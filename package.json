@@ -1,0 +1,11 @@
+{
+  "name": "texas-chemistry-sims",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/chem.test.js && node tests/game.test.js && node tests/casefile.test.js",
+    "test:chem": "node tests/chem.test.js",
+    "test:game": "node tests/game.test.js",
+    "test:casefile": "node tests/casefile.test.js"
+  }
+}

@@ -1,0 +1,110 @@
+/* Unit 11 page styles — Hot Lab: emission picker with A and Z steppers, the
+   fission/fusion bench, the isotope cards, the activity calculator, and the two
+   Honors benches. Everything here reuses the shared tokens; copper stays Honors only. */
+
+.small { font-size: var(--fs-xs); }
+.se-cap { font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }
+
+/* Given-data readout: the numbers the vial and the paperwork hand you */
+.readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--s-3); }
+.readout .cell {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-3);
+}
+.readout .cell .k {
+  font-family: var(--font-mono); font-size: var(--fs-xs); text-transform: uppercase;
+  letter-spacing: .07em; color: var(--muted);
+}
+.readout .cell .v {
+  font-family: var(--font-mono); font-size: var(--fs-lg); font-weight: 700;
+  color: var(--ink); font-variant-numeric: tabular-nums;
+}
+
+/* Survey evidence: what the meter actually did, which is how you name an emission */
+.evidence {
+  border: 1px solid var(--border-strong); border-left: 4px solid var(--accent-500);
+  background: var(--surface-2); border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4); margin: var(--s-4) 0;
+}
+.evidence .k {
+  display: block; font-family: var(--font-mono); font-size: var(--fs-xs);
+  text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin-bottom: 4px;
+}
+.evidence .t { font-size: var(--fs-sm); line-height: var(--lh-body); }
+
+/* Emission options: full sentences, so they wrap and stack rather than sit in a row */
+.emgrid { display: grid; gap: var(--s-3); }
+.emgrid .choice { text-align: left; font-weight: 400; line-height: 1.45; }
+.emgrid .choice .tag {
+  display: block; font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .09em; color: var(--accent-700); margin-bottom: 2px;
+}
+.emgrid .choice[data-state="correct"] .tag { color: #1f6b41; }
+.emgrid .choice[data-state="wrong"] .tag { color: #8a3320; }
+
+/* A balanced fission equation is wider than a phone. The equation box below scrolls on
+   its own, but a grid item defaults to min-width:auto, which would let that min-content
+   width push the whole column past the viewport instead of letting the box scroll. */
+.sim-grid > .stack { min-width: 0; }
+
+/* The live equation the steppers are building */
+.nuceq {
+  background: var(--surface-2); border: 1px solid var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-4); margin-top: var(--s-4);
+  text-align: center; overflow-x: auto;
+}
+.nuceq.balanced { border-color: var(--success); background: var(--success-050); }
+.conserve {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-4);
+  margin-top: var(--s-3); font-family: var(--font-mono); font-size: var(--fs-xs);
+}
+.conserve .item { color: var(--muted); }
+.conserve .item.ok { color: #1f6b41; font-weight: 700; }
+.conserve .item.no { color: #8a3320; font-weight: 700; }
+
+/* A and Z steppers, matched to the rest of the kit */
+.stepper-row { display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: center; }
+.stepper {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-3);
+}
+.stepper .el { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted); min-width: 6.4em; }
+.stepper .sub {
+  font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-lg);
+  min-width: 2.6em; text-align: center; color: var(--accent-700);
+  font-variant-numeric: tabular-nums;
+}
+.stepper .btn-sm { min-width: 30px; }
+
+/* Isotope option cards for the applications bench */
+.isogrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--s-3); }
+.isogrid .choice { text-align: left; font-weight: 400; }
+.isogrid .choice .iname { display: block; font-weight: 700; margin-bottom: 2px; }
+.isogrid .choice .ifacts {
+  display: block; font-family: var(--font-mono); font-size: var(--fs-xs);
+  color: var(--muted); margin-top: var(--s-2);
+}
+.isogrid .choice .iuse { display: block; font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }
+.isogrid .choice[data-state="correct"] .ifacts, .isogrid .choice[data-state="correct"] .iuse,
+.isogrid .choice[data-state="wrong"] .ifacts, .isogrid .choice[data-state="wrong"] .iuse { color: inherit; opacity: .85; }
+
+/* Reason options: long sentences, stacked */
+.reasongrid { display: grid; gap: var(--s-2); }
+.reasongrid .choice { text-align: left; font-weight: 400; line-height: 1.4; font-size: var(--fs-sm); }
+
+/* The activity working, one factor per line so the substitution is visible */
+.eqline {
+  font-family: var(--font-mono); font-size: var(--fs-sm);
+  padding: var(--s-2) 0; border-bottom: 1px dashed var(--border);
+  display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: baseline;
+}
+.eqline:last-child { border-bottom: none; }
+.eqline .calc { font-weight: 700; color: var(--accent-700); }
+
+/* Mass-defect table on the binding-energy bench */
+.bdata td.num, .bdata th.num { font-variant-numeric: tabular-nums; }
+.bdata .side {
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  text-transform: uppercase; letter-spacing: .07em; color: var(--muted);
+}

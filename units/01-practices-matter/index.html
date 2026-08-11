@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 1 · Practices, Measurement &amp; Matter</title>
+<meta name="description" content="Read a graduated cylinder, count and round significant figures, find density by displacement, and judge accuracy versus precision. TEKS C.1-C.4.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<link rel="stylesheet" href="../../shared/css/components.css">
+<link rel="stylesheet" href="../../shared/css/casefile.css">
+<link rel="stylesheet" href="css/style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+</head>
+<body>
+<div x-data="sim" x-cloak>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../index.html"><span class="mark">Pr</span> Practices &amp; Measurement</a>
+      <span class="grow"></span>
+      <label class="switch" title="Reveal advanced content">
+        <input type="checkbox" x-model="honors">
+        <span class="track"></span>
+        <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+      </label>
+    </div>
+  </header>
+
+  <main class="wrap page-main">
+    <div class="page-head">
+      <h1>Practices, Measurement &amp; Matter</h1>
+      <p class="eyebrow">Unit 1 · TEKS C.1-C.4 (science &amp; engineering practices)</p>
+    </div>
+
+      <div data-casefile-teaser></div>
+
+    <div class="sim-grid">
+      <div class="stack">
+
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" :aria-selected="mode==='measure'"  @click="mode='measure'">Read the tool</button>
+          <button class="tab" role="tab" :aria-selected="mode==='sigfig'"   @click="mode='sigfig'">Significant figures</button>
+          <button class="tab" role="tab" :aria-selected="mode==='density'"  @click="mode='density'">Density lab</button>
+          <button class="tab" role="tab" :aria-selected="mode==='evaluate'" @click="mode='evaluate'">Accuracy vs precision</button>
+        </div>
+
+        <!-- ---------- C.1 READING THE TOOL ---------- -->
+        <div class="panel" x-show="mode==='measure'">
+          <p class="muted" style="margin-bottom: var(--s-3);">Read the bottom of the meniscus at eye level. The smallest marking is 1 mL, so estimate one digit further, to the nearest 0.1 mL.</p>
+
+          <div class="lab-row">
+            <svg class="cyl" viewBox="0 0 150 330" role="img" aria-label="graduated cylinder">
+              <rect x="30" y="20" width="70" height="285" rx="6" fill="#f4f8f9" stroke="#aebfc6" stroke-width="2"></rect>
+              <rect x="31" :y="lvlY(mVal)" width="68" :height="lvlH(mVal)" fill="#79b0ba" opacity="0.55"></rect>
+              <ellipse cx="65" :cy="lvlY(mVal)" rx="34" ry="3.5" fill="#4f93a0" opacity="0.7"></ellipse>
+              <g x-html="ticksSvg(true)"></g>
+              <g x-show="mChecked">
+                <line x1="20" x2="110" :y1="lvlY(mVal)" :y2="lvlY(mVal)" stroke="#bf4a30" stroke-width="1.2" stroke-dasharray="4 3"></line>
+                <text x="6" :y="lvlY(mVal)+3" x-text="mVal.toFixed(1)" font-size="10" fill="#bf4a30" font-family="JetBrains Mono"></text>
+              </g>
+            </svg>
+
+            <div class="lab-side">
+              <div class="field" style="max-width: 220px;">
+                <label>Your reading (mL)</label>
+                <input type="number" step="0.1" x-model="mGuess" placeholder="e.g. 27.4">
+              </div>
+              <div class="row" style="margin-top: var(--s-3);">
+                <button class="btn btn-accent" @click="checkMeasure()" :disabled="mGuess===''">Check</button>
+                <button class="btn" @click="newMeasure()">New sample</button>
+              </div>
+              <div x-show="mChecked" class="note" :class="mCorrect ? 'note-ok' : 'note-bad'" style="margin-top: var(--s-3);">
+                <span x-show="mCorrect">Good reading.</span>
+                <span x-show="!mCorrect">Not quite.</span>
+                The level is <strong x-text="mVal.toFixed(1)+' mL'"></strong>. A reading is only as precise as the tool allows: certain digits plus one estimated digit.
+              </div>
+
+              <div class="ref-card" style="margin-top: var(--s-4);">
+                <div class="ref-title">SI base units</div>
+                <table class="data mini">
+                  <template x-for="u in SI_UNITS" :key="u.sym">
+                    <tr><td x-text="u.quantity"></td><td x-text="u.unit"></td><td class="mono" x-text="u.sym"></td></tr>
+                  </template>
+                </table>
+                <div class="ref-title" style="margin-top: var(--s-3);">Common prefixes</div>
+                <div class="prefix-row">
+                  <template x-for="p in PREFIXES" :key="p.sym">
+                    <span class="prefix"><strong x-text="p.sym"></strong> <span x-text="p.name"></span> <span class="mono" x-text="p.factor"></span></span>
+                  </template>
+                </div>
+                <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">Volume is derived: 1 mL = 1 cm&#179;.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- C.2 SIGNIFICANT FIGURES ---------- -->
+        <div class="panel" x-show="mode==='sigfig'">
+          <div class="tabs" style="border:none; margin-bottom: var(--s-3);">
+            <button class="tab btn-sm" :aria-selected="sfTask==='count'" @click="setTask('count')">Count</button>
+            <button class="tab btn-sm" :aria-selected="sfTask==='round'" @click="setTask('round')">Round</button>
+            <button class="tab btn-sm" :aria-selected="sfTask==='calc'"  @click="setTask('calc')">Calculate</button>
+          </div>
+
+          <!-- COUNT -->
+          <div x-show="sfTask==='count'">
+            <p class="muted" style="margin-bottom: var(--s-3);">How many significant figures does this measurement have?</p>
+            <div class="eqn mono" x-text="sfQ.str"></div>
+            <div class="choice-grid" style="grid-template-columns: repeat(5, 1fr); margin-top: var(--s-3);">
+              <template x-for="n in [1,2,3,4,5]" :key="n">
+                <button class="choice" style="text-align:center" :data-state="countState(n)" @click="pickSF(n)" x-text="n"></button>
+              </template>
+            </div>
+          </div>
+
+          <!-- ROUND -->
+          <div x-show="sfTask==='round'">
+            <p class="muted" style="margin-bottom: var(--s-3);">Round <strong class="mono" x-text="sfQ.base"></strong> to <strong x-text="sfQ.n"></strong> significant figures.</p>
+            <div class="field" style="max-width: 220px;">
+              <label>Rounded value</label>
+              <input type="number" step="any" x-model="sfInput">
+            </div>
+          </div>
+
+          <!-- CALCULATE -->
+          <div x-show="sfTask==='calc'">
+            <p class="muted" style="margin-bottom: var(--s-3);">Multiply, then report with the correct number of significant figures (the fewest of the inputs).</p>
+            <div class="eqn mono"><span x-text="sfQ.a"></span> &#215; <span x-text="sfQ.b"></span> = ?</div>
+            <div class="field" style="max-width: 220px; margin-top: var(--s-3);">
+              <label>Answer</label>
+              <input type="number" step="any" x-model="sfInput">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: var(--s-4);">
+            <button class="btn btn-accent" @click="checkSF()" :disabled="(sfTask==='count' ? sfPick===null : sfInput==='') || sfChecked">Check</button>
+            <button class="btn" @click="newSF()">New question</button>
+          </div>
+
+          <div x-show="sfChecked" class="note" :class="sfCorrect ? 'note-ok' : 'note-bad'" style="margin-top: var(--s-3);">
+            <span x-show="sfCorrect">Correct.</span>
+            <span x-show="!sfCorrect">Not quite.</span>
+            <span x-show="sfTask==='count'">It has <strong x-text="sfQ.ans"></strong> significant figures.</span>
+            <span x-show="sfTask==='round'">Rounded to <span x-text="sfQ.n"></span> sig figs: <strong class="mono" x-text="sfAnsDisplay"></strong>.</span>
+            <span x-show="sfTask==='calc'">The product is <span class="mono" x-text="fmt(sfQ.raw,6)"></span>, reported to <span x-text="sfQ.sf"></span> sig figs as <strong class="mono" x-text="sfAnsDisplay"></strong>.</span>
+          </div>
+        </div>
+
+        <!-- ---------- C.3 DENSITY LAB ---------- -->
+        <div class="panel" x-show="mode==='density'">
+          <p class="muted" style="margin-bottom: var(--s-3);">An unknown metal is massed, then lowered into water. The water it pushes aside equals its volume. Find the density, then identify the metal.</p>
+
+          <div class="lab-row">
+            <div class="cyl-pair">
+              <div>
+                <svg class="cyl sm" viewBox="0 0 150 330" role="img" aria-label="before">
+                  <rect x="30" y="20" width="70" height="285" rx="6" fill="#f4f8f9" stroke="#aebfc6" stroke-width="2"></rect>
+                  <rect x="31" :y="lvlY(dBefore)" width="68" :height="lvlH(dBefore)" fill="#79b0ba" opacity="0.55"></rect>
+                  <ellipse cx="65" :cy="lvlY(dBefore)" rx="34" ry="3.5" fill="#4f93a0" opacity="0.7"></ellipse>
+                  <g x-html="ticksSvg(false)"></g>
+                </svg>
+                <div class="cyl-cap">before<br><strong class="mono" x-text="dBefore.toFixed(1)+' mL'"></strong></div>
+              </div>
+              <div>
+                <svg class="cyl sm" viewBox="0 0 150 330" role="img" aria-label="after">
+                  <rect x="30" y="20" width="70" height="285" rx="6" fill="#f4f8f9" stroke="#aebfc6" stroke-width="2"></rect>
+                  <rect x="31" :y="lvlY(dAfter)" width="68" :height="lvlH(dAfter)" fill="#79b0ba" opacity="0.55"></rect>
+                  <ellipse cx="65" :cy="lvlY(dAfter)" rx="34" ry="3.5" fill="#4f93a0" opacity="0.7"></ellipse>
+                  <rect x="46" :y="lvlY(dAfter)+10" width="38" :height="Math.max(0, lvlH(dAfter)-14)" rx="3" fill="#8a6a4a" opacity="0.85"></rect>
+                  <g x-html="ticksSvg(false)"></g>
+                </svg>
+                <div class="cyl-cap">after<br><strong class="mono" x-text="dAfter.toFixed(1)+' mL'"></strong></div>
+              </div>
+            </div>
+
+            <div class="lab-side">
+              <div class="stat" style="max-width: 260px;"><div class="k">balance reading</div><div class="v" x-text="dMass.toFixed(1)+' g'"></div></div>
+              <div class="eqn" style="margin-top: var(--s-3);"><span x-tex="'\\rho = \\dfrac{m}{V}'"></span></div>
+
+              <div class="row" style="gap: var(--s-3); margin-top: var(--s-3);">
+                <div class="field" style="flex:1;"><label>Volume (mL)</label><input type="number" step="0.1" x-model="dVolInput" :disabled="dChecked"></div>
+                <div class="field" style="flex:1;"><label>Density (g/mL)</label><input type="number" step="0.01" x-model="dDensInput" :disabled="dChecked"></div>
+              </div>
+
+              <label style="display:block; margin: var(--s-3) 0 var(--s-2);">Identify the metal</label>
+              <div class="choice-grid">
+                <template x-for="name in dOptions" :key="name">
+                  <button class="choice" :data-state="subState(name)" @click="pickSub(name)" x-text="name"></button>
+                </template>
+              </div>
+
+              <div class="row" style="margin-top: var(--s-3);">
+                <button class="btn btn-accent" @click="checkDensity()" :disabled="!dPick || dChecked">Check</button>
+                <button class="btn" @click="newSample()">New sample</button>
+              </div>
+
+              <div x-show="dChecked" style="margin-top: var(--s-3);">
+                <div class="note" :class="(dVolOk && dDensOk && dIdOk) ? 'note-ok' : 'note-bad'">
+                  Volume = <strong class="mono" x-text="dVolTrue.toFixed(1)+' mL'"></strong> (after &#8722; before), density = <strong class="mono" x-text="fmt(dDensTrue,3)+' g/mL'"></strong>.
+                  That matches <strong x-text="dNearest.name"></strong> (<span class="mono" x-text="dNearest.density.toFixed(2)"></span> g/mL).
+                </div>
+                <div class="honors-block" x-show="honors">
+                  <span class="honors-tag">Honors · error propagation</span>
+                  <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0;">With a balance good to &#177;0.1 g and each volume read to &#177;0.1 mL, the relative uncertainties add:</p>
+                  <div class="stat-row">
+                    <div class="stat"><div class="k">relative uncertainty</div><div class="v" style="font-size: var(--fs-lg)" x-text="fmt(dUncert.rel,2)+' %'"></div></div>
+                    <div class="stat"><div class="k">density</div><div class="v" style="font-size: var(--fs-lg)" x-text="fmt(dDensTrue,3)+' ± '+fmt(dUncert.abs,2)"></div></div>
+                  </div>
+                  <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">Smaller samples carry larger relative volume error, so the density is less certain.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- C.4 ACCURACY VS PRECISION ---------- -->
+        <div class="panel" x-show="mode==='evaluate'">
+          <p class="muted" style="margin-bottom: var(--s-3);">Accuracy is closeness to the true value. Precision is how tightly repeated trials agree. They are independent.</p>
+
+          <div class="ap-grid">
+            <template x-for="b in AP_BOARDS" :key="b.key">
+              <div class="ap-card">
+                <svg viewBox="0 0 120 120" class="target" role="img" :aria-label="b.title">
+                  <circle cx="60" cy="60" r="46" fill="#fff" stroke="#cfdbe0"></circle>
+                  <circle cx="60" cy="60" r="31" fill="none" stroke="#e2eaed"></circle>
+                  <circle cx="60" cy="60" r="16" fill="#e8f2f4" stroke="#cfdbe0"></circle>
+                  <circle cx="60" cy="60" r="3" fill="#bf4a30"></circle>
+                  <g x-html="boardDots(b.dots)"></g>
+                </svg>
+                <div class="ap-cap"><strong x-text="b.title"></strong><span x-text="b.desc"></span></div>
+              </div>
+            </template>
+          </div>
+
+          <hr class="rule">
+
+          <h4>Judge a real dataset</h4>
+          <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0 var(--s-3);">Five trials measuring the <strong x-text="evScenario.label"></strong>. Accepted value: <strong class="mono" x-text="evAccepted+' '+evScenario.unit"></strong>.</p>
+
+          <div class="lab-row">
+            <svg viewBox="0 0 120 120" class="target big" role="img" aria-label="this dataset">
+              <circle cx="60" cy="60" r="46" fill="#fff" stroke="#cfdbe0"></circle>
+              <circle cx="60" cy="60" r="31" fill="none" stroke="#e2eaed"></circle>
+              <circle cx="60" cy="60" r="16" fill="#e8f2f4" stroke="#cfdbe0"></circle>
+              <circle cx="60" cy="60" r="3" fill="#bf4a30"></circle>
+              <g x-html="liveDots()"></g>
+            </svg>
+
+            <div class="lab-side">
+              <table class="data mini">
+                <thead><tr><th>trial</th><th class="num">value</th></tr></thead>
+                <tbody>
+                  <template x-for="(v,i) in evTrials" :key="i">
+                    <tr><td x-text="'#'+(i+1)"></td><td class="num mono" x-text="v"></td></tr>
+                  </template>
+                </tbody>
+              </table>
+              <div class="stat-row" style="margin-top: var(--s-3);">
+                <div class="stat"><div class="k">mean</div><div class="v" style="font-size: var(--fs-lg)" x-text="fmt(evMean,4)"></div></div>
+                <div class="stat"><div class="k">percent error</div><div class="v" style="font-size: var(--fs-lg)" x-text="fmt(evPctError,2)+'%'"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <label style="display:block; margin: var(--s-4) 0 var(--s-2);">Classify this dataset</label>
+          <div class="choice-grid">
+            <template x-for="b in AP_BOARDS" :key="'c'+b.key">
+              <button class="choice" :data-state="classState(b.key)" @click="pickClass(b.key)" x-text="b.title"></button>
+            </template>
+          </div>
+          <div class="row" style="margin-top: var(--s-3);">
+            <button class="btn btn-accent" @click="checkEval()" :disabled="!evClassPick || evChecked">Check</button>
+            <button class="btn" @click="newDataset()">New dataset</button>
+          </div>
+
+          <div x-show="evChecked" class="note" :class="evClassPick===evVerdict ? 'note-ok' : 'note-bad'" style="margin-top: var(--s-3);">
+            <span x-show="evClassPick===evVerdict">Correct.</span>
+            <span x-show="evClassPick!==evVerdict">Not quite.</span>
+            Percent error <span class="mono" x-text="fmt(evPctError,2)+'%'"></span> means it is <strong x-text="evAccurate ? 'accurate' : 'not accurate'"></strong>;
+            the spread is <span class="mono" x-text="fmt(evRelStd,2)+'%'"></span> so it is <strong x-text="evPrecise ? 'precise' : 'not precise'"></strong>.
+          </div>
+
+          <div class="honors-block" x-show="honors">
+            <span class="honors-tag">Honors · quantifying precision</span>
+            <div class="eqn" style="margin: var(--s-2) 0;"><span x-tex="'s = \\sqrt{\\dfrac{\\sum (x_i-\\bar{x})^2}{n-1}}'"></span></div>
+            <div class="stat-row">
+              <div class="stat"><div class="k">standard deviation</div><div class="v" style="font-size: var(--fs-lg)" x-text="fmt(evStd,4)"></div></div>
+              <div class="stat"><div class="k">relative (precision)</div><div class="v" style="font-size: var(--fs-lg)" x-text="fmt(evRelStd,2)+'%'"></div></div>
+            </div>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">Random error widens the spread (hurts precision). Systematic error shifts the whole set off-target (hurts accuracy) without changing the spread.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- standards map -->
+      <aside class="panel se-panel">
+        <div class="panel-head"><span class="panel-title" style="font-size:var(--fs-md)">Practices you are using</span></div>
+        <template x-for="se in SE" :key="se.code">
+          <div class="se-item" :class="{ active: se.mode===mode }">
+            <div class="se-code" x-text="se.code"></div>
+            <div class="se-text" x-text="se.text"></div>
+          </div>
+        </template>
+        <p class="muted" style="font-size:var(--fs-xs); margin-top: var(--s-3);">These practices (C.1-C.4) run through every unit. Toggle <strong>Honors</strong> for error propagation and standard deviation.</p>
+      </aside>
+    </div>
+
+    <div data-casefile></div>
+  </main>
+</div>
+
+<script type="module">
+  import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
+  import { registerRender } from '../../shared/js/render.js';
+  import { createSim } from './js/main.js';
+  import { mountCaseFile } from '../../shared/js/casefile.js';
+  import { CASE } from './js/case.js';
+  registerRender(Alpine);
+  Alpine.data('sim', createSim);
+  mountCaseFile(Alpine, CASE);
+  window.Alpine = Alpine;
+  Alpine.start();
+</script>
+</body>
+</html>

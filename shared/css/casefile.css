@@ -1,0 +1,326 @@
+/* casefile.css — shared "Case File" component: animated real-world chemistry stories.
+   A dark, cinematic panel built on the design-system tokens. All ambient motion is
+   CSS-only, so the base.css prefers-reduced-motion kill switch freezes it automatically.
+   Copper stays reserved for Honors; the case file uses the teal family plus semantics. */
+
+.casefile {
+  --cf-bg-1: #14222b;
+  --cf-bg-2: #1d3440;
+  --cf-ink: #eef6f8;
+  --cf-ink-2: #c3d6dc;
+  --cf-muted: #8fa9b2;
+  --cf-line: rgba(151, 183, 194, .22);
+  --cf-card: rgba(13, 26, 33, .55);
+  --cf-accent: #7fc4d0;
+  --cf-accent-deep: #2a7d8a;
+  --cf-good: #8fd9ae;
+  --cf-warn: #ffd27e;
+  --cf-bad: #ff9a82;
+  position: relative;
+  margin-top: var(--s-7);
+  border-radius: var(--r-lg);
+  border: 1px solid #2c414d;
+  background:
+    radial-gradient(900px 420px at 90% -20%, rgba(42, 125, 138, .35), transparent 60%),
+    linear-gradient(145deg, var(--cf-bg-1), var(--cf-bg-2));
+  box-shadow: var(--shadow-lg);
+  color: var(--cf-ink-2);
+  padding: var(--s-6);
+  overflow: hidden;
+}
+.casefile h2 { color: var(--cf-ink); }
+
+/* Header */
+.cf-kicker {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--cf-accent);
+}
+.cf-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--cf-bad);
+  box-shadow: 0 0 0 0 rgba(255, 154, 130, .55);
+  animation: cf-ping 2.2s var(--ease) infinite;
+}
+@keyframes cf-ping {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 154, 130, .55); }
+  70%  { box-shadow: 0 0 0 9px rgba(255, 154, 130, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 154, 130, 0); }
+}
+.cf-title { font-size: var(--fs-2xl); margin: var(--s-2) 0; letter-spacing: -.01em; }
+.cf-hook { font-size: var(--fs-lg); color: var(--cf-ink-2); max-width: 62ch; }
+
+/* Big-number stats strip */
+.cf-stats { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-4); }
+.cf-stat {
+  flex: 1 1 130px; min-width: 130px;
+  background: var(--cf-card); border: 1px solid var(--cf-line); border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4);
+}
+.cf-stat .v {
+  display: block; font-family: var(--font-mono); font-weight: 700;
+  font-size: var(--fs-xl); color: var(--cf-ink); font-variant-numeric: tabular-nums;
+}
+.cf-stat .k {
+  display: block; font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: .07em; text-transform: uppercase; color: var(--cf-muted); margin-top: 2px;
+}
+
+/* Body: stage + story rail */
+.cf-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: var(--s-5); margin-top: var(--s-5); align-items: start; }
+@media (max-width: 880px) { .cf-grid { grid-template-columns: 1fr; } }
+
+.cf-stage {
+  position: relative; margin: 0; border-radius: var(--r-md); overflow: hidden;
+  background: #0d1a21; border: 1px solid var(--cf-line);
+}
+.cf-stage svg { display: block; width: 100%; height: auto; }
+.cf-cap {
+  padding: var(--s-2) var(--s-3); font-size: var(--fs-xs); color: var(--cf-muted);
+  border-top: 1px solid var(--cf-line); font-family: var(--font-mono); min-height: 2.4em;
+}
+
+/* Chapter list */
+.cf-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s-2); }
+.cf-step {
+  display: flex; align-items: center; gap: var(--s-3); width: 100%; text-align: left;
+  background: transparent; border: 1px solid var(--cf-line); border-radius: var(--r-md);
+  color: var(--cf-ink-2); font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
+  padding: var(--s-2) var(--s-3); cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-fast) var(--ease);
+}
+.cf-step:hover { border-color: var(--cf-accent); transform: translateX(2px); }
+.cf-step.on { background: rgba(42, 125, 138, .28); border-color: var(--cf-accent); color: var(--cf-ink); }
+.cf-step.done { color: var(--cf-muted); }
+.cf-step.done .cf-step-n { background: var(--cf-good); color: #10261a; }
+.cf-step-n {
+  flex: none; width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(151, 183, 194, .18); color: var(--cf-ink);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 700;
+}
+.cf-step.on .cf-step-n { background: var(--cf-accent); color: #0d1a21; }
+
+/* Narration */
+.cf-narr {
+  margin-top: var(--s-4); background: var(--cf-card); border: 1px solid var(--cf-line);
+  border-radius: var(--r-md); padding: var(--s-4); min-height: 150px;
+}
+.cf-narr p { color: var(--cf-ink-2); font-size: var(--fs-sm); line-height: var(--lh-body); }
+.cf-chem {
+  margin-top: var(--s-3); padding: var(--s-3);
+  border-left: 3px solid var(--cf-accent); border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  background: rgba(42, 125, 138, .16);
+}
+.cf-chem strong { color: var(--cf-accent); font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .08em; text-transform: uppercase; }
+.cf-controls { display: flex; gap: var(--s-3); margin-top: var(--s-3); align-items: center; }
+.cf-progress { margin-left: auto; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--cf-muted); }
+
+/* Dark buttons */
+.cf-btn {
+  background: transparent; color: var(--cf-ink); border-color: var(--cf-line);
+}
+.cf-btn:hover { border-color: var(--cf-accent); background: rgba(42, 125, 138, .18); box-shadow: none; }
+.cf-btn:disabled { opacity: .35; }
+.cf-btn-accent { background: var(--cf-accent-deep); border-color: var(--cf-accent-deep); color: #fff; }
+.cf-btn-accent:hover { background: #236974; border-color: #236974; }
+
+/* "Your call" quiz */
+.cf-quiz { margin-top: var(--s-5); border-top: 1px dashed var(--cf-line); padding-top: var(--s-5); }
+.cf-quiz-label {
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--cf-warn);
+}
+.cf-quiz-q { color: var(--cf-ink); font-weight: 700; margin: var(--s-2) 0 var(--s-3); max-width: 70ch; }
+.cf-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--s-3); }
+.cf-choice {
+  text-align: left; padding: var(--s-3) var(--s-4);
+  background: var(--cf-card); border: 1px solid var(--cf-line); border-radius: var(--r-md);
+  color: var(--cf-ink-2); font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
+  cursor: pointer; transition: border-color var(--t-fast), background var(--t-fast);
+}
+.cf-choice:hover { border-color: var(--cf-accent); }
+.cf-choice[data-state="on"] { border-color: var(--cf-accent); background: rgba(42, 125, 138, .28); color: var(--cf-ink); }
+.cf-choice[data-state="correct"] { border-color: var(--cf-good); background: rgba(47, 143, 91, .25); color: var(--cf-good); }
+.cf-choice[data-state="wrong"] { border-color: var(--cf-bad); background: rgba(191, 74, 48, .22); color: var(--cf-bad); }
+.cf-explain {
+  margin-top: var(--s-3); padding: var(--s-3) var(--s-4); border-radius: var(--r-md);
+  font-size: var(--fs-sm); border: 1px solid var(--cf-line); background: var(--cf-card);
+  animation: rise var(--t-med) var(--ease) both;
+}
+.cf-explain.good { border-color: rgba(143, 217, 174, .5); }
+.cf-explain.good strong { color: var(--cf-good); }
+.cf-explain.bad { border-color: rgba(255, 154, 130, .5); }
+.cf-explain.bad strong { color: var(--cf-bad); }
+
+/* Punch: the motivating close */
+.cf-punch {
+  margin-top: var(--s-5); display: flex; flex-wrap: wrap; gap: var(--s-4);
+  align-items: center; justify-content: space-between;
+  background: linear-gradient(120deg, rgba(42, 125, 138, .3), rgba(42, 125, 138, .08));
+  border: 1px solid rgba(127, 196, 208, .35); border-radius: var(--r-md); padding: var(--s-4) var(--s-5);
+}
+.cf-punch-lead { color: var(--cf-ink); font-weight: 700; max-width: 56ch; }
+.cf-careers { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-2); }
+.cf-career {
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 700;
+  color: var(--cf-accent); border: 1px solid rgba(127, 196, 208, .4);
+  border-radius: var(--r-pill); padding: 2px 10px; white-space: nowrap;
+}
+.cf-cta {
+  flex: none; display: inline-flex; align-items: center; gap: var(--s-2);
+  background: var(--cf-accent); color: #0d1a21; border: none; border-radius: var(--r-md);
+  font-family: var(--font-body); font-weight: 700; font-size: var(--fs-sm);
+  padding: var(--s-3) var(--s-5); cursor: pointer;
+  transition: transform var(--t-fast) var(--ease), background var(--t-fast);
+}
+.cf-cta:hover { background: #9ad4de; transform: translateY(-1px); }
+
+/* Teaser chip (light page context, sits under the unit h1) */
+.cf-teaser {
+  display: inline-flex; align-items: center; gap: var(--s-3);
+  background: linear-gradient(135deg, #1c2a31, #2a4552); color: #dcebee;
+  border: 1px solid #2c3f49; border-radius: var(--r-pill);
+  padding: 6px 16px 6px 10px; font-size: var(--fs-sm); font-weight: 700;
+  box-shadow: var(--shadow-sm); margin-bottom: var(--s-4);
+  transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast);
+}
+.cf-teaser:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); text-decoration: none; color: #fff; }
+.cf-teaser .t-tag {
+  font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .1em;
+  text-transform: uppercase; color: #7fc4d0;
+}
+.cf-teaser .t-go { font-family: var(--font-mono); color: #7fc4d0; animation: cf-nudge 1.6s var(--ease) infinite; }
+@keyframes cf-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+
+/* ===== Ambient animation library for stage SVGs =====
+   Apply a class, tune with custom props (--dur, --delay, --rise, --fx, --fy, --deg,
+   --wob sideways wobble, --sway drift while falling, --tilt gentle rock, --o peak opacity).
+   transform-box keeps SVG transforms centered on the element itself. */
+.casefile svg .a-pulse, .casefile svg .a-float, .casefile svg .a-orbit, .casefile svg .a-burst,
+.casefile svg .a-rise, .casefile svg .a-blink, .casefile svg .a-flow, .casefile svg .a-shake,
+.casefile svg .a-hop, .casefile svg .a-fall, .casefile svg .a-sway, .casefile svg .a-twinkle,
+.casefile svg .a-flicker, .casefile svg .a-jiggle, .casefile svg .a-drift, .casefile svg .a-swim,
+.casefile svg .a-tailwag, .casefile svg .a-glow, .casefile svg .a-spark, .casefile svg .a-tumble {
+  transform-box: fill-box; transform-origin: center;
+}
+.a-pulse   { animation: cf-pulse var(--dur, 2.4s) var(--ease) var(--delay, 0s) infinite; }
+.a-twinkle { animation: cf-twinkle var(--dur, 3s) ease-in-out var(--delay, 0s) infinite; }
+.a-float   { animation: cf-float var(--dur, 4s) ease-in-out var(--delay, 0s) infinite; }
+.a-orbit   { animation: cf-orbit var(--dur, 10s) linear var(--delay, 0s) infinite; }
+.a-burst   { animation: cf-burst var(--dur, 2.6s) cubic-bezier(.2, .9, .3, 1) var(--delay, 0s) infinite; }
+.a-rise    { animation: cf-rise var(--dur, 3.5s) linear var(--delay, 0s) infinite; }
+.a-blink   { animation: cf-blink var(--dur, 1.2s) steps(1) var(--delay, 0s) infinite; }
+.a-flow    { animation: cf-flow var(--dur, 4s) linear var(--delay, 0s) infinite; }
+.a-shake   { animation: cf-shake var(--dur, .5s) linear var(--delay, 0s) infinite; }
+.a-hop     { animation: cf-hop var(--dur, 3s) var(--ease) var(--delay, 0s) infinite; }
+.a-fall    { animation: cf-fall var(--dur, 2.8s) ease-in var(--delay, 0s) infinite; }
+.a-sway    { animation: cf-sway var(--dur, 5s) ease-in-out var(--delay, 0s) infinite; }
+.a-draw    { stroke-dasharray: var(--dash, 600); stroke-dashoffset: var(--dash, 600);
+             animation: cf-draw var(--dur, 3s) var(--ease) var(--delay, 0s) forwards; }
+/* flame / hot-glow flicker; anchored at the base so it licks upward */
+.a-flicker { transform-origin: var(--org, 50% 100%);
+             animation: cf-flicker var(--dur, 1.1s) linear var(--delay, 0s) infinite; }
+/* rapid thermal jitter for gas particles */
+.a-jiggle  { animation: cf-jiggle var(--dur, .9s) linear var(--delay, 0s) infinite; }
+/* heavy cloud creeping across the scene */
+.a-drift   { animation: cf-drift var(--dur, 6s) ease-in-out var(--delay, 0s) infinite; }
+/* body undulation layered inside an a-flow carrier */
+.a-swim    { animation: cf-swim var(--dur, 1.6s) ease-in-out var(--delay, 0s) infinite; }
+/* tail fin beat; origin at the tail's attachment side */
+.a-tailwag { transform-origin: var(--org, 100% 50%);
+             animation: cf-tailwag var(--dur, .7s) ease-in-out var(--delay, 0s) infinite; }
+/* breathing glow: scale + opacity together */
+.a-glow    { animation: cf-glow var(--dur, 3.2s) ease-in-out var(--delay, 0s) infinite; }
+/* one-shot glitter pop, repeating */
+.a-spark   { animation: cf-spark var(--dur, 1.8s) cubic-bezier(.3, .7, .4, 1) var(--delay, 0s) infinite; }
+/* slow end-over-end rotation for falling debris */
+.a-tumble  { animation: cf-tumble var(--dur, 2.4s) linear var(--delay, 0s) infinite; }
+
+@keyframes cf-pulse   { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+@keyframes cf-twinkle { 0%, 100% { opacity: .15; transform: scale(.75); } 50% { opacity: .95; transform: scale(1.15); } }
+/* organic bob: a hint of sideways drift and rock, not a metronome */
+@keyframes cf-float   { 0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                        25% { transform: translate(var(--wob, 1.5px), calc(var(--fy, -5px) * .55)) rotate(var(--tilt, .8deg)); }
+                        50% { transform: translate(0, var(--fy, -5px)) rotate(0deg); }
+                        75% { transform: translate(calc(var(--wob, 1.5px) * -1), calc(var(--fy, -5px) * .55)) rotate(calc(var(--tilt, .8deg) * -1)); } }
+@keyframes cf-orbit   { to { transform: rotate(360deg); } }
+/* fast expansion, brief overshoot, lingering fade — like a real detonation */
+@keyframes cf-burst   { 0% { transform: scale(.1); opacity: 0; } 8% { opacity: 1; transform: scale(.5); }
+                        30% { transform: scale(1.08); opacity: 1; } 55% { transform: scale(1); opacity: .8; }
+                        100% { transform: scale(1.3); opacity: 0; } }
+/* bubbles wobble side to side and swell as pressure drops on the way up */
+@keyframes cf-rise    { 0% { transform: translate(0, 0) scale(.6); opacity: 0; } 10% { opacity: .9; }
+                        30% { transform: translate(var(--wob, 3.5px), calc(var(--rise, -70px) * .3)) scale(.78); }
+                        55% { transform: translate(calc(var(--wob, 3.5px) * -1), calc(var(--rise, -70px) * .58)) scale(.9); }
+                        80% { transform: translate(var(--wob, 3.5px), calc(var(--rise, -70px) * .84)) scale(1); opacity: .75; }
+                        100% { transform: translate(0, var(--rise, -70px)) scale(1.08); opacity: 0; } }
+@keyframes cf-blink   { 0%, 100% { opacity: 1; } 50% { opacity: .15; } }
+@keyframes cf-flow    { 0% { transform: translate(0, 0); opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; }
+                        100% { transform: translate(var(--fx, 60px), var(--fy, 0px)); opacity: 0; } }
+/* violent jolt with a touch of chassis roll */
+@keyframes cf-shake   { 0%, 100% { transform: translate(0, 0) rotate(0); }
+                        15% { transform: translate(-3px, 1px) rotate(-.5deg); }
+                        35% { transform: translate(3px, -1px) rotate(.4deg); }
+                        55% { transform: translate(-2px, 1px) rotate(-.35deg); }
+                        75% { transform: translate(2px, 0) rotate(.3deg); } }
+/* crouch, spring up, settle — an eager little leap */
+@keyframes cf-hop     { 0%, 30% { transform: translate(0, 0) scale(1); }
+                        36% { transform: translate(0, 2px) scale(1.06, .9); }
+                        46%, 60% { transform: translate(var(--fx, 0px), var(--fy, -26px)) scale(1); }
+                        66% { transform: translate(calc(var(--fx, 0px) * .1), 1px) scale(1.04, .94); }
+                        72%, 100% { transform: translate(0, 0) scale(1); } }
+/* --sway > 0 turns a straight drop into a leaf-like drift */
+@keyframes cf-fall    { 0% { transform: translate(0, 0); opacity: 0; } 12% { opacity: 1; }
+                        30% { transform: translate(var(--sway, 0px), calc(var(--fy, 60px) * .3)); }
+                        55% { transform: translate(calc(var(--sway, 0px) * -1), calc(var(--fy, 60px) * .58)); }
+                        85% { transform: translate(var(--sway, 0px), calc(var(--fy, 60px) * .85)); opacity: 1; }
+                        100% { transform: translate(0, var(--fy, 60px)); opacity: 0; } }
+@keyframes cf-sway    { 0%, 100% { transform: rotate(calc(var(--deg, 4deg) * -1)); } 50% { transform: rotate(var(--deg, 4deg)); } }
+@keyframes cf-draw    { to { stroke-dashoffset: 0; } }
+@keyframes cf-flicker { 0%, 100% { opacity: .9; transform: scale(1, 1); }
+                        12% { opacity: .65; transform: scale(.96, .84); }
+                        24% { opacity: 1; transform: scale(1.03, 1.14); }
+                        38% { opacity: .75; transform: scale(.97, .9); }
+                        52% { opacity: .95; transform: scale(1.02, 1.07); }
+                        66% { opacity: .68; transform: scale(.95, .88); }
+                        82% { opacity: 1; transform: scale(1.04, 1.1); } }
+@keyframes cf-jiggle  { 0%, 100% { transform: translate(0, 0); }
+                        18% { transform: translate(1.6px, -1.2px); }
+                        38% { transform: translate(-1.4px, 1.5px); }
+                        58% { transform: translate(1.3px, 1.2px); }
+                        78% { transform: translate(-1.6px, -1.4px); } }
+@keyframes cf-drift   { 0% { transform: translate(0, 0) scale(.82); opacity: 0; }
+                        18% { opacity: var(--o, .5); } 78% { opacity: var(--o, .5); }
+                        100% { transform: translate(var(--fx, 120px), var(--fy, 40px)) scale(1.12); opacity: 0; } }
+@keyframes cf-swim    { 0%, 100% { transform: translateY(0) rotate(0); }
+                        25% { transform: translateY(-2.5px) rotate(-2deg); }
+                        75% { transform: translateY(2.5px) rotate(2deg); } }
+@keyframes cf-tailwag { 0%, 100% { transform: rotate(var(--deg, 9deg)); } 50% { transform: rotate(calc(var(--deg, 9deg) * -1)); } }
+@keyframes cf-glow    { 0%, 100% { opacity: .5; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.06); } }
+@keyframes cf-spark   { 0% { transform: scale(0) rotate(0deg); opacity: 0; }
+                        22% { transform: scale(1.1) rotate(40deg); opacity: 1; }
+                        45% { transform: scale(.85) rotate(70deg); opacity: .9; }
+                        100% { transform: scale(.1) rotate(120deg); opacity: 0; } }
+@keyframes cf-tumble  { to { transform: rotate(360deg); } }
+
+/* Reduced motion.
+   base.css already clamps every animation-duration to ~0, but that is not enough here:
+   several of these keyframes deliberately END at opacity 0 (particles that rise and fade
+   out) and .a-draw parks the stroke fully dash-offset before drawing it in. Clamping the
+   duration would land those elements on their final frame and make them INVISIBLE rather
+   than still. So stop the animations outright and restore the drawn-in stroke, which
+   leaves every stage element resting at its authored opacity. */
+@media (prefers-reduced-motion: reduce) {
+  .casefile svg [class*="a-"],
+  .casefile .cf-dot,
+  .cf-teaser .t-go,
+  .cf-explain,
+  .verdict { animation: none !important; }
+  .casefile svg .a-draw { stroke-dashoffset: 0 !important; }
+  .cf-step { transition: none !important; }
+}
+
+@media (max-width: 640px) {
+  .casefile { padding: var(--s-5) var(--s-4); }
+  .cf-punch { flex-direction: column; align-items: flex-start; }
+}

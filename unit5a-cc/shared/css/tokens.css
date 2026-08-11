@@ -1,0 +1,134 @@
+/* tokens.css — shared design system (clinical blue-gray + teal, copper for Honors) */
+:root {
+  /* Surfaces */
+  --bg:           #eaf0f2;
+  --bg-2:         #dde7ea;
+  --surface:      #ffffff;
+  --surface-2:    #f4f8f9;
+  --surface-3:    #eef4f5;
+  --border:       #cfdbe0;
+  --border-strong:#aebfc6;
+
+  /* Ink */
+  --ink:    #1c2a31;
+  --ink-2:  #38484f;
+  --muted:  #687a82;
+
+  /* Teal-blue accent (primary) */
+  --accent:      #2a7d8a;
+  --accent-700:  #1d5b66;
+  --accent-300:  #79b0ba;
+  --accent-100:  #d6e8eb;
+  --accent-050:  #e8f2f4;
+
+  /* Copper accent — reserved exclusively for the Honors track */
+  --honors:      #c0772f;
+  --honors-700:  #95591f;
+  --honors-100:  #f1ddc8;
+  --honors-050:  #f8eee2;
+
+  /* Semantic */
+  --success:     #2f8f5b;
+  --success-050: #e4f2ea;
+  --warn:        #b8881f;
+  --warn-050:    #f6eed8;
+  --danger:      #bf4a30;
+  --danger-050:  #f6e6e1;
+
+  /* Typography */
+  --font-display: 'Bitter', Georgia, 'Times New Roman', serif;
+  --font-body:    'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+  --font-label:   'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  --fs-xs:  0.78rem;
+  --fs-sm:  0.88rem;
+  --fs-md:  1rem;
+  --fs-lg:  1.18rem;
+  --fs-xl:  1.5rem;
+  --fs-2xl: 2.1rem;
+  --fs-3xl: 2.9rem;
+
+  --lh-tight: 1.15;
+  --lh-body:  1.55;
+
+  /* Spacing (4px base) */
+  --s-1: 0.25rem; --s-2: 0.5rem;  --s-3: 0.75rem; --s-4: 1rem;
+  --s-5: 1.5rem;  --s-6: 2rem;    --s-7: 3rem;    --s-8: 4rem;
+
+  /* Radius + shadow + motion */
+  --r-sm: 4px; --r-md: 8px; --r-lg: 14px; --r-pill: 999px;
+  --shadow-sm: 0 1px 2px rgba(28,42,49,.06), 0 1px 3px rgba(28,42,49,.08);
+  --shadow-md: 0 4px 10px rgba(28,42,49,.08), 0 2px 4px rgba(28,42,49,.06);
+  --shadow-lg: 0 14px 40px rgba(28,42,49,.14);
+  --ease: cubic-bezier(.2,.7,.3,1);
+  --t-fast: .14s; --t-med: .26s;
+
+  --maxw: 1080px;
+
+  /* Atmosphere tokens (used by the deck theme; harmless defaults in light) */
+  --deck-glow: rgba(42,125,138,.18);
+  --led-on:    var(--accent);
+  --led-off:   var(--border-strong);
+}
+
+/* ============================================================================
+   DECK THEME — opt-in immersive "mission console" skin (set data-theme="deck"
+   on <html>). Deep desaturated slate-teal, NOT pitch black, so it stays easy on
+   the eyes and projector-friendly. Only overrides tokens: because every shared
+   component is built on these vars, flipping the palette reskins the whole UI.
+   Light remains the default (:root above) so non-opted units are untouched.
+   ============================================================================ */
+:root[data-theme="deck"] {
+  /* Surfaces — layered slate-teal, each step a touch lighter for depth */
+  --bg:           #15262d;
+  --bg-2:         #102026;
+  --surface:      #1b2e36;
+  --surface-2:    #213a44;
+  --surface-3:    #274450;
+  --border:       #2f4e59;
+  --border-strong:#3f6573;
+
+  /* Ink — high-contrast on the dark surfaces (WCAG AA for body + muted) */
+  --ink:    #eaf3f5;
+  --ink-2:  #c4d6db;
+  --muted:  #9bbcc4;
+
+  /* Teal accent. On dark, the "700" slot is the LIGHT text/link variant. */
+  --accent:      #3fb3bf;
+  --accent-700:  #79d2da;
+  --accent-300:  #57a7b2;
+  --accent-100:  #234c57;
+  --accent-050:  #18353d;
+
+  /* Copper — Honors only. "700" is the light text variant on dark. */
+  --honors:      #d28a4a;
+  --honors-700:  #e8ab6e;
+  --honors-100:  #43321f;
+  --honors-050:  #2c2012;
+
+  /* Semantic — bright signal colors + dark tints for verdict/note surfaces */
+  --success:     #46c98a;
+  --success-050: #163528;
+  --warn:        #e0a93f;
+  --warn-050:    #352a12;
+  --danger:      #ea6b4d;
+  --danger-050:  #3a201a;
+
+  /* Deeper shadows + a teal glow for the instrument feel */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.40), 0 1px 3px rgba(0,0,0,.34);
+  --shadow-md: 0 6px 16px rgba(0,0,0,.46), 0 2px 6px rgba(0,0,0,.38);
+  --shadow-lg: 0 18px 50px rgba(0,0,0,.55);
+  --deck-glow: rgba(63,179,191,.38);
+  --led-on:    #54d6df;
+  --led-off:   #2c4a52;
+
+  /* Typography with character: geometric display + a console label face.
+     Body stays Atkinson Hyperlegible (the accessibility win) and data stays mono. */
+  --font-display: 'Sora', Georgia, 'Times New Roman', serif;
+  --font-label:   'Chakra Petch', 'JetBrains Mono', ui-monospace, monospace;
+
+  /* The immersive cockpit needs three columns; give it a touch more room than the
+     1080 default so the center solve area is comfortable (header stays aligned). */
+  --maxw: 1160px;
+}

@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 3 · Periodic Table &amp; Trends</title>
+<meta name="description" content="Explore an interactive periodic table: trace how the table developed, predict chemical-family behavior, and read periodic trends in radius, ionization energy, electronegativity, and mass. TEKS C.5.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<link rel="stylesheet" href="../../shared/css/components.css">
+<link rel="stylesheet" href="../../shared/css/casefile.css">
+<link rel="stylesheet" href="css/style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div x-data="sim" x-cloak>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../index.html"><span class="mark">Pt</span> Periodic Table &amp; Trends</a>
+      <span class="grow"></span>
+      <label class="switch" title="Reveal advanced content for Honors sections">
+        <input type="checkbox" x-model="honors">
+        <span class="track"></span>
+        <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+      </label>
+    </div>
+  </header>
+
+  <main class="wrap page-main">
+    <div class="page-head">
+      <h1>Periodic Table &amp; Trends</h1>
+      <p class="eyebrow">Unit 3 · TEKS C.5 (A-C)</p>
+    </div>
+
+      <div data-casefile-teaser></div>
+
+    <div class="sim-grid">
+      <div class="stack">
+
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" :aria-selected="mode==='table'"    @click="mode='table'">How it developed</button>
+          <button class="tab" role="tab" :aria-selected="mode==='families'" @click="mode='families'">Chemical families</button>
+          <button class="tab" role="tab" :aria-selected="mode==='trends'"   @click="mode='trends'">Periodic trends</button>
+        </div>
+
+        <!-- ============ SHARED INTERACTIVE GRID + INSPECTOR ============ -->
+        <div class="panel">
+          <p class="muted" style="margin-bottom: var(--s-3); font-size: var(--fs-sm);">Click any element to inspect it. The same table recolors for each mode: family highlight, a property heatmap, or the historical evidence overlay.</p>
+
+          <!-- table mode: Moseley toggle -->
+          <div class="row" x-show="mode==='table'" style="margin-bottom: var(--s-3);">
+            <button class="btn" :class="moseleyOn ? 'btn-accent' : ''" @click="moseleyOn = !moseleyOn"
+              x-text="moseleyOn ? 'Hide mass-order inversions' : 'Show mass-order inversions'"></button>
+            <span class="muted" style="font-size: var(--fs-xs);">Moseley reordered the table by atomic number. The highlight marks pairs whose mass order disagrees.</span>
+          </div>
+
+          <!-- families mode: family selector -->
+          <div x-show="mode==='families'" style="margin-bottom: var(--s-3);">
+            <div class="fam-buttons">
+              <template x-for="f in FAMILIES" :key="f.key">
+                <button class="fam-btn" :aria-pressed="famKey===f.key" @click="selectFamily(f.key)">
+                  <span class="fam-dot" :class="'fam-'+f.key"></span><span x-text="f.name"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+
+          <!-- trends mode: heatmap property + legend -->
+          <div class="row" x-show="mode==='trends'" style="margin-bottom: var(--s-3); gap: var(--s-4); align-items: flex-end;">
+            <div class="field" style="max-width: 240px;">
+              <label for="prop">Color the table by</label>
+              <select id="prop" x-model="trendProp">
+                <template x-for="p in TREND_PROPS" :key="p.key"><option :value="p.key" x-text="p.label"></option></template>
+              </select>
+            </div>
+            <div class="heat-legend">
+              <span class="heat-ends" x-text="'low ' + heatLegend.min"></span>
+              <span class="heat-bar"></span>
+              <span class="heat-ends" x-text="heatLegend.max + ' high'"></span>
+            </div>
+          </div>
+
+          <div class="pt-scroll">
+            <div class="pt-grid" role="group" aria-label="Periodic table of the 37 elements studied">
+              <template x-for="el in elements" :key="el.sym">
+                <button class="pt-cell" :class="cellClass(el)" :style="cellStyle(el)" @click="selectEl(el.sym)"
+                  :aria-label="el.name + ', atomic number ' + el.z" :aria-pressed="el.sym===selectedSym">
+                  <span class="pt-z" x-text="el.z"></span>
+                  <span class="pt-sym" x-text="el.sym"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+
+          <!-- family legend (resting tints) shown in the history view -->
+          <div class="legend" x-show="mode==='table'">
+            <template x-for="(label, key) in FAMILY_LABELS" :key="key">
+              <span class="legend-item"><span class="fam-dot" :class="'fam-'+key"></span><span x-text="label"></span></span>
+            </template>
+          </div>
+
+          <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-3);">Atomic radius uses one consistent set of calculated radii (pm) so every element, including the noble gases, has a comparable value. Only the 37 elements in this course are shown; the empty spaces are real periodic-table positions we are not studying.</p>
+
+          <!-- shared element inspector -->
+          <div class="inspector">
+            <div class="insp-tile">
+              <div class="z mono" x-text="selected.z"></div>
+              <div class="sym" x-text="selected.sym"></div>
+              <div class="nm" x-text="selected.name"></div>
+              <div class="ms" x-text="fmt(selected.mass,5) + ' u'"></div>
+            </div>
+            <div class="insp-body">
+              <div class="ref-title">Electron configuration</div>
+              <div class="insp-config" x-text="selConfig"></div>
+              <div class="insp-props">
+                <div class="insp-prop"><div class="k">family</div><div class="v" style="font-size:var(--fs-sm)" x-text="selFamilyLabel"></div></div>
+                <div class="insp-prop"><div class="k">period / group</div><div class="v" x-text="selected.period + ' / ' + selected.group"></div></div>
+                <div class="insp-prop"><div class="k">valence e&#8315;</div><div class="v" x-text="selIsMainGroup ? selValence : '—'"></div></div>
+                <div class="insp-prop"><div class="k">radius</div><div class="v" x-text="selected.radius + ' pm'"></div></div>
+                <div class="insp-prop"><div class="k">first IE</div><div class="v" x-text="selected.ie1 + ' kJ/mol'"></div></div>
+                <div class="insp-prop"><div class="k">electronegativity</div><div class="v" x-text="selEN"></div></div>
+                <div class="insp-prop" x-show="honors"><div class="k">Zeff (core model)</div><div class="v" x-text="selIsMainGroup ? selZeff : '—'"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ C.5(A) HOW THE TABLE DEVELOPED ============ -->
+        <div class="panel" x-show="mode==='table'">
+          <p class="muted" style="margin-bottom: var(--s-3);">The table we use today was not designed all at once. It grew as chemists found better evidence for how to order the elements.</p>
+
+          <h4>How the Periodic Table developed (C.5A)</h4>
+          <div class="timeline">
+            <template x-for="h in TABLE_HISTORY" :key="h.who">
+              <div class="tl-card">
+                <div class="tl-head"><span class="tl-who" x-text="h.who"></span><span class="tl-year" x-text="h.year"></span></div>
+                <div class="tl-idea" x-text="h.idea"></div>
+
+                <!-- visual schematic of how this era's table looked -->
+                <div class="viz" role="img" :aria-label="'Schematic: ' + h.viz.cap">
+                  <template x-if="h.viz.type==='triads'">
+                    <div class="viz-triads">
+                      <template x-for="(tr, ti) in h.viz.triads" :key="ti">
+                        <div class="triad">
+                          <template x-for="(e, ei) in tr.els" :key="ei">
+                            <span class="mini-tile" :class="{ hi: ei===1 }"><span x-text="e.sym"></span><span class="mt-sub" x-text="e.mass"></span></span>
+                          </template>
+                          <div class="triad-avg" x-text="'avg ' + triadAvg(tr)"></div>
+                        </div>
+                      </template>
+                    </div>
+                  </template>
+
+                  <template x-if="h.viz.type==='octaves'">
+                    <div class="viz-grid">
+                      <template x-for="(row, ri) in h.viz.rows" :key="ri">
+                        <div class="viz-row">
+                          <template x-for="(sym, ci) in row" :key="ci">
+                            <span class="mini-tile" :class="{ hi: ci===h.viz.highlightCol }" x-text="sym"></span>
+                          </template>
+                        </div>
+                      </template>
+                    </div>
+                  </template>
+
+                  <template x-if="h.viz.type==='gaps'">
+                    <div class="viz-grid">
+                      <div class="viz-row">
+                        <template x-for="(g, gi) in h.viz.groupHeaders" :key="gi">
+                          <span class="viz-head" x-text="g"></span>
+                        </template>
+                      </div>
+                      <template x-for="(row, ri) in h.viz.rows" :key="ri">
+                        <div class="viz-row">
+                          <template x-for="(sym, ci) in row" :key="ci">
+                            <span class="mini-tile" :class="{ gap: sym==='?' }" x-text="sym"></span>
+                          </template>
+                        </div>
+                      </template>
+                    </div>
+                  </template>
+
+                  <template x-if="h.viz.type==='numbered'">
+                    <div class="viz-pairs">
+                      <template x-for="(pr, pi) in h.viz.pairs" :key="pi">
+                        <div class="viz-pair">
+                          <span class="mini-tile"><span class="mt-sub" x-text="'Z ' + pr[0].z"></span><span x-text="pr[0].sym"></span><span class="mt-sub" x-text="pr[0].mass"></span></span>
+                          <span class="viz-arrow">&#8594;</span>
+                          <span class="mini-tile"><span class="mt-sub" x-text="'Z ' + pr[1].z"></span><span x-text="pr[1].sym"></span><span class="mt-sub" x-text="pr[1].mass"></span></span>
+                        </div>
+                      </template>
+                    </div>
+                  </template>
+
+                  <template x-if="h.viz.type==='blocks'">
+                    <div class="viz-blocks">
+                      <div class="block-row">
+                        <span class="blk blk-s">s</span>
+                        <span class="blk-spacer"></span>
+                        <span class="blk blk-d">d</span>
+                        <span class="blk blk-p">p</span>
+                      </div>
+                      <div class="block-row" style="justify-content:center;">
+                        <span class="blk blk-f">f-block · lanthanides + actinides</span>
+                      </div>
+                    </div>
+                  </template>
+
+                  <div class="viz-cap" x-text="h.viz.cap"></div>
+                </div>
+
+                <div class="tl-ev"><strong>Evidence:</strong> <span x-text="h.evidence"></span></div>
+              </div>
+            </template>
+          </div>
+
+          <hr class="section-rule">
+          <h4>Moseley's evidence: order by atomic number, not weight (1913)</h4>
+          <p class="muted" style="font-size: var(--fs-sm);">Switch on "Show mass-order inversions" above to mark these pairs on the grid. In each pair, ordering by atomic mass would swap the two elements, but ordering by atomic number keeps each with the family it actually resembles.</p>
+          <table class="data" style="margin-top: var(--s-3);">
+            <thead><tr><th>Pair</th><th class="num">atomic number</th><th class="num">atomic mass</th><th>on grid</th></tr></thead>
+            <tbody>
+              <template x-for="p in MASS_ORDER_INVERSIONS" :key="p.a + p.b">
+                <tr>
+                  <td class="mono" x-text="p.a + ' vs ' + p.b"></td>
+                  <td class="num" x-text="p.zA + ' < ' + p.zB"></td>
+                  <td class="num" x-text="p.massA + ' > ' + p.massB"></td>
+                  <td x-text="p.onGrid ? 'yes' : 'Te off grid'"></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+          <div class="note note-info" style="margin-top: var(--s-3);">
+            <template x-for="p in MASS_ORDER_INVERSIONS" :key="'n' + p.a">
+              <p style="margin-bottom: var(--s-2); font-size: var(--fs-sm);"><strong x-text="p.a + '/' + p.b + ': '"></strong><span x-text="p.note"></span></p>
+            </template>
+          </div>
+
+          <hr class="section-rule">
+          <h4>Challenge: fill Mendeleev's gap</h4>
+          <p class="muted" style="font-size: var(--fs-sm);">In 1869 Mendeleev left a gap below boron for an undiscovered element he called "<span x-text="MENDELEEV_GAP.predictedName"></span>," and predicted its properties from its neighbors. Which element later filled that gap?</p>
+          <table class="data" style="margin-top: var(--s-3);">
+            <thead><tr><th>Property</th><th>Mendeleev predicted</th><th x-show="mgChecked">Actual</th></tr></thead>
+            <tbody>
+              <template x-for="r in MENDELEEV_GAP.comparison" :key="r.prop">
+                <tr><td x-text="r.prop"></td><td class="mono" x-text="r.predicted"></td><td class="mono" x-show="mgChecked" x-text="r.actual"></td></tr>
+              </template>
+            </tbody>
+          </table>
+          <div class="choice-grid" style="margin-top: var(--s-3); grid-template-columns: repeat(auto-fit, minmax(120px,1fr));">
+            <template x-for="opt in MENDELEEV_GAP.options" :key="opt">
+              <button class="choice" style="text-align:center" :data-state="gapState(opt)" @click="pickGap(opt)" x-text="opt + ' (' + elBySym(opt).name + ')'"></button>
+            </template>
+          </div>
+          <div class="row" style="margin-top: var(--s-3);">
+            <button class="btn btn-accent" @click="checkGap()" :disabled="mgPick===null || mgChecked">Check</button>
+            <button class="btn" @click="resetGap()">Reset</button>
+          </div>
+          <div x-show="mgChecked" class="note" :class="gapCorrect ? 'note-ok' : 'note-bad'" style="margin-top: var(--s-3);">
+            <span x-show="gapCorrect">Correct. </span><span x-show="!gapCorrect">Not quite. </span>
+            <span x-text="'The gap was filled by ' + gapAnswerEl.name + ' (' + gapAnswerEl.sym + '), now highlighted on the grid. '"></span>
+            <span x-text="MENDELEEV_GAP.explain"></span>
+          </div>
+        </div>
+
+        <!-- ============ C.5(B) CHEMICAL FAMILIES ============ -->
+        <div class="panel" x-show="mode==='families'">
+          <p class="muted" style="margin-bottom: var(--s-3);">Elements in the same column share the same number of valence electrons, so they behave alike. Pick a family above to highlight it on the grid, then see what that shared valence predicts.</p>
+
+          <div class="row" style="justify-content: space-between; align-items: baseline;">
+            <h4 x-text="family.name + ' (' + family.group + ')'"></h4>
+            <span class="badge" x-text="'forms ' + family.ionCharge + ' ions'"></span>
+          </div>
+          <div class="stat-row" style="margin-top: var(--s-3);">
+            <div class="stat"><div class="k">shared valence e&#8315;</div><div class="v" x-text="family.key==='transition' ? 'varies' : familyValence"></div></div>
+            <div class="stat"><div class="k">typical ion charge</div><div class="v" x-text="family.ionCharge"></div></div>
+            <div class="stat"><div class="k">reactivity trend</div><div class="v" style="font-size:var(--fs-md)" x-text="family.reactivityTrend==='down' ? 'rises down group' : family.reactivityTrend==='up' ? 'rises up group' : 'low overall'"></div></div>
+          </div>
+          <p class="note note-info" style="margin-top: var(--s-3); font-size: var(--fs-sm);" x-text="family.behavior"></p>
+
+          <div class="ref-title" style="margin-top: var(--s-4);">Reactivity meter</div>
+          <div class="react-list">
+            <template x-for="m in familyMembers" :key="m.sym">
+              <div class="react-row">
+                <span class="react-name" x-text="m.sym + ' · ' + m.name"></span>
+                <div class="react-track"><div class="react-fill" :style="'width:' + m.reactivity + '%'"></div></div>
+                <span class="react-val" x-text="m.reactivity"></span>
+              </div>
+            </template>
+          </div>
+          <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-text="family.reactivityNote"></p>
+
+          <div x-show="family.reaction" style="margin-top: var(--s-4);">
+            <div class="ref-title">Representative reaction</div>
+            <div class="eqn"><span x-ce="family.reaction"></span></div>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-text="family.reactionCaption"></p>
+          </div>
+
+          <hr class="section-rule">
+          <h4>Predict the ion charge</h4>
+          <p class="muted" style="font-size: var(--fs-sm);" x-text="fq.prompt"></p>
+          <div class="choice-grid" style="grid-template-columns: repeat(auto-fit, minmax(72px,1fr)); max-width: 360px;">
+            <template x-for="c in fq.choices" :key="c">
+              <button class="choice" style="text-align:center" :data-state="fqState(c)" @click="pickFq(c)" x-text="c"></button>
+            </template>
+          </div>
+          <div class="row" style="margin-top: var(--s-3);">
+            <button class="btn btn-accent" @click="checkFq()" :disabled="fqPick===null || fqChecked">Check</button>
+            <button class="btn" @click="nextFq()">New element</button>
+          </div>
+          <div x-show="fqChecked" class="note" :class="fqCorrect ? 'note-ok' : 'note-bad'" style="margin-top: var(--s-3);">
+            <span x-show="fqCorrect">Correct. </span><span x-show="!fqCorrect">Not quite. </span>
+            <span x-text="fqEl.name + ' forms a ' + fq.answer + ' ion. '"></span><span x-text="fq.explain"></span>
+          </div>
+        </div>
+
+        <!-- ============ C.5(C) PERIODIC TRENDS ============ -->
+        <div class="panel" x-show="mode==='trends'">
+          <p class="muted" style="margin-bottom: var(--s-3);">The grid above is now a heatmap of the property you chose. Read the color shift across a period and down a group, confirm it on the chart, then test yourself in the game.</p>
+          <p class="note note-info" style="font-size: var(--fs-sm);"><strong x-text="prop.label + ': '"></strong><span x-text="prop.why"></span></p>
+
+          <hr class="section-rule">
+          <h4>Plot a trend</h4>
+          <div class="row" style="gap: var(--s-4); align-items: flex-end;">
+            <div class="field" style="max-width: 240px;">
+              <label for="run">Walk along</label>
+              <select id="run" x-model="trendRun">
+                <template x-for="r in TREND_RUNS" :key="r.key"><option :value="r.key" x-text="r.label"></option></template>
+              </select>
+            </div>
+            <span class="muted" style="font-size: var(--fs-xs);">Plotting <span x-text="prop.label.toLowerCase()"></span>.</span>
+          </div>
+          <div class="canvas-wrap"><canvas x-ref="trendCanvas" role="img" aria-label="periodic trend line chart"></canvas></div>
+          <div class="trend-caption"><span class="trend-arrow" x-text="run.type==='period' ? '→' : '↓'"></span><span x-text="trendCaption"></span></div>
+          <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-show="trendHasGap">A break in the line marks an element we do not study (Sr in Group 2, or Ga to Se in Period 4), so the data stays honest instead of drawing a fake straight line. Electronegativity has no value for the noble gases, so Group 18 shows no points when that property is selected.</p>
+
+          <hr class="section-rule">
+          <h4>Which one wins?</h4>
+          <p class="muted" style="font-size: var(--fs-sm);">Which element has the <strong x-text="tqVerb"></strong>?</p>
+          <div class="choice-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 380px;">
+            <button class="choice" style="text-align:center" :data-state="tqState(tq.a)" @click="pickTq(tq.a)" x-text="tqElA.sym + ' · ' + tqElA.name"></button>
+            <button class="choice" style="text-align:center" :data-state="tqState(tq.b)" @click="pickTq(tq.b)" x-text="tqElB.sym + ' · ' + tqElB.name"></button>
+          </div>
+          <div class="row" style="margin-top: var(--s-3);">
+            <button class="btn btn-accent" @click="checkTq()" :disabled="tqPick===null || tqChecked">Check</button>
+            <button class="btn" @click="nextTq()">New pair</button>
+          </div>
+          <div x-show="tqChecked" class="note" :class="tqCorrect ? 'note-ok' : 'note-bad'" style="margin-top: var(--s-3);">
+            <span x-show="tqCorrect">Correct. </span><span x-show="!tqCorrect">Not quite. </span>
+            <span x-text="tqProp.label + ': ' + tqElA.sym + ' = ' + tqValue(tq.a) + ', ' + tqElB.sym + ' = ' + tqValue(tq.b) + '. '"></span>
+            <span x-text="tq.explain"></span>
+          </div>
+
+          <!-- Honors: Zeff + IE anomalies -->
+          <div class="honors-block" x-show="honors">
+            <span class="honors-tag">Honors · effective nuclear charge &amp; anomalies</span>
+            <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0;">Why does the radius shrink and ionization energy climb across a period, even though every element keeps adding electrons? The valence electrons feel a stronger net pull. Core electrons shield the nucleus; the outer electrons barely shield each other.</p>
+            <div class="eqn" style="margin: var(--s-2) 0;"><span x-tex.display="'Z_{eff} \\approx Z - (\\text{core electrons})'"></span></div>
+            <table class="data" style="margin-top: var(--s-2);">
+              <thead><tr><th>Period 3</th><th class="num">Zeff</th><th class="num">radius (pm)</th><th class="num">first IE</th></tr></thead>
+              <tbody>
+                <template x-for="r in zeffRows" :key="r.sym">
+                  <tr><td class="mono" x-text="r.sym"></td><td class="num" x-text="r.zeff"></td><td class="num" x-text="r.radius"></td><td class="num" x-text="r.ie1"></td></tr>
+                </template>
+              </tbody>
+            </table>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">As Zeff climbs from 1 (Na) to 8 (Ar), the radius falls and the first ionization energy rises. Same shells, stronger pull. This core model works best for the main-group elements.</p>
+
+            <div class="ref-title" style="margin-top: var(--s-4);">Ionization-energy anomalies (Period 2)</div>
+            <div class="canvas-wrap"><canvas x-ref="ieCanvas" role="img" aria-label="period 2 first ionization energy with the Group 13 and 16 dips marked"></canvas></div>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">First ionization energy generally rises across Period 2, but the two copper-marked points dip below their left-hand neighbor:</p>
+            <template x-for="a in IE_ANOMALIES" :key="a.label">
+              <p style="font-size: var(--fs-sm); margin-top: var(--s-2);"><strong x-text="a.label + ' (' + a.group + '): '"></strong><span x-text="a.explain"></span></p>
+            </template>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============ RIGHT: standards map ============ -->
+      <aside class="panel se-panel">
+        <div class="panel-head"><span class="panel-title" style="font-size:var(--fs-md)">What you are mastering</span></div>
+        <template x-for="se in SE.filter(s => !s.honors || honors)" :key="se.id">
+          <div class="se-item" :class="{ active: se.mode===mode }">
+            <div class="se-code" x-text="se.code + (se.honors ? ' · Honors' : '')"></div>
+            <div class="se-text" x-text="se.text"></div>
+          </div>
+        </template>
+        <p class="muted" style="font-size:var(--fs-xs); margin-top: var(--s-3);">Toggle <strong>Honors</strong> (top right) for effective nuclear charge, electron shielding, and the Group 13 and 16 ionization-energy anomalies.</p>
+      </aside>
+    </div>
+
+    <div data-casefile></div>
+  </main>
+</div>
+
+<script type="module">
+  import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
+  import { registerRender } from '../../shared/js/render.js';
+  import { createSim } from './js/main.js';
+  import { mountCaseFile } from '../../shared/js/casefile.js';
+  import { CASE } from './js/case.js';
+  registerRender(Alpine);
+  Alpine.data('sim', createSim);
+  mountCaseFile(Alpine, CASE);
+  window.Alpine = Alpine;
+  Alpine.start();
+</script>
+</body>
+</html>

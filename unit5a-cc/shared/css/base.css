@@ -1,0 +1,97 @@
+/* base.css — reset + layout primitives + a11y floor */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 85% -10%, var(--accent-050), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: var(--lh-tight); color: var(--ink); font-weight: 700; }
+h1 { font-size: var(--fs-3xl); letter-spacing: -.02em; }
+h2 { font-size: var(--fs-2xl); letter-spacing: -.015em; }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); }
+p { color: var(--ink-2); }
+a { color: var(--accent-700); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.eyebrow {
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: .16em; text-transform: uppercase; color: var(--accent-700);
+}
+.muted { color: var(--muted); }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--s-5); }
+.stack > * + * { margin-top: var(--s-4); }
+.row { display: flex; gap: var(--s-3); align-items: center; flex-wrap: wrap; }
+.grow { flex: 1 1 auto; }
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,.7);
+  backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 20;
+}
+.site-header .wrap { display: flex; align-items: center; gap: var(--s-3); padding-top: var(--s-2); padding-bottom: var(--s-2); }
+.brand { display: flex; align-items: center; gap: var(--s-2); font-family: var(--font-display); font-weight: 700; font-size: var(--fs-md); line-height: var(--lh-tight); color: var(--ink); }
+.brand .mark {
+  width: 24px; height: 24px; border-radius: var(--r-sm);
+  display: grid; place-items: center; color: #fff; font-family: var(--font-mono);
+  font-size: var(--fs-xs); font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent-700));
+  box-shadow: var(--shadow-sm);
+}
+
+:focus-visible { outline: 3px solid var(--accent-300); outline-offset: 2px; border-radius: var(--r-sm); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+
+@media (max-width: 640px) {
+  :root { --fs-3xl: 2.1rem; --fs-2xl: 1.65rem; --fs-xl: 1.3rem; }
+  .wrap { padding: 0 var(--s-4); }
+}
+
+/* ============================================================================
+   DECK THEME chrome — atmosphere lives here (background, header, starfield) so
+   the work surfaces below can stay calm. All decorative; reduced-motion-static.
+   ============================================================================ */
+:root[data-theme="deck"] body {
+  background:
+    radial-gradient(1100px 720px at 82% -8%,  #1e3b46 0%, transparent 58%),
+    radial-gradient(900px 620px at 8% 112%,   #143138 0%, transparent 55%),
+    var(--bg);
+  background-attachment: fixed;
+}
+/* Faint, fixed starfield. pointer-events:none so it never intercepts clicks. */
+:root[data-theme="deck"] body::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(1.4px 1.4px at 12% 18%, rgba(207,230,234,.55), transparent),
+    radial-gradient(1.2px 1.2px at 78% 12%, rgba(159,194,201,.45), transparent),
+    radial-gradient(1.6px 1.6px at 64% 42%, rgba(207,230,234,.40), transparent),
+    radial-gradient(1.1px 1.1px at 28% 64%, rgba(127,166,174,.45), transparent),
+    radial-gradient(1.5px 1.5px at 90% 72%, rgba(207,230,234,.38), transparent),
+    radial-gradient(1.2px 1.2px at 44% 88%, rgba(159,194,201,.40), transparent);
+  opacity: .8; animation: deck-twinkle 7s ease-in-out infinite;
+}
+:root[data-theme="deck"] body > * { position: relative; z-index: 1; }
+@keyframes deck-twinkle { 0%,100% { opacity: .55; } 50% { opacity: .9; } }
+
+:root[data-theme="deck"] .site-header {
+  background: rgba(17,30,36,.74);
+  border-bottom-color: var(--border);
+}
+/* Eyebrow / instrument labels pick up the console face under the deck theme. */
+:root[data-theme="deck"] .eyebrow { font-family: var(--font-label); letter-spacing: .14em; }

@@ -1,0 +1,69 @@
+/* Unit 5 page styles — factor-label chain, stepper, and tile bits on top of the kit */
+
+.small { font-size: var(--fs-xs); }
+
+/* Mission illustration banner at the top of each brief card */
+.brief-art {
+  margin: calc(var(--s-4) * -1) calc(var(--s-4) * -1) var(--s-3);
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  overflow: hidden;
+  line-height: 0;
+}
+.brief-art svg { display: block; width: 100%; height: auto; }
+
+/* Factor-label chain (the conversion built term by term) */
+.chain {
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-3);
+  background: var(--surface-2); border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-4); min-height: 64px;
+}
+.chain-term, .chain-result {
+  font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-md);
+  white-space: nowrap;
+}
+.chain-result.good { color: var(--success); }
+.chain-eq { font-family: var(--font-mono); color: var(--muted); }
+.chain-op { display: inline-flex; align-items: center; gap: var(--s-2); }
+.chain-op .times { font-family: var(--font-mono); color: var(--muted); }
+
+/* A conversion factor rendered as a fraction (numerator over denominator) */
+.frac {
+  display: inline-flex; flex-direction: column; align-items: center;
+  font-family: var(--font-mono); font-size: var(--fs-xs); line-height: 1.25;
+  padding: 2px 6px; border-radius: var(--r-sm); border: 1px solid transparent;
+}
+.frac.bad { border-color: var(--danger); background: var(--danger-050); }
+.frac-n, .frac-d { white-space: nowrap; padding: 1px 2px; }
+.frac-bar { width: 100%; height: 1px; background: currentColor; opacity: .6; margin: 1px 0; }
+
+/* Tile tray (clickable conversion factors) */
+.tile-tray { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.tile {
+  display: inline-flex; flex-direction: column; align-items: center;
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-4); cursor: pointer;
+  font-family: var(--font-mono); font-size: var(--fs-xs); line-height: 1.25;
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.tile:hover { border-color: var(--accent-300); background: var(--accent-050); }
+.tile:active { transform: translateY(1px); }
+.tile:disabled { opacity: .5; cursor: not-allowed; }
+.tile .frac-bar { background: var(--ink-2); opacity: .5; }
+
+/* Subscript steppers (empirical / molecular / x) */
+.stepper-row { display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: center; }
+.stepper {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-3);
+}
+.stepper .el { font-weight: 700; font-size: var(--fs-md); min-width: 1.4em; text-align: center; }
+.stepper .sub { font-weight: 700; font-size: var(--fs-lg); min-width: 1.4em; text-align: center; color: var(--accent-700); }
+.stepper .btn-sm { min-width: 30px; }
+
+.formula { font-size: 1.25rem; }
+
+/* Flag the assayed element row in the percent-composition breakdown */
+tr.row-flag td { background: var(--accent-050); }
+
+.se-cap { font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }

@@ -1,0 +1,224 @@
+/* Unit 5 page styles — factor-label chain, stepper, and tile bits on top of the kit */
+
+.small { font-size: var(--fs-xs); }
+
+/* Mission illustration banner at the top of each brief card */
+.brief-art {
+  margin: calc(var(--s-4) * -1) calc(var(--s-4) * -1) var(--s-3);
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  overflow: hidden;
+  line-height: 0;
+}
+.brief-art svg { display: block; width: 100%; height: auto; }
+
+/* Factor-label chain (the conversion built term by term) */
+.chain {
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-3);
+  background: var(--surface-2); border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-4); min-height: 64px;
+}
+.chain-term, .chain-result {
+  font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-md);
+  white-space: nowrap;
+}
+.chain-result.good { color: var(--success); }
+.chain-eq { font-family: var(--font-mono); color: var(--muted); }
+.chain-op { display: inline-flex; align-items: center; gap: var(--s-2); }
+.chain-op .times { font-family: var(--font-mono); color: var(--muted); }
+
+/* A conversion factor rendered as a fraction (numerator over denominator) */
+.frac {
+  display: inline-flex; flex-direction: column; align-items: center;
+  font-family: var(--font-mono); font-size: var(--fs-xs); line-height: 1.25;
+  padding: 2px 6px; border-radius: var(--r-sm); border: 1px solid transparent;
+}
+.frac.bad { border-color: var(--danger); background: var(--danger-050); }
+.frac-n, .frac-d { white-space: nowrap; padding: 1px 2px; }
+.frac-bar { width: 100%; height: 1px; background: currentColor; opacity: .6; margin: 1px 0; }
+
+/* Tile tray (clickable conversion factors) */
+.tile-tray { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.tile {
+  display: inline-flex; flex-direction: column; align-items: center;
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-4); cursor: pointer;
+  font-family: var(--font-mono); font-size: var(--fs-xs); line-height: 1.25;
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.tile:hover { border-color: var(--accent-300); background: var(--accent-050); }
+.tile:active { transform: translateY(1px); }
+.tile:disabled { opacity: .5; cursor: not-allowed; }
+.tile .frac-bar { background: var(--ink-2); opacity: .5; }
+
+/* Subscript steppers (empirical / molecular / x) */
+.stepper-row { display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: center; }
+.stepper {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-3);
+}
+.stepper .el { font-weight: 700; font-size: var(--fs-md); min-width: 1.4em; text-align: center; }
+.stepper .sub { font-weight: 700; font-size: var(--fs-lg); min-width: 1.4em; text-align: center; color: var(--accent-700); }
+.stepper .btn-sm { min-width: 30px; }
+
+.formula { font-size: 1.25rem; }
+
+/* Flag the assayed element row in the percent-composition breakdown */
+tr.row-flag td { background: var(--accent-050); }
+
+.se-cap { font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }
+
+/* ============================ Unit 5A lab mechanics ============================ */
+/* Appended below the copied Unit 5 styles. Reuses shared tokens + semantic colors.
+   Copper stays Honors-only; reward state is never color-only (always paired with text). */
+
+/* Mechanic A: scaffold-fade rung indicator pill */
+.rung-indicator {
+  display: inline-block; margin-bottom: var(--s-3);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .01em;
+  color: var(--accent-700); background: var(--accent-050);
+  border: 1px solid var(--accent-100); border-radius: var(--r-pill);
+  padding: 3px var(--s-3);
+}
+
+/* Mechanic B: gut-check gate (order-of-magnitude estimate chips) */
+.gutcheck { margin-bottom: var(--s-3); }
+.est-chips { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.est-chip {
+  font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 700;
+  background: var(--surface); color: var(--ink-2);
+  border: 1px solid var(--border-strong); border-radius: var(--r-pill);
+  padding: var(--s-2) var(--s-4); cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.est-chip:hover { border-color: var(--accent-300); background: var(--accent-050); }
+.est-chip:active { transform: translateY(1px); }
+.est-chip:disabled { opacity: .5; cursor: not-allowed; }
+.est-chip.picked { background: var(--accent); color: #fff; border-color: var(--accent-700); }
+
+/* Mechanic A rung 2: build-the-factor (constructed numerator over denominator) */
+.build-row {
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-3);
+  background: var(--surface-2); border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-4); min-height: 64px;
+}
+.build-factor { display: inline-flex; flex-direction: column; align-items: stretch; gap: 2px; min-width: 190px; }
+.build-factor .frac-bar { background: var(--ink-2); opacity: .5; height: 1px; margin: 2px 0; }
+.bf-line { display: flex; gap: var(--s-2); align-items: center; }
+.bf-val, .bf-unit {
+  font-family: var(--font-mono); font-size: var(--fs-sm);
+  padding: 4px var(--s-2); border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm); background: var(--surface);
+}
+/* The shared `input[type=text], select { width:100% }` rule (specificity 0,1,1) outranks a
+   bare `.bf-val`/`.bf-unit`, which let the value box swell to full width and starved the unit
+   dropdown down to a bare chevron (the chosen unit was clipped out of view). Scope these with
+   `.build-factor` to win specificity: keep the value box compact and make the dropdown wide
+   enough to SHOW the selected unit (g / mol / particles), not just the arrow. */
+.build-factor .bf-val  { flex: 0 0 7em; width: 7em; }
+.build-factor .bf-unit { flex: 1 1 auto; width: auto; min-width: 9.5em; }
+
+/* Mechanic A rung 3: type-the-answer */
+.solve-input {
+  font-family: var(--font-mono); font-size: var(--fs-md); width: 100%;
+  padding: var(--s-2) var(--s-3); border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm); background: var(--surface);
+}
+.ref-line { margin-top: var(--s-3); }
+
+/* Mechanic B: reconcile gate (warn-toned; blocks commit until gut and answer agree) */
+.reconcile {
+  display: flex; gap: var(--s-2); align-items: flex-start;
+  margin-top: var(--s-4); padding: var(--s-3) var(--s-4);
+  background: var(--warn-050); border: 1px solid var(--warn);
+  border-left-width: 4px; border-radius: var(--r-md);
+  color: var(--ink); font-weight: 600; font-size: var(--fs-sm);
+}
+.reconcile-icon { font-size: var(--fs-lg); line-height: 1; }
+
+/* Mechanic C: self-explanation on a miss */
+.miss-panel {
+  margin-top: var(--s-4); padding: var(--s-4);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.miss-q { font-weight: 700; font-size: var(--fs-sm); margin-bottom: var(--s-3); }
+.miss-opts { display: flex; flex-direction: column; gap: var(--s-2); }
+.miss-opt {
+  text-align: left; font-size: var(--fs-sm);
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-md);
+  padding: var(--s-2) var(--s-3); cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.miss-opt:hover { border-color: var(--accent-300); background: var(--accent-050); }
+.miss-opt:disabled { cursor: default; }
+.miss-opt[data-state="correct"] { border-color: var(--success); background: var(--success-050); font-weight: 700; }
+.miss-opt[data-state="wrong"] { border-color: var(--danger); background: var(--danger-050); }
+.miss-fix {
+  margin-top: var(--s-3); padding: var(--s-3); font-size: var(--fs-sm);
+  background: var(--success-050); border-left: 4px solid var(--success); border-radius: var(--r-sm);
+}
+
+/* ===================== Tier 2: ARI coach line + audit station ===================== */
+/* ARI's coach line inside a solve verdict (the recurrence nudge before the audit arms) */
+.coach {
+  display: block; margin-top: var(--s-3); padding: var(--s-2) var(--s-3);
+  font-size: var(--fs-sm); font-weight: 600; line-height: 1.4;
+  background: var(--surface-2); border-left: 3px solid var(--accent); border-radius: var(--r-sm);
+}
+.coach-who, .audit-who { font-family: var(--font-mono); font-weight: 700; color: var(--accent-700); white-space: nowrap; }
+.coach-who { margin-right: var(--s-1); }
+
+/* Audit station: ARI's finished solution for the learner to check */
+.audit-intro {
+  display: flex; align-items: baseline; gap: var(--s-2); flex-wrap: wrap;
+  margin-bottom: var(--s-4); padding: var(--s-3) var(--s-4);
+  background: var(--accent-050); border: 1px solid var(--accent-100); border-radius: var(--r-md);
+}
+.audit-frame { font-size: var(--fs-sm); margin: 0; flex: 1; min-width: 200px; }
+.audit-solution {
+  margin-top: var(--s-3); padding: var(--s-4);
+  background: var(--surface-2); border: 1px dashed var(--border-strong); border-radius: var(--r-md);
+}
+.audit-claim { font-style: italic; font-size: var(--fs-sm); color: var(--ink-2); margin: 0 0 var(--s-2); }
+.audit-working { font-family: var(--font-mono); font-size: var(--fs-sm); line-height: 1.45; margin: 0 0 var(--s-2); }
+.audit-result { font-size: var(--fs-md); margin: 0; }
+.audit-choices { margin-top: var(--s-2); }
+
+/* ===================== PART A: the Living Ship dashboard ===================== */
+/* Four coupled stocks (Air / Power / Food / Hull) crew safety derives from. A row of
+   four on wide screens; wraps to two-by-two at the shared 880px breakpoint so the
+   dashboard stays readable when the sim grid collapses to one column. Reuses the
+   shared .meter and semantic colors; each meter carries its value as text (never
+   color-only) so the reading survives without color. */
+.ship-systems {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-3) var(--s-4); margin-bottom: var(--s-4);
+}
+.ship-stock { min-width: 0; }
+@media (max-width: 880px) {
+  .ship-systems { grid-template-columns: 1fr 1fr; }
+}
+
+/* ===================== PART B: the Instincts calibration card ===================== */
+/* A small readout inside the Crew & ship panel that turns the gut-check the learner
+   already commits into visible metacognitive calibration. Formative only; gates nothing. */
+.instincts {
+  margin-bottom: var(--s-4); padding: var(--s-3) var(--s-4);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.instincts p { margin: 0 0 var(--s-1); }
+.instincts p:last-child { margin-bottom: 0; }
+.instinct-nudge { font-weight: 600; color: var(--accent-700); margin-top: var(--s-2); }
+
+/* Mechanic D: "Feel a mole" zoom */
+.zoom-stage {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-3); margin-top: var(--s-3);
+}
+.zoom-svg { display: block; width: 100%; height: auto; }
+.zoom-dots circle { fill: var(--accent); }
+.zoom-readout { display: flex; align-items: baseline; gap: var(--s-2); margin-top: var(--s-4); }
+.zoom-count { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-2xl); color: var(--accent-700); }
+.zoom-unit { font-size: var(--fs-md); color: var(--muted); }
+.zoom-slider { width: 100%; }
+.zoom-analogy { margin-top: var(--s-3); font-size: var(--fs-md); font-weight: 600; }

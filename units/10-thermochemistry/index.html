@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 10 · Thermochemistry</title>
+<meta name="description" content="Heat Line: keep a hypothermic climber alive. Name the law, pick the right chemical pack, size the rewarming heat with q = mc(dT), and predict where a calorimeter settles. TEKS C.13.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<link rel="stylesheet" href="../../shared/css/components.css">
+<link rel="stylesheet" href="../../shared/css/casefile.css">
+<link rel="stylesheet" href="css/style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
+</head>
+<body>
+<div x-data="sim" x-cloak>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../index.html"><span class="mark">Th</span> Heat Line</a>
+      <span class="grow"></span>
+      <label class="switch" title="Reveal advanced content for Honors sections">
+        <input type="checkbox" x-model="honors">
+        <span class="track"></span>
+        <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+      </label>
+    </div>
+  </header>
+
+  <main class="wrap page-main">
+    <div class="page-head">
+      <h1>Thermochemistry</h1>
+      <p class="eyebrow">Unit 10 · TEKS C.13</p>
+    </div>
+
+    <div class="mission">
+      <span class="mission-role">Thermal medic · mountain rescue</span>
+      <span class="mission-goal">A climber is going hypothermic on a ledge at 3,100 m. You carry packs, a stove, a pot, and a shelter, and every call you make is a heat calculation. Lock in a system by clearing it three times in a row.</span>
+    </div>
+
+    <div data-casefile-teaser></div>
+
+    <div class="sim-grid">
+      <!-- ============ LEFT: the simulator ============ -->
+      <div class="stack">
+
+        <!-- Badges + reset; XP/streak demoted to a quiet line -->
+        <div class="panel">
+          <div class="row" style="align-items: center; gap: var(--s-3);">
+            <span class="badge" :class="gOverall()===1 ? 'earned' : 'locked'" x-text="gOverall()===1 ? '✓ All systems certified' : 'Systems not yet certified'"></span>
+            <span class="badge honors" :class="(gMastered('h1') && gMastered('h2')) ? 'earned' : 'locked'" x-show="honors" x-text="(gMastered('h1') && gMastered('h2')) ? '✓ Honors mastery' : 'Honors badge locked'"></span>
+            <span class="grow"></span>
+            <button class="btn btn-sm" @click="resetProgress()">Reset progress</button>
+          </div>
+          <p class="small muted" style="margin-top: var(--s-2);">XP <span x-text="g_xp"></span> · streak <span x-text="g_streak"></span> (best <span x-text="g_best"></span>)</p>
+        </div>
+
+        <!-- Mode tabs -->
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" :aria-selected="mode==='laws'"        @click="setMode('laws')">Read the situation</button>
+          <button class="tab" role="tab" :aria-selected="mode==='pack'"        @click="setMode('pack')">Pick the pack</button>
+          <button class="tab" role="tab" :aria-selected="mode==='warm'"        @click="setMode('warm')">Size the heat</button>
+          <button class="tab" role="tab" :aria-selected="mode==='calorimeter'" @click="setMode('calorimeter')">Calorimetry</button>
+          <button class="tab" role="tab" :aria-selected="mode==='capstone'"    @click="setMode('capstone')">The call<span class="small" x-show="!capUnlocked"> (locked)</span></button>
+        </div>
+
+        <!-- ---------- C.13(A) name the law, read the heat flow ---------- -->
+        <div class="panel" x-show="mode==='laws' && lw">
+          <template x-if="lw">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="lw.sc.icon"></span> <span x-text="lw.sc.system"></span></span>
+                <div class="brief-goal" x-text="lw.sc.goal"></div>
+                <div class="brief-why" x-text="lw.sc.why"></div>
+              </div>
+
+              <p class="small muted" style="margin-bottom: var(--s-2);">1. Which law settles this?</p>
+              <div class="lawgrid">
+                <template x-for="l in LAWS" :key="l.key">
+                  <button class="choice" :data-state="lwLawState(l.key)" @click="lwPickLaw(l.key)">
+                    <span class="tag" x-text="l.tag"></span>
+                    <span x-text="l.label"></span>
+                  </button>
+                </template>
+              </div>
+
+              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);" x-text="'2. ' + lw.sc.flow.prompt"></p>
+              <div class="choice-grid">
+                <template x-for="o in lw.sc.flow.options" :key="o.key">
+                  <button class="choice" :data-state="lwFlowState(o.key)" @click="lwPickFlow(o.key)" x-text="o.label"></button>
+                </template>
+              </div>
+
+              <div class="row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="lwCommit()" :disabled="lwDone || !lwLaw || !lwFlow">Make the call</button>
+                <button class="btn btn-ghost" x-show="lwChecked" @click="lwNext()">Next situation</button>
+              </div>
+
+              <template x-if="lwVerdict">
+                <div class="verdict" :class="'verdict-' + lwVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="lwVerdict.icon"></span>
+                    <span class="status-state" x-text="lwVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-text="lwVerdict.headline"></span>
+                  <span class="verdict-detail" x-text="lwVerdict.detail"></span>
+                </div>
+              </template>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.13(C) pick the pack, classify it, read the diagram ---------- -->
+        <div class="panel" x-show="mode==='pack' && pk">
+          <template x-if="pk">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="pk.sc.icon"></span> <span x-text="pk.sc.system"></span></span>
+                <div class="brief-goal" x-text="pk.sc.goal"></div>
+                <div class="brief-spec" x-text="pk.need === 'hot' ? 'You need heat going INTO the patient.' : 'You need heat coming OUT of the injury.'"></div>
+                <div class="brief-why" x-text="pk.sc.why"></div>
+              </div>
+
+              <p class="small muted" style="margin-bottom: var(--s-2);">1. Which pouch do you open?</p>
+              <div class="packgrid">
+                <template x-for="p in pk.offered" :key="p.key">
+                  <button class="choice" :data-state="pkPackState(p.key)" @click="pkPickPack(p.key)">
+                    <span class="pname" x-text="p.name"></span>
+                    <span class="mono small" x-ce="p.ce"></span>
+                    <span class="pfeel" x-text="p.feel"></span>
+                  </button>
+                </template>
+              </div>
+
+              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">2. Classify the process running inside the pouch you picked.</p>
+              <div class="choice-grid" style="max-width: 420px;">
+                <button class="choice" :data-state="pkClassState('exothermic')"  @click="pkPickClass('exothermic')" :disabled="!pkPick">Exothermic (releases heat, dH &lt; 0)</button>
+                <button class="choice" :data-state="pkClassState('endothermic')" @click="pkPickClass('endothermic')" :disabled="!pkPick">Endothermic (absorbs heat, dH &gt; 0)</button>
+              </div>
+
+              <div class="diagram-wrap" x-show="pkPick">
+                <svg viewBox="0 0 520 240" role="img" aria-label="Reaction-coordinate energy diagram for the selected pack">
+                  <g x-html="diagramSvg()"></g>
+                </svg>
+              </div>
+              <p class="small muted" style="margin-top: var(--s-2);" x-show="pkPick">
+                The dH arrow is to scale against the value shown. The activation barrier height is schematic, drawn only to show that a reaction climbs before it falls.
+              </p>
+
+              <div class="row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="pkCommit()" :disabled="pkDone || !pkPick || !pkClass">Use this pack</button>
+                <button class="btn btn-ghost" x-show="pkChecked" @click="pkNext()">Next patient</button>
+              </div>
+
+              <template x-if="pkVerdict">
+                <div class="verdict" :class="'verdict-' + pkVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="pkVerdict.icon"></span>
+                    <span class="status-state" x-text="pkVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-text="pkVerdict.headline"></span>
+                  <span class="verdict-detail" x-text="pkVerdict.detail"></span>
+                </div>
+              </template>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.13(D) q = mc(dT) ---------- -->
+        <div class="panel" x-show="mode==='warm' && wm">
+          <template x-if="wm">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="wm.sc.icon"></span> <span x-text="wm.sc.system"></span></span>
+                <div class="brief-goal" x-text="wm.sc.goal"></div>
+                <div class="brief-why" x-text="wm.sc.why"></div>
+              </div>
+
+              <div class="readout">
+                <div class="cell"><div class="k">material</div><div class="v" x-text="wm.material"></div></div>
+                <div class="cell"><div class="k">mass</div><div class="v" x-text="fmt(wm.m) + ' g'"></div></div>
+                <div class="cell"><div class="k">start</div><div class="v" x-text="fmt(wm.t0) + ' C'"></div></div>
+                <div class="cell"><div class="k">target</div><div class="v" x-text="fmt(wm.t1) + ' C'"></div></div>
+                <div class="cell"><div class="k">change dT</div><div class="v" x-text="fmt(wm.dT) + ' C'"></div></div>
+              </div>
+
+              <div class="eqn" style="margin-top: var(--s-4);"><span x-tex="'q = m \\, c \\, \\Delta T'"></span></div>
+
+              <div class="row" style="gap: var(--s-4); align-items: flex-end; margin-top: var(--s-4);">
+                <div class="field" style="flex: 1 1 230px;">
+                  <label for="wmat">Which specific heat applies?</label>
+                  <select id="wmat" x-model="wmMat" :disabled="wmDone">
+                    <option value="" disabled>choose a material</option>
+                    <template x-for="mt in FIELD_MATERIALS" :key="mt">
+                      <option :value="mt" x-text="mt + '  (' + fmt(cOf(mt)) + ' J/g per C)'"></option>
+                    </template>
+                  </select>
+                </div>
+                <div class="field" style="width: 190px;">
+                  <label for="wq">Heat needed (kJ)</label>
+                  <input id="wq" type="number" step="0.01" x-model="wmQ" :disabled="wmDone" placeholder="your value">
+                </div>
+              </div>
+
+              <div style="margin-top: var(--s-4);" x-show="wmMat">
+                <div class="eqline">
+                  <span x-text="'m = ' + fmt(wm.m) + ' g'"></span>
+                  <span x-text="'c = ' + fmt(cOf(wmMat) || 0) + ' J/g per C'"></span>
+                  <span x-text="'dT = ' + fmt(wm.dT) + ' C'"></span>
+                </div>
+                <div class="eqline">
+                  <span>with that specific heat, q works out to</span>
+                  <span class="calc" x-text="wmPreview === null ? '—' : fmt(wmPreview) + ' kJ'"></span>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="wmRun()" :disabled="wmDone || !wmMat || wmQ===''" x-text="wm.sc.actionLabel"></button>
+                <button class="btn btn-ghost" x-show="wmChecked" @click="wmNext()">Next job</button>
+              </div>
+
+              <template x-if="wmVerdict">
+                <div class="verdict" :class="'verdict-' + wmVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="wmVerdict.icon"></span>
+                    <span class="status-state" x-text="wmVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-text="wmVerdict.headline"></span>
+                  <span class="verdict-detail" x-text="wmVerdict.detail"></span>
+                  <template x-if="wmVerdict.gauge">
+                    <div class="gauge">
+                      <div class="gauge-seg" :class="wmVerdict.gauge==='low' ? 'miss' : ''">too little</div>
+                      <div class="gauge-seg" :class="wmVerdict.gauge==='on' ? 'on' : ''">on spec</div>
+                      <div class="gauge-seg" :class="wmVerdict.gauge==='high' ? 'miss' : ''">too much</div>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.13(B) calorimetry + Honors ---------- -->
+        <div class="panel" x-show="mode==='calorimeter' && cl">
+          <template x-if="cl">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="cl.sc.icon"></span> <span x-text="cl.sc.system"></span></span>
+                <div class="brief-goal" x-text="cl.sc.goal"></div>
+                <div class="brief-why" x-text="cl.sc.why"></div>
+              </div>
+
+              <table class="data" style="max-width: 520px;">
+                <thead><tr><th>body</th><th>material</th><th class="num">mass (g)</th><th class="num">c (J/g per C)</th><th class="num">start (C)</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>hot</td><td x-text="cl.hotMat"></td>
+                    <td class="num" x-text="fmt(cl.hot.m)"></td>
+                    <td class="num" x-text="fmt(cl.hot.c)"></td>
+                    <td class="num" x-text="fmt(cl.hot.t)"></td>
+                  </tr>
+                  <tr>
+                    <td>cold</td><td x-text="cl.coldMat"></td>
+                    <td class="num" x-text="fmt(cl.cold.m)"></td>
+                    <td class="num" x-text="fmt(cl.cold.c)"></td>
+                    <td class="num" x-text="fmt(cl.cold.t)"></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="eqn" style="margin-top: var(--s-4);"><span x-tex="'q_{lost} = q_{gained}'"></span></div>
+              <p class="small muted" style="margin-top: var(--s-2);">
+                Nothing escapes the insulated pot, so every joule the hot body loses is a joule the cold body gains. Set the two q expressions equal and solve for the one temperature they end up sharing.
+              </p>
+
+              <div class="field" style="max-width: 240px; margin-top: var(--s-4);">
+                <label for="clt">Settling temperature (C)</label>
+                <input id="clt" type="number" step="0.01" x-model="clInput" :disabled="clDone" placeholder="your prediction">
+              </div>
+
+              <div class="row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="clCommit()" :disabled="clDone || clInput===''" x-text="cl.sc.actionLabel"></button>
+                <button class="btn btn-ghost" x-show="clChecked" @click="clNext()">Next mix</button>
+              </div>
+
+              <template x-if="clVerdict">
+                <div>
+                  <div class="verdict" :class="'verdict-' + clVerdict.tone">
+                    <div class="status">
+                      <span class="status-icon" x-text="clVerdict.icon"></span>
+                      <span class="status-state" x-text="clVerdict.state"></span>
+                    </div>
+                    <span class="verdict-headline" x-text="clVerdict.headline"></span>
+                    <span class="verdict-detail" x-text="clVerdict.detail"></span>
+                    <template x-if="clVerdict.gauge">
+                      <div class="gauge">
+                        <div class="gauge-seg" :class="clVerdict.gauge==='low' ? 'miss' : ''">too cold</div>
+                        <div class="gauge-seg" :class="clVerdict.gauge==='on' ? 'on' : ''">on target</div>
+                        <div class="gauge-seg" :class="clVerdict.gauge==='high' ? 'miss' : ''">too hot</div>
+                      </div>
+                    </template>
+                  </div>
+                  <div class="stat-row" style="margin-top: var(--s-3);">
+                    <div class="stat"><div class="k">heat that moved</div><div class="v" style="font-size: var(--fs-lg)" x-text="fmt(cl.q / 1000) + ' kJ'"></div></div>
+                    <div class="stat"><div class="k">settles at</div><div class="v" style="font-size: var(--fs-lg)" x-text="fmt(cl.tFinal) + ' C'"></div></div>
+                  </div>
+                </div>
+              </template>
+
+              <!-- Honors h1: Hess's law -->
+              <div class="honors-block" x-show="honors">
+                <span class="honors-tag">Honors · Hess's law</span>
+                <div class="note note-info" x-show="!gMastered('b')" style="margin-top: var(--s-3);">Lock in calorimetry (three correct in a row) to unlock the Honors bench.</div>
+                <template x-if="gMastered('b') && hs">
+                  <div style="margin-top: var(--s-3);">
+                    <p class="small" x-text="hs.route.story"></p>
+                    <div class="note note-info" style="margin-top: var(--s-3);">
+                      Target route: <span class="mono" x-ce="hs.target.ce"></span>
+                    </div>
+                    <p class="small muted" style="margin: var(--s-3) 0 var(--s-2);">Flip and scale the measurable steps until they add up to the target.</p>
+                    <template x-for="(s,i) in hs.route.steps" :key="i">
+                      <div class="hess-row" :class="{ flipped: hsFlip[i] }">
+                        <span class="rxn mono small" x-ce="hsFlip[i] ? s.ce.split(' -> ').reverse().join(' -> ') : s.ce"></span>
+                        <button class="btn btn-sm" @click="hsToggle(i)" x-text="hsFlip[i] ? 'Flipped' : 'Flip'"></button>
+                        <span class="stepper">
+                          <span class="el">x</span>
+                          <button class="btn btn-sm" @click="hsStep(i,-1)" :aria-label="'decrease scale on step ' + (i+1)">&minus;</button>
+                          <span class="sub" x-text="hsScale[i]"></span>
+                          <button class="btn btn-sm" @click="hsStep(i,1)" :aria-label="'increase scale on step ' + (i+1)">+</button>
+                        </span>
+                        <span class="term" x-text="(hsTermDH(i) > 0 ? '+' : '') + fmt(hsTermDH(i)) + ' kJ'"></span>
+                      </div>
+                    </template>
+                    <div class="hess-total" :class="{ match: hsOk }">
+                      <span>your sum</span>
+                      <span x-text="(hsTotal > 0 ? '+' : '') + fmt(hsTotal) + ' kJ'"></span>
+                      <span class="muted small" x-text="'target ' + (hs.target.dH > 0 ? '+' : '') + fmt(hs.target.dH) + ' kJ'"></span>
+                    </div>
+                    <div class="row" style="margin-top: var(--s-3);">
+                      <button class="btn btn-honors" @click="hsCommit()" :disabled="hsDone">Send the number</button>
+                      <button class="btn btn-ghost" x-show="hsChecked" @click="hsNext()">Next route</button>
+                    </div>
+                    <template x-if="hsVerdict">
+                      <div class="verdict" :class="'verdict-' + hsVerdict.tone">
+                        <div class="status">
+                          <span class="status-icon" x-text="hsVerdict.icon"></span>
+                          <span class="status-state" x-text="hsVerdict.state"></span>
+                        </div>
+                        <span class="verdict-headline" x-text="hsVerdict.headline"></span>
+                        <span class="verdict-detail" x-text="hsVerdict.detail"></span>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+              </div>
+
+              <!-- Honors h2: enthalpy from formation data -->
+              <div class="honors-block" x-show="honors">
+                <span class="honors-tag">Honors · enthalpy from formation data</span>
+                <div class="note note-info" x-show="!gMastered('b')" style="margin-top: var(--s-3);">Lock in calorimetry to unlock the formation-data job.</div>
+                <template x-if="gMastered('b') && fm">
+                  <div style="margin-top: var(--s-3);">
+                    <p class="small" x-text="fm.fc.story"></p>
+                    <div class="eqn" style="margin: var(--s-3) 0;"><span x-ce="fm.fc.ce"></span></div>
+                    <table class="data fdata" style="max-width: 420px;">
+                      <thead><tr><th>species</th><th class="num">dHf (kJ/mol)</th><th class="num">coefficient</th></tr></thead>
+                      <tbody>
+                        <tr><td class="side" colspan="3">reactants</td></tr>
+                        <template x-for="s in fm.fc.reactants" :key="'r'+s.label">
+                          <tr><td class="mono" x-ce="s.label"></td><td class="num" x-text="fmt(s.dHf)"></td><td class="num" x-text="s.coefficient"></td></tr>
+                        </template>
+                        <tr><td class="side" colspan="3">products</td></tr>
+                        <template x-for="s in fm.fc.products" :key="'p'+s.label">
+                          <tr><td class="mono" x-ce="s.label"></td><td class="num" x-text="fmt(s.dHf)"></td><td class="num" x-text="s.coefficient"></td></tr>
+                        </template>
+                      </tbody>
+                    </table>
+                    <p class="small muted" style="margin-top: var(--s-2);">An element in its standard state has dHf = 0 by definition.</p>
+
+                    <div class="row" style="gap: var(--s-4); align-items: flex-end; margin-top: var(--s-3);">
+                      <div class="field" style="width: 200px;">
+                        <label for="fmv">dHrxn (kJ)</label>
+                        <input id="fmv" type="number" step="0.1" x-model="fmInput" :disabled="fmDone" placeholder="your value">
+                      </div>
+                      <div class="choice-grid" style="flex: 1 1 260px;">
+                        <button class="choice" :data-state="fmClassState('exothermic')"  @click="fmPickClass('exothermic')">Exothermic</button>
+                        <button class="choice" :data-state="fmClassState('endothermic')" @click="fmPickClass('endothermic')">Endothermic</button>
+                      </div>
+                    </div>
+                    <div class="row" style="margin-top: var(--s-3);">
+                      <button class="btn btn-honors" @click="fmCommit()" :disabled="fmDone || fmInput==='' || !fmClass">File the report</button>
+                      <button class="btn btn-ghost" x-show="fmChecked" @click="fmNext()">Next fuel</button>
+                    </div>
+                    <template x-if="fmVerdict">
+                      <div class="verdict" :class="'verdict-' + fmVerdict.tone">
+                        <div class="status">
+                          <span class="status-icon" x-text="fmVerdict.icon"></span>
+                          <span class="status-state" x-text="fmVerdict.state"></span>
+                        </div>
+                        <span class="verdict-headline" x-text="fmVerdict.headline"></span>
+                        <span class="verdict-detail" x-text="fmVerdict.detail"></span>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- Capstone: the evacuation call ---------- -->
+        <div class="panel" x-show="mode==='capstone'">
+          <div class="note note-info" x-show="!capUnlocked">
+            The evacuation call unlocks once all four core systems (C.13 A to D) are certified. Certified so far: <span x-text="Math.round(gOverall()*4)"></span> of 4.
+          </div>
+          <button class="btn btn-accent" x-show="capUnlocked && !cap" @click="genCapstone()">Take the radio</button>
+
+          <template x-if="capUnlocked && cap">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="cap.sc.icon"></span> <span x-text="cap.sc.system"></span></span>
+                <div class="brief-goal" x-text="cap.sc.goal"></div>
+                <div class="brief-why" x-text="cap.sc.why"></div>
+              </div>
+
+              <div class="readout">
+                <div class="cell"><div class="k">ledge</div><div class="v" x-text="fmt(cap.ledge) + ' m'"></div></div>
+                <div class="cell"><div class="k">cloud base</div><div class="v" x-text="fmt(cap.ceiling) + ' m'"></div></div>
+                <div class="cell"><div class="k">her core now</div><div class="v" x-text="fmt(cap.coreAtCall) + ' C'"></div></div>
+              </div>
+              <p class="small muted" style="margin-top: var(--s-3);">
+                An aircraft needs cloud base above the ledge to reach you. Moving a patient below 33 degrees Celsius risks washing cold blood from her limbs into her core.
+              </p>
+
+              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">Make the call.</p>
+              <div class="choice-grid">
+                <template x-for="o in cap.sc.options" :key="o.key">
+                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
+                </template>
+              </div>
+
+              <div class="row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Radio it in</button>
+              </div>
+
+              <template x-if="capVerdict">
+                <div class="verdict" :class="'verdict-' + capVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="capVerdict.icon"></span>
+                    <span class="status-state" x-text="capVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-text="capVerdict.headline"></span>
+                  <span class="verdict-detail" x-text="capVerdict.detail"></span>
+                </div>
+              </template>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- World-state: the patient's core temperature ---------- -->
+        <div class="panel worldstate">
+          <div class="panel-head">
+            <span class="panel-title" style="font-size: var(--fs-md)">Patient &amp; clock</span>
+            <span class="grow"></span>
+            <span class="small muted">T+<span x-text="elapsed"></span> min</span>
+          </div>
+          <div class="crew-status">
+            <span class="crew-face" x-text="coreMood"></span>
+            <div class="crew-bar">
+              <div class="row" style="justify-content: space-between; align-items: baseline;">
+                <span class="small" style="font-weight:700;" x-text="coreState"></span>
+                <span class="small mono" x-text="fmt(core) + ' C core'"></span>
+              </div>
+              <div class="meter"><div class="meter-fill" :style="`width:${corePct}%; background:${coreColor}`"></div></div>
+              <p class="small muted" style="margin-top: var(--s-1);">37 C is normal. Shivering fails below 32 C.</p>
+            </div>
+          </div>
+          <p class="worldstate-empty" x-show="!worldLog.length">No calls logged yet. Make one and watch what your number does to her core temperature.</p>
+          <ul class="worldstate-list" x-show="worldLog.length">
+            <template x-for="w in worldLog" :key="w.id">
+              <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
+                <span class="ws-icon" x-text="w.icon"></span>
+                <span x-text="w.text"></span>
+              </li>
+            </template>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- ============ RIGHT: skills mastery ============ -->
+      <aside class="panel se-panel">
+        <div class="panel-head"><span class="panel-title" style="font-size: var(--fs-md)">Systems certified</span></div>
+        <template x-for="se in SE" :key="se.id">
+          <div class="se-item" :class="{ active: se.mode===mode, mastered: gMastered(se.id) }" x-show="!se.honors || honors">
+            <div class="row" style="justify-content: space-between;">
+              <span class="se-code" x-text="se.code"></span>
+              <span class="badge badge-honors" x-show="se.honors">Honors</span>
+            </div>
+            <div class="se-text" x-text="se.text"></div>
+            <div class="meter"><div class="meter-fill" :class="{ honors: se.honors }" :style="`width:${gMastery(se.id)*100}%`"></div></div>
+            <div class="se-cap mono" x-text="seCaption(se)"></div>
+          </div>
+        </template>
+        <p class="small muted" style="margin-top: var(--s-3);">Toggle <strong>Honors</strong> (top right) for Hess's law and enthalpy from formation data, once you have certified calorimetry.</p>
+      </aside>
+    </div>
+
+    <div data-casefile></div>
+  </main>
+</div>
+
+<script type="module">
+  import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
+  import { registerRender } from '../../shared/js/render.js';
+  import { createSim } from './js/main.js';
+  import { mountCaseFile } from '../../shared/js/casefile.js';
+  import { CASE } from './js/case.js';
+  registerRender(Alpine);
+  Alpine.data('sim', createSim);
+  mountCaseFile(Alpine, CASE);
+  window.Alpine = Alpine;
+  Alpine.start();
+</script>
+</body>
+</html>

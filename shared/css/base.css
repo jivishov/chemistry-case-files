@@ -1,0 +1,91 @@
+/* base.css — reset + layout primitives + a11y floor */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 85% -10%, var(--accent-050), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: var(--lh-tight); color: var(--ink); font-weight: 700; }
+h1 { font-size: var(--fs-3xl); letter-spacing: -.02em; }
+h2 { font-size: var(--fs-2xl); letter-spacing: -.015em; }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); }
+p { color: var(--ink-2); }
+a { color: var(--accent-700); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.eyebrow {
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: .16em; text-transform: uppercase; color: var(--accent-700);
+}
+.muted { color: var(--muted); }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--s-5); }
+
+/* Page shell + compact title block.
+   Every page uses these instead of inline padding so the header area stays
+   uniform: the sticky bar, a single-line title row, then content. The title
+   and its TEKS context share one baseline row rather than stacking, which is
+   what keeps the simulator inside the first screenful. */
+.page-main { padding-top: var(--s-2); padding-bottom: var(--s-8); }
+.page-head {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: var(--s-1) var(--s-4);
+  margin-bottom: var(--s-2);
+}
+.page-head h1 { font-size: var(--fs-xl); letter-spacing: -.01em; }
+.page-head .eyebrow { line-height: var(--lh-tight); }
+/* The hub headline carries the whole site, so it keeps one step more scale. */
+.page-head-hero h1 { font-size: var(--fs-2xl); }
+
+.stack > * + * { margin-top: var(--s-4); }
+.row { display: flex; gap: var(--s-3); align-items: center; flex-wrap: wrap; }
+.grow { flex: 1 1 auto; }
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,.7);
+  backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 20;
+}
+.site-header .wrap { display: flex; align-items: center; gap: var(--s-3); padding-top: var(--s-2); padding-bottom: var(--s-2); }
+.brand { display: flex; align-items: center; gap: var(--s-2); font-family: var(--font-display); font-weight: 700; font-size: var(--fs-md); line-height: var(--lh-tight); color: var(--ink); }
+.brand .mark {
+  width: 24px; height: 24px; border-radius: var(--r-sm);
+  display: grid; place-items: center; color: #fff; font-family: var(--font-mono);
+  font-size: var(--fs-xs); font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent-700));
+  box-shadow: var(--shadow-sm);
+}
+
+:focus-visible { outline: 3px solid var(--accent-300); outline-offset: 2px; border-radius: var(--r-sm); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+
+@media (max-width: 640px) {
+  :root { --fs-3xl: 2.1rem; --fs-2xl: 1.65rem; --fs-xl: 1.3rem; }
+  .wrap { padding: 0 var(--s-4); }
+
+  /* Phones lose the most to a tall header, so the bar and the title row both
+     drop a step and the brand stays on one line beside its control. */
+  .site-header .wrap { flex-wrap: nowrap; }
+  .brand { font-size: var(--fs-sm); min-width: 0; }
+  .page-head h1 { font-size: var(--fs-lg); }
+  /* The lead copy already explains Honors and Case File, so the legend keeps
+     its chips and drops the descriptions rather than eating three rows. */
+  .legend { gap: var(--s-3) !important; }
+  .legend-note { display: none; }
+}

@@ -1,0 +1,84 @@
+/* Unit 9 page styles: name builder, pH meter, strength shelf, titration host, patient. */
+
+/* A grid child defaults to min-width:auto, so the titration canvas and the KaTeX [H+]
+   expression force the whole sim-grid wider than the viewport instead of shrinking. */
+.sim-grid > .stack { min-width: 0; }
+
+.small { font-size: var(--fs-xs); }
+.formula-lg { font-size: 1.5rem; font-weight: 700; }
+
+/* Name-builder selects (acid prefix/root/suffix or base metal/roman/anion) */
+.name-grid { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.name-grid .field { flex: 1 1 150px; min-width: 130px; }
+.name-grid .field > span { font-size: var(--fs-xs); color: var(--muted); margin-bottom: 2px; }
+.name-grid select {
+  width: 100%; padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--border-strong); border-radius: var(--r-md);
+  background: var(--surface); font-family: var(--font-mono); font-size: var(--fs-sm);
+}
+.name-preview { font-family: var(--font-mono); color: var(--accent-700); }
+
+/* Subscript steppers (salt criss-cross), matched to the kit */
+.stepper-row { display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: center; }
+.stepper {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-3);
+}
+.stepper .el { font-weight: 700; font-size: var(--fs-md); min-width: 1.4em; text-align: center; }
+.stepper .sub { font-weight: 700; font-size: var(--fs-lg); min-width: 1.4em; text-align: center; color: var(--accent-700); }
+.stepper .btn-sm { min-width: 30px; }
+
+/* Strong-vs-weak shelf */
+.bottle {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
+  flex-wrap: wrap; padding: var(--s-2) var(--s-3); border-radius: var(--r-md);
+  border: 1px solid var(--border); margin-bottom: var(--s-2); background: var(--surface);
+}
+.bottle-id { display: inline-flex; align-items: baseline; gap: var(--s-2); }
+.seg { display: inline-flex; gap: var(--s-2); }
+.choice-sm { padding: var(--s-1) var(--s-3); font-size: var(--fs-xs); min-width: 72px; }
+
+/* pH meter: a gradient scale with a movable needle plus the slider that drives it */
+.ph-readout { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-lg); margin-top: var(--s-3); }
+.ph-readout .small { font-weight: 500; }
+.ph-scale {
+  position: relative; height: 14px; max-width: 520px; margin: var(--s-2) 0;
+  border-radius: 999px; border: 1px solid var(--border);
+  background: linear-gradient(to right, #c0392b 0%, #d98a23 25%, #4a9d4a 50%, #2a7d8a 72%, #3a4fa0 100%);
+}
+.ph-needle {
+  position: absolute; top: -4px; width: 3px; height: 22px; border-radius: 2px;
+  background: var(--ink-1); transform: translateX(-50%); transition: left var(--t-fast);
+}
+.ph-slider, .ph-readout + .ph-scale + .ph-slider { width: 100%; max-width: 520px; display: block; }
+input[type="range"].ph-slider { accent-color: var(--accent); }
+
+/* Chart host needs a fixed-height parent for Chart.js maintainAspectRatio:false */
+.canvas-wrap { position: relative; height: 280px; margin-top: var(--s-3); }
+.canvas-wrap canvas { width: 100% !important; height: 100% !important; }
+
+.se-cap { font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }
+
+/* World-state: the patient's arterial pH on a WINDOWED scale (6.80 to 7.60), with the
+   7.35 to 7.45 reference range drawn on it. The target is a band, not an end of the bar,
+   so this is deliberately not the .meter / .meter-fill shape the mastery rail uses. */
+.pt-scale {
+  position: relative; height: 16px; margin: var(--s-2) 0 var(--s-1);
+  border-radius: 999px; border: 1px solid var(--border);
+  background: linear-gradient(to right, #c0392b 0%, #d98a23 45%, #4a9d4a 72%, #2a7d8a 100%);
+}
+.pt-window {
+  position: absolute; top: -3px; bottom: -3px;
+  border: 2px solid var(--ink-1); border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, .28);
+}
+.pt-needle {
+  position: absolute; top: -5px; width: 4px; height: 26px; border-radius: 2px;
+  background: var(--ink-1); transform: translateX(-50%);
+  box-shadow: 0 0 0 1px var(--surface); transition: left var(--t-med);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-needle, .pt-needle { transition: none; }
+}

@@ -1,0 +1,1321 @@
+/* Unit 5 page styles — factor-label chain, stepper, and tile bits on top of the kit */
+
+.small { font-size: var(--fs-xs); }
+
+/* Mission illustration banner at the top of each brief card */
+.brief-art {
+  margin: calc(var(--s-4) * -1) calc(var(--s-4) * -1) var(--s-3);
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  overflow: hidden;
+  line-height: 0;
+}
+.brief-art svg { display: block; width: 100%; height: auto; }
+
+/* Factor-label chain (the conversion built term by term) */
+.chain {
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-3);
+  background: var(--surface-2); border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-4); min-height: 64px;
+}
+.chain-term, .chain-result {
+  font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-md);
+  white-space: nowrap;
+}
+.chain-result.good { color: var(--success); }
+.chain-eq { font-family: var(--font-mono); color: var(--muted); }
+.chain-op { display: inline-flex; align-items: center; gap: var(--s-2); }
+.chain-op .times { font-family: var(--font-mono); color: var(--muted); }
+
+/* A conversion factor rendered as a fraction (numerator over denominator) */
+.frac {
+  display: inline-flex; flex-direction: column; align-items: center;
+  font-family: var(--font-mono); font-size: var(--fs-xs); line-height: 1.25;
+  padding: 2px 6px; border-radius: var(--r-sm); border: 1px solid transparent;
+}
+.frac.bad { border-color: var(--danger); background: var(--danger-050); }
+.frac-n, .frac-d { white-space: nowrap; padding: 1px 2px; }
+.frac-bar { width: 100%; height: 1px; background: currentColor; opacity: .6; margin: 1px 0; }
+
+/* Tile tray (clickable conversion factors) */
+.tile-tray { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.tile {
+  display: inline-flex; flex-direction: column; align-items: center;
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-4); cursor: pointer;
+  font-family: var(--font-mono); font-size: var(--fs-xs); line-height: 1.25;
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.tile:hover { border-color: var(--accent-300); background: var(--accent-050); }
+.tile:active { transform: translateY(1px); }
+.tile:disabled { opacity: .5; cursor: not-allowed; }
+.tile .frac-bar { background: var(--ink-2); opacity: .5; }
+
+/* Subscript steppers (empirical / molecular / x) */
+.stepper-row { display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: center; }
+.stepper {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-3);
+}
+.stepper .el { font-weight: 700; font-size: var(--fs-md); min-width: 1.4em; text-align: center; }
+.stepper .sub { font-weight: 700; font-size: var(--fs-lg); min-width: 1.4em; text-align: center; color: var(--accent-700); }
+.stepper .btn-sm { min-width: 30px; }
+
+.formula { font-size: 1.25rem; }
+
+/* Flag the assayed element row in the percent-composition breakdown */
+tr.row-flag td { background: var(--accent-050); }
+
+.se-cap { font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }
+
+/* ============================ Unit 5A lab mechanics ============================ */
+/* Appended below the copied Unit 5 styles. Reuses shared tokens + semantic colors.
+   Copper stays Honors-only; reward state is never color-only (always paired with text). */
+
+/* Mechanic A: scaffold-fade rung indicator pill */
+.rung-indicator {
+  display: inline-block; margin-bottom: var(--s-3);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .01em;
+  color: var(--accent-700); background: var(--accent-050);
+  border: 1px solid var(--accent-100); border-radius: var(--r-pill);
+  padding: 3px var(--s-3);
+}
+
+/* Mechanic B: gut-check gate (order-of-magnitude estimate chips) */
+.gutcheck { margin-bottom: var(--s-3); }
+.est-chips { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.est-chip {
+  font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 700;
+  background: var(--surface); color: var(--ink-2);
+  border: 1px solid var(--border-strong); border-radius: var(--r-pill);
+  padding: var(--s-2) var(--s-4); cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.est-chip:hover { border-color: var(--accent-300); background: var(--accent-050); }
+.est-chip:active { transform: translateY(1px); }
+.est-chip:disabled { opacity: .5; cursor: not-allowed; }
+.est-chip.picked { background: var(--accent); color: var(--surface); border-color: var(--accent-700); }
+
+/* Mechanic A rung 2: build-the-factor (constructed numerator over denominator) */
+.build-row {
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-3);
+  background: var(--surface-2); border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-4); min-height: 64px;
+}
+.build-factor { display: inline-flex; flex-direction: column; align-items: stretch; gap: 2px; min-width: 190px; }
+.build-factor .frac-bar { background: var(--ink-2); opacity: .5; height: 1px; margin: 2px 0; }
+.bf-line { display: flex; gap: var(--s-2); align-items: center; }
+.bf-val, .bf-unit {
+  font-family: var(--font-mono); font-size: var(--fs-sm);
+  padding: 4px var(--s-2); border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm); background: var(--surface);
+}
+/* The shared `input[type=text], select { width:100% }` rule (specificity 0,1,1) outranks a
+   bare `.bf-val`/`.bf-unit`, which let the value box swell to full width and starved the unit
+   dropdown down to a bare chevron (the chosen unit was clipped out of view). Scope these with
+   `.build-factor` to win specificity: keep the value box compact and make the dropdown wide
+   enough to SHOW the selected unit (g / mol / particles), not just the arrow. */
+.build-factor .bf-val  { flex: 0 0 7em; width: 7em; }
+.build-factor .bf-unit { flex: 1 1 auto; width: auto; min-width: 9.5em; }
+
+/* Mechanic A rung 3: type-the-answer */
+.solve-input {
+  font-family: var(--font-mono); font-size: var(--fs-md); width: 100%;
+  padding: var(--s-2) var(--s-3); border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm); background: var(--surface);
+}
+.ref-line { margin-top: var(--s-3); }
+
+/* Mechanic B: reconcile gate (warn-toned; blocks commit until gut and answer agree) */
+.reconcile {
+  display: flex; gap: var(--s-2); align-items: flex-start;
+  margin-top: var(--s-4); padding: var(--s-3) var(--s-4);
+  background: var(--warn-050); border: 1px solid var(--warn);
+  border-left-width: 4px; border-radius: var(--r-md);
+  color: var(--ink); font-weight: 600; font-size: var(--fs-sm);
+}
+.reconcile-icon { font-size: var(--fs-lg); line-height: 1; }
+
+/* Mechanic C: self-explanation on a miss */
+.miss-panel {
+  margin-top: var(--s-4); padding: var(--s-4);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.miss-q { font-weight: 700; font-size: var(--fs-sm); margin-bottom: var(--s-3); }
+.miss-opts { display: flex; flex-direction: column; gap: var(--s-2); }
+.miss-opt {
+  text-align: left; font-size: var(--fs-sm);
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-md);
+  padding: var(--s-2) var(--s-3); cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.miss-opt:hover { border-color: var(--accent-300); background: var(--accent-050); }
+.miss-opt:disabled { cursor: default; }
+.miss-opt[data-state="correct"] { border-color: var(--success); background: var(--success-050); font-weight: 700; }
+.miss-opt[data-state="wrong"] { border-color: var(--danger); background: var(--danger-050); }
+.miss-fix {
+  margin-top: var(--s-3); padding: var(--s-3); font-size: var(--fs-sm);
+  background: var(--success-050); border-left: 4px solid var(--success); border-radius: var(--r-sm);
+}
+
+/* ===================== Tier 2: ARI coach line + audit station ===================== */
+/* ARI's coach line inside a solve verdict (the recurrence nudge before the audit arms) */
+.coach {
+  display: block; margin-top: var(--s-3); padding: var(--s-2) var(--s-3);
+  font-size: var(--fs-sm); font-weight: 600; line-height: 1.4;
+  background: var(--surface-2); border-left: 3px solid var(--accent); border-radius: var(--r-sm);
+}
+.coach-who, .audit-who { font-family: var(--font-mono); font-weight: 700; color: var(--accent-700); white-space: nowrap; }
+.coach-who { margin-right: var(--s-1); }
+
+/* Audit station: ARI's finished solution for the learner to check */
+.audit-intro {
+  display: flex; align-items: baseline; gap: var(--s-2); flex-wrap: wrap;
+  margin-bottom: var(--s-4); padding: var(--s-3) var(--s-4);
+  background: var(--accent-050); border: 1px solid var(--accent-100); border-radius: var(--r-md);
+}
+.audit-frame { font-size: var(--fs-sm); margin: 0; flex: 1; min-width: 200px; }
+.audit-solution {
+  margin-top: var(--s-3); padding: var(--s-4);
+  background: var(--surface-2); border: 1px dashed var(--border-strong); border-radius: var(--r-md);
+}
+.audit-claim { font-style: italic; font-size: var(--fs-sm); color: var(--ink-2); margin: 0 0 var(--s-2); }
+.audit-working { font-family: var(--font-mono); font-size: var(--fs-sm); line-height: 1.45; margin: 0 0 var(--s-2); }
+.audit-result { font-size: var(--fs-md); margin: 0; }
+.audit-choices { margin-top: var(--s-2); }
+
+/* ===================== PART A: the Living Ship dashboard ===================== */
+/* Four coupled stocks (Air / Power / Food / Hull) crew safety derives from. A row of
+   four on wide screens; wraps to two-by-two at the shared 880px breakpoint so the
+   dashboard stays readable when the sim grid collapses to one column. Reuses the
+   shared .meter and semantic colors; each meter carries its value as text (never
+   color-only) so the reading survives without color. */
+.ship-systems {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-3) var(--s-4); margin-bottom: var(--s-4);
+}
+.ship-stock { min-width: 0; }
+@media (max-width: 880px) {
+  .ship-systems { grid-template-columns: 1fr 1fr; }
+}
+
+/* ===================== PART B: the Instincts calibration card ===================== */
+/* A small readout inside the Crew & ship panel that turns the gut-check the learner
+   already commits into visible metacognitive calibration. Formative only; gates nothing. */
+.instincts {
+  margin-bottom: var(--s-4); padding: var(--s-3) var(--s-4);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.instincts p { margin: 0 0 var(--s-1); }
+.instincts p:last-child { margin-bottom: 0; }
+.instinct-nudge { font-weight: 600; color: var(--accent-700); margin-top: var(--s-2); }
+
+/* Mechanic D: "Feel a mole" zoom */
+.zoom-stage {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-3); margin-top: var(--s-3);
+}
+.zoom-svg { display: block; width: 100%; height: auto; }
+.zoom-dots circle { fill: var(--accent); }
+.zoom-readout { display: flex; align-items: baseline; gap: var(--s-2); margin-top: var(--s-4); }
+.zoom-count { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-2xl); color: var(--accent-700); }
+.zoom-unit { font-size: var(--fs-md); color: var(--muted); }
+.zoom-slider { width: 100%; }
+.zoom-analogy { margin-top: var(--s-3); font-size: var(--fs-md); font-weight: 600; }
+
+/* ============================ Codex Mission Workbench ============================ */
+/* Local prototype shell. Keeps the chemistry task in the first viewport and moves
+   progress, crew state, and standards into a quieter learning rail. */
+
+.codex-shell {
+  padding-top: clamp(1rem, 1.5vw, 1.6rem);
+  padding-bottom: var(--s-8);
+}
+
+.codex-shell h1 {
+  margin-bottom: var(--s-3);
+  max-width: 760px;
+}
+
+.codex-shell .mission {
+  display: grid;
+  grid-template-columns: minmax(210px, 260px) minmax(0, 1fr);
+  align-items: center;
+  margin-bottom: var(--s-3);
+  padding: var(--s-2) var(--s-3);
+  gap: var(--s-2) var(--s-3);
+}
+
+.codex-shell .mission-goal {
+  max-width: none;
+  line-height: 1.34;
+}
+
+.workbench-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+  gap: var(--s-5);
+  align-items: start;
+}
+
+.task-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+}
+
+/* The copied page still contains the old top status card. The prototype renders
+   those controls in the rail instead. */
+.task-stack > .legacy-status-panel {
+  display: none;
+}
+
+.task-stack > .tabs {
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: color-mix(in srgb, var(--surface) 86%, var(--accent-050));
+  box-shadow: var(--shadow-sm);
+  flex-wrap: nowrap;
+  overflow: hidden;
+  scrollbar-width: thin;
+  padding: var(--s-1);
+  gap: var(--s-2);
+  margin: 0;
+}
+
+.task-stack > .tabs .tab {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  padding: .46rem .72rem;
+  margin: 0;
+  color: var(--ink-2);
+  background: transparent;
+}
+
+.task-stack > .tabs .tab:hover {
+  border-color: var(--accent-100);
+  background: var(--surface);
+}
+
+.task-stack > .tabs .tab[aria-selected="true"] {
+  color: var(--surface);
+  background: var(--accent);
+  border-color: var(--accent-700);
+}
+
+.task-stack > .panel {
+  padding: var(--s-3);
+}
+
+.task-stack .panel > .brief:first-child,
+.task-stack .panel > template:first-child + .brief,
+.task-stack .brief {
+  margin-bottom: var(--s-4);
+}
+
+.brief {
+  display: grid;
+  grid-template-columns: minmax(150px, 190px) minmax(0, 1fr);
+  gap: var(--s-2) var(--s-3);
+  align-items: center;
+  padding: var(--s-3);
+  border-left-width: 3px;
+}
+
+.brief-art {
+  grid-row: 1 / span 3;
+  margin: 0;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--ink) 78%, var(--accent-700));
+}
+
+.brief-art svg {
+  width: 100%;
+  height: auto;
+  max-height: 104px;
+}
+
+.brief-role,
+.brief-goal,
+.brief-why {
+  min-width: 0;
+}
+
+.brief-role {
+  margin-bottom: 0;
+}
+
+.brief-goal {
+  font-size: var(--fs-sm);
+  line-height: 1.42;
+}
+
+.brief-why {
+  margin-top: 0;
+  line-height: 1.42;
+}
+
+.chain,
+.build-row {
+  padding: var(--s-2) var(--s-3);
+  min-height: 50px;
+}
+
+.tile-tray {
+  gap: var(--s-2);
+}
+
+.tile {
+  padding: var(--s-2) var(--s-3);
+}
+
+.learning-rail {
+  position: sticky;
+  top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  max-height: min(580px, calc(100vh - 140px));
+  overflow: hidden;
+  padding-right: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.learning-rail::-webkit-scrollbar {
+  width: 6px;
+}
+
+.learning-rail::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--r-pill);
+}
+
+.rail-card {
+  padding: var(--s-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.rail-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-3);
+}
+
+.rail-card .panel-title {
+  font-size: var(--fs-md);
+}
+
+.rail-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-bottom: var(--s-2);
+}
+
+.rail-status p {
+  margin: 0;
+}
+
+.rail-worldstate .panel-head {
+  margin-bottom: var(--s-3);
+}
+
+.rail-worldstate .crew-status {
+  margin-bottom: var(--s-3);
+}
+
+.rail-worldstate .ship-systems {
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+  margin-bottom: var(--s-3);
+}
+
+.rail-worldstate .instincts {
+  margin-bottom: var(--s-3);
+  padding: var(--s-3) 0 0;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+}
+
+.rail-worldstate .instincts .panel-title {
+  display: block;
+  margin-bottom: var(--s-2);
+  font-size: var(--fs-sm);
+}
+
+.rail-worldstate .worldstate-list {
+  max-height: 190px;
+  overflow: hidden;
+  padding-right: 2px;
+}
+
+.learning-rail .se-panel {
+  position: static;
+  top: auto;
+}
+
+.learning-rail .se-item {
+  padding: var(--s-2) var(--s-3);
+}
+
+.learning-rail .se-text {
+  line-height: 1.38;
+}
+
+@media (max-width: 1040px) {
+  .workbench-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .learning-rail {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .learning-rail .se-panel {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 880px) {
+  .brief {
+    grid-template-columns: 1fr;
+  }
+
+  .brief-art {
+    grid-row: auto;
+  }
+
+  .brief-art svg {
+    max-height: none;
+  }
+
+  .learning-rail {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================ Codex Cockpit V2 ============================ */
+/* Full-screen mission cockpit for the local prototype. This section intentionally
+   overrides the copied worksheet shell without touching shared styles. */
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background:
+    radial-gradient(circle at 24% 12%, color-mix(in srgb, var(--accent-050) 74%, transparent), transparent 28rem),
+    linear-gradient(135deg, #0b1f27 0%, #12313a 36%, #edf6f8 36.2%, #e8f1f3 100%);
+}
+
+body > [x-data] {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.site-header,
+.cockpit-shell > .eyebrow,
+.cockpit-shell > h1,
+.cockpit-shell > .mission,
+.task-stack > .legacy-status-panel,
+.task-stack > .tabs,
+.learning-rail {
+  display: none !important;
+}
+
+.cockpit-shell {
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  min-height: 0;
+  padding: clamp(8px, 1.15vw, 14px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(8px, 1vw, 12px);
+  overflow: hidden;
+}
+
+.cockpit-command {
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) minmax(300px, 1fr) minmax(126px, auto) minmax(400px, 420px);
+  align-items: center;
+  gap: clamp(7px, .85vw, 12px);
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent-700) 32%, var(--border));
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, #f7fcfd 92%, var(--accent-050));
+  box-shadow: 0 12px 30px rgb(7 30 38 / 16%);
+  overflow: hidden;
+}
+
+.command-brand {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+}
+
+.command-brand strong {
+  color: #102833;
+  font-size: clamp(1rem, 1.45vw, 1.35rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.command-brand span:last-child {
+  min-width: 0;
+  color: var(--muted);
+  font-size: var(--fs-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.command-kicker {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: .67rem;
+  line-height: 1;
+  letter-spacing: .14em;
+  color: var(--accent-700);
+  text-transform: uppercase;
+}
+
+.station-nav {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px;
+  overflow: hidden;
+}
+
+.station-nav .tab {
+  min-width: 0;
+  height: 42px;
+  margin: 0;
+  padding: 0 6px;
+  border: 1px solid color-mix(in srgb, var(--border-strong) 70%, transparent);
+  border-radius: var(--r-sm);
+  background: #f8fbfc;
+  color: #19333d;
+  font-size: clamp(.74rem, .9vw, .88rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.station-nav .tab:hover {
+  border-color: var(--accent-300);
+  background: var(--accent-050);
+}
+
+.station-nav .tab[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent-700);
+  color: var(--surface);
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, #ffffff 34%, transparent);
+}
+
+.command-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.command-actions .switch {
+  min-width: 0;
+  gap: 6px;
+}
+
+.command-actions .label-text {
+  font-size: var(--fs-xs);
+  font-weight: 800;
+}
+
+.command-reset {
+  min-height: 34px;
+  padding-inline: 10px;
+}
+
+.command-metrics {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, auto));
+  justify-content: end;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+}
+
+.metric-chip,
+.teks-chip,
+.sol-chip {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: #213d46;
+  font-family: var(--font-mono);
+  font-size: .69rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.metric-chip {
+  min-width: 56px;
+}
+
+.metric-chip strong,
+.sol-chip strong {
+  color: var(--accent-700);
+}
+
+.teks-chip {
+  position: relative;
+  width: 64px;
+  padding-inline: 4px;
+  font-size: .64rem;
+  overflow: hidden;
+  color: #24424b;
+}
+
+.teks-chip::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  width: var(--p, 0%);
+  background: var(--accent);
+}
+
+.teks-chip.active {
+  border-color: var(--accent-300);
+  background: var(--accent-050);
+}
+
+.teks-chip.mastered {
+  color: var(--success);
+}
+
+.workbench-grid {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(230px, .85fr) minmax(385px, 1.34fr) minmax(230px, .82fr);
+  grid-template-areas: "screen console life";
+  gap: clamp(8px, 1vw, 12px);
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.mission-screen,
+.chem-console,
+.life-support-board {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mission-screen {
+  grid-area: screen;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 9px;
+  background: linear-gradient(180deg, #09212b, #112f39);
+  border-color: color-mix(in srgb, var(--accent-700) 58%, #ffffff);
+  color: #eaf8fb;
+}
+
+.mission-frame {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  border: 1px solid rgb(149 219 230 / 45%);
+  background: radial-gradient(circle at 50% 45%, rgb(67 160 173 / 34%), rgb(5 20 27 / 88%) 72%);
+}
+
+.mission-screen-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 6px;
+}
+
+.mission-screen-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  filter: saturate(1.08) contrast(1.05);
+}
+
+.screen-scanline {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(to bottom, rgb(255 255 255 / 5%) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, transparent, rgb(9 33 43 / 44%));
+  pointer-events: none;
+}
+
+.mission-screen-overlay {
+  position: absolute;
+  inset: auto 8px 8px;
+  display: grid;
+  gap: 3px;
+  padding: 7px 8px;
+  border-left: 3px solid var(--accent-300);
+  border-radius: var(--r-sm);
+  background: rgb(4 17 23 / 72%);
+  backdrop-filter: blur(5px);
+}
+
+.screen-system,
+.screen-state {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.screen-system {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .08em;
+  color: #bfe9ef;
+  text-transform: uppercase;
+}
+
+.screen-state {
+  font-size: clamp(1.12rem, 2.1vw, 1.65rem);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.screen-copy {
+  display: grid;
+  gap: 5px;
+  overflow: hidden;
+}
+
+.screen-goal,
+.screen-outcome {
+  margin: 0;
+  display: block;
+  overflow: visible;
+}
+
+.screen-goal {
+  color: #e7f6f8;
+  font-weight: 800;
+  font-size: clamp(.82rem, 1.02vw, 1rem);
+  line-height: 1.23;
+}
+
+.screen-outcome {
+  color: #b8d2d8;
+  font-size: clamp(.76rem, .92vw, .9rem);
+  line-height: 1.28;
+}
+
+.tone-safe .mission-frame,
+.latest-consequence.tone-safe {
+  border-color: color-mix(in srgb, var(--success) 70%, white);
+  box-shadow: 0 0 0 1px rgb(56 154 103 / 24%), inset 0 0 46px rgb(56 154 103 / 18%);
+}
+
+.tone-warn .mission-frame,
+.latest-consequence.tone-warn,
+.tone-stalled .mission-frame,
+.latest-consequence.tone-stalled {
+  border-color: color-mix(in srgb, var(--warn) 76%, white);
+  box-shadow: 0 0 0 1px rgb(207 139 37 / 26%), inset 0 0 48px rgb(207 139 37 / 20%);
+}
+
+.tone-danger .mission-frame,
+.latest-consequence.tone-danger {
+  border-color: color-mix(in srgb, var(--danger) 70%, white);
+  box-shadow: 0 0 0 1px rgb(197 59 59 / 28%), inset 0 0 52px rgb(197 59 59 / 18%);
+}
+
+.chem-console {
+  grid-area: console;
+  display: grid;
+}
+
+.chem-console > .panel:not(.legacy-status-panel) {
+  grid-area: 1 / 1;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(11px, 1.25vw, 16px);
+  border-color: color-mix(in srgb, var(--accent-300) 28%, var(--border));
+  border-radius: var(--r-md);
+  box-shadow: 0 12px 28px rgb(6 28 36 / 13%);
+  z-index: 0;
+}
+
+.chem-console > .panel.is-active:not(.legacy-status-panel) {
+  display: block !important;
+  z-index: 2;
+}
+
+.chem-console .brief {
+  display: none !important;
+}
+
+.chem-console p {
+  line-height: 1.34;
+}
+
+.chem-console .muted {
+  margin-block: 0 7px !important;
+}
+
+.chem-console .small {
+  line-height: 1.28;
+}
+
+.chem-console .solve-region,
+.chem-console .audit {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chem-console .rung-indicator {
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  font-size: .73rem;
+}
+
+.chem-console .chain,
+.chem-console .build-row {
+  min-height: 44px;
+  gap: 8px;
+  padding: 8px 10px;
+  flex-wrap: wrap;
+}
+
+.chem-console .chain-term,
+.chem-console .chain-result {
+  font-size: clamp(.94rem, 1.2vw, 1.15rem);
+}
+
+.chem-console .tile-tray {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+  gap: 7px;
+}
+
+.chem-console .tile {
+  min-height: 46px;
+  justify-content: center;
+  padding: 6px 8px;
+  border-radius: var(--r-sm);
+}
+
+.chem-console .row {
+  gap: 8px;
+}
+
+.chem-console .btn {
+  min-height: 38px;
+  padding: 7px 12px;
+}
+
+.chem-console .verdict {
+  display: none !important;
+  margin-top: 8px;
+  padding: 8px 10px;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.chem-console .verdict-detail,
+.chem-console .verdict-headline,
+.chem-console .coach {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.chem-console .miss-panel,
+.chem-console .reconcile,
+.chem-console .audit-solution,
+.chem-console .choice-grid,
+.chem-console .zoom-stage {
+  margin-top: 8px !important;
+}
+
+.chem-console .miss-opts,
+.chem-console .choice-grid {
+  gap: 6px;
+}
+
+.chem-console .miss-opt,
+.chem-console .choice {
+  padding: 7px 9px;
+  line-height: 1.22;
+}
+
+.chem-console .solve-region.has-miss .ref-line {
+  display: none;
+}
+
+.chem-console .solve-region.has-miss .gutcheck {
+  margin-bottom: 5px;
+}
+
+.chem-console .solve-region.has-miss .gutcheck > p {
+  display: none;
+}
+
+.chem-console .solve-region.has-miss .est-chips {
+  gap: 5px;
+}
+
+.chem-console .solve-region.has-miss .est-chip {
+  min-height: 30px;
+  padding: 4px 11px;
+}
+
+.chem-console .miss-panel {
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+}
+
+.chem-console .miss-q {
+  margin-bottom: 6px;
+  font-size: .84rem;
+  line-height: 1.2;
+}
+
+.chem-console .miss-opts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.chem-console .miss-opt {
+  min-height: 32px;
+  font-size: .82rem;
+  line-height: 1.15;
+}
+
+.chem-console .miss-fix {
+  margin-top: 6px;
+  padding: 7px 8px;
+  font-size: .8rem;
+  line-height: 1.2;
+}
+
+.chem-console .field {
+  margin-bottom: 7px;
+}
+
+.chem-console .mystery-job-switcher {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.chem-console .job-pill {
+  min-width: 0;
+  min-height: 32px;
+  padding: 5px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: #19333d;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.chem-console .job-pill[aria-pressed="true"] {
+  color: #fff;
+  border-color: var(--honors-700);
+  background: var(--honors);
+}
+
+.chem-console .honors-lockline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 6px 9px;
+  border: 1px solid color-mix(in srgb, var(--honors) 34%, var(--border));
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--honors) 10%, var(--surface));
+  color: #5c3b17;
+  font-size: .78rem;
+  line-height: 1.2;
+  overflow: hidden;
+}
+
+.chem-console .honors-lockline .honors-tag {
+  flex: 0 0 auto;
+}
+
+.chem-console .formula-core {
+  min-height: 0;
+}
+
+.chem-console .honors-block {
+  margin-top: 4px;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+}
+
+.chem-console .honors-tag {
+  font-size: .62rem;
+  letter-spacing: .14em;
+}
+
+.chem-console .honors-block .note-info {
+  margin-top: 4px !important;
+  padding: 4px 7px;
+  min-height: 0;
+  font-size: .72rem;
+  line-height: 1.14;
+}
+
+.chem-console .zoom-stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.chem-console .zoom-svg {
+  height: 100%;
+  max-height: 280px;
+}
+
+.chem-console .zoom-readout {
+  margin-top: 8px;
+}
+
+.chem-console .zoom-count {
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+}
+
+.life-support-board {
+  grid-area: life;
+  padding: clamp(10px, 1.2vw, 14px);
+  display: grid;
+  grid-template-rows: auto auto auto minmax(78px, auto) auto minmax(92px, 1fr);
+  gap: 9px;
+  border-color: color-mix(in srgb, var(--accent-700) 30%, var(--border));
+  background: color-mix(in srgb, #f7fbfc 92%, var(--accent-050));
+  box-shadow: 0 12px 28px rgb(6 28 36 / 12%);
+}
+
+.life-header,
+.life-meter-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.life-header strong {
+  display: block;
+  margin-top: 3px;
+  font-size: clamp(1rem, 1.45vw, 1.25rem);
+  color: #102833;
+}
+
+.cockpit-crew {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.cockpit-crew .crew-face {
+  font-size: clamp(1.7rem, 2.5vw, 2.25rem);
+  line-height: 1;
+}
+
+.life-meter-label {
+  margin-bottom: 4px;
+  color: #1a3640;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.life-support-board .meter {
+  height: 8px;
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--border) 64%, white);
+}
+
+.system-grid {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.system-grid .ship-stock {
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+.latest-consequence,
+.cockpit-instincts,
+.mission-log {
+  min-width: 0;
+  overflow: hidden;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+.latest-consequence strong {
+  display: block;
+  margin-top: 4px;
+  color: #102833;
+  font-size: clamp(.94rem, 1.25vw, 1.12rem);
+  line-height: 1.05;
+}
+
+.latest-consequence p,
+.cockpit-instincts p,
+.mission-log p {
+  margin: 5px 0 0;
+  color: var(--ink-2);
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+}
+
+.latest-consequence p,
+.cockpit-instincts p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.mission-log {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.mission-log .worldstate-list {
+  min-height: 0;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 5px;
+  overflow: hidden;
+}
+
+.mission-log .worldstate-entry {
+  min-height: 0;
+  padding: 6px 7px;
+  border-radius: var(--r-sm);
+  font-size: .73rem;
+  line-height: 1.2;
+}
+
+.mission-log .worldstate-entry span:last-child {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.mission-log .ws-icon {
+  line-height: 1;
+}
+
+@media (max-width: 1120px) {
+  .cockpit-command {
+    grid-template-columns: minmax(150px, 190px) minmax(300px, 1fr) minmax(112px, auto) minmax(196px, 240px);
+  }
+
+  .command-metrics {
+    grid-template-columns: repeat(3, minmax(0, auto));
+  }
+
+  .teks-chip {
+    width: 64px;
+  }
+
+  .workbench-grid {
+    grid-template-columns: minmax(214px, .78fr) minmax(360px, 1.28fr) minmax(214px, .78fr);
+  }
+}
+
+@media (max-width: 980px) {
+  .cockpit-command {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    grid-template-areas:
+      "brand actions"
+      "nav metrics";
+    min-height: 104px;
+  }
+
+  .command-brand { grid-area: brand; }
+  .station-nav { grid-area: nav; }
+  .command-actions { grid-area: actions; }
+  .command-metrics { grid-area: metrics; }
+
+  .workbench-grid {
+    grid-template-columns: minmax(270px, .8fr) minmax(0, 1.2fr);
+    grid-template-areas:
+      "screen console"
+      "life console";
+  }
+
+  .life-support-board {
+    grid-template-rows: auto auto auto minmax(58px, auto) auto;
+  }
+
+  .mission-log {
+    display: none;
+  }
+}

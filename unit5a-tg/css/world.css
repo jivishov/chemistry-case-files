@@ -1,0 +1,1194 @@
+/* world.css — MISSION CONSOLE "BRIDGE VIEW" (Round 4): a viewport-locked
+   game-style command bridge. Single glance, no scroll anywhere.
+
+   LAYER STACK (all absolutely positioned inside .bridge):
+     1. .bridge-bg       dark space background (inset:0, z:0)
+     2. .bridge-view     dominant scene art viewscreen (centered)
+     3. .hud-brief        top-center mission brief strip (translucent)
+     4. .hud-crew         top-right crew mood HUD
+     5. .hud-tabs         right-edge vertical mode rail
+     6. .console-strip    GSAP mount root (transparent overlay); holds:
+                           .hud-meters (left-edge vertical bars)
+                           .hud-voyage (bottom-left above dock)
+                           .hud-comm   (bottom-left log, collapsed)
+     7. .hud-dock         bottom work panel + commit/verdict inline
+
+   WORLD.JS CONTRACT PRESERVED:
+     - .console-strip is queried by document.querySelector in react()
+     - 14 data-refs live as descendants: hull + 4x sys-<k>-{block,fill,glow} + voyage-ship
+     - x-init="World?.mount($el, $data)" + x-effect="World?.react(...)" untouched
+   */
+
+/* =========================================================================
+   VIEWPORT LOCK — body is a flex column; site-header takes its natural
+   height at the top; .bridge fills the rest. No calc on --header-h needed,
+   so the lock is robust even if the header's measured height drifts.
+   ========================================================================= */
+html, body { height: 100%; }
+body {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+body > div { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+
+.site-header { flex: 0 0 auto; }
+
+/* =========================================================================
+   BRIDGE — the viewport-locked canvas. Everything below sits inside it.
+   ========================================================================= */
+.bridge {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--bg);
+  --dock-h: 300px;       /* height of the bottom work dock; tune to fit panels */
+  --rail-w: 168px;       /* right-edge mode rail width */
+  --mtr-w: 116px;        /* left-edge meters column width */
+  --voyage-h: 56px;      /* voyage strip height (above dock) */
+  --comm-h: 28px;        /* collapsed comm strip height */
+  /* scene-bottom = top of the dock (scene art fills everything above) */
+  --scene-bottom: calc(var(--dock-h) + var(--s-2));
+  /* stack-bottom = top of the voyage strip (used by the comm, sits above voyage) */
+  --stack-bottom: calc(var(--scene-bottom) + var(--voyage-h) + var(--s-2));
+}
+
+/* 1. Dark space background fills the whole bridge */
+.bridge-bg {
+  position: absolute; inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 540px at 50% 18%, oklch(0.22 0.030 252 / .55), transparent 65%),
+    radial-gradient(1200px 700px at 80% 92%, oklch(0.18 0.030 252 / .55), transparent 60%),
+    linear-gradient(180deg, var(--bg-2), var(--bg));
+}
+
+/* =========================================================================
+   2. SCENE ART VIEWSCREEN — full-bleed above the dock. HUD overlays float
+      on top with translucent backgrounds; the scene art shows through around
+      them. The scope-frame centers the banner SVG with corner ticks.
+   ========================================================================= */
+.bridge-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: var(--scene-bottom);
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+.scope-frame {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.scope-corner {
+  position: absolute;
+  width: 18px; height: 18px;
+  border: 2px solid var(--accent-300);
+  opacity: .8;
+}
+.scope-corner.tl { top: -1px; left: -1px;  border-right: 0; border-bottom: 0; }
+.scope-corner.tr { top: -1px; right: -1px; border-left: 0;  border-bottom: 0; }
+.scope-corner.bl { bottom: -1px; left: -1px;  border-right: 0; border-top: 0; }
+.scope-corner.br { bottom: -1px; right: -1px; border-left: 0;  border-top: 0; }
+
+.scope-art {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scope-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.05);
+}
+
+.scope-idle {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: var(--s-2);
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.scope-idle-title { font-size: var(--fs-lg); letter-spacing: .18em; color: var(--accent-300); }
+.scope-idle-text  { font-size: var(--fs-sm); }
+
+.scope-tag {
+  position: absolute;
+  top: var(--s-3);
+  left: var(--s-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-1) var(--s-3);
+  background: oklch(0.10 0.012 252 / .65);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  backdrop-filter: blur(6px);
+}
+.scope-tag-icon { font-size: var(--fs-md); }
+.scope-tag-text { color: var(--accent-300); font-weight: 700; }
+
+/* =========================================================================
+   3. HUD BRIEF — top-center translucent strip (system name + why line).
+   ========================================================================= */
+.hud-brief {
+  position: absolute;
+  top: var(--s-3);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  max-width: min(560px, calc(100% - var(--mtr-w) - var(--rail-w) - var(--s-6)));
+  padding: var(--s-2) var(--s-4);
+  background: oklch(0.10 0.012 252 / .65);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  backdrop-filter: blur(8px);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  pointer-events: none;
+}
+.hud-tag {
+  font-size: var(--fs-xs);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent-300);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.hud-goal {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================================
+   4. HUD CREW — top-right compact mood HUD.
+   ========================================================================= */
+.hud-crew {
+  position: absolute;
+  top: var(--s-3);
+  right: calc(var(--rail-w) + var(--s-4));
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  background: oklch(0.10 0.012 252 / .65);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  backdrop-filter: blur(8px);
+}
+.hud-crew .crew-face { font-size: var(--fs-xl); line-height: 1; }
+.hud-crew .crew-info { display: flex; flex-direction: column; line-height: 1.1; }
+.hud-crew .crew-pct  { font-family: var(--font-mono); font-weight: 700; color: var(--ink); font-size: var(--fs-md); }
+.hud-crew .crew-state { font-size: var(--fs-xs); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.hud-crew .crew-meter {
+  width: 96px; height: 6px;
+  background: var(--surface-3);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.hud-crew .crew-meter-fill {
+  display: block;
+  height: 100%;
+  background: var(--success);
+  border-radius: var(--r-pill);
+  transition: width var(--t-med) var(--ease);
+}
+.hud-crew .crew-meter[data-state="warn"] .crew-meter-fill { background: var(--warn); }
+.hud-crew .crew-meter[data-state="bad"]  .crew-meter-fill { background: var(--danger); }
+
+/* =========================================================================
+   5. HUD TABS — right-edge vertical mode rail.
+   ========================================================================= */
+.hud-tabs {
+  position: absolute;
+  top: 56px;
+  right: var(--s-3);
+  bottom: var(--scene-bottom);
+  z-index: 3;
+  width: var(--rail-w);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  overflow: hidden;
+}
+.hud-tabs .tab {
+  flex: 1 1 0;
+  min-height: 0;
+  padding: var(--s-2) var(--s-3);
+  background: oklch(0.16 0.014 252 / .65);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--ink-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+  backdrop-filter: blur(6px);
+}
+.hud-tabs .tab:hover {
+  background: oklch(0.22 0.018 252 / .75);
+  border-color: var(--border-strong);
+  color: var(--ink);
+}
+.hud-tabs .tab[aria-selected="true"] {
+  background: oklch(0.26 0.030 200 / .75);
+  border-color: var(--accent);
+  color: var(--ink);
+  box-shadow: inset 3px 0 0 var(--accent-300), 0 0 18px oklch(0.55 0.12 200 / .18);
+}
+.hud-tabs .tab .small { font-size: var(--fs-xs); color: var(--muted); font-weight: 400; }
+.hud-tabs .tab[aria-selected="true"] .small { color: var(--ink-2); }
+
+/* =========================================================================
+   6. CONSOLE-STRIP — GSAP mount root (transparent overlay). Contains:
+       .hud-meters  (left-edge vertical bars, 4 ship systems)
+       .hud-voyage  (bottom-left progress Earth -> Mars)
+       .hud-comm    (bottom-left mission log, collapsed by default)
+   ========================================================================= */
+.console-strip {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* HUD METERS — 4 vertical bars on the left edge */
+.hud-meters {
+  position: absolute;
+  top: 56px;
+  left: var(--s-3);
+  bottom: var(--scene-bottom);
+  width: var(--mtr-w);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  background: oklch(0.10 0.012 252 / .55);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-2) var(--s-1);
+  backdrop-filter: blur(6px);
+}
+.hud-meters .hud-cap {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: var(--s-1);
+}
+.hud-meters .ship-svg {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+}
+.hud-meters .ship-svg .sys-housing {
+  fill: oklch(0.10 0.012 252);
+  stroke: var(--border-strong);
+  stroke-width: 1;
+}
+.hud-meters .ship-svg .sys-fill {
+  transform-origin: center bottom;
+  transform-box: fill-box;
+  opacity: .9;
+}
+.hud-meters .ship-svg .sys-glow {
+  transform-origin: center bottom;
+  transform-box: fill-box;
+  opacity: 0;
+  pointer-events: none;
+}
+.hud-meters .ship-svg .sys-label {
+  fill: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+.hud-meters .ship-svg .sys-value {
+  fill: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+}
+.hud-meters .ship-svg .fault-scrim { fill: none; stroke: none; }
+.hud-meters[data-fault="warn"] .fault-scrim { fill: oklch(0.77 0.14 75 / .08); stroke: oklch(0.77 0.14 75 / .25); }
+.hud-meters[data-fault="bad"]  .fault-scrim { fill: oklch(0.68 0.17 25 / .10); stroke: oklch(0.68 0.17 25 / .35); }
+.hud-meters .sys-block[data-state="critical"] .sys-housing { stroke: var(--danger); }
+.hud-meters .sys-block[data-state="critical"] .sys-label { fill: var(--danger); }
+
+/* HUD VOYAGE — horizontal strip just above the dock, between meters and tabs */
+.hud-voyage {
+  position: absolute;
+  left: calc(var(--mtr-w) + var(--s-4));
+  right: calc(var(--rail-w) + var(--s-4));
+  bottom: calc(var(--dock-h) + var(--s-2));
+  z-index: 2;
+  pointer-events: auto;
+  background: oklch(0.10 0.012 252 / .55);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-1) var(--s-3);
+  backdrop-filter: blur(6px);
+  max-height: calc(var(--voyage-h) - 2 * var(--s-1));
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.hud-voyage .hud-cap {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.hud-voyage .voyage-svg { flex: 1 1 auto; min-width: 0; height: 32px; display: block; }
+.hud-voyage .voyage-svg .voyage-route { stroke: var(--border-strong); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.hud-voyage .voyage-svg .planet.earth { fill: oklch(0.65 0.12 220); }
+.hud-voyage .voyage-svg .planet.mars  { fill: oklch(0.60 0.13 35); }
+.hud-voyage .voyage-svg .planet-name  { fill: var(--muted); font-family: var(--font-mono); font-size: 9px; text-anchor: middle; letter-spacing: .08em; }
+.hud-voyage .voyage-svg .voyage-ship .cone { fill: var(--accent-300); stroke: var(--accent); stroke-width: .5; }
+.hud-voyage .voyage-foot {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.hud-voyage .voyage-pct { color: var(--accent-300); font-weight: 700; }
+.hud-voyage .voyage-pct .of { color: var(--muted); font-weight: 400; }
+
+/* HUD COMM — mission log, collapsed by default; expands inline.
+   Stacked above .hud-voyage. Width spans between meters and tabs. */
+.hud-comm {
+  position: absolute;
+  left: calc(var(--mtr-w) + var(--s-4));
+  right: calc(var(--rail-w) + var(--s-4));
+  bottom: var(--stack-bottom);   /* just above the voyage strip */
+  z-index: 4;
+  pointer-events: auto;
+  background: oklch(0.10 0.012 252 / .55);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  backdrop-filter: blur(6px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+}
+.hud-comm > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: var(--s-2) var(--s-3);
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.hud-comm > summary::-webkit-details-marker { display: none; }
+.hud-comm .comm-icon { font-size: var(--fs-md); }
+.hud-comm .comm-latest { flex: 1 1 0; min-width: 0; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hud-comm .comm-count { color: var(--accent-300); font-weight: 700; white-space: nowrap; }
+.hud-comm .comm-chev { color: var(--muted); transition: transform var(--t-fast) var(--ease); }
+.hud-comm[open] .comm-chev { transform: rotate(90deg); }
+.hud-comm .rail-strip {
+  padding: var(--s-2) var(--s-3);
+  border-top: 1px solid var(--border);
+  max-height: 96px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-2);
+}
+.hud-comm .rail-strip .rail-empty { color: var(--muted); font-style: italic; }
+.hud-comm .rail-strip .rail-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  padding: 2px var(--s-2);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border);
+  background: oklch(0.16 0.014 252 / .7);
+}
+.hud-comm .rail-strip .rail-chip.good { border-color: oklch(0.74 0.15 150 / .45); color: var(--success); }
+.hud-comm .rail-strip .rail-chip.warn { border-color: oklch(0.77 0.14 75  / .45); color: var(--warn); }
+.hud-comm .rail-strip .rail-chip.bad  { border-color: oklch(0.68 0.17 25  / .45); color: var(--danger); }
+.hud-comm .rail-strip .ws-icon { font-size: var(--fs-sm); }
+
+/* =========================================================================
+   7. HUD DOCK — bottom work panel + commit/verdict. The dock-body remaps
+   the parchment --work* tokens to dark chrome so every existing panel
+   class (chain, frac, tile, build, stepper, miss-panel, audit, etc.) renders
+   as a HUD surface, not a worksheet card.
+   ========================================================================= */
+.hud-dock {
+  position: absolute;
+  left: var(--s-3);
+  right: var(--s-3);
+  bottom: var(--s-3);
+  height: var(--dock-h);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  background: oklch(0.13 0.014 252 / .92);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 oklch(1 0 0 0 / .05);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+.dock-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-2) var(--s-4);
+  border-bottom: 1px solid var(--border);
+  background: oklch(0.16 0.016 252 / .8);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+}
+.dock-tag {
+  font-size: var(--fs-xs);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent-300);
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 2px var(--s-2);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-pill);
+  background: oklch(0.26 0.030 200 / .35);
+}
+.dock-tag.standby { color: var(--muted); border-color: var(--border-strong); background: transparent; }
+.dock-text { flex: 1 1 0; min-width: 0; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dock-inst {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  padding: 2px var(--s-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.dock-inst-k { color: var(--accent-300); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.dock-inst-v { color: var(--ink-2); }
+.dock-inst.calibrating { color: var(--muted); font-style: italic; }
+
+.dock-body {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--s-3) var(--s-4);
+  position: relative;
+
+  /* --- PARCHMENT -> CHROME TOKEN REMAP ---
+     Every panel-internal class (chain, frac, tile, build, stepper, miss-panel,
+     audit, brief, gutcheck, zoom-stage, etc.) was authored against the warm
+     parchment --work* tokens. By remapping them here to dark chrome surfaces,
+     all of those elements inherit the HUD look without any source changes. */
+  --work:           var(--surface);
+  --work-2:         var(--surface-2);
+  --work-3:         var(--surface-3);
+  --work-border:    var(--border);
+  --work-border-2:  var(--border-strong);
+  --work-ink:       var(--ink);
+  --work-ink-2:     var(--ink-2);
+  --work-muted:     var(--muted);
+
+  --success-work:   var(--success-050);
+  --warn-work:       var(--warn-050);
+  --danger-work:     var(--danger-050);
+
+  /* AA-contrast ink colours from style.css were tuned for parchment; on dark
+     chrome they'd be too dark. Use the bright semantic colors instead. */
+  --ok-ink:      var(--success);
+  --warn-ink:    var(--warn);
+  --bad-ink:     var(--danger);
+  --accent-ink:  var(--accent-300);
+
+  background: var(--bg-2);
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+}
+
+/* The dock-body hosts one panel at a time; each panel fills the slot.
+   No internal scroll — content must fit (clipped if it doesn't). */
+.dock-body > .panel {
+  position: absolute;
+  inset: var(--s-3) var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  overflow: hidden;
+}
+/* x-show handles panel visibility: inactive panels get inline display:none,
+   active panel uses the flex layout above. No CSS display:none needed here. */
+
+/* Tame the in-panel vertical rhythm so more content fits in the dock. */
+.dock-body p { margin: 0; color: var(--ink-2); }
+.dock-body p.small { font-size: var(--fs-xs); }
+.dock-body p.brief-line { font-size: var(--fs-sm); color: var(--ink); }
+.dock-body p.ref-line { margin-top: 2px; color: var(--muted); }
+.dock-body .muted { color: var(--muted); }
+.dock-body .mono { font-family: var(--font-mono); }
+.dock-body .row { gap: var(--s-2); }
+.dock-body .commit-row { margin-top: auto; padding-top: var(--s-2); }
+
+/* Make the existing buttons read as HUD controls. */
+.dock-body .btn {
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: var(--fs-xs);
+  padding: var(--s-1) var(--s-3);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.dock-body .btn:hover { background: var(--surface-3); border-color: var(--accent); }
+.dock-body .btn:disabled { opacity: .5; cursor: not-allowed; }
+.dock-body .btn-accent {
+  background: oklch(0.30 0.040 200);
+  border-color: var(--accent);
+  color: var(--ink);
+  box-shadow: var(--glow-accent);
+}
+.dock-body .btn-accent:hover:not(:disabled) {
+  background: oklch(0.36 0.060 200);
+  color: var(--ink);
+}
+.dock-body .btn-honors {
+  background: oklch(0.30 0.040 55);
+  border-color: var(--honors);
+  color: var(--ink);
+  box-shadow: var(--glow-honors);
+}
+.dock-body .btn-honors:hover:not(:disabled) {
+  background: oklch(0.36 0.060 55);
+}
+.dock-body .btn-sm {
+  font-size: var(--fs-xs);
+  padding: 2px var(--s-2);
+  min-width: 30px;
+  box-shadow: none;
+}
+
+/* Chain / Frac / Tile / Build / Stepper / Solve-input inherit the remap,
+   but tighten their spacing for the dock slot. */
+.dock-body .chain,
+.dock-body .build-row {
+  padding: var(--s-2) var(--s-3);
+  min-height: 0;
+  background: var(--work);
+  border: 1px dashed var(--work-border);
+  border-radius: var(--r-md);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+}
+.dock-body .chain-term,
+.dock-body .chain-result,
+.dock-body .chain-op,
+.dock-body .chain-eq,
+.dock-body .chain-op .times { font-size: var(--fs-sm); }
+.dock-body .frac-n,
+.dock-body .frac-d,
+.dock-body .frac-bar { font-size: var(--fs-xs); }
+.dock-body .frac { font-family: var(--font-mono); }
+.dock-body .tile-tray { gap: var(--s-2); }
+.dock-body .tile {
+  background: var(--work-2);
+  border: 1px solid var(--work-border);
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+}
+.dock-body .tile:hover { border-color: var(--accent); background: var(--accent-050); }
+.dock-body .build-factor { min-width: 160px; }
+.dock-body .bf-val,
+.dock-body .bf-unit,
+.dock-body .solve-input {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  background: var(--work-2);
+  border: 1px solid var(--work-border);
+  color: var(--work-ink);
+  border-radius: var(--r-sm);
+  padding: 4px var(--s-2);
+}
+.dock-body .bf-val:focus,
+.dock-body .bf-unit:focus,
+.dock-body .solve-input:focus {
+  border-color: var(--accent);
+  outline: 2px solid oklch(0.45 0.10 200 / .35);
+  outline-offset: 1px;
+}
+.dock-body .stepper-row { gap: var(--s-2); flex-wrap: wrap; }
+.dock-body .stepper {
+  padding: 4px var(--s-2);
+  background: var(--work);
+  border: 1px solid var(--work-border);
+  border-radius: var(--r-sm);
+  gap: var(--s-1);
+}
+.dock-body .stepper .el,
+.dock-body .stepper .sub { font-size: var(--fs-sm); }
+.dock-body .formula { font-size: var(--fs-md); color: var(--ink); font-family: var(--font-mono); }
+
+/* Gutcheck / est-chip / reconcile */
+.dock-body .gutcheck { margin: 0; }
+.dock-body .gutcheck p { font-size: var(--fs-xs); }
+.dock-body .est-chips { gap: var(--s-1); }
+.dock-body .est-chip {
+  background: var(--surface-3);
+  border: 1px solid var(--border-strong);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 4px var(--s-2);
+  border-radius: var(--r-pill);
+  cursor: pointer;
+}
+.dock-body .est-chip:hover { border-color: var(--accent); color: var(--ink); }
+.dock-body .est-chip.picked {
+  background: var(--accent);
+  color: var(--bg-2);
+  border-color: var(--accent-700);
+  box-shadow: var(--glow-accent);
+}
+.dock-body .reconcile {
+  background: var(--warn-050);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--r-sm);
+  padding: var(--s-1) var(--s-2);
+  color: var(--warn-ink);
+  font-size: var(--fs-xs);
+}
+
+/* Rung indicator (chrome pill) */
+.dock-body .rung-indicator {
+  font-size: var(--fs-xs);
+  padding: 2px var(--s-2);
+  background: var(--accent-050);
+  color: var(--accent-300);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-pill);
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Miss-panel + audit (parchment card -> HUD inset) */
+.dock-body .miss-panel,
+.dock-body .audit-intro,
+.dock-body .audit-solution {
+  background: var(--work);
+  border: 1px solid var(--work-border);
+  border-radius: var(--r-md);
+  padding: var(--s-2) var(--s-3);
+}
+.dock-body .audit-intro {
+  border-color: var(--accent);
+  background: var(--accent-050);
+}
+.dock-body .audit-who,
+.dock-body .coach-who {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: .12em;
+  color: var(--accent-300);
+  font-weight: 700;
+}
+.dock-body .audit-frame { font-size: var(--fs-xs); color: var(--ink-2); margin: 0; }
+.dock-body .audit-claim,
+.dock-body .audit-working { font-size: var(--fs-xs); font-family: var(--font-mono); color: var(--ink-2); }
+.dock-body .audit-result { font-size: var(--fs-sm); color: var(--ink); }
+.dock-body .miss-q { font-size: var(--fs-xs); color: var(--ink); font-weight: 700; }
+.dock-body .miss-opts { gap: var(--s-1); }
+.dock-body .miss-opt {
+  background: var(--work-2);
+  border: 1px solid var(--work-border);
+  color: var(--work-ink);
+  font-size: var(--fs-xs);
+  padding: 4px var(--s-2);
+  border-radius: var(--r-sm);
+  text-align: left;
+  cursor: pointer;
+}
+.dock-body .miss-opt:hover { border-color: var(--accent); }
+.dock-body .miss-opt[data-state="correct"] {
+  border-color: var(--success);
+  background: var(--success-050);
+  color: var(--ok-ink);
+  font-weight: 700;
+}
+.dock-body .miss-opt[data-state="wrong"] {
+  border-color: var(--danger);
+  background: var(--danger-050);
+  color: var(--bad-ink);
+}
+.dock-body .miss-fix {
+  background: var(--success-050);
+  border-left: 3px solid var(--success);
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-xs);
+  color: var(--ok-ink);
+}
+.dock-body .coach {
+  background: var(--surface-3);
+  border-left: 3px solid var(--accent);
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+}
+
+/* Choice grids (accept/reject, trust/flag, capstone actions) */
+.dock-body .choice-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  max-width: none;
+}
+.dock-body .choice {
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 6px var(--s-3);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.dock-body .choice:hover { border-color: var(--accent); background: var(--accent-050); }
+.dock-body .choice[data-state="picked"] {
+  background: var(--accent);
+  color: var(--bg-2);
+  border-color: var(--accent-700);
+}
+.dock-body .choice[data-state="correct"] {
+  border-color: var(--success);
+  background: var(--success-050);
+  color: var(--ok-ink);
+}
+.dock-body .choice[data-state="wrong"] {
+  border-color: var(--danger);
+  background: var(--danger-050);
+  color: var(--bad-ink);
+}
+
+/* Verdict panel (post-commit) */
+.dock-body .verdict {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--s-2) var(--s-3);
+  border-left: 3px solid var(--accent);
+  background: var(--surface-3);
+  border-radius: var(--r-sm);
+}
+.dock-body .verdict-verdict-good { border-left-color: var(--success); }
+.dock-body .verdict-warn   { border-left-color: var(--warn); }
+.dock-body .verdict-bad    { border-left-color: var(--danger); }
+.dock-body .verdict .status { display: flex; align-items: baseline; gap: var(--s-2); }
+.dock-body .verdict .status-icon { font-size: var(--fs-md); }
+.dock-body .verdict .status-state { font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .12em; text-transform: uppercase; color: var(--accent-300); font-weight: 700; }
+.dock-body .verdict-good .status-state { color: var(--success); }
+.dock-body .verdict-warn  .status-state { color: var(--warn); }
+.dock-body .verdict-bad   .status-state { color: var(--danger); }
+.dock-body .verdict-headline { font-size: var(--fs-md); color: var(--ink); font-weight: 700; }
+.dock-body .verdict-detail  { font-size: var(--fs-xs); color: var(--ink-2); }
+.dock-body .gauge { display: flex; gap: 2px; margin-top: var(--s-1); }
+.dock-body .gauge-seg {
+  flex: 1; text-align: center;
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  padding: 4px var(--s-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--muted);
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.dock-body .gauge-seg.miss { color: var(--bad-ink); border-color: var(--danger); background: var(--danger-050); }
+.dock-body .gauge-seg.on   { color: var(--ok-ink);  border-color: var(--success); background: var(--success-050); font-weight: 700; }
+
+/* Data tables (formula / capstone) read as console readouts */
+.dock-body table.data {
+  width: 100%;
+  max-width: none;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+}
+.dock-body table.data th,
+.dock-body table.data td {
+  padding: 4px var(--s-2);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+.dock-body table.data th {
+  color: var(--muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 10px;
+}
+.dock-body table.data td.num { text-align: right; color: var(--ink); }
+.dock-body table.data tr.row-flag td { background: var(--accent-050); }
+
+/* Stat row (percent panel) */
+.dock-body .stat-row {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+.dock-body .stat {
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--work);
+  border: 1px solid var(--work-border);
+  border-radius: var(--r-sm);
+  padding: var(--s-1) var(--s-2);
+}
+.dock-body .stat .k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+.dock-body .stat .v {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* Honors sub-blocks inside the formula panel */
+.dock-body .honors-block {
+  border-left: 2px solid var(--honors);
+  padding: var(--s-2) var(--s-3);
+  margin-top: var(--s-2);
+  background: var(--honors-050);
+  border-radius: var(--r-sm);
+}
+.dock-body .honors-tag {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--honors);
+  font-weight: 700;
+}
+.dock-body .brief {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.dock-body .brief-role {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent-300);
+}
+.dock-body .brief-goal { font-size: var(--fs-sm); color: var(--ink); font-weight: 700; }
+.dock-body .brief-why  { font-size: var(--fs-xs); color: var(--ink-2); }
+.dock-body .brief-art {
+  margin: 0 0 var(--s-2) 0;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  max-height: 90px;
+}
+.dock-body .brief-art svg { height: 100%; width: 100%; object-fit: cover; }
+
+/* Zoom panel (always-compact) */
+.dock-body .zoom-stage {
+  background: var(--work);
+  border: 1px solid var(--work-border);
+  border-radius: var(--r-sm);
+  padding: var(--s-2);
+  max-height: 110px;
+  overflow: hidden;
+}
+.dock-body .zoom-svg { width: 100%; height: auto; max-height: 90px; }
+.dock-body .zoom-readout { display: flex; align-items: baseline; gap: var(--s-2); }
+.dock-body .zoom-count { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-xl); color: var(--accent-ink); }
+.dock-body .zoom-unit { font-size: var(--fs-sm); color: var(--muted); }
+.dock-body .zoom-slider { width: 100%; }
+.dock-body .zoom-analogy { font-size: var(--fs-sm); color: var(--ink); font-weight: 700; }
+
+/* Notes (locked / honors-off hints) */
+.dock-body .note {
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-xs);
+}
+.dock-body .note-info {
+  background: var(--accent-050);
+  border: 1px solid var(--accent);
+  color: var(--ink-2);
+}
+
+/* =========================================================================
+   TOP STRIP — brand + voyage/sol/xp stats + Reset + Systems + Honors toggle
+   ========================================================================= */
+.bridge-top {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.top-stats { display: inline-flex; align-items: center; gap: var(--s-3); }
+.top-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--s-1);
+  font-family: var(--font-mono);
+}
+.top-stat .k {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.top-stat .v { font-size: var(--fs-sm); color: var(--ink); font-weight: 700; }
+.top-stat .v .of { color: var(--muted); font-weight: 400; }
+
+.top-btn {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 4px var(--s-3);
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  transition: border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+.top-btn:hover { border-color: var(--accent); color: var(--ink); background: var(--accent-050); }
+.top-systems-hint {
+  background: var(--accent);
+  color: var(--bg-2);
+  padding: 1px var(--s-1);
+  border-radius: var(--r-pill);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* =========================================================================
+   TEKS MODAL — overlay, opens from the top-strip Systems button.
+   ========================================================================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: oklch(0.04 0.02 252 / .65);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  padding: var(--s-5);
+}
+.modal-card {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  width: min(640px, 100%);
+  max-height: min(80vh, 100%);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--border);
+}
+.modal-head h2 { font-size: var(--fs-lg); color: var(--ink); }
+.modal-close {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--ink-2);
+  font-size: var(--fs-lg);
+  width: 32px; height: 32px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+}
+.modal-close:hover { border-color: var(--accent); color: var(--ink); }
+.modal-body {
+  padding: var(--s-4);
+  overflow: auto;
+}
+.modal-body .se-item {
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--border);
+}
+.modal-body .se-code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--accent-300);
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+.modal-body .se-text { font-size: var(--fs-sm); color: var(--ink-2); margin: var(--s-1) 0; }
+.modal-body .meter {
+  width: 100%; height: 6px;
+  background: var(--surface-3);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.modal-body .meter-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--r-pill);
+}
+.modal-body .meter-fill.honors { background: var(--honors); }
+.modal-body .se-cap {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+  letter-spacing: .06em;
+}
+.modal-body .badge-honors {
+  background: var(--honors-050);
+  color: var(--honors);
+  border: 1px solid var(--honors);
+  padding: 1px var(--s-2);
+  border-radius: var(--r-pill);
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* =========================================================================
+   RESPONSIVE FALLBACK — on very small viewports, allow scroll so content
+   remains reachable. The bridge lock is for typical laptop widths.
+   ========================================================================= */
+@media (max-width: 980px) {
+  html, body { height: auto; }
+  body { overflow: auto; display: block; }
+  body > div { flex: none; min-height: 0; display: block; }
+  .bridge {
+    position: static;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    padding: var(--s-3);
+    gap: var(--s-3);
+  }
+  .bridge-bg { display: none; }
+  .bridge-view,
+  .hud-brief,
+  .hud-crew,
+  .hud-tabs,
+  .console-strip,
+  .hud-dock {
+    position: static;
+    transform: none;
+    width: auto;
+    height: auto;
+    inset: auto;
+    bottom: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    max-width: none;
+    pointer-events: auto;
+  }
+  .hud-tabs { flex-direction: row; flex-wrap: wrap; overflow: visible; }
+  .hud-tabs .tab { flex: 0 0 auto; }
+  .hud-meters { width: auto; }
+  .hud-meters .ship-svg { max-height: 220px; }
+  .hud-comm { transform: none; }
+  .hud-dock { height: auto; }
+  .dock-body > .panel { position: static; inset: auto; overflow: visible; }
+}
+
+/* On short laptop screens, shrink the dock a touch so the scene stays */
+@media (max-height: 700px) and (min-width: 981px) {
+  .bridge { --dock-h: 300px; }
+  .bridge-view { top: 50px; bottom: calc(var(--dock-h) + var(--s-3)); }
+  .hud-tabs, .hud-meters { top: 50px; bottom: calc(var(--dock-h) + var(--s-3)); }
+}
+
+/* =========================================================================
+   REDUCED MOTION — strip the GSAP tween durations so values snap.
+   (world.js also checks prefers-reduced-motion and snaps its tweens.)
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}

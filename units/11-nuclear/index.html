@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 11 · Nuclear Chemistry</title>
+<meta name="description" content="Hot Lab: run a hospital radiopharmacy for a morning. Identify a source from its decay equation, work out what is left in a decaying vial, pick the isotope each job needs, and compare fission with fusion. TEKS C.14.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<link rel="stylesheet" href="../../shared/css/components.css">
+<link rel="stylesheet" href="../../shared/css/casefile.css">
+<link rel="stylesheet" href="css/style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
+</head>
+<body>
+<div x-data="sim" x-cloak>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../index.html"><span class="mark">Nc</span> Hot Lab</a>
+      <span class="grow"></span>
+      <label class="switch" title="Reveal advanced content for Honors sections">
+        <input type="checkbox" x-model="honors">
+        <span class="track"></span>
+        <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+      </label>
+    </div>
+  </header>
+
+  <main class="wrap page-main">
+    <div class="page-head">
+      <h1>Nuclear Chemistry</h1>
+      <p class="eyebrow">Unit 11 · TEKS C.14</p>
+    </div>
+
+    <div class="mission">
+      <span class="mission-role">Nuclear medicine technologist · hospital radiopharmacy</span>
+      <span class="mission-goal">Eight patients are on this morning's list. The generator was eluted at 07:00 and the technetium in that vial has been decaying ever since. Every wrong call costs you minutes, and minutes cost you activity. Lock in a bench by clearing it three times in a row.</span>
+    </div>
+
+    <div data-casefile-teaser></div>
+
+    <div class="sim-grid">
+      <!-- ============ LEFT: the simulator ============ -->
+      <div class="stack">
+
+        <!-- Badges + reset; XP/streak demoted to a quiet line -->
+        <div class="panel">
+          <div class="row" style="align-items: center; gap: var(--s-3);">
+            <span class="badge" :class="gOverall()===1 ? 'earned' : 'locked'" x-text="gOverall()===1 ? '✓ All benches certified' : 'Benches not yet certified'"></span>
+            <span class="badge honors" :class="(gMastered('h1') && gMastered('h2') && gMastered('h3')) ? 'earned' : 'locked'" x-show="honors" x-text="(gMastered('h1') && gMastered('h2') && gMastered('h3')) ? '✓ Honors mastery' : 'Honors badge locked'"></span>
+            <span class="grow"></span>
+            <button class="btn btn-sm" @click="resetProgress()">Reset progress</button>
+          </div>
+          <p class="small muted" style="margin-top: var(--s-2);">XP <span x-text="g_xp"></span> · streak <span x-text="g_streak"></span> (best <span x-text="g_best"></span>)</p>
+        </div>
+
+        <!-- Mode tabs -->
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" :aria-selected="mode==='ident'"    @click="setMode('ident')">Identify the source</button>
+          <button class="tab" role="tab" :aria-selected="mode==='dose'"     @click="setMode('dose')">What is left</button>
+          <button class="tab" role="tab" :aria-selected="mode==='apply'"    @click="setMode('apply')">Pick the isotope</button>
+          <button class="tab" role="tab" :aria-selected="mode==='power'"    @click="setMode('power')">Fission or fusion</button>
+          <button class="tab" role="tab" :aria-selected="mode==='capstone'" @click="setMode('capstone')">The last call<span class="small" x-show="!capUnlocked"> (locked)</span></button>
+        </div>
+
+        <!-- ---------- C.14(A) name the emission, balance the equation ---------- -->
+        <div class="panel" x-show="mode==='ident' && id_">
+          <template x-if="id_">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="id_.sc.icon"></span> <span x-text="id_.sc.system"></span></span>
+                <div class="brief-goal" x-text="id_.sc.goal"></div>
+                <div class="brief-why" x-text="id_.sc.why"></div>
+              </div>
+
+              <div class="evidence">
+                <span class="k">Survey meter</span>
+                <span class="t" x-text="id_.sc.evidence"></span>
+              </div>
+
+              <p class="small muted" style="margin-bottom: var(--s-2);">1. What is it emitting?</p>
+              <div class="emgrid">
+                <template x-for="e in EMISSIONS" :key="e.key">
+                  <button class="choice" :data-state="idEmState(e.key)" @click="idPickEm(e.key)">
+                    <span class="tag" x-text="e.tag"></span>
+                    <span x-text="e.label"></span>
+                  </button>
+                </template>
+              </div>
+
+              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">2. Set the daughter nuclide so both numbers are conserved.</p>
+              <div class="stepper-row">
+                <span class="stepper">
+                  <span class="el">mass number A</span>
+                  <button class="btn btn-sm" @click="idStep('idA',-1)" aria-label="decrease the daughter mass number">&minus;</button>
+                  <span class="sub" x-text="idA"></span>
+                  <button class="btn btn-sm" @click="idStep('idA',1)" aria-label="increase the daughter mass number">+</button>
+                </span>
+                <span class="stepper">
+                  <span class="el">atomic number Z</span>
+                  <button class="btn btn-sm" @click="idStep('idZ',-1)" aria-label="decrease the daughter atomic number">&minus;</button>
+                  <span class="sub" x-text="idZ"></span>
+                  <button class="btn btn-sm" @click="idStep('idZ',1)" aria-label="increase the daughter atomic number">+</button>
+                </span>
+                <span class="small muted">Z <span x-text="idZ"></span> is <strong x-text="idDaughterName"></strong>, so the daughter reads <span class="mono" x-text="idDaughterSym + '-' + idA"></span>.</span>
+              </div>
+
+              <div class="nuceq" :class="{ balanced: idBalanced }">
+                <span x-ce="idEquation"></span>
+                <div class="conserve">
+                  <span class="item" :class="idEm ? (idMassSum === id_.n.A ? 'ok' : 'no') : ''"
+                        x-text="idEm ? ('mass: ' + id_.n.A + ' left, ' + idMassSum + ' right') : 'mass: pick an emission first'"></span>
+                  <span class="item" :class="idEm ? (idChargeSum === id_.n.Z ? 'ok' : 'no') : ''"
+                        x-text="idEm ? ('charge: ' + id_.n.Z + ' left, ' + idChargeSum + ' right') : 'charge: pick an emission first'"></span>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="idCommit()" :disabled="idDone || !idEm">Log the source</button>
+                <button class="btn btn-ghost" x-show="idChecked" @click="idNext()">Next source</button>
+              </div>
+
+              <template x-if="idVerdict">
+                <div class="verdict" :class="'verdict-' + idVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="idVerdict.icon"></span>
+                    <span class="status-state" x-text="idVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-text="idVerdict.headline"></span>
+                  <span class="verdict-detail" x-text="idVerdict.detail"></span>
+                  <div class="nuceq" style="margin-top: var(--s-2);"><span x-ce="idVerdict.eq"></span></div>
+                </div>
+              </template>
+
+              <!-- Honors h1: the whole decay series -->
+              <div class="honors-block" x-show="honors">
+                <span class="honors-tag">Honors · decay series</span>
+                <div class="note note-info" x-show="!gMastered('a')" style="margin-top: var(--s-3);">Certify the decay equations bench (three correct in a row) to unlock the series bench.</div>
+                <template x-if="gMastered('a') && sr">
+                  <div style="margin-top: var(--s-3);">
+                    <p class="small" x-text="sr.s.story"></p>
+                    <div class="note note-info" style="margin-top: var(--s-3);">
+                      <span x-text="sr.s.parent.sym"></span> ends on <span x-text="sr.s.end.sym"></span>, which is stable. How many of each decay does the whole chain take?
+                    </div>
+                    <p class="small muted" style="margin: var(--s-3) 0 var(--s-2);" x-text="sr.sc.why"></p>
+                    <div class="stepper-row">
+                      <span class="stepper">
+                        <span class="el">alpha decays</span>
+                        <button class="btn btn-sm" @click="srStep('srAlpha',-1)" aria-label="fewer alpha decays">&minus;</button>
+                        <span class="sub" x-text="srAlpha"></span>
+                        <button class="btn btn-sm" @click="srStep('srAlpha',1)" aria-label="more alpha decays">+</button>
+                      </span>
+                      <span class="stepper">
+                        <span class="el">beta decays</span>
+                        <button class="btn btn-sm" @click="srStep('srBeta',-1)" aria-label="fewer beta decays">&minus;</button>
+                        <span class="sub" x-text="srBeta"></span>
+                        <button class="btn btn-sm" @click="srStep('srBeta',1)" aria-label="more beta decays">+</button>
+                      </span>
+                    </div>
+                    <div class="nuceq" :class="{ balanced: srOk }">
+                      <span x-ce="srEquation"></span>
+                      <div class="conserve">
+                        <span class="item" :class="srA === sr.s.end.A ? 'ok' : 'no'" x-text="'your chain lands at A ' + srA + ', target A ' + sr.s.end.A"></span>
+                        <span class="item" :class="srZ === sr.s.end.Z ? 'ok' : 'no'" x-text="'and at Z ' + srZ + ', target Z ' + sr.s.end.Z"></span>
+                      </div>
+                    </div>
+                    <div class="row" style="margin-top: var(--s-3);">
+                      <button class="btn btn-honors" @click="srCommit()" :disabled="srDone">Close the chain</button>
+                      <button class="btn btn-ghost" x-show="srChecked" @click="srNext()">Next series</button>
+                    </div>
+                    <template x-if="srVerdict">
+                      <div class="verdict" :class="'verdict-' + srVerdict.tone">
+                        <div class="status">
+                          <span class="status-icon" x-text="srVerdict.icon"></span>
+                          <span class="status-state" x-text="srVerdict.state"></span>
+                        </div>
+                        <span class="verdict-headline" x-text="srVerdict.headline"></span>
+                        <span class="verdict-detail" x-text="srVerdict.detail"></span>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.14(C) half-life: what is left in the vial ---------- -->
+        <div class="panel" x-show="mode==='dose' && ds">
+          <template x-if="ds">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="ds.sc.icon"></span> <span x-text="ds.sc.system"></span></span>
+                <div class="brief-goal" x-text="ds.sc.goal"></div>
+                <div class="brief-why" x-text="ds.sc.why"></div>
+              </div>
+
+              <div class="readout">
+                <div class="cell"><div class="k">on the label</div><div class="v" x-text="ds.sc.isotope"></div></div>
+                <div class="cell"><div class="k">assayed at</div><div class="v" x-text="fmt(ds.a0) + ' mCi'"></div></div>
+                <div class="cell"><div class="k">time since</div><div class="v" x-text="fmt(ds.elapsed) + ' ' + dsUnitWord"></div></div>
+              </div>
+
+              <div class="eqn" style="margin-top: var(--s-4);"><span x-tex="'N = N_0 \\left(\\tfrac{1}{2}\\right)^{t / t_{1/2}}'"></span></div>
+
+              <div class="row" style="gap: var(--s-4); align-items: flex-end; margin-top: var(--s-4);">
+                <div class="field" style="flex: 1 1 260px;">
+                  <label for="dsiso">Which half-life applies?</label>
+                  <select id="dsiso" x-model="dsIso" :disabled="dsDone">
+                    <option value="" disabled>choose an isotope</option>
+                    <template x-for="c in ds.candidates" :key="c.sym">
+                      <option :value="c.sym" x-text="c.sym + '  (' + fmt(hlIn(c.sym, ds.unit)) + ' ' + dsUnitWord + ')'"></option>
+                    </template>
+                  </select>
+                </div>
+                <div class="field" style="width: 190px;">
+                  <label for="dsval">Activity now (mCi)</label>
+                  <input id="dsval" type="number" step="0.01" x-model="dsVal" :disabled="dsDone" placeholder="your value">
+                </div>
+              </div>
+
+              <div style="margin-top: var(--s-4);" x-show="dsIso">
+                <div class="eqline">
+                  <span x-text="'N0 = ' + fmt(ds.a0) + ' mCi'"></span>
+                  <span x-text="'t = ' + fmt(ds.elapsed) + ' ' + dsUnitWord"></span>
+                  <span x-text="'half-life = ' + fmt(hlIn(dsIso || ds.sc.isotope, ds.unit)) + ' ' + dsUnitWord"></span>
+                </div>
+                <div class="eqline">
+                  <span>that is</span>
+                  <span class="calc" x-text="dsHalfLives === null ? '—' : fmt(dsHalfLives) + ' half-lives'"></span>
+                  <span>elapsed, which leaves</span>
+                  <span class="calc" x-text="dsPreview === null ? '—' : fmt(dsPreview) + ' mCi'"></span>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="dsCommit()" :disabled="dsDone || !dsIso || dsVal===''" x-text="ds.sc.actionLabel"></button>
+                <button class="btn btn-ghost" x-show="dsChecked" @click="dsNext()">Next job</button>
+              </div>
+
+              <template x-if="dsVerdict">
+                <div class="verdict" :class="'verdict-' + dsVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="dsVerdict.icon"></span>
+                    <span class="status-state" x-text="dsVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-text="dsVerdict.headline"></span>
+                  <span class="verdict-detail" x-text="dsVerdict.detail"></span>
+                  <template x-if="dsVerdict.gauge">
+                    <div class="gauge">
+                      <div class="gauge-seg" :class="dsVerdict.gauge==='low' ? 'miss' : ''">under-read</div>
+                      <div class="gauge-seg" :class="dsVerdict.gauge==='on' ? 'on' : ''">on the assay</div>
+                      <div class="gauge-seg" :class="dsVerdict.gauge==='high' ? 'miss' : ''">over-read</div>
+                    </div>
+                  </template>
+                </div>
+              </template>
+
+              <!-- Honors h3: effective half-life -->
+              <div class="honors-block" x-show="honors">
+                <span class="honors-tag">Honors · effective half-life</span>
+                <div class="note note-info" x-show="!gMastered('hl')" style="margin-top: var(--s-3);">Certify the half-life bench to unlock the patient release bench.</div>
+                <template x-if="gMastered('hl') && ef">
+                  <div style="margin-top: var(--s-3);">
+                    <p class="small" x-text="ef.c.story"></p>
+                    <p class="small muted" style="margin-top: var(--s-2);" x-text="ef.c.why"></p>
+                    <div class="readout" style="margin-top: var(--s-3);">
+                      <div class="cell"><div class="k">agent</div><div class="v" style="font-size: var(--fs-sm)" x-text="ef.c.isotope"></div></div>
+                      <div class="cell"><div class="k">physical</div><div class="v" x-text="fmt(ef.c.physical) + ' ' + ef.unit.slice(0,1)"></div></div>
+                      <div class="cell"><div class="k">biological</div><div class="v" x-text="fmt(ef.c.biological) + ' ' + ef.unit.slice(0,1)"></div></div>
+                      <div class="cell"><div class="k">release below</div><div class="v" x-text="Math.round(ef.c.threshold*100) + '%'"></div></div>
+                    </div>
+                    <div class="eqn" style="margin: var(--s-3) 0;"><span x-tex="'\\frac{1}{t_e} = \\frac{1}{t_p} + \\frac{1}{t_b}'"></span></div>
+                    <div class="row" style="gap: var(--s-4); align-items: flex-end;">
+                      <div class="field" style="width: 210px;">
+                        <label for="efte">Effective half-life (<span x-text="ef.unit"></span>)</label>
+                        <input id="efte" type="number" step="0.01" x-model="efTe" :disabled="efDone" placeholder="your value">
+                      </div>
+                      <div class="field" style="width: 230px;">
+                        <label for="eftime">Time to the threshold (<span x-text="ef.unit"></span>)</label>
+                        <input id="eftime" type="number" step="0.01" x-model="efTime" :disabled="efDone" placeholder="your value">
+                      </div>
+                    </div>
+                    <div class="row" style="margin-top: var(--s-3);">
+                      <button class="btn btn-honors" @click="efCommit()" :disabled="efDone || efTe==='' || efTime===''">Tell the ward</button>
+                      <button class="btn btn-ghost" x-show="efChecked" @click="efNext()">Next patient</button>
+                    </div>
+                    <template x-if="efVerdict">
+                      <div class="verdict" :class="'verdict-' + efVerdict.tone">
+                        <div class="status">
+                          <span class="status-icon" x-text="efVerdict.icon"></span>
+                          <span class="status-state" x-text="efVerdict.state"></span>
+                        </div>
+                        <span class="verdict-headline" x-text="efVerdict.headline"></span>
+                        <span class="verdict-detail" x-text="efVerdict.detail"></span>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.14(C) pick the isotope and justify it ---------- -->
+        <div class="panel" x-show="mode==='apply' && ap">
+          <template x-if="ap">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="ap.sc.icon"></span> <span x-text="ap.sc.system"></span></span>
+                <div class="brief-goal" x-text="ap.sc.goal"></div>
+                <div class="brief-why" x-text="ap.sc.why"></div>
+              </div>
+
+              <p class="small muted" style="margin-bottom: var(--s-2);">1. Which vial do you reach for?</p>
+              <div class="isogrid">
+                <template x-for="n in ap.offered" :key="n.sym">
+                  <button class="choice" :data-state="apIsoState(n.sym)" @click="apPickIso(n.sym)">
+                    <span class="iname" x-text="n.name"></span>
+                    <span class="ifacts" x-text="modeLabel(n) + ' · half-life ' + hlLabel(n)"></span>
+                    <span class="iuse" x-text="'usually used for: ' + n.use"></span>
+                  </button>
+                </template>
+              </div>
+
+              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">2. Which property actually decided it?</p>
+              <div class="reasongrid">
+                <template x-for="r in REASONS" :key="r.key">
+                  <button class="choice" :data-state="apReasonState(r.key)" @click="apPickReason(r.key)" :disabled="!apPick" x-text="r.label"></button>
+                </template>
+              </div>
+
+              <div class="row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="apCommit()" :disabled="apDone || !apPick || !apReason">Send it up</button>
+                <button class="btn btn-ghost" x-show="apChecked" @click="apNext()">Next request</button>
+              </div>
+
+              <template x-if="apVerdict">
+                <div class="verdict" :class="'verdict-' + apVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="apVerdict.icon"></span>
+                    <span class="status-state" x-text="apVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-text="apVerdict.headline"></span>
+                  <span class="verdict-detail" x-text="apVerdict.detail"></span>
+                </div>
+              </template>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.14(B) fission, fusion, or neither ---------- -->
+        <div class="panel" x-show="mode==='power' && pw">
+          <template x-if="pw">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="pw.sc.icon"></span> <span x-text="pw.sc.system"></span></span>
+                <div class="brief-goal" x-text="pw.sc.goal"></div>
+                <div class="brief-why" x-text="pw.sc.why"></div>
+              </div>
+
+              <div class="nuceq"><span x-ce="pw.sc.ce"></span></div>
+
+              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">1. What kind of reaction is that?</p>
+              <div class="choice-grid" style="max-width: 560px;">
+                <button class="choice" :data-state="pwKindState('fission')" @click="pwPickKind('fission')">Fission: one heavy nucleus splits into two smaller ones</button>
+                <button class="choice" :data-state="pwKindState('fusion')"  @click="pwPickKind('fusion')">Fusion: light nuclei join into a heavier one</button>
+                <button class="choice" :data-state="pwKindState('neither')" @click="pwPickKind('neither')">Neither: this is ordinary decay or capture, not splitting or joining</button>
+              </div>
+
+              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);" x-text="'2. ' + pw.sc.question.prompt"></p>
+              <div class="choice-grid">
+                <template x-for="o in pw.sc.question.options" :key="o.key">
+                  <button class="choice" :data-state="pwAnsState(o.key)" @click="pwPickAns(o.key)" x-text="o.label"></button>
+                </template>
+              </div>
+
+              <div class="row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="pwCommit()" :disabled="pwDone || !pwKind || !pwAns">Put it on the record</button>
+                <button class="btn btn-ghost" x-show="pwChecked" @click="pwNext()">Next question</button>
+              </div>
+
+              <template x-if="pwVerdict">
+                <div class="verdict" :class="'verdict-' + pwVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="pwVerdict.icon"></span>
+                    <span class="status-state" x-text="pwVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-text="pwVerdict.headline"></span>
+                  <span class="verdict-detail" x-text="pwVerdict.detail"></span>
+                </div>
+              </template>
+
+              <!-- Honors h2: binding energy per nucleon -->
+              <div class="honors-block" x-show="honors">
+                <span class="honors-tag">Honors · binding energy per nucleon</span>
+                <div class="note note-info" x-show="!gMastered('b')" style="margin-top: var(--s-3);">Certify the fission and fusion bench to unlock the binding-energy bench.</div>
+                <template x-if="gMastered('b') && be">
+                  <div style="margin-top: var(--s-3);">
+                    <p class="small" x-text="be.c.story"></p>
+                    <p class="small muted" style="margin-top: var(--s-2);" x-text="be.sc.why"></p>
+                    <table class="data bdata" style="max-width: 460px; margin-top: var(--s-3);">
+                      <thead><tr><th>quantity</th><th class="num">value</th></tr></thead>
+                      <tbody>
+                        <tr><td>nuclide</td><td class="num mono" x-text="be.c.sym + '  (A ' + be.c.A + ', Z ' + be.c.Z + ')'"></td></tr>
+                        <tr><td>measured atomic mass</td><td class="num mono" x-text="be.c.mass.toFixed(6) + ' u'"></td></tr>
+                        <tr><td>mass of one hydrogen-1 atom</td><td class="num mono" x-text="HYDROGEN_ATOM_MASS_U.toFixed(6) + ' u'"></td></tr>
+                        <tr><td>mass of one neutron</td><td class="num mono" x-text="NEUTRON_MASS_U.toFixed(6) + ' u'"></td></tr>
+                        <tr><td>energy per unit of mass defect</td><td class="num mono" x-text="MEV_PER_U + ' MeV/u'"></td></tr>
+                      </tbody>
+                    </table>
+                    <p class="small muted" style="margin-top: var(--s-2);">Use the hydrogen ATOM mass rather than the bare proton, because the mass you are comparing against is an atomic mass too. The electrons then cancel on both sides.</p>
+
+                    <div class="row" style="gap: var(--s-4); align-items: flex-end; margin-top: var(--s-3);">
+                      <div class="field" style="width: 230px;">
+                        <label for="beval">Binding energy per nucleon (MeV)</label>
+                        <input id="beval" type="number" step="0.01" x-model="beVal" :disabled="beDone" placeholder="your value">
+                      </div>
+                    </div>
+                    <p class="small muted" style="margin: var(--s-3) 0 var(--s-2);">Which way does this nuclide release energy?</p>
+                    <div class="choice-grid" style="max-width: 560px;">
+                      <button class="choice" :data-state="beClassState('fusion')"  @click="bePickClass('fusion')">By fusion: it is light enough that joining moves it up the curve</button>
+                      <button class="choice" :data-state="beClassState('fission')" @click="bePickClass('fission')">By fission: it is heavy enough that splitting moves it up the curve</button>
+                      <button class="choice" :data-state="beClassState('peak')"    @click="bePickClass('peak')">Neither: it already sits near the top of the curve</button>
+                    </div>
+                    <div class="row" style="margin-top: var(--s-3);">
+                      <button class="btn btn-honors" @click="beCommit()" :disabled="beDone || beVal==='' || !beClass">Place it on the curve</button>
+                      <button class="btn btn-ghost" x-show="beChecked" @click="beNext()">Next nuclide</button>
+                    </div>
+                    <template x-if="beVerdict">
+                      <div class="verdict" :class="'verdict-' + beVerdict.tone">
+                        <div class="status">
+                          <span class="status-icon" x-text="beVerdict.icon"></span>
+                          <span class="status-state" x-text="beVerdict.state"></span>
+                        </div>
+                        <span class="verdict-headline" x-text="beVerdict.headline"></span>
+                        <span class="verdict-detail" x-text="beVerdict.detail"></span>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- Capstone: the last patient of the morning ---------- -->
+        <div class="panel" x-show="mode==='capstone'">
+          <div class="note note-info" x-show="!capUnlocked">
+            The last call unlocks once all four core benches (C.14 A to C, including the half-life bench) are certified. Certified so far: <span x-text="Math.round(gOverall()*4)"></span> of 4.
+          </div>
+          <button class="btn btn-accent" x-show="capUnlocked && !cap" @click="genCapstone()">Take the call</button>
+
+          <template x-if="capUnlocked && cap">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="cap.sc.icon"></span> <span x-text="cap.sc.system"></span></span>
+                <div class="brief-goal" x-text="cap.sc.goal"></div>
+                <div class="brief-why" x-text="cap.sc.why"></div>
+              </div>
+
+              <div class="readout">
+                <div class="cell"><div class="k">time now</div><div class="v" x-text="cap.clockAtCall"></div></div>
+                <div class="cell"><div class="k">in the vial</div><div class="v" x-text="fmt(cap.vialAtCall) + ' mCi'"></div></div>
+                <div class="cell"><div class="k">prescription</div><div class="v" x-text="fmt(cap.needed) + ' mCi'"></div></div>
+                <div class="cell"><div class="k">afternoon slot</div><div class="v" style="font-size: var(--fs-md)" x-text="cap.afternoonOpen ? 'one open' : 'full'"></div></div>
+              </div>
+              <p class="small muted" style="margin-top: var(--s-3);">
+                The fresh generator lands at 14:00. Nothing you do to this vial makes it hotter, and it is still halving every six hours while you decide.
+              </p>
+
+              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">Make the call.</p>
+              <div class="choice-grid">
+                <template x-for="o in cap.sc.options" :key="o.key">
+                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
+                </template>
+              </div>
+
+              <div class="row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Commit</button>
+              </div>
+
+              <template x-if="capVerdict">
+                <div class="verdict" :class="'verdict-' + capVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="capVerdict.icon"></span>
+                    <span class="status-state" x-text="capVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-text="capVerdict.headline"></span>
+                  <span class="verdict-detail" x-text="capVerdict.detail"></span>
+                </div>
+              </template>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- World-state: the vial, and the clock eating it ---------- -->
+        <div class="panel worldstate">
+          <div class="panel-head">
+            <span class="panel-title" style="font-size: var(--fs-md)">The vial &amp; the clock</span>
+            <span class="grow"></span>
+            <span class="small muted"><span x-text="clockLabel"></span> · <span x-text="patients"></span> scanned</span>
+          </div>
+          <div class="crew-status">
+            <span class="crew-face" x-text="vialMood"></span>
+            <div class="crew-bar">
+              <div class="row" style="justify-content: space-between; align-items: baseline;">
+                <span class="small" style="font-weight:700;" x-text="vialState"></span>
+                <span class="small mono" x-text="fmt(vial) + ' mCi · ' + dosesLeft + ' doses'"></span>
+              </div>
+              <div class="meter"><div class="meter-fill" :style="`width:${vialPct}%; background:${vialColor}`"></div></div>
+              <p class="small muted" style="margin-top: var(--s-1);">340 mCi was eluted at 07:00. Technetium-99m halves every 6 hours, so time on the clock is activity off the bench.</p>
+            </div>
+          </div>
+          <p class="worldstate-empty" x-show="!worldLog.length">Nothing logged yet. Make a call and watch what the minutes it costs you do to the vial.</p>
+          <ul class="worldstate-list" x-show="worldLog.length">
+            <template x-for="w in worldLog" :key="w.id">
+              <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
+                <span class="ws-icon" x-text="w.icon"></span>
+                <span x-text="w.text"></span>
+              </li>
+            </template>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- ============ RIGHT: skills mastery ============ -->
+      <aside class="panel se-panel">
+        <div class="panel-head"><span class="panel-title" style="font-size: var(--fs-md)">Benches certified</span></div>
+        <template x-for="se in SE" :key="se.id">
+          <div class="se-item" :class="{ active: se.mode===mode, mastered: gMastered(se.id) }" x-show="!se.honors || honors">
+            <div class="row" style="justify-content: space-between;">
+              <span class="se-code" x-text="se.code"></span>
+              <span class="badge badge-honors" x-show="se.honors">Honors</span>
+            </div>
+            <div class="se-text" x-text="se.text"></div>
+            <div class="meter"><div class="meter-fill" :class="{ honors: se.honors }" :style="`width:${gMastery(se.id)*100}%`"></div></div>
+            <div class="se-cap mono" x-text="seCaption(se)"></div>
+          </div>
+        </template>
+        <p class="small muted" style="margin-top: var(--s-3);">Toggle <strong>Honors</strong> (top right) for decay series, binding energy, and effective half-life, each unlocked by certifying the bench it sits on.</p>
+      </aside>
+    </div>
+
+    <div data-casefile></div>
+  </main>
+</div>
+
+<script type="module">
+  import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
+  import { registerRender } from '../../shared/js/render.js';
+  import { createSim } from './js/main.js';
+  import { mountCaseFile } from '../../shared/js/casefile.js';
+  import { CASE } from './js/case.js';
+  registerRender(Alpine);
+  Alpine.data('sim', createSim);
+  mountCaseFile(Alpine, CASE);
+  window.Alpine = Alpine;
+  Alpine.start();
+</script>
+</body>
+</html>

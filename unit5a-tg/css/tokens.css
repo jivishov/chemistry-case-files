@@ -1,0 +1,98 @@
+/* tokens.css - Mission Console (Unit 5A redesign pilot).
+   Dual-surface system: dark instrument CHROME (the console) + warm parchment
+   WORK (where the chemistry is done). Tinted neutrals only, never pure black/white.
+   OKLCH so the per-system hues share lightness and stay cohesive. */
+
+:root {
+  /* ---- Chrome: the instrument console (dark, tinted cool) ---- */
+  --bg:            oklch(0.155 0.016 252);   /* app background, deep */
+  --bg-2:           oklch(0.135 0.014 252);   /* vignette base */
+  --surface:        oklch(0.205 0.018 252);   /* panel chrome */
+  --surface-2:      oklch(0.250 0.020 252);   /* raised chrome / hover */
+  --surface-3:      oklch(0.175 0.016 252);   /* recessed chrome */
+  --border:         oklch(0.320 0.020 252);   /* chrome hairline */
+  --border-strong:  oklch(0.420 0.022 252);   /* chrome control border */
+
+  /* ---- Ink on chrome (light text for dark surfaces) ---- */
+  --ink:            oklch(0.945 0.012 95);    /* main text on chrome */
+  --ink-2:          oklch(0.780 0.014 85);    /* secondary on chrome */
+  --muted:          oklch(0.620 0.014 85);    /* muted on chrome */
+
+  /* ---- Work: warm parchment inset (light, where chemistry is done) ---- */
+  --work:           oklch(0.945 0.017 75);    /* parchment surface */
+  --work-2:         oklch(0.905 0.018 72);    /* parchment inset */
+  --work-3:         oklch(0.865 0.020 70);    /* parchment recessed */
+  --work-border:    oklch(0.740 0.024 68);   /* parchment border */
+  --work-border-2:  oklch(0.620 0.026 66);   /* parchment strong border */
+  --work-ink:       oklch(0.265 0.018 55);    /* dark text on parchment */
+  --work-ink-2:     oklch(0.400 0.020 60);    /* secondary on parchment */
+  --work-muted:     oklch(0.520 0.018 65);    /* muted on parchment */
+
+  /* ---- Accent: steel-teal (primary system hue, tuned to read on dark) ---- */
+  --accent:        oklch(0.720 0.115 200);
+  --accent-700:    oklch(0.600 0.110 200);
+  --accent-300:    oklch(0.820 0.080 200);
+  --accent-100:    oklch(0.880 0.045 200);
+  --accent-050:    oklch(0.240 0.030 200);    /* dark tinted accent bg on chrome */
+  --accent-glow:   oklch(0.620 0.140 200);
+
+  /* ---- Copper: Honors only (tuned for dark) ---- */
+  --honors:        oklch(0.740 0.140 55);
+  --honors-700:    oklch(0.600 0.130 55);
+  --honors-100:    oklch(0.870 0.060 55);
+  --honors-050:    oklch(0.250 0.035 55);     /* dark tinted honors bg on chrome */
+
+  /* ---- Semantic (tuned: strong color for fills/borders, 050 tint for badges) ---- */
+  --success:       oklch(0.740 0.150 150);
+  --success-050:   oklch(0.240 0.040 150);
+  --success-work:  oklch(0.910 0.045 150);    /* light tint on parchment */
+  --warn:          oklch(0.770 0.140 75);
+  --warn-050:      oklch(0.250 0.040 75);
+  --warn-work:     oklch(0.910 0.055 75);
+  --danger:        oklch(0.680 0.170 25);
+  --danger-050:    oklch(0.250 0.045 25);
+  --danger-work:   oklch(0.910 0.045 25);
+
+  /* ---- Per-system hues (the four coupled stocks) ---- */
+  --sys-air:       oklch(0.720 0.115 200);   /* teal */
+  --sys-power:     oklch(0.760 0.140 75);    /* amber */
+  --sys-food:      oklch(0.720 0.150 150);   /* green */
+  --sys-hull:      oklch(0.660 0.165 25);    /* rose */
+
+  /* ---- Typography ---- */
+  --font-display:  'Space Grotesk', 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-body:     'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+  --font-mono:     'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  --fs-xs:  0.78rem;
+  --fs-sm:  0.88rem;
+  --fs-md:  1rem;
+  --fs-lg:  1.18rem;
+  --fs-xl:  1.5rem;
+  --fs-2xl: 2.1rem;
+  --fs-3xl: 2.9rem;
+
+  --lh-tight: 1.15;
+  --lh-body:  1.55;
+
+  /* ---- Spacing (4px base, shared) ---- */
+  --s-1: 0.25rem; --s-2: 0.5rem;  --s-3: 0.75rem; --s-4: 1rem;
+  --s-5: 1.5rem;  --s-6: 2rem;    --s-7: 3rem;    --s-8: 4rem;
+
+  /* ---- Radius + shadow + motion ---- */
+  --r-sm: 4px; --r-md: 9px; --r-lg: 14px; --r-pill: 999px;
+  /* On dark chrome, elevation reads as a faint top highlight + soft dark drop + accent rim. */
+  --shadow-sm: 0 1px 2px oklch(0.04 0 0 252 / .45), inset 0 1px 0 oklch(1 0 0 0 / .04);
+  --shadow-md: 0 4px 14px oklch(0.04 0 0 252 / .55), inset 0 1px 0 oklch(1 0 0 0 / .05);
+  --shadow-lg: 0 18px 46px oklch(0.03 0 0 252 / .65), 0 0 30px oklch(0.45 0.10 200 / .16);
+  --glow-accent: 0 0 0 1px oklch(0.40 0.06 200 / .55), 0 0 22px oklch(0.55 0.12 200 / .25);
+  --glow-honors: 0 0 0 1px oklch(0.40 0.08 55 / .6), 0 0 22px oklch(0.60 0.14 55 / .28);
+  --ease: cubic-bezier(.2, .7, .3, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --t-fast: .14s; --t-med: .26s; --t-slow: .4s;
+
+  --maxw: 1140px;
+
+  /* Sticky geometry: site-header holds the top slot; the command deck pins below it. */
+  --header-h: 68px;   /* measured site-header chrome height (mark + padding) */
+}
