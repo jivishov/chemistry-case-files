@@ -28,7 +28,7 @@
 
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="../../index.html"><span class="mark">Bd</span> Bonding &amp; Geometry</a>
+      <a class="brand" href="../../index.html"><span class="mark">Tx</span> Chemistry Case Files</a>
       <span class="grow"></span>
       <label class="switch" title="Reveal advanced content">
         <input type="checkbox" x-model="honors">
@@ -40,7 +40,7 @@
 
   <main class="wrap page-main">
     <div class="page-head">
-      <h1>Bonding, Nomenclature &amp; Geometry</h1>
+      <h1><span class="mark">Bd</span> Bonding, Nomenclature &amp; Geometry</h1>
       <p class="eyebrow">Unit 4 · TEKS C.7</p>
     </div>
 
@@ -51,7 +51,17 @@
 
       <div data-casefile-teaser></div>
 
-    <div class="sim-grid">
+    <!-- Mode tabs -->
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" :aria-selected="mode==='bond'"     @click="setMode('bond')">Bond type</button>
+      <button class="tab" role="tab" :aria-selected="mode==='name'"     @click="setMode('name')">Naming</button>
+      <button class="tab" role="tab" :aria-selected="mode==='geometry'" @click="setMode('geometry')">3D geometry</button>
+      <button class="tab" role="tab" :aria-selected="mode==='forces'"   @click="setMode('forces')">Forces &amp; properties</button>
+      <button class="tab" role="tab" :aria-selected="mode==='capstone'" @click="setMode('capstone')">The last bottle<span class="small" x-show="!capUnlocked"> (locked)</span></button>
+      <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')">Case file</button>
+    </div>
+
+    <div class="sim-grid" x-show="mode!=='casefile'">
       <!-- ============ LEFT: the simulator ============ -->
       <div class="stack">
 
@@ -64,15 +74,6 @@
             <button class="btn btn-sm" @click="resetProgress()">Reset progress</button>
           </div>
           <p class="small muted" style="margin-top: var(--s-2);">XP <span x-text="g_xp"></span> · streak <span x-text="g_streak"></span> (best <span x-text="g_best"></span>)</p>
-        </div>
-
-        <!-- Mode tabs -->
-        <div class="tabs" role="tablist">
-          <button class="tab" role="tab" :aria-selected="mode==='bond'"     @click="setMode('bond')">Bond type</button>
-          <button class="tab" role="tab" :aria-selected="mode==='name'"     @click="setMode('name')">Naming</button>
-          <button class="tab" role="tab" :aria-selected="mode==='geometry'" @click="setMode('geometry')">3D geometry</button>
-          <button class="tab" role="tab" :aria-selected="mode==='forces'"   @click="setMode('forces')">Forces &amp; properties</button>
-          <button class="tab" role="tab" :aria-selected="mode==='capstone'" @click="setMode('capstone')">The last bottle<span class="small" x-show="!capUnlocked"> (locked)</span></button>
         </div>
 
         <!-- ---------- C.7(A) BOND TYPE ---------- -->
@@ -261,7 +262,7 @@
               <div class="row" style="gap: var(--s-4); margin-top: var(--s-2);">
                 <span class="legend-atom"><span class="dot" :style="'background:'+colorHex(currentMol.central)"></span><span x-text="'central: '+currentMol.central"></span></span>
                 <span class="legend-atom"><span class="dot" :style="'background:'+colorHex(currentMol.ligand)"></span><span x-text="'bonded: '+currentMol.ligand"></span></span>
-                <span class="legend-atom" x-show="currentMol.lone>0"><span class="dot" style="background:#6f93b0; opacity:.5"></span>lone pair</span>
+                <span class="legend-atom" x-show="currentMol.lone>0"><span class="dot dot-lone"></span>lone pair (2 e&#8315;)</span>
                 <span class="muted" style="font-size:var(--fs-xs)">drag to rotate</span>
               </div>
 
@@ -553,10 +554,12 @@
 <script type="module">
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
+  import { registerGauge } from '../../shared/js/gauge.js';
   import { createSim } from './js/main.js';
   import { mountCaseFile } from '../../shared/js/casefile.js';
   import { CASE } from './js/case.js';
   registerRender(Alpine);
+  registerGauge(Alpine);
   Alpine.data('sim', createSim);
   mountCaseFile(Alpine, CASE);
   window.Alpine = Alpine;

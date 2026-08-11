@@ -42,11 +42,6 @@
 .emgrid .choice[data-state="correct"] .tag { color: #1f6b41; }
 .emgrid .choice[data-state="wrong"] .tag { color: #8a3320; }
 
-/* A balanced fission equation is wider than a phone. The equation box below scrolls on
-   its own, but a grid item defaults to min-width:auto, which would let that min-content
-   width push the whole column past the viewport instead of letting the box scroll. */
-.sim-grid > .stack { min-width: 0; }
-
 /* The live equation the steppers are building */
 .nuceq {
   background: var(--surface-2); border: 1px solid var(--border-strong);

@@ -2,10 +2,6 @@
 .sim-grid { display: grid; grid-template-columns: 1fr 300px; gap: var(--s-5); align-items: start; }
 @media (max-width: 880px) { .sim-grid { grid-template-columns: 1fr; } }
 
-/* A grid child defaults to min-width:auto, so a wide token row or equation forces the
-   whole column open and the page scrolls sideways. HANDOFF.md:228-231. */
-.sim-grid > .stack { min-width: 0; }
-
 .small  { font-size: var(--fs-xs); }
 .se-cap { font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }
 

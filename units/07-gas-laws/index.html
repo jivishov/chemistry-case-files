@@ -29,7 +29,7 @@
 
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="../../index.html"><span class="mark">Gs</span> Gas Laws &amp; KMT</a>
+      <a class="brand" href="../../index.html"><span class="mark">Tx</span> Chemistry Case Files</a>
       <span class="grow"></span>
       <label class="switch" title="Reveal advanced content">
         <input type="checkbox" x-model="honors">
@@ -41,7 +41,7 @@
 
   <main class="wrap page-main">
     <div class="page-head">
-      <h1>Gas Laws &amp; Kinetic Theory</h1>
+      <h1><span class="mark">Gs</span> Gas Laws &amp; Kinetic Theory</h1>
       <p class="eyebrow">Unit 7 · TEKS C.10</p>
     </div>
 
@@ -52,7 +52,15 @@
 
     <div data-casefile-teaser></div>
 
-    <div class="sim-grid">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" :aria-selected="mode==='kmt'"      @click="setMode('kmt')">Kinetic theory</button>
+      <button class="tab" role="tab" :aria-selected="mode==='ideal'"    @click="setMode('ideal')">Ideal gas law</button>
+      <button class="tab" role="tab" :aria-selected="mode==='dalton'"   @click="setMode('dalton')">Partial pressures</button>
+      <button class="tab" role="tab" :aria-selected="mode==='capstone'" @click="setMode('capstone')">The last fill<span class="small" x-show="!capUnlocked"> (locked)</span></button>
+      <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')">Case file</button>
+    </div>
+
+    <div class="sim-grid" x-show="mode!=='casefile'">
       <!-- ============ LEFT: the simulator ============ -->
       <div class="stack">
 
@@ -65,13 +73,6 @@
             <button class="btn btn-sm" @click="resetProgress()">Reset progress</button>
           </div>
           <p class="small muted" style="margin-top: var(--s-2);">XP <span x-text="g_xp"></span> · streak <span x-text="g_streak"></span> (best <span x-text="g_best"></span>)</p>
-        </div>
-
-        <div class="tabs" role="tablist">
-          <button class="tab" role="tab" :aria-selected="mode==='kmt'"      @click="setMode('kmt')">Kinetic theory</button>
-          <button class="tab" role="tab" :aria-selected="mode==='ideal'"    @click="setMode('ideal')">Ideal gas law</button>
-          <button class="tab" role="tab" :aria-selected="mode==='dalton'"   @click="setMode('dalton')">Partial pressures</button>
-          <button class="tab" role="tab" :aria-selected="mode==='capstone'" @click="setMode('capstone')">The last fill<span class="small" x-show="!capUnlocked"> (locked)</span></button>
         </div>
 
         <!-- ---------- C.10(A) KINETIC MOLECULAR THEORY ---------- -->
@@ -103,12 +104,36 @@
                 </div>
               </div>
 
-              <div class="stat-row" style="margin-top: var(--s-4);">
-                <div class="stat"><div class="k">avg kinetic energy</div><div class="v" x-text="'×'+fmt(relKE,3)"></div></div>
-                <div class="stat"><div class="k">relative pressure</div><div class="v" x-text="'×'+fmt(relP,3)"></div></div>
-                <div class="stat"><div class="k">particles</div><div class="v" x-text="boxN"></div></div>
+              <!-- Each card carries a dial because a bare "×0.329" states the number
+                   without the story. The two ×-cards get RATIO dials, whose axis is
+                   logarithmic and centred on ×1, so halving and doubling read as equal
+                   moves in opposite directions. The particle count is an absolute
+                   quantity, so it gets a plain SPAN dial over the slider's own range. -->
+              <div class="stat-row has-dials" style="margin-top: var(--s-4);">
+                <div class="stat">
+                  <div class="k">avg kinetic energy</div>
+                  <div class="v" x-text="'×'+fmt(relKE,3)"></div>
+                  <div x-gauge="{ kind:'ratio', value: relKE, fold: 3, digits: 3,
+                                  label:'average kinetic energy', refLabel:'the 300 K baseline', tone:'teal' }"></div>
+                </div>
+                <div class="stat">
+                  <div class="k">relative pressure</div>
+                  <div class="v" x-text="'×'+fmt(relP,3)"></div>
+                  <!-- fold 50 covers every corner the three sliders can reach
+                       (×0.021 at 5 particles/100 K/×2 volume up to ×18.8 at
+                       100 particles/900 K/×0.4 volume), so the needle never pins
+                       during ordinary exploration. -->
+                  <div x-gauge="{ kind:'ratio', value: relP, fold: 50, digits: 3,
+                                  label:'relative pressure', refLabel:'the baseline fill', tone:'indigo' }"></div>
+                </div>
+                <div class="stat">
+                  <div class="k">particles</div>
+                  <div class="v" x-text="boxN"></div>
+                  <div x-gauge="{ kind:'span', value: boxN, min: 5, max: 100, digits: 3,
+                                  label:'particle count', tone:'green' }"></div>
+                </div>
               </div>
-              <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--s-3);">Average kinetic energy depends only on temperature (postulate 5). Pressure comes from wall collisions, so it rises with more particles or higher temperature and falls as the volume grows: P &#8733; nT/V.</p>
+              <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--s-3);">Every ×-number compares this box with one baseline box: 40 particles, 300 K, ×1 volume. Average kinetic energy depends only on temperature (postulate 5). Pressure comes from wall collisions, so it rises with more particles or higher temperature and falls as the volume grows: P &#8733; nT/V.</p>
 
               <h4 style="margin-top: var(--s-5);">The five postulates</h4>
               <ol class="postulates">
@@ -413,10 +438,20 @@
           </template>
 
           <div x-show="h2Unlocked && h2Checked" style="margin-top: var(--s-5);">
-            <div class="stat-row">
+            <div class="stat-row has-dials">
               <div class="stat"><div class="k">ideal P</div><div class="v" style="font-size: var(--fs-lg)" x-text="h2s ? fmt(h2s.ideal,4)+' atm' : '-'"></div></div>
               <div class="stat"><div class="k">van der Waals P</div><div class="v" style="font-size: var(--fs-lg)" x-text="h2s ? fmt(h2s.target,4)+' atm' : '-'"></div></div>
-              <div class="stat"><div class="k">Z = PV/nRT</div><div class="v" style="font-size: var(--fs-lg)" x-text="h2s ? fmt(h2s.Z,3) : '-'"></div></div>
+              <!-- Z is already a ratio against ideal behaviour, so the ratio dial is
+                   literally the right picture: which side of Z = 1 this state fell on,
+                   and how far. The series key drops the trend when the gas changes,
+                   because a delta between two different gases means nothing. -->
+              <div class="stat">
+                <div class="k">Z = PV/nRT</div>
+                <div class="v" style="font-size: var(--fs-lg)" x-text="h2s ? fmt(h2s.Z,3) : '-'"></div>
+                <div x-gauge="{ kind:'ratio', value: h2s ? h2s.Z : null, fold: 3, digits: 3,
+                                series: rgKey, label:'compressibility factor Z',
+                                refLabel:'ideal behaviour (Z = 1)', tone:'plum' }"></div>
+              </div>
             </div>
             <div class="canvas-wrap"><canvas x-ref="zCanvas"></canvas></div>
             <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">An ideal gas holds Z = 1 at every pressure. A real gas dips below 1 where attractions dominate, then rises above 1 once the particles' own volume takes over. Deviations grow at high pressure and low temperature.</p>
@@ -713,10 +748,12 @@
 <script type="module">
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
+  import { registerGauge } from '../../shared/js/gauge.js';
   import { createSim } from './js/main.js';
   import { mountCaseFile } from '../../shared/js/casefile.js';
   import { CASE } from './js/case.js';
   registerRender(Alpine);
+  registerGauge(Alpine);
   Alpine.data('sim', createSim);
   mountCaseFile(Alpine, CASE);
   window.Alpine = Alpine;

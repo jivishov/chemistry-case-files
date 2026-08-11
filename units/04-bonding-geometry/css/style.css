@@ -3,9 +3,6 @@
 
 .small  { font-size: var(--fs-xs); }
 .se-cap { font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }
-/* A grid item defaults to min-width:auto, so the 520-wide shelf SVG and the 3D stage
-   would otherwise blow out the single-column layout at 375 px. */
-.sim-grid > .stack { min-width: 0; }
 
 /* Given-data readout: the numbers the apartment hands you, before any call */
 .readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: var(--s-3); }
@@ -67,7 +64,10 @@
 }
 
 
-.stage { width: 100%; height: 380px; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border); background: #eef4f5; }
+/* The fallback fill mirrors the studio backdrop in shared/js/stage3d.js (BACKDROP) as this
+   stage's level camera frames it — bright band at the subject, deeper above and below — so
+   the frame before WebGL first paints is not a flat rectangle of a different colour. */
+.stage { width: 100%; height: 380px; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border); background: linear-gradient(180deg, #dae7ed 0%, #f8fbfc 45%, #c6d6de 100%); }
 .stage canvas { display: block; }
 @media (max-width: 640px) { .stage { height: 300px; } }
 
@@ -83,6 +83,14 @@
 
 .legend-atom { display: inline-flex; align-items: center; gap: 5px; font-size: var(--fs-xs); color: var(--ink-2); }
 .legend-atom .dot { width: 13px; height: 13px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
+/* Matches the viewer's lone pair: a pale lobe carrying the two electrons it stands for
+   (#2f5d7a dots in vsepr.js). Radial stops, not a gradient ramp, so the dots stay crisp. */
+.legend-atom .dot-lone {
+  background:
+    radial-gradient(circle at 33% 50%, #2f5d7a 0 2px, transparent 2px),
+    radial-gradient(circle at 67% 50%, #2f5d7a 0 2px, transparent 2px),
+    rgba(111, 147, 176, 0.5);
+}
 
 .fact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: var(--s-3); margin-top: var(--s-4); }
 .compare th, .compare td { vertical-align: top; }

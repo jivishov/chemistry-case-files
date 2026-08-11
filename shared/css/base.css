@@ -61,13 +61,14 @@ a:hover { text-decoration: underline; }
 }
 .site-header .wrap { display: flex; align-items: center; gap: var(--s-3); padding-top: var(--s-2); padding-bottom: var(--s-2); }
 .brand { display: flex; align-items: center; gap: var(--s-2); font-family: var(--font-display); font-weight: 700; font-size: var(--fs-md); line-height: var(--lh-tight); color: var(--ink); }
-.brand .mark {
+.brand .mark, .page-head h1 .mark {
   width: 24px; height: 24px; border-radius: var(--r-sm);
-  display: grid; place-items: center; color: #fff; font-family: var(--font-mono);
+  display: inline-grid; place-items: center; vertical-align: middle; color: #fff; font-family: var(--font-mono);
   font-size: var(--fs-xs); font-weight: 700;
   background: linear-gradient(135deg, var(--accent), var(--accent-700));
   box-shadow: var(--shadow-sm);
 }
+.page-head h1 .mark { margin-right: var(--s-2); }
 
 :focus-visible { outline: 3px solid var(--accent-300); outline-offset: 2px; border-radius: var(--r-sm); }
 

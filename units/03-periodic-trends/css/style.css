@@ -5,8 +5,16 @@
 .canvas-wrap canvas { width: 100% !important; height: 100% !important; }
 
 /* ---------- the interactive periodic-table grid ---------- */
-/* The 18-column grid scrolls horizontally on narrow screens instead of crushing. */
-.pt-scroll { overflow-x: auto; padding-bottom: var(--s-2); }
+/* The 18-column grid scrolls horizontally on narrow screens instead of crushing.
+   Cell state is a 2px box-shadow ring painted OUTSIDE the cell's border box, so the
+   scroll container needs padding on every side or the ring on a Group 1 / Period 1
+   cell is clipped away. The negative side margins cancel the horizontal padding so
+   the table's left edge still lines up with the prose above it. */
+.pt-scroll {
+  overflow: auto;
+  margin: 0 calc(-1 * var(--s-1));
+  padding: var(--s-1) var(--s-1) var(--s-2);
+}
 .pt-grid {
   display: grid;
   grid-template-columns: repeat(18, minmax(0, 1fr));

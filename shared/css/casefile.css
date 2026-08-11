@@ -190,7 +190,7 @@
   text-transform: uppercase; color: #7fc4d0;
 }
 .cf-teaser .t-go { font-family: var(--font-mono); color: #7fc4d0; animation: cf-nudge 1.6s var(--ease) infinite; }
-@keyframes cf-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+@keyframes cf-nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
 
 /* ===== Ambient animation library for stage SVGs =====
    Apply a class, tune with custom props (--dur, --delay, --rise, --fx, --fy, --deg,

@@ -3,6 +3,7 @@
 // by temperature (v proportional to sqrt(T)). Relies on the document's import map.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { createStageEnvironment, BACKDROP } from '../../../shared/js/stage3d.js';
 
 const BASE = 0.018;   // baseline step length per frame at the reference temperature
 const T_REF = 300;    // K, the temperature at which tempScale === 1
@@ -13,6 +14,7 @@ const rand = (a, b) => a + Math.random() * (b - a);
 
 export function createGasBox() {
   let scene, camera, renderer, controls, ro, raf, host, mounted = false;
+  let env = null;           // backdrop + ground (shared/js/stage3d.js); scenery only
   let cage = null;          // wireframe cube (LineSegments)
   let half = 2.3;           // half-edge of the cube (volume control)
   let tempScale = 1;        // sqrt(T / T_REF)
@@ -22,7 +24,7 @@ export function createGasBox() {
     if (mounted) return;
     host = container;
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xeef4f5);
+    scene.background = new THREE.Color(BACKDROP.horizon);   // clear colour behind the dome
     camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
     camera.position.set(5.4, 3.6, 6.4);
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -38,11 +40,17 @@ export function createGasBox() {
     controls.minDistance = 5; controls.maxDistance = 16;
     controls.target.set(0, 0, 0);
 
+    // Scenery first, so the cage and the particles keep drawing over it.
+    env = createStageEnvironment(scene, { gridCell: 1.15, gridExtent: 12, floorGap: 0.32 });
     buildCage();
+    env.setFootprint(half);
     ro = new ResizeObserver(resize); ro.observe(host);
     resize();
     mounted = true;
-    const loop = () => { raf = requestAnimationFrame(loop); step(); controls.update(); renderer.render(scene, camera); };
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+      step(); controls.update(); env.update(camera); renderer.render(scene, camera);
+    };
     loop();
   }
 
@@ -108,6 +116,7 @@ export function createGasBox() {
     half = 2.3 * Math.cbrt(Math.max(volRel, 0.05));
     if (!mounted) return;
     buildCage();
+    env.setFootprint(half);   // the box keeps resting on the ground as it grows
     const lim = half - PART_R;
     parts.forEach(p => p.mesh.position.clampScalar(-lim, lim));
   }
@@ -119,6 +128,7 @@ export function createGasBox() {
     parts.forEach(p => { p.mesh.geometry.dispose(); p.mesh.material.dispose(); scene.remove(p.mesh); });
     parts = [];
     cage?.geometry.dispose(); cage?.material.dispose();
+    env?.dispose(); env = null;
     renderer.dispose(); renderer.domElement.remove(); mounted = false;
   }
 

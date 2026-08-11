@@ -23,7 +23,7 @@
 
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="../../index.html"><span class="mark">Pt</span> Periodic Table &amp; Trends</a>
+      <a class="brand" href="../../index.html"><span class="mark">Tx</span> Chemistry Case Files</a>
       <span class="grow"></span>
       <label class="switch" title="Reveal advanced content for Honors sections">
         <input type="checkbox" x-model="honors">
@@ -35,20 +35,21 @@
 
   <main class="wrap page-main">
     <div class="page-head">
-      <h1>Periodic Table &amp; Trends</h1>
+      <h1><span class="mark">Pt</span> Periodic Table &amp; Trends</h1>
       <p class="eyebrow">Unit 3 · TEKS C.5 (A-C)</p>
     </div>
 
       <div data-casefile-teaser></div>
 
-    <div class="sim-grid">
-      <div class="stack">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" :aria-selected="mode==='table'"    @click="mode='table'">How it developed</button>
+      <button class="tab" role="tab" :aria-selected="mode==='families'" @click="mode='families'">Chemical families</button>
+      <button class="tab" role="tab" :aria-selected="mode==='trends'"   @click="mode='trends'">Periodic trends</button>
+      <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="mode='casefile'">Case file</button>
+    </div>
 
-        <div class="tabs" role="tablist">
-          <button class="tab" role="tab" :aria-selected="mode==='table'"    @click="mode='table'">How it developed</button>
-          <button class="tab" role="tab" :aria-selected="mode==='families'" @click="mode='families'">Chemical families</button>
-          <button class="tab" role="tab" :aria-selected="mode==='trends'"   @click="mode='trends'">Periodic trends</button>
-        </div>
+    <div class="sim-grid" x-show="mode!=='casefile'">
+      <div class="stack">
 
         <!-- ============ SHARED INTERACTIVE GRID + INSPECTOR ============ -->
         <div class="panel">
@@ -404,10 +405,12 @@
 <script type="module">
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
+  import { registerGauge } from '../../shared/js/gauge.js';
   import { createSim } from './js/main.js';
   import { mountCaseFile } from '../../shared/js/casefile.js';
   import { CASE } from './js/case.js';
   registerRender(Alpine);
+  registerGauge(Alpine);
   Alpine.data('sim', createSim);
   mountCaseFile(Alpine, CASE);
   window.Alpine = Alpine;

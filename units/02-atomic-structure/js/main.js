@@ -114,9 +114,15 @@ export function createSim() {
       return averageAtomicMass(this.iso.isotopes.map(m => ({ mass: m.mass, abundance: +this.isoAbund[m.a] || 0 })));
     },
     get avgError() { return Math.abs(this.avgMass - this.iso.accepted); },
-    massLineSvg() {
+    // The mass number line and the average-mass dial read off ONE axis: from just
+    // under the lightest isotope to just over the heaviest. Extracted so the SVG
+    // and the dial can never drift apart and disagree about where the average is.
+    get isoMassAxis() {
       const ms = this.iso.isotopes.map(m => m.mass);
-      const lo = Math.floor(Math.min(...ms)) - 1, hi = Math.ceil(Math.max(...ms)) + 1;
+      return { lo: Math.floor(Math.min(...ms)) - 1, hi: Math.ceil(Math.max(...ms)) + 1 };
+    },
+    massLineSvg() {
+      const { lo, hi } = this.isoMassAxis;
       const x = v => 40 + (v - lo) / (hi - lo) * 520;
       let s = `<line x1="40" y1="60" x2="560" y2="60" stroke="#aebfc6" stroke-width="1.5"></line>`;
       for (let v = lo; v <= hi; v++) {
@@ -140,6 +146,21 @@ export function createSim() {
     rgb(nm) { return wavelengthToRGB(nm); },
     nmToX(nm) { return 30 + (Math.max(380, Math.min(700, nm)) - 380) / 320 * 580; },
     get spec() { return SPECTRA.find(s => s.key === this.specKey); },
+    // The visible strip drawn above runs 380-700 nm, so the wavelength and the
+    // photon-energy dials share exactly those two endpoints. Because E = hc/λ the
+    // energy axis is the wavelength axis inverted, which is the whole point of
+    // showing the pair: one line puts the two needles on opposite sides, and
+    // picking a different line swings them in opposite directions.
+    get specAxis() {
+      return {
+        wlLo: 380, wlHi: 700,
+        // Frequency and energy are the same axis twice over (E = h nu), so their
+        // two needles move together while the wavelength needle opposes them.
+        vLo: frequencyOf(700e-9), vHi: frequencyOf(380e-9),
+        eLo: photonEnergy({ wavelength: 700e-9 }),
+        eHi: photonEnergy({ wavelength: 380e-9 })
+      };
+    },
     get lines() {
       let raw;
       if (this.spec.computed) raw = [3, 4, 5, 6].map(n => ({ n, wl: rydbergWavelength(2, n) * 1e9 }));

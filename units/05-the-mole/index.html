@@ -22,7 +22,7 @@
 
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="../../index.html"><span class="mark">Mo</span> Mole Control</a>
+      <a class="brand" href="../../index.html"><span class="mark">Tx</span> Chemistry Case Files</a>
       <span class="grow"></span>
       <label class="switch" title="Reveal advanced content for Honors sections">
         <input type="checkbox" x-model="honors">
@@ -34,7 +34,7 @@
 
   <main class="wrap page-main">
     <div class="page-head">
-      <h1>The Mole &amp; Chemical Quantities</h1>
+      <h1><span class="mark">Mo</span> The Mole &amp; Chemical Quantities</h1>
       <p class="eyebrow">Unit 5 · TEKS C.8</p>
     </div>
 
@@ -45,7 +45,17 @@
 
       <div data-casefile-teaser></div>
 
-    <div class="sim-grid">
+    <!-- Mode tabs -->
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" :aria-selected="mode==='molg'"      @click="setMode('molg')">Life support</button>
+      <button class="tab" role="tab" :aria-selected="mode==='particles'" @click="setMode('particles')">Tanks &amp; counts</button>
+      <button class="tab" role="tab" :aria-selected="mode==='percent'"   @click="setMode('percent')">Purity check</button>
+      <button class="tab" role="tab" :aria-selected="mode==='formula'"   @click="setMode('formula')">Mystery ID</button>
+      <button class="tab" role="tab" :aria-selected="mode==='capstone'"  @click="setMode('capstone')">Resupply pod<span class="small" x-show="!capUnlocked"> (locked)</span></button>
+      <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')">Case file</button>
+    </div>
+
+    <div class="sim-grid" x-show="mode!=='casefile'">
       <!-- ============ LEFT: the simulator ============ -->
       <div class="stack">
 
@@ -58,15 +68,6 @@
             <button class="btn btn-sm" @click="resetProgress()">Reset progress</button>
           </div>
           <p class="small muted" style="margin-top: var(--s-2);">XP <span x-text="g_xp"></span> · streak <span x-text="g_streak"></span> (best <span x-text="g_best"></span>)</p>
-        </div>
-
-        <!-- Mode tabs -->
-        <div class="tabs" role="tablist">
-          <button class="tab" role="tab" :aria-selected="mode==='molg'"      @click="setMode('molg')">Life support</button>
-          <button class="tab" role="tab" :aria-selected="mode==='particles'" @click="setMode('particles')">Tanks &amp; counts</button>
-          <button class="tab" role="tab" :aria-selected="mode==='percent'"   @click="setMode('percent')">Purity check</button>
-          <button class="tab" role="tab" :aria-selected="mode==='formula'"   @click="setMode('formula')">Mystery ID</button>
-          <button class="tab" role="tab" :aria-selected="mode==='capstone'"  @click="setMode('capstone')">Resupply pod<span class="small" x-show="!capUnlocked"> (locked)</span></button>
         </div>
 
         <!-- ---------- C.8(A)/(B) convert the reading, then act ---------- -->
@@ -507,10 +508,12 @@
 <script type="module">
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
+  import { registerGauge } from '../../shared/js/gauge.js';
   import { createSim } from './js/main.js';
   import { mountCaseFile } from '../../shared/js/casefile.js';
   import { CASE } from './js/case.js';
   registerRender(Alpine);
+  registerGauge(Alpine);
   Alpine.data('sim', createSim);
   mountCaseFile(Alpine, CASE);
   window.Alpine = Alpine;

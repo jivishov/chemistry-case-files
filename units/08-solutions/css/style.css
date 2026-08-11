@@ -1,9 +1,5 @@
 /* Unit 8 page styles: solubility curve, reaction row, flask/dilution visuals, clearwell */
 
-/* A grid child defaults to min-width:auto, so the Chart.js canvas and the wide reaction
-   row force the whole sim-grid wider than the viewport instead of shrinking. */
-.sim-grid > .stack { min-width: 0; }
-
 .small { font-size: var(--fs-xs); }
 .formula { font-size: 1.2rem; }
 .se-cap { font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }

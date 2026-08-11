@@ -21,7 +21,7 @@
 
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="../../index.html"><span class="mark">At</span> Atomic Structure &amp; Theory</a>
+      <a class="brand" href="../../index.html"><span class="mark">Tx</span> Chemistry Case Files</a>
       <span class="grow"></span>
       <label class="switch" title="Reveal advanced content for Honors sections">
         <input type="checkbox" x-model="honors">
@@ -33,21 +33,22 @@
 
   <main class="wrap page-main">
     <div class="page-head">
-      <h1>Atomic Structure &amp; Theory</h1>
+      <h1><span class="mark">At</span> Atomic Structure &amp; Theory</h1>
       <p class="eyebrow">Unit 2 · TEKS C.6 (atomic theory) &amp; C.5(B)</p>
     </div>
 
       <div data-casefile-teaser></div>
 
-    <div class="sim-grid">
-      <div class="stack">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" :aria-selected="mode==='build'"   @click="mode='build'">Build an atom</button>
+      <button class="tab" role="tab" :aria-selected="mode==='mass'"    @click="mode='mass'">Average mass</button>
+      <button class="tab" role="tab" :aria-selected="mode==='spectra'" @click="mode='spectra'">Emission spectra</button>
+      <button class="tab" role="tab" :aria-selected="mode==='config'"  @click="mode='config'">Electrons</button>
+      <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="mode='casefile'">Case file</button>
+    </div>
 
-        <div class="tabs" role="tablist">
-          <button class="tab" role="tab" :aria-selected="mode==='build'"   @click="mode='build'">Build an atom</button>
-          <button class="tab" role="tab" :aria-selected="mode==='mass'"    @click="mode='mass'">Average mass</button>
-          <button class="tab" role="tab" :aria-selected="mode==='spectra'" @click="mode='spectra'">Emission spectra</button>
-          <button class="tab" role="tab" :aria-selected="mode==='config'"  @click="mode='config'">Electrons</button>
-        </div>
+    <div class="sim-grid" x-show="mode!=='casefile'">
+      <div class="stack">
 
         <!-- ---------- C.6(A/B) BUILD AN ATOM ---------- -->
         <div class="panel" x-show="mode==='build'">
@@ -104,10 +105,33 @@
                 </div>
               </div>
 
-              <div class="stat-row" style="margin-top: var(--s-4);">
+              <!-- Z has no dial on purpose: it does not respond to the steppers, it
+                   IS the element. A and charge do move, so each carries one. -->
+              <div class="stat-row has-dials" style="margin-top: var(--s-4);">
                 <div class="stat"><div class="k">atomic number Z</div><div class="v" x-text="elZ"></div></div>
-                <div class="stat"><div class="k">mass number A</div><div class="v" x-text="massNumber"></div></div>
-                <div class="stat"><div class="k">charge</div><div class="v" x-text="charge>0 ? '+'+charge : charge"></div></div>
+                <div class="stat">
+                  <div class="k">mass number A</div>
+                  <div class="v" x-text="massNumber"></div>
+                  <!-- Axis = the isotope range the neutron stepper can actually reach
+                       for this element, so it re-scales when the element changes and
+                       the series key drops the stale trend with it. -->
+                  <div x-gauge="{ kind:'span', value: massNumber, min: elZ, max: elZ*2+12, digits: 3,
+                                  series: elZ, label:'mass number A', tone:'indigo' }"></div>
+                </div>
+                <div class="stat">
+                  <div class="k">charge</div>
+                  <div class="v" x-text="charge>0 ? '+'+charge : charge"></div>
+                  <!-- A signed axis with neutral at the centre: adding electrons walks
+                       the needle left into anion territory, removing them walks it
+                       right into cation territory. The band names what side it landed
+                       on, which is the reading the bare number leaves implicit. -->
+                  <div x-gauge="{ kind:'span', value: charge, min: -4, max: 4, ref: 0, digits: 2,
+                                  refLabel:'neutral', label:'net charge',
+                                  tone:'plum',
+                                  bands: [{ upTo: 0, label:'anion · more electrons than protons' },
+                                          { upTo: 1, label:'neutral · electrons balance protons' },
+                                          { upTo: Infinity, label:'cation · fewer electrons than protons' }] }"></div>
+                </div>
               </div>
 
               <div class="note note-info" style="margin-top: var(--s-4);">
@@ -176,8 +200,18 @@
             <div class="step-line mono total">sum = <span class="calc" x-text="fmt(avgMass,5) + ' u'"></span></div>
           </div>
 
-          <div class="stat-row" style="margin-top: var(--s-4);">
-            <div class="stat"><div class="k">your average</div><div class="v" x-text="fmt(avgMass,5)"></div></div>
+          <div class="stat-row has-dials" style="margin-top: var(--s-4);">
+            <div class="stat">
+              <div class="k">your average</div>
+              <div class="v" x-text="fmt(avgMass,5)"></div>
+              <!-- Same axis as the mass line above, with the periodic-table value as
+                   the reference tick. Dragging an abundance slider now answers the
+                   question the two bare numbers left open: did that move take the
+                   average toward the accepted mass or away from it. -->
+              <div x-gauge="{ kind:'span', value: avgMass, min: isoMassAxis.lo, max: isoMassAxis.hi,
+                              ref: iso.accepted, refLabel:'table value', digits: 5,
+                              series: isoKey, label:'weighted average atomic mass', tone:'teal' }"></div>
+            </div>
             <div class="stat"><div class="k">periodic-table value</div><div class="v" x-text="iso.accepted"></div></div>
           </div>
           <div class="row" style="margin-top: var(--s-3);">
@@ -219,11 +253,35 @@
             </template>
           </div>
 
-          <div x-show="selectedLine" class="stat-row" style="margin-top: var(--s-4);">
-            <div class="stat"><div class="k">wavelength λ</div><div class="v" x-text="selectedLine ? selectedLine.wl.toFixed(1)+' nm' : ''"></div></div>
-            <div class="stat"><div class="k">frequency ν</div><div class="v" style="font-size:var(--fs-lg)" x-text="selectedLine ? fmt(selectedLine.freq,3)+' Hz' : ''"></div></div>
-            <div class="stat"><div class="k">photon energy E</div><div class="v" style="font-size:var(--fs-lg)" x-text="selectedLine ? fmt(selectedLine.energy,3)+' J' : ''"></div></div>
+          <div x-show="selectedLine" class="stat-row has-dials" style="margin-top: var(--s-4);">
+            <div class="stat">
+              <div class="k">wavelength λ</div>
+              <div class="v" x-text="selectedLine ? selectedLine.wl.toFixed(1)+' nm' : ''"></div>
+              <div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.wl : null,
+                              min: specAxis.wlLo, max: specAxis.wlHi, unit:' nm', digits: 4,
+                              series: specKey, label:'wavelength across the visible strip', tone:'green' }"></div>
+            </div>
+            <div class="stat">
+              <div class="k">frequency ν</div>
+              <div class="v" style="font-size:var(--fs-lg)" x-text="selectedLine ? fmt(selectedLine.freq,3)+' Hz' : ''"></div>
+              <div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.freq : null,
+                              min: specAxis.vLo, max: specAxis.vHi, unit:' Hz', digits: 3,
+                              series: specKey, label:'frequency across the same strip', tone:'indigo' }"></div>
+            </div>
+            <div class="stat">
+              <div class="k">photon energy E</div>
+              <div class="v" style="font-size:var(--fs-lg)" x-text="selectedLine ? fmt(selectedLine.energy,3)+' J' : ''"></div>
+              <!-- All three gauges span the SAME 380-700 nm strip. Energy and frequency
+                   read it one way and wavelength the other, so picking a line swings
+                   the wavelength needle against the other two while those two stay
+                   locked together. That is E = h nu = hc/lambda made visible instead
+                   of asserted: two proportional quantities and one inverse. -->
+              <div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.energy : null,
+                              min: specAxis.eLo, max: specAxis.eHi, unit:' J', digits: 3,
+                              series: specKey, label:'photon energy across the same strip', tone:'plum' }"></div>
+            </div>
           </div>
+          <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-show="selectedLine">All three gauges span the same 380-700 nm strip. Frequency and energy always point the same way as each other and the opposite way to wavelength, because a shorter wave is a faster, more energetic photon: E = h&nu; = hc/&lambda;.</p>
 
           <div class="honors-block" x-show="honors">
             <span class="honors-tag">Honors · E = hν quantization</span>
@@ -310,7 +368,7 @@
           <!-- valence quiz (main-group only) -->
           <div x-show="isMainGroup" style="margin-top: var(--s-4);">
             <label style="display:block; margin-bottom: var(--s-2);">How many valence electrons does <span x-text="cfgEl.name"></span> have?</label>
-            <div class="choice-grid" style="grid-template-columns: repeat(8, 1fr);">
+            <div class="choice-grid valence-pad">
               <template x-for="n in [1,2,3,4,5,6,7,8]" :key="n">
                 <button class="choice" style="text-align:center" :data-state="vState(n)" @click="pickV(n)" x-text="n"></button>
               </template>
@@ -386,10 +444,12 @@
 <script type="module">
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
+  import { registerGauge } from '../../shared/js/gauge.js';
   import { createSim } from './js/main.js';
   import { mountCaseFile } from '../../shared/js/casefile.js';
   import { CASE } from './js/case.js';
   registerRender(Alpine);
+  registerGauge(Alpine);
   Alpine.data('sim', createSim);
   mountCaseFile(Alpine, CASE);
   window.Alpine = Alpine;

@@ -1,9 +1,5 @@
 /* Unit 9 page styles: name builder, pH meter, strength shelf, titration host, patient. */
 
-/* A grid child defaults to min-width:auto, so the titration canvas and the KaTeX [H+]
-   expression force the whole sim-grid wider than the viewport instead of shrinking. */
-.sim-grid > .stack { min-width: 0; }
-
 .small { font-size: var(--fs-xs); }
 .formula-lg { font-size: 1.5rem; font-weight: 700; }
 

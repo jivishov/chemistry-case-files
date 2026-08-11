@@ -111,6 +111,99 @@ table.data td.num, table.data th.num { text-align: right; font-family: var(--fon
 .stat .k { font-size: var(--fs-xs); color: var(--muted); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .08em; }
 .stat .v { font-family: var(--font-mono); font-size: var(--fs-xl); font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
 
+/* ===== Live dial (x-gauge) — a half-circle dashboard gauge per number =====
+   Paired with the .stat card it explains: the card carries the figure, the gauge
+   carries which side of the baseline it sits on and which way the last control
+   move pushed it. See shared/js/gauge.js for the axis reasoning (a multiplier
+   gets a LOG axis centred on its baseline, so x1/2 and x2 are symmetric) and for
+   the arc geometry, which is pure and node-tested.
+
+   COLOUR IS CATEGORICAL. The hue says which quantity a gauge reads, so a row of
+   them is told apart at a glance. It never says whether the value is good, so
+   each arc keeps ONE hue across its whole travel. Direction is carried three
+   other ways: which side of the baseline mark the coloured sweep grows from, an
+   arrow glyph, and a word. Tones live in tokens.css. */
+.dial {
+  display: block; margin-top: var(--s-3);
+  --dial-hue: var(--dial-teal);
+  --dial-hue-deep: var(--dial-teal-deep);
+}
+.stat .dial { margin-top: var(--s-2); }
+.dial[data-tone="indigo"] { --dial-hue: var(--dial-indigo); --dial-hue-deep: var(--dial-indigo-deep); }
+.dial[data-tone="green"]  { --dial-hue: var(--dial-green);  --dial-hue-deep: var(--dial-green-deep); }
+.dial[data-tone="plum"]   { --dial-hue: var(--dial-plum);   --dial-hue-deep: var(--dial-plum-deep); }
+.dial[data-tone="slate"]  { --dial-hue: var(--dial-slate);  --dial-hue-deep: var(--dial-slate-deep); }
+
+/* The face. Capped so a gauge in a full-width panel stays instrument-sized
+   instead of ballooning to the panel's width. */
+.dial-face { display: block; width: 100%; max-width: 208px; margin: 0 auto; overflow: visible; }
+
+.dial-arc-track { stroke: var(--surface-3); stroke-width: 9; }
+.dial-arc-fill {
+  stroke: var(--dial-hue); stroke-width: 9;
+  transition: stroke-dasharray var(--t-med) var(--ease), stroke-dashoffset var(--t-med) var(--ease);
+}
+/* Off-scale: the far sliver darkens, and .dial-read says "off the top of the
+   dial" in words, so a pinned needle never reads as an exact maximum. */
+.dial-arc-cap { stroke: var(--dial-hue-deep); stroke-width: 9; opacity: 0; }
+.dial[data-over="hi"] .dial-arc-cap,
+.dial[data-over="lo"] .dial-arc-cap { opacity: 1; }
+
+/* The baseline the "x" is measured from. Crosses the arc, so it reads as a datum
+   on the scale and not as one more tick outside it. */
+.dial-arc-ref { stroke: var(--ink-2); stroke-width: 1.6; }
+.dial-tick-mark { stroke: var(--border-strong); stroke-width: 1.4; }
+
+/* Where the reading sat before the last control move: a hollow bead riding the
+   arc, so it never competes with the needle for "this is the value". */
+.dial-ghost {
+  opacity: 0;
+  transition: opacity var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+}
+.dial-ghost circle { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.6; }
+.dial.is-moving .dial-ghost { opacity: .9; }
+.dial-needle {
+  stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round;
+  transition: transform var(--t-med) var(--ease);
+}
+.dial-hub { fill: var(--ink); }
+
+.dial-tick {
+  font-family: var(--font-mono); font-size: 8.5px; fill: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.dial-tick.is-ref { fill: var(--ink-2); font-weight: 700; }
+/* The linear track needed a container query here to drop intermediate labels on
+   a narrow card. The arc does not: the two ends sit BELOW the baseline while
+   everything between rides the arc, so the rows that used to collide are now
+   separated by construction. Label geometry and text size are both in viewBox
+   units, so the spacing is scale-invariant and every tick can stay. */
+
+/* Stacked and centred under the gauge face, the way an instrument's digital
+   readout sits under its dial. */
+.dial-foot {
+  display: flex; flex-direction: column; align-items: center; gap: var(--s-1);
+  margin-top: var(--s-1); text-align: center;
+}
+.dial-trend {
+  display: inline-flex; align-items: baseline; gap: 4px; flex: none;
+  font-family: var(--font-mono); font-size: var(--fs-2xs); font-weight: 700;
+  letter-spacing: .04em; border-radius: var(--r-sm); padding: 1px 7px;
+  opacity: 0; transition: opacity var(--t-med) var(--ease);
+  /* Flat fallback first, then tinted to match its own gauge so the chip and the
+     arc read as one instrument. */
+  color: var(--dial-hue-deep); background: var(--surface-3); border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--dial-hue) 13%, transparent);
+  border-color: color-mix(in srgb, var(--dial-hue) 32%, transparent);
+}
+.dial.is-moving .dial-trend { opacity: 1; }
+.dial-arrow { font-size: .8em; line-height: 1; }
+.dial-read { font-size: var(--fs-2xs); color: var(--ink-2); line-height: 1.35; }
+
+/* Gauges need room for their arc and tick labels, so rows carrying them start
+   wider than a plain stat row. */
+.stat-row.has-dials { grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); }
+
 /* Particle token visualization */
 .tokenfield { display: flex; flex-direction: column; gap: var(--s-3); }
 .tokenrow { display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; }
@@ -187,6 +280,10 @@ a.cell:hover .case-ico { background: var(--accent); color: #fff; }
 
 /* Shared simulator layout (used by every unit) */
 .sim-grid { display: grid; grid-template-columns: 1fr 300px; gap: var(--s-5); align-items: start; }
+/* A grid item defaults to min-width:auto, so one wide child (a long equation, a fixed-width
+   table or canvas) would push the whole grid past the viewport instead of scrolling inside
+   its own box. Belongs with the layout it guards, not copied into each unit. */
+.sim-grid > .stack { min-width: 0; }
 @media (max-width: 880px) { .sim-grid { grid-template-columns: 1fr; } }
 .se-panel { position: sticky; top: 84px; }
 .se-item { padding: var(--s-3); border-radius: var(--r-md); border: 1px solid var(--border); margin-bottom: var(--s-2); transition: border-color var(--t-fast), background var(--t-fast); }
@@ -312,4 +409,9 @@ a.cell:hover .case-ico { background: var(--accent); color: #fff; }
   .meter-fill { transition: none; }
   .badge.earned { animation: none; }
   .verdict { animation: none; }
+  /* The gauge's reading stays truthful without the travel: the needle, the
+     coloured sweep and the trend chip all snap, and the ghost needle (which only
+     means anything as a fading trail) is dropped. */
+  .dial-arc-fill, .dial-needle, .dial-ghost, .dial-trend { transition: none; }
+  .dial-ghost { display: none !important; }
 }

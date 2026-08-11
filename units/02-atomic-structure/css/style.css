@@ -19,11 +19,14 @@
 .iso-sym { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-2xl); color: var(--accent-700); line-height: 1; }
 .iso-charge { font-family: var(--font-mono); font-weight: 700; color: var(--danger); font-size: var(--fs-md); }
 
-.stepper-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-3); }
-.stepper { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s-3); text-align: center; }
+/* auto-fit, not repeat(3, 1fr): the -/+ row gives a stepper a hard min-content width, so
+   three fixed tracks push past a 375 px viewport instead of reflowing. The floor is that
+   min-content width, which keeps every track wide enough for the buttons at any count. */
+.stepper-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.75rem, 1fr)); gap: var(--s-3); }
+.stepper { min-width: 0; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s-3); text-align: center; }
 .stp-label { display: block; font-size: var(--fs-xs); font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: .06em; }
 .stp-fixed { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-xl); color: var(--ink); margin: var(--s-2) 0; }
-.stp-ctl { display: flex; align-items: center; justify-content: center; gap: var(--s-2); margin: var(--s-2) 0; }
+.stp-ctl { display: flex; align-items: center; justify-content: center; gap: var(--s-1); margin: var(--s-2) 0; }
 .stp-ctl .btn { padding: 0 var(--s-3); font-size: var(--fs-lg); line-height: 1.6; }
 .stp-val { font-weight: 700; font-size: var(--fs-xl); min-width: 2ch; }
 .stp-sub { display: block; font-size: var(--fs-xs); color: var(--muted); }
@@ -73,6 +76,11 @@
 .cfg-pill sup { font-size: .7em; }
 .cfg-strings { font-size: var(--fs-sm); line-height: 1.7; }
 .cfg-strings .mono { color: var(--ink); }
+
+/* 1-8 valence answer pad. Eight tracks across need ~420 px, so phones get two rows of
+   four; minmax(0, ...) keeps a track from being widened by its own button. */
+.valence-pad { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 26rem; }
+@media (min-width: 620px) { .valence-pad { grid-template-columns: repeat(8, minmax(0, 1fr)); max-width: none; } }
 
 .lewis-wrap { flex: none; }
 .lewis { width: 140px; height: 110px; }

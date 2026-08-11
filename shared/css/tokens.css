@@ -35,11 +35,32 @@
   --danger:      #bf4a30;
   --danger-050:  #f6e6e1;
 
+  /* Dial tones — CATEGORICAL hues for the half-circle gauges (x-gauge).
+     A tone says WHICH quantity a gauge reads, so two gauges side by side are
+     told apart at a glance. It never says whether a value is good: a falling
+     pressure is not a failure, so each arc keeps one hue across its whole
+     travel and direction is carried by the arrow, the word, and which side of
+     the baseline the arc grows from. Values come from render.js's species
+     palette, so a dial and a chart of the same substance agree. Copper
+     (Honors) and amber (warn) are deliberately absent: they mean other things.
+     -deep is the off-scale cap, -soft the resting arc track. */
+  --dial-teal:        #2a7d8a;
+  --dial-teal-deep:   #1d5b66;
+  --dial-indigo:      #5a6b9c;
+  --dial-indigo-deep: #41507a;
+  --dial-green:       #4d8a5b;
+  --dial-green-deep:  #366742;
+  --dial-plum:        #9c5a87;
+  --dial-plum-deep:   #7a4169;
+  --dial-slate:       #5f7480;
+  --dial-slate-deep:  #45575f;
+
   /* Typography */
   --font-display: 'Bitter', Georgia, 'Times New Roman', serif;
   --font-body:    'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
 
+  --fs-2xs: 0.68rem;   /* axis tick labels on a dial; not for prose */
   --fs-xs:  0.78rem;
   --fs-sm:  0.88rem;
   --fs-md:  1rem;
@@ -63,5 +84,8 @@
   --ease: cubic-bezier(.2,.7,.3,1);
   --t-fast: .14s; --t-med: .26s;
 
-  --maxw: 1080px;
+  /* Tuned for a 15-inch laptop, the default viewing device. Wide enough that the
+     18-column periodic table and the 300px standards rail both sit comfortably,
+     while keeping a visible margin so the page reads as a column, not edge-to-edge. */
+  --maxw: 1200px;
 }

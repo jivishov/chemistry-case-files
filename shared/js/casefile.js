@@ -16,6 +16,16 @@
 //        mountCaseFile(Alpine, CASE);   // BEFORE Alpine.start()
 //   4. Add the unit to tests/casefile.test.js UNITS list (that suite is the gate).
 //
+// The Case File is a MODE, not a section at the foot of the page: the injected markup
+// binds x-show="mode==='casefile'", so the unit page owes it three things.
+//   a. a `<button class="tab" ... @click="mode='casefile'">Case file</button>` in the strip
+//      (use setMode('casefile') on units that define setMode)
+//   b. `x-show="mode!=='casefile'"` on .sim-grid, so the simulator and the standards rail
+//      give up the page while the story is showing
+//   c. the tab strip OUTSIDE .sim-grid, or hiding the grid takes the strip with it and the
+//      learner is stranded on the story with no way back
+// `mode` lives on the sim component; Alpine resolves it up the scope chain from here.
+//
 // Why the markup is injected from JS rather than written in each index.html:
 // the chrome is identical across units, so duplicating it 10 times guarantees
 // drift. Injection happens before Alpine.start(), so every binding inside the
@@ -172,7 +182,7 @@ export function createCaseFile(CASE) {
  */
 export function caseFileMarkup(CASE) {
   return `
-<section class="casefile" id="casefile" x-data="casefile" aria-labelledby="cf-title">
+<section class="casefile" id="casefile" x-data="casefile" x-show="mode==='casefile'" aria-labelledby="cf-title">
   <span class="cf-kicker"><span class="cf-dot"></span> <span x-text="'Case file ' + cs.number + ' &middot; ' + cs.kicker"></span></span>
   <h2 class="cf-title" id="cf-title" x-text="cs.title"></h2>
   <p class="cf-hook" x-text="cs.hook"></p>
@@ -249,13 +259,15 @@ export function caseFileMarkup(CASE) {
 }
 
 /**
- * The teaser chip that sits under the unit's <h1> and jumps to the Case File.
+ * The teaser chip that sits under the unit's <h1> and opens the Case File tab.
+ * Stays an <a href="#casefile"> so the story is still reachable without JS, but the
+ * click switches `mode` instead of scrolling, and the chip hides once you are there.
  */
 export function teaserMarkup(CASE) {
-  return `<a class="cf-teaser" href="#casefile">`
+  return `<a class="cf-teaser" href="#casefile" x-show="mode!=='casefile'" @click.prevent="mode='casefile'">`
     + `<span class="t-tag">Case file</span>`
     + `<span>${CASE.teaser}</span>`
-    + `<span class="t-go" aria-hidden="true">&#8595;</span>`
+    + `<span class="t-go" aria-hidden="true">&#8594;</span>`
     + `</a>`;
 }
 

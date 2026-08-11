@@ -23,7 +23,7 @@
 
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="../../index.html"><span class="mark">Mn</span> Day Three</a>
+      <a class="brand" href="../../index.html"><span class="mark">Tx</span> Chemistry Case Files</a>
       <span class="grow"></span>
       <label class="switch" title="Reveal advanced content for Honors sections">
         <input type="checkbox" x-model="honors">
@@ -35,7 +35,7 @@
 
   <main class="wrap page-main">
     <div class="page-head">
-      <h1>Solutions &amp; Solubility</h1>
+      <h1><span class="mark">Mn</span> Solutions &amp; Solubility</h1>
       <p class="eyebrow">Unit 8 · TEKS C.11</p>
     </div>
 
@@ -46,7 +46,19 @@
 
       <div data-casefile-teaser></div>
 
-    <div class="sim-grid">
+    <!-- Mode tabs -->
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" :aria-selected="mode==='dissolve'" @click="setMode('dissolve')">Water polarity</button>
+      <button class="tab" role="tab" :aria-selected="mode==='types'"    @click="setMode('types')">Solution types</button>
+      <button class="tab" role="tab" :aria-selected="mode==='curve'"    @click="setMode('curve')">Solubility curves</button>
+      <button class="tab" role="tab" :aria-selected="mode==='precip'"   @click="setMode('precip')">Precipitation</button>
+      <button class="tab" role="tab" :aria-selected="mode==='molarity'" @click="setMode('molarity')">Molarity</button>
+      <button class="tab" role="tab" :aria-selected="mode==='dilute'"   @click="setMode('dilute')">Dilution</button>
+      <button class="tab" role="tab" :aria-selected="mode==='capstone'" @click="setMode('capstone')">Batch run<span class="small" x-show="!capUnlocked"> (locked)</span></button>
+      <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')">Case file</button>
+    </div>
+
+    <div class="sim-grid" x-show="mode!=='casefile'">
       <!-- ============ LEFT: the simulator ============ -->
       <div class="stack">
 
@@ -59,17 +71,6 @@
             <button class="btn btn-sm" @click="resetProgress()">Reset progress</button>
           </div>
           <p class="small muted" style="margin-top: var(--s-2);">XP <span x-text="g_xp"></span> · streak <span x-text="g_streak"></span> (best <span x-text="g_best"></span>)</p>
-        </div>
-
-        <!-- Mode tabs -->
-        <div class="tabs" role="tablist">
-          <button class="tab" role="tab" :aria-selected="mode==='dissolve'" @click="setMode('dissolve')">Water polarity</button>
-          <button class="tab" role="tab" :aria-selected="mode==='types'"    @click="setMode('types')">Solution types</button>
-          <button class="tab" role="tab" :aria-selected="mode==='curve'"    @click="setMode('curve')">Solubility curves</button>
-          <button class="tab" role="tab" :aria-selected="mode==='precip'"   @click="setMode('precip')">Precipitation</button>
-          <button class="tab" role="tab" :aria-selected="mode==='molarity'" @click="setMode('molarity')">Molarity</button>
-          <button class="tab" role="tab" :aria-selected="mode==='dilute'"   @click="setMode('dilute')">Dilution</button>
-          <button class="tab" role="tab" :aria-selected="mode==='capstone'" @click="setMode('capstone')">Batch run<span class="small" x-show="!capUnlocked"> (locked)</span></button>
         </div>
 
         <!-- ---------- C.11(A) why it dissolves ---------- -->
@@ -635,10 +636,12 @@
 <script type="module">
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
+  import { registerGauge } from '../../shared/js/gauge.js';
   import { createSim } from './js/main.js';
   import { mountCaseFile } from '../../shared/js/casefile.js';
   import { CASE } from './js/case.js';
   registerRender(Alpine);
+  registerGauge(Alpine);
   Alpine.data('sim', createSim);
   mountCaseFile(Alpine, CASE);
   window.Alpine = Alpine;
