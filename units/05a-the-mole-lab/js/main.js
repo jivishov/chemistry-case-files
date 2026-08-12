@@ -8,13 +8,14 @@
 // in the shared engine, so chem.js/game.js and their Node test suites are untouched.
 // Lab/ladder state persists under chem.lab.05a-the-mole-lab, separate from mastery.
 import { SE, SUBSTANCES, FORMULA_POOL, HYDRATES, COMBUSTION, SCENARIOS,
-  TYPED_BANDS, ZOOM_ANALOGIES, MISCONCEPTIONS, ARI_INTRO } from './model.js';
+  TYPED_BANDS, MISCONCEPTIONS, ARI_INTRO } from './model.js';
 import { sceneArt } from './art.js';
 import {
   molarMass, percentComposition, parseFormula, ATOMIC_MASS, AVOGADRO,
   empiricalFormula, combustionFormula, fmt
 } from '../../../shared/js/chem.js';
 import { createGame, outcomeBand } from '../../../shared/js/game.js';
+import { createMoleZoom } from '../../../shared/js/molezoom.js';
 
 const pick = a => a[(Math.random() * a.length) | 0];
 const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -51,6 +52,7 @@ export { SE };
 export function createSim() {
   return {
     ...createGame({ unitId: '05a-the-mole-lab', skills }),
+    ...createMoleZoom(),          // the ungraded "Feel a mole" tab (shared with U5)
     SE, fmt, ARI_INTRO,
     honors: false,
     mode: 'molg',
@@ -77,7 +79,6 @@ export function createSim() {
     calib: { est: 0, estOk: 0, goodOfOk: 0 },
     // Molecular-eyes zoom slider (ungraded). Just needs an initial value; state persists
     // across tab switches and is not regenerated.
-    zoomPow: 0,
 
     // ---- world-state: the crew you keep alive (session-local; the primary feedback).
     // Crew safety starts full and dents on emergencies (a good run heals it back); `sol`
@@ -471,40 +472,6 @@ export function createSim() {
     },
     get cvMissCorrectLabel() { return this.cvMiss ? MISCONCEPTIONS[this.cvMiss].label : ''; },
     get cvMissFix() { return this.cvMiss ? MISCONCEPTIONS[this.cvMiss].fix : ''; },
-
-    // ---- Mechanic D: molecular-eyes zoom (ungraded) ----
-    get zoomCount() {
-      const k = this.zoomPow;
-      if (k <= 4) return (10 ** k).toLocaleString('en-US');   // 1 .. 10,000
-      return `10^${k}`;                                        // avoid building 1e23
-    },
-    get zoomCapped() { return 10 ** this.zoomPow > 300; },
-    get zoomAnalogy() {
-      let cur = ZOOM_ANALOGIES[0];
-      for (const a of ZOOM_ANALOGIES) { if (a.pow <= this.zoomPow) cur = a; else break; }
-      return cur.text;
-    },
-    // String-built SVG dot field injected via x-html on a <g> (never <template> in <svg>).
-    // Honest LOG zoom: draw min(10^pow, CAP) dots; past the cap they keep shrinking to
-    // convey that 10^23 cannot be drawn. Slider-driven only; no self-animating motion.
-    get zoomDots() {
-      const CAP = 300, W = 320, H = 200, pad = 8;
-      const pow = this.zoomPow;
-      const n = Math.min(Math.round(10 ** pow), CAP);
-      const cols = Math.max(1, Math.ceil(Math.sqrt(n * W / H)));
-      const rows = Math.max(1, Math.ceil(n / cols));
-      const cw = (W - pad * 2) / cols, ch = (H - pad * 2) / rows;
-      const capped = 10 ** pow > CAP;
-      const powShrink = capped ? Math.max(0.25, 1 - (pow - 3) * 0.06) : 1;
-      const r = Math.max(0.5, Math.min(cw, ch) * 0.34 * powShrink);
-      let out = '';
-      for (let i = 0; i < n; i++) {
-        const c = i % cols, rr = (i / cols) | 0;
-        const cx = pad + cw * (c + 0.5), cy = pad + ch * (rr + 0.5);
-        out += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r.toFixed(1)}"></circle>`;
-      }
-      return out;
-    },
 
     // ---- commit the dose conversion (rung-aware; same grading spine as U5) ----
     cvShip() {

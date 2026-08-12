@@ -309,14 +309,3 @@ export const MISCONCEPTIONS = {
 // mistake in someone else's solution is the metacognitive flip the audit is built around.
 export const ARI_INTRO = "ARI, the ship's junior AI, ran this job while you were off shift. It is still learning, and it picks up your habits, slips and all. Check its work before the number goes live.";
 
-// Mechanic D (molecular-eyes zoom): milestone analogies along the log slider (0..23).
-// Ordered ascending so the view-model can pick the milestone at or just below the
-// current power of ten. Makes Avogadro's scale viscerally real, one decade at a time.
-export const ZOOM_ANALOGIES = [
-  { pow: 0,  text: 'one particle, far too small to see.' },
-  { pow: 2,  text: 'about a hundred, a small classroom of them.' },
-  { pow: 6,  text: 'a million, a packed stadium crowd.' },
-  { pow: 12, text: 'a trillion, the grains of sand on a long beach.' },
-  { pow: 18, text: 'a quintillion, every grain of sand on every beach on Earth.' },
-  { pow: 23, text: 'a mole, that many grains of sand would bury Texas a metre deep.' }
-];

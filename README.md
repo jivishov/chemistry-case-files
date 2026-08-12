@@ -32,10 +32,11 @@ pattern, and Unit 5 is the reference for the scenario/gamification layer.
 npm test          # chem engine + gamification + case files
 ```
 
-Four suites, all plain node with no dependencies: `tests/chem.test.js` (the pure chemistry
+Five suites, all plain node with no dependencies: `tests/chem.test.js` (the pure chemistry
 engine), `tests/game.test.js` (mastery/XP helpers), `tests/casefile.test.js` (validates every
 unit's Case File data against the schema), `tests/gauge.test.js` (the live-gauge axis model, its arc geometry, and
-its plain-language readings). They are the gate for changes to `shared/js/`.
+its plain-language readings), `tests/molezoom.test.js` (the shared "Feel a mole" tool).
+They are the gate for changes to `shared/js/`.
 
 ## Run it
 
@@ -71,7 +72,8 @@ shared/
   js/   chem.js    chemistry engine (pure, unit-tested)
         teks.js    course + TEKS data
         render.js  KaTeX/Chart helpers, Alpine x-ce / x-tex directives
-        gauge.js   live readout dials, Alpine x-gauge directive
+        gauge.js   half-circle live gauges, Alpine x-gauge directive
+        molezoom.js  the "Feel a mole" powers-of-ten tool (U5 + U5a)
 units/06-reactions-stoichiometry/
   index.html · css/style.css · js/model.js (reactions) · js/main.js (view-model)
 ```

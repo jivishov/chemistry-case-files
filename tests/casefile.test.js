@@ -12,7 +12,6 @@ import { CASE as U2 } from '../units/02-atomic-structure/js/case.js';
 import { CASE as U3 } from '../units/03-periodic-trends/js/case.js';
 import { CASE as U4 } from '../units/04-bonding-geometry/js/case.js';
 import { CASE as U5 } from '../units/05-the-mole/js/case.js';
-import { CASE as U5A } from '../units/05a-the-mole-lab/js/case.js';
 import { CASE as U6 } from '../units/06-reactions-stoichiometry/js/case.js';
 import { CASE as U7 } from '../units/07-gas-laws/js/case.js';
 import { CASE as U8 } from '../units/08-solutions/js/case.js';
@@ -35,10 +34,18 @@ const UNITS = [
   { unit: '10', CASE: U10 },
   { unit: '11', CASE: U11 }
 ];
-const ALL = [...UNITS, { unit: '05a', CASE: U5A }];
+// U5a (the lab build) is an OPTIONAL variant: it is absent from teks.js's UNITS[],
+// the hub never links it, and nothing outside its own folder loads from it, so a
+// deploy or a checkout can legitimately drop it. Imported dynamically so this gate
+// still runs when the folder is gone, and counted as skipped rather than silently
+// dropped, because a quietly smaller test run is worse than a smaller one you can see.
+let U5A = null;
+try { ({ CASE: U5A } = await import('../units/05a-the-mole-lab/js/case.js')); } catch { /* not deployed */ }
+const ALL = U5A ? [...UNITS, { unit: '05a', CASE: U5A }] : [...UNITS];
 
-let pass = 0, fail = 0;
+let pass = 0, fail = 0, skipped = 0;
 const t = (name, cond) => { cond ? pass++ : (fail++, console.log('FAIL:', name)); };
+const skip = name => { skipped++; console.log('SKIP:', name, '(unit 05a not present)'); };
 
 // ---------------------------------------------------------------- schema gate
 for (const { unit, CASE } of ALL) {
@@ -71,7 +78,8 @@ t('case ids are unique across units', new Set(ids).size === ids.length);
 const numbers = UNITS.map(u => u.CASE.number);
 t('case numbers are unique across units', new Set(numbers).size === numbers.length);
 t('every case id is kebab-case', ids.every(id => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(id)));
-t('unit 05a deliberately reuses unit 05 story', U5A.id === U5.id && U5A.title === U5.title);
+U5A ? t('unit 05a deliberately reuses unit 05 story', U5A.id === U5.id && U5A.title === U5.title)
+    : skip('unit 05a reuses unit 05 story');
 
 // ------------------------------------------------------------- editorial rules
 // House style: no em-dashes or en-dashes in student-facing copy.
@@ -213,5 +221,5 @@ for (const { unit, CASE } of ALL) {
 // pure pieces above must be. Guard that the module never touched document at import.
 t('module imports cleanly in node (no DOM at import time)', typeof caseFileMarkup === 'function');
 
-console.log(`\n${pass} passed, ${fail} failed`);
+console.log(`\n${pass} passed, ${fail} failed${skipped ? `, ${skipped} skipped` : ''}`);
 process.exit(fail ? 1 : 0);

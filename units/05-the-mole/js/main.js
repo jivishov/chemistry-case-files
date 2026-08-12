@@ -12,6 +12,7 @@ import {
   empiricalFormula, combustionFormula, fmt
 } from '../../../shared/js/chem.js';
 import { createGame, outcomeBand } from '../../../shared/js/game.js';
+import { createMoleZoom } from '../../../shared/js/molezoom.js';
 
 const pick = a => a[(Math.random() * a.length) | 0];
 const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -43,6 +44,7 @@ export { SE };
 export function createSim() {
   return {
     ...createGame({ unitId: '05-the-mole', skills }),
+    ...createMoleZoom(),          // the ungraded "Feel a mole" tab (shared with U5a)
     SE, fmt,
     honors: false,
     mode: 'molg',

@@ -626,20 +626,25 @@
             <div class="brief-goal">A mole is 6.022 × 10²³ of something. That number is too big to picture. Slide it up one power of ten at a time and watch how fast it outruns anything you could ever draw.</div>
           </div>
 
+          <!-- x-init measures the rendered stage so the field can pack to what this
+               display can actually resolve; without it the module falls back to a
+               reference resolution and a retina panel would draw fewer dots than it
+               could show. -->
           <div class="zoom-stage">
-            <svg class="zoom-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <g class="zoom-dots" x-html="zoomDots"></g>
+            <svg class="zoom-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"
+                 aria-hidden="true" x-init="zoomWatch($el)">
+              <g class="zoom-dots" x-html="zoomDots()"></g>
             </svg>
           </div>
 
           <div class="zoom-readout">
-            <span class="zoom-count" x-text="zoomCount"></span>
+            <span class="zoom-count" x-html="zoomCount()"></span>
             <span class="zoom-unit">particles</span>
           </div>
 
           <div class="field" style="margin-top: var(--s-3);">
             <label>Power of ten: 10<sup x-text="zoomPow"></sup></label>
-            <input type="range" min="0" max="23" step="1" x-model.number="zoomPow" class="zoom-slider" aria-label="power of ten, 0 to 23">
+            <input type="range" min="0" :max="ZOOM_MAX_POW" step="1" x-model.number="zoomPow" class="zoom-slider" aria-label="power of ten, 0 to 23">
           </div>
           <!-- A DECADE dial, not a span one: the slider steps in powers of ten, so the
                axis has to be log or every step below 10^22 would collapse into the
@@ -649,8 +654,8 @@
           <div x-gauge="{ kind:'decade', value: Math.pow(10, zoomPow), min: 1, max: 1e23, digits: 3,
                           label:'how far up the powers of ten', tone:'teal' }"></div>
 
-          <p class="zoom-analogy">That is <span x-text="zoomAnalogy"></span></p>
-          <p class="small muted" x-show="zoomCapped">Only 300 dots are drawn here. The rest will not fit on any screen, which is exactly the point.</p>
+          <p class="zoom-analogy">That is <span x-text="zoomAnalogy()"></span></p>
+          <p class="small muted" x-show="zoomCapped()">Only <span x-text="zoomDrawn()"></span> dots are drawn here &mdash; every one this screen can still tell apart. The rest will not fit on any screen, which is exactly the point.</p>
         </div>
 
         <!-- ---------- World-state: crew safety + ship's log ---------- -->

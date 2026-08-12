@@ -210,15 +210,5 @@ tr.row-flag td { background: var(--accent-050); }
 .instincts p:last-child { margin-bottom: 0; }
 .instinct-nudge { font-weight: 600; color: var(--accent-700); margin-top: var(--s-2); }
 
-/* Mechanic D: "Feel a mole" zoom */
-.zoom-stage {
-  background: var(--surface-2); border: 1px solid var(--border);
-  border-radius: var(--r-md); padding: var(--s-3); margin-top: var(--s-3);
-}
-.zoom-svg { display: block; width: 100%; height: auto; }
-.zoom-dots circle { fill: var(--accent); }
-.zoom-readout { display: flex; align-items: baseline; gap: var(--s-2); margin-top: var(--s-4); }
-.zoom-count { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-2xl); color: var(--accent-700); }
-.zoom-unit { font-size: var(--fs-md); color: var(--muted); }
-.zoom-slider { width: 100%; }
-.zoom-analogy { margin-top: var(--s-3); font-size: var(--fs-md); font-weight: 600; }
+/* The "Feel a mole" zoom styles moved to shared/css/components.css when U5
+   picked up the same tool. See .zoom-* there. */

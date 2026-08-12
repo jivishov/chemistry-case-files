@@ -239,17 +239,21 @@ export function axisKey(spec, kind = spec.kind) {
 }
 
 function spanTicks(kind, lo, hi, refValue, refLabel, unit, digits, place) {
-  const out = [{ pos: 0, label: kind === 'decade' ? exp10Label(lo) : `${fmt(lo, digits)}${unit}` }];
+  const out = [kind === 'decade'
+    ? { pos: 0, ...exp10Parts(lo) }
+    : { pos: 0, label: `${fmt(lo, digits)}${unit}` }];
   if (kind === 'decade') {
     const step = Math.max(1, Math.round((Math.log10(hi) - Math.log10(lo)) / 4));
     for (let p = Math.ceil(Math.log10(lo)) + step; p < Math.log10(hi) - 0.5; p += step) {
-      out.push({ pos: place(10 ** p, lo, hi), label: exp10Label(10 ** p) });
+      out.push({ pos: place(10 ** p, lo, hi), ...exp10Parts(10 ** p) });
     }
   }
   if (refValue !== null) {
     out.push({ pos: place(refValue, lo, hi), label: refLabel ?? `${fmt(refValue, digits)}${unit}`, ref: true });
   }
-  out.push({ pos: 1, label: kind === 'decade' ? exp10Label(hi) : `${fmt(hi, digits)}${unit}` });
+  out.push(kind === 'decade'
+    ? { pos: 1, ...exp10Parts(hi) }
+    : { pos: 1, label: `${fmt(hi, digits)}${unit}` });
   return out.sort((a, b) => a.pos - b.pos);
 }
 
@@ -273,11 +277,34 @@ function spanPhrase(spec, value, ok, refValue, unit, digits, dir) {
   return '';
 }
 
-// 10^23 rather than 1e+23: the exponent is the thing being taught.
-function exp10Label(v) {
+// PURE. A power of ten split into what sits on the baseline and what is raised:
+// 10^23 -> { label: '10', exp: '23' }. 10²³ rather than 1e+23 because the exponent
+// is the thing being taught, and split rather than formatted into one string
+// because of how it has to be DRAWN.
+//
+// Unicode superscript characters look like the obvious answer and are a trap here.
+// JetBrains Mono carries ¹ ² ³ — they are Latin-1 — but NOT ⁰ or ⁴-⁹, which live in
+// the U+2070 block. Measured in the page at 40px: a digit and ¹²³ all advance 24.00px
+// while ⁰⁴⁵⁶⁷⁸⁹ advance 23.44px, i.e. they are quietly coming from a fallback face.
+// So "10¹²" would render wholly in the dial's monospace and "10⁶" would not, mixing
+// two typefaces across one axis and breaking the monospace advance that
+// tickLabelPoint's width estimate assumes. Raising a normal digit sidesteps the
+// font's coverage entirely: every exponent is drawn in the same face as every other.
+export function exp10Parts(v) {
   const p = Math.round(Math.log10(v));
-  return p === 0 ? '1' : `10^${p}`;
+  return p === 0 ? { label: '1' } : { label: '10', exp: String(p) };
 }
+
+// PURE. Width of a tick label in characters, counting a raised exponent at the
+// reduced size it is actually drawn. tickLabelPoint uses this to keep a label on
+// the face, so it has to measure what the eye sees, not the string's length.
+export function tickChars(t) {
+  return t.label.length + (t.exp ? t.exp.length * EXP_SCALE : 0);
+}
+
+// How a raised exponent is drawn, shared by the SVG dial and any HTML readout that
+// prints the same notation: 68% of the size, lifted a third of the baseline size.
+export const EXP_SCALE = 0.68, EXP_RISE = 0.32;
 
 // ---------------------------------------------------------------------------
 // Half-circle geometry. Pure and exported so the arc maths is node-tested: a
@@ -288,12 +315,21 @@ function exp10Label(v) {
 // One face for every dial, in its own viewBox units. The two ends of the arc sit
 // on the cy baseline, which leaves the bottom strip free for the end labels and
 // the inside of the arc free for the needle.
-export const DIAL_GEOM = Object.freeze({
-  viewBox: '0 0 136 88', cx: 68, cy: 64, r: 42, stroke: 9,
-  labelR: 57,      // tick text rides this radius, clear of the arc's outer edge
-  endLabelDy: 13,  // ...except the two ends, which drop below the baseline
-  needleR: 36, hubR: 4
-});
+//
+// Sized to stay an instrument rather than a centrepiece: three of these have to
+// sit in one .stat-row without the row eating a 15-inch laptop screen. Everything
+// scales together, so the only real constraint is that the tick text still lands
+// near 12px once the face is drawn at its capped width (see components.css):
+// 9 units x 150px / 112 units = 12.05px.
+const _geom = {
+  vw: 112, vh: 70, cx: 56, cy: 55, r: 34, stroke: 7,
+  labelR: 47,      // tick text rides this radius, clear of the arc's outer edge
+  endLabelDy: 11,  // ...except the two ends, which drop below the baseline
+  tickFont: 9,     // set as an SVG attribute, so JS owns the size the maths assumes
+  needleR: 28, hubR: 3.2
+};
+_geom.viewBox = `0 0 ${_geom.vw} ${_geom.vh}`;
+export const DIAL_GEOM = Object.freeze(_geom);
 
 // PURE. Degrees from the +x axis. pos 0 is the left end (180), pos 0.5 the apex
 // (90), pos 1 the right end (0).
@@ -330,10 +366,18 @@ export function arcSegment(fromPos, toPos, pathLen) {
 // PURE. Where a tick's text sits. The two ends drop to the bottom corners, the
 // dashboard idiom, because following the circle out there would push them
 // through the side of the viewBox.
-export function tickLabelPoint(pos, g = DIAL_GEOM) {
-  if (pos <= 0.02) return { x: g.cx - g.r, y: g.cy + g.endLabelDy, anchor: 'middle' };
-  if (pos >= 0.98) return { x: g.cx + g.r, y: g.cy + g.endLabelDy, anchor: 'middle' };
-  return { ...arcPoint(pos, g.labelR, g), anchor: 'middle' };
+//
+// `chars` is the label's character count. The scale is monospaced, so half its
+// width is arithmetic rather than a measurement, and a long label can be nudged
+// inward until it fits. Without that, an axis in scientific notation ("2.84e-19
+// J" is ten characters) hangs its left end off the side of the face.
+export function tickLabelPoint(pos, g = DIAL_GEOM, chars = 0) {
+  const half = chars * 0.6 * g.tickFont / 2;
+  const fit = x => Math.min(Math.max(x, half + 1), g.vw - half - 1);
+  if (pos <= 0.02) return { x: fit(g.cx - g.r), y: g.cy + g.endLabelDy, anchor: 'middle' };
+  if (pos >= 0.98) return { x: fit(g.cx + g.r), y: g.cy + g.endLabelDy, anchor: 'middle' };
+  const p = arcPoint(pos, g.labelR, g);
+  return { x: fit(p.x), y: p.y, anchor: 'middle' };
 }
 
 // Categorical hues. A tone says WHICH quantity a gauge reads, never whether its
@@ -367,7 +411,9 @@ function buildDial(el) {
   // The SVG is aria-hidden: the host div carries role="meter" plus the name and
   // the spoken reading, so a screen reader gets one instrument, not a shape tree.
   const svg = svgEl('svg', { class: 'dial-face', viewBox: g.viewBox, 'aria-hidden': 'true', focusable: 'false' });
-  const arc = { d: arcPathD(g), fill: 'none', 'stroke-linecap': 'round' };
+  // Stroke width comes from the geometry, not from CSS, so the arc thickness can
+  // never drift out of step with the radius the label maths was sized against.
+  const arc = { d: arcPathD(g), fill: 'none', 'stroke-linecap': 'round', 'stroke-width': g.stroke };
   const track = svgEl('path', { ...arc, class: 'dial-arc-track' });
   const fill = svgEl('path', { ...arc, class: 'dial-arc-fill' });
   const cap = svgEl('path', { ...arc, class: 'dial-arc-cap' });
@@ -449,7 +495,7 @@ function paintDial(p, m) {
     p.ref.setAttribute('x2', b.x.toFixed(2)); p.ref.setAttribute('y2', b.y.toFixed(2));
   }
 
-  const tickKey = m.ticks.map(t => t.label).join('|');
+  const tickKey = m.ticks.map(t => t.label + (t.exp ? '^' + t.exp : '')).join('|');
   if (tickKey !== p.tickKey) {
     p.tickKey = tickKey;
     p.ticks.replaceChildren();
@@ -470,12 +516,25 @@ function paintDial(p, m) {
           x1: a.x.toFixed(2), y1: a.y.toFixed(2), x2: b.x.toFixed(2), y2: b.y.toFixed(2)
         }));
       }
-      const at = tickLabelPoint(t.pos, g);
+      const at = tickLabelPoint(t.pos, g, tickChars(t));
       const text = svgEl('text', {
         class: 'dial-tick' + cls,
-        x: at.x.toFixed(2), y: at.y.toFixed(2), 'text-anchor': at.anchor
+        x: at.x.toFixed(2), y: at.y.toFixed(2), 'text-anchor': at.anchor,
+        'font-size': g.tickFont
       });
       text.textContent = t.label;
+      // The exponent is a raised, reduced run in the SAME face rather than a
+      // Unicode superscript character, which the dial's monospace only carries
+      // for 1, 2 and 3 (see exp10Parts). dy is not reset afterwards because the
+      // exponent is always the last run in the label.
+      if (t.exp) {
+        const sup = svgEl('tspan', {
+          'font-size': (g.tickFont * EXP_SCALE).toFixed(2),
+          dy: (-g.tickFont * EXP_RISE).toFixed(2)
+        });
+        sup.textContent = t.exp;
+        text.appendChild(sup);
+      }
       p.scale.appendChild(text);
     });
   }

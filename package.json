@@ -3,10 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/chem.test.js && node tests/game.test.js && node tests/casefile.test.js && node tests/gauge.test.js",
+    "test": "node tests/chem.test.js && node tests/game.test.js && node tests/casefile.test.js && node tests/gauge.test.js && node tests/molezoom.test.js",
     "test:chem": "node tests/chem.test.js",
     "test:game": "node tests/game.test.js",
     "test:casefile": "node tests/casefile.test.js",
-    "test:gauge": "node tests/gauge.test.js"
+    "test:gauge": "node tests/gauge.test.js",
+    "test:molezoom": "node tests/molezoom.test.js"
   }
 }

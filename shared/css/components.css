@@ -124,35 +124,38 @@ table.data td.num, table.data th.num { text-align: right; font-family: var(--fon
    other ways: which side of the baseline mark the coloured sweep grows from, an
    arrow glyph, and a word. Tones live in tokens.css. */
 .dial {
-  display: block; margin-top: var(--s-3);
+  display: block; margin-top: var(--s-1);
   --dial-hue: var(--dial-teal);
   --dial-hue-deep: var(--dial-teal-deep);
 }
-.stat .dial { margin-top: var(--s-2); }
+.stat .dial { margin-top: 0; }
 .dial[data-tone="indigo"] { --dial-hue: var(--dial-indigo); --dial-hue-deep: var(--dial-indigo-deep); }
 .dial[data-tone="green"]  { --dial-hue: var(--dial-green);  --dial-hue-deep: var(--dial-green-deep); }
 .dial[data-tone="plum"]   { --dial-hue: var(--dial-plum);   --dial-hue-deep: var(--dial-plum-deep); }
 .dial[data-tone="slate"]  { --dial-hue: var(--dial-slate);  --dial-hue-deep: var(--dial-slate-deep); }
 
-/* The face. Capped so a gauge in a full-width panel stays instrument-sized
-   instead of ballooning to the panel's width. */
-.dial-face { display: block; width: 100%; max-width: 208px; margin: 0 auto; overflow: visible; }
+/* The face. Capped so three of these fit one .stat-row without the row taking
+   over a laptop screen, and so a gauge in a full-width panel stays
+   instrument-sized instead of ballooning. Stroke width and tick font size come
+   from DIAL_GEOM as SVG attributes, not from here: the label positions are
+   computed against them, so they have to have one owner. */
+.dial-face { display: block; width: 100%; max-width: 150px; margin: 0 auto; overflow: visible; }
 
-.dial-arc-track { stroke: var(--surface-3); stroke-width: 9; }
+.dial-arc-track { stroke: var(--surface-3); }
 .dial-arc-fill {
-  stroke: var(--dial-hue); stroke-width: 9;
+  stroke: var(--dial-hue);
   transition: stroke-dasharray var(--t-med) var(--ease), stroke-dashoffset var(--t-med) var(--ease);
 }
 /* Off-scale: the far sliver darkens, and .dial-read says "off the top of the
    dial" in words, so a pinned needle never reads as an exact maximum. */
-.dial-arc-cap { stroke: var(--dial-hue-deep); stroke-width: 9; opacity: 0; }
+.dial-arc-cap { stroke: var(--dial-hue-deep); opacity: 0; }
 .dial[data-over="hi"] .dial-arc-cap,
 .dial[data-over="lo"] .dial-arc-cap { opacity: 1; }
 
 /* The baseline the "x" is measured from. Crosses the arc, so it reads as a datum
    on the scale and not as one more tick outside it. */
-.dial-arc-ref { stroke: var(--ink-2); stroke-width: 1.6; }
-.dial-tick-mark { stroke: var(--border-strong); stroke-width: 1.4; }
+.dial-arc-ref { stroke: var(--ink-2); stroke-width: 1.4; }
+.dial-tick-mark { stroke: var(--border-strong); stroke-width: 1.2; }
 
 /* Where the reading sat before the last control move: a hollow bead riding the
    arc, so it never competes with the needle for "this is the value". */
@@ -160,16 +163,16 @@ table.data td.num, table.data th.num { text-align: right; font-family: var(--fon
   opacity: 0;
   transition: opacity var(--t-med) var(--ease), transform var(--t-med) var(--ease);
 }
-.dial-ghost circle { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.6; }
+.dial-ghost circle { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
 .dial.is-moving .dial-ghost { opacity: .9; }
 .dial-needle {
-  stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round;
+  stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round;
   transition: transform var(--t-med) var(--ease);
 }
 .dial-hub { fill: var(--ink); }
 
 .dial-tick {
-  font-family: var(--font-mono); font-size: 8.5px; fill: var(--muted);
+  font-family: var(--font-mono); fill: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 .dial-tick.is-ref { fill: var(--ink-2); font-weight: 700; }
@@ -180,10 +183,11 @@ table.data td.num, table.data th.num { text-align: right; font-family: var(--fon
    units, so the spacing is scale-invariant and every tick can stay. */
 
 /* Stacked and centred under the gauge face, the way an instrument's digital
-   readout sits under its dial. */
+   readout sits under its dial. Pulled up tight against the arc: the face already
+   carries whitespace below its end labels. */
 .dial-foot {
-  display: flex; flex-direction: column; align-items: center; gap: var(--s-1);
-  margin-top: var(--s-1); text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  text-align: center;
 }
 .dial-trend {
   display: inline-flex; align-items: baseline; gap: 4px; flex: none;
@@ -200,9 +204,34 @@ table.data td.num, table.data th.num { text-align: right; font-family: var(--fon
 .dial-arrow { font-size: .8em; line-height: 1; }
 .dial-read { font-size: var(--fs-2xs); color: var(--ink-2); line-height: 1.35; }
 
-/* Gauges need room for their arc and tick labels, so rows carrying them start
-   wider than a plain stat row. */
-.stat-row.has-dials { grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); }
+/* Gauges need a little more room than a plain stat row, but not much: the face
+   caps at 150px, so 186px is enough for it plus the card's own padding. Keeping
+   this tight is what lets three gauge cards share one row on a laptop instead of
+   wrapping and pushing the panel off the bottom of the screen. */
+.stat-row.has-dials { grid-template-columns: repeat(auto-fit, minmax(186px, 1fr)); }
+/* A gauge card is taller than a bare number, so it gets less padding back. */
+.stat:has(> .dial) { padding: var(--s-3); }
+
+/* ===== "Feel a mole" powers-of-ten zoom (shared by U5 and U5a) =====
+   Pairs with shared/js/molezoom.js. The dot field is a string-built SVG
+   fragment, so the only styling it needs is the dot fill. */
+/* Mechanic D: "Feel a mole" zoom */
+.zoom-stage {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-3); margin-top: var(--s-3);
+}
+.zoom-svg { display: block; width: 100%; height: auto; }
+.zoom-dots circle { fill: var(--accent); }
+.zoom-readout { display: flex; align-items: baseline; gap: var(--s-2); margin-top: var(--s-4); }
+.zoom-count { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-2xl); color: var(--accent-700); }
+/* The exponent is a raised run of ORDINARY digits, not a Unicode superscript: the
+   mono face carries 1/2/3 but not 0 or 4-9, so 10^6 would swap fonts mid-number.
+   Offset with position rather than vertical-align:super so raising it cannot grow
+   the line box and shove the readout row apart. */
+.zoom-count sup { font-size: .58em; vertical-align: baseline; position: relative; top: -.46em; }
+.zoom-unit { font-size: var(--fs-md); color: var(--muted); }
+.zoom-slider { width: 100%; }
+.zoom-analogy { margin-top: var(--s-3); font-size: var(--fs-md); font-weight: 600; }
 
 /* Particle token visualization */
 .tokenfield { display: flex; flex-direction: column; gap: var(--s-3); }

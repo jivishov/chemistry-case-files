@@ -4,7 +4,8 @@
 // here; everything a wrong dial could misteach lives in these pure functions.
 import {
   niceFactor, ratioPos, linPos, logPos, ratioPhrase, ratioTicks, dialModel, axisKey,
-  DIAL_GEOM, DIAL_TONES, arcAngle, arcPoint, needleRotation, arcPathD, arcSegment, tickLabelPoint
+  DIAL_GEOM, DIAL_TONES, arcAngle, arcPoint, needleRotation, arcPathD, arcSegment, tickLabelPoint,
+  exp10Parts, tickChars, EXP_SCALE
 } from '../shared/js/gauge.js';
 
 const approx = (a, b, t = 1e-9) => Math.abs(a - b) < t;
@@ -152,7 +153,26 @@ const dec = dialModel({ kind: 'decade', value: 10 ** 12, min: 1, max: 10 ** 23, 
 t('decade dial places a power of ten by its exponent', approx(dec.pos, logPos(10 ** 12, 1, 10 ** 23)));
 t('decade dial counts the powers of ten', dec.read === '12 powers of ten above 1');
 t('decade dial labels ticks as exponents, not 1e+23',
-  dec.ticks.some(x => x.label === '10^23') && dec.ticks[0].label === '1');
+  dec.ticks.some(x => x.label === '10' && x.exp === '23') && dec.ticks[0].label === '1');
+// The exponent is carried SEPARATELY so the painter can raise it as its own text
+// run in the dial's own face. A Unicode superscript character would look simpler
+// and is a trap: JetBrains Mono has 1/2/3 but not 0 or 4-9, so half the axis would
+// silently render from a fallback font. See exp10Parts.
+t('the raised part is carried apart from the baseline part, never merged into it',
+  dec.ticks.every(x => !x.label.includes('^') && !/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/.test(x.label + (x.exp ?? ''))));
+t('every decade tick is either the base or 10 with a plain-digit exponent',
+  dec.ticks.every(x => x.label === '1' ? !('exp' in x) : x.label === '10' && /^-?\d+$/.test(x.exp)));
+t('the base of the axis is named, not written as 10 to the zero',
+  exp10Parts(1).label === '1' && exp10Parts(1).exp === undefined);
+t('a negative exponent survives the split', exp10Parts(1e-19).exp === '-19');
+// A ratio dial has no exponents, and its ticks must not grow a stray raised run.
+t('non-decade ticks carry no exponent', ratioTicks(3).every(x => x.exp === undefined));
+// tickLabelPoint keeps a label on the face from its width; a raised exponent is
+// drawn smaller, so counting its digits at full width would over-nudge every tick.
+t('a raised exponent counts as less than a full character',
+  tickChars({ label: '10', exp: '23' }) === 2 + 2 * EXP_SCALE
+  && tickChars({ label: '10', exp: '23' }) < '10^23'.length);
+t('a plain label measures as its own length', tickChars({ label: '×1/3' }) === 4);
 t('one power of ten is singular', dialModel({ kind: 'decade', value: 10, min: 1, max: 10 ** 23 }).read === '1 power of ten above 1');
 t('the bottom of a decade axis is named, not called "0 powers of ten"',
   dialModel({ kind: 'decade', value: 1, min: 1, max: 10 ** 23 }).read === 'the base of the scale');
@@ -250,10 +270,33 @@ t('end labels drop below the baseline, the dashboard idiom',
 t('the mid label rides outside the arc', approx(mid.x, G.cx) && approx(mid.y, G.cy - G.labelR));
 t('label radius clears the arc stroke', G.labelR > G.r + G.stroke / 2);
 t('every label stays inside the viewBox', [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1].every(q => {
-  const s = tickLabelPoint(q), [, , vw, vh] = G.viewBox.split(' ').map(Number);
-  return s.x > 4 && s.x < vw - 4 && s.y > 4 && s.y < vh - 2;
+  const s = tickLabelPoint(q);
+  return s.x > 4 && s.x < G.vw - 4 && s.y > 4 && s.y < G.vh - 2;
 }));
+t('the viewBox string agrees with the numeric bounds', G.viewBox === `0 0 ${G.vw} ${G.vh}`);
 t('the needle stays inside the arc', G.needleR < G.r);
+t('the tick font is small enough to render near 12px at the capped face width',
+  Math.abs(G.tickFont * 150 / G.vw - 12) < 1.5);
+
+// A long label in scientific notation ("2.84e-19 J") used to hang off the left
+// edge of the face. The scale is monospaced, so the fix is arithmetic.
+// Takes either a label string or a width already measured by tickChars, since a
+// tick with a raised exponent is narrower than its characters suggest.
+const fits = (pos, textOrChars) => {
+  const chars = typeof textOrChars === 'number' ? textOrChars : textOrChars.length;
+  const s = tickLabelPoint(pos, G, chars);
+  const half = chars * 0.6 * G.tickFont / 2;
+  return s.x - half >= 0 && s.x + half <= G.vw;
+};
+t('a long left-end label is nudged inward until it fits', fits(0, '2.84e-19 J'));
+t('a long right-end label is nudged inward until it fits', fits(1, '5.23e-19 J'));
+t('a long mid-arc label is nudged inward too',
+  fits(0.26, tickChars({ label: '10', exp: '12' })) && fits(0.78, tickChars({ label: '10', exp: '18' })));
+t('an absurdly long label still lands on the face, just centred', fits(0, '0.000123456789 mol/L'));
+t('a short label is NOT nudged, so it stays under its arc end',
+  approx(tickLabelPoint(0, G, 1).x, G.cx - G.r) && approx(tickLabelPoint(1, G, 3).x, G.cx + G.r));
+t('nudging only moves x, never y',
+  tickLabelPoint(0, G, 20).y === tickLabelPoint(0, G, 1).y);
 
 // ---- tone: categorical identity, never a verdict -------------------------
 t('the tone palette excludes copper and amber, which mean Honors and warn',
