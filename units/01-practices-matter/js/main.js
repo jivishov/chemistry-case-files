@@ -16,8 +16,14 @@ const onBoard = (x, y) => {
   return r <= 0.92 ? { x, y } : { x: x * 0.92 / r, y: y * 0.92 / r };
 };
 
-// graduated-cylinder SVG geometry (50 mL)
-const MAXV = 50, TOP = 20, BOT = 300, SPAN = BOT - TOP;
+// graduated-cylinder SVG geometry (50 mL). The viewBox is drawn large — 10 units
+// per mL — so the 1 mL graduations and the meniscus stay legible once CSS scales
+// the drawing down; see .cyl in css/style.css.
+const MAXV = 50;
+const GLASS_X = 48, GLASS_W = 90;                     // outer glass wall
+const CX_L = 50, CX_R = 136, CX_MID = (CX_L + CX_R) / 2;  // inner wall, where liquid sits
+const TOP = 66, BOT = 566, SPAN = BOT - TOP;          // y of the 50 mL and 0 mL marks
+const MENISCUS = 6;                                    // how far the liquid climbs the wall
 
 const EV_SCENARIOS = [
   { label: 'density of a copper sample', accepted: 8.96, unit: 'g/mL', dec: 2 },
@@ -55,7 +61,10 @@ export function createSim() {
     // repeated SVG markup is built as a string and injected with x-html on a <g>.
     get ticks() {
       const out = [];
-      for (let v = 0; v <= MAXV; v++) out.push({ v, y: this.lvlY(v), major: v % 10 === 0 });
+      for (let v = 0; v <= MAXV; v++) {
+        const major = v % 10 === 0;
+        out.push({ v, y: this.lvlY(v), major, mid: !major && v % 5 === 0 });
+      }
       return out;
     },
     lvlY(v) { return BOT - (v / MAXV) * SPAN; },
@@ -63,10 +72,33 @@ export function createSim() {
     ticksSvg(labels = false) {
       let s = '';
       for (const t of this.ticks) {
-        s += `<line x1="${t.major ? 80 : 88}" x2="99" y1="${t.y}" y2="${t.y}" stroke="#7d929b" stroke-width="${t.major ? 1.4 : 0.7}"></line>`;
-        if (labels && t.major) s += `<text x="104" y="${t.y + 3}" font-size="9" fill="#687a82" font-family="JetBrains Mono">${t.v}</text>`;
+        const x1 = t.major ? 96 : t.mid ? 108 : 119;
+        const w = t.major ? 2.2 : t.mid ? 1.6 : 1.1;
+        s += `<line x1="${x1}" x2="${CX_R}" y1="${t.y}" y2="${t.y}" stroke="#7d929b" stroke-width="${w}"></line>`;
+        if (labels && t.major) s += `<text x="${CX_R + 8}" y="${t.y + 5}" font-size="15" fill="#687a82" font-family="JetBrains Mono">${t.v}</text>`;
       }
       return s;
+    },
+    // Glass, liquid, submerged sample and scale all come from here so the reader
+    // and the two displacement cylinders can never drift apart.
+    cylSvg(v, { labels = false, block = false } = {}) {
+      const y = this.lvlY(v), m = MENISCUS;
+      // The meniscus is concave: its lowest point sits exactly on the reading, the
+      // edges climb the wall. That is the point students are told to read.
+      const curve = `M${CX_L} ${y - m} Q${CX_MID} ${y + m} ${CX_R} ${y - m}`;
+      let s = `<rect x="${GLASS_X}" y="28" width="${GLASS_W}" height="566" rx="8" fill="#f7fafb" stroke="#aebfc6" stroke-width="2.5"></rect>`
+        + `<rect x="${GLASS_X}" y="28" width="${GLASS_W}" height="12" rx="6" fill="#eaf1f3" stroke="#aebfc6" stroke-width="2"></rect>`
+        + `<rect x="34" y="588" width="118" height="16" rx="6" fill="#e6eef0" stroke="#aebfc6" stroke-width="2"></rect>`;
+      if (v > 0) {
+        s += `<path d="${curve} L${CX_R} ${BOT} L${CX_L} ${BOT} Z" fill="#79b0ba" opacity="0.5"></path>`;
+        if (block) {
+          const h = Math.max(0, BOT - y - 30);
+          s += `<rect x="${CX_MID - 23}" y="${y + 16}" width="46" height="${h}" rx="4" fill="#8a6a4a" opacity="0.85"></rect>`;
+        }
+        s += `<path d="${curve}" fill="none" stroke="#3f7f8c" stroke-width="2.4" stroke-linecap="round"></path>`;
+      }
+      s += `<rect x="${CX_L + 6}" y="48" width="6" height="516" rx="3" fill="#ffffff" opacity="0.7"></rect>`;
+      return s + this.ticksSvg(labels);
     },
     boardDots(dots) { return dots.map(d => `<circle cx="${(60 + d[0] * 46).toFixed(2)}" cy="${(60 + d[1] * 46).toFixed(2)}" r="3.5" fill="#1d5b66"></circle>`).join(''); },
     liveDots() { return this.evDots.map(d => `<circle cx="${(60 + d.x * 46).toFixed(2)}" cy="${(60 + d.y * 46).toFixed(2)}" r="4" fill="#2a7d8a"></circle>`).join(''); },
