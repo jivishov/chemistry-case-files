@@ -1,0 +1,303 @@
+/* Unit 9 bench styles on top of units_new/shared/cockpit.css.
+ *
+ * Only what is specific to this unit's tools lives here: the acid/base name builder, the
+ * salt-subscript steppers, the strong-vs-weak shelf, the pH meter and its scale, the
+ * Chart.js titration host, and the patient's windowed pH figure in the status rail. The
+ * shell -- command header, station strip, three columns, mission screen, status rail -- is
+ * the shared file's job.
+ *
+ * Carried over from units/09-acids-bases/css/style.css: .name-grid, .name-preview,
+ * .stepper-row, .stepper, .bottle, .seg, .choice-sm, .ph-readout, .ph-scale, .ph-needle,
+ * .ph-slider, .canvas-wrap, .pt-scale, .pt-window and .pt-needle. Same drawings, same class
+ * names; what changed is the sizes, which have to fit a console column and a 230px rail
+ * rather than a full-width worksheet page, and every --fs-xs that turned out to be
+ * instructional text (porting trap 6).
+ *
+ * `.small` and `.formula-lg` are NOT redefined here: cockpit.css already declares `.small`
+ * and lifts it to the 14px floor inside the console, and a copy of the worksheet's own
+ * `.small { font-size: var(--fs-xs) }` would have been dead weight at best.
+ */
+
+.formula-lg { font-size: 1.5rem; font-weight: 700; }
+
+/* ============================ the benches ============================ */
+
+/* Name builder: the acid prefix/root/suffix trio, or the base metal/roman/anion trio. The
+   three fields sit on one line in a wide console and wrap to two below that. The worksheet
+   set the field captions at --fs-xs (12.5px); inside the console "prefix" is the
+   instruction telling a learner what that dropdown is, so it sits at the shell's 14px floor
+   (porting trap 6). */
+.name-grid { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.name-grid .field { flex: 1 1 132px; min-width: 116px; }
+.name-grid .field > span { font-size: var(--fs-sm); color: var(--ink-2); margin-bottom: 2px; }
+.name-grid select {
+  width: 100%; padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--border-strong); border-radius: var(--r-md);
+  background: var(--surface); font-family: var(--font-mono); font-size: var(--fs-sm);
+}
+.name-preview { font-family: var(--font-mono); color: var(--accent-700); }
+
+/* Subscript steppers (the salt criss-cross), matched to the kit. */
+.stepper-row { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; }
+.stepper {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-3);
+}
+.stepper .el { font-weight: 700; font-size: var(--fs-md); min-width: 1.4em; text-align: center; }
+.stepper .sub { font-weight: 700; font-size: var(--fs-lg); min-width: 1.4em; text-align: center; color: var(--accent-700); }
+.stepper .btn-sm { min-width: 30px; }
+
+/* The strong-vs-weak shelf: one row per bottle, the two calls on the right. */
+.bottle {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
+  flex-wrap: wrap; padding: var(--s-2) var(--s-3); border-radius: var(--r-md);
+  border: 1px solid var(--border); margin-bottom: var(--s-2); background: var(--surface);
+}
+.bottle-id { display: inline-flex; align-items: baseline; gap: var(--s-2); min-width: 0; }
+.seg { display: inline-flex; gap: var(--s-2); }
+/* --fs-xs on the worksheet. These two buttons ARE the call this bench grades, so they are
+   held to the console floor like every other choice (porting trap 6). */
+.choice-sm { padding: var(--s-1) var(--s-3); font-size: var(--fs-sm); min-width: 68px; text-align: center; }
+
+/* The four reason options are full sentences, so the cards have to wrap rather than
+   inherit a single-line centring and clip. */
+.chem-console .choice { white-space: normal; line-height: 1.3; }
+
+/* The worksheet carried five inline `style="max-width: ..."` attributes on choice grids and
+   number fields. Inline styles win every specificity contest, so no breakpoint could ever
+   tighten them; these are the same caps as classes. */
+.choice-grid-wide { max-width: 480px; }
+.choice-grid-narrow { max-width: 360px; }
+.field-narrow { max-width: 240px; }
+.field-wide { max-width: 360px; }
+
+/* pH meter: a gradient scale with a movable needle, plus the slider that drives it. */
+.ph-readout { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-lg); margin-top: var(--s-3); }
+.ph-readout .small { font-weight: 500; }
+.ph-scale {
+  position: relative; height: 14px; max-width: 520px; margin: var(--s-2) 0;
+  border-radius: 999px; border: 1px solid var(--border);
+  background: linear-gradient(to right, #c0392b 0%, #d98a23 25%, #4a9d4a 50%, #2a7d8a 72%, #3a4fa0 100%);
+}
+.ph-needle {
+  position: absolute; top: -4px; width: 3px; height: 22px; border-radius: 2px;
+  background: var(--ink-1); transform: translateX(-50%); transition: left var(--t-fast);
+}
+.ph-slider { width: 100%; max-width: 520px; display: block; }
+input[type="range"].ph-slider { accent-color: var(--accent); }
+.ph-ends { justify-content: space-between; max-width: 520px; }
+
+/* ============================ the titration chart ============================ */
+
+/* Porting trap 12, the Chart.js half, and Unit 9 is the first port to owe this list a
+   number for a CHART rather than a 3D stage.
+ *
+ * lineChart() in shared/js/render.js is already `responsive: true,
+ * maintainAspectRatio: false`, which means the canvas takes its height from THIS element
+ * and nothing else. In the worksheet shell that was a normal block in a scrolling page and
+ * a flat 280px worked. In the cockpit it sits inside a console panel that is fixed-height,
+ * and after the `display: block` fix below there is no grid track to give it a height
+ * either -- so without an explicit one it collapses to zero and Chart.js draws into a 0px
+ * box for the rest of the session.
+ *
+ * WHY 26vh AND WHY THIS CLAMP. A chart's usable aspect is not a 3D stage's. Of whatever
+ * height this box gets, Chart.js spends roughly 70px on furniture -- a three-entry legend
+ * on top, an x-axis title and its ticks underneath, y ticks down the side -- and only the
+ * remainder draws the curve. At Unit 4's `clamp(190px, 33vh, 300px)` the plot area on the
+ * 726px primary display would have been ~170px, which is more than a sigmoid needs and
+ * pushed the indicator buttons below it off the visible part of the panel. At 26vh the box
+ * is 189px on that display, leaving ~120px of plot: enough that the flat approach, the
+ * near-vertical jump and the flat tail all read, with the slider and the three indicator
+ * cards still in view under it. The 178px floor is what keeps the plot area from falling
+ * under 100px at 1024x600, where 26vh would be 156px; the 240px ceiling stops the chart
+ * eating a projector's extra height for nothing, since a taller sigmoid is not a clearer
+ * one.
+ *
+ * position: relative is load-bearing separately: Chart.js measures the parent box, and an
+ * absolutely-positioned canvas needs a positioned ancestor to measure against. */
+.canvas-wrap {
+  position: relative;
+  height: clamp(178px, 26vh, 240px);
+  margin-top: var(--s-3);
+}
+.canvas-wrap canvas { width: 100% !important; height: 100% !important; }
+
+/* ============================ console fit ============================ */
+
+/* Two changes to how the shell lays out the active bench, and both are load-bearing.
+ *
+ * BLOCK, NOT GRID (porting trap 1). The shell makes the active panel `display: grid` with
+ * `grid-template-rows: minmax(0, auto)`, and that first track resolves to 0px. Every panel
+ * in this unit opens with a real instruction paragraph rather than the `.brief` card the
+ * shell hides, so the collapsed row rendered that paragraph at zero height and the bench
+ * under it drew on top of it.
+ *
+ * SCROLL, NOT CLIP. None of this unit's five benches fits one screen: naming is three
+ * dropdowns plus a preview, strength is four bottle rows plus four sentence-long reason
+ * cards, neutralize is two steppers plus a number field plus a 189px chart plus three
+ * indicator cards, and the capstone is all four steps at once. Clipping those would
+ * silently delete the Honors work rather than shrink it, so this unit scrolls its own
+ * bench: the header and the side columns stay put and only the task column moves.
+ * Declared in this unit's TARGETS entry in tests/unit5a-layout.test.mjs, so the audit reads
+ * it as a port rather than as a clip. */
+.chem-console > .panel.is-active {
+  display: block !important;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* The shell hides the console's verdict card outright, because the mission screen already
+   states the outcome and repeating it inside the bench would say the same sentence twice on
+   one screen. That holds for the five core benches and the capstone -- and not for the two
+   Honors commits, which sit at the bottom of a panel the learner has scrolled to reach.
+   Their feedback would land in the top-left corner, off screen from the button that
+   produced it. So exactly those two are shown again where they happened (porting trap 2). */
+.chem-console .honors-block .verdict {
+  display: grid !important;
+}
+
+/* And unclamp their text. The shell clamps a verdict to two lines because it has a fixed
+   screen to fit; this panel scrolls, so a clamp here would hide the second half of an
+   explanation for no gain. The titration verdict in particular is two sentences of
+   arithmetic plus the indicator note. */
+.chem-console .honors-block .verdict-headline,
+.chem-console .honors-block .verdict-detail {
+  display: block;
+  -webkit-line-clamp: none;
+  overflow: visible;
+}
+
+/* KaTeX renders an invisible 1px MathML mirror at `position: absolute`. With no positioned
+   ancestor it resolves against the initial containing block, lands at a document coordinate
+   past the fold, and inflates documentElement.scrollHeight -- a phantom page scroll on a
+   shell that is supposed to have none (porting trap 4). Units 1 and 4 pinned it per
+   wrapper with `.eqn { position: relative }`. This unit renders chemistry and math in
+   fifteen places across five benches, the capstone and the case file, so it is pinned on
+   the KaTeX box itself: `.katex` is inline-block and takes no offsets, so a relative
+   position moves nothing and every mirror in the page resolves inside its own formula. */
+.katex { position: relative; }
+.eqn { position: relative; }
+
+/* ============================ the status rail ============================ */
+
+/* The patient's arterial pH, and it is deliberately not the shell's `.meter`: a monotone
+   fill says "more is better", and this patient is aimed at a BAND in the middle of the
+   scale. So the reference window is drawn ON the scale and the needle sits where they are.
+ *
+ * Trimmed from the worksheet's 16px bar plus a three-item caption row to a 13px bar plus
+ * two end labels. The rail is height-tight at 1024x600 (porting trap 9) and the middle
+ * caption -- "window 7.35 to 7.45" -- was the widest thing in a 115px-per-cell column. Its
+ * meaning is the white band the learner is looking at, and it is also on the Reached
+ * meter's title, so it costs nothing to drop. */
+.pt-scale {
+  position: relative; height: 13px; margin: 5px 0 3px;
+  border-radius: 999px; border: 1px solid var(--border);
+  background: linear-gradient(to right, #c0392b 0%, #d98a23 45%, #4a9d4a 72%, #2a7d8a 100%);
+}
+.pt-window {
+  position: absolute; top: -3px; bottom: -3px;
+  border: 2px solid var(--ink-1); border-radius: var(--r-sm);
+  background: rgb(255 255 255 / 28%);
+}
+.pt-needle {
+  position: absolute; top: -4px; width: 4px; height: 21px; border-radius: 2px;
+  background: var(--ink-1); transform: translateX(-50%);
+  box-shadow: 0 0 0 1px var(--surface); transition: left var(--t-med);
+}
+.pt-ends {
+  display: flex; justify-content: space-between;
+  font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted);
+}
+
+/* ======================== seven tabs and long call names ======================== */
+
+/* The shared strip was calibrated at seven tabs, but Unit 9's short "Strength" label
+ * lands four pixels past its equal track at the 1152px scaled viewport. Trim only this
+ * unit's already-compact pills in that middle band; lower widths use the shell's natural
+ * content tracks, while wider widths have room for the normal padding. */
+@media (min-width: 1121px) and (max-width: 1240px) {
+  .station-nav { gap: 3px; }
+  .station-nav .tab { padding-inline: 6px; }
+}
+
+/* A scenario's system name is the meaningful identity of the active call, not decorative
+ * chrome. At narrower desktop widths this unit has names such as "The soda a caller is
+ * worried about", which must wrap rather than silently ellipsing in the mission column. */
+@media (max-width: 1240px) {
+  .mission-screen .screen-system {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.22;
+  }
+}
+
+/* The same generated system name also appears in the command header. The shell normally
+ * keeps that status line to one row, but once its responsive header has already moved to
+ * two rows, wrapping preserves the full call name without a horizontal spill. */
+@media (max-width: 1120px) {
+  .command-brand span:last-child {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.22;
+  }
+}
+
+/* ============================ short viewports ============================ */
+
+/* At 1536x864 the browser viewport is about 726px tall, which is the height this unit is
+   tuned for. Below that the chart gives up height before anything else does, because it is
+   the one element here with slack: an indicator card cannot be shorter, a bottle row
+   cannot, and a sigmoid stays readable in 150px of plot. */
+@media (max-height: 660px) {
+  .canvas-wrap { height: 168px; }
+  .ph-readout { font-size: var(--fs-md); }
+}
+
+/* Below the shell's own 980px breakpoint the three columns stack, so the bench gets the
+   full width back and the chart can be read at its intended size again. */
+@media (max-width: 980px) {
+  .canvas-wrap { height: min(38vh, 300px); }
+
+  /* In the stacked status band, the patient-state sentence must be allowed to shrink before
+     the clock chip. Flex's automatic minimum otherwise keeps the sentence's max-content
+     width and makes the whole life header five to fifteen pixels wider than its rail. */
+  .patient-board .life-header > div { min-width: 0; }
+  .patient-board .life-header strong { overflow-wrap: anywhere; }
+}
+
+/* The cockpit, not the document, owns long patient-work panels. */
+.chem-console > .panel.is-active { display: block !important; overflow-y: auto; overscroll-behavior: contain; contain: paint; }
+.mission-screen { grid-template-rows: auto auto minmax(0, 1fr) auto auto; overflow-y: auto; overscroll-behavior: contain; contain: paint; }
+.mission-screen > .screen-copy { min-height: 0; }
+@media (max-width: 1240px) { .mission-screen .cockpit-instincts { display: none; } }
+
+/* The Reference card used to be dropped outright below 760px of viewport (960px here), which
+   on every laptop in the matrix meant the standing facts were not reachable at all. It is a
+   <details> now, so the learner can hand those rows back to the prompt themselves -- and
+   shared/cockpit.css still moves the card below the copy at 699px and drops it at 639px, which
+   is the shell deciding there is no room rather than this unit deciding there never is. */
+
+/* ============================ mission screen fit ============================ */
+
+/* The shell gives its flexible row to the LAST block, because Unit 5's scenario goals are
+   one or two lines and the slack belonged at the bottom. This unit's goals are two and
+   three sentences -- a caller is described before the instruction arrives -- and its
+   consequence strings are longer still, so the goal text is what has to be allowed to move
+   and the fixed reference card and night-shift line stay put. */
+.mission-screen {
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+}
+
+.mission-screen > .screen-copy {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* The shared block in components.css freezes .meter-fill, .badge.earned and .verdict. The
+   moving parts local to this unit are the two pH needles. */
+@media (prefers-reduced-motion: reduce) {
+  .ph-needle, .pt-needle { transition: none; }
+}

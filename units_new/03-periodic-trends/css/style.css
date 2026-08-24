@@ -1,0 +1,570 @@
+/* Unit 3: Repair Bench styles on top of units_new/shared/cockpit.css.
+ *
+ * The shell owns the three-column cockpit. This file owns only the Unit 3 tools: the
+ * decision cards, source-faithful periodic-table references, two Chart.js hosts, and the
+ * compact reconstructed-table rail. Every readable sentence in an active bench meets the
+ * cockpit's 14px instructional floor; compact element symbols live inside SVG drawings.
+ */
+
+/* =============================== cockpit fit =============================== */
+
+/* The source materials are deliberately rich. The unit gives the scientific bench its own
+ * scroll port rather than clipping evidence or forcing the page itself to scroll. */
+.chem-console > .panel.is-active {
+  display: block !important;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  contain: paint;
+}
+
+.chem-console > .panel.is-active .muted,
+.chem-console > .panel.is-active .mono,
+.chem-console > .panel.is-active .small,
+.chem-console > .panel.is-active .map-note,
+.chem-console > .panel.is-active .chart-cap,
+.chem-console > .panel.is-active table,
+.chem-console > .panel.is-active .charge-list,
+.chem-console > .panel.is-active .family-stat-grid,
+.chem-console > .panel.is-active .heat-ends {
+  font-size: var(--fs-sm);
+}
+
+.mission-screen {
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+}
+
+.mission-screen > .screen-copy {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* The shell hides verdicts because the mission screen normally carries the outcome. The two
+ * Honors buttons live at the bottom of a long, independently scrolled bench, so feedback is
+ * repeated immediately beside the action that caused it. */
+.chem-console .honors-block .verdict {
+  display: grid !important;
+}
+
+.chem-console .honors-block .verdict strong,
+.chem-console .honors-block .verdict p {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: none;
+}
+
+/* The closed-disclosure geometry note that used to live here moved to
+ * units_new/shared/cockpit.css with the rest of the .lesson-reference chrome. */
+
+/* ============================== decision bench ============================== */
+
+/* The question. It is the one line in the panel that stays at weight 800, because it is now
+ * the only one: the options below it dropped to 600 in the shell's control-face pass, so
+ * the ask is what the eye lands on first instead of competing with four bold buttons. */
+.ask-line {
+  margin: 0;
+  padding: 8px 11px;
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r-sm);
+  background: var(--accent-050);
+  color: var(--ink);
+  font-size: var(--fs-md);
+  font-weight: 800;
+  line-height: 1.32;
+}
+
+/* Two fixed columns, not auto-fit.
+ *
+ * Every task in model.js offers exactly FOUR options, so auto-fit's answer to a 660px
+ * console was three across and one hanging underneath -- a 3+1 that looks like a mistake,
+ * with the top row three lines tall (204px each) and the orphan two. Two columns make the
+ * four a square, halve the wrapping, and give each label 370px instead of 204.
+ *
+ * The odd-count rule keeps a three-option bench (the Honors calls) symmetric too: the last
+ * option spans both columns rather than leaving a hole. It reads `:nth-child(even)` because
+ * Alpine leaves its <template> in the DOM as child 1, so option N is child N+1 -- an odd
+ * option count therefore lands the last one on an even child index. */
+.opt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: var(--s-3);
+}
+
+.opt-grid > .opt:last-child:nth-child(even) { grid-column: 1 / -1; }
+
+.opt,
+.pair {
+  min-width: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.32;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+}
+
+.opt:hover:not(:disabled), .pair:hover:not(:disabled) { border-color: var(--accent); }
+.opt:focus-visible, .pair:focus-visible, .fam-btn:focus-visible, .periodic-map [role="button"]:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 52%, transparent); outline-offset: 2px; }
+.opt:disabled, .pair:disabled { cursor: default; }
+.opt-act { background: color-mix(in srgb, var(--accent-050) 62%, var(--surface)); }
+
+/* `auto repeat(auto-fit, minmax(min(100%, 178px), 1fr))` was INVALID, so Chromium dropped
+ * the whole declaration and computed grid-template-columns: none. That is why the two
+ * action buttons stacked as 627px full-width bars under the "Then" label instead of sitting
+ * side by side: an auto-repeat cannot take a percentage in its track sizing function, and
+ * combining one with a fixed `auto` track put it past what the parser accepts.
+ *
+ * `grid-auto-flow: column` gets the intended layout without an auto-repeat at all: the
+ * kicker takes the one explicit `auto` track and every action after it takes an equal
+ * implicit column. It also stops depending on the action COUNT -- the benches offer two and
+ * the capstone offers three, and both now fill the row evenly. */
+.act-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+}
+
+.act-row > .command-kicker {
+  align-self: center;
+  padding-inline: 2px;
+}
+
+.explain {
+  margin: var(--s-3) 0 0;
+  padding: 8px 11px;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  line-height: 1.42;
+}
+
+.pair-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+  margin-top: var(--s-3);
+}
+
+.pair { display: grid; gap: 2px; padding: 8px 10px; }
+.pair-sym { color: var(--accent-700); font-family: var(--font-display); font-size: clamp(1.05rem, 1.35vw, 1.22rem); line-height: 1; }
+.pair-val, .pair-fam { min-width: 0; color: var(--ink-2); font-size: var(--fs-sm); overflow-wrap: anywhere; }
+.pair-vs { align-self: center; color: var(--muted); font-size: var(--fs-sm); text-align: center; }
+
+/* ========================= shared periodic-table tools ========================= */
+
+/* .lesson-reference and its summary chrome moved to units_new/shared/cockpit.css when
+   Units 01, 02 and 07 needed the same door. What stays here is the table tools behind it. */
+
+.periodic-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 2px 0 10px;
+}
+
+.periodic-toolbar .muted { flex: 1 1 260px; margin: 0 !important; }
+
+.periodic-map-card {
+  margin-top: var(--s-3);
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+}
+
+.periodic-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 168px;
+  overflow: visible;
+}
+
+.periodic-map [role="button"] { cursor: pointer; }
+.periodic-map [role="button"]:hover rect { stroke: var(--accent-700); stroke-width: 1.25; }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: 8px;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+}
+
+.legend-item { display: inline-flex; align-items: center; gap: 5px; }
+.fam-dot { width: 11px; height: 11px; border: 1px solid rgb(0 0 0 / 16%); border-radius: 3px; flex: none; }
+.fam-dot.fam-hydrogen { background: #5b6b9c; }
+.fam-dot.fam-alkali { background: #c0504d; }
+.fam-dot.fam-alkaline-earth { background: #9a8c2b; }
+.fam-dot.fam-transition { background: #607d8b; }
+.fam-dot.fam-metalloid { background: #4a8f7b; }
+.fam-dot.fam-post-transition { background: #9c8aa0; }
+.fam-dot.fam-nonmetal { background: #3f8f5f; }
+.fam-dot.fam-halogen { background: #3a6fb0; }
+.fam-dot.fam-noble { background: #8a5a9c; }
+
+.map-note { margin: 8px 0 0; color: var(--muted); line-height: 1.35; }
+
+.inspector {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: var(--s-3);
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+
+.compact-inspector { margin-top: 10px; }
+.insp-tile { width: 86px; flex: 0 0 86px; padding: 8px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface); text-align: center; }
+.insp-tile .z, .insp-tile .nm, .insp-tile .ms { color: var(--muted); font-size: var(--fs-sm); }
+.insp-tile .sym { color: var(--accent-700); font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1; }
+.insp-body { flex: 1 1 230px; min-width: 0; }
+.insp-body > p { margin: 7px 0 0; line-height: 1.35; }
+.ref-title { display: block; margin-bottom: 5px; color: var(--muted); font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.insp-config { color: var(--accent-700); font-family: var(--font-mono); font-size: var(--fs-sm); overflow-wrap: anywhere; }
+.insp-props { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 7px; margin-top: 8px; }
+.insp-prop { min-width: 0; padding: 6px 8px; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface); }
+.insp-prop .k { color: var(--muted); font-family: var(--font-mono); font-size: var(--fs-sm); letter-spacing: .04em; text-transform: uppercase; }
+.insp-prop .v { color: var(--ink); font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 700; overflow-wrap: anywhere; }
+.insp-prop .small-value { font-family: var(--font-body); }
+
+/* =============================== table history =============================== */
+
+.timeline { display: grid; gap: 10px; margin-top: var(--s-4); padding-left: 14px; border-left: 2px solid var(--border); }
+.tl-card { position: relative; padding: 10px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface); }
+.tl-card::before { content: ''; position: absolute; left: -20px; top: 15px; width: 9px; height: 9px; border: 2px solid var(--surface); border-radius: 50%; background: var(--accent); }
+.tl-head { display: flex; align-items: baseline; justify-content: space-between; gap: 9px; }
+.tl-who { font-weight: 800; }
+.tl-year, .mt-sub { color: var(--muted); font-family: var(--font-mono); font-size: var(--fs-sm); }
+.tl-idea, .tl-ev { margin: 6px 0 0; color: var(--ink-2); line-height: 1.35; }
+.tl-ev { color: var(--muted); }
+.viz { margin-top: 9px; }
+.viz-cap { margin: 7px 0 0; color: var(--muted); font-family: var(--font-mono); font-size: var(--fs-sm); line-height: 1.3; }
+
+.mini-tile { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-width: 29px; min-height: 27px; padding: 3px 5px; border: 1px solid var(--border-strong); border-radius: var(--r-sm); background: var(--surface-2); font-family: var(--font-display); font-weight: 700; line-height: 1.05; }
+.mini-tile.hi { border-color: var(--accent); background: var(--accent-050); color: var(--accent-700); }
+.mini-tile.gap { border-style: dashed; color: var(--muted); }
+.viz-triads, .viz-pairs { display: flex; flex-wrap: wrap; gap: 12px; }
+.triad { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.triad-avg { color: var(--accent-700); font-family: var(--font-mono); font-size: var(--fs-sm); }
+.viz-grid { display: inline-flex; flex-direction: column; gap: 3px; }
+.viz-row { display: flex; gap: 3px; }
+.viz-head { min-width: 29px; color: var(--muted); font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 700; text-align: center; }
+.viz-pair { display: flex; align-items: center; gap: 5px; }
+.viz-arrow { color: var(--muted); font-family: var(--font-mono); font-weight: 700; }
+.viz-blocks { display: grid; gap: 5px; max-width: 360px; }
+.block-row { display: flex; align-items: stretch; gap: 5px; }
+.block-row.centered { justify-content: center; }
+.blk { display: grid; place-items: center; min-height: 30px; padding: 5px 7px; border-radius: var(--r-sm); color: #fff; font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 700; }
+.blk-s { min-width: 30px; background: #5b6b9c; }
+.blk-d { min-width: 120px; background: #607d8b; }
+.blk-p { min-width: 78px; background: #3f8f5f; }
+.blk-f { background: #8a5a9c; }
+.blk-spacer { flex: 1; }
+
+.evidence-section { margin-top: var(--s-4); padding-top: var(--s-4); border-top: 1px solid var(--border); }
+.evidence-section h4 { margin: 0 0 7px; font-size: var(--fs-md); }
+.compact-data { width: 100%; margin-top: 8px; }
+.compact-data th, .compact-data td { padding: 6px 7px; font-size: var(--fs-sm); line-height: 1.3; }
+.evidence-notes { margin-top: 8px; }
+.evidence-notes p { margin: 0 0 8px; line-height: 1.35; }
+.evidence-notes p:last-child { margin-bottom: 0; }
+
+/* =============================== family bench =============================== */
+
+/* .fam-card, .trend-map and .chart-row are now <details> that also carry .lesson-reference,
+ * so the surface, border and radius come from the disclosure and these classes only say
+ * "this tool has a tinted body". Without the padding reset they drew a card inside a card.
+ */
+.fam-card, .trend-map, .chart-row { padding: 0; background: var(--surface-2); }
+.fam-card > .lesson-reference-body,
+.trend-map > .lesson-reference-body,
+.chart-row > .lesson-reference-body { padding: 0 11px 11px; }
+.trend-map > .lesson-reference-body > .heat-legend { margin-top: 0; }
+.fam-buttons { display: flex; flex-wrap: wrap; gap: 7px; }
+.fam-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 5px 9px; border: 1px solid var(--border-strong); border-radius: var(--r-pill); background: var(--surface); color: var(--ink); font: inherit; font-size: var(--fs-sm); font-weight: 700; cursor: pointer; }
+.fam-btn:hover, .fam-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-050); color: var(--accent-700); }
+.fam-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 9px; }
+.fam-head .mono { color: var(--muted); }
+.family-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 7px; margin: 9px 0; }
+.family-stat-grid > div { display: grid; gap: 2px; min-width: 0; padding: 7px 8px; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface); }
+.family-stat-grid span { color: var(--muted); font-family: var(--font-mono); }
+.family-stat-grid strong { color: var(--ink); line-height: 1.25; }
+.react-list { display: grid; gap: 6px; }
+.react-row { display: grid; grid-template-columns: minmax(102px, .9fr) minmax(80px, 1fr) 38px; gap: 8px; align-items: center; }
+.react-name { min-width: 0; font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 700; overflow-wrap: anywhere; }
+.react-track { height: 13px; overflow: hidden; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--surface); }
+.react-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent-300), var(--accent)); transition: width var(--t-med) var(--ease); }
+.react-val { color: var(--muted); font-family: var(--font-mono); font-size: var(--fs-sm); text-align: right; }
+.family-reaction { margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--border); }
+.family-reaction code { display: block; padding: 7px 9px; border-radius: var(--r-sm); background: #112e37; color: #ddf6fa; font-family: var(--font-mono); font-size: var(--fs-sm); overflow-x: auto; }
+.family-reaction .muted { margin: 6px 0 0 !important; }
+.charge-list { display: grid; gap: 7px; margin: 10px 0 0; padding-left: 19px; color: var(--ink-2); line-height: 1.35; }
+
+/* =============================== trend bench =============================== */
+
+/* The property rule, hoisted out of the heatmap card so it stays visible while the tools
+   are folded. It is the sentence that decides the call, so it reads as a statement rather
+   than as the caption on a figure. */
+.trend-rule { line-height: 1.4; }
+.trend-rule strong { color: var(--accent-700); }
+.heat-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 8px; }
+.heat-bar { width: min(190px, 100%); height: 12px; border: 1px solid var(--border); border-radius: var(--r-pill); background: linear-gradient(90deg, rgb(234 243 244), rgb(21 69 78)); }
+.heat-ends { color: var(--muted); font-family: var(--font-mono); }
+.trend-selected-values { display: flex; flex-wrap: wrap; gap: 5px 12px; margin-top: 7px; color: var(--ink-2); line-height: 1.35; }
+.trend-selected-values span { min-width: 0; }
+.chart-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+/* "First ionization energy" needs a real control width.  Let this pair wrap rather
+ * than hiding the selected property behind the native select affordance. */
+.chart-controls .field { flex: 1 1 250px; min-width: min(100%, 250px); }
+#u3-prop { min-width: 250px; }
+.canvas-wrap { position: relative; height: clamp(178px, 26vh, 240px); margin-top: 9px; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface); }
+.canvas-wrap canvas { width: 100% !important; height: 100% !important; }
+.canvas-wrap-ie { height: clamp(168px, 24vh, 220px); }
+.chart-cap { margin: 7px 0 0 !important; color: var(--muted); line-height: 1.35; }
+
+/* =============================== Honors bench =============================== */
+
+.honors-content { display: grid; gap: 9px; margin-top: 8px; }
+.honors-content .screen-goal { color: var(--ink); font-size: var(--fs-md); }
+.honors-content .small { margin: 0 !important; line-height: 1.38; }
+.zeff-formula { padding: 7px 9px; border: 1px solid color-mix(in srgb, var(--honors) 42%, var(--border)); border-radius: var(--r-sm); background: color-mix(in srgb, var(--honors) 9%, var(--surface)); color: #5c3b17; font-family: var(--font-mono); font-size: var(--fs-sm); line-height: 1.35; }
+.zeff-table { width: 100%; border-collapse: collapse; }
+.zeff-table th, .zeff-table td { padding: 5px 6px; border-bottom: 1px solid var(--border); font-size: var(--fs-sm); text-align: right; }
+.zeff-table th:first-child, .zeff-table td:first-child { text-align: left; }
+.dip-line { margin: 0; padding: 7px 9px; border-left: 3px solid var(--honors); border-radius: var(--r-sm); background: color-mix(in srgb, var(--honors) 8%, var(--surface)); line-height: 1.36; }
+
+/* =============================== capstone =============================== */
+
+.cap-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.cap-neighbours, .cap-offer { min-width: 0; padding: 10px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-2); }
+.cap-neighbours p, .cap-offer p { margin: 6px 0 0; line-height: 1.35; }
+.field-220 { max-width: 220px; }
+
+/* =============================== board rail =============================== */
+
+.board-figure { grid-column: 1 / -1; margin: 0; padding: 5px 6px; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface); }
+.board-figure svg { display: block; width: 100%; height: clamp(58px, 8.5vh, 86px); }
+.board-figure figcaption { margin-top: 3px; color: var(--muted); font-size: var(--fs-sm); line-height: 1.25; }
+.board-rail .life-meter-label span:first-child { white-space: nowrap; }
+
+/* =============================== responsive =============================== */
+
+@media (max-width: 980px) {
+  .chem-console > .panel.is-active { overflow-y: visible; }
+  .periodic-map { max-height: none; }
+}
+
+/* The abbreviated dock is narrow enough that a one-line repair title would be
+ * ellipsized.  Preserve the whole job name; the mission copy below is already a
+ * dedicated scroll port. */
+@media (max-width: 1100px) {
+  .mission-screen .screen-system {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 640px) {
+  .act-row { grid-auto-flow: row; grid-template-columns: minmax(0, 1fr); }
+  .opt-grid { grid-template-columns: minmax(0, 1fr); }
+  .pair-row { grid-template-columns: 1fr; }
+  .pair-vs { padding: 2px; }
+  .cap-grid { grid-template-columns: 1fr; }
+  .react-row { grid-template-columns: minmax(78px, .8fr) minmax(68px, 1fr) 34px; }
+  .family-stat-grid { grid-template-columns: 1fr; }
+  .periodic-map-card { padding: 6px; }
+}
+
+@media (max-height: 660px) and (min-width: 981px) {
+  .board-figure { display: none; }
+  .canvas-wrap { height: 168px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opt, .pair, .react-fill { transition: none; }
+}
+
+/* ===================== The pick, made visible =========================================
+ *
+ * Selecting an option used to change a 1px border from grey to teal and tint the fill by
+ * about 4%. Next to three unselected siblings carrying the same bevel, that is not a state
+ * -- you had to compare four boxes to find out what you had chosen, on the one screen where
+ * knowing what you chose is the whole point.
+ *
+ * Four cues now carry it, because one is never enough on a bench a student scans quickly:
+ *   1. a RADIO INDICATOR, which also fixes a mental-model problem the boxes never admitted
+ *      to: four bordered rectangles read as four buttons that each DO something, when they
+ *      are actually one single-select question. A ring that fills says "pick one of these",
+ *      and it says it before the first click rather than after;
+ *   2. the face presses IN (inset ring plus inset shadow, no lift), so the chosen key is
+ *      physically down while the other three are still up;
+ *   3. the fill moves to the accent tint and the label to accent ink;
+ *   4. once the call is made the indicator switches to a check or a cross, so the record of
+ *      what happened is legible without re-reading the label.
+ *
+ * The indicator is a ::before rather than markup: it is a signifier for state the element
+ * already carries in its class, and every option in the unit is rendered from one x-for.
+ */
+.opt,
+.act-row > .opt-act {
+  --dot: 15px;
+}
+
+.opt {
+  display: grid;
+  grid-template-columns: var(--dot) minmax(0, 1fr);
+  gap: 9px;
+  align-items: start;
+}
+
+/* Actions are centre-set (a sentence-shaped label in a wide column), so the indicator
+   travels with the text as one centred group instead of pinning to the left edge. */
+.act-row > .opt-act {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.opt::before,
+.act-row > .opt-act::before {
+  content: '';
+  flex: none;
+  width: var(--dot);
+  height: var(--dot);
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: inset 0 1px 2px rgb(12 38 48 / 12%);
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.opt::before { margin-top: 2px; }
+
+/* Hovering an unpicked option previews the ring it is about to fill. */
+.opt:hover:not(:disabled)::before,
+.act-row > .opt-act:hover:not(:disabled)::before { border-color: var(--accent-300); }
+
+/* The classic filled radio: a white gap between ring and core, drawn with an inset ring so
+   nothing about the element's box changes and no text reflows on selection. */
+.opt.on::before,
+.act-row > .opt-act.on::before {
+  border-color: var(--accent-700);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 2.5px #fff;
+}
+
+/* Answered. A tick and a cross rather than two more filled circles: after the commit the
+   question is no longer "which did I pick" but "was it right", and a green dot and a teal dot
+   are the same SHAPE -- which means the verdict would be carried by hue alone. The glyphs are
+   inline SVG so they scale with the indicator and need no icon font. */
+.opt.correct::before,
+.pair.correct::after {
+  border-color: var(--success);
+  background: var(--success) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3 4.8 8.5 9.4 3.7' fill='none' stroke='%23fff' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 11px 11px no-repeat;
+  box-shadow: none;
+}
+
+.opt.wrong::before,
+.pair.wrong::after {
+  border-color: var(--danger);
+  background: var(--danger) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3.6 3.6 8.4 8.4M8.4 3.6 3.6 8.4' fill='none' stroke='%23fff' stroke-width='2.1' stroke-linecap='round'/%3E%3C/svg%3E") center / 10px 10px no-repeat;
+  box-shadow: none;
+}
+
+/* The box itself, pressed in. `translate: 0` cancels the shell's hover lift so a chosen key
+   cannot float back up under the pointer -- selected outranks hovered. */
+.opt.on,
+.pair.on,
+.opt.on:hover:not(:disabled),
+.pair.on:hover:not(:disabled) {
+  border-color: var(--accent-700);
+  background: var(--accent-050);
+  background-image: none;
+  color: var(--accent-700);
+  box-shadow: inset 0 0 0 1px var(--accent), inset 0 2px 5px rgb(12 38 48 / 11%);
+  translate: 0;
+}
+
+.opt.correct,
+.pair.correct,
+.opt.correct:hover,
+.pair.correct:hover {
+  border-color: var(--success);
+  background: color-mix(in srgb, var(--success) 13%, var(--surface));
+  color: #1c5f3c;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--success) 55%, transparent);
+  translate: 0;
+}
+
+.opt.wrong,
+.pair.wrong,
+.opt.wrong:hover,
+.pair.wrong:hover {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 11%, var(--surface));
+  color: #8a3320;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--danger) 48%, transparent);
+  translate: 0;
+}
+
+/* The two trend candidates are a three-line card (symbol, value, family), so the indicator
+   sits in the corner rather than pushing the symbol off its own left edge. */
+.pair { position: relative; }
+
+.pair::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: inset 0 1px 2px rgb(12 38 48 / 12%);
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.pair:hover:not(:disabled)::after { border-color: var(--accent-300); }
+
+.pair.on::after {
+  border-color: var(--accent-700);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 2.5px #fff;
+}
+
+/* Room for the corner indicator, so a long family name never runs under it. */
+.pair-sym, .pair-val, .pair-fam { padding-right: 20px; }
+
+/* ---- Fitts's Law: the targets a student hits most often are the largest ------------- */
+.opt { min-height: 46px; padding: 9px 11px; }
+.act-row > .opt-act { min-height: 46px; }
+
+/* .chem-console .call-hint and the 40px commit-key floor moved to units_new/shared/cockpit.css
+   when .call-row became shared: they are properties of that row, not of this unit. */
+
+@media (prefers-reduced-motion: reduce) {
+  .opt::before, .act-row > .opt-act::before, .pair::after { transition: none; }
+}

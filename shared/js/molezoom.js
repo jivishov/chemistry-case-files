@@ -86,7 +86,7 @@ export const ZOOM_ANALOGIES = [
   { pow: 6,  text: 'a million, a packed stadium crowd.' },
   { pow: 12, text: 'a trillion, the grains of sand on a long beach.' },
   { pow: 18, text: 'a quintillion, every grain of sand on every beach on Earth.' },
-  { pow: 23, text: 'a mole, that many grains of sand would bury Texas a metre deep.' }
+  { pow: 23, text: 'a mole, about eighty thousand times every grain of sand on every beach on Earth.' }
 ];
 
 // PURE. How to print 10^pow. Small powers read better in full with separators;

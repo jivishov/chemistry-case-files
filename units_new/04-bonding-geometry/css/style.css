@@ -1,0 +1,301 @@
+/* Unit 4 bench styles on top of units_new/shared/cockpit.css.
+ *
+ * Only what is specific to this unit's four tools lives here: the two element selects and
+ * their electronegativity bar, the given-data readout, the melt/conductivity clue card,
+ * the three.js stage, and the shelf figure in the status rail. The shell -- command
+ * header, station strip, three columns, mission screen, status rail -- is the shared
+ * file's job.
+ *
+ * Carried over from units/04-bonding-geometry/css/style.css: .readout, .bondgrid, .stage,
+ * .en-chip, .bondbar, .legend-atom, .fact-grid, .compare, .table-wrap and .clue-card. Same
+ * drawings, same class names; what changed is the sizes, which have to fit a console
+ * column rather than a full-width worksheet page.
+ */
+
+/* ============================ the benches ============================ */
+
+/* Given-data readout: the numbers the apartment hands you, before any call. The worksheet
+   build set the key row at --fs-xs (12.5px); inside the console that is instructional
+   text, so it sits at the shell's 14px floor (porting trap 6). Same for every other
+   --fs-xs the old sheet used in a bench: they are all lifted below. */
+.readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: var(--s-2); }
+.readout .cell {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-3); min-width: 0;
+}
+.readout .cell .k {
+  font-family: var(--font-mono); font-size: var(--fs-sm); text-transform: uppercase;
+  letter-spacing: .07em; color: var(--muted);
+}
+.readout .cell .v {
+  font-family: var(--font-mono); font-size: var(--fs-md); font-weight: 700;
+  color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
+}
+/* A phrase, not a number: "conducts when molten or dissolved" cannot be set at the
+   numeric size and still fit its cell. */
+.readout .cell .v.v-word { font-size: var(--fs-sm); line-height: 1.3; }
+
+/* The two element selects sit side by side down to a narrow console, then stack. Replaces
+   the worksheet build's inline flex + min-width. */
+.bond-selects { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--s-3); }
+
+/* The four bond types carry a name plus the rule behind them, so the cards stack. Two
+   columns in the console, because four full-width rows is most of the panel. */
+.bondgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(196px, 1fr)); gap: var(--s-2); }
+.bondgrid .choice { text-align: left; font-weight: 400; line-height: 1.32; }
+.bondgrid .choice .tag {
+  display: block; font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .09em; color: var(--accent-700); margin-bottom: 1px;
+}
+.bondgrid .choice[data-state="correct"] .tag { color: #1f6b41; }
+.bondgrid .choice[data-state="wrong"] .tag { color: #8a3320; }
+
+.en-chip {
+  font-family: var(--font-mono); font-size: var(--fs-sm); background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: var(--r-pill); padding: 2px 10px;
+}
+
+.bondbar {
+  height: 13px; border-radius: var(--r-pill); position: relative; margin: var(--s-2) 0;
+  background: linear-gradient(90deg, #6b9c5a 0%, #b8881f 35%, #c0772f 70%, #bf4a30 100%);
+}
+.bondbar .marker {
+  position: absolute; top: -4px; width: 4px; height: 21px; background: var(--ink);
+  border-radius: 2px; transform: translateX(-2px); transition: left var(--t-med) var(--ease);
+}
+.bondbar-labels {
+  display: flex; justify-content: space-between;
+  font-size: var(--fs-sm); color: var(--muted); font-family: var(--font-mono);
+}
+
+/* The bond-type readout is one word, not a figure, so it takes the prose size rather than
+   the numeric one; --fs-lg would put "nonpolar covalent" on two lines in a stat cell. */
+.stat .v.v-word { font-size: var(--fs-md); line-height: 1.2; }
+.stat .v.v-num { font-size: var(--fs-lg); }
+
+.fact-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+  gap: var(--s-2); margin-top: var(--s-3);
+}
+
+.legend-row { gap: var(--s-3); flex-wrap: wrap; }
+.legend-atom { display: inline-flex; align-items: center; gap: 5px; font-size: var(--fs-sm); color: var(--ink-2); }
+.legend-atom .dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgb(0 0 0 / 15%); flex: none; }
+/* Matches the viewer's lone pair: a pale lobe carrying the two electrons it stands for
+   (#2f5d7a dots in js/vsepr.js, and the same pair in js/art.js). Radial stops, not a
+   gradient ramp, so the dots stay crisp. */
+.legend-atom .dot-lone {
+  background:
+    radial-gradient(circle at 33% 50%, #2f5d7a 0 2px, transparent 2px),
+    radial-gradient(circle at 67% 50%, #2f5d7a 0 2px, transparent 2px),
+    rgb(111 147 176 / 50%);
+}
+
+/* The molecule select and the spin toggle on one line, the select taking the slack. */
+.bench-controls {
+  display: flex; gap: var(--s-3); align-items: flex-end; flex-wrap: wrap;
+  margin-bottom: var(--s-2);
+}
+.bench-controls .field { flex: 1 1 200px; min-width: 0; }
+
+/* The clue card: one observation per row, the heat and then the meter. */
+.clue-card {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-3) var(--s-4); font-size: var(--fs-sm);
+}
+.clue-line {
+  display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: baseline;
+  padding: var(--s-2) 0; border-bottom: 1px dashed var(--border);
+}
+.clue-line:last-child { border-bottom: none; }
+.clue-line:first-child { padding-top: 0; }
+.clue-line .k {
+  font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em; color: var(--muted);
+  flex: none; min-width: 62px;
+}
+
+/* Four prose columns will not fit a console column, so the reference table scrolls inside
+   its own box rather than widening the panel. */
+.compare th, .compare td { vertical-align: top; }
+.table-wrap { overflow-x: auto; max-width: 100%; }
+.table-wrap .compare { min-width: 440px; }
+.compare td { font-size: var(--fs-sm); }
+.compare .cell-note { font-size: var(--fs-sm); }
+
+/* A compound name set as prose rather than as mhchem, in the same box the formula uses. */
+.eqn .eqn-word { font-family: var(--font-body); font-size: var(--fs-lg); }
+
+/* ============================ the 3D stage ============================ */
+
+/* Trap 12, and this unit is the first port to meet it.
+ *
+ * The WebGL canvas in js/vsepr.js sizes itself to this element (renderer.setSize from
+ * host.clientWidth/clientHeight). In the worksheet shell that host was a normal block in a
+ * scrolling page and a flat 380px worked. In the cockpit it sits in a console panel that
+ * is fixed-height and scrolled, and after the display:block fix below there is no grid
+ * track to give it a height either -- so it needs an explicit one, or it collapses to zero
+ * and the viewer renders into a 0x0 buffer.
+ *
+ * A clamp on vh rather than a fixed height, because the panel scrolls: on the 726px
+ * primary display the stage takes about 240px and the five geometry choices below it stay
+ * above the fold, and at 600px it gives height up first, being the one element here with
+ * slack. main.js calls viewer.resize() from setMode() for the same reason, since a canvas
+ * laid out while its panel was display:none measures zero and stays zero.
+ *
+ * The fallback fill mirrors the studio backdrop in shared/js/stage3d.js (BACKDROP) as this
+ * stage's level camera frames it -- bright band at the subject, deeper above and below --
+ * so the frame before WebGL first paints is not a flat rectangle of a different colour. */
+.stage {
+  width: 100%;
+  height: clamp(190px, 33vh, 300px);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, #dae7ed 0%, #f8fbfc 45%, #c6d6de 100%);
+}
+.stage canvas { display: block; }
+
+/* ============================ console fit ============================ */
+
+/* Two changes to how the shell lays out the active bench, and both are load-bearing.
+ *
+ * BLOCK, NOT GRID (porting trap 1). The shell makes the active panel `display:grid` with
+ * `grid-template-rows: minmax(0, auto)`, and that first track resolves to 0px. In Unit 5
+ * it never mattered, because every one of its panels opens with the `.brief` card, which
+ * the shell hides outright. Every panel here opens with a real instruction paragraph,
+ * which the collapsed row rendered at zero height -- so the paragraph and the bench under
+ * it drew on top of each other.
+ *
+ * SCROLL, NOT CLIP. The shell clips the panel, because Unit 5's benches were designed to
+ * fit one screen exactly. Three of this unit's cannot: two element selects plus the
+ * electronegativity bar plus four two-line bond cards plus an Honors block is more than
+ * 700px, the geometry bench carries a 240px WebGL stage on top of five choices, and the
+ * forces bench carries a four-row reference table. Clipping those would silently delete
+ * the Honors work rather than shrink it, so this unit scrolls its own bench: header and
+ * side columns stay put, and only the task column moves. Declared in that unit's
+ * TARGETS entry in tests/unit5a-layout.test.mjs, so the audit reads it as a port rather
+ * than as a clip. */
+.chem-console > .panel.is-active {
+  display: block !important;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Two-line choice labels (the four bond cards, the three Honors calls, the capstone's
+   three options) would otherwise inherit the shell's single-line centring and clip. */
+.chem-console .choice {
+  white-space: normal;
+  line-height: 1.3;
+}
+
+/* The naming bench's direction switcher reuses the shell's job-pill row, which was written
+   for a row that only appears at Honors. Here it is always on, so it needs its own gap.
+   It is also a THREE-column grid in the shell, because the prototype it came from had three
+   drills. This bench has two directions, so the third track sat empty and each pill was
+   squeezed into a third of the row -- at 1024px "Formula to name" then ran 4px past its own
+   box, and .job-pill is white-space: nowrap, so it could not give. */
+.chem-console .mystery-job-switcher {
+  margin-bottom: var(--s-3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* KaTeX renders an invisible 1px MathML mirror at `position: absolute`. With no positioned
+   ancestor it resolves against the initial containing block, so it lands at a document
+   coordinate past the fold and inflates documentElement.scrollHeight -- a phantom page
+   scroll on a shell that is supposed to have none. It is clipped and unreadable either
+   way; this just keeps it inside the formula it belongs to. Every mhchem formula in this
+   unit (the naming bench, the Honors IMF bench) sits in an .eqn. */
+.eqn { position: relative; }
+
+/* The shell hides the console's verdict card outright, because the mission screen already
+   states the outcome and repeating it inside the bench would say the same sentence twice
+   on one screen. That holds for the four core benches here -- and not for the three Honors
+   commits, which sit at the bottom of a panel the learner has scrolled to reach. Their
+   feedback would land in the top-left corner, off screen from the button that produced it.
+   So exactly those three are shown again where they happened. */
+.chem-console .honors-block .verdict {
+  display: grid !important;
+}
+
+/* And unclamp their text. The shell clamps a verdict to two lines because it has a fixed
+   screen to fit; this panel scrolls, so a clamp here would hide the second half of an
+   explanation for no gain. */
+.chem-console .honors-block .verdict-headline,
+.chem-console .honors-block .verdict-detail {
+  display: block;
+  -webkit-line-clamp: none;
+  overflow: visible;
+}
+
+/* ============================ the status rail ============================ */
+
+/* The shelf, under the four counts. `.system-grid` is two columns, which is right for the
+   meters and wrong for a twelve-slot figure, so the figure spans both. */
+.shelf-grid .shelf-figure {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 5px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+/* Height-capped, not width-driven. `height: auto` let the 236x112 drawing take its full
+   aspect ratio out of a ~330px rail column -- 170px of figure, which pushed the move-in log
+   off the bottom of the viewport at 1536x726. The cap fits the drawing to the height the
+   rail can spare and lets it letterbox horizontally instead; the slots are silhouettes, so
+   they lose nothing by being 26px wide rather than 40. */
+.shelf-grid .shelf-figure svg {
+  display: block;
+  width: 100%;
+  height: clamp(58px, 8.5vh, 92px);
+}
+
+/* ============================ short viewports ============================ */
+
+/* At 1536x864 the browser viewport is about 726px tall, which is the height this unit is
+   tuned for. Below that the WebGL stage gives up height before anything else does, because
+   it is the one element with slack -- a molecule stays readable in 190px, a table row does
+   not. Below 660px the shelf figure goes too: the rail is height-tight there (porting trap
+   9), the four counts above it carry the same state in words and numbers, and losing a
+   duplicate figure is cheaper than pushing the move-in log off the viewport. */
+@media (max-height: 760px) {
+  .stage { height: clamp(180px, 27vh, 250px); }
+}
+
+@media (max-height: 660px) {
+  .stage { height: 175px; }
+  .shelf-grid .shelf-figure { display: none; }
+  .table-wrap .compare { min-width: 400px; }
+}
+
+/* Below the shell's own 980px breakpoint the three columns stack, so the bench gets the
+   full width back and the stage can be read at its intended size again. */
+@media (max-width: 980px) {
+  .stage { height: min(42vh, 340px); }
+  .chem-console > .panel.is-active { overflow-y: visible; }
+  .shelf-grid .shelf-figure { display: block; }
+}
+
+/* ============================ mission screen fit ============================ */
+
+/* The shell gives its flexible row to the LAST block, because Unit 5's scenario goals are
+   one or two lines and the slack belonged at the bottom. This unit's goals are longer -- a
+   container takes two sentences of setup before it takes an instruction, and the four
+   consequence strings per bond scenario are longer still -- so the goal text is what has
+   to be allowed to move, and the fixed reference card and move-in line stay put. Without
+   this the move-in line was pushed past the panel's clipped edge and disappeared. */
+.mission-screen {
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+}
+
+.mission-screen > .screen-copy {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* The shared block in components.css freezes .meter-fill, .badge.earned and .verdict. The
+   one moving part local to this unit is the electronegativity marker. */
+@media (prefers-reduced-motion: reduce) {
+  .bondbar .marker { transition: none; }
+}

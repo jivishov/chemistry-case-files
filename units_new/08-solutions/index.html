@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 8 · Solutions &amp; Solubility</title>
+<meta name="description" content="Day Three: bench chemist at a small town's water plant, under a do-not-drink notice. Polarity, saturation, solubility curves, precipitation rules, molarity, and dilution. TEKS C.11.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<link rel="stylesheet" href="../../shared/css/components.css">
+<link rel="stylesheet" href="../../shared/css/casefile.css">
+<link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
+<link rel="stylesheet" href="css/style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div x-data="sim()" x-cloak>
+
+  <main class="codex-shell cockpit-shell" aria-label="Unit 8 water-plant cockpit">
+    <header class="cockpit-command">
+      <div class="command-brand">
+        <span class="command-kicker">Unit 8 · TEKS C.11</span>
+        <a class="command-home" href="../index.html" title="All units">Solutions &amp; Solubility</a>
+        <span x-text="activeStationName"></span>
+      </div>
+      <nav class="station-nav" role="tablist" aria-label="Water plant benches">
+        <button class="tab" role="tab" :aria-selected="mode==='dissolve'" @click="setMode('dissolve')" aria-label="Water polarity"><span class="tab-full" aria-hidden="true">Water polarity</span><span class="tab-short" aria-hidden="true">Polarity</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='types'" @click="setMode('types')" aria-label="Solution types"><span class="tab-full" aria-hidden="true">Solution types</span><span class="tab-short" aria-hidden="true">Types</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='curve'" @click="setMode('curve')" aria-label="Solubility curves"><span class="tab-full" aria-hidden="true">Solubility curves</span><span class="tab-short" aria-hidden="true">Curves</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='precip'" @click="setMode('precip')" aria-label="Precipitation"><span class="tab-full" aria-hidden="true">Precipitation</span><span class="tab-short" aria-hidden="true">Precip</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='molarity'" @click="setMode('molarity')" aria-label="Molarity"><span class="tab-full" aria-hidden="true">Molarity</span><span class="tab-short" aria-hidden="true">Molarity</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='dilute'" @click="setMode('dilute')" aria-label="Dilution"><span class="tab-full" aria-hidden="true">Dilution</span><span class="tab-short" aria-hidden="true">Dilute</span></button>
+        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="Batch run"><span class="tab-full" aria-hidden="true">Batch run</span><span class="tab-short" aria-hidden="true">Batch</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')" aria-label="Case file"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
+      </nav>
+      <div class="command-actions">
+      <label class="switch" title="Reveal advanced content for Honors sections">
+        <input type="checkbox" x-model="honors">
+        <span class="track"></span>
+        <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+      </label>
+        <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
+      </div>
+      <div class="command-metrics" aria-label="Progress">
+        <span class="metric-chip">XP <strong x-text="g_xp"></strong></span><span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
+        <span class="teks-badge" :class="{ complete: teksMasteredCount===coreSkills.length }">TEKS <strong><span x-text="teksMasteredCount"></span>/6</strong></span>
+      </div>
+    </header>
+
+    <div class="workbench-grid" x-show="mode!=='casefile'">
+      <section class="mission-screen panel" :class="'tone-'+activeTone" aria-label="Active water-plant job">
+        <div class="mission-frame"><div class="mission-screen-art" x-html="scArt(activeArtId)"></div><div class="screen-scanline" aria-hidden="true"></div></div>
+        <div class="screen-status"><span class="screen-system" x-text="activeStationName"></span><span class="screen-state" x-show="activeStateLabel" x-text="activeStateLabel"></span></div>
+        <div class="screen-copy"><p class="screen-goal" x-prose="activeBrief ? activeBrief.goal : ''"></p><p class="screen-outcome" x-prose="activeOutcomeText"></p></div>
+        <!-- A native <details>, so the standing facts can be folded away and the art and the
+             prompt take the rows back. Open by default, because facts a learner has to hunt
+             for are not standing facts. The summary keeps .command-kicker: it is the same
+             chrome eyebrow it was before it became a disclosure, and that class is what
+             exempts it from the 14px legibility floor in tests/unit5a-layout.test.mjs.
+             shared/cockpit.css styles it; the height media queries there still drop the whole
+             card on a short viewport, which is the shell deciding there is no room rather
+             than the learner deciding they want it elsewhere. -->
+        <details class="screen-reference" aria-label="Reference facts" open><summary class="command-kicker">Reference</summary><div class="screen-reference-body"><template x-for="r in activeReference" :key="r.k"><p class="ref-item"><span class="ref-k" x-text="r.k"></span><span class="ref-v" x-prose="r.v"></span></p></template></div></details>
+        <section class="cockpit-instincts" aria-label="Plant status"><span class="command-kicker">The notice</span><p><strong x-text="dayLabel"></strong> · manganese <strong x-text="mnLabel+' mg/L'"></strong></p></section>
+      </section>
+      <section class="task-stack chem-console">
+
+        <!-- ---------- C.11(A) why it dissolves ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='dissolve' }" x-show="mode==='dissolve'">
+          <template x-if="dp">
+          <div>
+          <div class="brief">
+            <span class="brief-role"><span x-text="dp.sc.icon"></span> <span x-text="dp.sc.system"></span></span>
+            <div class="brief-goal" x-prose="dp.sc.goal"></div>
+            <div class="brief-why" x-prose="dp.sc.why"></div>
+          </div>
+
+          <p class="muted" style="margin-bottom: var(--s-4);">Classify its bonding, then predict whether it dissolves in water (a polar solvent). Remember: like dissolves like.</p>
+
+          <div class="prompt-card">
+            <span class="prompt-formula formula" x-ce="dp.formula"></span>
+            <span class="prompt-name" x-text="dp.name"></span>
+            <span class="prompt-where small muted" x-text="dp.where"></span>
+          </div>
+
+          <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">1. What kind of substance is it?</p>
+          <div class="choice-grid" style="max-width: 520px;">
+            <button class="choice" :data-state="dpKindState('ionic')"    @click="dpPickKind('ionic')">Ionic</button>
+            <button class="choice" :data-state="dpKindState('polar')"    @click="dpPickKind('polar')">Polar covalent</button>
+            <button class="choice" :data-state="dpKindState('nonpolar')" @click="dpPickKind('nonpolar')">Nonpolar covalent</button>
+          </div>
+
+          <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">2. Does it dissolve in water?</p>
+          <div class="choice-grid" style="max-width: 340px;">
+            <button class="choice" :data-state="dpDisState(true)"  @click="dpPickDis(true)">Dissolves</button>
+            <button class="choice" :data-state="dpDisState(false)" @click="dpPickDis(false)">Does not dissolve</button>
+          </div>
+
+          <div class="row call-row" style="margin-top: var(--s-4);">
+            <button class="btn btn-accent" @click="dpCertify()" :disabled="dpDone || dpKind===null || dpDis===null" x-text="dp.sc.actionLabel"></button>
+            <span class="grow"></span>
+            <button class="btn btn-sm" @click="dpNext()">Next sample</button>
+            <span class="call-hint" x-show="(dpKind === null || dpDis === null) && !dpDone" x-text="dpKind === null ? 'Say what kind of substance it is.' : 'Now say whether it dissolves.'"></span>
+          </div>
+
+          <template x-if="dpVerdict">
+            <div class="verdict" :class="'verdict-' + dpVerdict.tone">
+              <div class="status">
+                <span class="status-icon" x-text="dpVerdict.icon"></span>
+                <span class="status-state" x-text="dpVerdict.state"></span>
+              </div>
+              <span class="verdict-headline" x-prose="dpVerdict.headline"></span>
+              <span class="verdict-detail" x-prose="dpVerdict.detail"></span>
+            </div>
+          </template>
+          </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.11(B) solution types ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='types' }" x-show="mode==='types'">
+          <template x-if="tp">
+          <div>
+          <div class="brief">
+            <span class="brief-role"><span x-text="tp.sc.icon"></span> <span x-text="tp.sc.system"></span></span>
+            <div class="brief-goal" x-prose="tp.sc.goal"></div>
+            <div class="brief-why" x-prose="tp.sc.why"></div>
+          </div>
+
+          <p class="muted" style="margin-bottom: var(--s-4);">The tank is mixed and stays clear (everything is dissolved). Use the saturation limit to classify it, then say whether it conducts. On the bench today: <span x-text="tp.item.where"></span>.</p>
+
+          <div class="stat-row">
+            <div class="stat"><div class="k">solute</div><div class="v" style="font-size: var(--fs-lg)"><span x-ce="tp.item.formula"></span></div></div>
+            <div class="stat"><div class="k">dissolved in 100 g water</div><div class="v"><span x-text="tp.amount"></span> g</div></div>
+            <div class="stat"><div class="k">saturates at 20 °C</div><div class="v"><span x-text="tp.item.s"></span> g</div></div>
+          </div>
+
+          <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">1. Saturation state (compare the amount dissolved to the saturation limit):</p>
+          <div class="choice-grid" style="max-width: 540px;">
+            <button class="choice" :data-state="tpClassState('unsaturated')"   @click="tpPickClass('unsaturated')">Unsaturated</button>
+            <button class="choice" :data-state="tpClassState('saturated')"     @click="tpPickClass('saturated')">Saturated</button>
+            <button class="choice" :data-state="tpClassState('supersaturated')" @click="tpPickClass('supersaturated')">Supersaturated</button>
+          </div>
+
+          <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">2. Electrolyte (conducts) or nonelectrolyte?</p>
+          <div class="choice-grid" style="max-width: 340px;">
+            <button class="choice" :data-state="tpElecState(true)"  @click="tpPickElec(true)">Electrolyte</button>
+            <button class="choice" :data-state="tpElecState(false)" @click="tpPickElec(false)">Nonelectrolyte</button>
+          </div>
+
+          <div class="row call-row" style="margin-top: var(--s-4);">
+            <button class="btn btn-accent" @click="tpCertify()" :disabled="tpDone || tpClass===null || tpElec===null" x-text="tp.sc.actionLabel"></button>
+            <span class="grow"></span>
+            <button class="btn btn-sm" @click="tpNext()">Next tank</button>
+            <span class="call-hint" x-show="(tpClass === null || tpElec === null) && !tpDone" x-text="tpClass === null ? 'Say which saturation state it is in.' : 'Now say whether it conducts.'"></span>
+          </div>
+
+          <template x-if="tpVerdict">
+            <div class="verdict" :class="'verdict-' + tpVerdict.tone">
+              <div class="status">
+                <span class="status-icon" x-text="tpVerdict.icon"></span>
+                <span class="status-state" x-text="tpVerdict.state"></span>
+              </div>
+              <span class="verdict-headline" x-prose="tpVerdict.headline"></span>
+              <span class="verdict-detail" x-prose="tpVerdict.detail"></span>
+            </div>
+          </template>
+          </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.11(C) solubility curves + rate ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='curve' }" x-show="mode==='curve'">
+          <template x-if="cu">
+          <div>
+          <div class="brief">
+            <span class="brief-role"><span x-text="cu.sc.icon"></span> <span x-text="cu.sc.system"></span></span>
+            <div class="brief-goal" x-prose="cu.sc.goal"></div>
+            <div class="brief-why" x-prose="cu.sc.why"></div>
+          </div>
+
+          <p class="muted" style="margin-bottom: var(--s-3);">Read the instrument: the active solute is highlighted and the dashed line marks the reading temperature. Read its solubility off the curve.</p>
+
+          <div class="canvas-wrap"><canvas x-ref="curveCanvas"></canvas></div>
+          <p class="small muted" style="margin-top: var(--s-2);">Gas note: unlike the solids plotted here, the solubility of a gas <em>decreases</em> as temperature rises.</p>
+
+          <div class="field" style="max-width: 360px; margin-top: var(--s-4);">
+            <label for="cuInput">At <span x-text="cu.t"></span> °C, solubility of <span x-text="cu.name"></span> (g per 100 g water)</label>
+            <input id="cuInput" type="number" step="1" x-model="cuInput" :disabled="cuDone">
+          </div>
+
+          <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">Dissolution rate: <strong x-text="cu.rf.change"></strong>. Does this make the solid dissolve faster or slower?</p>
+          <div class="choice-grid" style="max-width: 340px;">
+            <button class="choice" :data-state="cuRateState(true)"  @click="cuPickRate(true)">Faster</button>
+            <button class="choice" :data-state="cuRateState(false)" @click="cuPickRate(false)">Slower</button>
+          </div>
+
+          <div class="row call-row" style="margin-top: var(--s-4);">
+            <button class="btn btn-accent" @click="cuCertify()" :disabled="cuDone || cuInput==='' || cuRate===null" x-text="cu.sc.actionLabel"></button>
+            <span class="grow"></span>
+            <button class="btn btn-sm" @click="cuNext()">Next reading</button>
+            <span class="call-hint" x-show="(cuInput === '' || cuRate === null) && !cuDone" x-text="cuInput === '' ? 'Read the curve first, then type the grams.' : 'Now say what it does to the rate.'"></span>
+          </div>
+
+          <template x-if="cuVerdict">
+            <div class="verdict" :class="'verdict-' + cuVerdict.tone">
+              <div class="status">
+                <span class="status-icon" x-text="cuVerdict.icon"></span>
+                <span class="status-state" x-text="cuVerdict.state"></span>
+              </div>
+              <span class="verdict-headline" x-prose="cuVerdict.headline"></span>
+              <span class="verdict-detail" x-prose="cuVerdict.detail"></span>
+              <!-- Both levels are guarded: Alpine evaluates the inner template's :class
+                   expressions once more while tearing the outer x-if down, so guarding
+                   only the x-if throws on every re-roll. -->
+              <template x-if="cuVerdict && cuVerdict.gauge">
+                <div class="gauge">
+                  <div class="gauge-seg" :class="cuVerdict && cuVerdict.gauge==='low' ? 'miss' : ''">read low</div>
+                  <div class="gauge-seg" :class="cuVerdict && cuVerdict.gauge==='on' ? 'on' : ''">on the curve</div>
+                  <div class="gauge-seg" :class="cuVerdict && cuVerdict.gauge==='high' ? 'miss' : ''">read high</div>
+                </div>
+              </template>
+            </div>
+          </template>
+          </div>
+          </template>
+
+          <!-- Honors: crystallization (h2). Guarded with x-if, not x-show: the brief
+               inside dereferences cr.sc, and an x-show subtree still evaluates when
+               hidden, so the old x-show guard would throw the moment a brief landed. -->
+          <div class="honors-block" x-show="honors">
+            <span class="honors-tag">Honors · crystallization</span>
+            <div class="note note-info" x-show="!crysUnlocked" style="margin-top: var(--s-3);">Master the solubility-curve stage (three correct in a row) to unlock crystallization.</div>
+            <template x-if="crysUnlocked && cr">
+            <div style="margin-top: var(--s-3);">
+              <div class="brief">
+                <span class="brief-role"><span x-text="cr.sc.icon"></span> <span x-text="cr.sc.system"></span></span>
+                <div class="brief-goal" x-prose="cr.sc.goal"></div>
+                <div class="brief-why" x-prose="cr.sc.why"></div>
+              </div>
+              <p class="small">A saturated solution of <span x-text="cr.c.name"></span> in <span x-text="cr.water"></span> g of water is cooled from <span x-text="cr.t1"></span> °C to <span x-text="cr.t2"></span> °C. How many grams crystallize out?</p>
+              <p class="small muted">Solubility: <span x-text="cr.s1"></span> g at <span x-text="cr.t1"></span> °C, <span x-text="cr.s2"></span> g at <span x-text="cr.t2"></span> °C (per 100 g water).</p>
+              <div class="field" style="max-width: 300px; margin-top: var(--s-2);">
+                <label for="crInput">Grams crystallized</label>
+                <input id="crInput" type="number" step="0.1" x-model="crInput" :disabled="crDone">
+              </div>
+              <div class="row call-row" style="margin-top: var(--s-3);">
+                <button class="btn btn-honors" @click="crCertify()" :disabled="crDone || crInput===''" x-text="cr.sc.actionLabel"></button>
+                <span class="grow"></span>
+                <button class="btn btn-sm" @click="crNext()">Next tank</button>
+                <span class="call-hint" x-show="crInput === '' && !crDone" x-text="'Subtract the two solubilities, then type the grams.'"></span>
+              </div>
+
+              <template x-if="crVerdict">
+                <div class="verdict" :class="'verdict-' + crVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="crVerdict.icon"></span>
+                    <span class="status-state" x-text="crVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-prose="crVerdict.headline"></span>
+                  <span class="verdict-detail" x-prose="crVerdict.detail"></span>
+                  <template x-if="crVerdict && crVerdict.gauge">
+                    <div class="gauge">
+                      <div class="gauge-seg" :class="crVerdict && crVerdict.gauge==='low' ? 'miss' : ''">called short</div>
+                      <div class="gauge-seg" :class="crVerdict && crVerdict.gauge==='on' ? 'on' : ''">on spec</div>
+                      <div class="gauge-seg" :class="crVerdict && crVerdict.gauge==='high' ? 'miss' : ''">called long</div>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- ---------- C.11(D) precipitation ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='precip' }" x-show="mode==='precip'">
+          <template x-if="pr">
+          <div>
+          <div class="brief">
+            <span class="brief-role"><span x-text="pr.sc.icon"></span> <span x-text="pr.sc.system"></span></span>
+            <div class="brief-goal" x-prose="pr.sc.goal"></div>
+            <div class="brief-why" x-prose="pr.sc.why"></div>
+          </div>
+
+          <p class="muted" style="margin-bottom: var(--s-3);">Two feed streams meet. The cations trade anions. Use the solubility rules to label each product, so you know what drops out of the tank.</p>
+
+          <details class="rules">
+            <summary>General solubility rules</summary>
+            <ul>
+              <template x-for="r in SOLUBILITY_RULES" :key="r.id"><li x-text="r.text"></li></template>
+            </ul>
+          </details>
+
+          <div class="reaction" style="margin-top: var(--s-4);">
+            <span class="formula"><span x-ce="pr.rA.formula"></span><span class="phase">(aq)</span></span>
+            <span class="plus">+</span>
+            <span class="formula"><span x-ce="pr.rB.formula"></span><span class="phase">(aq)</span></span>
+            <span class="arrow">&rarr;</span>
+            <span class="formula"><span x-ce="pr.products[0].formula"></span></span>
+            <span class="plus">+</span>
+            <span class="formula"><span x-ce="pr.products[1].formula"></span></span>
+          </div>
+
+          <div class="prod-grid" style="margin-top: var(--s-4);">
+            <template x-for="(p,i) in pr.products" :key="i">
+              <div class="prod">
+                <span class="formula" x-ce="p.formula"></span>
+                <div class="choice-grid" style="margin-top: var(--s-2);">
+                  <button class="choice" :data-state="prState(i,'aq')" @click="prSet(i,'aq')">Soluble (aq)</button>
+                  <button class="choice" :data-state="prState(i,'s')"  @click="prSet(i,'s')">Insoluble (s)</button>
+                </div>
+              </div>
+            </template>
+          </div>
+
+          <div class="row call-row" style="margin-top: var(--s-4);">
+            <button class="btn btn-accent" @click="prCertify()" :disabled="prDone || prCls.includes(null)" x-text="pr.sc.actionLabel"></button>
+            <span class="grow"></span>
+            <button class="btn btn-sm" @click="prNext()">Next mix</button>
+            <span class="call-hint" x-show="prCls.includes(null) && !prDone" x-text="'Classify every product: ' + prCls.filter(c => c === null).length + ' still unmarked.'"></span>
+          </div>
+
+          <template x-if="prVerdict">
+            <div class="verdict" :class="'verdict-' + prVerdict.tone">
+              <div class="status">
+                <span class="status-icon" x-text="prVerdict.icon"></span>
+                <span class="status-state" x-text="prVerdict.state"></span>
+              </div>
+              <span class="verdict-headline" x-prose="prVerdict.headline"></span>
+              <span class="verdict-detail" x-prose="prVerdict.detail"></span>
+            </div>
+          </template>
+          </div>
+          </template>
+
+          <!-- Honors: Ksp / common ion (h1). Guarded with x-if, not x-show, for the same
+               reason as the crystallization bench: the brief dereferences ks.sc. -->
+          <div class="honors-block" x-show="honors">
+            <span class="honors-tag">Honors · Ksp and the common-ion effect</span>
+            <div class="note note-info" x-show="!kspUnlocked" style="margin-top: var(--s-3);">Master the precipitation stage to unlock the Ksp challenge.</div>
+            <template x-if="kspUnlocked && ks">
+            <div style="margin-top: var(--s-3);">
+              <div class="brief">
+                <span class="brief-role"><span x-text="ks.sc.icon"></span> <span x-text="ks.sc.system"></span></span>
+                <div class="brief-goal" x-prose="ks.sc.goal"></div>
+                <div class="brief-why" x-prose="ks.sc.why"></div>
+              </div>
+              <p class="small">A tank reaches <span class="mono"><span x-ce="ks.salt.cation"></span> = <span x-text="ksConc(ks.a)"></span> M</span> and <span class="mono"><span x-ce="ks.salt.anion"></span> = <span x-text="ksConc(ks.b)"></span> M</span> for <span x-ce="ks.salt.formula"></span> (Ksp = <span x-text="ksKsp()"></span>). Does it precipitate?</p>
+              <!-- Q is the work. It is revealed with the verdict, never before it. -->
+              <p class="small mono" x-show="ksChecked">Q = [cation][anion] = <span x-text="ksQ()"></span></p>
+              <div class="choice-grid" style="max-width: 360px; margin-top: var(--s-2);">
+                <button class="choice" :data-state="ksState(true)"  @click="ksPickV(true)">Precipitate forms</button>
+                <button class="choice" :data-state="ksState(false)" @click="ksPickV(false)">Stays dissolved</button>
+              </div>
+              <div class="row call-row" style="margin-top: var(--s-3);">
+                <button class="btn btn-honors" @click="ksCertify()" :disabled="ksDone || ksPick===null" x-text="ks.sc.actionLabel"></button>
+                <span class="grow"></span>
+                <button class="btn btn-sm" @click="ksNext()">Next tank</button>
+                <span class="call-hint" x-show="ksPick === null && !ksDone" x-text="'Compare Q with Ksp, then say which way it goes.'"></span>
+              </div>
+
+              <template x-if="ksVerdict">
+                <div class="verdict" :class="'verdict-' + ksVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="ksVerdict.icon"></span>
+                    <span class="status-state" x-text="ksVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-prose="ksVerdict.headline"></span>
+                  <span class="verdict-detail" x-prose="ksVerdict.detail"></span>
+                </div>
+              </template>
+            </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- ---------- C.11(E) molarity ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='molarity' }" x-show="mode==='molarity'">
+          <template x-if="mo">
+          <div>
+          <div class="brief">
+            <span class="brief-role"><span x-text="mo.sc.icon"></span> <span x-text="mo.sc.system"></span></span>
+            <div class="brief-goal" x-prose="mo.sc.goal"></div>
+            <div class="brief-why" x-prose="mo.sc.why"></div>
+          </div>
+
+          <p class="muted" style="margin-bottom: var(--s-4);">Prepare <strong><span x-text="mo.targetM"></span> M</strong> <span x-text="mo.s.name"></span> (<span x-text="mo.s.where"></span>). Add solute and set the final volume. M = moles / litres.</p>
+
+          <div class="flask-row">
+            <svg class="flask" viewBox="0 0 120 150" aria-hidden="true">
+              <rect x="22" y="18" width="76" height="120" rx="6" fill="none" stroke="var(--border-strong)" stroke-width="2"></rect>
+              <rect x="24" :y="136-(moFillPct/100)*116" width="72" :height="(moFillPct/100)*116"
+                    rx="4" fill="var(--accent)" :fill-opacity="0.12 + (moTintPct/100)*0.6"></rect>
+            </svg>
+            <div class="flask-controls">
+              <!-- Molar mass at 4 sig figs: it is derived from the draw and shown before
+                   the commit, so fmt()'s default 3 would be coarser than the band. -->
+              <p class="small muted">Molar mass of <span x-ce="mo.s.formula"></span> = <span x-text="fmt(mo.M,4)"></span> g/mol.</p>
+              <div class="field" style="max-width: 260px;">
+                <label for="moGrams">Solute added (g)</label>
+                <input id="moGrams" type="number" step="0.1" x-model="moGrams" :disabled="moDone">
+              </div>
+              <label class="slider-label" for="moVol">Final volume: <strong><span x-text="moVol"></span> mL</strong></label>
+              <input id="moVol" type="range" min="50" max="500" step="5" x-model.number="moVol" :disabled="moDone" class="slider">
+              <!-- The live "current M / on spec" readout computed the graded answer for
+                   the learner, so it is revealed on commit and not before. It stays after
+                   the call, which keeps the flask explorable. -->
+              <div class="readout" x-show="moChecked">
+                <span>current: <strong x-text="fmt(moConc,4) + ' M'"></strong></span>
+                <span :class="moOnSpec ? 'spec-ok' : 'spec-off'" x-text="moGrams==='' ? 'add solute' : (moOnSpec ? 'on spec' : 'off by ' + fmt(moErr) + '%')"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row call-row" style="margin-top: var(--s-4);">
+            <button class="btn btn-accent" @click="moShip()" :disabled="moDone || moGrams===''" x-text="mo.sc.actionLabel"></button>
+            <span class="grow"></span>
+            <button class="btn btn-sm" @click="moNext()">Next spec</button>
+            <span class="call-hint" x-show="moGrams === '' && !moDone" x-text="'Work out the mass the spec needs, then weigh it out.'"></span>
+          </div>
+
+          <template x-if="moVerdict">
+            <div class="verdict" :class="'verdict-' + moVerdict.tone">
+              <div class="status">
+                <span class="status-icon" x-text="moVerdict.icon"></span>
+                <span class="status-state" x-text="moVerdict.state"></span>
+              </div>
+              <span class="verdict-headline" x-prose="moVerdict.headline"></span>
+              <span class="verdict-detail" x-prose="moVerdict.detail"></span>
+              <template x-if="moVerdict && moVerdict.gauge">
+                <div class="gauge">
+                  <div class="gauge-seg" :class="moVerdict && moVerdict.gauge==='low' ? 'miss' : ''">too weak</div>
+                  <div class="gauge-seg" :class="moVerdict && moVerdict.gauge==='on' ? 'on' : ''">on spec</div>
+                  <div class="gauge-seg" :class="moVerdict && moVerdict.gauge==='high' ? 'miss' : ''">too strong</div>
+                </div>
+              </template>
+            </div>
+          </template>
+          </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.11(F) dilution ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='dilute' }" x-show="mode==='dilute'">
+          <template x-if="di">
+          <div>
+          <div class="brief">
+            <span class="brief-role"><span x-text="di.sc.icon"></span> <span x-text="di.sc.system"></span></span>
+            <div class="brief-goal" x-prose="di.sc.goal"></div>
+            <div class="brief-why" x-prose="di.sc.why"></div>
+          </div>
+
+          <p class="muted" style="margin-bottom: var(--s-4);">Dilute the <span x-text="di.stock.name"></span> stock (<strong><span x-text="di.c1"></span> M</strong>, <span x-text="di.stock.where"></span>) to <strong><span x-text="di.targetC2"></span> M</strong> in a <strong><span x-text="di.v2"></span> mL</strong> batch. Set how much stock to draw; the rest is water. C1V1 = C2V2.</p>
+
+          <div class="mixbar">
+            <div class="mixbar-stock" :style="`width:${diStockPct}%`"><span x-show="diStockPct>14" x-text="diVstock + ' mL stock'"></span></div>
+            <div class="mixbar-water" :style="`width:${100-diStockPct}%`"><span x-show="(100-diStockPct)>14" x-text="diWater + ' mL water'"></span></div>
+          </div>
+
+          <label class="slider-label" for="diVstock" style="margin-top: var(--s-4);">Stock drawn: <strong><span x-text="diVstock"></span> mL</strong> (water added: <span x-text="diWater"></span> mL)</label>
+          <input id="diVstock" type="range" min="0" :max="di.v2" step="1" x-model.number="diVstock" :disabled="diDone" class="slider">
+          <!-- Same rule as the flask: the concentration this pour reaches is the graded
+               answer, so it is revealed on commit and not before. -->
+          <div class="readout" x-show="diChecked">
+            <span>final concentration: <strong x-text="fmt(diConc,4) + ' M'"></strong></span>
+            <span :class="diOnSpec ? 'spec-ok' : 'spec-off'" x-text="diOnSpec ? 'on spec' : 'off by ' + fmt(diErr) + '%'"></span>
+          </div>
+
+          <div class="row call-row" style="margin-top: var(--s-4);">
+            <button class="btn btn-accent" @click="diShip()" :disabled="diDone" x-text="di.sc.actionLabel"></button>
+            <span class="grow"></span>
+            <button class="btn btn-sm" @click="diNext()">Next spec</button>
+          </div>
+
+          <template x-if="diVerdict">
+            <div class="verdict" :class="'verdict-' + diVerdict.tone">
+              <div class="status">
+                <span class="status-icon" x-text="diVerdict.icon"></span>
+                <span class="status-state" x-text="diVerdict.state"></span>
+              </div>
+              <span class="verdict-headline" x-prose="diVerdict.headline"></span>
+              <span class="verdict-detail" x-prose="diVerdict.detail"></span>
+              <template x-if="diVerdict && diVerdict.gauge">
+                <div class="gauge">
+                  <div class="gauge-seg" :class="diVerdict && diVerdict.gauge==='low' ? 'miss' : ''">too weak</div>
+                  <div class="gauge-seg" :class="diVerdict && diVerdict.gauge==='on' ? 'on' : ''">on spec</div>
+                  <div class="gauge-seg" :class="diVerdict && diVerdict.gauge==='high' ? 'miss' : ''">too strong</div>
+                </div>
+              </template>
+            </div>
+          </template>
+          </div>
+          </template>
+        </div>
+
+        <!-- ---------- Capstone: full batch run ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
+          <div class="note note-info" x-show="!capUnlocked">The full batch run unlocks once all six core skills (C.11 A to F) are mastered. Mastered so far: <span x-text="Math.round(gOverall()*6)"></span> of 6.</div>
+          <button class="btn btn-accent" x-show="capUnlocked && !cap" @click="genCapstone()">Begin batch run</button>
+
+          <template x-if="capUnlocked && cap">
+          <div>
+            <div class="brief">
+              <span class="brief-role"><span x-text="cap.sc.icon"></span> <span x-text="cap.sc.system"></span></span>
+              <div class="brief-goal" x-prose="cap.sc.goal"></div>
+              <div class="brief-why" x-prose="cap.sc.why"></div>
+            </div>
+
+            <p class="muted" style="margin-bottom: var(--s-4);">One batch, end to end: dissolve the stock solute, prepare it to spec, then mix in the reagent and predict the precipitate.</p>
+
+            <p class="step-label">Step 1 · Dissolve</p>
+            <div class="prompt-card">
+              <span class="prompt-formula formula" x-ce="cap.salt.formula"></span>
+              <span class="prompt-name" x-text="cap.salt.name"></span>
+            </div>
+            <p class="small muted" style="margin: var(--s-3) 0 var(--s-2);">Classify the stock solute:</p>
+            <div class="choice-grid" style="max-width: 520px;">
+              <button class="choice" :data-state="capKindState('ionic')"    @click="capPickKind('ionic')">Ionic</button>
+              <button class="choice" :data-state="capKindState('polar')"    @click="capPickKind('polar')">Polar covalent</button>
+              <button class="choice" :data-state="capKindState('nonpolar')" @click="capPickKind('nonpolar')">Nonpolar covalent</button>
+            </div>
+            <div class="choice-grid" style="max-width: 340px; margin-top: var(--s-2);">
+              <button class="choice" :data-state="capElecState(true)"  @click="capPickElec(true)">Electrolyte</button>
+              <button class="choice" :data-state="capElecState(false)" @click="capPickElec(false)">Nonelectrolyte</button>
+            </div>
+
+            <p class="step-label" style="margin-top: var(--s-5);">Step 2 · Prepare to spec</p>
+            <p class="small muted" style="margin-bottom: var(--s-2);">Make <strong><span x-text="cap.targetM"></span> M</strong> (molar mass <span x-text="fmt(cap.M,4)"></span> g/mol). Within <span x-text="cap.tolPct"></span>%.</p>
+            <div class="field" style="max-width: 260px;">
+              <label for="capGrams">Solute added (g)</label>
+              <input id="capGrams" type="number" step="0.1" x-model="capGrams" :disabled="capWin">
+            </div>
+            <label class="slider-label" for="capVol">Final volume: <strong><span x-text="capVol"></span> mL</strong></label>
+            <input id="capVol" type="range" min="50" max="500" step="5" x-model.number="capVol" :disabled="capWin" class="slider">
+            <div class="readout" x-show="capChecked"><span>current: <strong x-text="fmt(capConc,4) + ' M'"></strong></span></div>
+
+            <p class="step-label" style="margin-top: var(--s-5);">Step 3 · Predict the precipitate</p>
+            <div class="reaction">
+              <span class="formula"><span x-ce="cap.salt.formula"></span><span class="phase">(aq)</span></span>
+              <span class="plus">+</span>
+              <span class="formula"><span x-ce="cap.reagent.formula"></span><span class="phase">(aq)</span></span>
+              <span class="arrow">&rarr;</span>
+              <span class="formula"><span x-ce="cap.products[0].formula"></span></span>
+              <span class="plus">+</span>
+              <span class="formula"><span x-ce="cap.products[1].formula"></span></span>
+            </div>
+            <div class="prod-grid" style="margin-top: var(--s-3);">
+              <template x-for="(p,i) in cap.products" :key="i">
+                <div class="prod">
+                  <span class="formula" x-ce="p.formula"></span>
+                  <div class="choice-grid" style="margin-top: var(--s-2);">
+                    <button class="choice" :data-state="capClsState(i,'aq')" @click="capSetCls(i,'aq')">Soluble (aq)</button>
+                    <button class="choice" :data-state="capClsState(i,'s')"  @click="capSetCls(i,'s')">Insoluble (s)</button>
+                  </div>
+                </div>
+              </template>
+            </div>
+
+            <div class="row call-row" style="margin-top: var(--s-5);">
+              <button class="btn btn-accent" @click="capRun()" :disabled="capWin || capKind===null || capElec===null || capGrams==='' || capCls.includes(null)">Run batch</button>
+              <span class="call-hint" x-show="(capKind === null || capElec === null || capGrams === '' || capCls.includes(null)) && !capWin" x-text="capKind === null ? 'Start with what kind of substance it is.' : (capElec === null ? 'Now say whether it conducts.' : (capGrams === '' ? 'Now weigh out the solute.' : 'Now classify every product in the run.'))"></span>
+            </div>
+
+            <template x-if="capVerdict">
+              <div class="verdict" :class="'verdict-' + capVerdict.tone">
+                <div class="status">
+                  <span class="status-icon" x-text="capVerdict.icon"></span>
+                  <span class="status-state" x-text="capVerdict.state"></span>
+                </div>
+                <span class="verdict-headline" x-prose="capVerdict.headline"></span>
+                <span class="verdict-detail" x-prose="capVerdict.detail"></span>
+              </div>
+            </template>
+          </div>
+          </template>
+        </div>
+
+        <!-- ---------- World-state: the finished water ---------- -->
+        <div class="panel worldstate">
+          <div class="panel-head">
+            <span class="panel-title" style="font-size: var(--fs-md)">The finished water</span>
+            <span class="grow"></span>
+            <span class="small muted" x-text="dayLabel"></span>
+          </div>
+          <div class="crew-status">
+            <span class="crew-face" x-text="mnMood"></span>
+            <div class="crew-bar">
+              <div class="row" style="justify-content: space-between; align-items: baseline;">
+                <span class="small" style="font-weight:700;" x-text="mnState"></span>
+                <span class="small mono"><span x-text="mnLabel"></span> mg/L Mn</span>
+              </div>
+              <!-- Inverted meter: full at 0.00 mg/L, empty at 0.50. -->
+              <div class="meter"><div class="meter-fill" :style="`width:${mnPct}%; background:${mnColor}`"></div></div>
+              <div class="limit-row">
+                <span class="limit-mark" aria-hidden="true"></span>
+                <span class="small muted">secondary standard <span class="mono"><span x-text="mnLimit"></span> mg/L</span>. Correct work pulls the clearwell down; a missed call pushes it back up, and an over-dosed permanganate batch puts purple in the main as well.</span>
+              </div>
+            </div>
+          </div>
+          <p class="worldstate-empty" x-show="!worldLog.length">Nothing run yet. Make a call and watch what it does to the number the notice is measured on.</p>
+          <ul class="worldstate-list" x-show="worldLog.length">
+            <template x-for="w in worldLog" :key="w.id">
+              <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
+                <span class="ws-icon" x-text="w.icon"></span>
+                <span x-text="w.text"></span>
+              </li>
+            </template>
+          </ul>
+        </div>
+
+      </section>
+      <aside class="life-support-board panel" aria-label="Finished water status">
+        <div class="life-header"><div><span class="command-kicker">Finished water</span><strong x-text="mnState"></strong></div><span class="sol-chip" x-text="dayLabel"></span></div>
+        <div class="crew-status cockpit-crew"><div class="crew-bar"><div class="life-meter-label"><span>Clearwell</span><span class="mono" x-text="mnLabel+' mg/L'"></span></div><div class="meter"><div class="meter-fill" :style="`width:${mnPct}%; background:${mnColor}`"></div></div></div></div>
+        <div class="system-grid" aria-label="Plant readings"><template x-for="r in waterReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span :title="r.hint" x-text="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template></div>
+        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest consequence</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'No bench call is logged yet.'"></p></section>
+        <section class="mission-log"><span class="command-kicker">Plant log</span><p class="worldstate-empty" x-show="!worldLog.length">The clearwell is waiting.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : 'bad'"><span class="ws-icon" x-text="w.icon"></span><span x-text="w.text"></span></li></template></ul></section>
+      </aside>
+    </div>
+
+    <div data-casefile></div>
+  </main>
+</div>
+
+<script type="module">
+  import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
+  import { registerRender } from '../../shared/js/render.js';
+  import { registerGauge } from '../../shared/js/gauge.js';
+  import { createSim } from './js/main.js';
+  import { mountCaseFile } from '../../shared/js/casefile.js';
+  import { CASE } from './js/case.js';
+  import { mountColumnResizers } from '../shared/columns.js?v=cockpit-3';
+  registerRender(Alpine);
+  registerGauge(Alpine);
+  Alpine.data('sim', createSim);
+  mountCaseFile(Alpine, CASE);
+  window.Alpine = Alpine;
+  Alpine.start();
+  // After start(), so the handles are appended to a workbench Alpine has already claimed.
+  // The two gutter buttons carry no bindings, so Alpine never walks them.
+  mountColumnResizers();
+</script>
+</body>
+</html>

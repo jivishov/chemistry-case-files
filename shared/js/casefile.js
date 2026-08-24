@@ -183,14 +183,24 @@ export function createCaseFile(CASE) {
 export function caseFileMarkup(CASE) {
   return `
 <section class="casefile" id="casefile" x-data="casefile" x-show="mode==='casefile'" aria-labelledby="cf-title">
-  <span class="cf-kicker"><span class="cf-dot"></span> <span x-text="'Case file ' + cs.number + ' &middot; ' + cs.kicker"></span></span>
-  <h2 class="cf-title" id="cf-title" x-text="cs.title"></h2>
-  <p class="cf-hook" x-text="cs.hook"></p>
+  <!-- Masthead and stats side by side.
+       The hook is one sentence of set-up, and as a full-bleed paragraph in a 1462px cockpit
+       panel it broke wherever a 62ch cap happened to land -- a ragged edge in the middle of
+       the screen with nothing to its right. Pairing it with the stats gives the sentence a
+       container the width of its own measure, so it wraps AT an edge, and puts the three
+       numbers where a magazine deck would put them. Below 880px the two stack. -->
+  <div class="cf-top">
+    <div class="cf-head">
+      <span class="cf-kicker"><span class="cf-dot"></span> <span x-text="'Case file ' + cs.number + ' &middot; ' + cs.kicker"></span></span>
+      <h2 class="cf-title" id="cf-title" x-text="cs.title"></h2>
+      <p class="cf-hook" x-text="cs.hook"></p>
+    </div>
 
-  <div class="cf-stats">
-    <template x-for="st in cs.stats" :key="st.k">
-      <div class="cf-stat"><span class="v" x-text="st.v"></span><span class="k" x-text="st.k"></span></div>
-    </template>
+    <div class="cf-stats">
+      <template x-for="st in cs.stats" :key="st.k">
+        <div class="cf-stat"><span class="v" x-text="st.v"></span><span class="k" x-text="st.k"></span></div>
+      </template>
+    </div>
   </div>
 
   <div class="cf-grid">
@@ -234,7 +244,7 @@ export function caseFileMarkup(CASE) {
         <button class="cf-choice" :data-state="quizState(i)" @click="pickQuiz(i)" x-text="o.label"></button>
       </template>
     </div>
-    <div class="row" style="margin-top: var(--s-3);">
+    <div class="cf-quiz-actions">
       <button class="btn cf-btn cf-btn-accent" @click="checkQuiz()" :disabled="quizPick===null || quizChecked">Lock it in</button>
       <button class="btn cf-btn" x-show="quizChecked &amp;&amp; !quizCorrect" @click="retryQuiz()">Try again</button>
     </div>

@@ -46,50 +46,90 @@
   70%  { box-shadow: 0 0 0 9px rgba(255, 154, 130, 0); }
   100% { box-shadow: 0 0 0 0 rgba(255, 154, 130, 0); }
 }
-.cf-title { font-size: var(--fs-2xl); margin: var(--s-2) 0; letter-spacing: -.01em; }
-.cf-hook { font-size: var(--fs-lg); color: var(--cf-ink-2); max-width: 62ch; }
+/* Masthead beside the numbers.
+   The title was 33.6px and the hook 18.9px, which is magazine-cover scale for a block that
+   is only the set-up: it pushed the story itself -- stage, chapters, quiz -- entirely below
+   the fold. Both come down a step and the pair sits in a column whose width IS the measure,
+   so no line ends in the middle of nowhere. */
+.cf-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: var(--s-4) var(--s-5);
+  align-items: end;
+}
+.cf-head { min-width: 0; }
+.cf-title { font-size: clamp(1.35rem, 1.75vw, 1.75rem); margin: var(--s-2) 0; letter-spacing: -.01em; line-height: 1.16; }
+.cf-hook { font-size: var(--fs-md); line-height: 1.5; color: var(--cf-ink-2); margin: 0; }
 
 /* Big-number stats strip */
-.cf-stats { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-4); }
+.cf-stats { display: flex; flex-wrap: wrap; gap: var(--s-2); margin: 0; min-width: 0; }
 .cf-stat {
-  flex: 1 1 130px; min-width: 130px;
+  flex: 1 1 108px; min-width: 108px;
   background: var(--cf-card); border: 1px solid var(--cf-line); border-radius: var(--r-md);
-  padding: var(--s-3) var(--s-4);
+  padding: var(--s-2) var(--s-3);
 }
 .cf-stat .v {
   display: block; font-family: var(--font-mono); font-weight: 700;
-  font-size: var(--fs-xl); color: var(--cf-ink); font-variant-numeric: tabular-nums;
+  font-size: var(--fs-lg); color: var(--cf-ink); font-variant-numeric: tabular-nums;
 }
 .cf-stat .k {
-  display: block; font-family: var(--font-mono); font-size: var(--fs-xs);
-  letter-spacing: .07em; text-transform: uppercase; color: var(--cf-muted); margin-top: 2px;
+  display: block; font-family: var(--font-mono); font-size: var(--fs-2xs);
+  letter-spacing: .06em; text-transform: uppercase; color: var(--cf-muted); margin-top: 2px;
+  line-height: 1.25;
 }
 
-/* Body: stage + story rail */
-.cf-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: var(--s-5); margin-top: var(--s-5); align-items: start; }
-@media (max-width: 880px) { .cf-grid { grid-template-columns: 1fr; } }
+@media (max-width: 880px) {
+  .cf-top { grid-template-columns: minmax(0, 1fr); align-items: start; }
+}
+
+/* Body: stage + story rail.
+   The stage takes a bigger share than it used to (1.15fr -> 1.34fr). Its labels live inside
+   the SVG, so they scale with the figure and nothing else: at 1.15fr the scene rendered
+   785px wide on a 15in laptop, which put a 640-unit viewBox at 1.23x and its 9-unit
+   annotations at 11px. The rail beside it is one column of 14px prose and does not need the
+   width as much. */
+.cf-grid { display: grid; grid-template-columns: minmax(0, 1.34fr) minmax(0, .88fr); gap: var(--s-4); margin-top: var(--s-4); align-items: start; }
+@media (max-width: 880px) { .cf-grid { grid-template-columns: minmax(0, 1fr); } }
 
 .cf-stage {
   position: relative; margin: 0; border-radius: var(--r-md); overflow: hidden;
-  background: #0d1a21; border: 1px solid var(--cf-line);
+  background: #0a151b; border: 1px solid var(--cf-line);
 }
-.cf-stage svg { display: block; width: 100%; height: auto; }
+/* A hair of contrast, not a brightness lift: raising brightness on a near-black stage lifts
+   the ground with the ink and nets nothing. Contrast pushes the two apart. */
+.cf-stage svg { display: block; width: 100%; height: auto; filter: contrast(1.06) saturate(1.04); }
 .cf-cap {
   padding: var(--s-2) var(--s-3); font-size: var(--fs-xs); color: var(--cf-muted);
   border-top: 1px solid var(--cf-line); font-family: var(--font-mono); min-height: 2.4em;
 }
 
-/* Chapter list */
-.cf-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s-2); }
+/* Chapter list.
+   These are the story's navigation, so they get the same "pressable" treatment the cockpit
+   gives its keys, in the dark palette: a face that catches light from the top, a hard 1px
+   wall under the bottom edge, and a press that collapses the wall. Weight drops to 600 --
+   a chapter title is a control's label, and at 700 all four competed with the narration. */
+.cf-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .cf-step {
   display: flex; align-items: center; gap: var(--s-3); width: 100%; text-align: left;
-  background: transparent; border: 1px solid var(--cf-line); border-radius: var(--r-md);
-  color: var(--cf-ink-2); font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
-  padding: var(--s-2) var(--s-3); cursor: pointer;
-  transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-fast) var(--ease);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, 0));
+  background-color: transparent;
+  border: 1px solid var(--cf-line); border-radius: var(--r-md);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09), 0 1px 0 rgba(6, 16, 21, .55);
+  color: var(--cf-ink-2); font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 600;
+  padding: 7px var(--s-3); cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast), translate var(--t-fast) var(--ease);
 }
-.cf-step:hover { border-color: var(--cf-accent); transform: translateX(2px); }
-.cf-step.on { background: rgba(42, 125, 138, .28); border-color: var(--cf-accent); color: var(--cf-ink); }
+.cf-step:hover {
+  border-color: var(--cf-accent);
+  background-image: linear-gradient(180deg, rgba(127, 196, 208, .16), rgba(127, 196, 208, .04));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 2px 6px rgba(4, 12, 16, .5);
+  translate: 0 -1px;
+}
+.cf-step:active { box-shadow: inset 0 2px 4px rgba(4, 12, 16, .5); translate: 0 1px; }
+.cf-step.on {
+  background-color: rgba(42, 125, 138, .28); border-color: var(--cf-accent); color: var(--cf-ink);
+  box-shadow: inset 0 2px 5px rgba(4, 14, 18, .45); translate: 0;
+}
 .cf-step.done { color: var(--cf-muted); }
 .cf-step.done .cf-step-n { background: var(--cf-good); color: #10261a; }
 .cf-step-n {
@@ -102,49 +142,102 @@
 
 /* Narration */
 .cf-narr {
-  margin-top: var(--s-4); background: var(--cf-card); border: 1px solid var(--cf-line);
-  border-radius: var(--r-md); padding: var(--s-4); min-height: 150px;
+  margin-top: var(--s-3); background: var(--cf-card); border: 1px solid var(--cf-line);
+  border-radius: var(--r-md); padding: var(--s-3) var(--s-4); min-height: 128px;
 }
-.cf-narr p { color: var(--cf-ink-2); font-size: var(--fs-sm); line-height: var(--lh-body); }
+.cf-narr p { color: var(--cf-ink-2); font-size: var(--fs-sm); line-height: 1.5; margin: 0; }
 .cf-chem {
-  margin-top: var(--s-3); padding: var(--s-3);
+  margin-top: var(--s-3) !important; padding: var(--s-2) var(--s-3);
   border-left: 3px solid var(--cf-accent); border-radius: 0 var(--r-sm) var(--r-sm) 0;
   background: rgba(42, 125, 138, .16);
 }
 .cf-chem strong { color: var(--cf-accent); font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .08em; text-transform: uppercase; }
-.cf-controls { display: flex; gap: var(--s-3); margin-top: var(--s-3); align-items: center; }
+.cf-controls { display: flex; gap: var(--s-2); margin-top: var(--s-3); align-items: center; }
 .cf-progress { margin-left: auto; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--cf-muted); }
 
-/* Dark buttons */
+/* Dark buttons. Same bevel as the chapter keys, in the two inks the story uses: a neutral
+   face for Back/Try again and the teal face for the move that commits. */
 .cf-btn {
-  background: transparent; color: var(--cf-ink); border-color: var(--cf-line);
+  background-color: transparent;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, 0));
+  color: var(--cf-ink); border-color: var(--cf-line); font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 1px 0 rgba(6, 16, 21, .55);
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast), translate var(--t-fast);
 }
-.cf-btn:hover { border-color: var(--cf-accent); background: rgba(42, 125, 138, .18); box-shadow: none; }
-.cf-btn:disabled { opacity: .35; }
-.cf-btn-accent { background: var(--cf-accent-deep); border-color: var(--cf-accent-deep); color: #fff; }
-.cf-btn-accent:hover { background: #236974; border-color: #236974; }
+.cf-btn:hover:not(:disabled) {
+  border-color: var(--cf-accent);
+  background-color: rgba(42, 125, 138, .18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .13), 0 2px 6px rgba(4, 12, 16, .5);
+  translate: 0 -1px;
+}
+.cf-btn:active:not(:disabled) {
+  box-shadow: inset 0 2px 4px rgba(4, 12, 16, .5);
+  translate: 0 1px;
+  transform: none;
+}
+.cf-btn:disabled { opacity: .35; background-image: none; box-shadow: none; translate: none; }
+.cf-btn-accent {
+  background-color: var(--cf-accent-deep); border-color: var(--cf-accent-deep); color: #fff;
+  background-image: linear-gradient(180deg, #3894a2, var(--cf-accent-deep));
+  font-weight: 700;
+}
+.cf-btn-accent:hover:not(:disabled) {
+  background-color: #236974; border-color: #2f8b98;
+  background-image: linear-gradient(180deg, var(--cf-accent-deep), #236974);
+}
 
-/* "Your call" quiz */
-.cf-quiz { margin-top: var(--s-5); border-top: 1px dashed var(--cf-line); padding-top: var(--s-5); }
+/* "Your call" quiz.
+ *
+ * The choices were 479px-wide left-aligned slabs: three of them ran the full width of the
+ * cockpit panel, so a two-word answer sat alone at the left end of half a metre of card.
+ * Two changes fix that together -- a max-width on the row, which is what actually shrinks
+ * the controls, and centred labels, so a short answer sits in the middle of its own key
+ * instead of hugging an edge it does not reach. They also get the bevel, because these are
+ * the most important buttons in the story and they looked like table cells.
+ *
+ * `place-items: center` (not just text-align) so a two-line answer stays optically centred.
+ */
+.cf-quiz { margin-top: var(--s-4); border-top: 1px dashed var(--cf-line); padding-top: var(--s-4); }
 .cf-quiz-label {
   font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 700;
   letter-spacing: .14em; text-transform: uppercase; color: var(--cf-warn);
 }
-.cf-quiz-q { color: var(--cf-ink); font-weight: 700; margin: var(--s-2) 0 var(--s-3); max-width: 70ch; }
-.cf-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--s-3); }
-.cf-choice {
-  text-align: left; padding: var(--s-3) var(--s-4);
-  background: var(--cf-card); border: 1px solid var(--cf-line); border-radius: var(--r-md);
-  color: var(--cf-ink-2); font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
-  cursor: pointer; transition: border-color var(--t-fast), background var(--t-fast);
+.cf-quiz-q { color: var(--cf-ink); font-size: var(--fs-sm); font-weight: 700; margin: 6px 0 var(--s-3); max-width: 78ch; }
+.cf-choices {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: var(--s-2); max-width: 1000px;
 }
-.cf-choice:hover { border-color: var(--cf-accent); }
-.cf-choice[data-state="on"] { border-color: var(--cf-accent); background: rgba(42, 125, 138, .28); color: var(--cf-ink); }
-.cf-choice[data-state="correct"] { border-color: var(--cf-good); background: rgba(47, 143, 91, .25); color: var(--cf-good); }
-.cf-choice[data-state="wrong"] { border-color: var(--cf-bad); background: rgba(191, 74, 48, .22); color: var(--cf-bad); }
+.cf-choice {
+  display: grid; place-items: center; text-align: center;
+  min-height: 46px; padding: 8px var(--s-3);
+  background-color: var(--cf-card); border: 1px solid var(--cf-line); border-radius: var(--r-md);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, 0));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09), 0 1px 0 rgba(6, 16, 21, .55);
+  color: var(--cf-ink-2); font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 600;
+  line-height: 1.32;
+  cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast), translate var(--t-fast);
+}
+.cf-choice:hover {
+  border-color: var(--cf-accent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 2px 6px rgba(4, 12, 16, .5);
+  translate: 0 -1px;
+}
+.cf-choice:active { box-shadow: inset 0 2px 4px rgba(4, 12, 16, .5); translate: 0 1px; }
+/* Answered: the key becomes a record, so the bevel goes flat and the fill carries the verdict. */
+.cf-choice[data-state="on"] { border-color: var(--cf-accent); background-color: rgba(42, 125, 138, .28); color: var(--cf-ink); box-shadow: inset 0 2px 5px rgba(4, 14, 18, .4); translate: 0; }
+.cf-choice[data-state="correct"] { border-color: var(--cf-good); background-color: rgba(47, 143, 91, .25); background-image: none; color: var(--cf-good); box-shadow: none; translate: none; }
+.cf-choice[data-state="wrong"] { border-color: var(--cf-bad); background-color: rgba(191, 74, 48, .22); background-image: none; color: var(--cf-bad); box-shadow: none; translate: none; }
+
+/* Its own row rather than the generic .row, so the pair of keys that ends the quiz is sized
+   here with the choices above them instead of by an inline margin in the markup. */
+.cf-quiz-actions { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-3); }
+.cf-quiz-actions > .btn { min-width: 132px; text-align: center; }
+
 .cf-explain {
-  margin-top: var(--s-3); padding: var(--s-3) var(--s-4); border-radius: var(--r-md);
-  font-size: var(--fs-sm); border: 1px solid var(--cf-line); background: var(--cf-card);
+  margin-top: var(--s-3); padding: var(--s-2) var(--s-4); border-radius: var(--r-md);
+  font-size: var(--fs-sm); line-height: 1.5; border: 1px solid var(--cf-line); background: var(--cf-card);
+  max-width: 1000px;
   animation: rise var(--t-med) var(--ease) both;
 }
 .cf-explain.good { border-color: rgba(143, 217, 174, .5); }
@@ -154,26 +247,36 @@
 
 /* Punch: the motivating close */
 .cf-punch {
-  margin-top: var(--s-5); display: flex; flex-wrap: wrap; gap: var(--s-4);
+  margin-top: var(--s-4); display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-4);
   align-items: center; justify-content: space-between;
   background: linear-gradient(120deg, rgba(42, 125, 138, .3), rgba(42, 125, 138, .08));
-  border: 1px solid rgba(127, 196, 208, .35); border-radius: var(--r-md); padding: var(--s-4) var(--s-5);
+  border: 1px solid rgba(127, 196, 208, .35); border-radius: var(--r-md); padding: var(--s-3) var(--s-4);
 }
-.cf-punch-lead { color: var(--cf-ink); font-weight: 700; max-width: 56ch; }
-.cf-careers { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-2); }
+.cf-punch-lead { color: var(--cf-ink); font-size: var(--fs-sm); font-weight: 700; margin: 0; max-width: 68ch; }
+.cf-careers { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--s-2); }
 .cf-career {
-  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 700;
+  font-family: var(--font-mono); font-size: var(--fs-2xs); font-weight: 700;
   color: var(--cf-accent); border: 1px solid rgba(127, 196, 208, .4);
-  border-radius: var(--r-pill); padding: 2px 10px; white-space: nowrap;
+  border-radius: var(--r-pill); padding: 2px 9px; white-space: nowrap;
 }
 .cf-cta {
   flex: none; display: inline-flex; align-items: center; gap: var(--s-2);
   background: var(--cf-accent); color: #0d1a21; border: none; border-radius: var(--r-md);
+  background-image: linear-gradient(180deg, #a3dae3, var(--cf-accent));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 2px 0 #4e93a0, 0 3px 8px rgba(4, 12, 16, .4);
   font-family: var(--font-body); font-weight: 700; font-size: var(--fs-sm);
-  padding: var(--s-3) var(--s-5); cursor: pointer;
-  transition: transform var(--t-fast) var(--ease), background var(--t-fast);
+  padding: var(--s-2) var(--s-4); cursor: pointer;
+  transition: translate var(--t-fast) var(--ease), background var(--t-fast), box-shadow var(--t-fast);
 }
-.cf-cta:hover { background: #9ad4de; transform: translateY(-1px); }
+.cf-cta:hover {
+  background-image: linear-gradient(180deg, #b6e2ea, #8fcdd8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 3px 0 #4e93a0, 0 5px 12px rgba(4, 12, 16, .45);
+  translate: 0 -1px;
+}
+.cf-cta:active {
+  box-shadow: inset 0 2px 4px rgba(4, 12, 16, .3), 0 0 0 0 #4e93a0;
+  translate: 0 2px;
+}
 
 /* Teaser chip (light page context, sits under the unit h1) */
 .cf-teaser {
@@ -317,7 +420,7 @@
   .cf-explain,
   .verdict { animation: none !important; }
   .casefile svg .a-draw { stroke-dashoffset: 0 !important; }
-  .cf-step { transition: none !important; }
+  .cf-step, .cf-btn, .cf-choice, .cf-cta { transition: none !important; translate: none !important; }
 }
 
 @media (max-width: 640px) {

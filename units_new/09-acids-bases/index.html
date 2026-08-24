@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 9 · Acids &amp; Bases</title>
+<meta name="description" content="One night shift on a poison-control bench, with an acidotic patient next door at pH 7.20. Name acids and bases, find conjugate pairs, sort strong from weak, neutralize a spill, and drive a pH meter. TEKS C.12.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<link rel="stylesheet" href="../../shared/css/components.css">
+<link rel="stylesheet" href="../../shared/css/casefile.css">
+<link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
+<link rel="stylesheet" href="css/style.css?v=u9-1">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
+<!-- Chart.js arrives as a plain global, which is what shared/js/render.js expects. This
+     unit draws one chart, the Honors titration curve, through lineChart(). -->
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div x-data="sim()" x-cloak>
+
+  <main class="codex-shell cockpit-shell" aria-label="Unit 9 night shift cockpit">
+    <header class="cockpit-command">
+      <div class="command-brand">
+        <span class="command-kicker">Unit 9 · TEKS C.12</span>
+        <!-- The title carries the link home: it REPLACES the <strong> rather than adding a
+             row (the header is height-critical), and it must not be a <span>, because
+             .command-brand span:last-child styles the active-station line by position. -->
+        <a class="command-home" href="../index.html" title="All units">Acids &amp; Bases</a>
+        <span x-text="activeStationName"></span>
+      </div>
+
+      <nav class="station-nav" role="tablist" aria-label="Poison control benches">
+        <button class="tab" role="tab" :aria-selected="mode==='naming'"     @click="setMode('naming')"     aria-label="Naming" title="Naming · C.12(A) acid and base names"><span class="tab-full" aria-hidden="true">Naming</span><span class="tab-short" aria-hidden="true">Naming</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='define'"     @click="setMode('define')"     aria-label="Definitions" title="Definitions · C.12(B) frameworks and conjugate pairs"><span class="tab-full" aria-hidden="true">Definitions</span><span class="tab-short" aria-hidden="true">Define</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='strength'"   @click="setMode('strength')"   aria-label="Strong vs weak" title="Strong vs weak · C.12(C) extent of dissociation"><span class="tab-full" aria-hidden="true">Strong vs weak</span><span class="tab-short" aria-hidden="true">Strength</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='neutralize'" @click="setMode('neutralize')" aria-label="Neutralize" title="Neutralize · C.12(D) salt plus water, and the moles it takes"><span class="tab-full" aria-hidden="true">Neutralize</span><span class="tab-short" aria-hidden="true">Neutral</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='meter'"      @click="setMode('meter')"      aria-label="pH meter" title="pH meter · C.12(E) pH from the ion concentration"><span class="tab-full" aria-hidden="true">pH meter</span><span class="tab-short" aria-hidden="true">Meter</span></button>
+        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="Triage" title="Triage · the last call of the night"><span class="tab-full" aria-hidden="true">Triage</span><span class="tab-short" aria-hidden="true">Triage</span></button>
+        <!-- The Case File is a bench like any other, so it lives in this strip rather than
+             as a teaser chip: the cockpit header has no spare row for a chip, and a story
+             the learner cannot see is a story they never open. -->
+        <button class="tab" role="tab" :aria-selected="mode==='casefile'"   @click="setMode('casefile')"   aria-label="Case file" title="Case file · what a can of soda does to your teeth"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
+      </nav>
+
+      <div class="command-actions">
+        <label class="switch" title="Reveal advanced content for Honors sections">
+          <input type="checkbox" x-model="honors">
+          <span class="track"></span>
+          <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+        </label>
+        <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
+      </div>
+
+      <div class="command-metrics" aria-label="Progress and patient telemetry">
+        <span class="metric-chip">XP <strong x-text="g_xp"></strong></span>
+        <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
+        <!-- Standards tracking is secondary to the calls: one badge, expanded on demand,
+             instead of five chips competing with the bench tabs. Click, not hover:
+             hover-to-open fights the click toggle and does not exist on a touch screen. -->
+        <div class="teks-wrap" @click.outside="teksOpen = false" @keydown.escape="teksOpen = false">
+          <button type="button" class="teks-badge" :class="{ complete: teksMasteredCount === coreSkills.length }"
+                  :aria-expanded="teksOpen ? 'true' : 'false'" aria-label="TEKS standards progress"
+                  @click="teksOpen = !teksOpen">
+            <span>TEKS</span>
+            <strong><span x-text="teksMasteredCount"></span>/<span x-text="coreSkills.length"></span></strong>
+          </button>
+          <div class="teks-popover" x-show="teksOpen" x-cloak role="group" aria-label="TEKS C.12 standards">
+            <template x-for="se in coreSkills" :key="se.id">
+              <div class="teks-row" :class="{ active: se.mode===mode, mastered: gMastered(se.id) }">
+                <span class="teks-row-head">
+                  <span class="teks-row-code" x-text="se.code"></span>
+                  <span class="teks-row-cap" x-text="seCaption(se)"></span>
+                </span>
+                <span class="teks-row-text" x-text="se.text"></span>
+                <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id)*100}%`"></span></span>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- The Case File is a MODE, not a section at the foot of the page: the three working
+         columns give up the shell's flexible row while the story is showing, and the bench
+         strip stays above it so there is always a way back. -->
+    <div class="workbench-grid" x-show="mode!=='casefile'">
+
+      <!-- ============ LEFT: the call in front of you ============ -->
+      <section class="mission-screen panel" :class="'tone-' + activeTone" aria-label="Active call">
+        <div class="mission-frame">
+          <div class="mission-screen-art" x-html="scArt(activeArtId)"></div>
+          <div class="screen-scanline" aria-hidden="true"></div>
+        </div>
+        <!-- Caller and state read as a heading, not as an overlay: at the art's true 8:3
+             aspect an inset caption would cover 40% of the drawing. -->
+        <div class="screen-status">
+          <span class="screen-system" x-text="activeStationName"></span>
+          <span class="screen-state" x-text="activeStateLabel"></span>
+        </div>
+        <div class="screen-copy">
+          <p class="screen-goal" x-show="activeBrief" x-prose="activeBrief ? activeBrief.goal : ''"></p>
+          <p class="screen-outcome" x-prose="activeOutcomeText"></p>
+        </div>
+        <!-- A native <details>, so the standing facts can be folded away and the art and the
+             prompt take the rows back. Open by default, because facts a learner has to hunt
+             for are not standing facts. The summary keeps .command-kicker: it is the same
+             chrome eyebrow it was before it became a disclosure, and that class is what
+             exempts it from the 14px legibility floor in tests/unit5a-layout.test.mjs.
+             shared/cockpit.css styles it; the height media queries there still drop the whole
+             card on a short viewport, which is the shell deciding there is no room rather
+             than the learner deciding they want it elsewhere. -->
+        <!-- Closed by default, and only here. Unit 06's, 09's, 10's and 11's reference sets run
+             three wrapped facts to a 476px column -- a 150 to 170px card -- and this mission
+             column does not have that alongside a full scenario prompt at 726px of viewport.
+             The rows this unit used to reclaim it took by DROPPING the card outright below
+             760px, so on every laptop in the matrix the standing facts were unreachable. A
+             closed disclosure costs 23px, says the facts are there, and hands the choice to
+             the learner. The other seven units ship it open, which is the shell's default. -->
+        <details class="screen-reference" aria-label="Reference facts">
+          <summary class="command-kicker">Reference</summary>
+          <div class="screen-reference-body">
+            <template x-for="r in activeReference" :key="r.k">
+              <p class="ref-item">
+                <span class="ref-k" x-text="r.k"></span>
+                <span class="ref-v" x-prose="r.v"></span>
+              </p>
+            </template>
+          </div>
+        </details>
+        <!-- One line, not a card: this row is the last thing in a fixed-height column and
+             every line it takes is a line off the goal text above it. -->
+        <section class="instincts cockpit-instincts" aria-label="The night shift">
+          <span class="command-kicker">The night shift</span>
+          <p><strong x-text="clockLabel"></strong> on a 23:00 to 07:00 shift &middot;
+            <strong x-text="calls"></strong> calls logged &middot;
+            arterial pH <strong x-text="phLabel"></strong></p>
+        </section>
+      </section>
+
+      <!-- ============ CENTER: the bench ============ -->
+      <section class="task-stack chem-console">
+
+        <!-- ---------- C.12(A) acid and base naming ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='naming' }" x-show="mode==='naming'">
+          <template x-if="na">
+          <div>
+            <p class="muted mb-2">
+              Build the IUPAC name of <span class="formula-lg" x-ce="na.f"></span>
+              (<span x-text="na.kind==='base' ? 'a base' : 'an acid'"></span>) from its rule parts.
+              The naming rules are on the reference card beside you.
+            </p>
+            <p class="small muted mb-2">Where it turns up: <span x-text="na.where"></span></p>
+
+            <!-- acid name builder -->
+            <div class="name-grid" x-show="na.kind!=='base'">
+              <label class="field"><span>prefix</span>
+                <select x-model="naSel.prefix" :disabled="naDone">
+                  <option value="" disabled>choose</option>
+                  <template x-for="o in acidPrefixes" :key="o"><option :value="o" x-text="o"></option></template>
+                </select>
+              </label>
+              <label class="field"><span>root</span>
+                <select x-model="naSel.root" :disabled="naDone">
+                  <option value="" disabled>choose</option>
+                  <template x-for="o in acidRoots" :key="o"><option :value="o" x-text="o"></option></template>
+                </select>
+              </label>
+              <label class="field"><span>suffix</span>
+                <select x-model="naSel.suffix" :disabled="naDone">
+                  <option value="" disabled>choose</option>
+                  <template x-for="o in acidSuffixes" :key="o"><option :value="o" x-text="o"></option></template>
+                </select>
+              </label>
+            </div>
+
+            <!-- base name builder -->
+            <div class="name-grid" x-show="na.kind==='base'">
+              <label class="field"><span>metal</span>
+                <select x-model="naSel.metal" :disabled="naDone">
+                  <option value="" disabled>choose</option>
+                  <template x-for="o in baseMetals" :key="o"><option :value="o" x-text="o"></option></template>
+                </select>
+              </label>
+              <label class="field"><span>charge (roman)</span>
+                <select x-model="naSel.roman" :disabled="naDone">
+                  <option value="" disabled>choose</option>
+                  <template x-for="o in baseRomans" :key="o"><option :value="o" x-text="o"></option></template>
+                </select>
+              </label>
+              <label class="field"><span>anion name</span>
+                <select x-model="naSel.suffix" :disabled="naDone">
+                  <option value="" disabled>choose</option>
+                  <template x-for="o in baseSuffixes" :key="o"><option :value="o" x-text="o"></option></template>
+                </select>
+              </label>
+            </div>
+
+            <p class="mt-3">Your name: <strong class="name-preview" x-text="naPreview(naSel)"></strong></p>
+
+            <div class="row call-row mt-4">
+              <button class="btn btn-accent" @click="naCheck()" :disabled="naDone || !naReady" x-text="na.sc.actionLabel"></button>
+              <span class="grow"></span>
+              <button class="btn btn-sm" @click="naNext()">Next bottle</button>
+              <span class="call-hint" x-show="!naReady && !naDone" x-text="na.kind === 'base' ? 'Pick the metal, the numeral and the ending.' : 'Pick the prefix, the root and the ending.'"></span>
+            </div>
+
+            <template x-if="naVerdict">
+              <div class="verdict mt-3" :class="'verdict-' + naVerdict.tone">
+                <div class="status">
+                  <span class="status-icon" x-text="naVerdict.icon"></span>
+                  <span class="status-state" x-text="naVerdict.state"></span>
+                </div>
+                <span class="verdict-headline" x-prose="naVerdict.headline"></span>
+                <span class="verdict-detail" x-prose="naVerdict.detail"></span>
+              </div>
+            </template>
+          </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.12(B) definitions and conjugate pairs ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='define' }" x-show="mode==='define'">
+          <template x-if="df">
+          <div>
+            <p class="muted mb-2" x-text="df.text"></p>
+            <p class="eqn mb-3" x-show="df.ce" style="text-align:center;"><span class="formula-lg" x-ce="df.ce"></span></p>
+
+            <p class="small muted mb-2" x-text="df.qA.q"></p>
+            <div class="choice-grid choice-grid-wide">
+              <template x-for="o in df.qA.options" :key="o">
+                <button class="choice" :data-state="dfStateA(o)" @click="dfPickA(o)">
+                  <span x-show="df.qA.type==='ce'" x-ce="o"></span>
+                  <span x-show="df.qA.type!=='ce'" x-text="o"></span>
+                </button>
+              </template>
+            </div>
+
+            <p class="small muted mt-4 mb-2" x-text="df.qB.q"></p>
+            <div class="choice-grid choice-grid-narrow">
+              <template x-for="o in df.qB.options" :key="o">
+                <button class="choice" :data-state="dfStateB(o)" @click="dfPickB(o)" x-text="o"></button>
+              </template>
+            </div>
+
+            <div class="row call-row mt-4">
+              <button class="btn btn-accent" @click="dfCheck()" :disabled="dfDone || dfA===null || dfB===null" x-text="df.sc.actionLabel"></button>
+              <span class="grow"></span>
+              <button class="btn btn-sm" @click="dfNext()">Next case</button>
+              <span class="call-hint" x-show="(dfA === null || dfB === null) && !dfDone" x-text="dfA === null ? 'Answer the first question.' : 'Now answer the second.'"></span>
+            </div>
+
+            <template x-if="dfVerdict">
+              <div class="verdict mt-3" :class="'verdict-' + dfVerdict.tone">
+                <div class="status">
+                  <span class="status-icon" x-text="dfVerdict.icon"></span>
+                  <span class="status-state" x-text="dfVerdict.state"></span>
+                </div>
+                <span class="verdict-headline" x-prose="dfVerdict.headline"></span>
+                <span class="verdict-detail" x-prose="dfVerdict.detail"></span>
+              </div>
+            </template>
+          </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.12(C) strong versus weak ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='strength' }" x-show="mode==='strength'">
+          <template x-if="st">
+          <div>
+            <p class="muted mb-3">
+              Sort the shelf of <span x-text="st.fam==='acid' ? 'acids' : 'bases'"></span>. Mark each as strong (ionizes completely) or weak (ionizes only partly).
+            </p>
+
+            <template x-for="b in st.bottles" :key="b.f">
+              <div class="bottle">
+                <span class="bottle-id"><span class="formula" x-ce="b.f"></span> <span class="small muted" x-text="b.name"></span></span>
+                <span class="seg">
+                  <button class="choice choice-sm choice-tight" :data-state="stState(b.f,'strong')" @click="stSet(b.f,'strong')">strong</button>
+                  <button class="choice choice-sm choice-tight" :data-state="stState(b.f,'weak')" @click="stSet(b.f,'weak')">weak</button>
+                </span>
+              </div>
+            </template>
+
+            <p class="small muted mt-4 mb-2" x-text="st.reason.q"></p>
+            <div class="choice-grid">
+              <template x-for="o in st.reason.options" :key="o">
+                <button class="choice" :data-state="stReasonState(o)" @click="stPickReason(o)" x-text="o"></button>
+              </template>
+            </div>
+
+            <div class="row call-row mt-4">
+              <button class="btn btn-accent" @click="stCheck()" :disabled="stDone || !stAllClassified || !stReason" x-text="st.sc.actionLabel"></button>
+              <span class="grow"></span>
+              <button class="btn btn-sm" @click="stNext()">Next shelf</button>
+              <span class="call-hint" x-show="(!stAllClassified || !stReason) && !stDone" x-text="!stAllClassified ? 'Mark every bottle strong or weak first.' : 'Now say why the strong one has the lowest pH.'"></span>
+            </div>
+
+            <template x-if="stVerdict">
+              <div class="verdict mt-3" :class="'verdict-' + stVerdict.tone">
+                <div class="status">
+                  <span class="status-icon" x-text="stVerdict.icon"></span>
+                  <span class="status-state" x-text="stVerdict.state"></span>
+                </div>
+                <span class="verdict-headline" x-prose="stVerdict.headline"></span>
+                <span class="verdict-detail" x-prose="stVerdict.detail"></span>
+              </div>
+            </template>
+          </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.12(D) neutralization, and the Honors titration on the same bench ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='neutralize' }" x-show="mode==='neutralize'">
+          <template x-if="nu">
+          <div>
+            <p class="muted mb-2">
+              <strong x-text="nu.molAcid.toFixed(2)"></strong> mol of <span x-ce="nu.acid.f"></span> (<span x-text="nu.acid.name"></span>, <span x-text="nu.acid.where"></span>) sits in <strong x-text="fmt(nu.V)"></strong> L.
+              Neutralize it with <span x-ce="nu.base.f"></span> (<span x-text="nu.base.name"></span>).
+            </p>
+
+            <p class="small muted mb-2">Step 1. Predict the salt. Acid plus base always makes a salt plus water; criss-cross the ion charges to set each subscript.</p>
+            <div class="stepper-row">
+              <div class="stepper">
+                <span class="el mono" x-text="nu.base.cation"></span>
+                <button class="btn btn-sm" @click="nuCatStep(-1)" :disabled="nuDone" aria-label="decrease cation subscript">&minus;</button>
+                <span class="sub mono" x-text="nuCat"></span>
+                <button class="btn btn-sm" @click="nuCatStep(1)" :disabled="nuDone" aria-label="increase cation subscript">+</button>
+              </div>
+              <div class="stepper">
+                <span class="el mono" x-text="nu.acid.anion"></span>
+                <button class="btn btn-sm" @click="nuAnStep(-1)" :disabled="nuDone" aria-label="decrease anion subscript">&minus;</button>
+                <span class="sub mono" x-text="nuAn"></span>
+                <button class="btn btn-sm" @click="nuAnStep(1)" :disabled="nuDone" aria-label="increase anion subscript">+</button>
+              </div>
+            </div>
+            <p class="eqn mt-3">Reaction: <span x-ce="nu.acid.f"></span> + <span x-ce="nu.base.f"></span> &rarr; <span class="formula" x-ce="nuStudentSalt"></span> + <span x-ce="'H2O'"></span></p>
+
+            <p class="small muted mt-4 mb-2">Step 2. Work out the moles of base that make moles of H+ equal moles of OH-, and call it. The beaker meter is read back to you once the call is in.</p>
+            <div class="field field-narrow">
+              <label for="nuBase">moles of <span x-text="nu.base.cationName"></span> base to add</label>
+              <input id="nuBase" type="number" step="0.01" min="0" x-model="nuBaseInput" :disabled="nuDone">
+            </div>
+            <!-- The live beaker meter reads pH 7.00 at exactly the graded answer, so it is
+                 revealed on commit and not before. It stays after the call, which keeps the
+                 beaker explorable. -->
+            <div x-show="nuChecked">
+              <div class="ph-readout" :style="`color:${nuPhColor(nuPH)}`">pH &asymp; <span x-text="nuPH.toFixed(2)"></span> <span class="small" x-text="'('+nuPHClass+')'"></span></div>
+              <div class="ph-scale" aria-hidden="true"><div class="ph-needle" :style="`left:${nuPH/14*100}%`"></div></div>
+            </div>
+
+            <div class="row call-row mt-4">
+              <button class="btn btn-accent" @click="nuCheck()" :disabled="nuDone || nuBaseInput===''" x-text="nu.sc.actionLabel"></button>
+              <span class="grow"></span>
+              <button class="btn btn-sm" @click="nuNext()">Next spill</button>
+              <span class="call-hint" x-show="nuBaseInput === '' && !nuDone" x-text="'Work out the moles of base, then type them.'"></span>
+            </div>
+
+            <template x-if="nuVerdict">
+              <div class="verdict mt-3" :class="'verdict-' + nuVerdict.tone">
+                <div class="status">
+                  <span class="status-icon" x-text="nuVerdict.icon"></span>
+                  <span class="status-state" x-text="nuVerdict.state"></span>
+                </div>
+                <span class="verdict-headline" x-prose="nuVerdict.headline"></span>
+                <span class="verdict-detail" x-prose="nuVerdict.detail"></span>
+                <!-- Both levels are guarded: Alpine evaluates the inner template's :class
+                     expressions once more while tearing the outer x-if down, so guarding only
+                     the x-if throws on every re-roll. -->
+                <template x-if="nuVerdict && nuVerdict.gauge">
+                  <div class="gauge">
+                    <div class="gauge-seg" :class="nuVerdict && nuVerdict.gauge==='low' ? 'miss' : ''">still acid</div>
+                    <div class="gauge-seg" :class="nuVerdict && nuVerdict.gauge==='on' ? 'on' : ''">neutral</div>
+                    <div class="gauge-seg" :class="nuVerdict && nuVerdict.gauge==='high' ? 'miss' : ''">now caustic</div>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </div>
+          </template>
+
+          <!-- Honors h1: the titration curve. The canvas stays under x-show and never inside
+               an x-if: a canvas inside a template does not exist until the condition flips,
+               so init's buildTitrChart would find no $ref and the chart would never build.
+               Everything that dereferences the stage object sits in an x-if instead. -->
+          <div class="honors-block mt-4" x-show="honors">
+            <span class="honors-tag">Honors · titration curve</span>
+            <div class="note note-info mt-2" x-show="!h1Unlocked">Master neutralization (three in a row) to unlock the titration.</div>
+            <div x-show="h1Unlocked" class="mt-2">
+              <template x-if="ti">
+              <div>
+                <!-- The Honors sub-bench states its own task here rather than borrowing the
+                     mission screen, so a core "Next spill" can take the screen back without
+                     leaving this block's question nowhere on the page (porting trap 17). -->
+                <p class="small muted mb-2" x-prose="ti.sc.goal"></p>
+                <p class="small mb-2">Titrate <span x-text="ti.Va"></span> mL of <span x-text="ti.Ca.toFixed(2)"></span> M strong acid with <span x-text="ti.Cb.toFixed(2)"></span> M strong base. Drive the added volume to the equivalence point, then pick the indicator. The calculated equivalence volume is drawn on the chart once you commit, not before.</p>
+              </div>
+              </template>
+              <div class="canvas-wrap"><canvas x-ref="titrCanvas"></canvas></div>
+              <template x-if="ti">
+              <div>
+                <div class="field field-wide mt-3">
+                  <label for="tiVb">base added: <span class="mono" x-text="tiVb.toFixed(1)"></span> mL &middot; pH <span class="mono" x-text="tiCurrentPH.toFixed(2)"></span></label>
+                  <input id="tiVb" type="range" min="0" :max="ti.Vmax" step="0.1" x-model.number="tiVb" @input="updateTitrPoint()" :disabled="tiDone">
+                </div>
+                <p class="small muted mt-3 mb-2">Indicator (its color-change range should bracket the equivalence pH):</p>
+                <div class="choice-grid">
+                  <template x-for="ind in indicators" :key="ind.name">
+                    <button class="choice" :data-state="tiIndState(ind.name)" @click="tiPickInd(ind.name)" :disabled="tiDone">
+                      <span x-text="ind.name"></span> <span class="small muted" x-text="'('+ind.lo+'-'+ind.hi+')'"></span>
+                    </button>
+                  </template>
+                </div>
+                <div class="row call-row mt-3">
+                  <button class="btn btn-honors" @click="tiCheck()" :disabled="tiDone || !tiInd" x-text="ti.sc.actionLabel"></button>
+                  <span class="grow"></span>
+                  <button class="btn btn-sm" @click="tiNext()">New titration</button>
+                  <span class="call-hint" x-show="!tiInd && !tiDone" x-text="'Choose the indicator whose range brackets the equivalence point.'"></span>
+                </div>
+
+                <template x-if="tiVerdict">
+                  <div class="verdict mt-3" :class="'verdict-' + tiVerdict.tone">
+                    <div class="status">
+                      <span class="status-icon" x-text="tiVerdict.icon"></span>
+                      <span class="status-state" x-text="tiVerdict.state"></span>
+                    </div>
+                    <span class="verdict-headline" x-prose="tiVerdict.headline"></span>
+                    <span class="verdict-detail" x-prose="tiVerdict.detail"></span>
+                    <template x-if="tiVerdict && tiVerdict.gauge">
+                      <div class="gauge">
+                        <div class="gauge-seg" :class="tiVerdict && tiVerdict.gauge==='low' ? 'miss' : ''">stopped short</div>
+                        <div class="gauge-seg" :class="tiVerdict && tiVerdict.gauge==='on' ? 'on' : ''">at equivalence</div>
+                        <div class="gauge-seg" :class="tiVerdict && tiVerdict.gauge==='high' ? 'miss' : ''">ran past</div>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+              </div>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- C.12(E) pH from the ion concentration, and Honors weak-acid Ka ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='meter' }" x-show="mode==='meter'">
+          <template x-if="me">
+          <div>
+            <p class="muted eqn mb-2">The sample reads <span x-tex="meConcTeX()"></span>. Set the meter to its pH, then classify it.</p>
+
+            <div class="ph-readout" :style="`color:${phColor(meGuess)}`">pH = <span x-text="meGuess.toFixed(2)"></span></div>
+            <div class="ph-scale" aria-hidden="true"><div class="ph-needle" :style="`left:${meGuess/14*100}%`"></div></div>
+            <input class="ph-slider" type="range" min="0" max="14" step="0.01" x-model.number="meGuess" :disabled="meDone" aria-label="pH meter">
+            <div class="row ph-ends">
+              <span class="small muted">0 acidic</span><span class="small muted">7 neutral</span><span class="small muted">14 basic</span>
+            </div>
+
+            <p class="small muted mt-4 mb-2">Classify the beaker:</p>
+            <div class="choice-grid choice-grid-narrow">
+              <button class="choice" :data-state="meClassState('acid')"    @click="mePickClass('acid')">acidic</button>
+              <button class="choice" :data-state="meClassState('neutral')" @click="mePickClass('neutral')">neutral</button>
+              <button class="choice" :data-state="meClassState('base')"    @click="mePickClass('base')">basic</button>
+            </div>
+
+            <div class="row call-row mt-4">
+              <button class="btn btn-accent" @click="meCheck()" :disabled="meDone || !meClass" x-text="me.sc.actionLabel"></button>
+              <span class="grow"></span>
+              <button class="btn btn-sm" @click="meNext()">Next sample</button>
+              <span class="call-hint" x-show="!meClass && !meDone" x-text="'Classify the beaker first.'"></span>
+            </div>
+
+            <template x-if="meVerdict">
+              <div class="verdict mt-3" :class="'verdict-' + meVerdict.tone">
+                <div class="status">
+                  <span class="status-icon" x-text="meVerdict.icon"></span>
+                  <span class="status-state" x-text="meVerdict.state"></span>
+                </div>
+                <span class="verdict-headline" x-prose="meVerdict.headline"></span>
+                <span class="verdict-detail" x-prose="meVerdict.detail"></span>
+                <template x-if="meVerdict && meVerdict.gauge">
+                  <div class="gauge">
+                    <div class="gauge-seg" :class="meVerdict && meVerdict.gauge==='low' ? 'miss' : ''">read low</div>
+                    <div class="gauge-seg" :class="meVerdict && meVerdict.gauge==='on' ? 'on' : ''">on the reading</div>
+                    <div class="gauge-seg" :class="meVerdict && meVerdict.gauge==='high' ? 'miss' : ''">read high</div>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </div>
+          </template>
+
+          <!-- Honors h2: weak-acid Ka to pH. x-if, not x-show: the block dereferences
+               wa.sc, and an x-show subtree still evaluates while hidden. -->
+          <div class="honors-block mt-4" x-show="honors">
+            <span class="honors-tag">Honors · weak-acid Ka</span>
+            <div class="note note-info mt-2" x-show="!h2Unlocked">Master the pH meter (three in a row) to unlock weak-acid pH.</div>
+            <template x-if="h2Unlocked && wa">
+            <div class="mt-2">
+              <p class="small muted mb-2" x-prose="wa.sc.goal"></p>
+              <p class="small eqn mb-2"><span x-text="wa.C.toFixed(3)"></span> M <span x-ce="wa.acid.f"></span> (<span x-text="wa.acid.name"></span>), <span x-tex="waKaTeX()"></span>. A weak acid only partly ionizes, so solve Ka = x^2/(C - x) for x = [H+], then set the meter.</p>
+              <p class="small muted mb-2" x-show="wa.acid.note" x-prose="wa.acid.note"></p>
+              <div class="ph-readout" :style="`color:${phColor(waGuess)}`">pH = <span x-text="waGuess.toFixed(2)"></span></div>
+              <div class="ph-scale" aria-hidden="true"><div class="ph-needle" :style="`left:${waGuess/14*100}%`"></div></div>
+              <input class="ph-slider" type="range" min="0" max="14" step="0.01" x-model.number="waGuess" :disabled="waDone" aria-label="weak acid pH meter">
+              <div class="row call-row mt-3">
+                <button class="btn btn-honors" @click="waCheck()" :disabled="waDone" x-text="wa.sc.actionLabel"></button>
+                <span class="grow"></span>
+                <button class="btn btn-sm" @click="waNext()">Next weak acid</button>
+              </div>
+
+              <template x-if="waVerdict">
+                <div class="verdict mt-3" :class="'verdict-' + waVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="waVerdict.icon"></span>
+                    <span class="status-state" x-text="waVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-prose="waVerdict.headline"></span>
+                  <span class="verdict-detail" x-prose="waVerdict.detail"></span>
+                  <template x-if="waVerdict && waVerdict.gauge">
+                    <div class="gauge">
+                      <div class="gauge-seg" :class="waVerdict && waVerdict.gauge==='low' ? 'miss' : ''">called low</div>
+                      <div class="gauge-seg" :class="waVerdict && waVerdict.gauge==='on' ? 'on' : ''">on the equilibrium</div>
+                      <div class="gauge-seg" :class="waVerdict && waVerdict.gauge==='high' ? 'miss' : ''">called high</div>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- ---------- Capstone: the last call of the night ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
+          <div class="note note-info" x-show="!capUnlocked">The last call unlocks once all five core skills (C.12 A to E) are mastered. Mastered so far: <span x-text="Math.round(gOverall()*5)"></span> of 5.</div>
+          <button class="btn btn-accent" x-show="capUnlocked && !cap" @click="genCapstone()">Take the last call</button>
+
+          <template x-if="capUnlocked && cap">
+          <div>
+            <p class="muted mb-3">The beaker is acidic and unlabelled: <span class="formula-lg" x-ce="cap.acid.f"></span>, holding <strong x-text="cap.molAcid.toFixed(2)"></strong> mol in <strong x-text="fmt(cap.V)"></strong> L. Name it, classify it, predict its salt with <span x-ce="cap.base.f"></span>, and neutralize it.</p>
+
+            <p class="small muted mb-2">1. Name the acid:</p>
+            <div class="name-grid">
+              <label class="field"><span>prefix</span>
+                <select x-model="capNaSel.prefix" :disabled="capWin">
+                  <option value="" disabled>choose</option>
+                  <template x-for="o in acidPrefixes" :key="o"><option :value="o" x-text="o"></option></template>
+                </select>
+              </label>
+              <label class="field"><span>root</span>
+                <select x-model="capNaSel.root" :disabled="capWin">
+                  <option value="" disabled>choose</option>
+                  <template x-for="o in acidRoots" :key="o"><option :value="o" x-text="o"></option></template>
+                </select>
+              </label>
+              <label class="field"><span>suffix</span>
+                <select x-model="capNaSel.suffix" :disabled="capWin">
+                  <option value="" disabled>choose</option>
+                  <template x-for="o in acidSuffixes" :key="o"><option :value="o" x-text="o"></option></template>
+                </select>
+              </label>
+            </div>
+            <p class="small mt-2">Your name: <strong x-text="capPreview(capNaSel)"></strong></p>
+
+            <p class="small muted mt-4 mb-2">2. Classify it:</p>
+            <div class="choice-grid choice-grid-narrow">
+              <button class="choice" :data-state="capClassState('strong')" @click="capPickClass('strong')">strong</button>
+              <button class="choice" :data-state="capClassState('weak')" @click="capPickClass('weak')">weak</button>
+            </div>
+
+            <p class="small muted mt-4 mb-2">3. Predict the salt (criss-cross the charges):</p>
+            <div class="stepper-row">
+              <div class="stepper">
+                <span class="el mono" x-text="cap.base.cation"></span>
+                <button class="btn btn-sm" @click="capCatStep(-1)" :disabled="capWin" aria-label="decrease cation subscript">&minus;</button>
+                <span class="sub mono" x-text="capCat"></span>
+                <button class="btn btn-sm" @click="capCatStep(1)" :disabled="capWin" aria-label="increase cation subscript">+</button>
+              </div>
+              <div class="stepper">
+                <span class="el mono" x-text="cap.neut.anion"></span>
+                <button class="btn btn-sm" @click="capAnStep(-1)" :disabled="capWin" aria-label="decrease anion subscript">&minus;</button>
+                <span class="sub mono" x-text="capAn"></span>
+                <button class="btn btn-sm" @click="capAnStep(1)" :disabled="capWin" aria-label="increase anion subscript">+</button>
+              </div>
+              <span class="formula eqn" x-ce="capStudentSalt"></span>
+            </div>
+
+            <p class="small muted mt-4 mb-2">4. Neutralize to pH 7 with <span x-ce="cap.base.f"></span>:</p>
+            <div class="field field-narrow">
+              <label for="capBase">moles of base to add</label>
+              <input id="capBase" type="number" step="0.01" min="0" x-model="capBaseInput" :disabled="capWin">
+            </div>
+
+            <div class="row call-row mt-4">
+              <button class="btn btn-accent" @click="capCertify()" :disabled="capWin || !capReady">Hand it over</button>
+              <span class="call-hint" x-show="!capReady && !capWin" x-text="!capNaSel.suffix ? 'Name the acid first.' : (!capClass ? 'Now say whether it is strong or weak.' : 'Now type the moles of base to add.')"></span>
+            </div>
+
+            <template x-if="capVerdict">
+              <div class="verdict mt-3" :class="'verdict-' + capVerdict.tone">
+                <div class="status">
+                  <span class="status-icon" x-text="capVerdict.icon"></span>
+                  <span class="status-state" x-text="capVerdict.state"></span>
+                </div>
+                <span class="verdict-headline" x-prose="capVerdict.headline"></span>
+                <span class="verdict-detail" x-prose="capVerdict.detail"></span>
+              </div>
+            </template>
+          </div>
+          </template>
+        </div>
+
+      </section>
+
+      <!-- ============ RIGHT: the patient next door ============ -->
+      <aside class="life-support-board patient-board panel" aria-label="The patient next door">
+        <div class="life-header">
+          <div>
+            <span class="command-kicker">Next door</span>
+            <strong x-text="phState"></strong>
+          </div>
+          <span class="sol-chip" x-text="clockLabel"></span>
+        </div>
+
+        <!-- The headline figure, and it is deliberately NOT a .meter: a monotone bar says
+             "more is better", and this patient is aimed at a BAND in the middle of the
+             scale. So the reference window is drawn on the scale and the needle sits where
+             the patient is, which is the same figure the worksheet build used. -->
+        <div class="crew-status cockpit-crew">
+          <span class="crew-face" x-text="phMood"></span>
+          <div class="crew-bar">
+            <div class="life-meter-label">
+              <span title="arterial blood pH, against the 7.35 to 7.45 reference range">Arterial</span>
+              <span class="mono" x-text="'pH ' + phLabel"></span>
+            </div>
+            <div class="pt-scale" aria-hidden="true">
+              <div class="pt-window" :style="`left:${phBandLeftPct}%; width:${phBandWidthPct}%`"></div>
+              <div class="pt-needle" :style="`left:${phNeedlePct}%; background:${phTone}`"></div>
+            </div>
+            <div class="pt-ends" aria-hidden="true">
+              <span class="mono">6.80</span>
+              <span class="mono">7.60</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Four meters, because the audit fails a station with fewer (porting trap 13).
+             The patient is the crew row above, so these four are the night's WORK: the six
+             calls that reach them, the share of every call that was right, the sub-skills
+             certified, and the clock. Each can move while the others do not. -->
+        <div class="system-grid" aria-label="Night shift readings">
+          <template x-for="r in railReadings" :key="r.key">
+            <div class="ship-stock">
+              <div class="life-meter-label">
+                <span x-text="r.label" :title="r.hint"></span>
+                <span class="mono" x-text="r.raw"></span>
+              </div>
+              <div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${stockColor(r.pct)}`"></div></div>
+            </div>
+          </template>
+        </div>
+
+        <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest consequence">
+          <span class="command-kicker">Latest consequence</span>
+          <strong x-text="activeStateLabel"></strong>
+          <p x-text="worldLog.length ? worldLog[0].text : 'The clock starts at 23:00 and the patient is already outside the window.'"></p>
+        </section>
+
+        <section class="mission-log" aria-label="Night log">
+          <span class="command-kicker">Night log</span>
+          <p class="worldstate-empty" x-show="!worldLog.length">Nothing called yet.</p>
+          <ul class="worldstate-list" x-show="worldLog.length">
+            <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
+              <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
+                <span class="ws-icon" x-text="w.icon"></span>
+                <span x-text="w.text"></span>
+              </li>
+            </template>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <!-- Filled in by mountCaseFile() before Alpine.start(), so every binding inside the
+         injected story (including its animated stage SVG) initializes with the page. -->
+    <div data-casefile></div>
+  </main>
+</div>
+
+<script type="module">
+  window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
+  const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
+         { mountColumnResizers }] = await Promise.all([
+    import('./js/main.js?v=u9-1'),
+    import('../../shared/js/render.js'),
+    import('../../shared/js/gauge.js'),
+    import('../../shared/js/casefile.js'),
+    import('./js/case.js?v=u9-1'),
+    import('../shared/columns.js?v=cockpit-3')
+  ]);
+  window.sim = createSim;
+  const { default: Alpine } = await import('https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js');
+  registerRender(Alpine);
+  registerGauge(Alpine);
+  Alpine.data('sim', createSim);
+  mountCaseFile(Alpine, CASE);          // must precede start(): it injects markup + x-data
+  window.Alpine = Alpine;
+  if (window.__startAlpine) window.__startAlpine();
+  else Alpine.start();
+  // After start(), so the handles are appended to a workbench Alpine has already claimed.
+  // The two gutter buttons carry no bindings, so Alpine never walks them.
+  mountColumnResizers();
+</script>
+</body>
+</html>

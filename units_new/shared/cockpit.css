@@ -1,0 +1,2571 @@
+/* cockpit.css — the mission-cockpit shell shared by every unit in units_new/.
+ *
+ * Lifted verbatim from unit5a-codex/css/style.css, which is where the shell was
+ * prototyped. It is a shared file rather than a copy per unit because it is ~1200 lines
+ * of layout: two copies would drift, and only one of them would ever get the fix.
+ *
+ * What is in here:
+ *   1. Spacing/typography utilities the console markup uses (.mt-3, .small, ...).
+ *   2. The factor-label chain, tile tray, stepper and lab-mechanic styles. These are
+ *      Unit 5's tools. They are inert in a unit that has no .chain or .tile element, and
+ *      they stay here rather than moving to the Unit 5 stylesheet because several of
+ *      them are entangled with the console's own sizing rules further down; splitting
+ *      them apart would mean re-deriving the short-viewport ladder from scratch.
+ *   3. The cockpit proper: shell, command header, station strip, TEKS popover, the three
+ *      workbench columns, the mission screen, and the status rail. This is the part
+ *      every unit uses.
+ *
+ * A unit's own css/style.css loads AFTER this file and carries only what is specific to
+ * its benches. Nothing here is unit-aware; nothing here touches shared/css/*.
+ */
+
+.small { font-size: var(--fs-xs); }
+
+/* Spacing utilities. These replace 31 inline `style="margin-..."` attributes that used to
+   sit on the console's paragraphs and button rows. Inline styles won every specificity
+   contest, so no breakpoint could tighten them -- which is exactly what a short viewport
+   needs to do. */
+.mt-2 { margin-top: var(--s-2); }
+.mt-3 { margin-top: var(--s-3); }
+.mt-4 { margin-top: var(--s-4); }
+.mb-2 { margin-bottom: var(--s-2); }
+.mb-3 { margin-bottom: var(--s-3); }
+
+/* Mission illustration banner at the top of each brief card */
+.brief-art {
+  margin: calc(var(--s-4) * -1) calc(var(--s-4) * -1) var(--s-3);
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  overflow: hidden;
+  line-height: 0;
+}
+.brief-art svg { display: block; width: 100%; height: auto; }
+
+/* Factor-label chain (the conversion built term by term) */
+.chain {
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-3);
+  background: var(--surface-2); border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-4); min-height: 64px;
+}
+.chain-term, .chain-result {
+  font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-md);
+  white-space: nowrap;
+}
+.chain-result.good { color: var(--success); }
+.chain-eq { font-family: var(--font-mono); color: var(--muted); }
+.chain-op { display: inline-flex; align-items: center; gap: var(--s-2); }
+.chain-op .times { font-family: var(--font-mono); color: var(--muted); }
+
+/* A conversion factor rendered as a fraction (numerator over denominator) */
+.frac {
+  display: inline-flex; flex-direction: column; align-items: center;
+  font-family: var(--font-mono); font-size: var(--fs-sm); line-height: 1.25;
+  padding: 2px 6px; border-radius: var(--r-sm); border: 1px solid transparent;
+}
+.frac.bad { border-color: var(--danger); background: var(--danger-050); }
+.frac-n, .frac-d { white-space: nowrap; padding: 1px 2px; }
+.frac-bar { width: 100%; height: 1px; background: currentColor; opacity: .6; margin: 1px 0; }
+
+/* Tile tray (clickable conversion factors) */
+.tile-tray { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.tile {
+  display: inline-flex; flex-direction: column; align-items: center;
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-4); cursor: pointer;
+  font-family: var(--font-mono); font-size: var(--fs-sm); line-height: 1.25;
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.tile:hover { border-color: var(--accent-300); background: var(--accent-050); }
+.tile:active { transform: translateY(1px); }
+.tile:disabled { opacity: .5; cursor: not-allowed; }
+.tile .frac-bar { background: var(--ink-2); opacity: .5; }
+
+/* Subscript steppers (empirical / molecular / x) */
+.stepper-row { display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: center; }
+.stepper {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s-2) var(--s-3);
+}
+.stepper .el { font-weight: 700; font-size: var(--fs-md); min-width: 1.4em; text-align: center; }
+.stepper .sub { font-weight: 700; font-size: var(--fs-lg); min-width: 1.4em; text-align: center; color: var(--accent-700); }
+.stepper .btn-sm { min-width: 30px; }
+
+.formula { font-size: 1.25rem; }
+
+/* Flag the assayed element row in the percent-composition breakdown */
+tr.row-flag td { background: var(--accent-050); }
+
+.se-cap { font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }
+
+/* ============================ Unit 5A lab mechanics ============================ */
+/* Appended below the copied Unit 5 styles. Reuses shared tokens + semantic colors.
+   Copper stays Honors-only; reward state is never color-only (always paired with text). */
+
+/* Mechanic A: scaffold-fade rung indicator pill */
+.rung-indicator {
+  display: inline-block; margin-bottom: var(--s-3);
+  font-size: var(--fs-sm); font-weight: 700; letter-spacing: .01em;
+  color: var(--accent-700); background: var(--accent-050);
+  border: 1px solid var(--accent-100); border-radius: var(--r-pill);
+  padding: 3px var(--s-3);
+}
+
+/* Mechanic B: gut-check gate (order-of-magnitude estimate chips) */
+.gutcheck { margin-bottom: var(--s-3); }
+.est-chips { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.est-chip {
+  font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 700;
+  background: var(--surface); color: var(--ink-2);
+  border: 1px solid var(--border-strong); border-radius: var(--r-pill);
+  padding: var(--s-2) var(--s-4); cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.est-chip:hover { border-color: var(--accent-300); background: var(--accent-050); }
+.est-chip:active { transform: translateY(1px); }
+.est-chip:disabled { opacity: .5; cursor: not-allowed; }
+.est-chip.picked { background: var(--accent); color: var(--surface); border-color: var(--accent-700); }
+
+/* Mechanic A rung 2: build-the-factor (constructed numerator over denominator) */
+.build-row {
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-3);
+  background: var(--surface-2); border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md); padding: var(--s-4); min-height: 64px;
+}
+.build-factor { display: inline-flex; flex-direction: column; align-items: stretch; gap: 2px; min-width: 190px; }
+.build-factor .frac-bar { background: var(--ink-2); opacity: .5; height: 1px; margin: 2px 0; }
+.bf-line { display: flex; gap: var(--s-2); align-items: center; }
+.bf-val, .bf-unit {
+  font-family: var(--font-mono); font-size: var(--fs-sm);
+  padding: 4px var(--s-2); border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm); background: var(--surface);
+}
+/* The shared `input[type=text], select { width:100% }` rule (specificity 0,1,1) outranks a
+   bare `.bf-val`/`.bf-unit`, which let the value box swell to full width and starved the unit
+   dropdown down to a bare chevron (the chosen unit was clipped out of view). Scope these with
+   `.build-factor` to win specificity: keep the value box compact and make the dropdown wide
+   enough to SHOW the selected unit (g / mol / particles), not just the arrow. */
+.build-factor .bf-val  { flex: 0 0 7em; width: 7em; }
+.build-factor .bf-unit { flex: 1 1 auto; width: auto; min-width: 9.5em; }
+
+/* Mechanic A rung 3: type-the-answer */
+.solve-input {
+  font-family: var(--font-mono); font-size: var(--fs-md); width: 100%;
+  padding: var(--s-2) var(--s-3); border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm); background: var(--surface);
+}
+.ref-line { margin-top: var(--s-3); }
+
+/* Mechanic B: reconcile gate (warn-toned; blocks commit until gut and answer agree) */
+.reconcile {
+  display: flex; gap: var(--s-2); align-items: flex-start;
+  margin-top: var(--s-4); padding: var(--s-3) var(--s-4);
+  background: var(--warn-050); border: 1px solid var(--warn);
+  border-left-width: 4px; border-radius: var(--r-md);
+  color: var(--ink); font-weight: 600; font-size: var(--fs-sm);
+}
+.reconcile-icon { font-size: var(--fs-lg); line-height: 1; }
+
+/* Mechanic C: self-explanation on a miss */
+.miss-panel {
+  margin-top: var(--s-4); padding: var(--s-4);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.miss-q { font-weight: 700; font-size: var(--fs-sm); margin-bottom: var(--s-3); }
+.miss-opts { display: flex; flex-direction: column; gap: var(--s-2); }
+.miss-opt {
+  text-align: left; font-size: var(--fs-sm);
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-md);
+  padding: var(--s-2) var(--s-3); cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.miss-opt:hover { border-color: var(--accent-300); background: var(--accent-050); }
+.miss-opt:disabled { cursor: default; }
+.miss-opt[data-state="correct"] { border-color: var(--success); background: var(--success-050); font-weight: 700; }
+.miss-opt[data-state="wrong"] { border-color: var(--danger); background: var(--danger-050); }
+.miss-fix {
+  margin-top: var(--s-3); padding: var(--s-3); font-size: var(--fs-sm);
+  background: var(--success-050); border-left: 4px solid var(--success); border-radius: var(--r-sm);
+}
+
+/* ===================== Tier 2: ARI coach line + audit station ===================== */
+/* ARI's coach line inside a solve verdict (the recurrence nudge before the audit arms) */
+.coach {
+  display: block; margin-top: var(--s-3); padding: var(--s-2) var(--s-3);
+  font-size: var(--fs-sm); font-weight: 600; line-height: 1.4;
+  background: var(--surface-2); border-left: 3px solid var(--accent); border-radius: var(--r-sm);
+}
+.coach-who, .audit-who { font-family: var(--font-mono); font-weight: 700; color: var(--accent-700); white-space: nowrap; }
+.coach-who { margin-right: var(--s-1); }
+
+/* Audit station: ARI's finished solution for the learner to check */
+.audit-intro {
+  display: flex; align-items: baseline; gap: var(--s-2); flex-wrap: wrap;
+  margin-bottom: var(--s-4); padding: var(--s-3) var(--s-4);
+  background: var(--accent-050); border: 1px solid var(--accent-100); border-radius: var(--r-md);
+}
+.audit-frame { font-size: var(--fs-sm); margin: 0; flex: 1; min-width: 200px; }
+.audit-solution {
+  margin-top: var(--s-3); padding: var(--s-4);
+  background: var(--surface-2); border: 1px dashed var(--border-strong); border-radius: var(--r-md);
+}
+.audit-claim { font-style: italic; font-size: var(--fs-sm); color: var(--ink-2); margin: 0 0 var(--s-2); }
+.audit-working { font-family: var(--font-mono); font-size: var(--fs-sm); line-height: 1.45; margin: 0 0 var(--s-2); }
+.audit-result { font-size: var(--fs-md); margin: 0; }
+.audit-choices { margin-top: var(--s-2); }
+
+
+/* ===================== PART B: the Instincts calibration card ===================== */
+/* A small readout inside the Crew & ship panel that turns the gut-check the learner
+   already commits into visible metacognitive calibration. Formative only; gates nothing. */
+.instincts {
+  margin-bottom: var(--s-4); padding: var(--s-3) var(--s-4);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.instincts p { margin: 0 0 var(--s-1); }
+.instincts p:last-child { margin-bottom: 0; }
+.instinct-nudge { font-weight: 600; color: var(--accent-700); margin-top: var(--s-2); }
+
+/* Mechanic D's base .zoom-* rules are NOT here. They live in shared/css/components.css
+   beside shared/js/molezoom.js, which now draws this tab. The copy that used to sit here
+   was byte-identical apart from one thing it was missing -- the `.zoom-count sup` rule the
+   readout needs, because the shared component prints 10^23 as a raised <sup> run of
+   ordinary digits (this mono face has no ⁰ or ⁴-⁹ glyphs). The cockpit's own overrides for
+   this tab stay, further down under `.chem-console .zoom-*`. */
+
+/* ============================ Codex Mission Workbench ============================ */
+/* Local prototype shell. Keeps the chemistry task in the first viewport and moves
+   progress, crew state, and standards into a quieter learning rail. */
+
+.codex-shell {
+  padding-top: clamp(1rem, 1.5vw, 1.6rem);
+  padding-bottom: var(--s-8);
+}
+
+.codex-shell h1 {
+  margin-bottom: var(--s-3);
+  max-width: 760px;
+}
+
+.codex-shell .mission {
+  display: grid;
+  grid-template-columns: minmax(210px, 260px) minmax(0, 1fr);
+  align-items: center;
+  margin-bottom: var(--s-3);
+  padding: var(--s-2) var(--s-3);
+  gap: var(--s-2) var(--s-3);
+}
+
+.codex-shell .mission-goal {
+  max-width: none;
+  line-height: 1.34;
+}
+
+.task-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+}
+.task-stack > .panel {
+  padding: var(--s-3);
+}
+
+.task-stack .panel > .brief:first-child,
+.task-stack .panel > template:first-child + .brief,
+.task-stack .brief {
+  margin-bottom: var(--s-4);
+}
+
+.brief {
+  display: grid;
+  grid-template-columns: minmax(150px, 190px) minmax(0, 1fr);
+  gap: var(--s-2) var(--s-3);
+  align-items: center;
+  padding: var(--s-3);
+  border-left-width: 3px;
+}
+
+.brief-art {
+  grid-row: 1 / span 3;
+  margin: 0;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--ink) 78%, var(--accent-700));
+}
+
+.brief-art svg {
+  width: 100%;
+  height: auto;
+  max-height: 104px;
+}
+
+.brief-role,
+.brief-goal,
+.brief-why {
+  min-width: 0;
+}
+
+.brief-role {
+  margin-bottom: 0;
+}
+
+.brief-goal {
+  font-size: var(--fs-sm);
+  line-height: 1.42;
+}
+
+.brief-why {
+  margin-top: 0;
+  line-height: 1.42;
+}
+
+.chain,
+.build-row {
+  padding: var(--s-2) var(--s-3);
+  min-height: 50px;
+}
+
+.tile-tray {
+  gap: var(--s-2);
+}
+
+.tile {
+  padding: var(--s-2) var(--s-3);
+}
+
+/* ============================ Codex Cockpit V2 ============================ */
+/* Full-screen mission cockpit for the local prototype. This section intentionally
+   overrides the copied worksheet shell without touching shared styles. */
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background:
+    radial-gradient(circle at 24% 12%, color-mix(in srgb, var(--accent-050) 74%, transparent), transparent 28rem),
+    linear-gradient(135deg, #0b1f27 0%, #12313a 36%, #edf6f8 36.2%, #e8f1f3 100%);
+}
+
+body > [x-data] {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.cockpit-shell {
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  min-height: 0;
+  padding: clamp(8px, 1.15vw, 14px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(8px, 1vw, 12px);
+  overflow: hidden;
+}
+
+.cockpit-command {
+  min-height: 62px;
+  display: grid;
+  /* The metrics track used to reserve 400-420px for two chips plus four TEKS codes. With
+     the standards collapsed to one badge it needs half that, and the station tabs get the
+     difference instead of ellipsing to "M...". */
+  grid-template-columns: minmax(180px, 240px) minmax(340px, 1fr) minmax(126px, auto) minmax(190px, 240px);
+  align-items: center;
+  gap: clamp(7px, .85vw, 12px);
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent-700) 32%, var(--border));
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, #f7fcfd 92%, var(--accent-050));
+  box-shadow: 0 12px 30px rgb(7 30 38 / 16%);
+  /* No overflow:hidden here. The header is only ~70px tall, so it clipped the whole TEKS
+     popover out of existence -- the panel opened, measured 340x323, and was invisible.
+     Spill is prevented by min-width:0 on the tracks instead, and the layout test asserts
+     that nothing overflows its box. */
+}
+
+.command-brand {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+}
+
+/* One source of truth for the title line, whether it is inert text or the link home.
+   .command-home REPLACES the <strong> rather than sitting beside it: the header is
+   height-critical (min-height 104px and two rows below 980px), so a fourth row in this
+   grid is not available, and the title is the affordance the old shell used too. */
+.command-brand strong,
+.command-brand .command-home {
+  color: #102833;
+  font-size: clamp(1rem, 1.45vw, 1.35rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+/* base.css already gives every <a> no underline, an accent colour and the global
+   :focus-visible ring; this only restores the title's weight and ink, and hands the accent
+   back on hover so the line reads as clickable without a persistent glyph widening it.
+   No overflow or white-space rules here on purpose: the <strong> this replaces wrapped
+   freely, and the title is the one line in this header that is allowed to take two, so
+   overflow:hidden would clip that second line silently instead. */
+.command-brand .command-home {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.command-brand .command-home:hover,
+.command-brand .command-home:focus-visible {
+  color: var(--accent-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.command-brand span:last-child {
+  min-width: 0;
+  color: var(--muted);
+  font-size: var(--fs-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.command-kicker {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: .67rem;
+  line-height: 1;
+  letter-spacing: .14em;
+  color: var(--accent-700);
+  text-transform: uppercase;
+}
+
+/* Content-sized tracks, not six equal columns. Equal columns sized every tab to the
+   narrowest ("Pod") and ellipsed the longest, so at some widths both Mystery and Mole
+   rendered as "M..." -- indistinguishable. */
+.station-nav {
+  min-width: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, auto);
+  justify-content: start;
+  gap: 5px;
+  overflow: hidden;
+}
+
+.station-nav .tab {
+  min-width: 0;
+  height: 42px;
+  margin: 0;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--border-strong) 70%, transparent);
+  border-radius: var(--r-sm);
+  background: #f8fbfc;
+  color: #19333d;
+  font-size: clamp(.82rem, .9vw, .9rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.station-nav .tab:hover {
+  border-color: var(--accent-300);
+  background: var(--accent-050);
+}
+
+.station-nav .tab[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent-700);
+  color: var(--surface);
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, #ffffff 34%, transparent);
+}
+
+.command-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.command-actions .switch {
+  min-width: 0;
+  gap: 6px;
+}
+
+.command-actions .label-text {
+  font-size: var(--fs-xs);
+  font-weight: 800;
+}
+
+.command-reset {
+  min-height: 34px;
+  padding-inline: 10px;
+}
+
+.command-metrics {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, auto));
+  justify-content: end;
+  align-items: center;
+  gap: 5px;
+}
+
+.metric-chip,
+.teks-badge,
+.sol-chip {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: #213d46;
+  font-family: var(--font-mono);
+  font-size: .69rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.metric-chip {
+  min-width: 56px;
+}
+
+.metric-chip strong,
+.sol-chip strong {
+  color: var(--accent-700);
+}
+
+/* One badge in place of four code chips. The standards themselves -- including the
+   wording, which used to render only inside a display:none panel -- live in a popover. */
+.teks-wrap {
+  position: relative;
+  min-width: 0;
+  display: inline-flex;
+  justify-content: end;
+}
+
+.teks-badge {
+  cursor: pointer;
+  gap: 5px;
+}
+
+.teks-badge strong {
+  color: var(--accent-700);
+}
+
+.teks-badge.complete strong {
+  color: var(--success);
+}
+
+.teks-popover {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  right: 0;
+  width: min(340px, 78vw);
+  display: grid;
+  gap: 7px;
+  padding: 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+  text-align: left;
+  white-space: normal;
+}
+
+.teks-row {
+  display: grid;
+  gap: 3px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.teks-row:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.teks-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.teks-row-code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 800;
+  color: #24424b;
+}
+
+.teks-row.active .teks-row-code {
+  color: var(--accent-700);
+}
+
+.teks-row.mastered .teks-row-code {
+  color: var(--success);
+}
+
+.teks-row-cap {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+.teks-row-text {
+  font-size: var(--fs-sm);
+  line-height: 1.34;
+  color: var(--ink-2);
+}
+
+.teks-row-meter {
+  height: 4px;
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--border) 64%, white);
+}
+
+.teks-row-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.teks-row.mastered .teks-row-fill {
+  background: var(--success);
+}
+
+/* Three columns the learner can re-proportion, with the gap itself as the drag handle.
+ *
+ * The tracks used to be three `fr` values, which meant the split was whatever the shell
+ * decided: the status rail took 404px at 1536 and the bench -- the column that actually
+ * holds the work -- got 661. So the side columns are now DEFAULTS rather than verdicts.
+ * They are authored in vw so they still scale with the viewport (no media query re-states
+ * them), and shared/columns.js overwrites the two custom properties in px when the handle
+ * between two columns is dragged. clamp() keeps a drag, or a very small viewport, from
+ * starving a column: nothing goes below its px floor or past its vw ceiling.
+ *
+ * `gap` is 0 on purpose. The old 12px gap is now two 12px GUTTER TRACKS, so the grabbable
+ * strip lives exactly where the breathing room already was -- the layout gives up no width
+ * to gain a control. */
+.workbench-grid {
+  --wb-gutter: clamp(8px, 1vw, 12px);
+  /* 31vw, not 28: the scene banner is a 400-unit viewBox rendered at the width of this
+     column, so the column's width IS the art's scale -- and the labels on the drawing are
+     the part of it that carries the chemistry. At 31vw the banner is ~460px on a 15in
+     laptop and its 9.2-unit floor lands near 11px. The bench still nets ~55px more than the
+     fr layout gave it, because the whole 112px the status rail gave up did not have to go
+     to one column. */
+  --wb-left: 31vw;
+  --wb-right: 19vw;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-columns:
+    clamp(230px, var(--wb-left), 42vw)
+    var(--wb-gutter)
+    minmax(320px, 1fr)
+    var(--wb-gutter)
+    clamp(232px, var(--wb-right), 34vw);
+  grid-template-areas: "screen g1 console g2 life";
+  gap: 0;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+/* The handle is the whole gutter, so the hit area is the full 12px and the full column
+   height; what is PAINTED is a 2px rule that only appears under the pointer. At rest the
+   gutter reads as the gap it replaced. */
+.wb-handle {
+  align-self: stretch;
+  justify-self: stretch;
+  position: relative;
+  z-index: 3;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.wb-handle[data-wb-handle="left"]  { grid-area: g1; }
+.wb-handle[data-wb-handle="right"] { grid-area: g2; }
+
+/* Two marks, because "sleek" and "discoverable" pull in opposite directions and both matter.
+ *
+ * ::before is the full-height rule, invisible at rest: at 12px wide and 590px tall, showing
+ * it always would draw two hard lines down a screen that is already three bordered panels.
+ *
+ * ::after is a three-dot grip at the vertical centre, and it is ALWAYS visible -- faintly.
+ * A control nobody can see is a control nobody uses, and the affordance here is not one a
+ * learner would guess: nothing else in the shell is draggable. The grip is the standing
+ * signifier and the rule is the hover confirmation, which is the same division of labour a
+ * window splitter uses. Both live in the gap, so neither costs the layout a pixel. */
+.wb-handle::before {
+  content: '';
+  position: absolute;
+  inset: 6% 50%;
+  width: 2px;
+  translate: -1px 0;
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--accent-700) 42%, transparent);
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+
+.wb-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 22px;
+  translate: -50% -50%;
+  background:
+    radial-gradient(circle at 50% 50%, currentColor 0 1.6px, transparent 1.7px) 50% 0 / 4px 8px repeat-y;
+  color: color-mix(in srgb, var(--accent-700) 46%, transparent);
+  opacity: .5;
+  transition: opacity var(--t-fast), color var(--t-fast);
+}
+
+.wb-handle:hover::before,
+.wb-handle:focus-visible::before,
+.wb-handle[data-dragging]::before { opacity: 1; }
+
+.wb-handle:hover::after,
+.wb-handle:focus-visible::after,
+.wb-handle[data-dragging]::after { opacity: 1; color: var(--accent-700); }
+
+.wb-handle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-radius: var(--r-sm);
+}
+
+/* While a drag is live the pointer owns the page: no text selection, and no hover states
+   flickering on whatever the cursor crosses. */
+.workbench-grid[data-resizing] { cursor: col-resize; user-select: none; }
+.workbench-grid[data-resizing] > :not(.wb-handle) { pointer-events: none; }
+
+.mission-screen,
+.chem-console,
+.life-support-board {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Named areas rather than positional tracks: the column carries five blocks now, and
+   document order should not decide which one gets the flexible row. The scenario copy
+   takes the slack, so reclaimed space becomes readable narrative instead of a void. */
+.mission-screen {
+  grid-area: screen;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: auto auto auto auto minmax(0, 1fr);
+  grid-template-areas: "art" "status" "copy" "reference" "instincts";
+  align-content: start;
+  gap: 9px;
+  background: linear-gradient(180deg, #09212b, #112f39);
+  border-color: color-mix(in srgb, var(--accent-700) 58%, #ffffff);
+  color: #eaf8fb;
+}
+
+.mission-screen > .mission-frame { grid-area: art; }
+.mission-screen > .screen-status { grid-area: status; }
+.mission-screen > .screen-copy { grid-area: copy; }
+.mission-screen > .screen-reference { grid-area: reference; }
+.mission-screen > .instincts { grid-area: instincts; align-self: start; }
+
+/* Every scene in art.js is authored at viewBox="0 0 400 150". Matching that here stops
+   the frame stretching to the column height and letterboxing the drawing -- it was
+   holding a 144px picture in a 483px box. */
+.mission-frame {
+  position: relative;
+  aspect-ratio: 8 / 3;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  border: 1px solid rgb(149 219 230 / 45%);
+  background: radial-gradient(circle at 50% 45%, rgb(67 160 173 / 34%), rgb(5 20 27 / 88%) 72%);
+}
+
+.mission-screen-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 6px;
+}
+
+.mission-screen-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  filter: saturate(1.08) contrast(1.05);
+}
+
+.screen-scanline {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(to bottom, rgb(255 255 255 / 5%) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, transparent, rgb(9 33 43 / 44%));
+  pointer-events: none;
+}
+
+.screen-status {
+  display: grid;
+  gap: 2px;
+  padding: 6px 9px;
+  border-left: 3px solid var(--accent-300);
+  border-radius: var(--r-sm);
+  background: rgb(4 17 23 / 72%);
+}
+
+.screen-system,
+.screen-state {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.screen-system {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: .08em;
+  color: #bfe9ef;
+  text-transform: uppercase;
+}
+
+/* Sized as a status line, not a headline. At 2.1vw it took 26px and two lines of the
+   column that also has to hold the art and the scenario; the words it carries ("Repairs
+   holding") are a state, and a state is read in a glance rather than declaimed. */
+.screen-state {
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+/* The scenario is instructional framing, not flavour text: it takes the flexible row
+   and is sized to be read from a few feet away rather than squinted at. */
+.screen-copy {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.screen-goal,
+.screen-outcome {
+  margin: 0;
+  display: block;
+  min-width: 0;
+}
+
+/* The prompt is the longest continuous prose in the shell, and it lives in the narrowest
+   column. 17.7px at weight 800 spent its width on letterforms and then needed a scrollbar
+   to finish the sentence; 15.7px at 700 fits the same words in fewer lines and still reads
+   as the instruction. The 14px floor in tests/unit5a-layout.test.mjs is the bottom of this
+   range and neither of these goes near it. */
+.screen-goal {
+  color: #e7f6f8;
+  font-weight: 700;
+  font-size: clamp(.97rem, 1.02vw, 1.06rem);
+  line-height: 1.34;
+}
+
+.screen-outcome {
+  color: #cbe4ea;
+  font-size: clamp(.9rem, .96vw, .98rem);
+  line-height: 1.42;
+}
+
+/* Standing reference card. These constants used to live in one 12.5px line inside the
+   console, and only on the harder rungs; a learner should never have to hunt for them.
+ *
+ * It is a <details> so the learner can hand its rows back to the art and the prompt, which
+ * are the two blocks in this column that a fixed height actually hurts. It ships OPEN: the
+ * facts are meant to be standing, and a collapsed default would make them something to
+ * discover.
+ *
+ * The height media queries further down still drop this card outright on a short viewport.
+ * That is not redundant with the toggle: one is the shell deciding there is no room, the
+ * other is the learner deciding they would rather have the room elsewhere. */
+.screen-reference {
+  display: block;
+  padding: 7px 9px;
+  border: 1px solid rgb(149 219 230 / 30%);
+  border-radius: var(--r-sm);
+  background: rgb(6 26 34 / 62%);
+}
+
+/* The rows live in their own box, and that box is what makes the fold real.
+ *
+ * A closed <details> gets `content-visibility: hidden` on its ::details-content in Chromium,
+ * which stops the subtree PAINTING but leaves every descendant a laid-out box. Closed, this
+ * card measured 23px while each .ref-item still reported 553x21 fifteen pixels past the
+ * card's own bottom edge, over the readout below. Nothing was visible -- the rows are not
+ * hit-testable and a screenshot is clean -- but the geometry is real, and
+ * tests/unit5a-layout.test.mjs was right to report the neighbours as painting over content.
+ *
+ * Unit 3 found this first and wrote the fix for its own `.lesson-reference`; the rule below is
+ * that fix, for the card the eleven units share. It needs the body element to hang off: you
+ * cannot say `display: none` to a light-tree child of a closed <details> without also hiding
+ * the summary. */
+.screen-reference-body {
+  display: grid;
+  gap: 4px;
+}
+
+details.screen-reference:not([open]) > .screen-reference-body {
+  display: none;
+}
+
+.screen-reference .command-kicker {
+  color: #9fd4dd;
+}
+
+/* The summary IS the kicker row: it carries .command-kicker in the markup for its type and
+   colour, and gets only the layout and the chevron here. */
+details.screen-reference > summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  cursor: pointer;
+}
+
+details.screen-reference > summary::-webkit-details-marker { display: none; }
+
+details.screen-reference > summary::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  margin-left: auto;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  rotate: 45deg;
+  translate: 0 -2px;
+  transition: rotate var(--t-fast), translate var(--t-fast);
+}
+
+details.screen-reference[open] > summary::after { rotate: 225deg; translate: 0 1px; }
+details.screen-reference > summary:hover { color: #eaf8fb; }
+
+/* Closed, the card is one 11px eyebrow: no padding rows, nothing but the handle. */
+details.screen-reference:not([open]) {
+  padding: 5px 9px;
+}
+
+details.screen-reference[open] > summary { margin-bottom: 2px; }
+
+.ref-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 3px 8px;
+  margin: 0;
+  min-width: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.3;
+}
+
+.ref-k {
+  color: #9fd4dd;
+  font-weight: 700;
+}
+
+.ref-v {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  min-width: 0;
+  color: #eaf8fb;
+  font-family: var(--font-mono);
+}
+
+.tone-safe .mission-frame,
+.latest-consequence.tone-safe {
+  border-color: color-mix(in srgb, var(--success) 70%, white);
+  box-shadow: 0 0 0 1px rgb(56 154 103 / 24%), inset 0 0 46px rgb(56 154 103 / 18%);
+}
+
+.tone-warn .mission-frame,
+.latest-consequence.tone-warn,
+.tone-stalled .mission-frame,
+.latest-consequence.tone-stalled {
+  border-color: color-mix(in srgb, var(--warn) 76%, white);
+  box-shadow: 0 0 0 1px rgb(207 139 37 / 26%), inset 0 0 48px rgb(207 139 37 / 20%);
+}
+
+.tone-danger .mission-frame,
+.latest-consequence.tone-danger {
+  border-color: color-mix(in srgb, var(--danger) 70%, white);
+  box-shadow: 0 0 0 1px rgb(197 59 59 / 28%), inset 0 0 52px rgb(197 59 59 / 18%);
+}
+
+.chem-console {
+  grid-area: console;
+  display: grid;
+}
+
+.chem-console > .panel {
+  grid-area: 1 / 1;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(11px, 1.25vw, 16px);
+  border-color: color-mix(in srgb, var(--accent-300) 28%, var(--border));
+  border-radius: var(--r-md);
+  box-shadow: 0 12px 28px rgb(6 28 36 / 13%);
+  z-index: 0;
+}
+
+/* Top-aligned on purpose: all three columns start on the same line, and the room below
+   the task is where feedback lands -- committing an answer surfaces the miss panel and
+   the table breakdown into exactly that space. */
+.chem-console > .panel.is-active {
+  display: grid !important;
+  grid-template-rows: minmax(0, auto);
+  align-content: start;
+  z-index: 2;
+}
+
+.chem-console .brief {
+  display: none !important;
+}
+
+.chem-console p {
+  line-height: 1.34;
+}
+
+.chem-console .muted {
+  margin-block: 0 7px !important;
+}
+
+/* Every step instruction in the workbench carries class="small muted": 12.5px of grey.
+   That is the text telling a learner what to do, so it is sized and inked as such. */
+.chem-console .small {
+  font-size: var(--fs-sm);
+  line-height: 1.32;
+}
+
+.chem-console .muted,
+.chem-console .small.muted {
+  color: var(--ink-2);
+}
+
+/* Data labels and table headers read as content here, not as captions. */
+.chem-console .stat .k,
+.chem-console table.data th {
+  font-size: var(--fs-sm);
+}
+
+.chem-console .btn-sm {
+  font-size: var(--fs-sm);
+}
+
+.chem-console .solve-region,
+.chem-console .audit {
+  height: auto;
+  max-height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chem-console .rung-indicator {
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  font-size: var(--fs-sm);
+}
+
+.chem-console .chain,
+.chem-console .build-row {
+  min-height: 44px;
+  gap: 8px;
+  padding: 8px 10px;
+  flex-wrap: wrap;
+}
+
+.chem-console .chain-term,
+.chem-console .chain-result {
+  font-size: clamp(.94rem, 1.2vw, 1.15rem);
+}
+
+.chem-console .tile-tray {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 7px;
+}
+
+/* A factor like "6.022 x 10^23 units" is wider than its grid column, and .frac-n/.frac-d
+   default to nowrap -- so the tile pushed past the tray instead of wrapping. */
+.chem-console .tile .frac-n,
+.chem-console .tile .frac-d {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.chem-console .tile {
+  min-height: 46px;
+  justify-content: center;
+  padding: 6px 8px;
+  border-radius: var(--r-sm);
+}
+
+.chem-console .row {
+  gap: 8px;
+}
+
+.chem-console .btn {
+  min-height: 38px;
+  padding: 7px 12px;
+}
+
+.chem-console .verdict {
+  display: none !important;
+  margin-top: 8px;
+  padding: 8px 10px;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.chem-console .verdict-detail,
+.chem-console .verdict-headline,
+.chem-console .coach {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.chem-console .miss-panel,
+.chem-console .reconcile,
+.chem-console .audit-solution,
+.chem-console .choice-grid,
+.chem-console .zoom-stage {
+  margin-top: 8px !important;
+}
+
+.chem-console .miss-opts,
+.chem-console .choice-grid {
+  gap: 6px;
+}
+
+.chem-console .miss-opt,
+.chem-console .choice {
+  padding: 7px 9px;
+  line-height: 1.22;
+}
+
+.chem-console .solve-region.has-miss .ref-line {
+  display: none;
+}
+
+.chem-console .solve-region.has-miss .gutcheck {
+  margin-bottom: 5px;
+}
+
+.chem-console .solve-region.has-miss .gutcheck > p {
+  display: none;
+}
+
+.chem-console .solve-region.has-miss .est-chips {
+  gap: 5px;
+}
+
+.chem-console .solve-region.has-miss .est-chip {
+  min-height: 30px;
+  padding: 4px 11px;
+}
+
+.chem-console .miss-panel {
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+}
+
+.chem-console .miss-q {
+  margin-bottom: 6px;
+  font-size: .84rem;
+  line-height: 1.2;
+}
+
+.chem-console .miss-opts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.chem-console .miss-opt {
+  min-height: 32px;
+  font-size: .82rem;
+  line-height: 1.15;
+}
+
+.chem-console .miss-fix {
+  margin-top: 6px;
+  padding: 7px 8px;
+  font-size: .8rem;
+  line-height: 1.2;
+}
+
+.chem-console .field {
+  margin-bottom: 7px;
+}
+
+.chem-console .mystery-job-switcher {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.chem-console .job-pill {
+  min-width: 0;
+  min-height: 32px;
+  padding: 5px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: #19333d;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.chem-console .job-pill[aria-pressed="true"] {
+  color: #fff;
+  border-color: var(--honors-700);
+  background: var(--honors);
+}
+
+.chem-console .honors-lockline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 6px 9px;
+  border: 1px solid color-mix(in srgb, var(--honors) 34%, var(--border));
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--honors) 10%, var(--surface));
+  color: #5c3b17;
+  font-size: var(--fs-sm);
+  line-height: 1.28;
+  overflow: hidden;
+}
+
+.chem-console .honors-lockline .honors-tag {
+  flex: 0 0 auto;
+}
+
+.chem-console .formula-core {
+  min-height: 0;
+}
+
+.chem-console .honors-block {
+  margin-top: 4px;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+}
+
+.chem-console .honors-tag {
+  font-size: var(--fs-sm);
+  letter-spacing: .08em;
+}
+
+.chem-console .honors-block .note-info {
+  margin-top: 4px !important;
+  padding: 4px 7px;
+  min-height: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.14;
+}
+
+/* Shrink-wrapped around the dot field, not stretched across the console. The stage draws a
+   320x200 viewBox and this console has a height budget, so capping the height while the
+   panel kept its full width letterboxed the field: a ~313px drawing centred in a ~600px
+   box of empty stage. Drive the size from HEIGHT (the scarce axis) and let the 8:5 aspect
+   set the width, then shrink-wrap the stage to it, and the panel's border sits around the
+   drawing again -- an instrument window rather than a wide grey band. */
+.chem-console .zoom-stage {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 0;
+  margin-inline: auto;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.chem-console .zoom-svg {
+  width: auto;
+  height: 196px;
+  max-width: 100%;
+}
+
+.chem-console .zoom-readout {
+  margin-top: 8px;
+}
+
+.chem-console .zoom-count {
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+}
+
+/* Named areas instead of six positional tracks: the old template mapped row sizes to
+   document order, so moving or removing a child silently reshuffled which panel got the
+   floor and which got the stretch. min-content on the meters means they can never be
+   compressed below their own height again. */
+.life-support-board {
+  grid-area: life;
+  padding: clamp(10px, 1.2vw, 14px);
+  display: grid;
+  grid-template-rows: auto auto min-content min-content minmax(92px, 1fr);
+  grid-template-areas: "header" "crew" "systems" "consequence" "log";
+  gap: 9px;
+  border-color: color-mix(in srgb, var(--accent-700) 30%, var(--border));
+  background: color-mix(in srgb, #f7fbfc 92%, var(--accent-050));
+  box-shadow: 0 12px 28px rgb(6 28 36 / 12%);
+}
+
+.life-support-board > .life-header { grid-area: header; }
+.life-support-board > .crew-status { grid-area: crew; }
+.life-support-board > .system-grid { grid-area: systems; }
+.life-support-board > .latest-consequence { grid-area: consequence; }
+.life-support-board > .mission-log { grid-area: log; }
+
+.life-header,
+.life-meter-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Sized against the RAIL, not the viewport. 1.45vw made this title grow as the window grew
+   -- which was fine while the rail was an fr track that grew with it, and is wrong now that
+   the rail holds a set width: at 1366 the type reached 19.8px in a 260px column and
+   "Repairs holding" took three lines, which is where the log at the bottom of the rail was
+   being pushed out of the panel. */
+.life-header strong {
+  display: block;
+  margin-top: 3px;
+  font-size: clamp(.98rem, 1.12vw, 1.12rem);
+  line-height: 1.16;
+  color: #102833;
+}
+
+.cockpit-crew {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.cockpit-crew .crew-face {
+  font-size: clamp(1.7rem, 2.5vw, 2.25rem);
+  line-height: 1;
+}
+
+/* Wraps rather than spilling: at a narrow track "Power" + "100%" does not fit on one
+   line, and with space-between the value slid outside the card's border. */
+.life-meter-label {
+  flex-wrap: wrap;
+  row-gap: 0;
+  margin-bottom: 4px;
+  color: #1a3640;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.life-support-board .meter {
+  height: 8px;
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--border) 64%, white);
+}
+
+/* No min-height:0 here. That unclamped the automatic minimum of this track, letting the
+   grid squeeze 117px of meters into 63px (30px at 1280x600) with overflow visible -- the
+   Food and Hull rows then painted underneath the opaque consequence panel, invisible. */
+.system-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.system-grid .ship-stock {
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+.latest-consequence,
+.mission-log {
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+/* Instincts moved into the mission column, so it is styled for the dark panel and
+   overrides the light-rail rules further up the file. */
+.mission-screen > .cockpit-instincts {
+  min-width: 0;
+  margin: 0;
+  padding: 7px 9px;
+  border: 1px solid rgb(149 219 230 / 30%);
+  border-radius: var(--r-sm);
+  background: rgb(6 26 34 / 62%);
+}
+
+.mission-screen > .cockpit-instincts .command-kicker {
+  color: #9fd4dd;
+}
+
+.mission-screen > .cockpit-instincts p {
+  margin: 3px 0 0;
+  color: #cbe4ea;
+  font-size: var(--fs-sm);
+  line-height: 1.3;
+}
+
+.mission-screen > .cockpit-instincts strong {
+  color: #eaf8fb;
+}
+
+.latest-consequence strong {
+  display: block;
+  margin-top: 4px;
+  color: #102833;
+  font-size: clamp(.94rem, 1.25vw, 1.12rem);
+  line-height: 1.15;
+}
+
+/* No line-clamp: the consequence is how a learner finds out that a wrong mole count hurt
+   the crew, so it is never worth truncating. The rail now has the height to show it. */
+.latest-consequence p,
+.mission-log p {
+  margin: 5px 0 0;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  line-height: 1.34;
+}
+
+.mission-log {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mission-log .worldstate-list {
+  min-height: 0;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 5px;
+  overflow: hidden;
+}
+
+.mission-log .worldstate-entry {
+  min-height: 0;
+  padding: 6px 7px;
+  border-radius: var(--r-sm);
+  font-size: var(--fs-sm);
+  line-height: 1.3;
+}
+
+.mission-log .ws-icon {
+  line-height: 1;
+}
+
+/* ---- room for a seventh station ----------------------------------------------------- */
+/* The strip was tuned for six tabs; the Case station adds 53px to it. Between roughly
+   1120px and 1240px the header's four tracks leave the nav under 30px of slack, so the
+   two longest labels ("Counts", "Mystery") started ellipsing to "Count..."/"Myster..." --
+   the exact failure the tabs were made content-sized to avoid. Spacing yields before type
+   does, so the tabs give up 2px of side padding and the strip 1px of gap: 34px back at
+   full label legibility, which covers the new tab with room to spare. Measured, not
+   guessed -- the strip needs 373px after the trim and never gets less than 384px. */
+@media (max-width: 1240px) {
+  .station-nav {
+    gap: 4px;
+  }
+
+  .station-nav .tab {
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 1120px) {
+  .cockpit-command {
+    /* Brand track trimmed 190px -> 172px: the widest station name any scenario can put in
+       it is "Course-correction burn" at 164px, so this is still ellipsis-free, and the
+       18px goes to the nav where it is the difference between seven labels and six. */
+    grid-template-columns: minmax(150px, 172px) minmax(300px, 1fr) minmax(112px, auto) minmax(150px, 200px);
+  }
+
+  /* The tracks themselves are vw-proportional, so they need no restating here. What does
+     change under 1120px is the share: the bench is the column that runs out of room first,
+     so both side columns give up two points of viewport width to it. */
+  .workbench-grid {
+    --wb-left: 26vw;
+    --wb-right: 18vw;
+  }
+}
+
+/* Below three workable columns the rail tucks under the mission column and the console
+   takes the full height on the right. The art can no longer be crushed (it holds its 8:3
+   aspect), and nothing is dropped from the four groups -- the old rule hid the mission
+   log outright. The reference card and instincts do stand down: they exist to spend
+   reclaimed space, and at this size there is none to spend. */
+@media (max-width: 980px) {
+  .cockpit-command {
+    grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+    grid-template-areas:
+      "brand actions"
+      "nav metrics";
+    min-height: 104px;
+  }
+
+  .command-brand { grid-area: brand; }
+  .station-nav { grid-area: nav; }
+  .command-actions { grid-area: actions; }
+  .command-metrics { grid-area: metrics; }
+
+  /* Stacking the rail under the mission column does not fit: the rail needs ~464px of
+     height and one stacked column offers ~274px. So the ship status turns into a
+     full-width band and the two reading columns keep the height above it. */
+  .workbench-grid {
+    /* A wider console is what actually shortens the densest panel: the step instructions
+       wrap one line fewer, which beats shaving padding. The mission column only needs
+       enough width for a legible 8:3 banner and the scenario text. */
+    grid-template-columns: minmax(210px, .62fr) minmax(0, 1.38fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "screen console"
+      "life   life";
+    /* Two columns and a band, so there are no gutter tracks to be the gap: it comes back
+       as a real gap here, and columns.js hides the handles at this breakpoint. */
+    gap: clamp(8px, 1vw, 12px);
+  }
+
+  .life-support-board {
+    /* The consequence text sets the band's height, so it gets the widest track -- a
+       narrow cell just makes it taller and steals rows from the console above. */
+    /* Tracks sized by what each cell's text actually needs. A .55fr header cell squeezed
+       "LIFE SUPPORT / Crew safe" into 112px of wrapped lines, and that -- not the meters --
+       was setting the height of the whole band. */
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.05fr) minmax(0, 1.5fr) minmax(0, 2.5fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: "header crew systems consequence log";
+    align-items: start;
+    padding: 9px 10px;
+    gap: 8px;
+  }
+
+  /* The mood emoji is the least informative thing in the band and the widest: dropping it
+     gives the crew meter enough room that "Crew safety 100%" stays on one line, which
+     keeps the whole band ~13px shorter. The reading was never carried by the face alone. */
+  .cockpit-crew .crew-face {
+    display: none;
+  }
+
+  .cockpit-crew {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* In a narrow band cell the "Sol n" chip cannot sit beside the label, and pushed out
+     of the header into the crew card. */
+  .life-header {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+
+  /* Honors adds the job switcher and lock line on top of the densest panel. */
+  .chem-console .mystery-job-switcher {
+    margin-bottom: 5px;
+    gap: 5px;
+  }
+
+  .chem-console .honors-lockline {
+    margin-bottom: 3px;
+    padding: 3px 8px;
+  }
+
+  .chem-console .honors-block {
+    margin-top: 2px;
+    padding: 3px 6px;
+  }
+
+  /* Mystery + Honors is the tallest state in the app: a four-row table, two stepper rows,
+     two formula readouts, a lock notice and a commit button. Squeeze the chrome around
+     them rather than the words themselves. */
+  .chem-console > .panel {
+    padding: 5px 8px;
+  }
+
+  .chem-console .small {
+    line-height: 1.18;
+  }
+
+  .chem-console .stepper-row {
+    gap: 6px;
+    row-gap: 4px;
+  }
+
+  .chem-console .honors-lockline {
+    line-height: 1.18;
+  }
+
+  .chem-console table.data th,
+  .chem-console table.data td {
+    padding-block: 2px;
+    line-height: 1.25;
+  }
+
+  .chem-console .formula {
+    font-size: .95rem;
+  }
+
+  /* Headroom for the worst randomly generated case: depending on the molecule and the
+     width of its molar masses, the step text wraps an extra line. Sizing for the median
+     made the fit depend on luck. The formula readouts and the commit row carry 12-16px of
+     inherited margin each -- 40px in the Mystery panel alone -- so that goes first. */
+  .chem-console .mt-2 { margin-top: 3px; }
+  .chem-console .mt-3 { margin-top: 4px; }
+  .chem-console .mt-4 { margin-top: 6px; }
+  .chem-console .mb-2 { margin-bottom: 3px; }
+  .chem-console .mb-3 { margin-bottom: 4px; }
+
+  .chem-console .stepper {
+    padding: 1px 5px;
+  }
+
+  .chem-console .stepper .sub {
+    font-size: var(--fs-md);
+  }
+
+  .chem-console .stepper .btn-sm {
+    min-width: 26px;
+  }
+
+  /* The band is a scoreboard, not instructional text, so it takes the compact size and
+     gives the reading columns their height back. */
+  .system-grid .ship-stock {
+    padding: 5px;
+  }
+
+  .system-grid {
+    gap: 5px;
+  }
+
+  /* Name over value, deliberately. Side-by-side with space-between, the label wrapped or
+     did not depending on the track width, so the band's height swung by 40px between
+     viewports for no visible reason. Stacked, each meter cell is a known height. */
+  .life-meter-label {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 0;
+    font-size: var(--fs-xs);
+    line-height: 1.2;
+  }
+
+  .screen-outcome {
+    font-size: var(--fs-sm);
+    line-height: 1.3;
+  }
+
+  /* Reachable rather than clipped.
+     Below 980px the mission column is ~250px wide and the scenario is the one block in it
+     whose height is set by an author's sentence, not by the layout. Unit 5's Purity goal
+     gained a clause and overflowed this box by 3px -- with overflow:hidden that is a lost
+     line, silently. `auto` costs a scrollbar in the one layout where the column is narrow
+     and buys back every word. The three-column layout above 980px still clips, because
+     there the column has the height and a scrollbar there would be noise. */
+  .screen-copy {
+    gap: 4px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .screen-goal {
+    line-height: 1.24;
+  }
+
+  .screen-status {
+    padding: 3px 8px;
+  }
+
+  .screen-state {
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+  }
+
+  .life-support-board .meter {
+    height: 6px;
+  }
+
+  .life-meter-label {
+    margin-bottom: 2px;
+  }
+
+  /* The mole-zoom stage is the tallest single element in any panel; at this height the
+     console cannot spare 196px for it. */
+  .chem-console .zoom-svg {
+    height: 150px;
+  }
+
+  .chem-console .zoom-stage {
+    padding: 4px;
+  }
+
+  .mission-screen {
+    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-areas: "art" "status" "copy";
+  }
+
+  .mission-screen > .screen-reference,
+  .mission-screen > .instincts {
+    display: none;
+  }
+
+}
+
+/* ---- height budget for the mission column ----------------------------------------- */
+/* The reference card and the instincts readout fill the space reclaimed from the art's
+   letterbox. On a short viewport there is nothing to fill, and the scenario text needs
+   every line it can get -- so they stand down in that order. The molar-mass and Avogadro
+   facts still appear in the console's own reference line, so nothing is lost outright. */
+@media (min-width: 981px) and (max-height: 699px) {
+  .mission-screen {
+    grid-template-rows: auto auto auto minmax(0, 1fr);
+    grid-template-areas: "art" "status" "copy" "reference";
+  }
+
+  .mission-screen > .instincts {
+    display: none;
+  }
+}
+
+@media (min-width: 981px) and (max-height: 639px) {
+  .mission-screen {
+    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-areas: "art" "status" "copy";
+  }
+
+  .mission-screen > .screen-reference {
+    display: none;
+  }
+
+  .screen-goal {
+    font-size: clamp(.94rem, 1.05vw, 1.06rem);
+  }
+
+  .screen-outcome {
+    font-size: clamp(.88rem, .95vw, .96rem);
+  }
+}
+
+/* ---- short-viewport compaction ----------------------------------------------------- */
+/* On a 600-800px viewport the console runs out of room once the instructional text is
+   sized properly. Spacing yields before type does: paddings, gaps and control heights
+   shrink, the words do not.
+ *
+ * The bound was 719px, which meant it never fired on the device the type scale is tuned for:
+ * Emil's panel is 1536 x 726 CSS px, seven pixels the wrong side of it, so every bench on the
+ * target machine ran at full padding and several scrolled for want of 30. It is 819 now, which
+ * pairs it with the `min-height: 820px` blocks below -- above that a tall viewport buys rows
+ * and type steps UP, below it spacing yields. One boundary, two behaviours. Closing that gap
+ * alone took four benches to zero scroll and 30 to 65px off every other one. */
+@media (max-height: 819px) {
+  .chem-console > .panel {
+    padding: 9px 11px;
+  }
+
+  .chem-console .muted {
+    margin-block: 0 5px !important;
+  }
+
+  .chem-console .rung-indicator {
+    margin-bottom: 5px;
+    padding: 3px 9px;
+  }
+
+  .chem-console .chain,
+  .chem-console .build-row {
+    min-height: 38px;
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
+  .chem-console .tile {
+    min-height: 38px;
+    padding: 4px 6px;
+  }
+
+  .chem-console .btn {
+    min-height: 34px;
+  }
+
+  .chem-console .stepper {
+    padding: 2px 6px;
+  }
+
+  .chem-console .stepper-row {
+    gap: 8px;
+  }
+
+  .chem-console .formula {
+    font-size: 1.1rem;
+  }
+
+  .chem-console table.data th,
+  .chem-console table.data td {
+    padding-block: 3px;
+  }
+
+  .chem-console .miss-panel {
+    margin-top: 6px;
+    padding: 7px 8px;
+  }
+
+  .chem-console .gutcheck {
+    margin-bottom: 5px;
+  }
+
+  .chem-console .mt-3 { margin-top: 6px; }
+  .chem-console .mt-4 { margin-top: 8px; }
+  .chem-console .mb-2 { margin-bottom: 4px; }
+  .chem-console .mb-3 { margin-bottom: 6px; }
+
+  .screen-status {
+    padding: 4px 9px;
+  }
+}
+
+/* ---- tall-viewport generosity ------------------------------------------------------ */
+/* On a projector or a large monitor the console has room to spare, so the chemistry gets
+   bigger rather than the panel ending in blank space. Sparse stations (Purity, Mole, the
+   locked Pod) still finish early -- they hold a handful of controls by design, and
+   inflating them further would read as padding, not emphasis. */
+@media (min-height: 820px) {
+  .chem-console .small {
+    font-size: var(--fs-md);
+  }
+
+  .chem-console p {
+    font-size: var(--fs-lg);
+  }
+
+  .chem-console .chain,
+  .chem-console .build-row {
+    min-height: 58px;
+    padding: 12px 14px;
+  }
+
+  .chem-console .chain-term,
+  .chem-console .chain-result {
+    font-size: clamp(1.15rem, 1.35vw, 1.4rem);
+  }
+
+  .chem-console .frac,
+  .chem-console .tile {
+    font-size: var(--fs-md);
+  }
+
+  .chem-console .tile {
+    min-height: 56px;
+  }
+
+  .chem-console .btn {
+    min-height: 46px;
+    font-size: var(--fs-md);
+  }
+
+  .chem-console .stat .k,
+  .chem-console table.data th,
+  .chem-console table.data td {
+    font-size: var(--fs-md);
+  }
+
+  .chem-console .formula {
+    font-size: 1.5rem;
+  }
+
+  .chem-console .stepper .sub {
+    font-size: var(--fs-xl);
+  }
+
+  .chem-console .miss-opt,
+  .chem-console .choice,
+  .chem-console .est-chip {
+    font-size: var(--fs-md);
+  }
+}
+
+/* A tall viewport buys rows, not columns. The prompt still lives in the narrowest column of
+   the shell, so it takes one step up rather than the two it used to -- at 1.4rem a 430px
+   column was fitting five words a line. */
+@media (min-height: 820px) {
+  .screen-goal {
+    font-size: clamp(1.04rem, 1.12vw, 1.15rem);
+  }
+
+  .screen-outcome {
+    font-size: clamp(.95rem, 1.02vw, 1.05rem);
+  }
+
+  .ref-item {
+    font-size: var(--fs-md);
+  }
+}
+
+/* ============================ Case File station ==================================== */
+/* The Apollo 13 story, rendered by shared/js/casefile.js + shared/css/casefile.css.
+   Everything below is placement only: not one of the story's own styles is restated
+   here, so the six units that already ship a Case File and this one cannot diverge.
+
+   The story is the one station that is genuinely LONGER than a screen -- four chapters,
+   an animated stage, a quiz and a close -- so it is the one station that scrolls. It
+   scrolls INSIDE the shell's flexible row rather than scrolling the document, because
+   the cockpit's contract (and tests/unit5a-layout.test.mjs) is that html/body never do.
+   The station strip stays fixed above it, so there is always a way back to the work. */
+.cockpit-shell > .casefile {
+  min-width: 0;
+  min-height: 0;
+  margin-top: 0;
+  /* casefile.css sets overflow:hidden to keep the ambient SVG motion inside the panel.
+     `auto` clips exactly the same way and adds the scroll this station needs. */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(14px, 1.6vw, 22px);
+}
+
+/* The `max-width: 72ch` that used to sit on .cf-hook here is gone: the hook now shares a
+   row with the stats (see .cf-top in shared/css/casefile.css), so its COLUMN is the measure
+   and a character cap on top of that is what made the line end mid-panel with nothing
+   beside it. Same for the two margins -- casefile.css tightened them at source, so
+   restating them here would only re-open the gaps. */
+.cockpit-shell > .casefile .cf-top { align-items: start; }
+
+/* On a short viewport the stage is what makes the story a long scroll rather than a
+   two-screen one, so it is the part that yields. The chapter text does not. */
+@media (max-height: 819px) {
+  .cockpit-shell > .casefile .cf-stage svg { max-height: 268px; }
+  .cockpit-shell > .casefile .cf-title { font-size: clamp(1.25rem, 1.5vw, 1.45rem); }
+}
+
+/* ============================ Live dial in the console ============================= */
+/* The Mole station pairs the dot field with a decade gauge (shared/js/gauge.js). Both
+   want to be the tallest thing in the panel, and the panel does not scroll -- so they
+   are capped as a PAIR here: the gauge stays instrument-sized and the field, which is
+   already standing in for a number it cannot draw, gives up the difference. */
+.chem-console .dial {
+  margin-top: 8px;
+}
+
+/* The dial's plain-language readout ("23 powers of ten above 1") and its trend chip are
+   the whole reason the gauge beats a bare number, so they are held to the same 14px floor
+   as every other instruction in this console rather than shipping at the shared component's
+   --fs-2xs. The arrow drops its .8em too: at 14px text that glyph was 8.7px. */
+.chem-console .dial-read,
+.chem-console .dial-trend {
+  font-size: var(--fs-sm);
+}
+
+.chem-console .dial-arrow {
+  font-size: 1em;
+}
+
+.chem-console .dial-face {
+  max-width: 128px;
+}
+
+
+@media (max-height: 819px) {
+  .chem-console .dial-face { max-width: 108px; }
+  .chem-console .zoom-svg { height: 150px; }
+}
+
+@media (min-height: 820px) {
+  .chem-console .dial-face { max-width: 150px; }
+  .chem-console .zoom-svg { height: 240px; }
+}
+
+/* ============================ Station strip ============================
+   The prototype cockpit shipped one-word tabs ("Life", "Counts", "Pod") to make
+   seven of them fit one 42px row. The units_new builds use their unit's real
+   station names instead, so the strip carries twice the glyphs in the same track. Three
+   changes buy the room, in order of how much they cost the reader:
+     1. tighter horizontal padding and gap (costs nothing),
+     2. a slightly smaller floor on the clamped font (0.72rem, still above the
+        0.7rem readability floor the tokens use for .fs-xs), and
+     3. `1fr` auto-columns capped by `max-content`, so the tabs share the track
+        evenly instead of the long ones ellipsing while short ones keep slack.
+   Labels stay nowrap + ellipsis as a last resort, and every tab carries a `title`
+   with the full station name and its TEKS code, so a clipped label is still
+   recoverable on hover. */
+.station-nav {
+  gap: 4px;
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+.station-nav .tab {
+  padding: 0 7px;
+  font-size: clamp(.72rem, .78vw, .88rem);
+  text-align: center;
+}
+
+/* Equal columns are the right call while the strip has room: they stop a long label
+   ellipsing while a short one keeps slack. Once the header itself starts reflowing there
+   is no slack left to share, and equal columns size every tab to the average and clip the
+   longest — so below that point the prototype behaviour returns and each tab takes exactly
+   the width its (already short) label needs. */
+@media (max-width: 1120px) {
+  .station-nav { grid-auto-columns: minmax(0, auto); }
+}
+
+/* Two labels per tab, and the strip picks the one that fits.
+ *
+ * The full station names are what the unit actually calls these jobs, and they are what a
+ * learner should see. They only fit at 1536 CSS px and up, which is the primary display
+ * (a 15in 1920x1080 panel at 125%) and anything larger. Below that, seven tabs of
+ * "Tanks & counts" ellipse to garbage — "Tanks & c..." next to "Resupply p..." is worse
+ * than a short word, because two clipped labels can read as the same tab.
+ *
+ * So the strip swaps to the prototype's one-word names below 1536px. Nothing is lost: the
+ * `title` on every tab carries the full name and its TEKS code, the command header prints
+ * the active station under the unit title, and the mission screen names it in full above
+ * the goal. This is the one place in the shell where the viewport picks the wording, and
+ * it is deliberate — the alternative is a strip that is illegible on a Chromebook. */
+.tab-short { display: none; }
+
+@media (max-width: 1535px) {
+  .tab-full { display: none; }
+  .tab-short { display: inline; }
+}
+
+/* The capstone tab says "locked" without spending a word on it: a dot that clears the
+   moment every core skill is certified. A pseudo-element rather than a <span>, because a
+   one-glyph text node inside a tab is a text leaf that every layout audit has to special-
+   case — and a decoration is not text. */
+.station-nav .tab.is-locked::after {
+  content: '•';
+  margin-left: 4px;
+  color: var(--muted);
+  font-size: .9em;
+  line-height: 1;
+}
+
+.station-nav .tab.is-locked[aria-selected="true"]::after {
+  color: color-mix(in srgb, var(--surface) 75%, transparent);
+}
+
+/* The drill switcher's pills sit inside the console, so their labels are instructional
+   text and belong at the same legibility floor as everything else there. They were
+   inherited at --fs-xs from a prototype that only ever showed them behind an Honors gate. */
+.chem-console .job-pill {
+  font-size: var(--fs-sm);
+}
+
+/* ====================== Control faces: making a button look pressable ==================
+ *
+ * Everything clickable in this shell was a 1px outline on a flat white fill, which is the
+ * same treatment the shell gives a reference card, a stat tile and a table cell. So the
+ * only cue that a thing could be clicked was that its text happened to be a verb.
+ *
+ * These four lines are the whole affordance, and they are worth spelling out because they
+ * are what separates a key from a panel:
+ *   - a top-to-bottom gradient, so the face catches light from above like a real key;
+ *   - an inset white hairline along the top edge, which is the highlight on that bevel;
+ *   - a hard 1px shadow directly under the bottom border: the side wall of the key, the
+ *     thing that makes it read as standing above the page rather than drawn on it;
+ *   - a soft ambient shadow below that, so it casts.
+ * Pressing collapses the side wall and moves the face down onto the page by the same 1px,
+ * so the travel is real rather than a colour change. Hover raises it instead.
+ *
+ * One token set, applied to every control class the units use: .opt/.pair (Unit 3),
+ * .choice (the other ten), plus the tiles, chips, pills and .btn that any unit can show.
+ * Selectors are scoped to the cockpit (or carry two classes) so they outrank the flat
+ * component defaults in shared/css/components.css and each unit's own style.css, both of
+ * which load after this file.
+ */
+.cockpit-shell {
+  --face-fill: linear-gradient(180deg, #ffffff, #eef4f6);
+  --face-fill-hover: linear-gradient(180deg, #ffffff, #e4eff1);
+  --face-wall: color-mix(in srgb, var(--border-strong) 78%, transparent);
+  --face-lift:
+    inset 0 1px 0 #ffffff,
+    0 1px 0 var(--face-wall),
+    0 2px 4px rgb(12 38 48 / 9%);
+  --face-lift-hover:
+    inset 0 1px 0 #ffffff,
+    0 1px 0 color-mix(in srgb, var(--accent-700) 34%, transparent),
+    0 4px 9px rgb(12 38 48 / 15%);
+  --face-press:
+    inset 0 1px 2px rgb(12 38 48 / 16%),
+    0 0 0 0 var(--face-wall);
+  --face-accent: linear-gradient(180deg, color-mix(in srgb, var(--accent) 88%, #ffffff), var(--accent));
+  --face-accent-hover: linear-gradient(180deg, var(--accent), var(--accent-700));
+}
+
+.workbench-grid .btn,
+.cockpit-command .command-reset,
+.workbench-grid .opt,
+.workbench-grid .pair,
+.workbench-grid .choice,
+.workbench-grid .tile,
+.workbench-grid .est-chip,
+.workbench-grid .miss-opt,
+.workbench-grid .fam-btn,
+.workbench-grid .job-pill,
+.station-nav .tab {
+  background-image: var(--face-fill);
+  box-shadow: var(--face-lift);
+  transition:
+    background var(--t-fast), border-color var(--t-fast),
+    box-shadow var(--t-fast), translate var(--t-fast), color var(--t-fast);
+}
+
+.workbench-grid .btn:hover:not(:disabled),
+.cockpit-command .command-reset:hover:not(:disabled),
+.workbench-grid .opt:hover:not(:disabled),
+.workbench-grid .pair:hover:not(:disabled),
+.workbench-grid .choice:hover:not(:disabled),
+.workbench-grid .tile:hover:not(:disabled),
+.workbench-grid .est-chip:hover:not(:disabled),
+.workbench-grid .miss-opt:hover:not(:disabled),
+.workbench-grid .fam-btn:hover:not(:disabled),
+.workbench-grid .job-pill:hover:not(:disabled),
+.station-nav .tab:hover:not([aria-selected="true"]) {
+  background-image: var(--face-fill-hover);
+  border-color: var(--accent-300);
+  box-shadow: var(--face-lift-hover);
+  translate: 0 -1px;
+}
+
+.workbench-grid .btn:active:not(:disabled),
+.cockpit-command .command-reset:active,
+.workbench-grid .opt:active:not(:disabled),
+.workbench-grid .pair:active:not(:disabled),
+.workbench-grid .choice:active:not(:disabled),
+.workbench-grid .tile:active:not(:disabled),
+.workbench-grid .est-chip:active:not(:disabled),
+.workbench-grid .miss-opt:active:not(:disabled),
+.workbench-grid .fam-btn:active:not(:disabled),
+.workbench-grid .job-pill:active:not(:disabled),
+.station-nav .tab:active {
+  box-shadow: var(--face-press);
+  translate: 0 1px;
+}
+
+/* The transform utility in components.css (.btn:active gets translateY(1px)) would stack
+   with the translate above and press twice as far. */
+.workbench-grid .btn:active:not(:disabled),
+.cockpit-command .command-reset:active { transform: none; }
+
+/* A disabled control is not pressable, so it does not stand up. Flattening it is what
+   makes "Make the call" visibly inert before an answer is picked, instead of a raised key
+   that happens to be pale. */
+.workbench-grid .btn:disabled,
+.workbench-grid .opt:disabled,
+.workbench-grid .pair:disabled,
+.workbench-grid .choice:disabled,
+.workbench-grid .tile:disabled,
+.workbench-grid .est-chip:disabled,
+.workbench-grid .miss-opt:disabled {
+  background-image: none;
+  box-shadow: none;
+  translate: none;
+}
+
+/* The primary key is the same bevel in accent ink. */
+.workbench-grid .btn-accent { background-image: var(--face-accent); }
+.workbench-grid .btn-accent:hover:not(:disabled) { background-image: var(--face-accent-hover); }
+.workbench-grid .btn-honors {
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--honors) 88%, #ffffff), var(--honors));
+}
+.workbench-grid .btn-honors:hover:not(:disabled) {
+  background-image: linear-gradient(180deg, var(--honors), var(--honors-700));
+}
+
+/* A selected tab is pressed IN, which is the one place in the shell where a control should
+   not stand up: it is the state of the strip, not an invitation. */
+.station-nav .tab[aria-selected="true"] {
+  background-image: linear-gradient(180deg, var(--accent), var(--accent-700));
+  box-shadow: inset 0 2px 4px rgb(4 24 30 / 26%), inset 0 -2px 0 color-mix(in srgb, #ffffff 26%, transparent);
+  translate: 0;
+}
+
+/* Answered states keep their semantic fill (green/red/teal) and lose the bevel: once a call
+   is made the control is a record, not a key. */
+.workbench-grid .opt.correct,
+.workbench-grid .opt.wrong,
+.workbench-grid .pair.correct,
+.workbench-grid .pair.wrong,
+.workbench-grid .choice[data-state="correct"],
+.workbench-grid .choice[data-state="wrong"],
+.workbench-grid .miss-opt[data-state="correct"],
+.workbench-grid .miss-opt[data-state="wrong"] {
+  background-image: none;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%);
+  translate: none;
+}
+
+/* ---- weight ----
+ * Everything in this shell shipped at 700 to 800, which is the same thing as nothing being
+ * emphasised. Weight goes back to carrying meaning: the QUESTION and the primary key are
+ * bold, an answer choice is 600 (the label of a control, not a statement), and the station
+ * strip is 700 rather than 800 so the active tab's fill is what marks it. */
+.workbench-grid .opt,
+.workbench-grid .pair,
+.workbench-grid .choice,
+.workbench-grid .miss-opt,
+.workbench-grid .fam-btn,
+.workbench-grid .job-pill,
+.workbench-grid .est-chip { font-weight: 600; }
+
+.workbench-grid .btn,
+.cockpit-command .command-reset { font-weight: 600; }
+.workbench-grid .btn-accent,
+.workbench-grid .btn-honors { font-weight: 700; }
+.station-nav .tab { font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  .workbench-grid .btn,
+.cockpit-command .command-reset,
+  .workbench-grid .opt,
+  .workbench-grid .pair,
+  .workbench-grid .choice,
+  .workbench-grid .tile,
+  .workbench-grid .est-chip,
+  .workbench-grid .miss-opt,
+  .workbench-grid .fam-btn,
+  .workbench-grid .job-pill,
+  .station-nav .tab { transition: none; translate: none !important; }
+}
+
+/* ====================== The commit row =================================================
+ * .row is used all over the consoles -- for fields, legends, chip groups -- so the pair of
+ * keys that ENDS a task opts in by name instead. Two things make it read as the end of the
+ * task rather than one more row of it: a hairline above, and two keys of one width. The
+ * unequal 115px/88px pair it replaces was the most obviously unconsidered thing on the
+ * bench, because the buttons above it were 627px wide. */
+.chem-console .call-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.chem-console .call-row > .btn {
+  flex: 0 1 auto;
+  min-width: 148px;
+  /* Fitts's Law: the target a learner hits on every single task is the one that gets the
+     height. 148 x 40 is the pair Unit 3 tuned; it lives here because the row is shared. */
+  min-height: 40px;
+  text-align: center;
+}
+
+@media (max-height: 819px) {
+  .chem-console .call-row { margin-top: 8px; padding-top: 8px; }
+}
+
+/* ====================== The pick, made visible: `.choice` ==============================
+ *
+ * Unit 3 answers with `.opt`/`.pair`; the other ten answer with `.choice`, and `.choice`
+ * shipped exactly the non-state Unit 3 had -- a 1px border going teal and a fill tint of
+ * about 4%. Next to three unselected siblings wearing the same bevel, that is something a
+ * learner works out by comparing four boxes, on the one screen where knowing what you chose
+ * is the whole point.
+ *
+ * Same four channels as Unit 3, driven by the attribute this markup already carries
+ * (`data-state` is '' | on | correct | wrong):
+ *   1. a RADIO INDICATOR, which also fixes a mental-model problem the boxes never admitted
+ *      to: four bordered rectangles read as four buttons that each DO something, when they
+ *      are one single-select question. A ring that fills says "pick one of these", and says
+ *      it before the first click rather than after;
+ *   2. the face presses IN (inset ring plus inset shadow, no lift), so the chosen key is
+ *      physically down while its siblings are still up;
+ *   3. the fill moves to the accent tint and the label to accent ink;
+ *   4. once the call is made the indicator becomes a check or a cross, so the record of what
+ *      happened is legible without re-reading the label -- a green dot and a teal dot are the
+ *      same SHAPE, which would leave the verdict carried by hue alone.
+ *
+ * The indicator FLOATS, and that is the one real difference from Unit 3's `.opt`. `.opt` is
+ * always a single text node, so a two-column grid works there. `.choice` is sometimes a stack
+ * of element children -- a mono tag over a hint (Units 04, 10), a pack name over how it feels
+ * (Unit 10), an isotope over its note (Unit 11) -- and a grid column would restack those. A
+ * float shortens the line boxes beside it and leaves every other box where it was, so the
+ * indent lands on the first line and nothing re-flows. It also needs no knowledge of the
+ * button's padding, which four units override from a stylesheet that loads after this one.
+ *
+ * Scoped to `.workbench-grid` inside `.cockpit-shell`. `.workbench-grid` because the Case File
+ * is a sibling with its own dark palette, and a `.cockpit-shell .btn`-style rule once painted
+ * every story button with a white gradient. Three classes deep so the state block outranks
+ * `.choice[data-state="on"]` in shared/css/components.css and the `.something .choice` rules
+ * four units add from a stylesheet that loads after this one -- without needing !important on
+ * a control that four other stylesheets have opinions about.
+ */
+.cockpit-shell .workbench-grid .choice {
+  --dot: 15px;
+  position: relative;
+  min-height: calc(var(--dot) + 10px);
+}
+
+.cockpit-shell .workbench-grid .choice::before {
+  content: '';
+  float: left;
+  width: var(--dot);
+  height: var(--dot);
+  margin: 2px 8px 0 0;
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: inset 0 1px 2px rgb(12 38 48 / 12%);
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+/* Hovering an unpicked option previews the ring it is about to fill. */
+.cockpit-shell .workbench-grid .choice:hover:not(:disabled)::before {
+  border-color: var(--accent-300);
+}
+
+/* The classic filled radio: a white gap between ring and core, drawn with an inset ring so
+   nothing about the element's box changes and no text reflows on selection. */
+.cockpit-shell .workbench-grid .choice[data-state="on"]::before {
+  border-color: var(--accent-700);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 2.5px #fff;
+}
+
+/* Answered. The glyphs are inline SVG so they scale with the indicator and need no icon font
+   -- the same two data URIs Unit 3's stylesheet uses, which is why they are worth having in
+   the shared file rather than a third copy. */
+.cockpit-shell .workbench-grid .choice[data-state="correct"]::before {
+  border-color: var(--success);
+  background: var(--success) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3 4.8 8.5 9.4 3.7' fill='none' stroke='%23fff' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 11px 11px no-repeat;
+  box-shadow: none;
+}
+
+.cockpit-shell .workbench-grid .choice[data-state="wrong"]::before {
+  border-color: var(--danger);
+  background: var(--danger) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3.6 3.6 8.4 8.4M8.4 3.6 3.6 8.4' fill='none' stroke='%23fff' stroke-width='2.1' stroke-linecap='round'/%3E%3C/svg%3E") center / 10px 10px no-repeat;
+  box-shadow: none;
+}
+
+/* The box itself, pressed in. `translate: 0` cancels the shell's hover lift, so a chosen key
+   cannot float back up under the pointer: selected outranks hovered. */
+.cockpit-shell .workbench-grid .choice[data-state="on"],
+.cockpit-shell .workbench-grid .choice[data-state="on"]:hover:not(:disabled) {
+  border-color: var(--accent-700);
+  background: var(--accent-050);
+  background-image: none;
+  color: var(--accent-700);
+  box-shadow: inset 0 0 0 1px var(--accent), inset 0 2px 5px rgb(12 38 48 / 11%);
+  translate: 0;
+}
+
+.cockpit-shell .workbench-grid .choice[data-state="correct"],
+.cockpit-shell .workbench-grid .choice[data-state="correct"]:hover {
+  border-color: var(--success);
+  background: color-mix(in srgb, var(--success) 13%, var(--surface));
+  color: #1c5f3c;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--success) 55%, transparent);
+  translate: 0;
+}
+
+.cockpit-shell .workbench-grid .choice[data-state="wrong"],
+.cockpit-shell .workbench-grid .choice[data-state="wrong"]:hover {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 11%, var(--surface));
+  color: #8a3320;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--danger) 48%, transparent);
+  translate: 0;
+}
+
+/* ---- select-every-one-that-applies ---------------------------------------------------
+ * Unit 06's second classify question is "which of these ALSO apply? Select every one that
+ * does" -- a genuine multi-select behind the same `.choice` class. A ring that fills says
+ * "pick one of these", so on that group it would be a lie about the affordance. A rounded
+ * square is the other half of the convention every learner already knows, and it is the only
+ * thing that changes: the fill, the ink and the tick/cross stay identical, because after the
+ * commit the question is the same one. */
+.cockpit-shell .workbench-grid .choice-multi .choice::before {
+  border-radius: 4px;
+}
+
+.cockpit-shell .workbench-grid .choice-multi .choice[data-state="on"]::before {
+  background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3 4.8 8.5 9.4 3.7' fill='none' stroke='%23fff' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 11px 11px no-repeat;
+  box-shadow: none;
+}
+
+/* ---- cells too narrow for a leading indicator ----------------------------------------
+ * A significant-figure keypad is five cells of one digit; a valence pad is eight. There is no
+ * room beside the digit for a 15px ring, and taking it would either wrap the digit or push it
+ * off its own centre. So these carry the indicator in the CORNER, which is the same answer
+ * Unit 3's `.pair` needed for the opposite reason (a three-line card whose symbol owns the
+ * left edge). Declared per site with a class, so a narrow cell is a decision somebody made
+ * rather than a number that happened to fit. */
+.cockpit-shell .workbench-grid .choice-tight {
+  /* Room for the corner marker on BOTH sides, so a centred label stays centred and still
+     never runs under the tick. Unit 3's `.pair` reserves it on one side only because its
+     label is left-set; these are centred, and reserving one side would push the digit off
+     the middle of its own cell to buy space it does not use. */
+  padding-inline: 15px;
+}
+
+.cockpit-shell .workbench-grid .choice-tight::before {
+  float: none;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 11px;
+  height: 11px;
+  margin: 0;
+  border-width: 1.5px;
+  background-size: 9px 9px;
+}
+
+.cockpit-shell .workbench-grid .choice-tight[data-state="on"]::before {
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+.cockpit-shell .workbench-grid .choice-tight[data-state="correct"]::before,
+.cockpit-shell .workbench-grid .choice-tight[data-state="wrong"]::before {
+  background-size: 9px 9px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cockpit-shell .workbench-grid .choice::before { transition: none; }
+}
+
+/* ---- the commit gate, explained where it is felt ------------------------------------
+ * Lifted out of Unit 3's own stylesheet, because `.call-row` is shared now and the hint is
+ * part of that row rather than part of that unit. A commit that gates on two separate picks
+ * leaves a dead primary button with no reason beside it, which is the highest-load moment on
+ * a bench: the learner can see that nothing works and not what would make it work. The hint
+ * occupies the same row, so the answer is where the question is, and it disappears the moment
+ * the gate opens -- which also makes the enabled button an event rather than a steady state.
+ * Gate it on `!ready && !checked`: `*Ready` is false both before the picks and after the
+ * commit, so `!ready` alone brings the hint back on top of the verdict. */
+.chem-console .call-hint {
+  align-self: center;
+  margin-left: 2px;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  line-height: 1.3;
+}
+
+/* ====================== The reference door =============================================
+ *
+ * A bench holds two kinds of block: the DECISION, which has to be above the fold, and the
+ * reference tool you consult to make it. Unit 3's three benches went from 0/352/561px of
+ * scroll to nothing by moving the second kind behind a native <details> -- and it worked
+ * because bench A in the same unit already shipped that way and needed no scroll at all.
+ *
+ * This is that chrome, promoted out of Unit 3's stylesheet the moment a fourth unit needed
+ * it: Unit 01's accuracy figure, Unit 02's model history, Unit 07's postulates and gas-law
+ * table are the same category of block behind the same door.
+ *
+ * The summary reads as a door rather than a heading. The native ::marker triangle is 6px of
+ * grey at a different offset in every browser; a drawn chevron in accent ink, a hover fill
+ * and a real 38px row make the row itself the target (Fitts) and make the state -- open or
+ * shut -- readable from across the panel. */
+.lesson-reference {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.lesson-reference > summary {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 38px;
+  padding: 8px 11px;
+  color: var(--accent-700);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--r-md);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.lesson-reference > summary::-webkit-details-marker { display: none; }
+
+.lesson-reference > summary::before {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-left: 2px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  rotate: -45deg;
+  transition: rotate var(--t-fast);
+}
+
+.lesson-reference[open] > summary::before { rotate: 45deg; }
+.lesson-reference > summary:hover { background: var(--accent-050); }
+.lesson-reference[open] > summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.lesson-reference-body { padding: 0 11px 12px; }
+
+/* Closed, the body has to be explicitly absent. A closed <details> gets
+ * `content-visibility: hidden` in Chromium, which stops it painting but leaves every
+ * descendant a laid-out box -- so an audit reads folded reference text as content buried
+ * under whatever is drawn next. Same rule, same reason, as .screen-reference-body above. */
+.lesson-reference:not([open]) > .lesson-reference-body { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lesson-reference > summary::before { transition: none; }
+}
+
+/* ---- the rail on a short viewport --------------------------------------------------- */
+/* The rail is a fixed-width column now, so its height is set by how much its five blocks
+ * wrap rather than by how much room the grid felt like giving it. At 600-650px of viewport
+ * the five did not fit and the bench log fell out of the panel entirely.
+ *
+ * Chrome yields, words do not: gaps, paddings and the log's own floor come down, and the
+ * board illustration (already hidden below 660px by the unit's own stylesheet) is the one
+ * block that leaves. Every reading -- the meters, the consequence, the log -- stays at its
+ * size. */
+@media (min-width: 981px) and (max-height: 819px) {
+  .life-support-board {
+    gap: 6px;
+    padding: 9px 10px;
+    grid-template-rows: auto auto min-content min-content minmax(76px, 1fr);
+  }
+
+  .life-support-board .system-grid { gap: 6px; }
+  .life-support-board .system-grid .ship-stock { padding: 6px; }
+  .life-support-board .latest-consequence,
+  .life-support-board .mission-log { padding: 6px 8px; }
+  .life-support-board .latest-consequence strong { margin-top: 2px; }
+  .life-support-board .cockpit-crew { padding: 6px; gap: 8px; }
+  .life-support-board .cockpit-crew .crew-face { font-size: clamp(1.4rem, 2vw, 1.8rem); }
+}

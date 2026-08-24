@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 5 · The Mole &amp; Chemical Quantities</title>
+<meta name="description" content="Mole Control: keep four crew alive on the haul to Mars. Scrub the air, fill the tanks, ID a leak, all with mole, mass, particle, percent, and formula math. A scaffold-fade ladder, gut-check estimates, and self-explanation on a miss make you do the conversion thinking yourself. TEKS C.8.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<link rel="stylesheet" href="../../shared/css/components.css">
+<link rel="stylesheet" href="../../shared/css/casefile.css">
+<link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
+</head>
+<body>
+<div x-data="sim()" x-cloak>
+
+  <main class="codex-shell cockpit-shell" aria-label="Unit 5 mission cockpit">
+    <header class="cockpit-command">
+      <div class="command-brand">
+        <span class="command-kicker">Unit 5 · TEKS C.8</span>
+        <!-- The title is the way back to the unit list, the same role the old shell gave
+             its "Tx Chemistry Case Files" brand link. It wraps the existing <strong>
+             rather than adding a row, because the header is height-critical, and it adds
+             no <span>, because `.command-brand span:last-child` styles the station line
+             below by POSITION. -->
+        <a class="command-home" href="../index.html" title="All units">The Mole &amp; Chemical Quantities</a>
+        <span x-text="activeStationName"></span>
+      </div>
+
+      <nav class="station-nav" role="tablist" aria-label="Mission stations">
+        <button class="tab" role="tab" :aria-selected="mode==='molg'"      @click="setMode('molg')" aria-label="Life support" title="Life support · C.8(A) mass and moles"><span class="tab-full" aria-hidden="true">Life support</span><span class="tab-short" aria-hidden="true">Life</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='particles'" @click="setMode('particles')" aria-label="Tanks &amp; counts" title="Tanks &amp; counts · C.8(B) moles and particles"><span class="tab-full" aria-hidden="true">Tanks &amp; counts</span><span class="tab-short" aria-hidden="true">Counts</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='percent'"   @click="setMode('percent')" aria-label="Purity check" title="Purity check · C.8(C) percent composition"><span class="tab-full" aria-hidden="true">Purity check</span><span class="tab-short" aria-hidden="true">Purity</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='formula'"   @click="setMode('formula')" aria-label="Mystery ID" title="Mystery ID · C.8(D) empirical and molecular formulas"><span class="tab-full" aria-hidden="true">Mystery ID</span><span class="tab-short" aria-hidden="true">Mystery</span></button>
+        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'"  @click="setMode('capstone')" aria-label="Resupply pod" title="Resupply pod · capstone"><span class="tab-full" aria-hidden="true">Resupply pod</span><span class="tab-short" aria-hidden="true">Pod</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='zoom'"      @click="setMode('zoom')" aria-label="Feel a mole" title="Feel a mole · powers-of-ten zoom"><span class="tab-full" aria-hidden="true">Feel a mole</span><span class="tab-short" aria-hidden="true">Mole</span></button>
+        <!-- The Case File is a station like any other, so it lives in this strip rather
+             than as a teaser chip: the cockpit header has no spare row for a chip, and a
+             station the learner cannot see is a station they never open. -->
+        <button class="tab" role="tab" :aria-selected="mode==='casefile'"  @click="setMode('casefile')" aria-label="Case file" title="Case file · Apollo 13"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
+      </nav>
+
+      <div class="command-actions">
+        <label class="switch" title="Reveal advanced content for Honors sections">
+          <input type="checkbox" x-model="honors">
+          <span class="track"></span>
+          <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+        </label>
+        <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
+      </div>
+
+      <div class="command-metrics" aria-label="Progress and mission telemetry">
+        <span class="metric-chip">XP <strong x-text="g_xp"></strong></span>
+        <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
+        <!-- Standards tracking is secondary to the chemistry: one badge, expanded on
+             demand, instead of four chips competing with the station tabs. -->
+        <!-- Click, not hover: hover-to-open fought the click toggle (the pointer opened it,
+             then the click closed it again) and does not exist on a touch screen at all. -->
+        <div class="teks-wrap" @click.outside="teksOpen = false" @keydown.escape="teksOpen = false">
+          <button type="button" class="teks-badge" :class="{ complete: teksMasteredCount === coreSkills.length }"
+                  :aria-expanded="teksOpen ? 'true' : 'false'" aria-label="TEKS standards progress"
+                  @click="teksOpen = !teksOpen">
+            <span>TEKS</span>
+            <strong><span x-text="teksMasteredCount"></span>/<span x-text="coreSkills.length"></span></strong>
+          </button>
+          <div class="teks-popover" x-show="teksOpen" x-cloak role="group" aria-label="TEKS C.8 standards">
+            <template x-for="se in coreSkills" :key="se.id">
+              <div class="teks-row" :class="{ active: se.mode===mode, mastered: gMastered(se.id) }">
+                <span class="teks-row-head">
+                  <span class="teks-row-code" x-text="se.code"></span>
+                  <span class="teks-row-cap" x-text="seCaption(se)"></span>
+                </span>
+                <span class="teks-row-text" x-text="se.text"></span>
+                <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id)*100}%`"></span></span>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- The Case File is a MODE, not a section at the foot of the page: the three working
+         columns give up the shell's flexible row while the story is showing, and the
+         station strip stays above it so there is always a way back. -->
+    <div class="workbench-grid" x-show="mode!=='casefile'">
+      <section class="mission-screen panel" :class="'tone-' + activeTone" aria-label="Active mission screen">
+        <div class="mission-frame">
+          <div class="mission-screen-art" x-html="scArt(activeArtId)"></div>
+          <div class="screen-scanline" aria-hidden="true"></div>
+        </div>
+        <!-- Station + state read as a heading, not as an overlay: at the art's true 8:3
+             aspect an inset caption would cover 40% of the drawing. -->
+        <div class="screen-status">
+          <span class="screen-system" x-text="activeStationName"></span>
+          <span class="screen-state" x-text="activeStateLabel"></span>
+        </div>
+        <!-- The goal line stands down when the station has no scenario brief (Mole, and the
+             pod before it unlocks). It used to fall back to activeOutcomeText, which is what
+             the line below it already says -- so the same sentence printed twice, once bold. -->
+        <div class="screen-copy">
+          <p class="screen-goal" x-show="activeBrief" x-prose="activeBrief ? activeBrief.goal : ''"></p>
+          <p class="screen-outcome" x-prose="activeOutcomeText"></p>
+        </div>
+        <!-- A native <details>, so the standing facts can be folded away and the art and the
+             prompt take the rows back. Open by default, because facts a learner has to hunt
+             for are not standing facts. The summary keeps .command-kicker: it is the same
+             chrome eyebrow it was before it became a disclosure, and that class is what
+             exempts it from the 14px legibility floor in tests/unit5a-layout.test.mjs.
+             shared/cockpit.css styles it; the height media queries there still drop the whole
+             card on a short viewport, which is the shell deciding there is no room rather
+             than the learner deciding they want it elsewhere. -->
+        <details class="screen-reference" aria-label="Reference facts" open>
+          <summary class="command-kicker">Reference</summary>
+          <div class="screen-reference-body">
+            <template x-for="r in activeReference" :key="r.k">
+              <p class="ref-item">
+                <span class="ref-k" x-text="r.k"></span>
+                <span class="ref-v">
+                  <template x-if="r.ce"><span class="mono" x-ce="r.ce"></span></template>
+                  <span x-prose="r.v"></span>
+                </span>
+              </p>
+            </template>
+          </div>
+        </details>
+        <section class="instincts cockpit-instincts" aria-label="Instinct calibration">
+          <span class="command-kicker">Instincts</span>
+          <template x-if="!calibReady">
+            <p><span x-text="calib.est"></span>/8 gut checks calibrated</p>
+          </template>
+          <template x-if="calibReady">
+            <p>Ballpark <strong x-text="calib.estOk"></strong>/<strong x-text="calib.est"></strong> right<span x-show="instinctNudge">. <span x-text="instinctNudge"></span></span></p>
+          </template>
+        </section>
+      </section>
+
+      <!-- ============ CENTER: the chemistry console ============ -->
+      <section class="task-stack chem-console">
+
+        <!-- ---------- C.8(A)/(B) convert the reading, then act ---------- -->
+        <div class="panel" :class="{ 'is-active': (mode==='molg' || mode==='particles') && cv }" x-show="(mode==='molg' || mode==='particles') && cv">
+          <!-- Brief -->
+          <template x-if="cvBrief">
+            <div class="brief">
+              <div class="brief-art" x-html="scArt(cvBrief.id)"></div>
+              <span class="brief-role"><span x-text="cvBrief.icon"></span> <span x-text="cvBrief.system"></span></span>
+              <div class="brief-goal" x-prose="cvBrief.goal"></div>
+              <div class="brief-why" x-prose="cvBrief.why"></div>
+            </div>
+          </template>
+
+          <!-- ===== SOLVE region (hidden while ARI's audit is up) ===== -->
+          <template x-if="cv && !cv.audit">
+          <div class="solve-region" :class="{ 'has-miss': !!cvMiss }">
+          <!-- The reading + the fixed facts -->
+          <p class="muted mb-2">
+            The reading is <strong x-text="fmt(cv.given.value) + ' ' + unitLabel(cv.given.unit)"></strong>
+            of <span class="mono" x-ce="cv.sub.f"></span> (<span x-text="cv.sub.name"></span>).
+            Resolve it to <strong x-text="unitLabel(cv.targetUnit)"></strong>, then commit.
+          </p>
+          <p class="small muted mb-3">Molar mass of <span x-ce="cv.sub.f"></span> = <span x-text="fmt(cv.M)"></span> g/mol.</p>
+
+          <!-- Rung indicator pill (always) -->
+          <div class="rung-indicator" x-text="rungText"></div>
+
+          <!-- Mechanic B: gut-check gate (rung >= 2) -->
+          <template x-if="cv.rung >= 2">
+            <div class="gutcheck">
+              <p class="small" style="font-weight:700; margin-bottom: var(--s-2);">Gut-check first: where will the answer land?</p>
+              <div class="est-chips">
+                <template x-for="d in cv.estOptions" :key="d">
+                  <button class="est-chip" :class="{ picked: cvEstimate===d }" @click="cvEstimatePick(d)" :disabled="cvDone" x-text="estLabel(d, cv.targetUnit)"></button>
+                </template>
+              </div>
+              <p class="small muted mt-2" x-show="cvEstimate===null">Lock in an estimate to unlock the build.</p>
+            </div>
+          </template>
+
+          <!-- Rung 1 SELECT: tap the ready-made tiles -->
+          <template x-if="cv.rung === 1">
+            <div>
+              <div class="chain">
+                <span class="chain-term"><span x-text="fmt(cv.given.value)"></span> <span x-text="unitLabel(cv.given.unit)"></span></span>
+                <template x-for="(s,i) in cvSteps.steps" :key="i">
+                  <span class="chain-op">
+                    <span class="times">&times;</span>
+                    <span class="frac" :class="{ bad: !s.cancels }">
+                      <span class="frac-n" x-text="s.tile.numText"></span>
+                      <span class="frac-bar"></span>
+                      <span class="frac-d" x-text="s.tile.denText"></span>
+                    </span>
+                  </span>
+                </template>
+                <span class="chain-eq">=</span>
+                <span class="chain-result" :class="{ good: cvSteps.reached }">
+                  <span x-text="fmt(cvSteps.value)"></span> <span x-text="unitLabel(cvSteps.unit)"></span>
+                </span>
+              </div>
+              <p class="small muted mt-4 mb-2">Conversion factors:</p>
+              <div class="tile-tray">
+                <template x-for="t in cv.tiles" :key="t.id">
+                  <button class="tile" @click="cvAdd(t.id)" :disabled="cvDone" :aria-label="'multiply by ' + t.numText + ' per ' + t.denText">
+                    <span class="frac-n" x-text="t.numText" aria-hidden="true"></span>
+                    <span class="frac-bar" aria-hidden="true"></span>
+                    <span class="frac-d" x-text="t.denText" aria-hidden="true"></span>
+                  </button>
+                </template>
+              </div>
+              <div class="row mt-4">
+                <button class="btn" @click="cvUndo()" :disabled="cvDone || !cvChain.length">Undo</button>
+                <button class="btn" @click="cvClear()" :disabled="cvDone || !cvChain.length">Clear</button>
+              </div>
+            </div>
+          </template>
+
+          <!-- Mechanic A rung 2 BUILD: construct the one factor (revealed after the gut-check) -->
+          <template x-if="cv.rung === 2 && cvEstimate !== null">
+            <div>
+              <p class="small muted mt-3 mb-2">Build the one factor that turns <strong x-text="unitLabel(cv.given.unit)"></strong> into <strong x-text="unitLabel(cv.targetUnit)"></strong>. The unit you start with goes on the bottom so it cancels.</p>
+              <div class="build-row">
+                <span class="chain-term"><span x-text="fmt(cv.given.value)"></span> <span x-text="unitLabel(cv.given.unit)"></span></span>
+                <span class="times">&times;</span>
+                <div class="build-factor">
+                  <div class="bf-line">
+                    <input type="text" class="bf-val" x-model="cvNum.value" @input="cvReconcilePrompt=false" :disabled="cvDone" placeholder="value" aria-label="numerator value">
+                    <select class="bf-unit" x-model="cvNum.unit" :disabled="cvDone" aria-label="numerator unit">
+                      <option value="">choose unit</option>
+                      <option value="g">g</option>
+                      <option value="mol">mol</option>
+                      <option value="particles">particles</option>
+                    </select>
+                  </div>
+                  <span class="frac-bar"></span>
+                  <div class="bf-line">
+                    <input type="text" class="bf-val" x-model="cvDen.value" @input="cvReconcilePrompt=false" :disabled="cvDone" placeholder="value" aria-label="denominator value">
+                    <select class="bf-unit" x-model="cvDen.unit" :disabled="cvDone" aria-label="denominator unit">
+                      <option value="">choose unit</option>
+                      <option value="g">g</option>
+                      <option value="mol">mol</option>
+                      <option value="particles">particles</option>
+                    </select>
+                  </div>
+                </div>
+                <span class="chain-eq">=</span>
+                <span class="chain-result" :class="{ good: cvBuiltFactor.ok }">
+                  <template x-if="cvBuiltFactor.entered"><span><span x-text="fmt(cvBuiltFactor.result)"></span> <span x-text="cvBuiltFactor.unit ? unitLabel(cvBuiltFactor.unit) : ''"></span></span></template>
+                  <template x-if="!cvBuiltFactor.entered"><span class="muted">?</span></template>
+                </span>
+              </div>
+              <p class="small muted ref-line">Molar mass of <span x-ce="cv.sub.f"></span> = <span x-text="fmt(cv.M)"></span> g/mol. Avogadro's number = 6.022 &times; 10<sup>23</sup> particles per mole.</p>
+            </div>
+          </template>
+
+          <!-- Mechanic A rung 3 SOLVE: type the answer (revealed after the gut-check) -->
+          <template x-if="cv.rung === 3 && cvEstimate !== null">
+            <div>
+              <p class="small muted mt-3 mb-2">Solve it yourself, then type the amount in <strong x-text="unitLabel(cv.targetUnit)"></strong>. Scientific notation is fine (for example 6.022e23).</p>
+              <div class="field" style="max-width: 320px;">
+                <label x-text="'Amount in ' + unitLabel(cv.targetUnit)"></label>
+                <input type="text" class="solve-input" x-model="cvAnswer" @input="cvReconcilePrompt=false" :disabled="cvDone" placeholder="type the number">
+              </div>
+              <p class="small muted ref-line">Molar mass of <span x-ce="cv.sub.f"></span> = <span x-text="fmt(cv.M)"></span> g/mol. Avogadro's number = 6.022 &times; 10<sup>23</sup> particles per mole.</p>
+            </div>
+          </template>
+
+          <!-- Shared action row -->
+          <div class="row call-row mt-4">
+            <button class="btn btn-accent" @click="cvShip()" :disabled="cvDone || !cvCommitReady" x-text="cv.sc.actionLabel"></button>
+            <button class="btn btn-accent" x-show="cvDone" @click="cvNext()">Next <span aria-hidden="true">&rarr;</span></button>
+            <span class="call-hint" x-show="!cvCommitReady && !cvDone" x-text="cv && cv.rung === 1 ? 'Build the conversion chain first.' : (cvEstimate === null ? 'Make the gut-check estimate first.' : (cv && cv.rung === 2 ? 'Enter the conversion factor.' : 'Type the amount, then ship it.'))"></span>
+          </div>
+
+          <!-- Mechanic B: reconcile gate (a live decade mismatch blocks commit) -->
+          <template x-if="cvReconcilePrompt && !cvMiss && !cvDone">
+            <div class="reconcile">
+              <span class="reconcile-icon" aria-hidden="true">&#9878;&#65039;</span>
+              <span x-text="reconcileText"></span>
+            </div>
+          </template>
+
+          <!-- Verdict / consequence -->
+          <template x-if="cvVerdict">
+            <div class="verdict" :class="'verdict-' + cvVerdict.tone">
+              <div class="status">
+                <span class="status-icon" x-text="cvVerdict.icon"></span>
+                <span class="status-state" x-text="cvVerdict.state"></span>
+              </div>
+              <span class="verdict-headline" x-prose="cvVerdict.headline"></span>
+              <span class="verdict-detail" x-prose="cvVerdict.detail"></span>
+              <template x-if="cvVerdict.gauge">
+                <div class="gauge">
+                  <div class="gauge-seg" :class="cvVerdict.gauge==='low' ? 'miss' : ''">too little</div>
+                  <div class="gauge-seg" :class="cvVerdict.gauge==='on' ? 'on' : ''">on target</div>
+                  <div class="gauge-seg" :class="cvVerdict.gauge==='high' ? 'miss' : ''">too much</div>
+                </div>
+              </template>
+              <!-- ARI coach line: appears on the verdict that arms an audit -->
+              <template x-if="cvVerdict.coach">
+                <p class="coach"><span class="coach-who">&#129302; ARI</span> <span x-text="cvVerdict.coach"></span></p>
+              </template>
+            </div>
+          </template>
+
+          <!-- Mechanic C: self-explanation on a miss -->
+          <template x-if="cvMiss">
+            <div class="miss-panel">
+              <p class="miss-q">What went wrong? Name the slip, then see the fix.</p>
+              <div class="miss-opts">
+                <template x-for="o in cvMissOptions" :key="o.key">
+                  <button class="miss-opt" :data-state="cvMissState(o.key)" @click="cvPickMiss(o.key)" :disabled="cvMissRevealed" x-text="o.label"></button>
+                </template>
+              </div>
+              <template x-if="cvMissRevealed">
+                <div class="miss-fix">
+                  <strong x-text="cvMissCorrectLabel + '.'"></strong>
+                  <span x-text="cvMissFix"></span>
+                </div>
+              </template>
+            </div>
+          </template>
+          </div>
+          </template>
+          <!-- ===== END SOLVE region ===== -->
+
+          <!-- ===== AUDIT station: catch ARI making your recurring slip (Tier 2) ===== -->
+          <template x-if="cv && cv.audit">
+          <div class="audit">
+            <div class="audit-intro">
+              <span class="audit-who">&#129302; ARI</span>
+              <p class="audit-frame" x-text="ARI_INTRO"></p>
+            </div>
+
+            <p class="muted mb-2">
+              The reading was <strong x-text="fmt(cv.given.value) + ' ' + unitLabel(cv.given.unit)"></strong>
+              of <span class="mono" x-ce="cv.sub.f"></span> (<span x-text="cv.sub.name"></span>),
+              to be resolved to <strong x-text="unitLabel(cv.targetUnit)"></strong>.
+            </p>
+            <p class="small muted mb-3">Molar mass of <span x-ce="cv.sub.f"></span> = <span x-text="fmt(cv.M)"></span> g/mol.</p>
+
+            <div class="audit-solution">
+              <p class="audit-claim" x-text="auditClaim"></p>
+              <p class="audit-working" x-text="cv.audit.working"></p>
+              <p class="audit-result">ARI logged <strong x-text="fmt(cv.audit.aiValue) + ' ' + unitLabel(cv.targetUnit)"></strong>.</p>
+            </div>
+
+            <p class="small" style="font-weight:700; margin: var(--s-4) 0 var(--s-2);">Check ARI's work. Does the number hold up?</p>
+            <div class="choice-grid audit-choices" style="max-width: 460px;">
+              <button class="choice" :data-state="auditChoiceState('trust')" @click="auditPickTrust()" :disabled="auditDone">Trust it, sign off</button>
+              <button class="choice" :data-state="auditChoiceState('flag')" @click="auditPickFlag()" :disabled="auditDone">Flag it, the number is off</button>
+            </div>
+
+            <!-- On Flag, name the slip (the three numeric misconceptions) -->
+            <template x-if="auditPick === 'flag'">
+              <div class="miss-panel mt-3">
+                <p class="miss-q">What did ARI get wrong? Name it.</p>
+                <div class="miss-opts">
+                  <template x-for="o in cv.audit.flawOpts" :key="o.key">
+                    <button class="miss-opt" :data-state="auditFlawState(o.key)" @click="auditNameFlaw(o.key)" :disabled="auditDone" x-text="o.label"></button>
+                  </template>
+                </div>
+              </div>
+            </template>
+
+            <div class="row call-row mt-4">
+              <button class="btn btn-accent" @click="auditCommit()" :disabled="auditDone || !auditCommitReady">Commit your call</button>
+              <button class="btn btn-accent" x-show="auditDone" @click="cvNext()">Next <span aria-hidden="true">&rarr;</span></button>
+              <span class="call-hint" x-show="!auditCommitReady && !auditDone" x-text="!auditPick ? 'Trust the number or flag it first.' : 'Now name what is wrong with it.'"></span>
+            </div>
+
+            <template x-if="auditVerdict">
+              <div class="verdict" :class="'verdict-' + auditVerdict.tone">
+                <div class="status">
+                  <span class="status-icon" x-text="auditVerdict.icon"></span>
+                  <span class="status-state" x-text="auditVerdict.state"></span>
+                </div>
+                <span class="verdict-headline" x-prose="auditVerdict.headline"></span>
+                <span class="verdict-detail" x-prose="auditVerdict.detail"></span>
+              </div>
+            </template>
+          </div>
+          </template>
+        </div>
+
+        <!-- ---------- C.8(C) percent composition (use it or reject it) ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='percent' && pc }" x-show="mode==='percent' && pc">
+          <template x-if="pcBrief">
+            <div class="brief">
+              <div class="brief-art" x-html="scArt(pcBrief.id)"></div>
+              <span class="brief-role"><span x-text="pcBrief.icon"></span> <span x-text="pcBrief.system"></span></span>
+              <div class="brief-goal" x-prose="pcBrief.goal"></div>
+              <div class="brief-why" x-prose="pcBrief.why"></div>
+            </div>
+          </template>
+
+          <div class="stat-row">
+            <div class="stat"><div class="k">substance</div><div class="v" style="font-size: var(--fs-lg)"><span x-ce="pc.sub.f"></span></div></div>
+            <div class="stat"><div class="k">molar mass</div><div class="v" x-text="fmt(MM(pc.sub.f))"></div></div>
+            <div class="stat"><div class="k" x-text="'label says ' + pc.target.el"></div><div class="v" x-text="pc.measured + '%'"></div></div>
+          </div>
+
+          <div class="field" style="max-width: 280px; margin-top: var(--s-4);">
+            <label x-text="'Real % of ' + pc.target.el + ' (your calculation)'"></label>
+            <input type="number" step="0.01" x-model="pcInput" :disabled="pcDone">
+          </div>
+          <p class="small muted mt-2 mb-3">Percent = (mass of the element in one mole / molar mass) times 100. The label is good only if it lands within <span x-text="pc.tol"></span>% of the real value.</p>
+
+          <div class="choice-grid" style="max-width: 460px;">
+            <template x-for="o in pc.sc.options" :key="o.key">
+              <button class="choice" :data-state="pcDecState(o.key)" @click="pcPick(o.key)" x-text="o.label"></button>
+            </template>
+          </div>
+
+          <!-- Commit -->
+          <div class="row call-row mt-4">
+            <button class="btn btn-accent" @click="pcCertify()" :disabled="pcDone || !pcDecision || pcInput===''">Commit the call</button>
+            <button class="btn btn-accent" x-show="pcDone" @click="pcNext()">Next <span aria-hidden="true">&rarr;</span></button>
+            <span class="call-hint" x-show="(!pcDecision || pcInput === '') && !pcDone" x-text="pcInput === '' ? 'Work out the real percent first.' : 'Now say whether the label holds.'"></span>
+          </div>
+
+          <!-- Verdict / consequence -->
+          <template x-if="pcVerdict">
+            <div class="verdict" :class="'verdict-' + pcVerdict.tone">
+              <div class="status">
+                <span class="status-icon" x-text="pcVerdict.icon"></span>
+                <span class="status-state" x-text="pcVerdict.state"></span>
+              </div>
+              <span class="verdict-headline" x-prose="pcVerdict.headline"></span>
+              <span class="verdict-detail" x-prose="pcVerdict.detail"></span>
+            </div>
+          </template>
+
+          <template x-if="pcChecked">
+            <table class="data" style="max-width: 360px; margin-top: var(--s-3);">
+              <thead><tr><th>element</th><th class="num">% by mass</th></tr></thead>
+              <tbody>
+                <template x-for="row in pc.comp" :key="row.el">
+                  <tr :class="{ 'row-flag': row.el===pc.target.el }">
+                    <td class="mono" x-text="row.el"></td>
+                    <td class="num" x-text="fmt(row.percent)"></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </template>
+        </div>
+
+        <!-- ---------- C.8(D) empirical + molecular (mystery ID) ---------- -->
+        <div class="panel formula-panel" :class="{ 'is-active': mode==='formula' && fo }" x-show="mode==='formula' && fo">
+          <template x-if="foBrief">
+            <div class="brief">
+              <div class="brief-art" x-html="scArt(foBrief.id)"></div>
+              <span class="brief-role"><span x-text="foBrief.icon"></span> <span x-text="foBrief.system"></span></span>
+              <div class="brief-goal" x-prose="foBrief.goal"></div>
+              <div class="brief-why" x-prose="foBrief.why"></div>
+            </div>
+          </template>
+
+          <div class="mystery-job-switcher" x-show="honors && gMastered('d')" aria-label="Mystery and Honors jobs">
+            <button class="job-pill" :aria-pressed="honorsJob==='core'" @click="honorsJob='core'">Core</button>
+            <button class="job-pill" :aria-pressed="honorsJob==='hy'" @click="honorsJob='hy'">Water</button>
+            <button class="job-pill" :aria-pressed="honorsJob==='cb'" @click="honorsJob='cb'">Fire</button>
+          </div>
+
+          <div class="honors-lockline" x-show="honors && !gMastered('d')" role="status">
+            <span class="honors-tag">Honors locked</span>
+            <span>Certify Mystery ID three times to unlock water reclaim and fire forensics.</span>
+          </div>
+
+          <div class="formula-core" x-show="!honors || !gMastered('d') || honorsJob==='core'">
+          <table class="data" style="max-width: 460px;">
+            <thead><tr><th>element</th><th class="num">grams</th><th class="num">moles</th><th class="num">ratio</th></tr></thead>
+            <tbody>
+              <template x-for="el in fo.els" :key="el">
+                <tr>
+                  <td class="mono" x-text="el"></td>
+                  <td class="num" x-text="fmt(fo.grams[el])"></td>
+                  <td class="num" x-text="fmt(fo.moles[el])"></td>
+                  <td class="num" x-text="fmt(foRatio(el))"></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+
+          <p class="small muted mt-4 mb-2">Step 1. Divide by the smallest, then scale to whole numbers. Set each subscript:</p>
+          <div class="stepper-row">
+            <template x-for="el in fo.els" :key="el">
+              <div class="stepper">
+                <span class="el mono" x-text="el"></span>
+                <button class="btn btn-sm" @click="fEmpStep(el,-1)" :disabled="foDone" :aria-label="'decrease subscript for ' + el">&minus;</button>
+                <span class="sub mono" x-formula="fEmp[el]"></span>
+                <button class="btn btn-sm" @click="fEmpStep(el,1)" :disabled="foDone" :aria-label="'increase subscript for ' + el">+</button>
+              </div>
+            </template>
+          </div>
+          <p class="mt-3">Empirical formula: <span class="formula" x-ce="foStudentEmp"></span></p>
+
+          <p class="small muted mt-4 mb-2">
+            Step 2. Empirical molar mass is <span x-text="fmt(fo.empMass)"></span> g/mol; the sample's molar mass is <span x-text="fmt(fo.molMass)"></span> g/mol.
+            Set the multiplier n so empirical times n is the molecular formula:
+          </p>
+          <div class="stepper-row">
+            <div class="stepper">
+              <span class="el mono">n</span>
+              <button class="btn btn-sm" @click="fNStep(-1)" :disabled="foDone" aria-label="decrease multiplier n">&minus;</button>
+              <span class="sub mono" x-text="fN"></span>
+              <button class="btn btn-sm" @click="fNStep(1)" :disabled="foDone" aria-label="increase multiplier n">+</button>
+            </div>
+          </div>
+          <p class="mt-3">Molecular formula: <span class="formula" x-ce="foStudentMol"></span></p>
+
+          <!-- Commit -->
+          <div class="row call-row mt-4">
+            <button class="btn btn-accent" @click="foCertify()" :disabled="foDone">Identify it</button>
+            <button class="btn btn-accent" x-show="foDone" @click="foNext()">Next <span aria-hidden="true">&rarr;</span></button>
+          </div>
+
+          <!-- Verdict / consequence -->
+          <template x-if="foVerdict && (!honors || !gMastered('d'))">
+            <div class="verdict" :class="'verdict-' + foVerdict.tone">
+              <div class="status">
+                <span class="status-icon" x-text="foVerdict.icon"></span>
+                <span class="status-state" x-text="foVerdict.state"></span>
+              </div>
+              <span class="verdict-headline" x-prose="foVerdict.headline"></span>
+              <span class="verdict-detail" x-prose="foVerdict.detail"></span>
+            </div>
+          </template>
+          </div>
+
+          <!-- Honors: water reclaim (h1) -->
+          <div class="honors-block" x-show="honors && gMastered('d') && honorsJob==='hy'">
+            <span class="honors-tag">Honors · water reclaim</span>
+            <template x-if="gMastered('d') && hy">
+              <div class="mt-3">
+                <template x-if="hyBrief">
+                  <div class="brief">
+                    <div class="brief-art" x-html="scArt(hyBrief.id)"></div>
+                    <span class="brief-role"><span x-text="hyBrief.icon"></span> <span x-text="hyBrief.system"></span></span>
+                    <div class="brief-goal" x-prose="hyBrief.goal"></div>
+                    <div class="brief-why" x-prose="hyBrief.why"></div>
+                  </div>
+                </template>
+                <p class="small">A <span x-text="fmt(hy.massHyd)"></span> g sample of the hydrate <span x-ce="hy.h.anhydrous + '.xH2O'"></span> is heated until only <span x-text="fmt(hy.massAnh)"></span> g of dry <span x-ce="hy.h.anhydrous"></span> remains. Water driven off: <span x-text="fmt(hy.waterLost)"></span> g. Find x.</p>
+                <div class="stepper-row">
+                  <div class="stepper">
+                    <span class="el mono">x</span>
+                    <button class="btn btn-sm" @click="hyStep(-1)" :disabled="hyDone" aria-label="decrease x">&minus;</button>
+                    <span class="sub mono" x-text="hyX"></span>
+                    <button class="btn btn-sm" @click="hyStep(1)" :disabled="hyDone" aria-label="increase x">+</button>
+                  </div>
+                  <span class="formula" x-ce="hy.h.anhydrous + '.' + hyX + 'H2O'"></span>
+                </div>
+                <div class="row call-row mt-3">
+                  <button class="btn btn-honors" @click="hyCertify()" :disabled="hyDone">Set the oven</button>
+                  <button class="btn btn-honors" x-show="hyDone" @click="hyNext()">Next <span aria-hidden="true">&rarr;</span></button>
+                </div>
+                <template x-if="hyVerdict">
+                  <div class="verdict" :class="'verdict-' + hyVerdict.tone">
+                    <div class="status">
+                      <span class="status-icon" x-text="hyVerdict.icon"></span>
+                      <span class="status-state" x-text="hyVerdict.state"></span>
+                    </div>
+                    <span class="verdict-headline" x-prose="hyVerdict.headline"></span>
+                    <span class="verdict-detail" x-prose="hyVerdict.detail"></span>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </div>
+
+          <!-- Honors: fire forensics (h2) -->
+          <div class="honors-block" x-show="honors && gMastered('d') && honorsJob==='cb'">
+            <span class="honors-tag">Honors · fire forensics</span>
+            <template x-if="gMastered('d') && cb">
+              <div class="mt-3">
+                <template x-if="cbBrief">
+                  <div class="brief">
+                    <div class="brief-art" x-html="scArt(cbBrief.id)"></div>
+                    <span class="brief-role"><span x-text="cbBrief.icon"></span> <span x-text="cbBrief.system"></span></span>
+                    <div class="brief-goal" x-prose="cbBrief.goal"></div>
+                    <div class="brief-why" x-prose="cbBrief.why"></div>
+                  </div>
+                </template>
+                <p class="small">
+                  A <span x-text="cb.sampleMass!==null ? (fmt(cb.sampleMass) + ' g ') : 'hydrocarbon '"></span>sample burned completely to
+                  <span x-text="fmt(cb.massCO2)"></span> g <span x-ce="'CO2'"></span> and <span x-text="fmt(cb.massH2O)"></span> g <span x-ce="'H2O'"></span>.
+                  All carbon goes to <span x-ce="'CO2'"></span>, all hydrogen to <span x-ce="'H2O'"></span><span x-show="cb.sampleMass!==null">, and oxygen is found by mass difference</span>. Build the empirical formula.
+                </p>
+                <div class="stepper-row">
+                  <template x-for="el in ['C','H','O']" :key="el">
+                    <div class="stepper">
+                      <span class="el mono" x-text="el"></span>
+                      <button class="btn btn-sm" @click="cbStep(el,-1)" :disabled="cbDone" :aria-label="'decrease subscript for ' + el">&minus;</button>
+                      <span class="sub mono" x-text="cbSub[el]"></span>
+                      <button class="btn btn-sm" @click="cbStep(el,1)" :disabled="cbDone" :aria-label="'increase subscript for ' + el">+</button>
+                    </div>
+                  </template>
+                  <span class="formula" x-ce="cbStudentStr"></span>
+                </div>
+                <div class="row call-row mt-3">
+                  <button class="btn btn-honors" @click="cbCertify()" :disabled="cbDone">Match the fuel</button>
+                  <button class="btn btn-honors" x-show="cbDone" @click="cbNext()">Next <span aria-hidden="true">&rarr;</span></button>
+                </div>
+                <template x-if="cbVerdict">
+                  <div class="verdict" :class="'verdict-' + cbVerdict.tone">
+                    <div class="status">
+                      <span class="status-icon" x-text="cbVerdict.icon"></span>
+                      <span class="status-state" x-text="cbVerdict.state"></span>
+                    </div>
+                    <span class="verdict-headline" x-prose="cbVerdict.headline"></span>
+                    <span class="verdict-detail" x-prose="cbVerdict.detail"></span>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- ---------- Capstone: resupply pod ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
+          <div class="note note-info" x-show="!capUnlocked">The resupply pod unlocks once all four core systems (C.8 A to D) are certified. Certified so far: <span x-text="Math.round(gOverall()*4)"></span> of 4.</div>
+          <button class="btn btn-accent" x-show="capUnlocked && !cap" @click="genCapstone()">Open the pod log</button>
+
+          <template x-if="capUnlocked && cap">
+          <div>
+            <template x-if="capBrief">
+              <div class="brief">
+                <div class="brief-art" x-html="scArt(capBrief.id)"></div>
+                <span class="brief-role"><span x-text="capBrief.icon"></span> <span x-text="capBrief.system"></span></span>
+                <div class="brief-goal" x-prose="capBrief.goal"></div>
+                <div class="brief-why" x-prose="capBrief.why"></div>
+              </div>
+            </template>
+
+            <p class="muted mb-3">Manifest says <strong x-text="cap.claimed.name"></strong> (<span class="mono" x-ce="cap.claimed.molecular"></span>). Build the molecular formula from the element masses to confirm what is really inside, then check the purity.</p>
+
+            <table class="data" style="max-width: 460px;">
+              <thead><tr><th>element</th><th class="num">grams</th><th class="num">moles</th></tr></thead>
+              <tbody>
+                <template x-for="el in cap.els" :key="el">
+                  <tr><td class="mono" x-text="el"></td><td class="num" x-text="fmt(cap.grams[el])"></td><td class="num" x-text="fmt(cap.moles[el])"></td></tr>
+                </template>
+              </tbody>
+            </table>
+
+            <p class="small muted mt-4 mb-2">Step 1. Empirical subscripts:</p>
+            <div class="stepper-row">
+              <template x-for="el in cap.els" :key="el">
+                <div class="stepper">
+                  <span class="el mono" x-text="el"></span>
+                  <button class="btn btn-sm" @click="capStepEmp(el,-1)" :disabled="capWin" :aria-label="'decrease subscript for ' + el">&minus;</button>
+                  <span class="sub mono" x-formula="capEmp[el]"></span>
+                  <button class="btn btn-sm" @click="capStepEmp(el,1)" :disabled="capWin" :aria-label="'increase subscript for ' + el">+</button>
+                </div>
+              </template>
+            </div>
+
+            <p class="small muted mt-4 mb-2">Empirical molar mass <span x-text="fmt(cap.empMass)"></span> g/mol; sample molar mass <span x-text="fmt(cap.molMass)"></span> g/mol. Multiplier n:</p>
+            <div class="stepper-row">
+              <div class="stepper">
+                <span class="el mono">n</span>
+                <button class="btn btn-sm" @click="capStepN(-1)" :disabled="capWin" aria-label="decrease multiplier n">&minus;</button>
+                <span class="sub mono" x-text="capN"></span>
+                <button class="btn btn-sm" @click="capStepN(1)" :disabled="capWin" aria-label="increase multiplier n">+</button>
+              </div>
+            </div>
+            <p class="mt-3">What is really inside: <span class="formula" x-ce="capStudentMol"></span></p>
+
+            <p class="small muted mt-4 mb-2">Step 2. Purity gauge reads <strong x-text="cap.measured + '% ' + cap.targetEl.el"></strong>. Work out the real % of <span x-text="cap.targetEl.el"></span> for what you just identified (it passes within <span x-text="cap.tol"></span>%):</p>
+            <div class="field" style="max-width: 280px;">
+              <label x-text="'Real % of ' + cap.targetEl.el"></label>
+              <input type="number" step="0.01" x-model="capInput" :disabled="capWin">
+            </div>
+
+            <p class="small muted mt-4 mb-2">Step 3. Make the call. Bring it aboard if the contents and purity both check out, quarantine if the contents are right but purity fails, jettison if the manifest is wrong.</p>
+            <div class="choice-grid" style="max-width: 560px;">
+              <template x-for="o in cap.sc.options" :key="o.key">
+                <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
+              </template>
+            </div>
+
+            <!-- Commit -->
+            <div class="row call-row mt-4">
+              <button class="btn btn-accent" @click="capCertify()" :disabled="capWin || !capPick">Make the call</button>
+              <span class="call-hint" x-show="!capPick && !capWin" x-text="'Make the call on the pod first.'"></span>
+            </div>
+
+            <!-- Verdict / consequence -->
+            <template x-if="capVerdict">
+              <div class="verdict" :class="'verdict-' + capVerdict.tone">
+                <div class="status">
+                  <span class="status-icon" x-text="capVerdict.icon"></span>
+                  <span class="status-state" x-text="capVerdict.state"></span>
+                </div>
+                <span class="verdict-headline" x-prose="capVerdict.headline"></span>
+                <span class="verdict-detail" x-prose="capVerdict.detail"></span>
+              </div>
+            </template>
+          </div>
+          </template>
+        </div>
+
+        <!-- ---------- Mechanic D: "Feel a mole" molecular-eyes zoom (ungraded) ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='zoom' }" x-show="mode==='zoom'">
+          <div class="brief">
+            <span class="brief-role">&#128300; Feel a mole</span>
+            <div class="brief-goal">A mole is 6.022 &times; 10<sup>23</sup> of something. That number is too big to picture. Slide it up one power of ten at a time and watch how fast it outruns anything you could ever draw.</div>
+          </div>
+
+          <!-- x-init measures the rendered stage so the dot field can pack to what this
+               display can actually resolve; without it the module falls back to a
+               reference resolution and a retina panel would draw fewer dots than it
+               could show. -->
+          <div class="zoom-stage">
+            <svg class="zoom-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"
+                 aria-hidden="true" x-init="zoomWatch($el)">
+              <g class="zoom-dots" x-html="zoomDots()"></g>
+            </svg>
+          </div>
+
+          <div class="zoom-readout">
+            <span class="zoom-count" x-html="zoomCount()"></span>
+            <span class="zoom-unit">particles</span>
+          </div>
+
+          <div class="field mt-3">
+            <label>Power of ten: 10<sup x-text="zoomPow"></sup></label>
+            <input type="range" min="0" :max="ZOOM_MAX_POW" step="1" x-model.number="zoomPow" class="zoom-slider" aria-label="power of ten, 0 to 23">
+          </div>
+
+          <!-- A DECADE gauge, not a span one: the slider steps in powers of ten, so the
+               axis has to be log or every step below 10^22 would collapse into the left
+               edge and the slider would look broken. Each notch of the slider moves the
+               needle the same distance, which is the honest picture of "one more power
+               of ten", and the trend chip counts the move in decades crossed. -->
+          <div x-gauge="{ kind:'decade', value: Math.pow(10, zoomPow), min: 1, max: 1e23, digits: 3,
+                          label:'how far up the powers of ten', tone:'teal' }"></div>
+
+          <p class="zoom-analogy">That is <span x-text="zoomAnalogy()"></span></p>
+          <p class="small muted" x-show="zoomCapped()">Only <span x-text="zoomDrawn()"></span> dots are drawn here &mdash; every one this screen can still tell apart. The rest will not fit on any screen, which is exactly the point.</p>
+        </div>
+      </section>
+
+      <!-- ============ RIGHT: life-support status ============ -->
+      <aside class="life-support-board panel" aria-label="Life-support status">
+        <div class="life-header">
+          <div>
+            <span class="command-kicker">Life support</span>
+            <strong x-text="crewState"></strong>
+          </div>
+          <span class="sol-chip">Sol <strong x-text="sol"></strong></span>
+        </div>
+
+        <div class="crew-status cockpit-crew">
+          <span class="crew-face" x-text="crewMood"></span>
+          <div class="crew-bar">
+            <div class="life-meter-label">
+              <span>Crew safety</span>
+              <span class="mono" x-text="crew + '%'"></span>
+            </div>
+            <div class="meter"><div class="meter-fill" :style="`width:${crew}%; background:${crew>=67 ? 'var(--success)' : crew>=34 ? 'var(--warn)' : 'var(--danger)'}`"></div></div>
+          </div>
+        </div>
+
+        <div class="system-grid" aria-label="Ship systems">
+          <template x-for="s in shipStocks" :key="s.key">
+            <div class="ship-stock">
+              <div class="life-meter-label">
+                <span x-text="s.label"></span>
+                <span class="mono" x-text="stocks[s.key] + '%'"></span>
+              </div>
+              <div class="meter"><div class="meter-fill" :style="`width:${stocks[s.key]}%; background:${stockColor(stocks[s.key])}`"></div></div>
+            </div>
+          </template>
+        </div>
+
+        <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest consequence">
+          <span class="command-kicker">Latest consequence</span>
+          <strong x-text="activeStateLabel"></strong>
+          <p x-text="worldLog.length ? worldLog[0].text : 'No system has been touched yet. Commit a chemistry action and the ship state will change here.'"></p>
+        </section>
+
+        <section class="mission-log" aria-label="Mission log">
+          <span class="command-kicker">Mission log</span>
+          <p class="worldstate-empty" x-show="!worldLog.length">Awaiting first call.</p>
+          <ul class="worldstate-list" x-show="worldLog.length">
+            <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
+              <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
+                <span class="ws-icon" x-text="w.icon"></span>
+                <span x-text="w.text"></span>
+              </li>
+            </template>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <!-- Filled in by mountCaseFile() before Alpine.start(), so every binding inside the
+         injected story (including its animated stage SVG) initializes with the page. -->
+    <div data-casefile></div>
+  </main>
+</div>
+
+<script type="module">
+  window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
+  const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
+         { mountColumnResizers }] = await Promise.all([
+    import('./js/main.js?v=u5-1'),
+    import('../../shared/js/render.js'),
+    import('../../shared/js/gauge.js'),
+    import('../../shared/js/casefile.js'),
+    import('./js/case.js?v=u5-1'),
+    import('../shared/columns.js?v=cockpit-3')
+  ]);
+  window.sim = createSim;
+  const { default: Alpine } = await import('https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js');
+  registerRender(Alpine);
+  registerGauge(Alpine);
+  Alpine.data('sim', createSim);
+  mountCaseFile(Alpine, CASE);          // must precede start(): it injects markup + x-data
+  window.Alpine = Alpine;
+  if (window.__startAlpine) window.__startAlpine();
+  else Alpine.start();
+  // After start(), so the handles are appended to a workbench Alpine has already claimed.
+  // The two gutter buttons carry no bindings, so Alpine never walks them.
+  mountColumnResizers();
+</script>
+</body>
+</html>

@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 7 · Gas Laws &amp; Kinetic Theory</title>
+<meta name="description" content="Watch a 3D kinetic particle box, solve PV = nRT for any variable, and split a mixture with Dalton's law of partial pressures. TEKS C.10.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<link rel="stylesheet" href="../../shared/css/components.css">
+<link rel="stylesheet" href="../../shared/css/casefile.css">
+<link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
+<link rel="stylesheet" href="css/style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div x-data="sim()" x-cloak>
+
+  <main class="codex-shell cockpit-shell" aria-label="Unit 7 dive-boat cockpit">
+    <header class="cockpit-command">
+      <div class="command-brand"><span class="command-kicker">Unit 7 · TEKS C.10</span><a class="command-home" href="../index.html" title="All units">Gas Laws &amp; Kinetic Theory</a><span x-text="activeStationName"></span></div>
+      <nav class="station-nav" role="tablist" aria-label="Dive-boat fill benches">
+        <button class="tab" role="tab" :aria-selected="mode==='kmt'" @click="setMode('kmt')" aria-label="Kinetic theory"><span class="tab-full" aria-hidden="true">Kinetic theory</span><span class="tab-short" aria-hidden="true">Kinetic</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='ideal'" @click="setMode('ideal')" aria-label="Ideal gas law"><span class="tab-full" aria-hidden="true">Ideal gas law</span><span class="tab-short" aria-hidden="true">Ideal</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='dalton'" @click="setMode('dalton')" aria-label="Partial pressures"><span class="tab-full" aria-hidden="true">Partial pressures</span><span class="tab-short" aria-hidden="true">Dalton</span></button>
+        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="The last fill"><span class="tab-full" aria-hidden="true">The last fill</span><span class="tab-short" aria-hidden="true">Last fill</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')" aria-label="Case file"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
+      </nav>
+      <div class="command-actions">
+      <label class="switch" title="Reveal advanced content">
+        <input type="checkbox" x-model="honors">
+        <span class="track"></span>
+        <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+      </label>
+        <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
+      </div>
+      <div class="command-metrics"><span class="metric-chip">XP <strong x-text="g_xp"></strong></span><span class="metric-chip">Streak <strong x-text="g_streak"></strong></span><span class="teks-badge" :class="{ complete: teksMasteredCount===coreSkills.length }">TEKS <strong><span x-text="teksMasteredCount"></span>/3</strong></span></div>
+    </header>
+    <div class="workbench-grid" x-show="mode!=='casefile'">
+      <section class="mission-screen panel" :class="'tone-'+activeTone" aria-label="Active dive-boat job">
+        <div class="mission-frame"><div class="mission-screen-art" x-html="scArt(activeArtId)"></div><div class="screen-scanline" aria-hidden="true"></div></div>
+        <div class="screen-status"><span class="screen-system" x-text="activeStationName"></span><span class="screen-state" x-show="activeStateLabel" x-text="activeStateLabel"></span></div>
+        <div class="screen-copy"><p class="screen-goal" x-prose="activeBrief ? activeBrief.goal : ''"></p><p class="screen-outcome" x-prose="activeOutcomeText"></p></div>
+        <!-- A native <details>, so the standing facts can be folded away and the art and the
+             prompt take the rows back. Open by default, because facts a learner has to hunt
+             for are not standing facts. The summary keeps .command-kicker: it is the same
+             chrome eyebrow it was before it became a disclosure, and that class is what
+             exempts it from the 14px legibility floor in tests/unit5a-layout.test.mjs.
+             shared/cockpit.css styles it; the height media queries there still drop the whole
+             card on a short viewport, which is the shell deciding there is no room rather
+             than the learner deciding they want it elsewhere. -->
+        <details class="screen-reference" aria-label="Reference facts" open><summary class="command-kicker">Reference</summary><div class="screen-reference-body"><template x-for="r in activeReference" :key="r.k"><p class="ref-item"><span class="ref-k" x-text="r.k"></span><span class="ref-v" x-prose="r.v"></span></p></template></div></details>
+        <section class="cockpit-instincts"><span class="command-kicker">The shift</span><p><strong x-text="clockLabel"></strong> · bank <strong x-text="fmt(bank)+' atm'"></strong></p></section>
+      </section>
+      <section class="task-stack chem-console">
+
+        <!-- ---------- C.10(A) KINETIC MOLECULAR THEORY ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='kmt' }" x-show="mode==='kmt'">
+          <template x-if="kq">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="kq.sc.icon"></span> <span x-text="kq.sc.system"></span></span>
+                <div class="brief-goal" x-prose="kq.sc.goal"></div>
+                <div class="brief-why" x-prose="kq.sc.why"></div>
+              </div>
+
+              <p class="small muted" style="margin-bottom: var(--s-3);">Every particle is in constant, random motion. Change the temperature, particle count, and volume, then watch how the model responds. Drag to rotate.</p>
+
+              <div class="stage" x-ref="stage"></div>
+
+              <div class="controls-grid">
+                <div class="ctrl">
+                  <label>Temperature <span class="val" x-text="boxT+' K'"></span></label>
+                  <input type="range" min="100" max="900" step="10" x-model.number="boxT" @input="onTemp()">
+                </div>
+                <div class="ctrl">
+                  <label>Particles <span class="val" x-text="boxN"></span></label>
+                  <input type="range" min="5" max="100" step="5" x-model.number="boxN" @input="onCount()">
+                </div>
+                <div class="ctrl">
+                  <label>Volume <span class="val" x-text="'×'+fmt(boxV,2)"></span></label>
+                  <input type="range" min="0.4" max="2" step="0.1" x-model.number="boxV" @input="onVol()">
+                </div>
+              </div>
+
+              <!-- Each card carries a dial because a bare "×0.329" states the number
+                   without the story. The two ×-cards get RATIO dials, whose axis is
+                   logarithmic and centred on ×1, so halving and doubling read as equal
+                   moves in opposite directions. The particle count is an absolute
+                   quantity, so it gets a plain SPAN dial over the slider's own range. -->
+              <div class="stat-row has-dials" style="margin-top: var(--s-4);">
+                <div class="stat">
+                  <div class="k">avg kinetic energy</div>
+                  <div class="v" x-text="'×'+fmt(relKE,3)"></div>
+                  <div x-gauge="{ kind:'ratio', value: relKE, fold: 3, digits: 3,
+                                  label:'average kinetic energy', refLabel:'the 300 K baseline', tone:'teal' }"></div>
+                </div>
+                <div class="stat">
+                  <div class="k">relative pressure</div>
+                  <div class="v" x-text="'×'+fmt(relP,3)"></div>
+                  <!-- fold 50 covers every corner the three sliders can reach
+                       (×0.021 at 5 particles/100 K/×2 volume up to ×18.8 at
+                       100 particles/900 K/×0.4 volume), so the needle never pins
+                       during ordinary exploration. -->
+                  <div x-gauge="{ kind:'ratio', value: relP, fold: 50, digits: 3,
+                                  label:'relative pressure', refLabel:'the baseline fill', tone:'indigo' }"></div>
+                </div>
+                <!-- No third card for the particle count: the slider directly above already
+                     reads it, and a linear 5-to-100 dial adds nothing the number does not say.
+                     Two cards also let each dial's caption sit on one line instead of two. -->
+              </div>
+              <details class="lesson-reference" style="margin-top: var(--s-3);">
+                <summary>The five postulates, and how to read the &times;-numbers</summary>
+                <div class="lesson-reference-body">
+                  <p class="muted" style="font-size: var(--fs-sm);">Every ×-number compares this box with one baseline box: 40 particles, 300 K, ×1 volume. Average kinetic energy depends only on temperature (postulate 5). Pressure comes from wall collisions, so it rises with more particles or higher temperature and falls as the volume grows: P &#8733; nT/V.</p>
+                  <ol class="postulates">
+                    <template x-for="p in KMT_POSTULATES" :key="'ref'+p.id">
+                      <li><strong x-text="p.short + ' · '"></strong><span x-text="p.text"></span></li>
+                    </template>
+                  </ol>
+                </div>
+              </details>
+
+              <label style="display:block; margin: var(--s-5) 0 var(--s-2);">Which postulate explains this?</label>
+              <div class="clue-card" x-text="kq.item.scenario"></div>
+              <p class="small muted" style="margin-top: var(--s-2);">Where it turns up: <span x-text="kq.item.where"></span>.</p>
+              <div class="choice-grid" style="margin-top: var(--s-3);">
+                <template x-for="p in KMT_POSTULATES" :key="'q'+p.id">
+                  <button class="choice" :data-state="postState(p.id)" @click="pickPostulate(p.id)" x-text="p.short"></button>
+                </template>
+              </div>
+              <div class="row call-row" style="margin-top: var(--s-3);">
+                <button class="btn btn-accent" @click="kCommit()" :disabled="kPick===null || kDone">Call it</button>
+                <span class="grow"></span>
+                <button class="btn btn-sm" @click="kNext()">Next observation</button>
+                <span class="call-hint" x-show="kPick === null && !kDone" x-text="'Say which postulate explains it first.'"></span>
+              </div>
+
+              <template x-if="kVerdict">
+                <div class="verdict" :class="'verdict-' + kVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="kVerdict.icon"></span>
+                    <span class="status-state" x-text="kVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-prose="kVerdict.headline"></span>
+                  <span class="verdict-detail" x-prose="kVerdict.detail"></span>
+                </div>
+              </template>
+            </div>
+          </template>
+        <!-- ---------- Honors h1: speed against energy (parent C.10A) ---------- -->
+        <div class="honors-block" x-show="honors">
+          <span class="honors-tag">Honors · Maxwell-Boltzmann distribution</span>
+          <div class="note note-info" x-show="!h1Unlocked" style="margin-top: var(--s-3);">Certify C.10(A) first: three postulate calls right in a row unlocks this bench.</div>
+          <template x-if="h1Unlocked && h1s">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="h1s.sc.icon"></span> <span x-text="h1s.sc.system"></span></span>
+                <div class="brief-goal" x-prose="h1s.sc.goal"></div>
+                <div class="brief-why" x-prose="h1s.sc.why"></div>
+              </div>
+              <div class="given-row">
+                <div class="given-cell">
+                  <span class="k">Bottle A</span>
+                  <span class="v mono"><span x-text="h1s.gA.name"></span>, <span x-text="fmt(h1s.gA.M)"></span> g/mol</span>
+                </div>
+                <div class="given-cell">
+                  <span class="k">Bottle B</span>
+                  <span class="v mono"><span x-text="h1s.gB.name"></span>, <span x-text="fmt(h1s.gB.M)"></span> g/mol</span>
+                </div>
+                <div class="given-cell">
+                  <span class="k">Rack temperature</span>
+                  <span class="v mono"><span x-text="boxT"></span> K</span>
+                </div>
+              </div>
+              <div class="clue-card" style="margin-top: var(--s-4);" x-text="h1Question"></div>
+              <div class="choice-grid choice-grid-wide" style="margin-top: var(--s-3);">
+                <button class="choice" :data-state="h1State('a')" @click="h1PickOption('a')" x-text="'Bottle A · ' + h1s.gA.name"></button>
+                <button class="choice" :data-state="h1State('b')" @click="h1PickOption('b')" x-text="'Bottle B · ' + h1s.gB.name"></button>
+                <button class="choice" :data-state="h1State('same')" @click="h1PickOption('same')">The two are the same</button>
+              </div>
+              <div class="row call-row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="h1Commit()" :disabled="h1Done || !h1Pick">Call it</button>
+                <span class="grow"></span>
+                <button class="btn btn-sm" @click="h1Next()">Next pair</button>
+                <span class="call-hint" x-show="!h1Pick && !h1Done" x-text="'Say which bottle holds more molecules.'"></span>
+              </div>
+              <template x-if="h1Verdict">
+                <div class="verdict" :class="'verdict-' + h1Verdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="h1Verdict.icon"></span>
+                    <span class="status-state" x-text="h1Verdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-prose="h1Verdict.headline"></span>
+                  <span class="verdict-detail" x-prose="h1Verdict.detail"></span>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <!-- The curve IS the answer to the speed question, so it stays hidden until the
+               call is made. It sits under x-show rather than x-if so the canvas is in the
+               DOM from the start and Chart.js only ever builds it once. Nothing in here
+               dereferences a nullable stage object without a guard. -->
+          <div x-show="h1Unlocked && h1Checked" style="margin-top: var(--s-5);">
+            <p class="eyebrow">What the curve actually says</p>
+            <div class="row" style="margin-top: var(--s-3); gap: var(--s-4);">
+              <div class="field" style="width: 180px;">
+                <label>Gas on the orange curve</label>
+                <select x-model="mbGasKey" @change="updateMB()">
+                  <template x-for="g in REAL_GASES" :key="g.key"><option :value="g.key" x-text="g.name"></option></template>
+                </select>
+              </div>
+              <span class="muted" style="font-size: var(--fs-sm);">at <span class="mono" x-text="boxT+' K'"></span> (set by the temperature slider above)</span>
+            </div>
+            <div class="canvas-wrap"><canvas x-ref="mbCanvas"></canvas></div>
+            <table class="data" style="margin-top: var(--s-3);">
+              <thead><tr><th>Gas</th><th class="num">molar mass</th><th class="num">most probable</th><th class="num">rms speed</th></tr></thead>
+              <tbody>
+                <template x-for="r in mbCompare" :key="'mb'+r.name">
+                  <tr>
+                    <td x-text="r.name"></td>
+                    <td class="num" x-text="fmt(r.M)+' g/mol'"></td>
+                    <td class="num" x-text="fmt(r.vmp,3)+' m/s'"></td>
+                    <td class="num" x-text="fmt(r.vrms,3)+' m/s'"></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">Particles share a spread of speeds, not one. Raising the temperature broadens the curve and shifts it faster; at one temperature the heavier gas peaks slower, carrying the same average energy as the lighter one.</p>
+          </div>
+        </div>
+        </div>
+
+        <!-- ---------- C.10(B) IDEAL GAS LAW (dose) ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='ideal' }" x-show="mode==='ideal'">
+          <template x-if="ig">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="ig.sc.icon"></span> <span x-text="ig.sc.system"></span></span>
+                <div class="brief-goal" x-prose="ig.sc.goal"></div>
+                <div class="brief-why" x-prose="ig.sc.why"></div>
+              </div>
+
+              <div class="given-row">
+                <template x-for="g in igGivens" :key="'ig'+g.key">
+                  <div class="given-cell">
+                    <span class="k" x-text="g.label"></span>
+                    <span class="v mono"><span x-text="g.value"></span> <span x-text="g.unit"></span></span>
+                  </div>
+                </template>
+                <div class="given-cell">
+                  <span class="k">Work out</span>
+                  <span class="v mono"><span x-text="ig.label"></span> (<span x-text="ig.unit"></span>)</span>
+                </div>
+              </div>
+
+              <!-- The solver stays exactly as it was. It is frozen while the call is open,
+                   so the state on screen is the state the brief describes, and it unlocks
+                   the moment the call is made so the relationship is explorable. -->
+              <div class="tabs" style="border:none; margin: var(--s-4) 0 var(--s-3);">
+                <button class="tab btn-sm" :aria-selected="solveFor==='P'" @click="solveFor='P'; onIdeal()" :disabled="!igDone">Solve for P</button>
+                <button class="tab btn-sm" :aria-selected="solveFor==='V'" @click="solveFor='V'; onIdeal()" :disabled="!igDone">Solve for V</button>
+                <button class="tab btn-sm" :aria-selected="solveFor==='n'" @click="solveFor='n'; onIdeal()" :disabled="!igDone">Solve for n</button>
+                <button class="tab btn-sm" :aria-selected="solveFor==='T'" @click="solveFor='T'; onIdeal()" :disabled="!igDone">Solve for T</button>
+              </div>
+
+              <div class="controls-grid">
+                <div class="field">
+                  <label>Pressure P (atm)</label>
+                  <input type="number" step="0.1" min="0" x-model.number="igP" @input="onIdeal()" x-show="solveFor!=='P'" :disabled="!igDone">
+                  <div class="solved" x-show="solveFor==='P' && igChecked" x-text="fmt(igResult,4)+' atm'"></div>
+                  <div class="solved solved-hidden" x-show="solveFor==='P' && !igChecked">your call</div>
+                </div>
+                <div class="field">
+                  <label>Volume V (L)</label>
+                  <input type="number" step="0.5" min="0" x-model.number="igV" @input="onIdeal()" x-show="solveFor!=='V'" :disabled="!igDone">
+                  <div class="solved" x-show="solveFor==='V' && igChecked" x-text="fmt(igResult,4)+' L'"></div>
+                  <div class="solved solved-hidden" x-show="solveFor==='V' && !igChecked">your call</div>
+                </div>
+                <div class="field">
+                  <label>Moles n (mol)</label>
+                  <input type="number" step="0.1" min="0" x-model.number="ign" @input="onIdeal()" x-show="solveFor!=='n'" :disabled="!igDone">
+                  <div class="solved" x-show="solveFor==='n' && igChecked" x-text="fmt(igResult,4)+' mol'"></div>
+                  <div class="solved solved-hidden" x-show="solveFor==='n' && !igChecked">your call</div>
+                </div>
+                <div class="field">
+                  <label>Temperature T (K)</label>
+                  <input type="number" step="1" min="0" x-model.number="igT" @input="onIdeal()" x-show="solveFor!=='T'" :disabled="!igDone">
+                  <div class="solved" x-show="solveFor==='T' && igChecked" x-text="fmt(igResult,4)+' K'"></div>
+                  <div class="solved solved-hidden" x-show="solveFor==='T' && !igChecked">your call</div>
+                </div>
+              </div>
+
+              <div class="eqn" style="margin-top: var(--s-4);"><span x-tex="idealFormula"></span></div>
+              <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--s-2);">R = <span class="mono" x-text="R"></span> L&#183;atm&#183;mol&#8315;&#185;&#183;K&#8315;&#185;. Keep units in atm, L, mol, and K.</p>
+
+              <div class="row call-row" style="gap: var(--s-4); align-items: flex-end; margin-top: var(--s-4);">
+                <div class="field" style="width: 210px;">
+                  <label for="igInput">Your call (<span x-text="ig.unit"></span>)</label>
+                  <input id="igInput" type="number" step="any" x-model="igInput" :disabled="igDone">
+                </div>
+                <button class="btn btn-accent" @click="igCommit()" :disabled="igDone || igInput===''" x-text="ig.sc.actionLabel"></button>
+                <span class="grow"></span>
+                <button class="btn btn-sm" @click="igNext()">Next cylinder</button>
+                <span class="call-hint" x-show="igInput === '' && !igDone" x-text="'Solve PV = nRT for the missing quantity, then type it.'"></span>
+              </div>
+
+              <template x-if="igVerdict">
+                <div class="verdict" :class="'verdict-' + igVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="igVerdict.icon"></span>
+                    <span class="status-state" x-text="igVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-prose="igVerdict.headline"></span>
+                  <span class="verdict-detail" x-prose="igVerdict.detail"></span>
+                  <template x-if="igVerdict && igVerdict.gauge">
+                    <div class="gauge">
+                      <div class="gauge-seg" :class="igVerdict && igVerdict.gauge==='low' ? 'miss' : ''">too little</div>
+                      <div class="gauge-seg" :class="igVerdict && igVerdict.gauge==='on' ? 'on' : ''">on spec</div>
+                      <div class="gauge-seg" :class="igVerdict && igVerdict.gauge==='high' ? 'miss' : ''">too much</div>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <!-- The curve passes through the solved variable, so it is the explanation
+               AFTER the call. x-show, not x-if, so the canvas is built once at load. -->
+          <div x-show="igChecked" style="margin-top: var(--s-5);">
+            <h4>See the relationship</h4>
+            <div class="field" style="max-width: 260px; margin-top: var(--s-2);">
+              <label>Relationship</label>
+              <select x-model="relKey" @change="onIdeal()">
+                <template x-for="r in RELATIONSHIPS" :key="r.key"><option :value="r.key" x-text="r.name"></option></template>
+              </select>
+            </div>
+            <div class="canvas-wrap"><canvas x-ref="lawCanvas"></canvas></div>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">The dot marks your current state. Holding the other variables fixed, the curve shows how the two plotted quantities track each other.</p>
+          </div>
+
+          <details class="lesson-reference" style="margin-top: var(--s-4);">
+            <summary>Named gas laws</summary>
+            <div class="lesson-reference-body">
+              <table class="data">
+                <thead><tr><th>Law</th><th>Relationship</th><th>Held constant</th></tr></thead>
+                <tbody>
+                  <template x-for="l in GAS_LAWS" :key="l.name">
+                    <tr>
+                      <td><strong x-text="l.name"></strong><br><span class="muted" style="font-size: var(--fs-xs)" x-prose="l.note"></span></td>
+                      <td><span x-tex="l.rel"></span></td>
+                      <td x-text="l.held"></td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        <!-- ---------- Honors h2: real-gas correction (parent C.10B) ---------- -->
+        <div class="honors-block" x-show="honors">
+          <span class="honors-tag">Honors · real gases deviate from ideal</span>
+          <div class="note note-info" x-show="!h2Unlocked" style="margin-top: var(--s-3);">Certify C.10(B) first: three ideal-gas calls right in a row unlocks this bench.</div>
+          <template x-if="h2Unlocked && h2s">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="h2s.sc.icon"></span> <span x-text="h2s.sc.system"></span></span>
+                <div class="brief-goal" x-prose="h2s.sc.goal"></div>
+                <div class="brief-why" x-prose="h2s.sc.why"></div>
+              </div>
+              <div class="given-row">
+                <div class="given-cell">
+                  <span class="k">Gas</span>
+                  <span class="v mono" x-text="h2s.gas.name"></span>
+                </div>
+                <div class="given-cell">
+                  <span class="k">Moles n</span>
+                  <span class="v mono"><span x-text="h2s.n"></span> mol</span>
+                </div>
+                <div class="given-cell">
+                  <span class="k">Volume V</span>
+                  <span class="v mono"><span x-text="h2s.V"></span> L</span>
+                </div>
+                <div class="given-cell">
+                  <span class="k">Temperature T</span>
+                  <span class="v mono"><span x-text="h2s.T"></span> K</span>
+                </div>
+                <div class="given-cell">
+                  <span class="k">a, b for this gas</span>
+                  <span class="v mono"><span x-text="h2s.gas.a"></span>, <span x-text="h2s.gas.b"></span></span>
+                </div>
+              </div>
+              <div class="eqn" style="margin-top: var(--s-4);"><span x-tex="'P = \\dfrac{nRT}{V - nb} - a\\dfrac{n^2}{V^2}'"></span></div>
+              <div class="row call-row" style="gap: var(--s-4); align-items: flex-end; margin-top: var(--s-4);">
+                <div class="field" style="width: 230px;">
+                  <label for="h2Input">van der Waals P (atm)</label>
+                  <input id="h2Input" type="number" step="any" x-model="h2Input" :disabled="h2Done">
+                </div>
+                <button class="btn btn-accent" @click="h2Commit()" :disabled="h2Done || h2Input===''" x-text="h2s.sc.actionLabel"></button>
+                <span class="grow"></span>
+                <button class="btn btn-sm" @click="h2Next()">Next bank state</button>
+                <span class="call-hint" x-show="h2Input === '' && !h2Done" x-text="'Work the van der Waals pressure out, then type it.'"></span>
+              </div>
+              <template x-if="h2Verdict">
+                <div class="verdict" :class="'verdict-' + h2Verdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="h2Verdict.icon"></span>
+                    <span class="status-state" x-text="h2Verdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-prose="h2Verdict.headline"></span>
+                  <span class="verdict-detail" x-prose="h2Verdict.detail"></span>
+                  <template x-if="h2Verdict && h2Verdict.gauge">
+                    <div class="gauge">
+                      <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='low' ? 'miss' : ''">corrected short</div>
+                      <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='on' ? 'on' : ''">on spec</div>
+                      <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='high' ? 'miss' : ''">corrected long</div>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <div x-show="h2Unlocked && h2Checked" style="margin-top: var(--s-5);">
+            <div class="stat-row has-dials">
+              <div class="stat"><div class="k">ideal P</div><div class="v" style="font-size: var(--fs-lg)" x-text="h2s ? fmt(h2s.ideal,4)+' atm' : '-'"></div></div>
+              <div class="stat"><div class="k">van der Waals P</div><div class="v" style="font-size: var(--fs-lg)" x-text="h2s ? fmt(h2s.target,4)+' atm' : '-'"></div></div>
+              <!-- Z is already a ratio against ideal behaviour, so the ratio dial is
+                   literally the right picture: which side of Z = 1 this state fell on,
+                   and how far. The series key drops the trend when the gas changes,
+                   because a delta between two different gases means nothing. -->
+              <div class="stat">
+                <div class="k">Z = PV/nRT</div>
+                <div class="v" style="font-size: var(--fs-lg)" x-text="h2s ? fmt(h2s.Z,3) : '-'"></div>
+                <div x-gauge="{ kind:'ratio', value: h2s ? h2s.Z : null, fold: 3, digits: 3,
+                                series: rgKey, label:'compressibility factor Z',
+                                refLabel:'ideal behaviour (Z = 1)', tone:'plum' }"></div>
+              </div>
+            </div>
+            <div class="canvas-wrap"><canvas x-ref="zCanvas"></canvas></div>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">An ideal gas holds Z = 1 at every pressure. A real gas dips below 1 where attractions dominate, then rises above 1 once the particles' own volume takes over. Deviations grow at high pressure and low temperature.</p>
+          </div>
+        </div>
+        </div>
+
+        <!-- ---------- C.10(C) DALTON'S PARTIAL PRESSURES (dose) ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='dalton' }" x-show="mode==='dalton'">
+          <template x-if="dl">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="dl.sc.icon"></span> <span x-text="dl.sc.system"></span></span>
+                <div class="brief-goal" x-prose="dl.sc.goal"></div>
+                <div class="brief-why" x-prose="dl.sc.why"></div>
+              </div>
+
+              <p class="small muted" style="margin-bottom: var(--s-3);">In a mixture, each gas pushes on the walls independently. Its share of the total pressure equals its mole fraction.</p>
+
+              <!-- The mixer is frozen while the call is open, so the numbers on screen are
+                   the numbers the brief states, then unlocks for exploring after the call. -->
+              <div class="row" style="gap: var(--s-6); align-items: flex-start;">
+                <div>
+                  <label style="display:block; margin-bottom: var(--s-2);">Moles of each gas</label>
+                  <div class="gasmix">
+                    <template x-for="g in dGases" :key="g.formula">
+                      <div class="gas-row" x-show="g.mol > 0 || dlChecked">
+                        <span class="gas-name" x-text="g.name"></span>
+                        <input type="number" min="0" step="0.1" x-model.number="g.mol" :disabled="!dlDone">
+                        <span class="muted mono">mol</span>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+                <div class="field" style="width: 200px;">
+                  <label x-text="dl.depth ? 'Absolute pressure at depth (atm)' : 'Total pressure (atm)'"></label>
+                  <input type="number" min="0" step="0.1" x-model.number="dTotalP" :disabled="!dlDone">
+                  <!-- 4 sig figs, not 3: this is the only derived figure shown BEFORE the
+                       commit, and the moles it sums are exact, so a learner who reads the
+                       sum off the screen instead of adding it up lands 0.21 percent out at
+                       3 sig figs against a 1 percent ideal band (trap 31). 4 gives 0.02. -->
+                  <span class="muted" style="font-size: var(--fs-xs);">total moles: <span class="mono" x-text="fmt(dTotalMol,4)"></span></span>
+                </div>
+              </div>
+
+              <div class="given-row" style="margin-top: var(--s-4);">
+                <div class="given-cell">
+                  <span class="k">Work out</span>
+                  <span class="v mono">partial P of <span x-text="dl.find.name"></span> (atm)</span>
+                </div>
+                <div class="given-cell" x-show="dl.depth">
+                  <span class="k">Depth</span>
+                  <span class="v mono"><span x-text="dl.depth"></span> m, limit <span x-text="PPO2_LIMIT"></span> atm</span>
+                </div>
+              </div>
+
+              <div class="row call-row" style="gap: var(--s-4); align-items: flex-end; margin-top: var(--s-4);">
+                <div class="field" style="width: 210px;">
+                  <label for="dlInput">Your call (atm)</label>
+                  <input id="dlInput" type="number" step="any" min="0" x-model="dlInput" :disabled="dlDone">
+                </div>
+                <button class="btn btn-accent" @click="dlCommit()" :disabled="dlDone || dlInput===''" x-text="dl.sc.actionLabel"></button>
+                <span class="grow"></span>
+                <button class="btn btn-sm" @click="dlNext()">Next cylinder</button>
+                <span class="call-hint" x-show="dlInput === '' && !dlDone" x-text="'Work out the partial pressure, then type it.'"></span>
+              </div>
+
+              <template x-if="dlVerdict">
+                <div class="verdict" :class="'verdict-' + dlVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="dlVerdict.icon"></span>
+                    <span class="status-state" x-text="dlVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-prose="dlVerdict.headline"></span>
+                  <span class="verdict-detail" x-prose="dlVerdict.detail"></span>
+                  <template x-if="dlVerdict && dlVerdict.gauge">
+                    <div class="gauge">
+                      <div class="gauge-seg" :class="dlVerdict && dlVerdict.gauge==='low' ? 'miss' : ''">too lean</div>
+                      <div class="gauge-seg" :class="dlVerdict && dlVerdict.gauge==='on' ? 'on' : ''">on spec</div>
+                      <div class="gauge-seg" :class="dlVerdict && dlVerdict.gauge==='high' ? 'miss' : ''">too rich</div>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <!-- Every partial pressure in the mixture is on this readout, so it is the
+               explanation AFTER the call, never the tool that answers it. -->
+          <div x-show="dlChecked" style="margin-top: var(--s-5);">
+            <p class="eyebrow">How the mixture splits</p>
+            <div class="pp-bar">
+              <template x-for="p in dPartsActive" :key="'bar'+p.name">
+                <div class="pp-seg" :style="'width:'+(p.fraction*100)+'%; background:'+color(p.formula)" :title="p.name+': '+fmt(p.partial,3)+' atm'">
+                  <span x-show="p.fraction>0.1" x-text="p.name"></span>
+                </div>
+              </template>
+            </div>
+
+            <table class="data" style="margin-top: var(--s-4);">
+              <thead><tr><th>Gas</th><th class="num">moles</th><th class="num">mole fraction</th><th class="num">partial P (atm)</th></tr></thead>
+              <tbody>
+                <template x-for="p in dPartsActive" :key="'row'+p.name">
+                  <tr>
+                    <td><span class="swatch" :style="'background:'+color(p.formula)"></span><span x-text="p.name"></span></td>
+                    <td class="num" x-text="fmt(p.mol,3)"></td>
+                    <td class="num" x-text="fmt(p.fraction,3)"></td>
+                    <td class="num" x-text="fmt(p.partial,3)"></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+            <div class="note note-info" style="margin-top: var(--s-3);">Partial pressures add back to the total: <span class="mono" x-text="fmt(dSumPartial,3)+' atm'"></span>. That is Dalton's law.</div>
+          </div>
+        <!-- ---------- Honors h3: gas collected over water (parent C.10C) ---------- -->
+        <div class="honors-block" x-show="honors">
+          <span class="honors-tag">Honors · gas collected over water</span>
+          <div class="note note-info" x-show="!h3Unlocked" style="margin-top: var(--s-3);">Certify C.10(C) first: three partial-pressure calls right in a row unlocks this bench.</div>
+          <template x-if="h3Unlocked && h3s">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="h3s.sc.icon"></span> <span x-text="h3s.sc.system"></span></span>
+                <div class="brief-goal" x-prose="h3s.sc.goal"></div>
+                <div class="brief-why" x-prose="h3s.sc.why"></div>
+              </div>
+              <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0;">A gas bubbled into an inverted tube over water mixes with water vapor. Subtract water's vapor pressure to get the dry-gas pressure.</p>
+              <div class="row" style="gap: var(--s-4);">
+                <div class="field" style="width: 150px;">
+                  <label>Water temp</label>
+                  <select x-model.number="wTemp" :disabled="!h3Done">
+                    <template x-for="r in WATER_VP" :key="r.tC"><option :value="r.tC" x-text="r.tC+' °C'"></option></template>
+                  </select>
+                </div>
+                <div class="field" style="width: 190px;">
+                  <label>Measured total P (atm)</label>
+                  <input type="number" min="0" step="0.05" x-model.number="wTotal" :disabled="!h3Done">
+                </div>
+                <div class="field" style="width: 190px;">
+                  <label>Vapour pressure table</label>
+                  <div class="solved"><span x-text="h3s.torr"></span> torr at <span x-text="h3s.tC"></span> °C</div>
+                </div>
+              </div>
+              <div class="row call-row" style="gap: var(--s-4); align-items: flex-end; margin-top: var(--s-4);">
+                <div class="field" style="width: 230px;">
+                  <label for="h3Input">Dry gas P (atm)</label>
+                  <input id="h3Input" type="number" step="any" min="0" x-model="h3Input" :disabled="h3Done">
+                </div>
+                <button class="btn btn-accent" @click="h3Commit()" :disabled="h3Done || h3Input===''" x-text="h3s.sc.actionLabel"></button>
+                <span class="grow"></span>
+                <button class="btn btn-sm" @click="h3Next()">Next tube</button>
+                <span class="call-hint" x-show="h3Input === '' && !h3Done" x-text="'Subtract the vapour pressure first, then type the dry value.'"></span>
+              </div>
+              <template x-if="h3Verdict">
+                <div class="verdict" :class="'verdict-' + h3Verdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="h3Verdict.icon"></span>
+                    <span class="status-state" x-text="h3Verdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-prose="h3Verdict.headline"></span>
+                  <span class="verdict-detail" x-prose="h3Verdict.detail"></span>
+                  <template x-if="h3Verdict && h3Verdict.gauge">
+                    <div class="gauge">
+                      <div class="gauge-seg" :class="h3Verdict && h3Verdict.gauge==='low' ? 'miss' : ''">reported short</div>
+                      <div class="gauge-seg" :class="h3Verdict && h3Verdict.gauge==='on' ? 'on' : ''">on spec</div>
+                      <div class="gauge-seg" :class="h3Verdict && h3Verdict.gauge==='high' ? 'miss' : ''">reported long</div>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <div x-show="h3Unlocked && h3Checked" class="stat-row" style="margin-top: var(--s-5);">
+            <div class="stat"><div class="k">water vapor P</div><div class="v" style="font-size: var(--fs-lg)" x-text="fmt(wp.pw,3)+' atm'"></div></div>
+            <div class="stat"><div class="k">dry gas P</div><div class="v" style="font-size: var(--fs-lg)" x-text="fmt(wp.pDry,3)+' atm'"></div></div>
+          </div>
+        </div>
+        </div>
+
+        <!-- ---------- CAPSTONE: the last fill of the day ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
+          <div class="note note-info" x-show="!capUnlocked">Certify all three core skills to take this one. Kinetic theory, the ideal gas law and partial pressures each need three right in a row.</div>
+          <template x-if="capUnlocked && cap">
+            <div>
+              <div class="brief">
+                <span class="brief-role"><span x-text="cap.sc.icon"></span> <span x-text="cap.sc.system"></span></span>
+                <div class="brief-goal" x-prose="cap.sc.goal"></div>
+                <div class="brief-why" x-prose="cap.sc.why"></div>
+              </div>
+
+              <div class="given-row">
+                <div class="given-cell">
+                  <span class="k">Diver wants</span>
+                  <span class="v mono"><span x-text="cap.depth"></span> m</span>
+                </div>
+                <div class="given-cell">
+                  <span class="k">Mix analysed</span>
+                  <span class="v mono"><span x-text="Math.round(cap.fO2*100)"></span> % O<sub>2</sub></span>
+                </div>
+                <div class="given-cell">
+                  <span class="k">This fill draws</span>
+                  <span class="v mono"><span x-text="cap.need"></span> atm of bank</span>
+                </div>
+                <div class="given-cell">
+                  <span class="k">Bank holds</span>
+                  <span class="v mono"><span x-text="fmt(cap.bankAt)"></span> atm</span>
+                </div>
+                <div class="given-cell">
+                  <span class="k">Oxygen working limit</span>
+                  <span class="v mono"><span x-text="PPO2_LIMIT"></span> atm</span>
+                </div>
+              </div>
+              <p class="small muted" style="margin-top: var(--s-2);">Every 10 m of seawater adds 1 atm to the 1 atm already on the surface.</p>
+
+              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">One call. What do you do?</p>
+              <div class="choice-grid choice-grid-wide">
+                <template x-for="o in cap.sc.options" :key="o.key">
+                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
+                </template>
+              </div>
+
+              <div class="row call-row" style="margin-top: var(--s-4);">
+                <button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Make the call</button>
+                <span class="call-hint" x-show="!capPick && !capWin" x-text="'Make the call on the fill first.'"></span>
+              </div>
+
+              <template x-if="capVerdict">
+                <div class="verdict" :class="'verdict-' + capVerdict.tone">
+                  <div class="status">
+                    <span class="status-icon" x-text="capVerdict.icon"></span>
+                    <span class="status-state" x-text="capVerdict.state"></span>
+                  </div>
+                  <span class="verdict-headline" x-prose="capVerdict.headline"></span>
+                  <span class="verdict-detail" x-prose="capVerdict.detail"></span>
+                </div>
+              </template>
+            </div>
+          </template>
+        </div>
+
+        <!-- ---------- World-state: the bank and the dive-day clock ---------- -->
+        <div class="panel worldstate">
+          <div class="panel-head">
+            <span class="panel-title" style="font-size: var(--fs-md)">The bank &amp; the clock</span>
+            <span class="grow"></span>
+            <span class="small muted" x-text="clockLabel"></span>
+          </div>
+          <div class="crew-status">
+            <span class="crew-face" x-text="bankMood"></span>
+            <div class="crew-bar">
+              <div class="row" style="justify-content: space-between; align-items: baseline;">
+                <span class="small" style="font-weight:700;" x-text="bankState"></span>
+                <span class="small mono"><span x-text="fmt(bank)"></span> of 200 atm</span>
+              </div>
+              <div class="meter"><div class="meter-fill" :style="`width:${bankPct}%; background:${bankColor}`"></div></div>
+              <div class="tankfield" aria-hidden="true">
+                <template x-for="(t,i) in bankTanks" :key="'tank'+i"><span class="tank"></span></template>
+              </div>
+              <p class="small muted" style="margin-top: var(--s-1);">One cylinder is 20 atm of storage. The bank drops when a call actually puts gas in a cylinder, and a missed call spends more of it than a right one.</p>
+            </div>
+          </div>
+          <p class="worldstate-empty" x-show="!worldLog.length">Nothing filled yet. Make a call and watch what your number costs the bank.</p>
+          <ul class="worldstate-list" x-show="worldLog.length">
+            <template x-for="w in worldLog" :key="w.id">
+              <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
+                <span class="ws-icon" x-text="w.icon"></span>
+                <span x-text="w.text"></span>
+              </li>
+            </template>
+          </ul>
+        </div>
+
+      </section>
+      <aside class="life-support-board panel" aria-label="Dive-boat bank status">
+        <div class="life-header"><div><span class="command-kicker">Storage bank</span><strong x-text="bankState"></strong></div><span class="sol-chip" x-text="clockLabel"></span></div>
+        <div class="crew-status cockpit-crew"><div class="crew-bar"><div class="life-meter-label"><span>Pressure</span><span class="mono" x-text="fmt(bank)+' / 200'"></span></div><div class="meter"><div class="meter-fill" :style="`width:${bankPct}%; background:${bankColor}`"></div></div></div></div>
+        <div class="system-grid" aria-label="Shift readings"><template x-for="r in bankReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span :title="r.hint" x-text="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template></div>
+        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest consequence</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'No fill is logged yet.'"></p></section>
+        <section class="mission-log"><span class="command-kicker">Fill log</span><p class="worldstate-empty" x-show="!worldLog.length">The first cylinder is waiting.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : 'bad'"><span class="ws-icon" x-text="w.icon"></span><span x-text="w.text"></span></li></template></ul></section>
+      </aside>
+    </div>
+
+    <div data-casefile></div>
+  </main>
+</div>
+
+<script type="module">
+  import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
+  import { registerRender } from '../../shared/js/render.js';
+  import { registerGauge } from '../../shared/js/gauge.js';
+  import { createSim } from './js/main.js';
+  import { mountCaseFile } from '../../shared/js/casefile.js';
+  import { CASE } from './js/case.js';
+  import { mountColumnResizers } from '../shared/columns.js?v=cockpit-3';
+  registerRender(Alpine);
+  registerGauge(Alpine);
+  Alpine.data('sim', createSim);
+  mountCaseFile(Alpine, CASE);
+  window.Alpine = Alpine;
+  Alpine.start();
+  // After start(), so the handles are appended to a workbench Alpine has already claimed.
+  // The two gutter buttons carry no bindings, so Alpine never walks them.
+  mountColumnResizers();
+</script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+/* Unit 11 cockpit styles. The shared shell owns the command header, station strip,
+   mission column, and status rail; this file keeps the nuclear-medicine tools legible
+   inside the compact central console. */
+
+/* Given-data readout: the numbers the vial and the paperwork hand you. */
+.readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--s-2);
+}
+
+.readout .cell {
+  min-width: 0;
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+
+.readout .cell .k {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.readout .cell .v {
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+/* A survey observation is evidence, not a decorative callout. */
+.evidence {
+  margin: var(--s-3) 0;
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--border-strong);
+  border-left: 4px solid var(--accent-500);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+
+.evidence .k {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.evidence .t { font-size: var(--fs-sm); line-height: var(--lh-body); }
+
+/* Full-sentence emission choices, two to a row where the column allows it.
+ *
+ * These used to stack, for readability -- but one card spanning the whole 682px bench is about
+ * 95 characters to the line, which is past the comfortable measure, not short of it. Two
+ * columns of 337px read at about 47 characters and cost half the height: the four emission
+ * cards went from 316px to 172, which is most of that bench's scroll. Below 300px per column
+ * they stack again on their own. */
+.emgrid,
+.reasongrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: var(--s-2);
+}
+
+.emgrid .choice,
+.reasongrid .choice { text-align: left; font-weight: 400; line-height: 1.35; }
+
+.emgrid .choice .tag {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--accent-700);
+}
+
+.emgrid .choice[data-state="correct"] .tag { color: #1f6b41; }
+.emgrid .choice[data-state="wrong"] .tag { color: #8a3320; }
+
+/* The live nuclear equation keeps the conservation check visually tied to the formula. */
+.nuceq {
+  position: relative;
+  overflow-x: auto;
+  margin-top: var(--s-3);
+  padding: var(--s-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  text-align: center;
+}
+
+.nuceq.balanced { border-color: var(--success); background: var(--success-050); }
+
+.conserve {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-2) var(--s-4);
+  margin-top: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+}
+
+.conserve .item { color: var(--muted); }
+.conserve .item.ok { color: #1f6b41; font-weight: 700; }
+.conserve .item.no { color: #8a3320; font-weight: 700; }
+
+/* A and Z steppers. */
+.stepper-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+
+.stepper .el {
+  min-width: 6.4em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+.stepper .sub {
+  min-width: 2.4em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--accent-700);
+}
+
+.stepper .btn-sm { min-width: 30px; }
+
+/* Isotope cards have names, physical facts, and use cases; they cannot rely on color. */
+.isogrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--s-2);
+}
+
+.isogrid .choice { text-align: left; font-weight: 400; }
+.isogrid .choice .iname { display: block; margin-bottom: 2px; font-weight: 700; }
+
+.isogrid .choice .ifacts,
+.isogrid .choice .iuse {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+.isogrid .choice .ifacts { margin-top: var(--s-2); font-family: var(--font-mono); }
+
+.eqline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding: var(--s-2) 0;
+  border-bottom: 1px dashed var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+}
+
+.eqline:last-child { border-bottom: none; }
+.eqline .calc { font-weight: 700; color: var(--accent-700); }
+
+.bdata {
+  width: 100%;
+  table-layout: fixed;
+  font-size: var(--fs-sm);
+}
+
+.bdata td,
+.bdata th { overflow-wrap: anywhere; vertical-align: top; }
+.bdata td.num,
+.bdata th.num { font-variant-numeric: tabular-nums; }
+
+/* Porting traps 1, 2, 4, and 17. A real tool panel must lay out as a block and scroll,
+   its Honors feedback stays beside its commit, and KaTeX must not create page height. */
+.chem-console > .panel.is-active {
+  display: block !important;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.chem-console .choice {
+  min-height: 38px;
+  white-space: normal;
+  line-height: 1.3;
+}
+
+.chem-console .honors-block .verdict { display: grid !important; }
+
+.chem-console .honors-block .verdict-headline,
+.chem-console .honors-block .verdict-detail {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: none;
+}
+
+.eqn { position: relative; }
+
+/* The four plain-language meters are the accessible compact view. The figure supplements
+   them only when the rail has vertical slack. */
+.vial-grid .vial-list {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 5px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+
+.vial-grid .vial-list svg {
+  display: block;
+  width: 100%;
+  height: clamp(58px, 8.5vh, 88px);
+}
+
+/* Unit 11 goals are long. Give their prose the flex row instead of silently clipping it. */
+.mission-screen {
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+}
+
+.mission-screen > .screen-copy {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* The active work order is evidence, not a decorative label. Let its full name wrap
+   in the compact shell instead of reducing “Where the molybdenum comes from” to dots. */
+.mission-screen .screen-system {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  font-size: var(--fs-sm);
+  letter-spacing: .045em;
+}
+
+@media (max-width: 1120px) {
+  .cockpit-command .command-brand span:last-child {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    font-size: var(--fs-sm);
+    line-height: 1.2;
+  }
+}
+
+@media (max-height: 760px) {
+  .vial-grid .vial-list svg { height: 58px; }
+}
+
+@media (max-height: 660px) {
+  .vial-grid .vial-list { display: none; }
+  .chem-console > .panel.is-active { padding: 9px 10px; }
+  .stepper { padding: 4px 6px; }
+}
+
+@media (max-width: 980px) {
+  .vial-grid .vial-list { display: block; }
+}
+
+/* The cockpit, not the document, owns long nuclear-medicine work panels. */
+.chem-console > .panel.is-active { display: block !important; overflow-y: auto; overscroll-behavior: contain; contain: paint; }
+.mission-screen { grid-template-rows: auto auto minmax(0, 1fr) auto auto; overflow-y: auto; overscroll-behavior: contain; contain: paint; }
+.mission-screen > .screen-copy { min-height: 0; }
+@media (max-width: 1240px) { .mission-screen .cockpit-instincts { display: none; } }
+
+/* The Reference card used to be dropped outright below 760px of viewport (960px here), which
+   on every laptop in the matrix meant the standing facts were not reachable at all. It is a
+   <details> now, so the learner can hand those rows back to the prompt themselves -- and
+   shared/cockpit.css still moves the card below the copy at 699px and drops it at 639px, which
+   is the shell deciding there is no room rather than this unit deciding there never is. */
+
+@media (prefers-reduced-motion: reduce) {
+  .chem-console *,
+  .mission-screen * { scroll-behavior: auto; }
+}

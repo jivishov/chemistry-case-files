@@ -25,6 +25,49 @@ a { color: var(--accent-700); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* Chemical and scientific typography, produced by shared/js/notation.js. Subscripts and
+   superscripts are real elements rather than Unicode, because the faces this project ships
+   carry no subscript digits and only ¹²³ of the superscripts (see the header comment in
+   notation.js). The default UA styling for sub/sup uses `vertical-align: sub|super`, which
+   grows the line box and makes a paragraph of formulas jump line to line; `position:
+   relative` with an explicit offset moves the glyph without touching the line box, so
+   H₂O sits inside a normal line of prose. */
+sub, sup {
+  font-size: .72em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  font-variant-numeric: normal;   /* tabular figures at .72em read as gaps */
+}
+sub { bottom: -.28em; }
+sup { top: -.42em; }
+/* A phase label is reference detail, not part of the formula, so it is quieter -- but quiet
+   by INK, not by size. At .88em it landed at 12.4px inside Unit 10's console, where the
+   surrounding chemistry sits at the shell's 14px instructional floor, and
+   tests/unit5a-layout.test.mjs reported "(s)" and "(aq)" for exactly that reason. It was
+   right to: (aq) versus (s) is the difference between a dissolved salt and a solid one, which
+   is the chemistry of that bench rather than a footnote to it. The muted colour already
+   carries "secondary" without spending legibility on it. */
+.phase { color: var(--muted); padding-left: .06em; }
+
+/* A nuclide prescript stacks the mass number over the atomic number in front of the symbol,
+   which is how ²³⁵₉₂U is written. One inline-block cell, right-aligned so the two numbers
+   share a right edge against the symbol, with the sub/sup rules above overridden back to
+   block flow so they sit one above the other rather than side by side. */
+.nuclide {
+  display: inline-block;
+  vertical-align: -.32em;
+  text-align: right;
+  margin-right: .08em;
+}
+.nuclide sup, .nuclide sub {
+  display: block;
+  position: static;
+  top: auto; bottom: auto;
+  font-size: .68em;
+  line-height: 1.05;
+}
 .eyebrow {
   font-family: var(--font-mono); font-size: var(--fs-xs);
   letter-spacing: .16em; text-transform: uppercase; color: var(--accent-700);

@@ -1,0 +1,368 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Notation sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<style>
+  body { max-width: 1000px; margin: 0 auto; padding: 32px 24px 64px; }
+  h1 { margin-bottom: 4px; }
+  .lede { color: var(--muted); margin: 0 0 32px; max-width: 62ch; }
+  section { margin-bottom: 36px; }
+  h2 { font-size: var(--fs-md); margin: 0 0 10px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: var(--fs-xs); text-transform: uppercase;
+       letter-spacing: .1em; color: var(--muted); font-weight: 500;
+       border-bottom: 1px solid var(--line, #d6e0e4); padding: 4px 10px; }
+  td { padding: 7px 10px; border-bottom: 1px solid rgba(0,0,0,.06); vertical-align: baseline; }
+  td.src { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted);
+           width: 46%; word-break: break-all; }
+  td.out { font-size: 16px; }
+  .flow { border-left: 3px solid var(--accent, #2a7d8a); padding: 2px 0 2px 16px; max-width: 68ch; }
+  .flow p { margin: 0 0 8px; }
+</style>
+<h1>Notation sheet</h1>
+<p class="lede">Every notation <code>shared/js/notation.js</code> produces, rendered by the real
+module in the real stylesheet. The node suite proves the markup; this page is for the half that
+needs eyes — legibility at size, whether a nuclide's numbers really stack, and whether a
+paragraph of formulas keeps its line rhythm.</p>
+
+  <section>
+    <h2>Formulas</h2>
+    <table>
+      <thead><tr><th>authored source</th><th>rendered</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="src">H2O</td>
+          <td class="out">H<sub>2</sub>O</td>
+        </tr>
+        <tr>
+          <td class="src">Fe2O3</td>
+          <td class="out">Fe<sub>2</sub>O<sub>3</sub></td>
+        </tr>
+        <tr>
+          <td class="src">Ca(OH)2</td>
+          <td class="out">Ca(OH)<sub>2</sub></td>
+        </tr>
+        <tr>
+          <td class="src">Cu(NO3)2</td>
+          <td class="out">Cu(NO<sub>3</sub>)<sub>2</sub></td>
+        </tr>
+        <tr>
+          <td class="src">CH3COOH</td>
+          <td class="out">CH<sub>3</sub>COOH</td>
+        </tr>
+        <tr>
+          <td class="src">C6H12O6</td>
+          <td class="out">C<sub>6</sub>H<sub>12</sub>O<sub>6</sub></td>
+        </tr>
+        <tr>
+          <td class="src">Al2(SO4)3</td>
+          <td class="out">Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub></td>
+        </tr>
+        <tr>
+          <td class="src">CuSO4·5H2O</td>
+          <td class="out">CuSO<sub>4</sub>·5H<sub>2</sub>O</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Ions and charges</h2>
+    <table>
+      <thead><tr><th>authored source</th><th>rendered</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="src">H+</td>
+          <td class="out">H<sup>+</sup></td>
+        </tr>
+        <tr>
+          <td class="src">OH^-</td>
+          <td class="out">OH<sup>-</sup></td>
+        </tr>
+        <tr>
+          <td class="src">NH4+</td>
+          <td class="out">NH<sub>4</sub><sup>+</sup></td>
+        </tr>
+        <tr>
+          <td class="src">SO4^2-</td>
+          <td class="out">SO<sub>4</sub><sup>2-</sup></td>
+        </tr>
+        <tr>
+          <td class="src">PO4^3-</td>
+          <td class="out">PO<sub>4</sub><sup>3-</sup></td>
+        </tr>
+        <tr>
+          <td class="src">Ca2+</td>
+          <td class="out">Ca<sub>2</sub><sup>+</sup></td>
+        </tr>
+        <tr>
+          <td class="src">HCO3^-</td>
+          <td class="out">HCO<sub>3</sub><sup>-</sup></td>
+        </tr>
+        <tr>
+          <td class="src">CH3COO^-</td>
+          <td class="out">CH<sub>3</sub>COO<sup>-</sup></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Equations — the reported defect was the first of these</h2>
+    <table>
+      <thead><tr><th>authored source</th><th>rendered</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="src">2Na + 2H2O -&gt; 2NaOH + H2</td>
+          <td class="out">2Na + 2H<sub>2</sub>O → 2NaOH + H<sub>2</sub></td>
+        </tr>
+        <tr>
+          <td class="src">Ca + 2H2O -&gt; Ca(OH)2 + H2</td>
+          <td class="out">Ca + 2H<sub>2</sub>O → Ca(OH)<sub>2</sub> + H<sub>2</sub></td>
+        </tr>
+        <tr>
+          <td class="src">Cl2 + 2Na -&gt; 2NaCl</td>
+          <td class="out">Cl<sub>2</sub> + 2Na → 2NaCl</td>
+        </tr>
+        <tr>
+          <td class="src">Fe + Cu(NO3)2 -&gt; Fe(NO3)2 + Cu</td>
+          <td class="out">Fe + Cu(NO<sub>3</sub>)<sub>2</sub> → Fe(NO<sub>3</sub>)<sub>2</sub> + Cu</td>
+        </tr>
+        <tr>
+          <td class="src">H2CO3 &lt;=&gt; H+ + HCO3^-</td>
+          <td class="out">H<sub>2</sub>CO<sub>3</sub> ⇌ H<sup>+</sup> + HCO<sub>3</sub><sup>-</sup></td>
+        </tr>
+        <tr>
+          <td class="src">AgNO3(aq) + NaCl(aq) -&gt; AgCl v + NaNO3(aq)</td>
+          <td class="out">AgNO<sub>3</sub><span class="phase">(aq)</span> + NaCl<span class="phase">(aq)</span> → AgCl ↓ + NaNO<sub>3</sub><span class="phase">(aq)</span></td>
+        </tr>
+        <tr>
+          <td class="src">CaCl2(s) -&gt; Ca^2+(aq) + 2Cl^-(aq)</td>
+          <td class="out">CaCl<sub>2</sub><span class="phase">(s)</span> → Ca<sup>2+</sup><span class="phase">(aq)</span> + 2Cl<sup>-</sup><span class="phase">(aq)</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Equations from the models, through the KaTeX-less fallback</h2>
+    <table>
+      <thead><tr><th>authored source</th><th>rendered</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="src">N2(g) + 3 H2(g) -&gt; 2 NH3(g)</td>
+          <td class="out">N<sub>2</sub><span class="phase">(g)</span> + 3 H<sub>2</sub><span class="phase">(g)</span> → 2 NH<sub>3</sub><span class="phase">(g)</span></td>
+        </tr>
+        <tr>
+          <td class="src">2 H2O2(aq) -&gt; 2 H2O(l) + O2(g)</td>
+          <td class="out">2 H<sub>2</sub>O<sub>2</sub><span class="phase">(aq)</span> → 2 H<sub>2</sub>O<span class="phase">(l)</span> + O<sub>2</sub><span class="phase">(g)</span></td>
+        </tr>
+        <tr>
+          <td class="src">Zn(s) + 2 HCl(aq) -&gt; ZnCl2(aq) + H2(g)</td>
+          <td class="out">Zn<span class="phase">(s)</span> + 2 HCl<span class="phase">(aq)</span> → ZnCl<sub>2</sub><span class="phase">(aq)</span> + H<sub>2</sub><span class="phase">(g)</span></td>
+        </tr>
+        <tr>
+          <td class="src">AgNO3(aq) + NaCl(aq) -&gt; AgCl v + NaNO3(aq)</td>
+          <td class="out">AgNO<sub>3</sub><span class="phase">(aq)</span> + NaCl<span class="phase">(aq)</span> → AgCl ↓ + NaNO<sub>3</sub><span class="phase">(aq)</span></td>
+        </tr>
+        <tr>
+          <td class="src">CH4(g) + 2 O2(g) -&gt; CO2(g) + 2 H2O(g)</td>
+          <td class="out">CH<sub>4</sub><span class="phase">(g)</span> + 2 O<sub>2</sub><span class="phase">(g)</span> → CO<sub>2</sub><span class="phase">(g)</span> + 2 H<sub>2</sub>O<span class="phase">(g)</span></td>
+        </tr>
+        <tr>
+          <td class="src">HCl(aq) + NaOH(aq) -&gt; NaCl(aq) + H2O(l)</td>
+          <td class="out">HCl<span class="phase">(aq)</span> + NaOH<span class="phase">(aq)</span> → NaCl<span class="phase">(aq)</span> + H<sub>2</sub>O<span class="phase">(l)</span></td>
+        </tr>
+        <tr>
+          <td class="src">4 Fe(s) + 3 O2(g) -&gt; 2 Fe2O3(s)</td>
+          <td class="out">4 Fe<span class="phase">(s)</span> + 3 O<sub>2</sub><span class="phase">(g)</span> → 2 Fe<sub>2</sub>O<sub>3</sub><span class="phase">(s)</span></td>
+        </tr>
+        <tr>
+          <td class="src">2 Al(s) + 3 Cl2(g) -&gt; 2 AlCl3(s)</td>
+          <td class="out">2 Al<span class="phase">(s)</span> + 3 Cl<sub>2</sub><span class="phase">(g)</span> → 2 AlCl<sub>3</sub><span class="phase">(s)</span></td>
+        </tr>
+        <tr>
+          <td class="src">Fe(s) + CuSO4(aq) -&gt; FeSO4(aq) + Cu(s)</td>
+          <td class="out">Fe<span class="phase">(s)</span> + CuSO<sub>4</sub><span class="phase">(aq)</span> → FeSO<sub>4</sub><span class="phase">(aq)</span> + Cu<span class="phase">(s)</span></td>
+        </tr>
+        <tr>
+          <td class="src">C3H8(g) + 5 O2(g) -&gt; 3 CO2(g) + 4 H2O(g)</td>
+          <td class="out">C<sub>3</sub>H<sub>8</sub><span class="phase">(g)</span> + 5 O<sub>2</sub><span class="phase">(g)</span> → 3 CO<sub>2</sub><span class="phase">(g)</span> + 4 H<sub>2</sub>O<span class="phase">(g)</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Electron configurations — the digit AFTER the letter is the one that rises</h2>
+    <table>
+      <thead><tr><th>authored source</th><th>rendered</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="src">1s2 2s2 2p6 3s2</td>
+          <td class="out">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup></td>
+        </tr>
+        <tr>
+          <td class="src">1s2 2s2 2p6 3s2 3p6 4s2 3d4</td>
+          <td class="out">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 4s<sup>2</sup> 3d<sup>4</sup></td>
+        </tr>
+        <tr>
+          <td class="src">1s2 2s2 2p6 3s2 3p6 4s2 3d9</td>
+          <td class="out">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 4s<sup>2</sup> 3d<sup>9</sup></td>
+        </tr>
+        <tr>
+          <td class="src">1s2 2s2 2p6 3s2 3p6 4s2 3d6</td>
+          <td class="out">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 4s<sup>2</sup> 3d<sup>6</sup></td>
+        </tr>
+        <tr>
+          <td class="src">1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p5</td>
+          <td class="out">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 4s<sup>2</sup> 3d<sup>10</sup> 4p<sup>5</sup></td>
+        </tr>
+        <tr>
+          <td class="src">[Ne] 3s2</td>
+          <td class="out">[Ne] 3s<sup>2</sup></td>
+        </tr>
+        <tr>
+          <td class="src">[Ar] 4s1 3d5</td>
+          <td class="out">[Ar] 4s<sup>1</sup> 3d<sup>5</sup></td>
+        </tr>
+        <tr>
+          <td class="src">[Xe] 6s1 4f14 5d10</td>
+          <td class="out">[Xe] 6s<sup>1</sup> 4f<sup>14</sup> 5d<sup>10</sup></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Nuclides — mass number over atomic number, in front of the symbol</h2>
+    <table>
+      <thead><tr><th>authored source</th><th>rendered</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="src">^{235}_{92}U</td>
+          <td class="out"><span class="nuclide"><sup>235</sup><sub>92</sub></span>U</td>
+        </tr>
+        <tr>
+          <td class="src">^{99m}_{43}Tc</td>
+          <td class="out"><span class="nuclide"><sup>99m</sup><sub>43</sub></span>Tc</td>
+        </tr>
+        <tr>
+          <td class="src">^{0}_{-1}e</td>
+          <td class="out"><span class="nuclide"><sup>0</sup><sub>-1</sub></span>e</td>
+        </tr>
+        <tr>
+          <td class="src">^{2}_{1}H + ^{3}_{1}H -&gt; ^{4}_{2}He + ^{1}_{0}n</td>
+          <td class="out"><span class="nuclide"><sup>2</sup><sub>1</sub></span>H + <span class="nuclide"><sup>3</sup><sub>1</sub></span>H → <span class="nuclide"><sup>4</sup><sub>2</sub></span>He + <span class="nuclide"><sup>1</sup><sub>0</sub></span>n</td>
+        </tr>
+        <tr>
+          <td class="src">^{235}_{92}U + ^{1}_{0}n -&gt; ^{99}_{42}Mo + ^{135}_{50}Sn + 2^{1}_{0}n</td>
+          <td class="out"><span class="nuclide"><sup>235</sup><sub>92</sub></span>U + <span class="nuclide"><sup>1</sup><sub>0</sub></span>n → <span class="nuclide"><sup>99</sup><sub>42</sub></span>Mo + <span class="nuclide"><sup>135</sup><sub>50</sub></span>Sn + 2<span class="nuclide"><sup>1</sup><sub>0</sub></span>n</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Scientific notation</h2>
+    <table>
+      <thead><tr><th>authored source</th><th>rendered</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="src">6.022e23</td>
+          <td class="out">6.022 × 10<sup>23</sup></td>
+        </tr>
+        <tr>
+          <td class="src">1.882e24</td>
+          <td class="out">1.882 × 10<sup>24</sup></td>
+        </tr>
+        <tr>
+          <td class="src">1.8e-5</td>
+          <td class="out">1.800 × 10<sup>-5</sup></td>
+        </tr>
+        <tr>
+          <td class="src">3.0e-8</td>
+          <td class="out">3.000 × 10<sup>-8</sup></td>
+        </tr>
+        <tr>
+          <td class="src">6.626e-34</td>
+          <td class="out">6.626 × 10<sup>-34</sup></td>
+        </tr>
+        <tr>
+          <td class="src">0.5</td>
+          <td class="out">0.5</td>
+        </tr>
+        <tr>
+          <td class="src">22.4</td>
+          <td class="out">22.4</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Prose — what the marker rewrites</h2>
+    <table>
+      <thead><tr><th>authored source</th><th>rendered</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="src">You filed 1.88e+24 against 3.76e+24 particles.</td>
+          <td class="out">You filed 1.88 × 10<sup>24</sup> against 3.76 × 10<sup>24</sup> particles.</td>
+        </tr>
+        <tr>
+          <td class="src">Avogadro&#39;s number is 6.022e23 representative particles in one mole.</td>
+          <td class="out">Avogadro&#39;s number is 6.022 × 10<sup>23</sup> representative particles in one mole.</td>
+        </tr>
+        <tr>
+          <td class="src">From pH 6.5 to 2.5 is 4 units, so 10^4, about ten thousand times more acidic.</td>
+          <td class="out">From pH 6.5 to 2.5 is 4 units, so 10<sup>4</sup>, about ten thousand times more acidic.</td>
+        </tr>
+        <tr>
+          <td class="src">It works out to 12.3 g H2O, and the excess is Fe2O3.</td>
+          <td class="out">It works out to 12.3 g H<sub>2</sub>O, and the excess is Fe<sub>2</sub>O<sub>3</sub>.</td>
+        </tr>
+        <tr>
+          <td class="src">A base is any substance that produces OH- ions when dissolved in water.</td>
+          <td class="out">A base is any substance that produces OH<sup>-</sup> ions when dissolved in water.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Prose — what it must leave alone</h2>
+    <table>
+      <thead><tr><th>authored source</th><th>rendered</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="src">Interpret, write, and balance equations using conservation of mass. TEKS C.9(A)</td>
+          <td class="out">Interpret, write, and balance equations using conservation of mass. TEKS C.9(A)</td>
+        </tr>
+        <tr>
+          <td class="src">Bronsted-Lowry defines an acid as a proton donor, with no need for water.</td>
+          <td class="out">Bronsted-Lowry defines an acid as a proton donor, with no need for water.</td>
+        </tr>
+        <tr>
+          <td class="src">There is NO free element on the left, so there is nothing to swap.</td>
+          <td class="out">There is NO free element on the left, so there is nothing to swap.</td>
+        </tr>
+        <tr>
+          <td class="src">C-14 at 70% over 3000 y, Sr-90 at 79% over a decade, I-131 in a thyroid.</td>
+          <td class="out">C-14 at 70% over 3000 y, Sr-90 at 79% over a decade, I-131 in a thyroid.</td>
+        </tr>
+        <tr>
+          <td class="src">The cylinder read 200 atm at dawn and 215 on the deck. Day 3 of 12, at 06:00.</td>
+          <td class="out">The cylinder read 200 atm at dawn and 215 on the deck. Day 3 of 12, at 06:00.</td>
+        </tr>
+        <tr>
+          <td class="src">fill=&quot;#0e2836&quot; stroke=&quot;#1e5b66&quot;</td>
+          <td class="out">fill=&quot;#0e2836&quot; stroke=&quot;#1e5b66&quot;</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+<section>
+  <h2>Line rhythm — these two paragraphs must sit on the same baseline grid</h2>
+  <div class="flow">
+    <p>The garage reading comes to 12.3 g H<sub>2</sub>, which is 3.68 × 10<sup>23</sup> particles, and the shelf still holds CH<sub>3</sub>COOH beside HCl while the drum takes Ca(OH)<sub>2</sub> against H<sub>2</sub>SO<sub>4</sub> at 1.8e-5. Every line in this paragraph has to sit on the same rhythm as one with no formulas in it at all, or a page of consequence text reads as though it were set by hand.</p>
+    <p>The garage reading comes to a round number, which is a plain count of particles, and the
+    shelf still holds vinegar beside acid while the drum takes lime against sulfuric at a small
+    constant. Every line in this paragraph has to sit on the same rhythm as one with no formulas
+    in it at all, or a page of consequence text reads as though it were set by hand.</p>
+  </div>
+</section>

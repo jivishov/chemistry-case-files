@@ -1,0 +1,315 @@
+/* Unit 1 bench styles on top of units_new/shared/cockpit.css.
+ *
+ * Only what is specific to this unit's four tools lives here: the graduated cylinders,
+ * the SI reference card, the accuracy/precision target boards, and the handful of console
+ * adjustments those tall drawings force. The shell — command header, station strip, three
+ * columns, mission screen, status rail — is the shared file's job.
+ *
+ * Carried over from units/01-practices-matter/css/style.css: .lab-row, .cyl, .ref-card,
+ * .prefix-row, .ap-grid, .target and .rule. They are the same drawings, so they keep the
+ * same class names and the same geometry; what changed is the heights, which have to fit
+ * a console column rather than a full-width worksheet page.
+ */
+
+/* ============================ the benches ============================ */
+
+.lab-row { display: flex; gap: var(--s-4); align-items: flex-start; flex-wrap: wrap; }
+.lab-side { flex: 1; min-width: 240px; }
+
+/* A label that introduces a choice grid. Replaces the inline `style="display:block;
+   margin:..."` the worksheet build used, so a short viewport can tighten it. */
+.bench-label {
+  display: block;
+  margin: var(--s-4) 0 var(--s-2);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+
+/* Graduated cylinders — sized by HEIGHT, not width, so the 1 mL graduations stay
+   readable. The drawing is authored at 10 SVG units per mL (see cylSvg in js/main.js);
+   below roughly 300px tall the minor ticks start merging and the meniscus stops being
+   something you can read a tenth off, which would make the whole C.1 exercise dishonest.
+   The clamp floor is therefore a legibility floor, not a taste one. */
+.cyl { flex: none; width: auto; height: clamp(340px, 62vh, 520px); }
+.cyl.sm { height: clamp(260px, 44vh, 400px); }
+.cyl-pair { display: flex; gap: var(--s-2); }
+.cyl-cap { text-align: center; font-size: var(--fs-sm); color: var(--muted); margin-top: var(--s-1); line-height: 1.3; }
+
+/* SI reference card — the facts a learner should not have to leave the bench to find.
+   The worksheet build set this whole card at --fs-xs (12.5px). It is reference material a
+   learner reads while working, not chrome, so it sits at the shell's 14px legibility floor
+   here; the same goes for the cylinder captions and the target-board legend below. The
+   cards are wide enough to absorb it. */
+.ref-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s-3) var(--s-4); }
+.ref-title { font-family: var(--font-mono); font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: var(--s-2); }
+table.data.mini th, table.data.mini td { padding: 3px 8px; font-size: var(--fs-sm); }
+.prefix-row { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.prefix { font-size: var(--fs-sm); background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-pill); padding: 2px 9px; }
+.prefix .mono { color: var(--accent-700); }
+
+/* Accuracy/precision target boards. The four reference cards are a figure, not a control,
+   so they shrink first when the column is tight. */
+.ap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(122px, 1fr)); gap: var(--s-3); }
+.ap-card { text-align: center; }
+.target { width: 108px; height: 108px; }
+.target.big { width: 150px; height: 150px; flex: none; }
+.ap-cap { margin-top: var(--s-1); }
+.ap-cap strong { display: block; font-size: var(--fs-sm); line-height: 1.25; }
+.ap-cap span { font-size: var(--fs-sm); color: var(--muted); line-height: 1.3; }
+
+.rule { border: none; border-top: 1px solid var(--border); margin: var(--s-4) 0; }
+
+/* ============================ console fit ============================ */
+
+/* Two changes to how the shell lays out the active bench, and both are load-bearing.
+ *
+ * BLOCK, NOT GRID. The shell makes the active panel `display:grid` with
+ * `grid-template-rows: minmax(0, auto)`. That first track resolves to 0px, and in Unit 5
+ * it never mattered: every one of its panels opens with the `.brief` card, which the shell
+ * hides outright, so the collapsed row only ever held an invisible element and the real
+ * content landed in the implicit rows below. Unit 1's panels open with a real instruction
+ * paragraph, which the collapsed row rendered at zero height — so the paragraph and the
+ * bench under it drew on top of each other. Block flow is what these benches want anyway;
+ * the panel still sits in the console's stacking cell, which is what the grid was for.
+ *
+ * SCROLL, NOT CLIP. The shell clips the panel, because Unit 5's benches were designed to
+ * fit one screen exactly. Unit 1's cannot: a graduated cylinder tall enough to read a
+ * tenth off, plus a four-card reference figure, plus an Honors block, is genuinely more
+ * than 700px of content, and clipping it would silently delete the Honors work rather
+ * than shrink it. So this unit scrolls its own bench — header and side columns stay put,
+ * and only the task column moves. */
+.chem-console > .panel.is-active {
+  display: block !important;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Dials sit in a light console, so they get a card of their own rather than floating on
+   the panel background where the axis ticks lose their ground. */
+.dial-wrap {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-2) var(--s-3);
+}
+
+/* The three sig-fig drills reuse the shell's job-pill switcher, which was written for a
+   row that only appears at Honors. Here it is always on, so it needs its own bottom gap. */
+.chem-console .mystery-job-switcher { margin-bottom: var(--s-3); }
+
+/* Two-line choice labels (the Honors calls, the capstone's three options) would otherwise
+   inherit the shell's single-line centring and clip. */
+.chem-console .choice {
+  white-space: normal;
+  line-height: 1.3;
+}
+
+/* ============================ short viewports ============================ */
+
+/* At 1536x864 the browser viewport is about 726px tall, which is the height this unit is
+   tuned for. Below that the cylinder gives up height before anything else does, because
+   it is the one element with slack: its clamp floor still resolves the graduations. */
+@media (max-height: 760px) {
+  .cyl { height: clamp(330px, 56vh, 440px); }
+  .cyl.sm { height: clamp(250px, 40vh, 340px); }
+  .target { width: 96px; height: 96px; }
+  .target.big { width: 128px; height: 128px; }
+}
+
+@media (max-height: 660px) {
+  .ap-grid { grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); }
+  .ap-cap span { display: none; }
+  .chem-console .eqn { padding: var(--s-2) var(--s-3); font-size: 1.1rem; }
+}
+
+/* Below the shell's own 980px breakpoint the three columns stack, so the bench gets the
+   full width back and the cylinders can be read at their intended size again. */
+@media (max-width: 980px) {
+  .cyl { height: min(56vh, 460px); }
+  .cyl.sm { height: min(42vh, 360px); }
+  .chem-console > .panel.is-active { overflow-y: visible; }
+}
+
+/* ============================ mission screen fit ============================ */
+
+/* The shell gives its flexible row to the LAST block, because Unit 5's scenario goals are
+   one or two lines and the slack belonged at the bottom. Unit 1's goals are longer — a
+   tank job takes a sentence of setup before it takes an instruction — so the goal text is
+   what has to be allowed to move, and the fixed reference card and fish line stay put.
+   Without this the fish line was pushed past the panel's clipped edge and disappeared. */
+.mission-screen {
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+}
+
+.mission-screen > .screen-copy {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* KaTeX renders an invisible 1px MathML mirror at `position: absolute`. With no positioned
+   ancestor it resolves against the initial containing block, so it lands at a document
+   coordinate past the fold and inflates documentElement.scrollHeight — a phantom page
+   scroll on a shell that is supposed to have none. It is clipped and unreadable either
+   way; this just keeps it inside the formula it belongs to. */
+.eqn { position: relative; }
+
+/* The shell hides the console's verdict card outright, because the mission screen already
+   states the outcome and repeating it inside the bench would say the same sentence twice
+   on one screen. That holds for the four core benches here — and not for the two Honors
+   commits, which sit at the bottom of a panel the learner has scrolled to reach. Their
+   feedback would land in the top-left corner, off screen from the button that produced it.
+   So exactly these two are shown again where they happened. */
+.chem-console .honors-block .verdict {
+  display: grid !important;
+}
+
+/* And unclamp their text. The shell clamps a verdict to two lines because it has a fixed
+   screen to fit; this panel scrolls, so a clamp here would hide the second half of an
+   explanation for no gain. */
+.chem-console .honors-block .verdict-headline,
+.chem-console .honors-block .verdict-detail {
+  display: block;
+  -webkit-line-clamp: none;
+  overflow: visible;
+}
+
+/* Reference headings are instructional labels inside the audited console, so they use
+   the cockpit's 14px floor rather than the worksheet-era extra-small token. */
+.chem-console > .panel.is-active .ref-title { font-size: var(--fs-sm); }
+
+/* The tool stays on screen while its numbers are entered. On a scrolled bench the
+   cylinders otherwise leave the top of the panel exactly when the learner starts typing
+   the volume they read off them — and leave a tall empty column behind, since the drawing
+   is a third of the height of the controls beside it. Sticky costs nothing and means the
+   meniscus is still there to re-read. */
+.chem-console .lab-row > .cyl,
+.chem-console .lab-row > .cyl-pair {
+  position: sticky;
+  top: 0;
+}
+
+/* ============================ type + alignment polish ============================ */
+
+/* Atkinson Hyperlegible is already the right face for this audience. The refinement here
+   is about rhythm: keep prose comfortable, keep utility text out of the 11px range, and
+   let weight establish hierarchy without making every instructional sentence shout. */
+.cockpit-shell {
+  font-kerning: normal;
+  font-variant-numeric: proportional-nums;
+  text-rendering: optimizeLegibility;
+}
+
+.command-brand {
+  align-content: center;
+}
+
+.command-brand .command-home {
+  line-height: 1.12;
+  letter-spacing: -.012em;
+}
+
+.command-brand span:last-child {
+  line-height: 1.25;
+}
+
+.station-nav .tab {
+  font-size: clamp(.78rem, .78vw, .88rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.command-actions .label-text,
+.command-reset {
+  font-size: var(--fs-xs);
+  line-height: 1.2;
+}
+
+.metric-chip,
+.teks-badge,
+.sol-chip {
+  font-size: .75rem;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.screen-goal {
+  font-weight: 700;
+  font-size: clamp(.94rem, 1.05vw, 1.08rem);
+  line-height: 1.28;
+}
+
+.screen-outcome {
+  line-height: 1.42;
+}
+
+.screen-system,
+.screen-state,
+.screen-reference,
+.cockpit-instincts,
+.life-support-board .command-kicker,
+.life-meter-label,
+.latest-consequence,
+.mission-log {
+  font-variant-numeric: tabular-nums;
+}
+
+.chem-console > .panel.is-active > p:first-child {
+  max-width: 66ch;
+  line-height: 1.42;
+}
+
+.chem-console .field label {
+  margin-bottom: var(--s-1);
+  line-height: 1.25;
+}
+
+.chem-console .btn,
+.chem-console .choice,
+.chem-console .job-pill {
+  line-height: 1.2;
+}
+
+.ref-title {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: .09em;
+}
+
+table.data.mini td {
+  vertical-align: baseline;
+}
+
+table.data.mini td:last-child {
+  width: 4.5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.prefix {
+  line-height: 1.35;
+}
+
+.life-header strong,
+.latest-consequence strong {
+  letter-spacing: -.01em;
+}
+
+.latest-consequence p,
+.worldstate-empty {
+  line-height: 1.4;
+}
+
+/* Named sizing helpers replace scattered inline presentation rules without changing the
+   current geometry. They also give every field and compact statistic one alignment rule. */
+.field-220 { max-width: 220px; }
+.field-240 { max-width: 240px; }
+.field-260 { max-width: 260px; }
+.stat-260 { max-width: 260px; }
+.table-460 { max-width: 460px; }
+.choices-620 { max-width: 620px; }
+.choice-counts { grid-template-columns: repeat(5, 1fr); }
+.choice-centered { text-align: center; }
+.density-fields { gap: var(--s-3); }
+.density-fields .field { flex: 1; }
+.stat-value-compact { font-size: var(--fs-lg); }

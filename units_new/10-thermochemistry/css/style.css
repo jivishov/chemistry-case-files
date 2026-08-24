@@ -1,0 +1,273 @@
+/* Unit 10 cockpit styles.
+ *
+ * The shared cockpit file owns the command header, station strip, three-column shell,
+ * mission screen, and status rail. This file owns only the thermochemistry workbench:
+ * long law calls, physical pack choices, the deliberately hand-rolled energy schematic,
+ * q = mc(dT), calorimetry, and the two Honors tools. There is no chart canvas or Chart.js
+ * lifecycle in this unit; the energy figure is an inline SVG schematic by design.
+ */
+
+/* Console text is instructional content, not peripheral worksheet metadata. The shared
+   worksheet small size is below the cockpit audit's 14px floor, so lift it locally. */
+.chem-console .small,
+.chem-console .small.muted,
+.chem-console table.data th,
+.chem-console table.data td,
+.chem-console .stat .k { font-size: var(--fs-sm); }
+
+.bench-intro {
+  margin: 0 0 var(--s-3);
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  line-height: 1.38;
+}
+
+/* The worksheet was an unbounded vertical stack. A cockpit panel is one controlled scroll
+   region, so the active panel must be a block rather than the shell's collapsing grid. */
+.chem-console > .panel.is-active {
+  display: block !important;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Choice labels are real procedural language, not compact tag names. Never hide their
+   second line merely to preserve the worksheet's one-line button geometry. */
+.chem-console .choice {
+  white-space: normal;
+  line-height: 1.3;
+  text-align: left;
+}
+
+/* KaTeX includes an absolute MathML accessibility mirror. Anchoring it prevents a phantom
+   document scroll when a formula lives in an otherwise fixed-height cockpit panel. */
+.eqn { position: relative; }
+
+/* ------------------------- readouts and selections ------------------------- */
+
+.readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: var(--s-2);
+}
+
+.readout .cell {
+  min-width: 0;
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+
+.readout .cell .k,
+.fdata .side {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.readout .cell .v {
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-md);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.lawgrid { display: grid; gap: var(--s-2); }
+.lawgrid .choice { font-weight: 400; }
+.lawgrid .choice .tag {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--accent-700);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.lawgrid .choice[data-state="correct"] .tag { color: #1f6b41; }
+.lawgrid .choice[data-state="wrong"] .tag { color: #8a3320; }
+
+.packgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--s-2);
+}
+.packgrid .choice { font-weight: 400; }
+.packgrid .pname { display: block; margin-bottom: 2px; font-weight: 700; }
+.packgrid .pfeel { display: block; margin-top: 3px; color: var(--muted); font-size: var(--fs-sm); }
+.packgrid .choice[data-state="correct"] .pfeel,
+.packgrid .choice[data-state="wrong"] .pfeel { color: inherit; opacity: .88; }
+
+.thermal-class-grid { max-width: 450px; }
+
+/* An actual fixed-aspect illustration surface, not a chart host. The SVG itself defines
+   the barrier, dH arrow, reactant/product plateaus, and all labels. */
+.diagram-wrap {
+  margin-top: var(--s-3);
+  padding: var(--s-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+.diagram-wrap svg { display: block; width: 100%; height: auto; }
+
+.warm-inputs,
+.formation-inputs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(160px, .54fr);
+  gap: var(--s-3);
+  align-items: end;
+}
+
+.heat-answer { min-width: 0; }
+.cal-answer { max-width: 250px; }
+
+.eq-work { margin-top: var(--s-3); }
+.eqline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding: var(--s-2) 0;
+  border-bottom: 1px dashed var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+}
+.eqline:last-child { border-bottom: 0; }
+.eqline .calc { color: var(--accent-700); font-weight: 700; }
+
+/* ------------------------- calorimetry and Honors ------------------------- */
+
+.table-wrap { max-width: 100%; overflow-x: auto; }
+.calorimeter-data { min-width: 520px; }
+.fdata { min-width: 390px; }
+.fdata td.num,
+.fdata th.num,
+.calorimeter-data td.num,
+.calorimeter-data th.num { font-variant-numeric: tabular-nums; }
+
+.hess-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+.hess-row.flipped { border-color: var(--accent-300); background: var(--accent-050); }
+.hess-row .rxn { flex: 1 1 205px; min-width: 0; }
+.hess-row .term {
+  min-width: 96px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  text-align: right;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 3px var(--s-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+.stepper .el { min-width: 1em; font-weight: 700; text-align: center; }
+.stepper .sub {
+  min-width: 1.3em;
+  color: var(--accent-700);
+  font-family: var(--font-mono);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  text-align: center;
+}
+.stepper .btn-sm { min-width: 30px; }
+
+.hess-total {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+.hess-total.match { border-color: var(--success); background: var(--success-050); color: #1f6b41; }
+
+/* Core verdicts are stated in the mission column. Honors controls are lower in the same
+   scrolling panel, so their local verdict must remain beside the button that generated it. */
+.chem-console .honors-block .verdict { display: grid !important; }
+.chem-console .honors-block .verdict-headline,
+.chem-console .honors-block .verdict-detail {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: none;
+}
+
+/* ------------------------------- panel fit ------------------------------- */
+
+/* The scenario goals are intentionally two sentences long. Let this one block use the
+   mission column's flex space while facts and the rescue clock remain visible. */
+.mission-screen { grid-template-rows: auto auto minmax(0, 1fr) auto auto; }
+.mission-screen > .screen-copy {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@media (max-height: 760px) {
+  .chem-console > .panel.is-active { padding-bottom: var(--s-2); }
+  .hess-row { gap: 5px; }
+}
+
+@media (max-width: 980px) {
+  .warm-inputs,
+  .formation-inputs { grid-template-columns: 1fr; }
+}
+
+/* At the last three-column width the calorimetry table is an input reference, not a
+   horizontal document. Keep all five givens in the console and let their headings wrap. */
+@media (max-width: 1120px) {
+  .calorimeter-data {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  .calorimeter-data th,
+  .calorimeter-data td {
+    padding: 3px 4px;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* The cockpit, not the document, owns long rescue-work panels. */
+.chem-console { min-width: 0; }
+.chem-console > .panel.is-active { display: block !important; min-width: 0; overflow-y: auto; overscroll-behavior: contain; contain: paint; }
+.chem-console .table-wrap { width: 100%; min-width: 0; }
+.mission-screen { grid-template-rows: auto auto minmax(0, 1fr) auto auto; overflow-y: auto; overscroll-behavior: contain; contain: paint; }
+.mission-screen > .screen-copy { min-height: 0; }
+@media (max-width: 1240px) { .mission-screen .cockpit-instincts { display: none; } }
+
+/* The Reference card used to be dropped outright below 760px of viewport (960px here), which
+   on every laptop in the matrix meant the standing facts were not reachable at all. It is a
+   <details> now, so the learner can hand those rows back to the prompt themselves -- and
+   shared/cockpit.css still moves the card below the copy at 699px and drops it at 639px, which
+   is the shell deciding there is no room rather than this unit deciding there never is. */
+
+@media (prefers-reduced-motion: reduce) {
+  .chem-console .choice,
+  .chem-console .btn { transition: none; }
+}

@@ -1,0 +1,91 @@
+/* Unit 7 bench styles on top of the shared cockpit. */
+
+.small, .se-cap { font-size: var(--fs-sm); }
+.se-cap { color: var(--muted); margin-top: 4px; }
+
+/* The observation a C.10(A) call is about, and the honors comparison question. */
+.clue-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s-4); font-size: var(--fs-sm); }
+
+/* What the call hands you, before you work anything out. */
+.given-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--s-3); }
+.given-cell { padding: var(--s-3); border-radius: var(--r-md); border: 1px solid var(--border); background: var(--surface-2, transparent); }
+.given-cell .k { display: block; font-size: var(--fs-sm); color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.given-cell .v { display: block; font-size: var(--fs-md); font-weight: 700; margin-top: 2px; }
+
+/* Options that run to more than one line (the honors pair, the capstone's three calls). */
+.choice-grid-wide { grid-template-columns: 1fr; }
+@media (min-width: 720px) { .choice-grid-wide { grid-template-columns: repeat(3, 1fr); } }
+.choice-grid-wide .choice { text-align: left; line-height: 1.35; padding: var(--s-3); }
+
+/* World-state: storage cylinders still worth drawing on, one token per 20 atm. */
+.tankfield { display: flex; flex-wrap: wrap; gap: 5px; margin-top: var(--s-2); }
+.tank {
+  width: 11px; height: 22px; border-radius: 5px 5px 3px 3px;
+  background: var(--accent-700, #4a5568);
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.18);
+  transition: opacity var(--t-fast);
+}
+
+/* The fallback fill mirrors the studio backdrop in shared/js/stage3d.js (BACKDROP), so the
+   frame before WebGL first paints is not a flat rectangle of a different colour. */
+.stage { width: 100%; height: 360px; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border); background: linear-gradient(180deg, #f8fbfc 0%, #e6eff3 55%, #c6d6de 100%); }
+.stage canvas { display: block; }
+@media (max-width: 640px) { .stage { height: 300px; } }
+
+/* Chart hosts need a fixed-height parent for Chart.js maintainAspectRatio:false */
+.canvas-wrap { position: relative; height: 260px; margin-top: var(--s-3); }
+.canvas-wrap canvas { width: 100% !important; height: 100% !important; }
+
+/* Slider controls */
+.controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--s-4); margin-top: var(--s-4); }
+.ctrl { display: flex; flex-direction: column; gap: var(--s-1); }
+.ctrl > label { display: flex; justify-content: space-between; align-items: center; }
+.ctrl .val { color: var(--accent-700); font-family: var(--font-mono); }
+
+/* Solved-variable readout in the PV=nRT solver */
+.solved { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-md); background: var(--accent-050); border: 1px solid var(--accent-100); color: var(--accent-700); border-radius: var(--r-md); padding: var(--s-2) var(--s-3); }
+/* The solver computes the graded answer, so the box is a placeholder until the call is
+   committed. Same footprint, so the layout does not jump when the number lands. */
+.solved-hidden { background: var(--surface-3); border-color: var(--border); color: var(--muted); font-weight: 500; }
+
+/* KMT postulate reference list */
+.postulates { margin: var(--s-3) 0 0 var(--s-5); display: flex; flex-direction: column; gap: var(--s-2); font-size: var(--fs-sm); color: var(--ink-2); }
+.postulates li strong { color: var(--ink); }
+
+/* Dalton partial-pressure stacked bar */
+.pp-bar { display: flex; height: 36px; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border); margin-top: var(--s-3); background: var(--surface-2); }
+.pp-seg { display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--fs-xs); font-weight: 700; font-family: var(--font-mono); min-width: 2px; white-space: nowrap; overflow: hidden; transition: width var(--t-med) var(--ease); }
+
+/* Dalton gas mixer rows */
+.gasmix { display: flex; flex-direction: column; gap: var(--s-2); }
+.gas-row { display: flex; align-items: center; gap: var(--s-3); }
+.gas-row .gas-name { width: 52px; font-weight: 700; }
+.gas-row input { max-width: 130px; }
+.swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: middle; border: 1px solid rgba(0,0,0,.15); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pp-seg, .tank { transition: none; }
+}
+
+/* The WebGL host and each Chart.js canvas need a real height inside a cockpit panel.
+   The module-owned viewers are resized from setMode after the panel has painted. */
+.chem-console > .panel.is-active { display: block !important; overflow-y: auto; overscroll-behavior: contain; contain: paint; }
+.chem-console > .worldstate { display: none; }
+.chem-console .brief { display: none; }
+.chem-console > .panel.is-active .muted,
+.chem-console > .panel.is-active .mono { font-size: var(--fs-sm) !important; }
+.chem-console .honors-block .verdict { display: grid !important; }
+.chem-console .honors-block .verdict-headline, .chem-console .honors-block .verdict-detail { display: block; -webkit-line-clamp: none; overflow: visible; }
+/* 30vh was 218px on a 15in laptop, which is more cube than the reading needs: the box is there
+   to show particles in constant motion, and 26vh still shows that while giving the bench back
+   30px of its decision. */
+.stage { height: clamp(180px, 26vh, 250px); }
+.canvas-wrap { height: clamp(178px, 26vh, 240px); }
+.canvas-wrap canvas { width: 100% !important; height: 100% !important; }
+.mission-screen { overflow-y: auto; overscroll-behavior: contain; contain: paint; }
+.screen-copy { overflow-y: auto; overscroll-behavior: contain; }
+@media (max-width: 600px) { .canvas-wrap { height: 168px; } }
+/* The time and bank summary is already present in the rail. At the three-column scaled
+   breakpoint its duplicate screen card overlays the job evidence, so yield that duplicate
+   before shrinking the instructional copy. */
+@media (max-width: 1240px) { .mission-screen .cockpit-instincts { display: none; } }

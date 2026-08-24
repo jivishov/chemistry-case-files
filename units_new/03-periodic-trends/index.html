@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 3 · Periodic Table &amp; Trends</title>
+<meta name="description" content="The Repair Bench: phone and laptop repairs at your own bench. Predict the element in a blacked-out datasheet row, name the family that made a part fail, and read the trend that decides which of two parts goes in. Rebuild the periodic table one confirmed call at a time. TEKS C.5.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<link rel="stylesheet" href="../../shared/css/components.css">
+<link rel="stylesheet" href="../../shared/css/casefile.css">
+  <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
+  <link rel="stylesheet" href="css/style.css?v=u3-4">
+<!-- Chart.js arrives as one CDN script; shared/js/render.js wraps it in barChart/lineChart. -->
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div x-data="sim()" x-cloak>
+
+  <main class="codex-shell cockpit-shell" aria-label="Unit 3 repair-bench cockpit">
+    <header class="cockpit-command">
+      <div class="command-brand">
+        <span class="command-kicker">Unit 3 · TEKS C.5</span>
+        <!-- The title carries the link home. It replaces the <strong> rather than adding a
+             row (the header is height-critical), and it must not be a <span>, because
+             .command-brand span:last-child styles the active-station line by position. -->
+        <a class="command-home" href="../index.html" title="All units">Periodic Table &amp; Trends</a>
+        <span x-text="activeStationName"></span>
+      </div>
+
+      <nav class="station-nav" role="tablist" aria-label="Bench jobs">
+        <button class="tab" role="tab" :aria-selected="mode==='table'"    @click="setMode('table')"    aria-label="How it developed" title="How it developed &middot; C.5(A) evidence behind the table"><span class="tab-full" aria-hidden="true">How it developed</span><span class="tab-short" aria-hidden="true">History</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='families'" @click="setMode('families')" aria-label="Chemical families" title="Chemical families &middot; C.5(B) predicting from valence patterns"><span class="tab-full" aria-hidden="true">Chemical families</span><span class="tab-short" aria-hidden="true">Families</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='trends'"   @click="setMode('trends')"   aria-label="Periodic trends" title="Periodic trends &middot; C.5(C) reading elemental data"><span class="tab-full" aria-hidden="true">Periodic trends</span><span class="tab-short" aria-hidden="true">Trends</span></button>
+        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="The order" title="The order &middot; capstone: the substitute part"><span class="tab-full" aria-hidden="true">The order</span><span class="tab-short" aria-hidden="true">Order</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')" aria-label="Case file" title="Case file &middot; why your phone bet on the top-left corner"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
+      </nav>
+
+      <div class="command-actions">
+        <label class="switch" title="Reveal advanced content for Honors sections">
+          <input type="checkbox" x-model="honors">
+          <span class="track"></span>
+          <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+        </label>
+        <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
+      </div>
+
+      <div class="command-metrics" aria-label="Progress and bench telemetry">
+        <span class="metric-chip">XP <strong x-text="g_xp"></strong></span>
+        <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
+        <div class="teks-wrap" @click.outside="teksOpen = false" @keydown.escape="teksOpen = false">
+          <button type="button" class="teks-badge" :class="{ complete: teksMasteredCount === coreSkills.length }"
+                  :aria-expanded="teksOpen ? 'true' : 'false'" aria-label="TEKS standards progress"
+                  @click="teksOpen = !teksOpen">
+            <span>TEKS</span>
+            <strong><span x-text="teksMasteredCount"></span>/<span x-text="coreSkills.length"></span></strong>
+          </button>
+          <div class="teks-popover" x-show="teksOpen" x-cloak role="group" aria-label="TEKS C.5 standards">
+            <template x-for="se in coreSkills" :key="se.id">
+              <div class="teks-row" :class="{ active: se.mode===mode, mastered: gMastered(se.id) }">
+                <span class="teks-row-head">
+                  <span class="teks-row-code" x-text="se.code"></span>
+                  <span class="teks-row-cap" x-text="seCaption(se)"></span>
+                </span>
+                <span class="teks-row-text" x-text="se.text"></span>
+                <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id)*100}%`"></span></span>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="workbench-grid" x-show="mode!=='casefile'">
+
+      <!-- ============ LEFT: the job you are on ============ -->
+      <section class="mission-screen panel" :class="'tone-' + activeTone" aria-label="Active job">
+        <div class="mission-frame">
+          <div class="mission-screen-art" x-html="scArt(activeArtId)"></div>
+          <div class="screen-scanline" aria-hidden="true"></div>
+        </div>
+        <div class="screen-status">
+          <span class="screen-system" x-text="activeStationName"></span>
+          <span class="screen-state" x-show="activeStateLabel" x-text="activeStateLabel"></span>
+        </div>
+        <div class="screen-copy">
+          <p class="screen-goal" x-show="activeBrief" x-prose="activeBrief ? activeBrief.goal : ''"></p>
+          <p class="screen-outcome" x-prose="activeOutcomeText"></p>
+        </div>
+        <!-- A native <details>, so the constants can be folded away and the art and the
+             prompt take the rows back. Open by default, because standing facts a learner has
+             to hunt for are not standing facts; shared/cockpit.css styles the summary as the
+             same mono eyebrow the card already had, so folding it costs one 12px line rather
+             than a whole card. No Alpine binding on purpose -- the element is never
+             re-rendered by a station change, so its own state is the state. -->
+        <details class="screen-reference" aria-label="Reference facts" open>
+          <!-- .command-kicker, not a bare span: this line is the same chrome eyebrow it was
+               before it became a summary, and that class is what says so -- to the reader, to
+               the stylesheet, and to the legibility floor in tests/unit5a-layout.test.mjs,
+               which exempts eyebrows and would otherwise (correctly) report a 10.7px word. -->
+          <summary class="command-kicker">Reference</summary>
+          <div class="screen-reference-body">
+            <template x-for="r in activeReference" :key="r.k">
+              <p class="ref-item">
+                <span class="ref-k" x-text="r.k"></span>
+                <span class="ref-v" x-prose="r.v"></span>
+              </p>
+            </template>
+          </div>
+        </details>
+        <section class="instincts cockpit-instincts" aria-label="The bench">
+          <span class="command-kicker">The bench</span>
+          <p>Phone and laptop repair &middot; <strong x-text="cellsConfirmed"></strong> of
+            <span x-text="cellsTotal"></span> cells confirmed &middot; day <strong x-text="day"></strong></p>
+        </section>
+      </section>
+
+      <!-- ============ CENTER: the bench ============ -->
+      <section class="task-stack chem-console">
+
+        <!-- ---------- C.5(A) how the table developed ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='table' }" x-show="mode==='table'">
+          <p class="muted mb-2">Every arrangement on this bench was somebody's best reading of the evidence. Say what the evidence supports, then act on it: an order goes out or it does not.</p>
+
+          <p class="ask-line" x-text="aTask ? aTask.ask : ''"></p>
+          <div class="opt-grid" role="group" aria-label="Answer options">
+            <template x-for="o in aOptions" :key="o.k">
+              <button class="opt" :class="aState(o.k)" @click="pickA(o.k)" :disabled="aChecked" x-text="o.label"></button>
+            </template>
+          </div>
+
+          <div class="act-row mt-3" role="group" aria-label="What happens next">
+            <span class="command-kicker">Then</span>
+            <template x-for="a in (aTask ? aTask.actions : [])" :key="a.k">
+              <button class="opt opt-act" :class="aActionState(a.k)" @click="pickAAction(a.k)" :disabled="aChecked" x-text="a.label"></button>
+            </template>
+          </div>
+
+          <div class="row call-row mt-3">
+            <button class="btn btn-accent" @click="commitA()" :disabled="!aReady">Make the call</button>
+            <button class="btn" @click="nextA()">Next part</button>
+            <span class="call-hint" x-show="!aReady && !aChecked" x-text="aPick ? 'Now choose what happens next.' : 'Choose a reading, then what happens next.'"></span>
+          </div>
+
+          <p class="explain" x-show="aChecked && aTask" x-text="aTask ? aTask.explain : ''"></p>
+
+          <!-- The history is the evidence behind the call. It is kept in the cockpit as a
+               reachable reference file instead of being reduced to an answer explanation. -->
+          <details class="lesson-reference history-reference mt-3">
+            <summary>Evidence file: how the table took shape</summary>
+            <div class="lesson-reference-body">
+              <div class="periodic-toolbar">
+                <button class="btn btn-sm" :class="moseleyOn ? 'btn-accent' : ''" @click="moseleyOn = !moseleyOn"
+                  x-text="moseleyOn ? 'Hide mass-order inversions' : 'Show mass-order inversions'"></button>
+                <p class="muted">Orange outlines mark the Ar/K and Co/Ni pairs where atomic mass would put the shelf in the wrong order. Click a cell to inspect it.</p>
+              </div>
+
+              <div class="periodic-map-card">
+                <svg class="periodic-map" viewBox="-3 -3 180 56" role="group" aria-label="Interactive periodic table of the 37 elements studied"
+                  @click="selectHeatFromEvent($event)" @keydown.enter.prevent="selectHeatFromEvent($event)" @keydown.space.prevent="selectHeatFromEvent($event)">
+                  <g x-html="heatSvg()"></g>
+                </svg>
+                <div class="legend" aria-label="Element family colours">
+                  <template x-for="(label, key) in FAMILY_LABELS" :key="key">
+                    <span class="legend-item"><span class="fam-dot" :class="'fam-'+key"></span><span x-text="label"></span></span>
+                  </template>
+                </div>
+                <p class="map-note">Only the 37 elements used in this course appear. The empty positions are real periodic-table places outside this unit's data set.</p>
+              </div>
+
+              <div class="inspector">
+                <div class="insp-tile">
+                  <div class="z mono" x-text="selected.z"></div>
+                  <div class="sym" x-text="selected.sym"></div>
+                  <div class="nm" x-text="selected.name"></div>
+                  <div class="ms" x-text="fmt(selected.mass,5) + ' u'"></div>
+                </div>
+                <div class="insp-body">
+                  <div class="ref-title">Selected element</div>
+                  <div class="insp-config" x-text="selConfig"></div>
+                  <div class="insp-props">
+                    <div class="insp-prop"><div class="k">family</div><div class="v small-value" x-text="selFamilyLabel"></div></div>
+                    <div class="insp-prop"><div class="k">period / group</div><div class="v" x-text="selected.period + ' / ' + selected.group"></div></div>
+                    <div class="insp-prop"><div class="k">valence e-</div><div class="v" x-text="selIsMainGroup ? selValence : 'varies'"></div></div>
+                    <div class="insp-prop"><div class="k">radius</div><div class="v" x-text="selected.radius + ' pm'"></div></div>
+                    <div class="insp-prop"><div class="k">first IE</div><div class="v" x-text="selected.ie1 + ' kJ/mol'"></div></div>
+                    <div class="insp-prop"><div class="k">electronegativity</div><div class="v" x-text="selEN"></div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="timeline">
+                <template x-for="h in TABLE_HISTORY" :key="h.who">
+                  <article class="tl-card">
+                    <div class="tl-head"><span class="tl-who" x-text="h.who"></span><span class="tl-year" x-text="h.year"></span></div>
+                    <p class="tl-idea" x-text="h.idea"></p>
+
+                    <div class="viz" role="img" :aria-label="'Schematic: ' + h.viz.cap">
+                      <template x-if="h.viz.type==='triads'">
+                        <div class="viz-triads">
+                          <template x-for="(tr, ti) in h.viz.triads" :key="ti">
+                            <div class="triad">
+                              <template x-for="(e, ei) in tr.els" :key="ei">
+                                <span class="mini-tile" :class="{ hi: ei===1 }"><span x-text="e.sym"></span><span class="mt-sub" x-text="e.mass"></span></span>
+                              </template>
+                              <span class="triad-avg" x-text="'avg ' + triadAvg(tr)"></span>
+                            </div>
+                          </template>
+                        </div>
+                      </template>
+
+                      <template x-if="h.viz.type==='octaves'">
+                        <div class="viz-grid">
+                          <template x-for="(row, ri) in h.viz.rows" :key="ri">
+                            <div class="viz-row">
+                              <template x-for="(sym, ci) in row" :key="ci">
+                                <span class="mini-tile" :class="{ hi: ci===h.viz.highlightCol }" x-text="sym"></span>
+                              </template>
+                            </div>
+                          </template>
+                        </div>
+                      </template>
+
+                      <template x-if="h.viz.type==='gaps'">
+                        <div class="viz-grid">
+                          <div class="viz-row">
+                            <template x-for="(g, gi) in h.viz.groupHeaders" :key="gi"><span class="viz-head" x-text="g"></span></template>
+                          </div>
+                          <template x-for="(row, ri) in h.viz.rows" :key="ri">
+                            <div class="viz-row">
+                              <template x-for="(sym, ci) in row" :key="ci"><span class="mini-tile" :class="{ gap: sym==='?' }" x-text="sym"></span></template>
+                            </div>
+                          </template>
+                        </div>
+                      </template>
+
+                      <template x-if="h.viz.type==='numbered'">
+                        <div class="viz-pairs">
+                          <template x-for="(pr, pi) in h.viz.pairs" :key="pi">
+                            <div class="viz-pair">
+                              <span class="mini-tile"><span class="mt-sub" x-text="'Z ' + pr[0].z"></span><span x-text="pr[0].sym"></span><span class="mt-sub" x-text="pr[0].mass"></span></span>
+                              <span class="viz-arrow">&#8594;</span>
+                              <span class="mini-tile"><span class="mt-sub" x-text="'Z ' + pr[1].z"></span><span x-text="pr[1].sym"></span><span class="mt-sub" x-text="pr[1].mass"></span></span>
+                            </div>
+                          </template>
+                        </div>
+                      </template>
+
+                      <template x-if="h.viz.type==='blocks'">
+                        <div class="viz-blocks">
+                          <div class="block-row"><span class="blk blk-s">s</span><span class="blk-spacer"></span><span class="blk blk-d">d</span><span class="blk blk-p">p</span></div>
+                          <div class="block-row centered"><span class="blk blk-f">f-block: lanthanides + actinides</span></div>
+                        </div>
+                      </template>
+
+                      <p class="viz-cap" x-text="h.viz.cap"></p>
+                    </div>
+                    <p class="tl-ev"><strong>Evidence:</strong> <span x-text="h.evidence"></span></p>
+                  </article>
+                </template>
+              </div>
+
+              <section class="evidence-section">
+                <h4>Moseley's evidence: atomic number, not atomic mass</h4>
+                <table class="data compact-data">
+                  <thead><tr><th>Pair</th><th class="num">atomic number</th><th class="num">atomic mass</th><th>on map</th></tr></thead>
+                  <tbody>
+                    <template x-for="p in MASS_ORDER_INVERSIONS" :key="p.a + p.b">
+                      <tr><td class="mono" x-text="p.a + ' vs ' + p.b"></td><td class="num" x-text="p.zA + ' < ' + p.zB"></td><td class="num" x-text="p.massA + ' > ' + p.massB"></td><td x-text="p.onGrid ? 'yes' : 'Te not shown'"></td></tr>
+                    </template>
+                  </tbody>
+                </table>
+                <div class="note note-info evidence-notes">
+                  <template x-for="p in MASS_ORDER_INVERSIONS" :key="'n' + p.a"><p><strong x-text="p.a + '/' + p.b + ': '"></strong><span x-prose="p.note"></span></p></template>
+                </div>
+              </section>
+
+              <section class="evidence-section">
+                <h4>Mendeleev's predicted gap</h4>
+                <p class="muted">The bench call uses this same comparison. Actual values appear after you make that call, whether it is right or wrong.</p>
+                <table class="data compact-data">
+                  <thead><tr><th>Property</th><th>predicted</th><th x-show="aChecked">actual</th></tr></thead>
+                  <tbody>
+                    <template x-for="r in MENDELEEV_GAP.comparison" :key="r.prop"><tr><td x-text="r.prop"></td><td class="mono" x-text="r.predicted"></td><td class="mono" x-show="aChecked" x-text="r.actual"></td></tr></template>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </details>
+        </div>
+
+        <!-- ---------- C.5(B) chemical families ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='families' }" x-show="mode==='families'">
+          <p class="muted mb-2">A part fails the way its family fails. Name the family and the ion it forms, then decide what the repair actually needs.</p>
+
+          <p class="ask-line" x-text="bTask ? bTask.ask : ''"></p>
+          <div class="opt-grid" role="group" aria-label="Answer options">
+            <template x-for="o in (bTask ? bTask.options : [])" :key="o.k">
+              <button class="opt" :class="bState(o.k)" @click="pickB(o.k)" :disabled="bChecked" x-text="o.label"></button>
+            </template>
+          </div>
+
+          <div class="act-row mt-3" role="group" aria-label="What happens next">
+            <span class="command-kicker">Then</span>
+            <template x-for="a in (bTask ? bTask.actions : [])" :key="a.k">
+              <button class="opt opt-act" :class="bActionState(a.k)" @click="pickBAction(a.k)" :disabled="bChecked" x-text="a.label"></button>
+            </template>
+          </div>
+
+          <div class="row call-row mt-3">
+            <button class="btn btn-accent" @click="commitB()" :disabled="!bReady">Make the call</button>
+            <button class="btn" @click="nextB()">Next part</button>
+            <span class="call-hint" x-show="!bReady && !bChecked" x-text="bPick ? 'Now choose what the repair needs.' : 'Name the family, then choose what the repair needs.'"></span>
+          </div>
+
+          <p class="explain" x-show="bChecked && bTask" x-text="bTask ? bTask.explain : ''"></p>
+
+          <!-- The family explorer is 552px of reference in a 589px panel, which is why this
+               bench was the one that scrolled the moment it opened. It becomes a disclosure
+               for the same reason bench A's evidence file is one: the DECISION belongs above
+               the fold, and a reference tool is something you consult. Bench A ships this way
+               already and needs no scroll at all; this is that pattern, not a new one. -->
+          <details class="lesson-reference fam-card mt-3" aria-label="Family reference">
+            <summary>Family reference &middot; valence, ions and reactivity</summary>
+            <div class="lesson-reference-body">
+            <div class="fam-buttons" role="group" aria-label="Choose a chemical family">
+              <template x-for="f in FAMILIES" :key="f.key">
+                <button class="fam-btn" :aria-pressed="famKey===f.key" @click="selectFamily(f.key)">
+                  <span class="fam-dot" :class="'fam-'+f.key"></span><span x-text="f.name"></span>
+                </button>
+              </template>
+            </div>
+
+            <div class="fam-head mt-3">
+              <span class="fam-dot" :class="'fam-' + family.key"></span>
+              <strong x-text="family.name"></strong>
+              <span class="mono" x-text="family.group"></span>
+            </div>
+            <div class="family-stat-grid">
+              <div><span>shared valence e-</span><strong class="mono" x-text="family.key==='transition' ? 'varies' : familyValence"></strong></div>
+              <div><span>typical ion</span><strong class="mono" x-text="family.ionCharge"></strong></div>
+              <div><span>reactivity direction</span><strong x-text="family.reactivityTrend==='down' ? 'rises down' : family.reactivityTrend==='up' ? 'rises up' : 'low overall'"></strong></div>
+            </div>
+            <p x-prose="family.behavior"></p>
+
+            <div class="ref-title">Reactivity meter</div>
+            <div class="react-list">
+              <template x-for="m in familyMembers" :key="m.sym">
+                <div class="react-row">
+                  <span class="react-name" x-text="m.sym + ' · ' + m.name"></span>
+                  <div class="react-track"><div class="react-fill" :style="'width:' + m.reactivity + '%'"></div></div>
+                  <span class="react-val" x-text="m.reactivity"></span>
+                </div>
+              </template>
+            </div>
+            <p class="muted" x-prose="family.reactivityNote"></p>
+
+            <div class="family-reaction" x-show="family.reaction">
+              <span class="ref-title">Representative reaction</span>
+              <code x-formula="family.reaction"></code>
+              <p class="muted" x-text="family.reactionCaption"></p>
+            </div>
+
+            <ul class="charge-list" x-show="familyCharges.length">
+              <template x-for="q in familyCharges" :key="q.sym">
+                <li><span class="mono" x-text="q.sym"></span> forms <span class="mono" x-prose="q.answer"></span> &middot; <span x-prose="q.explain"></span></li>
+              </template>
+            </ul>
+            </div>
+          </details>
+
+          <details class="lesson-reference mt-3">
+            <summary>Family positions on the periodic table</summary>
+            <div class="lesson-reference-body">
+              <div class="periodic-map-card">
+                <svg class="periodic-map" viewBox="-3 -3 180 56" role="group" aria-label="Interactive family-highlighted periodic table"
+                  @click="selectHeatFromEvent($event)" @keydown.enter.prevent="selectHeatFromEvent($event)" @keydown.space.prevent="selectHeatFromEvent($event)">
+                  <g x-html="heatSvg()"></g>
+                </svg>
+                <p class="map-note">The selected family stays bright. Every other element remains visible so a column is still a position on one table, not a separate list.</p>
+              </div>
+              <div class="inspector compact-inspector">
+                <div class="insp-tile"><div class="z mono" x-text="selected.z"></div><div class="sym" x-text="selected.sym"></div><div class="nm" x-text="selected.name"></div></div>
+                <div class="insp-body"><div class="ref-title">Selected element</div><div class="insp-config" x-text="selConfig"></div><p><strong x-text="selFamilyLabel"></strong> · Group <span class="mono" x-text="selected.group"></span> · period <span class="mono" x-text="selected.period"></span></p></div>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- ---------- C.5(C) periodic trends ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='trends' }" x-show="mode==='trends'">
+          <p class="muted mb-2">Two candidate parts, one property that decides. The pair is the two parts this job is choosing between; the property is generated from the element data.</p>
+
+          <p class="ask-line" x-text="cAsk"></p>
+          <div class="pair-row" role="group" aria-label="The two candidates">
+            <button class="pair" :class="cState(cPair.a)" @click="pickC(cPair.a)" :disabled="cChecked">
+              <span class="pair-sym" x-text="cPair.a"></span>
+              <span class="pair-val mono" x-text="cPairValue(cPair.a)"></span>
+              <span class="pair-fam" x-text="FAMILY_LABELS[elBySym(cPair.a).family]"></span>
+            </button>
+            <span class="pair-vs mono" x-prose="cPair.pairNote"></span>
+            <button class="pair" :class="cState(cPair.b)" @click="pickC(cPair.b)" :disabled="cChecked">
+              <span class="pair-sym" x-text="cPair.b"></span>
+              <span class="pair-val mono" x-text="cPairValue(cPair.b)"></span>
+              <span class="pair-fam" x-text="FAMILY_LABELS[elBySym(cPair.b).family]"></span>
+            </button>
+          </div>
+
+          <div class="act-row mt-3" role="group" aria-label="What goes in the repair">
+            <span class="command-kicker">Then</span>
+            <template x-for="a in (cTask ? cTask.actions : [])" :key="a.k">
+              <button class="opt opt-act" :class="cActionState(a.k)" @click="pickCAction(a.k)" :disabled="cChecked" x-text="a.label"></button>
+            </template>
+          </div>
+
+          <div class="row call-row mt-3">
+            <button class="btn btn-accent" @click="commitC()" :disabled="!cReady">Make the call</button>
+            <button class="btn" @click="nextC()">Next pair</button>
+            <span class="call-hint" x-show="!cReady && !cChecked" x-text="cPick ? 'Now choose which part goes in.' : 'Read the pair, then choose which part goes in.'"></span>
+          </div>
+
+          <p class="explain" x-show="cChecked" x-prose="cExplain"></p>
+
+          <!-- The rule that decides the call stays out of the disclosure. It is one line, it
+               changes with the property, and it is the sentence a learner needs in front of
+               them while they compare the two parts -- so it is the one piece of the old
+               485px trend-map that is not a tool. -->
+          <p class="note note-info trend-rule mt-3"><strong x-text="prop.label + ': '"></strong><span x-prose="prop.why"></span></p>
+
+          <details class="lesson-reference trend-map mt-3" aria-label="Periodic trend heatmap">
+            <summary>Periodic map &middot; every element shaded by this property</summary>
+            <div class="lesson-reference-body">
+            <div class="heat-legend" aria-label="Heatmap scale">
+              <span class="heat-ends" x-text="'low ' + heatLegend.min"></span>
+              <span class="heat-bar"></span>
+              <span class="heat-ends" x-text="heatLegend.max + ' high'"></span>
+            </div>
+            <div class="periodic-map-card">
+              <svg class="periodic-map" viewBox="-3 -3 180 56" role="group" aria-label="Interactive periodic-table heatmap"
+                @click="selectHeatFromEvent($event)" @keydown.enter.prevent="selectHeatFromEvent($event)" @keydown.space.prevent="selectHeatFromEvent($event)">
+                <g x-html="heatSvg()"></g>
+              </svg>
+              <p class="map-note">Click an element to inspect it. White dots mark cells already confirmed on the repair board; neutral cells have no value for this property.</p>
+            </div>
+            <div class="inspector compact-inspector">
+              <div class="insp-tile"><div class="z mono" x-text="selected.z"></div><div class="sym" x-text="selected.sym"></div><div class="nm" x-text="selected.name"></div></div>
+              <div class="insp-body">
+                <div class="ref-title">Selected element</div>
+                <div class="insp-config" x-text="selConfig"></div>
+                <div class="trend-selected-values"><span><strong x-text="prop.label"></strong> <span class="mono" x-text="selected[prop.field] == null ? 'n/a' : selected[prop.field] + ' ' + prop.unit"></span></span><span>radius <span class="mono" x-text="selected.radius + ' pm'"></span></span><span>first IE <span class="mono" x-text="selected.ie1 + ' kJ/mol'"></span></span></div>
+              </div>
+            </div>
+            <p class="muted chart-cap" x-show="trendHasGap">A break in a plotted series marks an element this course does not study. The graph leaves that space empty instead of inventing a straight line through missing data.</p>
+            </div>
+          </details>
+
+          <!-- The trend chart. Its wrapper carries an explicit height: see css/style.css.
+               A canvas laid out inside a closed disclosure measures 0x0, and Chart.js's own
+               ResizeObserver does not reliably fire on the reveal (the same failure main.js
+               documents for a display:none panel), so the toggle re-measures both charts. -->
+          <details class="lesson-reference chart-row mt-3" @toggle="$nextTick(() => resizeCharts())">
+            <summary>Plot the trend &middot; any property, across a period or down a group</summary>
+            <div class="lesson-reference-body">
+            <div class="chart-controls">
+              <div class="field">
+                <label for="u3-prop">Property</label>
+                <select id="u3-prop" x-model="trendProp">
+                  <template x-for="p in TREND_PROPS" :key="p.key"><option :value="p.key" x-text="p.label"></option></template>
+                </select>
+              </div>
+              <div class="field">
+                <label for="u3-run">Series</label>
+                <select id="u3-run" x-model="trendRun">
+                  <template x-for="r in TREND_RUNS" :key="r.key"><option :value="r.key" x-text="r.label"></option></template>
+                </select>
+              </div>
+            </div>
+            <div class="canvas-wrap"><canvas x-ref="trendCanvas" aria-label="Trend chart"></canvas></div>
+            <p class="muted chart-cap" x-text="trendCaption"></p>
+            </div>
+          </details>
+
+          <!-- ---------- Honors h1: Zeff and shielding ---------- -->
+          <div class="honors-block mt-3" x-show="honors" x-cloak>
+            <span class="command-kicker honors-kicker">Honors &middot; effective nuclear charge</span>
+            <div class="note note-info" x-show="!gMastered('c')">Certify the periodic-trends bench with three correct calls in a row to unlock the shielding analysis.</div>
+            <template x-if="honors && gMastered('c')">
+              <div class="honors-content">
+            <p class="screen-goal" x-text="h1Brief ? h1Brief.goal : ''"></p>
+            <p class="small muted">Across one period, added electrons enter the same outer shell while proton count increases. Core electrons shield; electrons in that same shell barely shield one another.</p>
+            <div class="zeff-formula">Zeff approximately = nuclear charge - core-electron shielding</div>
+
+            <table class="zeff-table">
+              <thead><tr><th>El</th><th>Group</th><th>Zeff</th><th>Radius</th><th>IE<sub>1</sub></th></tr></thead>
+              <tbody>
+                <template x-for="r in zeffRows" :key="r.sym">
+                  <tr>
+                    <td class="mono" x-text="r.sym"></td>
+                    <td class="mono" x-text="r.group"></td>
+                    <td class="mono" x-text="r.zeff.toFixed(2)"></td>
+                    <td class="mono" x-text="r.radius + ' pm'"></td>
+                    <td class="mono" x-text="r.ie1"></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+
+            <div class="opt-grid mt-2" role="group" aria-label="Honors answer options">
+              <template x-for="o in h1Task.options" :key="o.k">
+                <button class="opt" :class="h1State(o.k)" @click="pickH1(o.k)" :disabled="h1Checked" x-text="o.label"></button>
+              </template>
+            </div>
+            <div class="act-row mt-2" role="group" aria-label="Which end holds harder">
+              <span class="command-kicker">Then</span>
+              <template x-for="a in h1Task.actions" :key="a.k">
+                <button class="opt opt-act" :class="h1ActionState(a.k)" @click="pickH1Action(a.k)" :disabled="h1Checked" x-text="a.label"></button>
+              </template>
+            </div>
+            <div class="row call-row mt-2">
+              <button class="btn btn-accent" @click="commitH1()" :disabled="!h1Ready">Record it</button>
+              <button class="btn" @click="nextH1()">Try again</button>
+              <span class="call-hint" x-show="!h1Ready && !h1Checked" x-text="h1Pick ? 'Now choose which end holds harder.' : 'Choose a reading, then which end holds harder.'"></span>
+            </div>
+            <!-- The shell hides console verdicts because the mission screen states the
+                 outcome, but this commit sits at the bottom of a scrolled panel, so its
+                 feedback would land off-screen. Un-hidden in css/style.css. -->
+            <div class="verdict" x-show="h1Verdict" :class="h1Verdict ? 'v-' + h1Verdict.tone : ''">
+              <strong x-text="h1Verdict ? h1Verdict.headline : ''"></strong>
+              <p x-text="h1Verdict ? h1Verdict.detail : ''"></p>
+            </div>
+              </div>
+            </template>
+          </div>
+
+          <!-- ---------- Honors h2: the ionization dips ---------- -->
+          <div class="honors-block mt-3" x-show="honors" x-cloak>
+            <span class="command-kicker honors-kicker">Honors &middot; the ionization dips</span>
+            <div class="note note-info" x-show="!gMastered('c')">Certify the periodic-trends bench with three correct calls in a row to unlock the anomaly analysis.</div>
+            <template x-if="honors && gMastered('c')">
+              <div class="honors-content">
+            <p class="screen-goal" x-text="h2Brief ? h2Brief.goal : ''"></p>
+            <p class="small muted">Ionization energy generally rises across Period 2. The two marked departures are chemical structure, not measurement noise: Be to B changes subshell, and N to O starts electron pairing.</p>
+            <p class="dip-line">The chart is highlighting <strong class="mono" x-text="h2Anom.label"></strong>:
+              <span class="mono" x-text="h2Drop.from.sym + ' ' + h2Drop.from.ie1"></span> to
+              <span class="mono" x-text="h2Drop.to.sym + ' ' + h2Drop.to.ie1"></span> kJ/mol,
+              a drop of <strong class="mono" x-text="Math.abs(h2Drop.delta)"></strong>.</p>
+
+            <div class="canvas-wrap canvas-wrap-ie"><canvas x-ref="ieCanvas" aria-label="Period 2 ionization energy"></canvas></div>
+
+            <div class="opt-grid mt-2" role="group" aria-label="Honors answer options">
+              <template x-for="o in h2Task.options" :key="o.k">
+                <button class="opt" :class="h2State(o.k)" @click="pickH2(o.k)" :disabled="h2Checked" x-text="o.label"></button>
+              </template>
+            </div>
+            <div class="act-row mt-2" role="group" aria-label="How to record it">
+              <span class="command-kicker">Then</span>
+              <template x-for="a in h2Task.actions" :key="a.k">
+                <button class="opt opt-act" :class="h2ActionState(a.k)" @click="pickH2Action(a.k)" :disabled="h2Checked" x-text="a.label"></button>
+              </template>
+            </div>
+            <div class="row call-row mt-2">
+              <button class="btn btn-accent" @click="commitH2()" :disabled="!h2Ready">Record it</button>
+              <button class="btn" @click="nextH2()">Other dip</button>
+              <span class="call-hint" x-show="!h2Ready && !h2Checked" x-text="h2Pick ? 'Now choose how to record it.' : 'Choose a reading, then how to record it.'"></span>
+            </div>
+            <div class="verdict" x-show="h2Verdict" :class="h2Verdict ? 'v-' + h2Verdict.tone : ''">
+              <strong x-text="h2Verdict ? h2Verdict.headline : ''"></strong>
+              <p x-text="h2Verdict ? h2Verdict.detail : ''"></p>
+            </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- ---------- Capstone: the substitute part ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
+          <template x-if="!capUnlocked">
+            <p class="muted">Locked until all three C.5 standards are mastered. The last call needs every one of them.</p>
+          </template>
+
+          <template x-if="capUnlocked && cap">
+            <div>
+              <p class="muted mb-2">One datasheet, one blank, one substitute on offer. Predict the missing element from the two elements either side of it, then make the call.</p>
+
+              <div class="cap-grid">
+                <div class="cap-neighbours">
+                  <span class="command-kicker">The row</span>
+                  <p><span class="mono" x-text="cap.left.sym"></span> <span class="mono" x-text="cap.left.radius + ' pm'"></span>
+                    &middot; <span class="mono">?</span> &middot;
+                    <span class="mono" x-text="cap.right.sym"></span> <span class="mono" x-text="cap.right.radius + ' pm'"></span></p>
+                  <div class="field field-220 mt-2">
+                    <label for="u3-cap">Predicted atomic radius (pm)</label>
+                    <input id="u3-cap" type="number" step="0.5" x-model="capInput" placeholder="e.g. 148" :disabled="capWin">
+                  </div>
+                </div>
+                <div class="cap-offer">
+                  <span class="command-kicker">On offer</span>
+                  <p><strong class="mono" x-text="cap.sub.sym"></strong>
+                    &middot; <span x-text="FAMILY_LABELS[cap.subEl.family]"></span>
+                    &middot; reactivity <span class="mono" x-text="cap.subEl.reactivity"></span></p>
+                  <p class="muted" x-prose="cap.sub.note"></p>
+                  <p class="muted">The part it replaces is nickel, reactivity <span class="mono" x-text="cap.req.reactivity"></span>.</p>
+                </div>
+              </div>
+
+              <div class="act-row mt-3" role="group" aria-label="The call">
+                <span class="command-kicker">The call</span>
+                <template x-for="a in capActions" :key="a.k">
+                  <button class="opt opt-act" :class="capActionState(a.k)" @click="capPickAction(a.k)" :disabled="capWin" x-text="a.label"></button>
+                </template>
+              </div>
+
+              <div class="row call-row mt-3">
+                <button class="btn btn-accent" @click="capCommit()" :disabled="!capReady">Commit the order</button>
+                <button class="btn" @click="capNext()">Another datasheet</button>
+                <span class="call-hint" x-show="!capReady && !capWin" x-text="capInput === '' ? 'Predict the radius, then make the call.' : 'Now choose the call.'"></span>
+              </div>
+
+              <div class="verdict" x-show="capVerdict" :class="capVerdict ? 'v-' + capVerdict.tone : ''">
+                <strong x-text="capVerdict ? capVerdict.headline : ''"></strong>
+                <p x-text="capVerdict ? capVerdict.detail : ''"></p>
+              </div>
+            </div>
+          </template>
+        </div>
+      </section>
+
+      <!-- ============ RIGHT: the board you are rebuilding ============ -->
+      <aside class="life-support-board board-rail panel" aria-label="The board">
+        <div class="life-header">
+          <div>
+            <span class="command-kicker">The board</span>
+            <strong x-text="boardState"></strong>
+          </div>
+          <span class="sol-chip">Day <strong x-text="day"></strong></span>
+        </div>
+
+        <div class="crew-status cockpit-crew">
+          <span class="crew-face" x-text="boardMood"></span>
+          <div class="crew-bar">
+             <div class="life-meter-label">
+               <span>Cells confirmed</span>
+               <span class="mono"><span x-text="cellsConfirmed"></span>/<span x-text="cellsTotal"></span></span>
+            </div>
+            <div class="meter"><div class="meter-fill" :style="`width:${boardPct}%; background:${stockColor(boardPct)}`"></div></div>
+          </div>
+        </div>
+
+        <!-- The board itself. String-built and injected on an SVG group, because Alpine's
+             loop directives do not bind scope inside SVG. -->
+        <div class="system-grid" aria-label="The reconstructed table">
+          <figure class="board-figure">
+            <svg viewBox="0 0 180 54" role="img" aria-label="A periodic table being rebuilt one confirmed cell at a time">
+              <g x-html="boardSvg()"></g>
+            </svg>
+            <figcaption class="muted">Dashed slots are the calls still open.</figcaption>
+          </figure>
+          <template x-for="r in boardRows" :key="r.key">
+            <div class="ship-stock">
+              <div class="life-meter-label">
+                <span :title="r.title" x-text="r.label"></span>
+                <span class="mono" x-text="r.value"></span>
+              </div>
+              <div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.fill}`"></div></div>
+            </div>
+          </template>
+        </div>
+
+        <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest consequence">
+          <span class="command-kicker">Latest consequence</span>
+          <strong x-show="activeStateLabel" x-text="activeStateLabel"></strong>
+          <p x-text="worldLog.length ? worldLog[0].text : 'An empty board, a drawer of parts, and three jobs due before closing.'"></p>
+        </section>
+
+        <section class="mission-log" aria-label="Bench log">
+          <span class="command-kicker">Bench log</span>
+          <p class="worldstate-empty" x-show="!worldLog.length">Nothing written down yet.</p>
+          <ul class="worldstate-list" x-show="worldLog.length">
+            <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
+              <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
+                <span aria-hidden="true" x-text="w.icon"></span>
+                <span x-text="w.text"></span>
+              </li>
+            </template>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <!-- Filled in by mountCaseFile() before Alpine.start(), so every binding inside the
+         injected story (including its animated stage SVG) initializes with the page. -->
+    <div data-casefile></div>
+  </main>
+</div>
+
+<script type="module">
+  window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
+  const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
+         { mountColumnResizers }] = await Promise.all([
+    import('./js/main.js?v=u3-4'),
+    import('../../shared/js/render.js'),
+    import('../../shared/js/gauge.js'),
+    import('../../shared/js/casefile.js'),
+    import('./js/case.js?v=u3-4'),
+    import('../shared/columns.js?v=cockpit-3')
+  ]);
+  window.sim = createSim;
+  const { default: Alpine } = await import('https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js');
+  registerRender(Alpine);
+  registerGauge(Alpine);
+  Alpine.data('sim', createSim);
+  mountCaseFile(Alpine, CASE);          // must precede start(): it injects markup + x-data
+  window.Alpine = Alpine;
+  if (window.__startAlpine) window.__startAlpine();
+  else Alpine.start();
+  // After start(), so the handles are appended to a workbench Alpine has already claimed.
+  // The two gutter buttons carry no bindings, so Alpine never walks them.
+  mountColumnResizers();
+</script>
+</body>
+</html>

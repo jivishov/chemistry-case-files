@@ -1,0 +1,226 @@
+/* Unit 6 bench styles on top of units_new/shared/cockpit.css.
+ *
+ * Only what is specific to this unit's five benches lives here: the coefficient row, the
+ * element tally, the given-value cards, the factor-label readout, the limiting-reactant
+ * token field, the capstone's three wide options, and the bag field in the status rail.
+ * The shell -- command header, station strip, three columns, mission screen, status rail
+ * -- is the shared file's job.
+ *
+ * Carried over from units/06-reactions-stoichiometry/css/style.css: .arrow, .plus,
+ * input.coef-input, .balance-row, .tag-limiting, .tag-kind, .stat-row, .step-line,
+ * .given-row, .given-cell, .choice-grid-wide, .bagfield and .bag. Same tools, same class
+ * names; what changed is that they now sit in a ~440px console column and a ~230px rail
+ * rather than on a full-width worksheet page, and that everything the worksheet build set
+ * at --fs-xs is lifted to the shell's 14px floor (porting trap 6).
+ *
+ * The worksheet's page-layout rules (.sim-grid, .se-panel, .se-item) are deliberately NOT
+ * carried over: the cockpit's workbench-grid replaces the first and the header's TEKS
+ * popover replaces the other two.
+ */
+
+/* ============================ the benches ============================ */
+
+.arrow { font-family: var(--font-mono); font-size: 1.3rem; color: var(--muted); padding: 0 var(--s-1); }
+.plus  { font-family: var(--font-mono); font-size: 1.1rem; color: var(--muted); }
+
+/* components.css sets `input[type="number"] { width: 100% }` at specificity (0,1,1), which
+   BEATS a bare `.coef-input` class at (0,1,0) no matter which sheet loads last. Qualify
+   with the element to match that specificity (source order then favours this file), and
+   pin `flex` so a coefficient box never stretches inside `.balance-row` and pushes its
+   formula onto the next line. */
+input.coef-input {
+  width: 52px; flex: 0 0 auto;
+  text-align: center; font-family: var(--font-mono); font-weight: 700;
+  font-size: var(--fs-md); padding: 3px;
+}
+.balance-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); row-gap: var(--s-3); }
+.balance-row .species { flex: 0 0 auto; }
+
+/* The element tally is a four-column table in a narrow column, so it keeps its own tight
+   padding -- but not its --fs-xs cells, which are content here rather than chrome. */
+.chem-console table.data.tally th,
+.chem-console table.data.tally td { padding: 2px 8px; font-size: var(--fs-sm); }
+.chem-console table.data.tally { max-width: 340px; }
+
+/* What the call hands you, before you work anything out. */
+.given-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--s-2); }
+.given-cell { padding: var(--s-2) var(--s-3); border-radius: var(--r-md); border: 1px solid var(--border); background: var(--surface-2, transparent); }
+.given-cell .k { display: block; font-size: var(--fs-sm); color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.given-cell .v { display: block; font-size: var(--fs-md); font-weight: 700; margin-top: 1px; }
+
+/* The worked factor-label solution, shown only after the call is committed. */
+.stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--s-3); }
+.step-line { font-family: var(--font-mono); font-size: var(--fs-sm); padding: var(--s-1) 0; border-bottom: 1px dashed var(--border); }
+.step-line:last-child { border-bottom: none; }
+.step-line .calc { color: var(--accent-700); font-weight: 700; }
+
+/* The limiting-reactant token field. Both tags and the per-row mole figure were --fs-xs on
+   the worksheet page; inside the active panel they are content, so they take the floor. */
+.tag-limiting { font-family: var(--font-mono); font-size: var(--fs-sm); color: var(--danger); font-weight: 700; }
+.tag-kind { font-family: var(--font-mono); font-size: var(--fs-sm); color: var(--muted); }
+.chem-console .tokenmol { font-size: var(--fs-sm); }
+/* 92px of row label plus a mole figure leaves very little for the tokens in a console
+   column, and the tokens are the point of the figure. */
+.chem-console .tokenrow .rowlabel { width: 74px; }
+.chem-console .tokenfield { gap: var(--s-2); }
+
+/* The capstone's three actions run to two lines each, so they need room to breathe. In a
+   console column they stack; the worksheet's 3-across only makes sense on a wide page. */
+.choice-grid-wide { grid-template-columns: 1fr; }
+.chem-console .choice-grid-wide .choice { text-align: left; line-height: 1.3; }
+
+/* Two-line choice labels (the five structural types, the capstone's three options) would
+   otherwise inherit the shell's single-line centring and clip. */
+.chem-console .choice {
+  white-space: normal;
+  line-height: 1.25;
+}
+
+/* ============================ console fit ============================ */
+
+/* Two changes to how the shell lays out the active bench, and both are load-bearing.
+ *
+ * BLOCK, NOT GRID. The shell makes the active panel `display:grid` with
+ * `grid-template-rows: minmax(0, auto)`, and that first track resolves to 0px. In Unit 5
+ * it never mattered, because every panel there opens with the `.brief` card the shell
+ * hides outright. Every panel here opens with real content -- an instruction line, an
+ * equation, a given-value row -- which the collapsed row would render at zero height,
+ * drawing it on top of the block below. Block flow is what these benches want anyway.
+ *
+ * SCROLL, NOT CLIP. The shell clips the panel. The stoich and lr benches cannot fit one
+ * screen after a commit: the verdict, then the three-line worked solution or the
+ * before/after token field, then the percent-yield row, then a whole Honors sub-bench, is
+ * genuinely more than 700px. Clipping would silently delete the Honors work rather than
+ * shrink it, so this unit scrolls its own bench -- header and side columns stay put and
+ * only the task column moves. */
+.chem-console > .panel.is-active {
+  display: block !important;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* The mission column carries more reference text than the finished ports: the reaction
+   rules need all three short lines, and the rotation line is useful live telemetry rather
+   than decoration. Give the narrative the one deliberate scroll port, instead of letting
+   it push the fixed reference or rotation readout below the clipped workbench. The row
+   shapes mirror the shell's short-viewport rules below so this later local declaration
+   does not accidentally undo them. */
+.mission-screen {
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+}
+.mission-screen > .screen-copy {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* `activeStationName` is the scenario's actual call site, not a decorative short tab
+   label. An ellipsis hid the distinguishing part of "The tanker at the county line" at
+   tablet and narrow-laptop widths, so let this one compact status line wrap instead. */
+.mission-screen .screen-system {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+}
+
+/* KaTeX renders an invisible 1px MathML mirror at `position: absolute`. With no positioned
+   ancestor it resolves against the initial containing block, lands at a document
+   coordinate past the fold, and inflates documentElement.scrollHeight -- a phantom page
+   scroll on a shell that is supposed to have none (porting trap 4). Every one of this
+   unit's five benches renders an mhchem equation in an `.eqn`, so all five would hit it. */
+.eqn { position: relative; }
+.chem-console .eqn { padding: var(--s-2) var(--s-3); margin-bottom: var(--s-3); }
+
+/* The shell hides the console's verdict card outright, because the mission screen already
+   states the outcome and repeating it inside the bench would say the same sentence twice
+   on one screen. That holds for the four core benches -- and not for the two Honors
+   commits, which sit at the bottom of a panel the learner has scrolled to reach. Their
+   feedback would land in the top-left corner, off screen from the button that produced it.
+   So exactly these two are shown again where they happened (porting trap 2). */
+.chem-console .honors-block .verdict {
+  display: grid !important;
+}
+
+/* And unclamp their text. The shell clamps a verdict to two lines because it has a fixed
+   screen to fit; this panel scrolls, so a clamp here would hide the second half of an
+   explanation for no gain. */
+.chem-console .honors-block .verdict-headline,
+.chem-console .honors-block .verdict-detail {
+  display: block;
+  -webkit-line-clamp: none;
+  overflow: visible;
+}
+
+/* ============================ the status rail ============================ */
+
+/* The bag field is the world-state made literal: one 5 kg bag of caustic soda per token, and
+   the row shortens as calls spend it. It sits ALONGSIDE the four meters, spanning both
+   columns, never in place of them -- the audit fails any state with fewer than four
+   `.ship-stock` rows in `.system-grid` (porting trap 13).
+   Height-capped rather than width-driven, for the reason in trap 14: ten 18px tokens
+   wrapping freely took ~54px out of a ~330px rail column and pushed the incident log off a
+   726px viewport. Capped, the field letterboxes and the log keeps its place. */
+.truck-grid .bagfield {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 4px;
+  max-height: clamp(26px, 4.2vh, 44px);
+  overflow: hidden;
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+.bag {
+  width: 12px; height: 16px; border-radius: 2px; flex: none;
+  background: var(--accent-700);
+  box-shadow: inset 0 -3px 0 rgb(0 0 0 / 18%);
+}
+
+/* ============================ short viewports ============================ */
+
+/* At 1536x864 the browser viewport is about 726px tall, which is the height this unit is
+   tuned for. Below that the equation gives up size first: it is set at 1.25rem for a
+   full-width page and an mhchem formula stays legible well under that. */
+@media (max-height: 719px) {
+  .chem-console .eqn { padding: 4px 8px; font-size: 1.05rem; }
+  .given-cell { padding: 5px 8px; }
+  .given-cell .v { font-size: var(--fs-sm); }
+  .truck-grid .bagfield { max-height: 24px; }
+}
+
+@media (max-height: 639px) {
+  .chem-console table.data.tally th,
+  .chem-console table.data.tally td { padding: 1px 6px; }
+  .step-line { padding: 1px 0; }
+}
+
+/* Keep the local mission-row override aligned with cockpit.css's height budget. */
+@media (min-width: 981px) and (max-height: 699px) {
+  .mission-screen { grid-template-rows: auto auto minmax(0, 1fr) auto; }
+}
+
+@media (min-width: 981px) and (max-height: 639px) {
+  .mission-screen { grid-template-rows: auto auto minmax(0, 1fr); }
+}
+
+/* Below the shell's own 980px breakpoint the three columns stack, so the bench gets the
+   full width back and the capstone's three options can sit side by side again. */
+@media (max-width: 980px) {
+  .choice-grid-wide { grid-template-columns: repeat(3, 1fr); }
+  .mission-screen { grid-template-rows: auto auto minmax(0, 1fr); }
+}
+
+/* The cockpit, not the document, owns long reaction work. */
+.chem-console > .panel.is-active { display: block !important; overflow-y: auto; overscroll-behavior: contain; contain: paint; }
+.mission-screen { grid-template-rows: auto auto minmax(0, 1fr) auto auto; overflow-y: auto; overscroll-behavior: contain; contain: paint; }
+.mission-screen > .screen-copy { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+@media (max-width: 1240px) { .mission-screen .cockpit-instincts { display: none; } }
+
+/* The Reference card used to be dropped outright below 760px of viewport (960px here), which
+   on every laptop in the matrix meant the standing facts were not reachable at all. It is a
+   <details> now, so the learner can hand those rows back to the prompt themselves -- and
+   shared/cockpit.css still moves the card below the copy at 699px and drops it at 639px, which
+   is the shell deciding there is no room rather than this unit deciding there never is. */

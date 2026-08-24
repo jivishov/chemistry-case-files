@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 1 · Practices, Measurement &amp; Matter</title>
+<meta name="description" content="Tank Watch: keep six fish alive in a 20 gallon tank. Read a graduated cylinder, log the digits the tool justifies, find density by displacement to identify a metal, and judge whether your test kit can be trusted. TEKS C.1-C.4.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/base.css">
+<link rel="stylesheet" href="../../shared/css/components.css">
+<link rel="stylesheet" href="../../shared/css/casefile.css">
+<link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
+<link rel="stylesheet" href="css/style.css?v=u1-7">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+</head>
+<body>
+<div x-data="sim()" x-cloak>
+
+  <main class="codex-shell cockpit-shell" aria-label="Unit 1 tank-watch cockpit">
+    <header class="cockpit-command">
+      <div class="command-brand">
+        <span class="command-kicker">Unit 1 · TEKS C.1-C.4</span>
+        <!-- See the note in 05-the-mole: the title carries the link home, it replaces the
+             <strong> instead of adding a row, and it must not be a <span>. -->
+        <a class="command-home" href="../index.html" title="All units">Practices, Measurement &amp; Matter</a>
+        <span x-text="activeStationName"></span>
+      </div>
+
+      <nav class="station-nav" role="tablist" aria-label="Tank jobs">
+        <button class="tab" role="tab" :aria-selected="mode==='measure'"  @click="setMode('measure')"  aria-label="Read the tool" title="Read the tool · C.1 measurement and SI units"><span class="tab-full" aria-hidden="true">Read the tool</span><span class="tab-short" aria-hidden="true">Tool</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='sigfig'"   @click="setMode('sigfig')"   aria-label="Significant figures" title="Significant figures · C.2 precision and error"><span class="tab-full" aria-hidden="true">Sig figs</span><span class="tab-short" aria-hidden="true">Sig figs</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='density'"  @click="setMode('density')"  aria-label="Density lab" title="Density lab · C.3 evidence-based conclusions"><span class="tab-full" aria-hidden="true">Density lab</span><span class="tab-short" aria-hidden="true">Density</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='evaluate'" @click="setMode('evaluate')" aria-label="Accuracy vs precision" title="Accuracy vs precision · C.4 judging a dataset"><span class="tab-full" aria-hidden="true">Accuracy</span><span class="tab-short" aria-hidden="true">Accuracy</span></button>
+        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="The water change" title="The water change · capstone"><span class="tab-full" aria-hidden="true">Water change</span><span class="tab-short" aria-hidden="true">Change</span></button>
+        <!-- The Case File is a job like any other, so it lives in this strip rather than as
+             a teaser chip: the cockpit header has no spare row for a chip, and a story the
+             learner cannot see is a story they never open. -->
+        <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')" aria-label="Case file" title="Case file · the Mars Climate Orbiter"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
+      </nav>
+
+      <div class="command-actions">
+        <label class="switch" title="Reveal advanced content for Honors sections">
+          <input type="checkbox" x-model="honors">
+          <span class="track"></span>
+          <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+        </label>
+        <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
+      </div>
+
+      <div class="command-metrics" aria-label="Progress and tank telemetry">
+        <span class="metric-chip">XP <strong x-text="g_xp"></strong></span>
+        <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
+        <!-- Standards tracking is secondary to the measuring: one badge, expanded on
+             demand, instead of four chips competing with the job tabs. Click, not hover:
+             hover-to-open fights the click toggle and does not exist on a touch screen. -->
+        <div class="teks-wrap" @click.outside="teksOpen = false" @keydown.escape="teksOpen = false">
+          <button type="button" class="teks-badge" :class="{ complete: teksMasteredCount === coreSkills.length }"
+                  :aria-expanded="teksOpen ? 'true' : 'false'" aria-label="TEKS standards progress"
+                  @click="teksOpen = !teksOpen">
+            <span>TEKS</span>
+            <strong><span x-text="teksMasteredCount"></span>/<span x-text="coreSkills.length"></span></strong>
+          </button>
+          <div class="teks-popover" x-show="teksOpen" x-cloak role="group" aria-label="TEKS C.1 to C.4 standards">
+            <template x-for="se in coreSkills" :key="se.id">
+              <div class="teks-row" :class="{ active: se.mode===mode, mastered: gMastered(se.id) }">
+                <span class="teks-row-head">
+                  <span class="teks-row-code" x-text="se.code"></span>
+                  <span class="teks-row-cap" x-text="seCaption(se)"></span>
+                </span>
+                <span class="teks-row-text" x-text="se.text"></span>
+                <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id)*100}%`"></span></span>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- The Case File is a MODE, not a section at the foot of the page: the three working
+         columns give up the shell's flexible row while the story is showing, and the job
+         strip stays above it so there is always a way back. -->
+    <div class="workbench-grid" x-show="mode!=='casefile'">
+
+      <!-- ============ LEFT: the job you are on ============ -->
+      <section class="mission-screen panel" :class="'tone-' + activeTone" aria-label="Active job">
+        <div class="mission-frame">
+          <div class="mission-screen-art" x-html="scArt(activeArtId)"></div>
+          <div class="screen-scanline" aria-hidden="true"></div>
+        </div>
+        <!-- Job + state read as a heading, not as an overlay: at the art's true 8:3 aspect
+             an inset caption would cover 40% of the drawing. -->
+        <div class="screen-status">
+          <span class="screen-system" x-text="activeStationName"></span>
+          <span class="screen-state" x-show="activeStateLabel" x-text="activeStateLabel"></span>
+        </div>
+        <div class="screen-copy">
+          <p class="screen-goal" x-show="activeBrief" x-prose="activeBrief ? activeBrief.goal : ''"></p>
+          <p class="screen-outcome" x-prose="activeOutcomeText"></p>
+        </div>
+        <!-- A native <details>, so the standing facts can be folded away and the art and the
+             prompt take the rows back. Open by default, because facts a learner has to hunt
+             for are not standing facts. The summary keeps .command-kicker: it is the same
+             chrome eyebrow it was before it became a disclosure, and that class is what
+             exempts it from the 14px legibility floor in tests/unit5a-layout.test.mjs.
+             shared/cockpit.css styles it; the height media queries there still drop the whole
+             card on a short viewport, which is the shell deciding there is no room rather
+             than the learner deciding they want it elsewhere. -->
+        <details class="screen-reference" aria-label="Reference facts" open>
+          <summary class="command-kicker">Reference</summary>
+          <div class="screen-reference-body">
+            <template x-for="r in activeReference" :key="r.k">
+              <p class="ref-item">
+                <span class="ref-k" x-text="r.k"></span>
+                <span class="ref-v" x-prose="r.v"></span>
+              </p>
+            </template>
+          </div>
+        </details>
+        <!-- One line, not a card: this row is the last thing in a fixed-height column and
+             every line it takes is a line off the goal text above it. -->
+        <section class="instincts cockpit-instincts" aria-label="The tank">
+          <span class="command-kicker">The tank</span>
+          <p><strong x-text="TANK.fish"></strong> fish &middot; <span x-text="TANK.nominalGal"></span> gal on the box,
+            <strong x-text="TANK.realGal"></strong> measured &middot; day <strong x-text="day"></strong></p>
+        </section>
+      </section>
+
+      <!-- ============ CENTER: the bench ============ -->
+      <section class="task-stack chem-console">
+
+        <!-- ---------- C.1 read the tool (dose) ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='measure' }" x-show="mode==='measure'">
+          <p class="muted mb-2">Read the bottom of the meniscus at eye level. The smallest marking is 1 mL, so estimate one digit further, to the nearest 0.1 mL. Whatever you write is what the next person mixes from.</p>
+
+          <div class="lab-row">
+            <svg class="cyl" viewBox="0 0 200 620" role="img" aria-label="50 millilitre graduated cylinder">
+              <g x-html="cylSvg(mVal, { labels: true })"></g>
+              <!-- The answer line only appears after a commit, so the reading is never
+                   given away while it is still being read. -->
+              <g x-show="mChecked">
+                <line x1="14" x2="152" :y1="lvlY(mVal)" :y2="lvlY(mVal)" stroke="#bf4a30" stroke-width="1.8" stroke-dasharray="6 4"></line>
+                <text x="2" :y="lvlY(mVal)-6" x-text="mVal.toFixed(1)" font-size="15" fill="#bf4a30" font-family="JetBrains Mono"></text>
+              </g>
+            </svg>
+
+            <div class="lab-side">
+              <div class="field field-220">
+                <label>Your reading (mL)</label>
+                <input type="number" step="0.1" x-model="mGuess" placeholder="e.g. 27.4" :disabled="mDone">
+              </div>
+              <div class="row call-row mt-3">
+                <button class="btn btn-accent" @click="logDose()" :disabled="!mReady || mDone" x-text="mSc ? mSc.actionLabel : 'Log the dose'"></button>
+                <button class="btn" @click="newMeasure()">New sample</button>
+                <span class="call-hint" x-show="!mReady && !mDone" x-text="'Read the meniscus and type the value.'"></span>
+              </div>
+
+              <!-- A dial, not a sentence: "0.3 mL over" is a fact the learner has to
+                   translate, and the axis does the translating for them. ±0.5 mL of scale
+                   is five estimated digits either way, wide enough to see a miss and tight
+                   enough that a good read lands on the reference mark. -->
+              <template x-if="mGauge">
+                <div class="dial-wrap mt-3" x-gauge="mGauge"></div>
+              </template>
+
+
+              <div class="ref-card mt-4">
+                <div class="ref-title">SI base units</div>
+                <table class="data mini">
+                  <template x-for="u in SI_UNITS" :key="u.sym">
+                    <tr><td x-text="u.quantity"></td><td x-text="u.unit"></td><td class="mono" x-text="u.sym"></td></tr>
+                  </template>
+                </table>
+                <div class="ref-title mt-3">Common prefixes</div>
+                <div class="prefix-row">
+                  <template x-for="p in PREFIXES" :key="p.sym">
+                    <span class="prefix"><strong x-text="p.sym"></strong> <span x-text="p.name"></span> <span class="mono" x-text="p.factor"></span></span>
+                  </template>
+                </div>
+                <p class="small muted mt-2">Volume is derived: 1 mL = 1 cm&#179;.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- C.2 significant figures (identity) ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='sigfig' }" x-show="mode==='sigfig'">
+          <div class="mystery-job-switcher" aria-label="Significant-figure drills">
+            <button class="job-pill" :aria-pressed="sfTask==='count'" @click="setTask('count')">Count</button>
+            <button class="job-pill" :aria-pressed="sfTask==='round'" @click="setTask('round')">Round</button>
+            <button class="job-pill" :aria-pressed="sfTask==='calc'"  @click="setTask('calc')">Calculate</button>
+          </div>
+
+          <!-- COUNT -->
+          <div x-show="sfTask==='count'">
+            <p class="muted mb-3">This value is already in the log. How many significant figures does it actually claim?</p>
+            <div class="eqn mono" x-text="sfQ ? sfQ.str : ''"></div>
+            <div class="choice-grid choice-counts mt-3">
+              <template x-for="n in [1,2,3,4,5]" :key="n">
+                <button class="choice choice-centered" :data-state="countState(n)" @click="pickSF(n)" :disabled="sfDone" x-text="n"></button>
+              </template>
+            </div>
+          </div>
+
+          <!-- ROUND -->
+          <div x-show="sfTask==='round'">
+            <p class="muted mb-3">Round <strong class="mono" x-text="sfQ ? sfQ.base : ''"></strong> to <strong x-text="sfQ ? sfQ.n : ''"></strong> significant figures before it goes in the log.</p>
+            <div class="field field-220">
+              <label>Rounded value</label>
+              <input type="number" step="any" x-model="sfInput" :disabled="sfDone">
+            </div>
+          </div>
+
+          <!-- CALCULATE -->
+          <div x-show="sfTask==='calc'">
+            <p class="muted mb-3">Multiply, then report with the correct number of significant figures — the fewest of the inputs, never the calculator's ten.</p>
+            <div class="eqn mono"><span x-text="sfQ ? sfQ.a : ''"></span> &#215; <span x-text="sfQ ? sfQ.b : ''"></span> = ?</div>
+            <div class="field field-220 mt-3">
+              <label>Answer</label>
+              <input type="number" step="any" x-model="sfInput" :disabled="sfDone">
+            </div>
+          </div>
+
+          <div class="row call-row mt-4">
+            <button class="btn btn-accent" @click="writeLog()" :disabled="!sfReady || sfDone">Write it in the log</button>
+            <button class="btn" @click="newSF()">New entry</button>
+            <span class="call-hint" x-show="!sfReady && !sfDone" x-text="sfTask === 'count' ? 'Pick how many figures it claims.' : 'Type your answer.'"></span>
+          </div>
+
+
+          <div class="note note-info mt-3" x-show="sfChecked && sfTask==='calc' && sfQ">
+            The raw product is <span class="mono" x-text="fmt(sfQ.raw, 6)"></span>; only <span x-text="sfQ.sf"></span> of those digits were ever measured.
+          </div>
+        </div>
+
+        <!-- ---------- C.3 density by displacement (dose + decision) ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='density' }" x-show="mode==='density'">
+          <p class="muted mb-2">The piece is massed, then lowered into water. The water it pushes aside is its volume. Find the density, name the metal, then decide whether it belongs in the tank.</p>
+
+          <div class="lab-row">
+            <div class="cyl-pair">
+              <div>
+                <svg class="cyl sm" viewBox="0 0 200 620" role="img" aria-label="cylinder before the sample goes in">
+                  <g x-html="cylSvg(dBefore, { labels: true })"></g>
+                </svg>
+                <div class="cyl-cap">before<br><strong class="mono" x-text="dBefore.toFixed(1)+' mL'"></strong></div>
+              </div>
+              <div>
+                <svg class="cyl sm" viewBox="0 0 200 620" role="img" aria-label="cylinder after the sample goes in">
+                  <g x-html="cylSvg(dAfter, { labels: true, block: true })"></g>
+                </svg>
+                <div class="cyl-cap">after<br><strong class="mono" x-text="dAfter.toFixed(1)+' mL'"></strong></div>
+              </div>
+            </div>
+
+            <div class="lab-side">
+              <div class="stat stat-260"><div class="k">balance reading</div><div class="v" x-text="dMass.toFixed(1)+' g'"></div></div>
+              <div class="eqn mt-3"><span x-tex="'\\rho = \\dfrac{m}{V}'"></span></div>
+
+              <div class="row density-fields mt-3">
+                <div class="field"><label>Volume (mL)</label><input type="number" step="0.1" x-model="dVolInput" :disabled="dDone"></div>
+                <div class="field"><label>Density (g/mL)</label><input type="number" step="0.01" x-model="dDensInput" :disabled="dDone"></div>
+              </div>
+
+              <label class="bench-label">Name the metal</label>
+              <div class="choice-grid">
+                <template x-for="name in dOptions" :key="name">
+                  <button class="choice" :data-state="subState(name)" @click="pickSub(name)" :disabled="dDone" x-text="name"></button>
+                </template>
+              </div>
+
+              <label class="bench-label">Now make the call</label>
+              <div class="choice-grid">
+                <button class="choice" :data-state="actionState('keep')" @click="pickAction('keep')" :disabled="dDone">Leave it in the tank</button>
+                <button class="choice" :data-state="actionState('pull')" @click="pickAction('pull')" :disabled="dDone">Take it out</button>
+              </div>
+
+              <div class="row call-row mt-3">
+                <button class="btn btn-accent" @click="certifySample()" :disabled="!dReady || dDone">Commit the identification</button>
+                <button class="btn" @click="newSample()">New piece</button>
+                <span class="call-hint" x-show="!dReady && !dDone" x-text="dDensInput === '' ? 'Work out the density first.' : (!dPick ? 'Now name the metal.' : 'Now choose what happens to the sample.')"></span>
+              </div>
+
+              <!-- Every metal is a named band on this axis, so a density is not a number
+                   to look up in a table — it is a position that already IS the answer. -->
+              <template x-if="dGauge">
+                <div class="dial-wrap mt-3" x-gauge="dGauge"></div>
+              </template>
+
+
+              <div class="note note-info mt-3" x-show="dChecked">
+                Volume = <strong class="mono" x-text="dVolTrue.toFixed(1)+' mL'"></strong> (after &#8722; before), density = <strong class="mono" x-text="fmt(dDensTrue,3)+' g/mL'"></strong>.
+                <span x-show="dVolInput!==''">Your volume <span class="mono" x-text="dVolInput"></span> is <strong x-text="dVolOk ? 'on' : 'off'"></strong>.</span>
+              </div>
+
+              <!-- Honors h1: propagate the uncertainty, THEN decide. -->
+              <div class="honors-block mt-4" x-show="honors">
+                <span class="honors-tag">Honors · error propagation</span>
+                <p class="small muted mt-2 mb-2">The balance is good to &#177;0.1 g and each volume read to &#177;0.1 mL, so the relative uncertainties add. Work out the density's relative uncertainty, then decide whether this piece can name its metal at all.</p>
+                <div class="eqn"><span x-tex="'\\frac{\\Delta\\rho}{\\rho} = \\frac{\\Delta m}{m} + \\frac{\\Delta V}{V}'"></span></div>
+                <div class="field field-240 mt-3">
+                  <label>Relative uncertainty (%)</label>
+                  <input type="number" step="0.01" x-model="h1Input" :disabled="h1Done">
+                </div>
+                <div class="choice-grid mt-3">
+                  <button class="choice" :data-state="h1State('call')" @click="h1PickOpt('call')" :disabled="h1Done">Tight enough — name the metal</button>
+                  <button class="choice" :data-state="h1State('bigger')" @click="h1PickOpt('bigger')" :disabled="h1Done">Too wide — find a bigger piece</button>
+                </div>
+                <div class="row call-row mt-3">
+                  <button class="btn btn-honors" @click="certifyH1()" :disabled="!h1Ready || h1Done">Commit the uncertainty call</button>
+                  <span class="call-hint" x-show="!h1Ready && !h1Done" x-text="h1Input === '' ? 'Work out the relative uncertainty.' : 'Now choose what that width justifies.'"></span>
+                </div>
+                <template x-if="h1Verdict">
+                  <div class="verdict mt-3" :class="'verdict-' + h1Verdict.tone">
+                    <div class="status">
+                      <span class="status-icon" x-text="h1Verdict.icon"></span>
+                      <span class="status-state" x-text="h1Verdict.state"></span>
+                    </div>
+                    <span class="verdict-headline" x-prose="h1Verdict.headline"></span>
+                    <span class="verdict-detail" x-prose="h1Verdict.detail"></span>
+                  </div>
+                </template>
+                <p class="small muted mt-2">Smaller samples carry larger relative volume error, so their density is less certain — which is exactly when two neighbouring metals stop being distinguishable.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- C.4 accuracy vs precision (decision) ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='evaluate' }" x-show="mode==='evaluate'">
+          <p class="muted mb-3">Accuracy is closeness to the true value. Precision is how tightly repeated trials agree. They are independent, and repeating a measurement only ever tells you about the second one.</p>
+
+          <!-- Behind a door for the reason bench A's evidence file is: the DECISION (classify
+               this dataset) belongs above the fold, and these four boards are what you consult
+               to make it. shared/cockpit.css styles .lesson-reference. -->
+          <details class="lesson-reference mb-3">
+            <summary>The four cases &middot; accurate, precise, both, neither</summary>
+            <div class="lesson-reference-body">
+              <div class="ap-grid">
+                <template x-for="b in AP_BOARDS" :key="b.key">
+                  <div class="ap-card">
+                    <svg viewBox="0 0 120 120" class="target" role="img" :aria-label="b.title">
+                      <circle cx="60" cy="60" r="46" fill="#fff" stroke="#cfdbe0"></circle>
+                      <circle cx="60" cy="60" r="31" fill="none" stroke="#e2eaed"></circle>
+                      <circle cx="60" cy="60" r="16" fill="#e8f2f4" stroke="#cfdbe0"></circle>
+                      <circle cx="60" cy="60" r="3" fill="#bf4a30"></circle>
+                      <g x-html="boardDots(b.dots)"></g>
+                    </svg>
+                    <div class="ap-cap"><strong x-text="b.title"></strong><span x-text="b.desc"></span></div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </details>
+
+          <p class="small muted mb-3">Five trials measuring the <strong x-text="evScenario ? evScenario.label : ''"></strong>. Reference value: <strong class="mono" x-text="evScenario ? (evAccepted + ' ' + evScenario.unit) : ''"></strong>.</p>
+
+          <div class="lab-row">
+            <svg viewBox="0 0 120 120" class="target big" role="img" aria-label="this dataset plotted on a target">
+              <circle cx="60" cy="60" r="46" fill="#fff" stroke="#cfdbe0"></circle>
+              <circle cx="60" cy="60" r="31" fill="none" stroke="#e2eaed"></circle>
+              <circle cx="60" cy="60" r="16" fill="#e8f2f4" stroke="#cfdbe0"></circle>
+              <circle cx="60" cy="60" r="3" fill="#bf4a30"></circle>
+              <g x-html="liveDots()"></g>
+            </svg>
+
+            <div class="lab-side">
+              <table class="data mini">
+                <thead><tr><th>trial</th><th class="num">value</th></tr></thead>
+                <tbody>
+                  <template x-for="(v,i) in evTrials" :key="i">
+                    <tr><td x-text="'#'+(i+1)"></td><td class="num mono" x-text="v"></td></tr>
+                  </template>
+                </tbody>
+              </table>
+              <!-- The board above shows the scatter; the dial here shows the shift. Between the
+                   two, each half of C.4 gets its own picture instead of sharing one. The dial
+                   is the row's third card rather than a block under it: a 150px instrument in
+                   its own full-width wrapper was 97px of a 460px bench spent on margins. -->
+              <div class="stat-row mt-3">
+                <div class="stat"><div class="k">mean</div><div class="v stat-value-compact" x-text="fmt(evMean,4)"></div></div>
+                <div class="stat"><div class="k">percent error</div><div class="v stat-value-compact" x-text="fmt(evPctError,2)+'%'"></div></div>
+                <template x-if="evGauge">
+                  <div class="stat" x-gauge="evGauge"></div>
+                </template>
+              </div>
+            </div>
+          </div>
+
+          <label class="bench-label">Classify this dataset</label>
+          <div class="choice-grid">
+            <template x-for="b in AP_BOARDS" :key="'c'+b.key">
+              <button class="choice" :data-state="classState(b.key)" @click="pickClass(b.key)" :disabled="evDone" x-text="b.title"></button>
+            </template>
+          </div>
+          <div class="row call-row mt-3">
+            <button class="btn btn-accent" @click="judgeKit()" :disabled="!evClassPick || evDone">Commit the judgement</button>
+            <button class="btn" @click="newDataset()">New dataset</button>
+            <span class="call-hint" x-show="!evClassPick && !evDone" x-text="'Classify the dataset first.'"></span>
+          </div>
+
+
+          <!-- Honors h2: quantify the scatter, THEN pick the cure it points to. -->
+          <div class="honors-block mt-4" x-show="honors">
+            <span class="honors-tag">Honors · quantifying precision</span>
+            <div class="eqn mt-2"><span x-tex="'s = \\sqrt{\\dfrac{\\sum (x_i-\\bar{x})^2}{n-1}}'"></span></div>
+            <div class="field field-240 mt-3">
+              <label>Standard deviation of the five trials</label>
+              <input type="number" step="any" x-model="h2Input" :disabled="h2Done">
+            </div>
+            <div class="choice-grid mt-3">
+              <button class="choice" :data-state="h2State('trust')" @click="h2PickOpt('trust')" :disabled="h2Done">Trust the kit</button>
+              <button class="choice" :data-state="h2State('replace')" @click="h2PickOpt('replace')" :disabled="h2Done">Replace the reagent</button>
+              <button class="choice" :data-state="h2State('send')" @click="h2PickOpt('send')" :disabled="h2Done">Send a sample out</button>
+            </div>
+            <div class="row call-row mt-3">
+              <button class="btn btn-honors" @click="certifyH2()" :disabled="!h2Ready || h2Done">Commit the kit call</button>
+              <span class="call-hint" x-show="!h2Ready && !h2Done" x-text="h2Input === '' ? 'Work out the standard deviation.' : 'Now choose the cure it points to.'"></span>
+            </div>
+            <template x-if="h2Verdict">
+              <div class="verdict mt-3" :class="'verdict-' + h2Verdict.tone">
+                <div class="status">
+                  <span class="status-icon" x-text="h2Verdict.icon"></span>
+                  <span class="status-state" x-text="h2Verdict.state"></span>
+                </div>
+                <span class="verdict-headline" x-prose="h2Verdict.headline"></span>
+                <span class="verdict-detail" x-prose="h2Verdict.detail"></span>
+              </div>
+            </template>
+            <div class="stat-row mt-3" x-show="h2Checked">
+              <div class="stat"><div class="k">standard deviation</div><div class="v stat-value-compact" x-text="fmt(evStd,4)"></div></div>
+              <div class="stat"><div class="k">relative (precision)</div><div class="v stat-value-compact" x-text="fmt(evRelStd,2)+'%'"></div></div>
+            </div>
+            <p class="small muted mt-2">Random error widens the spread and hurts precision. Systematic error shifts the whole set off-target and hurts accuracy without changing the spread at all.</p>
+          </div>
+        </div>
+
+        <!-- ---------- Capstone: the water change ---------- -->
+        <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
+          <div class="note note-info" x-show="!capUnlocked">
+            The water change unlocks once all four practices (C.1 to C.4) are certified. Certified so far: <span x-text="Math.round(gOverall()*4)"></span> of 4.
+          </div>
+          <button class="btn btn-accent" x-show="capUnlocked && !cap" @click="genCapstone()">Start the water change</button>
+
+          <template x-if="capUnlocked && cap">
+            <div>
+              <p class="muted mb-3">The fish are in a bucket with an air stone. You are replacing <strong x-text="cap.change + '%'"></strong> of the tank's <strong x-text="cap.gal + ' gallons'"></strong> with treated water. The tank reads <strong class="mono" x-text="cap.before.toFixed(2) + ' mg/L'"></strong> free chlorine right now.</p>
+
+              <table class="data table-460">
+                <thead><tr><th>what you built</th><th class="num">reading</th></tr></thead>
+                <tbody>
+                  <tr><td>Free chlorine before the change</td><td class="num mono" x-text="cap.before.toFixed(2) + ' mg/L'"></td></tr>
+                  <tr><td>Dissolved metal</td><td class="num mono" x-text="cap.metals.toFixed(3) + ' mg/L'"></td></tr>
+                  <tr><td>How far the test kit can be trusted</td><td class="num mono" x-text="Math.round(cap.kit) + '%'"></td></tr>
+                </tbody>
+              </table>
+
+              <p class="small muted mt-4 mb-2">Step 1. A <span x-text="cap.change + '%'"></span> change leaves <span x-text="(100 - cap.change) + '%'"></span> of the chlorine behind. What will the tank read afterwards?</p>
+              <div class="field field-260">
+                <label>Free chlorine after the change (mg/L)</label>
+                <input type="number" step="0.01" x-model="capInput" :disabled="capWin">
+              </div>
+
+              <p class="small muted mt-4 mb-2">Step 2. Make the call. Fish go back in only if the water is safe AND you can believe the instrument that told you so.</p>
+              <div class="choice-grid choices-620">
+                <template x-for="o in cap.sc.options" :key="o.key">
+                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" :disabled="capWin" x-text="o.label"></button>
+                </template>
+              </div>
+
+              <div class="row call-row mt-4">
+                <button class="btn btn-accent" @click="capCommit()" :disabled="!capReady || capWin">Make the call</button>
+                <button class="btn" @click="capNext()" x-show="capChecked && !capWin">Reset the change</button>
+                <span class="call-hint" x-show="!capReady && !capWin" x-text="capInput === '' ? 'Work out the dose first.' : 'Now choose what happens to the fish.'"></span>
+              </div>
+
+              <template x-if="capGauge">
+                <div class="dial-wrap mt-3" x-gauge="capGauge"></div>
+              </template>
+
+            </div>
+          </template>
+        </div>
+      </section>
+
+      <!-- ============ RIGHT: the tank ============ -->
+      <aside class="life-support-board tank-board panel" aria-label="Tank status">
+        <div class="life-header">
+          <div>
+            <span class="command-kicker">Tank watch</span>
+            <strong x-text="tankState"></strong>
+          </div>
+          <span class="sol-chip">Day <strong x-text="day"></strong></span>
+        </div>
+
+        <div class="crew-status cockpit-crew">
+          <span class="crew-face" x-text="fishMood"></span>
+          <div class="crew-bar">
+            <div class="life-meter-label">
+              <span>Fish health</span>
+              <span class="mono" x-text="fishHealth + '%'"></span>
+            </div>
+            <div class="meter"><div class="meter-fill" :style="`width:${fishHealth}%; background:${stockColor(fishHealth)}`"></div></div>
+          </div>
+        </div>
+
+        <!-- Four readings in the units they are actually measured in. The bar is the
+             normalised safety score; the number beside it is the measurement, because a
+             concentration is the thing this unit is teaching people to read. -->
+        <div class="system-grid" aria-label="Tank readings">
+          <template x-for="r in tankReadings" :key="r.key">
+            <div class="ship-stock">
+              <div class="life-meter-label">
+                <span x-text="r.label" :title="r.hint"></span>
+                <span class="mono" x-text="r.raw"></span>
+              </div>
+              <div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${stockColor(r.pct)}`"></div></div>
+            </div>
+          </template>
+        </div>
+
+        <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest consequence">
+          <span class="command-kicker">Latest consequence</span>
+          <strong x-show="activeStateLabel" x-text="activeStateLabel"></strong>
+          <p x-text="worldLog.length ? worldLog[0].text : 'Fresh tap water at ' + TANK.tapChlorine.toFixed(2) + ' mg/L free chlorine. Nothing treated yet.'"></p>
+        </section>
+
+        <section class="mission-log" aria-label="Tank log">
+          <span class="command-kicker">Tank log</span>
+          <p class="worldstate-empty" x-show="!worldLog.length">Nothing written down yet.</p>
+          <ul class="worldstate-list" x-show="worldLog.length">
+            <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
+              <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
+                <span class="ws-icon" x-text="w.icon"></span>
+                <span x-text="w.text"></span>
+              </li>
+            </template>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <!-- Filled in by mountCaseFile() before Alpine.start(), so every binding inside the
+         injected story (including its animated stage SVG) initializes with the page. -->
+    <div data-casefile></div>
+  </main>
+</div>
+
+<script type="module">
+  window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
+  const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
+         { mountColumnResizers }] = await Promise.all([
+    import('./js/main.js?v=u1-2'),
+    import('../../shared/js/render.js'),
+    import('../../shared/js/gauge.js'),
+    import('../../shared/js/casefile.js'),
+    import('./js/case.js?v=u1-1'),
+    import('../shared/columns.js?v=cockpit-3')
+  ]);
+  window.sim = createSim;
+  const { default: Alpine } = await import('https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js');
+  registerRender(Alpine);
+  registerGauge(Alpine);
+  Alpine.data('sim', createSim);
+  mountCaseFile(Alpine, CASE);          // must precede start(): it injects markup + x-data
+  window.Alpine = Alpine;
+  if (window.__startAlpine) window.__startAlpine();
+  else Alpine.start();
+  // After start(), so the handles are appended to a workbench Alpine has already claimed.
+  // The two gutter buttons carry no bindings, so Alpine never walks them.
+  mountColumnResizers();
+</script>
+</body>
+</html>

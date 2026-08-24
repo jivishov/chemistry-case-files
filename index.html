@@ -3,11 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chemistry Case Files · TEKS-Aligned Interactive Simulators</title>
-<meta name="description" content="TEKS-aligned interactive chemistry simulators for Texas high school, On-Level with Honors extensions.">
+<title>Chemistry Case Files · Mission Cockpit</title>
+<meta name="description" content="TEKS-aligned interactive chemistry simulators for Texas high school, On-Level with Honors extensions. Mission-cockpit build.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<!-- Repo-level shared CSS is one level up from here; the unit pages reach it as
+     ../../shared/css/. This page needs no cockpit.css: the hub is a card grid, not a
+     cockpit, and every class it uses (.cell-grid, .cell, .pill, .data) already exists in
+     components.css. -->
 <link rel="stylesheet" href="shared/css/tokens.css">
 <link rel="stylesheet" href="shared/css/base.css">
 <link rel="stylesheet" href="shared/css/components.css">
@@ -46,8 +50,10 @@
     <section>
       <div class="cell-grid">
         <template x-for="u in units" :key="u.n">
+          <!-- Relative to THIS page, so the slug alone is the path. A 'units_new/' prefix
+               here would resolve to units_new/units_new/<slug> and 404. -->
           <a class="cell" :class="{ 'is-planned': u.status!=='ready' }"
-             :href="u.status==='ready' ? ('units/'+u.slug+'/index.html') : null"
+             :href="u.status==='ready' ? ('units_new/'+u.slug+'/index.html') : null"
              :aria-disabled="u.status!=='ready'">
             <span class="accentbar"></span>
             <div class="row" style="justify-content: space-between; align-items: baseline;">
@@ -70,6 +76,12 @@
           </a>
         </template>
       </div>
+
+      <!-- The migration-temporary "N of 11 have moved" notice lived here and was deleted
+           when `built` reached eleven, which is what HANDOFF-INDEX.md's front-door section
+           asks for. `BUILT` is still the readiness list: a unit card stays inactive until
+           its slug is in it, so the mechanism stays even though the notice is gone. -->
+
       <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-4);">
         Aligned to the Texas Chemistry TEKS (19 TAC §112.43). Standards are tracked inside each unit so you can focus on the chemistry, not the codes.
       </p>
@@ -100,8 +112,43 @@
 
 <script type="module">
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
-  import { UNITS, COURSE, SEP } from './shared/js/teks.js';
-  Alpine.data('hub', () => ({ units: UNITS, course: COURSE, sep: SEP }));
+  import { UNITS, COURSE, SEP } from '../shared/js/teks.js';
+
+  // Which units actually exist in THIS tree.
+  //
+  // `shared/js/teks.js` marks all eleven units status:'ready' -- it describes the old
+  // build, where they are -- and it is one of the protected files this tree may never
+  // modify. So readiness for units_new is decided here instead, and a verbatim copy of the
+  // old hub would have shipped eleven live cards with nine 404s behind them.
+  //
+  // Every port ends by adding its slug to this list (HANDOFF-PORTING.md 2.7). Keep it in
+  // unit order; it doubles as the migration's progress board.
+  const BUILT = [
+    '01-practices-matter',
+    '02-atomic-structure',
+    '03-periodic-trends',
+    '04-bonding-geometry',
+    '05-the-mole',
+    '06-reactions-stoichiometry',
+    '07-gas-laws',
+    '08-solutions',
+    '09-acids-bases',
+    '10-thermochemistry',
+    '11-nuclear',
+  ];
+
+  // teks.js stays the single source of titles, hooks, abbreviations and the SEP table.
+  // Only `status` is overridden.
+  const units = UNITS.map(u => ({
+    ...u,
+    status: BUILT.includes(u.slug) ? 'ready' : 'planned',
+  }));
+
+  Alpine.data('hub', () => ({
+    units,
+    course: COURSE,
+    sep: SEP,
+  }));
   window.Alpine = Alpine;
   Alpine.start();
 </script>
