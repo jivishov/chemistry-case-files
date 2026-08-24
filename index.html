@@ -53,7 +53,7 @@
           <!-- Relative to THIS page, so the slug alone is the path. A 'units_new/' prefix
                here would resolve to units_new/units_new/<slug> and 404. -->
           <a class="cell" :class="{ 'is-planned': u.status!=='ready' }"
-             :href="u.status==='ready' ? ('units_new/'+u.slug+'/index.html') : null"
+             :href="u.status==='ready' ? ('units/'+u.slug+'/index.html') : null"
              :aria-disabled="u.status!=='ready'">
             <span class="accentbar"></span>
             <div class="row" style="justify-content: space-between; align-items: baseline;">

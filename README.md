@@ -15,9 +15,9 @@ a learner can focus on the chemistry rather than the codes.
 index.html      the hub -- eleven unit cards
 shared/         the design tokens, base CSS, components, and the shared JS modules
                 (chem, game, gauge, render, casefile, molezoom, notation, stage3d, teks)
-units_new/      the eleven units, one directory each
-units_new/shared/   cockpit.css and columns.js -- the shell all eleven inherit
-units_new/tools/    the measurement tools the units were built and tuned with
+units/      the eleven units, one directory each
+units/shared/   cockpit.css and columns.js -- the shell all eleven inherit
+units/tools/    the measurement tools the units were built and tuned with
 ```
 
 Every unit is the same shape: `index.html` for the markup, `js/main.js` for the view-model,
@@ -31,25 +31,30 @@ All eleven units share one shell: three columns (the job, the bench, the board),
 split, a commit row that ends each task, and a scene banner drawn from `art.js`. The contract it
 holds itself to is one screen, nothing hidden, and nothing a learner reads below 14px.
 
-`units_new/HANDOFF-COCKPIT-REFINEMENT.md` is the engineering record for that shell: what moved
+`units/HANDOFF-COCKPIT-REFINEMENT.md` is the engineering record for that shell: what moved
 the numbers, what was a dead end, and the tools that measure it. The other `HANDOFF-*.md` files
-under `units_new/` cover how each unit was built.
+under `units/` cover how each unit was built.
 
 ## Running the tools
 
-The tools under `units_new/tools/` drive the units in a real browser to measure them — column
+The tools under `units/tools/` drive the units in a real browser to measure them — column
 widths, per-bench scroll, in-SVG label collisions, whether every disabled commit key explains
 itself. They need Playwright, which this repo does not depend on; point `PW_ROOT` at a checkout
 that has it.
 
 ```bash
-node units_new/tools/cockpit-survey.mjs      # which units carry which shell patterns
-node units_new/tools/scroll-table.mjs        # which benches still scroll, and what is tall
-node units_new/tools/hint-check.mjs          # every gated commit key says why it is dead
-node units_new/tools/label-collide.mjs 08-solutions
+node units/tools/cockpit-survey.mjs      # which units carry which shell patterns
+node units/tools/scroll-table.mjs        # which benches still scroll, and what is tall
+node units/tools/hint-check.mjs          # every gated commit key says why it is dead
+node units/tools/label-collide.mjs 08-solutions
 ```
 
-## Previous edition
+## History
 
-This repo previously published the `units/` tree and three `unit5a-*` prototypes. Those are in
-git history — see the commit before this one.
+`units/` was rebuilt on the shared cockpit shell; the previous build of it, and three
+`unit5a-*` prototypes, are in git history.
+
+Inside the unit sources you will see comments and one `unitId` that still say `units_new` —
+that was the staging name while the eleven units were rebuilt alongside the originals. The
+`unitId` strings are deliberate: they namespace saved progress in localStorage, and renaming
+them would make a returning learner's browser read state written by the older build.
