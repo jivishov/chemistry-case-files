@@ -53,7 +53,7 @@ export const CASE = {
   cta: { label: 'Master the curves that explain it', call: "setMode('curve')" },
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: dissolved CO2 loads into the deep water of Lake Nyos, erupts as an invisible cloud, and is finally vented safely by degassing pipes">
             <!-- night sky -->
-            <rect x="0" y="0" width="640" height="360" fill="#0c1c26"/>
+            <rect x="0" y="0" width="640" height="360" fill="#112837"/>
             <g fill="#cfe4ea">
               <circle class="a-twinkle" style="--dur:3.2s" cx="90" cy="34" r="1.2"/>
               <circle class="a-twinkle" style="--dur:2.7s; --delay:.7s" cx="300" cy="24" r="1.1"/>
@@ -61,13 +61,13 @@ export const CASE = {
             </g>
 
             <!-- crater rims + valley slope -->
-            <path d="M 0,180 L 60,110 L 120,96 L 150,120 L 150,360 L 0,360 Z" fill="#16303c"/>
-            <path d="M 430,120 L 470,96 L 520,150 L 580,230 L 640,280 L 640,360 L 430,360 Z" fill="#16303c"/>
+            <path d="M 0,180 L 60,110 L 120,96 L 150,120 L 150,360 L 0,360 Z" fill="#1b3a49"/>
+            <path d="M 430,120 L 470,96 L 520,150 L 580,230 L 640,280 L 640,360 L 430,360 Z" fill="#1b3a49"/>
 
             <!-- lake body -->
-            <rect x="150" y="140" width="280" height="200" fill="#0f3140"/>
-            <rect x="150" y="220" width="280" height="120" fill="#0b2635"/>
-            <rect x="150" y="280" width="280" height="60" fill="#081d2b"/>
+            <rect x="150" y="140" width="280" height="200" fill="#123b4d"/>
+            <rect x="150" y="220" width="280" height="120" fill="#0f3347"/>
+            <rect x="150" y="280" width="280" height="60" fill="#0c2a3e"/>
             <path class="a-flow" style="--fx:20px; --dur:5s" d="M 150,142 q 35,-5 70,0 q 35,5 70,0 q 35,-5 70,0 q 35,5 70,0" fill="none" stroke="#7fc4d0" stroke-width="2" opacity=".5"/>
             <text x="290" y="128" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">LAKE NYOS &#183; crater lake</text>
 
@@ -127,7 +127,7 @@ export const CASE = {
             </g>
             <!-- village in the valley (steps 2-3) -->
             <g x-show="step>=2">
-              <g fill="#1c313d" stroke="#3a545f">
+              <g fill="#213a49" stroke="#3a545f">
                 <path d="M 556,306 l 12,-10 12,10 z"/><rect x="560" y="306" width="16" height="12"/>
                 <path d="M 588,322 l 12,-10 12,10 z"/><rect x="592" y="322" width="16" height="12"/>
               </g>
@@ -145,7 +145,7 @@ export const CASE = {
               <path d="M 286,64 q -14,10 -8,24" fill="none" stroke="#7fc4d0" stroke-width="2"/>
               <path d="M 294,64 q 14,10 8,24" fill="none" stroke="#7fc4d0" stroke-width="2"/>
               <g class="a-float" style="--dur:3.4s">
-                <rect x="366" y="70" width="150" height="26" rx="13" fill="#0d1a21" stroke="#8fd9ae"/>
+                <rect x="366" y="70" width="150" height="26" rx="13" fill="#132630" stroke="#8fd9ae"/>
                 <text x="441" y="87" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fd9ae" font-weight="700">CONTROLLED VENTING</text>
               </g>
             </g>

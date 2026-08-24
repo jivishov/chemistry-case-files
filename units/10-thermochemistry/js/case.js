@@ -69,7 +69,7 @@ export const CASE = {
             </defs>
 
             <!-- insulated jacket -->
-            <rect x="60" y="70" width="300" height="250" rx="14" fill="#132530" stroke="#3a545f" stroke-width="2"/>
+            <rect x="60" y="70" width="300" height="250" rx="14" fill="#1a3241" stroke="#3a545f" stroke-width="2"/>
             <text x="72" y="92" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">INSULATED JACKET</text>
 
             <!-- water bath -->
@@ -78,7 +78,7 @@ export const CASE = {
             <text x="96" y="290" font-family="JetBrains Mono" font-size="9" fill="#cfe4ea">2000 g water</text>
 
             <!-- steel bomb chamber -->
-            <rect x="152" y="176" width="116" height="94" rx="10" fill="#22333d" stroke="#6e8794" stroke-width="3"/>
+            <rect x="152" y="176" width="116" height="94" rx="10" fill="#273b46" stroke="#6e8794" stroke-width="3"/>
             <text x="210" y="168" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">STEEL BOMB &#183; pure O2</text>
 
             <!-- the food sample inside -->
@@ -121,7 +121,7 @@ export const CASE = {
 
             <!-- thermometer: the bulb sits in the water, the column tracks the step -->
             <g>
-              <rect x="296" y="104" width="18" height="182" rx="9" fill="#0d1a21" stroke="#6e8794" stroke-width="2"/>
+              <rect x="296" y="104" width="18" height="182" rx="9" fill="#132630" stroke="#6e8794" stroke-width="2"/>
               <rect x="300" width="10" rx="5" fill="#ff6f5e" style="transition: y .9s var(--ease), height .9s var(--ease);"
                     :y="282 - [26,26,120,120][step]" :height="[26,26,120,120][step]"/>
               <circle cx="305" cy="288" r="11" fill="#ff6f5e"/>
@@ -133,7 +133,7 @@ export const CASE = {
 
             <!-- the working, revealed at step 2 -->
             <g x-show="step===2">
-              <rect x="384" y="176" width="236" height="96" rx="10" fill="#0d1a21" stroke="#7fc4d0"/>
+              <rect x="384" y="176" width="236" height="96" rx="10" fill="#132630" stroke="#7fc4d0"/>
               <text x="400" y="198" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">THE MEASUREMENT</text>
               <text x="400" y="222" font-family="JetBrains Mono" font-size="12" fill="#7fc4d0">q = m c (dT)</text>
               <text x="400" y="242" font-family="JetBrains Mono" font-size="10" fill="#cfe4ea">2000 x 4.184 x 4.50</text>
@@ -143,11 +143,11 @@ export const CASE = {
             <!-- nutrition label: present at step 0, resolved at step 3 -->
             <g x-show="step===0 || step===3">
               <rect x="400" y="96" width="200" height="196" rx="8" fill="#f3f7f8" stroke="#c9d9de" stroke-width="2"/>
-              <text x="416" y="122" font-family="Bitter" font-size="15" font-weight="700" fill="#1c2a31">Nutrition</text>
-              <line x1="416" y1="130" x2="584" y2="130" stroke="#1c2a31" stroke-width="3"/>
+              <text x="416" y="122" font-family="Bitter" font-size="15" font-weight="700" fill="#24363f">Nutrition</text>
+              <line x1="416" y1="130" x2="584" y2="130" stroke="#24363f" stroke-width="3"/>
               <text x="416" y="152" font-family="JetBrains Mono" font-size="10" fill="#38484f">Calories</text>
               <text x="584" y="152" text-anchor="end" font-family="JetBrains Mono" font-size="16" font-weight="700"
-                    :fill="step===3 ? '#2f8f5b' : '#1c2a31'">230</text>
+                    :fill="step===3 ? '#2f8f5b' : '#24363f'">230</text>
               <line x1="416" y1="162" x2="584" y2="162" stroke="#cfdbe0"/>
               <g font-family="JetBrains Mono" font-size="9" fill="#687a82">
                 <text x="416" y="182">Fat 9 g</text>
@@ -158,8 +158,8 @@ export const CASE = {
                 <text x="584" y="226" text-anchor="end" :fill="step===3 ? '#2a7d8a' : '#687a82'" x-text="step===3 ? 'x4 = 36' : ''"></text>
               </g>
               <g x-show="step===3">
-                <line x1="416" y1="240" x2="584" y2="240" stroke="#1c2a31" stroke-width="2"/>
-                <text x="416" y="262" font-family="JetBrains Mono" font-size="10" fill="#1c2a31">Atwater total</text>
+                <line x1="416" y1="240" x2="584" y2="240" stroke="#24363f" stroke-width="2"/>
+                <text x="416" y="262" font-family="JetBrains Mono" font-size="10" fill="#24363f">Atwater total</text>
                 <text x="584" y="262" text-anchor="end" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#2f8f5b">229</text>
                 <text x="500" y="282" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#687a82">rounds to the 230 on the packet</text>
               </g>

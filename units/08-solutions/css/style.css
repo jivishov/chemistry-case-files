@@ -97,12 +97,29 @@
 @media (max-width: 600px) { .canvas-wrap { height: 168px; } }
 @media (max-width: 1240px) { .mission-screen .cockpit-instincts { display: none; } }
 @media (max-width: 1120px) {
-  .station-nav .tab { padding-inline: 5px; }
   .mission-screen .screen-system { white-space: normal; overflow: visible; text-overflow: clip; }
 }
+
+/* The padding trim used to start at 1120px. Eight tabs need it from 1240px: at 1152px the
+   strip is 437px, and eight content-sized pills plus seven 4px gaps ask for 458px -- so
+   "Polarity" lost 3px and "Molarity" 6px to the ellipsis. Dropping the side padding from the
+   shared 8px to 5px hands 6px back to every tab, which clears the widest of them. Spacing
+   yields before type does, which is the same trade the shared sheet makes at 1240px. */
+@media (max-width: 1240px) {
+  .station-nav .tab { padding-inline: 5px; }
+}
+/* Eight labels, so the swap to short names happens at 1600px rather than the shell's 1536px.
+   `grid-auto-columns: auto` is dropped for the same reason as Unit 2's (see that unit's
+   style.css): it shrank eight equal 98px tracks to 430px of content-sized pills inside an
+   813px strip. The widest short label is "Molarity" at 63px, well inside a 98px track. */
 @media (max-width: 1600px) {
-  .station-nav { grid-auto-columns: auto; }
   .station-nav .tab-full { display: none; }
   .station-nav .tab-short { display: inline; }
-  .station-nav .tab { overflow: visible; text-overflow: clip; }
+}
+
+/* Eight tracks run out of shared slack sooner than Unit 2's seven, but at the same measured
+   step: the short labels fit their equal share down to 1280px and exceed it by 1152px. Same
+   1240px boundary, same reason -- see Unit 2's style.css for the full note. */
+@media (max-width: 1240px) {
+  .station-nav { grid-auto-columns: auto; }
 }

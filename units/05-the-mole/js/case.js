@@ -62,24 +62,24 @@ export const CASE = {
             </g>
 
             <!-- cabin shell -->
-            <path d="M 40,96 L 96,52 L 344,52 L 400,96 L 400,296 L 344,332 L 96,332 L 40,296 Z" fill="#10202a" stroke="#2c414d" stroke-width="2"/>
+            <path d="M 40,96 L 96,52 L 344,52 L 400,96 L 400,296 L 344,332 L 96,332 L 40,296 Z" fill="#172d3b" stroke="#2c414d" stroke-width="2"/>
             <text x="220" y="76" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">LM AQUARIUS &#183; LIFEBOAT</text>
 
             <!-- three astronauts -->
             <g>
               <g class="a-float" style="--dur:5.4s; --fy:-7px; --wob:3px; --tilt:2deg">
                 <circle cx="120" cy="256" r="20" fill="#dcebee"/>
-                <path d="M 106,250 A 16,14 0 0 1 134,250" fill="#132530"/>
+                <path d="M 106,250 A 16,14 0 0 1 134,250" fill="#1a3241"/>
                 <rect x="104" y="276" width="32" height="36" rx="8" fill="#9db4bd"/>
               </g>
               <g class="a-float" style="--dur:6.2s; --fy:-5px; --wob:4px; --tilt:1.4deg; --delay:1.2s">
                 <circle cx="220" cy="264" r="20" fill="#dcebee"/>
-                <path d="M 206,258 A 16,14 0 0 1 234,258" fill="#132530"/>
+                <path d="M 206,258 A 16,14 0 0 1 234,258" fill="#1a3241"/>
                 <rect x="204" y="284" width="32" height="30" rx="8" fill="#9db4bd"/>
               </g>
               <g class="a-float" style="--dur:4.8s; --fy:-8px; --wob:2.5px; --tilt:2.4deg; --delay:2.4s">
                 <circle cx="320" cy="256" r="20" fill="#dcebee"/>
-                <path d="M 306,250 A 16,14 0 0 1 334,250" fill="#132530"/>
+                <path d="M 306,250 A 16,14 0 0 1 334,250" fill="#1a3241"/>
                 <rect x="304" y="276" width="32" height="36" rx="8" fill="#9db4bd"/>
               </g>
             </g>
@@ -132,7 +132,7 @@ export const CASE = {
             <!-- step 2: LiOH canister scrubbing -->
             <g x-show="step===2">
               <g>
-                <circle cx="220" cy="170" r="26" fill="#132530" stroke="#7fc4d0" stroke-width="2"/>
+                <circle cx="220" cy="170" r="26" fill="#1a3241" stroke="#7fc4d0" stroke-width="2"/>
                 <text x="220" y="166" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#7fc4d0">LiOH</text>
                 <text x="220" y="180" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#8fa9b2">round</text>
               </g>
@@ -141,14 +141,14 @@ export const CASE = {
                 <circle class="a-flow" style="--fx:-56px; --fy:-36px; --dur:2.4s; --delay:.8s" cx="278" cy="208" r="4"/>
               </g>
               <g class="a-float" style="--dur:3.6s">
-                <rect x="88" y="96" width="264" height="26" rx="13" fill="#0d1a21" stroke="#8fd9ae"/>
+                <rect x="88" y="96" width="264" height="26" rx="13" fill="#132630" stroke="#8fd9ae"/>
                 <text x="220" y="113" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#8fd9ae">2 LiOH + CO2 &#8594; Li2CO3 + H2O</text>
               </g>
             </g>
 
             <!-- step 3: the mailbox adapter -->
             <g x-show="step===3">
-              <rect x="188" y="150" width="64" height="52" rx="6" fill="#132530" stroke="#8fd9ae" stroke-width="2"/>
+              <rect x="188" y="150" width="64" height="52" rx="6" fill="#1a3241" stroke="#8fd9ae" stroke-width="2"/>
               <text x="220" y="172" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">CM SQUARE</text>
               <text x="220" y="186" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">LiOH x2</text>
               <path d="M 252,176 C 290,176 300,210 316,224" fill="none" stroke="#9db4bd" stroke-width="6"/>
@@ -164,9 +164,9 @@ export const CASE = {
 
             <!-- CO2 gauge -->
             <g>
-              <rect x="446" y="70" width="168" height="250" rx="10" fill="#0d1a21" stroke="#2c414d"/>
+              <rect x="446" y="70" width="168" height="250" rx="10" fill="#132630" stroke="#2c414d"/>
               <text x="530" y="94" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">CABIN CO2 (mmHg)</text>
-              <rect x="510" y="110" width="40" height="180" rx="6" fill="#08141a" stroke="#2c414d"/>
+              <rect x="510" y="110" width="40" height="180" rx="6" fill="#0c1e27" stroke="#2c414d"/>
               <rect x="510" style="transition: y .9s var(--ease), height .9s var(--ease), fill .9s;" width="40" rx="6"
                     :y="290 - [70,150,120,36][step]" :height="[70,150,120,36][step]"
                     :fill="step===3 ? '#8fd9ae' : (step>=1 ? '#ff9a82' : '#ffd27e')"/>

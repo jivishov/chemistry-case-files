@@ -63,12 +63,12 @@ export const CASE = {
   stage: `
           <svg viewBox="0 0 640 360" role="img" aria-label="Interactive scene: a balloon sealed at 30 meters depth expands as you raise it toward the surface">
             <!-- sky + sun -->
-            <rect x="0" y="0" width="640" height="56" fill="#12303c"/>
+            <rect x="0" y="0" width="640" height="56" fill="#163b49"/>
             <circle class="a-glow" style="--dur:4s" cx="560" cy="26" r="16" fill="#ffd27e" opacity=".8"/>
             <!-- water, deeper = darker -->
-            <rect x="0" y="56" width="640" height="304" fill="#0e2836"/>
-            <rect x="0" y="150" width="640" height="210" fill="#0b2130"/>
-            <rect x="0" y="250" width="640" height="110" fill="#081a27"/>
+            <rect x="0" y="56" width="640" height="304" fill="#133548"/>
+            <rect x="0" y="150" width="640" height="210" fill="#0f2e43"/>
+            <rect x="0" y="250" width="640" height="110" fill="#0c2639"/>
             <path class="a-flow" style="--fx:26px; --dur:6s" d="M 0,58 q 40,-5 80,0 q 40,5 80,0 q 40,-5 80,0 q 40,5 80,0 q 40,-5 80,0 q 40,5 80,0 q 40,-5 80,0 q 40,5 80,0" fill="none" stroke="#7fc4d0" stroke-width="2" opacity=".6"/>
 
             <!-- depth ruler -->
@@ -97,12 +97,12 @@ export const CASE = {
             <g class="a-float" style="--fy:-3px; --tilt:1.5deg; --dur:3.2s">
               <circle :cy="80 + depth*8" :r="14 * Math.cbrt(4/(1 + depth/10))" cx="330" fill="#ffd27e" fill-opacity=".85" stroke="#ffe4b0" stroke-width="2"/>
               <line x1="330" :y1="80 + depth*8 + 14 * Math.cbrt(4/(1 + depth/10))" x2="330" :y2="80 + depth*8 + 14 * Math.cbrt(4/(1 + depth/10)) + 12" stroke="#ffe4b0" stroke-width="1.6"/>
-              <text :y="80 + depth*8 + 4" x="330" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#10202a" font-weight="700" x-text="(4/(1 + depth/10)).toFixed(2) + ' L'"></text>
+              <text :y="80 + depth*8 + 4" x="330" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#172d3b" font-weight="700" x-text="(4/(1 + depth/10)).toFixed(2) + ' L'"></text>
             </g>
 
             <!-- live readout -->
             <g font-family="JetBrains Mono">
-              <rect x="24" y="72" width="180" height="76" rx="10" fill="#0d1a21" stroke="#2c414d"/>
+              <rect x="24" y="72" width="180" height="76" rx="10" fill="#132630" stroke="#2c414d"/>
               <text x="40" y="96" font-size="10" fill="#8fa9b2">BALLOON TELEMETRY</text>
               <text x="40" y="116" font-size="12" fill="#7fc4d0" x-text="'P = ' + (1 + depth/10).toFixed(1) + ' atm'"></text>
               <text x="40" y="136" font-size="12" fill="#ffd27e" x-text="'V = ' + (4/(1 + depth/10)).toFixed(2) + ' L'"></text>
@@ -112,7 +112,7 @@ export const CASE = {
             <!-- step 3 warning overlay -->
             <g x-show="step===2">
               <g class="a-float" style="--dur:3s">
-                <rect x="236" y="72" width="188" height="26" rx="13" fill="#0d1a21" stroke="#ff9a82"/>
+                <rect x="236" y="72" width="188" height="26" rx="13" fill="#132630" stroke="#ff9a82"/>
                 <text x="330" y="89" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#ff9a82" font-weight="700">NEVER HOLD YOUR BREATH</text>
               </g>
             </g>

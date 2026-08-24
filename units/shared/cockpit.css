@@ -766,16 +766,35 @@ body > [x-data] {
 
 /* Named areas rather than positional tracks: the column carries five blocks now, and
    document order should not decide which one gets the flexible row. The scenario copy
-   takes the slack, so reclaimed space becomes readable narrative instead of a void. */
+   takes the slack, so reclaimed space becomes readable narrative instead of a void.
+ *
+ * The flexible row belongs to `copy`, and only to `copy`. It sat on `instincts` here (and on
+ * `reference` in the max-height:699px block below), which handed the column's whole slack to
+ * a CONTENT-SIZED CARD: at 1519x690 Unit 2's reference card measured 143px around 43px of
+ * rows, so 100px of the card was empty, and folding the card away could not reclaim any of
+ * it -- the track set the height, not the content, so the disclosure only blanked the text
+ * inside a box that never moved. That is the "hides the text instead of collapsing" report,
+ * and it hit Units 2, 5, 7 and 8 (whichever units have short enough scenario prose to leave
+ * slack behind). `copy` is the one block that can absorb it honestly: it is prose with
+ * `align-content: start`, so the spare height lands as unbordered space in a dark panel, and
+ * it is the block that MUST have the flexible track anyway -- its text is longer than the
+ * row on the narrow columns, and minmax(0, 1fr) is what gives it a scroll port instead of a
+ * clip. Now both cards are `auto`: closed, the reference is one 11px eyebrow, which is what
+ * the fold was written to do. */
 .mission-screen {
   grid-area: screen;
   padding: 10px;
   display: grid;
-  grid-template-rows: auto auto auto auto minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
   grid-template-areas: "art" "status" "copy" "reference" "instincts";
   align-content: start;
   gap: 9px;
-  background: linear-gradient(180deg, #09212b, #112f39);
+  /* Lifted one step off near-black (#09212b -> #112f39 was the original ramp). The column is
+     the largest dark surface in the shell and it sits beside two near-white panels, so at the
+     old value the contrast against its neighbours read as a hole rather than as a screen. The
+     ink on it is unchanged and every pair still clears 7:1 -- this moves the ground, not the
+     type. The reference and instincts cards float on it at 62% alpha, so they ride up with it. */
+  background: linear-gradient(180deg, #0f2c37, #1a3f4b);
   border-color: color-mix(in srgb, var(--accent-700) 58%, #ffffff);
   color: #eaf8fb;
 }
@@ -1757,8 +1776,11 @@ details.screen-reference[open] > summary { margin-bottom: 2px; }
    every line it can get -- so they stand down in that order. The molar-mass and Avogadro
    facts still appear in the console's own reference line, so nothing is lost outright. */
 @media (min-width: 981px) and (max-height: 699px) {
+  /* Same rule as the base block: `copy` keeps the flexible row when `instincts` drops out.
+     Giving it to `reference` here is what stretched the standing-facts card into a 143px
+     box around 43px of rows. */
   .mission-screen {
-    grid-template-rows: auto auto auto minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
     grid-template-areas: "art" "status" "copy" "reference";
   }
 

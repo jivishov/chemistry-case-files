@@ -146,11 +146,37 @@
 .chem-console .stepper-grid { grid-template-columns: minmax(0, 1fr); }
 .chem-console .stepper { min-width: 0; }
 .chem-console .stp-ctl .btn { padding-inline: var(--s-2); }
+/* This unit's seven full labels only fit above 1600px, not the shell's 1536px, so the swap
+   to the short names happens 64px earlier here. That part stays.
+ *
+ * What is gone is `grid-auto-columns: auto`, which came along with it and should not have.
+ * The shared strip gives its tabs equal `minmax(0, 1fr)` tracks down to 1120px, so on a
+ * 1536px screen the other units' six tabs are 132px wide and fill the 813px nav. Content
+ * tracks sized this unit's seven SHORT labels to their own text instead: 57/45/45/59/69/71/44
+ * = 390px of the same 813px strip, so Unit 2's controls read as half-size pills beside every
+ * other unit's. Equal tracks are also what stops one long label ellipsing while a short one
+ * keeps slack -- the reason the shared sheet uses them. The short labels' widest is
+ * "Electrons" at 69px against a 113px track, so nothing clips at the recovered size.
+ *
+ * The `overflow: visible; text-overflow: clip` that also lived here is gone with it. It was
+ * harmless beside content tracks -- a track sized to its own label cannot overflow -- but
+ * beside equal tracks it turns a clip into a SPILL: at 1121px "Electrons" is 10px wider than
+ * its share and would print across the tab's own border instead of ellipsing. The shared
+ * strip's hidden/ellipsis is the correct last resort, and the block below means it is never
+ * actually reached. */
 @media (max-width: 1600px) {
-  .station-nav { grid-auto-columns: auto; }
   .station-nav .tab-full { display: none; }
   .station-nav .tab-short { display: inline; }
-  .station-nav .tab { overflow: visible; text-overflow: clip; }
+}
+
+/* Equal tracks are right while the strip has slack to share, and wrong once it does not.
+   The shared sheet draws that line at 1120px, which is calibrated for six tabs; seven need it
+   earlier, because the seventh track takes ~16px off each of the others. Measured: the short
+   labels sit inside their equal share down to 1280px and start exceeding it at 1152px. 1240px
+   is the shared sheet's own next step down (where the tabs give up side padding), so the
+   switch rides that existing boundary rather than inventing a new one. */
+@media (max-width: 1240px) {
+  .station-nav { grid-auto-columns: auto; }
 }
 
 /* “Electron configuration” is the one full desktop label that reaches the seven-tab

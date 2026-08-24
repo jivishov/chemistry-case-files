@@ -4,11 +4,19 @@
    Copper stays reserved for Honors; the case file uses the teal family plus semantics. */
 
 .casefile {
-  --cf-bg-1: #14222b;
-  --cf-bg-2: #1d3440;
+  /* Lifted one step off near-black. The story panel fills the whole shell when the Case
+     station is showing, so its ground sets the mood for four chapters of reading; at
+     #14222b/#1d3440 it read as unlit rather than as night. Only --cf-muted moves with it (below);
+     every other ink pair still clears AA by a wide margin on the new ground. */
+  --cf-bg-1: #1c2d37;
+  --cf-bg-2: #27424f;
   --cf-ink: #eef6f8;
   --cf-ink-2: #c3d6dc;
-  --cf-muted: #8fa9b2;
+  /* Lifted with the ground it sits on. At #8fa9b2 the muted mono (.cf-cap, .cf-stat .k,
+     .cf-progress) measured 4.29:1 against the panel gradient's lightest corner -- it cleared
+     AA at the old darker ground and no longer did. #95afb8 is 4.60:1 there and still 1.6x
+     dimmer than --cf-ink-2, so it reads as secondary rather than as body text. */
+  --cf-muted: #95afb8;
   --cf-line: rgba(151, 183, 194, .22);
   --cf-card: rgba(13, 26, 33, .55);
   --cf-accent: #7fc4d0;
@@ -93,7 +101,10 @@
 
 .cf-stage {
   position: relative; margin: 0; border-radius: var(--r-md); overflow: hidden;
-  background: #0a151b; border: 1px solid var(--cf-line);
+  /* Most units' stage SVGs paint no ground of their own, so this colour IS their sky --
+     which is why it was the darkest value in the system. Lifted with the panel it sits in so
+     the figure stops reading as a cut-out hole in the page. */
+  background: #101f28; border: 1px solid var(--cf-line);
 }
 /* A hair of contrast, not a brightness lift: raising brightness on a near-black stage lifts
    the ground with the ink and nets nothing. Contrast pushes the two apart. */

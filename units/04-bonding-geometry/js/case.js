@@ -58,7 +58,7 @@ export const CASE = {
   cta: { label: 'Spin the 3D shapes yourself', call: "setMode('geometry')" },
   stage: `          <svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: a frozen lake with fish alive below the ice, and the bent water molecule whose shape makes ice float">
             <!-- winter sky -->
-            <rect x="0" y="0" width="640" height="110" fill="#0f1e27"/>
+            <rect x="0" y="0" width="640" height="110" fill="#152b38"/>
             <g fill="#dcebee" opacity=".8">
               <circle class="a-fall" style="--fy:90px; --sway:8px; --dur:4.5s" cx="90" cy="20" r="2"/>
               <circle class="a-fall" style="--fy:90px; --sway:6px; --dur:5.2s; --delay:1.2s" cx="220" cy="14" r="1.6"/>
@@ -77,10 +77,10 @@ export const CASE = {
               <path d="M 360,127 l 7,-6 9,0 7,6 -7,6 -9,0 z"/>
               <path d="M 520,127 l 7,-6 9,0 7,6 -7,6 -9,0 z"/>
             </g>
-            <text x="614" y="132" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#10202a">ICE 0&#176;C</text>
+            <text x="614" y="132" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#172d3b">ICE 0&#176;C</text>
 
             <!-- water -->
-            <rect x="0" y="144" width="640" height="216" fill="#11303f"/>
+            <rect x="0" y="144" width="640" height="216" fill="#153b4d"/>
             <!-- fish -->
             <g x-show="step&lt;3">
               <g class="a-flow" style="--fx:420px; --dur:9s">
@@ -88,7 +88,7 @@ export const CASE = {
                   <g class="a-swim" style="--dur:1.8s">
                     <ellipse cx="0" cy="0" rx="16" ry="7" fill="#7fc4d0"/>
                     <path class="a-tailwag" style="--dur:.7s" d="M -14,0 L -24,-7 L -24,7 Z" fill="#7fc4d0"/>
-                    <circle cx="9" cy="-2" r="1.6" fill="#0d1a21"/>
+                    <circle cx="9" cy="-2" r="1.6" fill="#132630"/>
                   </g>
                 </g>
               </g>
@@ -97,7 +97,7 @@ export const CASE = {
                   <g class="a-swim" style="--dur:2.1s; --delay:.5s">
                     <ellipse cx="0" cy="0" rx="13" ry="6" fill="#5ea3b0"/>
                     <path class="a-tailwag" style="--dur:.8s; --delay:.2s" d="M -11,0 L -20,-6 L -20,6 Z" fill="#5ea3b0"/>
-                    <circle cx="7" cy="-2" r="1.4" fill="#0d1a21"/>
+                    <circle cx="7" cy="-2" r="1.4" fill="#132630"/>
                   </g>
                 </g>
               </g>
@@ -106,7 +106,7 @@ export const CASE = {
                   <g class="a-swim" style="--dur:1.5s; --delay:.3s">
                     <ellipse cx="0" cy="0" rx="10" ry="4.5" fill="#8fd9ae"/>
                     <path class="a-tailwag" style="--dur:.6s; --delay:.1s" d="M -9,0 L -16,-5 L -16,5 Z" fill="#8fd9ae"/>
-                    <circle cx="5" cy="-1.5" r="1.2" fill="#0d1a21"/>
+                    <circle cx="5" cy="-1.5" r="1.2" fill="#132630"/>
                   </g>
                 </g>
               </g>
@@ -121,7 +121,7 @@ export const CASE = {
 
             <!-- step 2: the bent molecule card -->
             <g x-show="step===1">
-              <rect x="36" y="160" width="230" height="172" rx="10" fill="#0d1a21" stroke="#2c414d"/>
+              <rect x="36" y="160" width="230" height="172" rx="10" fill="#132630" stroke="#2c414d"/>
               <text x="151" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">H2O: BENT + POLAR</text>
               <!-- lone pairs -->
               <g fill="#ffd27e">
@@ -132,14 +132,14 @@ export const CASE = {
               </g>
               <!-- O and H -->
               <circle cx="151" cy="238" r="22" fill="#ff8a70"/>
-              <text x="151" y="243" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#0d1a21" font-weight="700">O</text>
+              <text x="151" y="243" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#132630" font-weight="700">O</text>
               <g class="a-float" style="--dur:3.4s">
                 <circle cx="106" cy="280" r="13" fill="#dcebee"/>
-                <text x="106" y="285" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#0d1a21" font-weight="700">H</text>
+                <text x="106" y="285" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#132630" font-weight="700">H</text>
               </g>
               <g class="a-float" style="--dur:3.4s; --delay:.8s">
                 <circle cx="196" cy="280" r="13" fill="#dcebee"/>
-                <text x="196" y="285" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#0d1a21" font-weight="700">H</text>
+                <text x="196" y="285" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#132630" font-weight="700">H</text>
               </g>
               <line x1="138" y1="252" x2="115" y2="270" stroke="#8fa9b2" stroke-width="3"/>
               <line x1="164" y1="252" x2="187" y2="270" stroke="#8fa9b2" stroke-width="3"/>
@@ -150,7 +150,7 @@ export const CASE = {
 
             <!-- step 3: open hexagonal lattice -->
             <g x-show="step===2">
-              <rect x="36" y="160" width="230" height="172" rx="10" fill="#0d1a21" stroke="#2c414d"/>
+              <rect x="36" y="160" width="230" height="172" rx="10" fill="#132630" stroke="#2c414d"/>
               <text x="151" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">FROZEN: AN OPEN CAGE</text>
               <g stroke="#9fd0dd" stroke-width="2" fill="none">
                 <path class="a-pulse" style="--dur:2.6s" d="M 151,206 l 30,17 0,34 -30,17 -30,-17 0,-34 z"/>
@@ -166,7 +166,7 @@ export const CASE = {
 
             <!-- step 4: the alternate universe -->
             <g x-show="step===3">
-              <rect x="36" y="160" width="230" height="172" rx="10" fill="#0d1a21" stroke="#ff9a82"/>
+              <rect x="36" y="160" width="230" height="172" rx="10" fill="#132630" stroke="#ff9a82"/>
               <text x="151" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#ff9a82">IF WATER WERE LINEAR&#8230;</text>
               <g>
                 <circle cx="106" cy="212" r="11" fill="#dcebee"/>

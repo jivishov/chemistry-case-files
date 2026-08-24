@@ -63,7 +63,7 @@ export const CASE = {
             </g>
 
             <!-- city skyline -->
-            <g fill="#152731">
+            <g fill="#1c3441">
               <rect x="0" y="318" width="640" height="42"/>
               <rect x="30" y="286" width="34" height="36"/><rect x="80" y="298" width="26" height="24"/>
               <rect x="130" y="278" width="40" height="44"/><rect x="200" y="292" width="30" height="30"/>
@@ -142,7 +142,7 @@ export const CASE = {
             <!-- star pellet chips (step 0) -->
             <g x-show="step===0">
               <g class="a-float" style="--dur:4s">
-                <rect x="404" y="96" width="196" height="86" rx="8" fill="#0d1a21" stroke="#2c414d"/>
+                <rect x="404" y="96" width="196" height="86" rx="8" fill="#132630" stroke="#2c414d"/>
                 <text x="502" y="118" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">INSIDE THE SHELL: STARS</text>
                 <circle cx="432" cy="146" r="9" fill="#ff6f5e"/><text x="432" y="172" text-anchor="middle" font-size="9" font-family="JetBrains Mono" fill="#ff9a82">Sr</text>
                 <circle cx="478" cy="146" r="9" fill="#7ede9a"/><text x="478" y="172" text-anchor="middle" font-size="9" font-family="JetBrains Mono" fill="#7ede9a">Ba</text>
@@ -153,7 +153,7 @@ export const CASE = {
 
             <!-- inset atom: levels + hopping electron (steps 1-2) -->
             <g x-show="step===1 || step===2">
-              <rect x="404" y="82" width="212" height="180" rx="8" fill="#0d1a21" stroke="#2c414d"/>
+              <rect x="404" y="82" width="212" height="180" rx="8" fill="#132630" stroke="#2c414d"/>
               <text x="510" y="104" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2" x-text="step===1 ? 'ENERGY IN: JUMP UP' : 'FALL DOWN: PHOTON OUT'"></text>
               <circle class="a-glow" style="--dur:2.8s" cx="510" cy="186" r="14" fill="#ff9a82" opacity=".25"/>
               <circle cx="510" cy="186" r="10" fill="#ff9a82" opacity=".9"/>
@@ -179,9 +179,9 @@ export const CASE = {
 
             <!-- step 3: element fingerprint strip -->
             <g x-show="step===3">
-              <rect x="404" y="240" width="212" height="64" rx="8" fill="#0d1a21" stroke="#2c414d"/>
+              <rect x="404" y="240" width="212" height="64" rx="8" fill="#132630" stroke="#2c414d"/>
               <text x="510" y="260" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">EMISSION LINES = ELEMENT ID</text>
-              <rect x="420" y="270" width="180" height="18" fill="#08141a"/>
+              <rect x="420" y="270" width="180" height="18" fill="#0c1e27"/>
               <rect class="a-pulse" style="--dur:2.2s" x="438" y="270" width="3" height="18" fill="#ff6f5e"/>
               <rect class="a-pulse" style="--dur:2.2s; --delay:.4s" x="470" y="270" width="3" height="18" fill="#ffd27e"/>
               <rect class="a-pulse" style="--dur:2.2s; --delay:.8s" x="516" y="270" width="3" height="18" fill="#7ede9a"/>

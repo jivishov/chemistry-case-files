@@ -115,12 +115,12 @@ export const CASE = {
             <!-- step 2: the two unit labels that never matched -->
             <g x-show="step===1">
               <g class="a-float" style="--dur:3.5s">
-                <rect x="176" y="120" width="92" height="30" rx="6" fill="#0d1a21" stroke="#ff9a82"/>
+                <rect x="176" y="120" width="92" height="30" rx="6" fill="#132630" stroke="#ff9a82"/>
                 <text x="222" y="140" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#ff9a82">lbf&#183;s</text>
               </g>
               <text class="a-blink" style="--dur:1.6s" x="296" y="141" text-anchor="middle" font-family="JetBrains Mono" font-size="18" fill="#ffd27e">&#8800;</text>
               <g class="a-float" style="--dur:3.5s; --delay:.8s">
-                <rect x="322" y="120" width="92" height="30" rx="6" fill="#0d1a21" stroke="#7fc4d0"/>
+                <rect x="322" y="120" width="92" height="30" rx="6" fill="#132630" stroke="#7fc4d0"/>
                 <text x="368" y="140" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#7fc4d0">N&#183;s</text>
               </g>
               <text x="296" y="170" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">no conversion applied</text>

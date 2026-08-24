@@ -73,7 +73,7 @@ export const CASE = {
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: two hikers finding a body face down in an Alpine glacier with the head, shoulders and one arm clear of the meltwater, carbon-14 forming in the atmosphere and cycling through a living tree but only leaving a dead one, the decay curve read at 53 percent remaining, and the copper axe and flint arrowhead that the date explained">
             <defs>
               <linearGradient id="cf11-sky" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#12222c"/><stop offset="100%" stop-color="#24414d"/>
+                <stop offset="0%" stop-color="#192f3d"/><stop offset="100%" stop-color="#24414d"/>
               </linearGradient>
               <linearGradient id="cf11-ice" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="#dcecf1"/><stop offset="100%" stop-color="#7fa8b4"/>
@@ -84,7 +84,7 @@ export const CASE = {
 
             <!-- the ridge is always there: this is one place, four moments -->
             <path d="M 0,210 L 96,142 L 168,186 L 262,104 L 356,182 L 452,132 L 548,198 L 640,158 L 640,360 L 0,360 Z"
-                  fill="#1b3039" stroke="#33525f" stroke-width="1.5"/>
+                  fill="#213a45" stroke="#33525f" stroke-width="1.5"/>
             <path d="M 262,104 L 292,136 L 232,136 Z" fill="#e8f2f5" opacity=".92"/>
             <path d="M 452,132 L 476,158 L 428,158 Z" fill="#dbe9ee" opacity=".8"/>
 
@@ -128,18 +128,18 @@ export const CASE = {
                 <!-- the back: widest at the shoulders on the left, sloping away into the glacier -->
                 <path d="M 337,301 C 339,291 347,285 357,285 C 370,285 383,293 394,304
                          C 398,310 396,316 390,318 C 375,322 355,321 345,315 C 339,311 336,306 337,301 Z"
-                      fill="#5f4d3a" stroke="#372c20" stroke-width="1.2"/>
+                      fill="#5f4d3a" stroke="#423526" stroke-width="1.2"/>
                 <!-- spine groove and the two shoulder blades. a bare human back really does read
                      as a groove flanked by a pair of ridges, and it is the cheapest true detail
                      available at this size. -->
-                <path d="M 352,296 C 364,294 376,299 387,307" fill="none" stroke="#332920" stroke-width="2.4" opacity=".6"/>
-                <path d="M 350,292 C 356,288 363,289 367,293" fill="none" stroke="#3d3124" stroke-width="2.4" opacity=".45"/>
-                <path d="M 356,304 C 362,301 369,302 373,306" fill="none" stroke="#3d3124" stroke-width="2.4" opacity=".4"/>
+                <path d="M 352,296 C 364,294 376,299 387,307" fill="none" stroke="#403328" stroke-width="2.4" opacity=".6"/>
+                <path d="M 350,292 C 356,288 363,289 367,293" fill="none" stroke="#443728" stroke-width="2.4" opacity=".45"/>
+                <path d="M 356,304 C 362,301 369,302 373,306" fill="none" stroke="#443728" stroke-width="2.4" opacity=".4"/>
                 <!-- the neck: the most human junction there is, so it gets its own dark shape
                      rather than being left as a gap between two blobs -->
-                <path d="M 329,288 L 339,293 L 336,301 L 326,295 Z" fill="#382c1e"/>
+                <path d="M 329,288 L 339,293 L 336,301 L 326,295 Z" fill="#433524"/>
                 <ellipse cx="320" cy="284" rx="10.5" ry="8.5" transform="rotate(-18 320 284)"
-                         fill="#8b7255" stroke="#372c20" stroke-width="1.2"/>
+                         fill="#8b7255" stroke="#423526" stroke-width="1.2"/>
                 <path d="M 311,281 C 311,275 316,272 322,273 C 327,274 330,277 330,281
                          C 324,277 316,277 311,281 Z" fill="#4a3b2a" opacity=".9"/>
                 <path d="M 314,290 C 319,294 325,293 329,289" fill="none" stroke="#54432f" stroke-width="1.6" opacity=".75"/>
@@ -149,7 +149,7 @@ export const CASE = {
                 <path d="M 345,312 L 332,319" fill="none" stroke="#5f4d3a" stroke-width="7" stroke-linecap="round"/>
                 <path d="M 332,319 L 316,316" fill="none" stroke="#80684e" stroke-width="6" stroke-linecap="round"/>
                 <ellipse cx="310" cy="314" rx="5.2" ry="4" transform="rotate(-16 310 314)"
-                         fill="#8b7255" stroke="#372c20" stroke-width="1.2"/>
+                         fill="#8b7255" stroke="#423526" stroke-width="1.2"/>
                 <!-- light on the near shoulder, and the ice biting into him on a ragged line, so
                      he is IN the glacier and not lying on it -->
                 <path d="M 339,295 C 343,288 349,283 358,283 C 350,286 344,290 341,298 Z" fill="#e8f2f5" opacity=".4"/>
@@ -163,10 +163,10 @@ export const CASE = {
               <g class="a-float" style="--fy:-2px; --wob:.8px; --tilt:.5deg; --dur:6.2s">
                 <line x1="170" y1="234" x2="176" y2="271" stroke="#9db4bd" stroke-width="2"/>
                 <rect x="139" y="230" width="12" height="21" rx="5" fill="#2a5b66"/>
-                <path d="M 151,248 L 149,267" stroke="#22333d" stroke-width="6" stroke-linecap="round"/>
-                <path d="M 160,248 L 163,267" stroke="#22333d" stroke-width="6" stroke-linecap="round"/>
-                <path d="M 145,269 h 8" stroke="#0d1a21" stroke-width="4.5" stroke-linecap="round"/>
-                <path d="M 159,269 h 8" stroke="#0d1a21" stroke-width="4.5" stroke-linecap="round"/>
+                <path d="M 151,248 L 149,267" stroke="#273b46" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 160,248 L 163,267" stroke="#273b46" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 145,269 h 8" stroke="#132630" stroke-width="4.5" stroke-linecap="round"/>
+                <path d="M 159,269 h 8" stroke="#132630" stroke-width="4.5" stroke-linecap="round"/>
                 <path d="M 146,226 q 10,-5 20,0 l 2,24 q -12,4 -24,0 Z" fill="#3f8f9e"/>
                 <path d="M 166,231 C 172,238 174,246 173,254" fill="none" stroke="#3f8f9e" stroke-width="5" stroke-linecap="round"/>
                 <circle cx="156" cy="217" r="7.5" fill="#c99a72"/>
@@ -176,10 +176,10 @@ export const CASE = {
               <g class="a-float" style="--fy:-2px; --wob:1px; --tilt:.6deg; --dur:7.6s; --delay:.9s">
                 <line x1="196" y1="228" x2="192" y2="263" stroke="#9db4bd" stroke-width="2"/>
                 <rect x="194" y="224" width="12" height="20" rx="5" fill="#7a3c33"/>
-                <path d="M 205,242 L 203,259" stroke="#22333d" stroke-width="6" stroke-linecap="round"/>
-                <path d="M 214,242 L 217,259" stroke="#22333d" stroke-width="6" stroke-linecap="round"/>
-                <path d="M 199,261 h 8" stroke="#0d1a21" stroke-width="4.5" stroke-linecap="round"/>
-                <path d="M 213,261 h 8" stroke="#0d1a21" stroke-width="4.5" stroke-linecap="round"/>
+                <path d="M 205,242 L 203,259" stroke="#273b46" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 214,242 L 217,259" stroke="#273b46" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 199,261 h 8" stroke="#132630" stroke-width="4.5" stroke-linecap="round"/>
+                <path d="M 213,261 h 8" stroke="#132630" stroke-width="4.5" stroke-linecap="round"/>
                 <path d="M 200,220 q 10,-5 20,0 l 2,23 q -12,4 -24,0 Z" fill="#e0524a"/>
                 <path d="M 222,225 C 234,227 244,231 252,236" fill="none" stroke="#e0524a" stroke-width="5.5" stroke-linecap="round"/>
                 <ellipse cx="255" cy="238" rx="5" ry="3.6" fill="#f2a196" transform="rotate(22 255 238)"/>
@@ -189,17 +189,17 @@ export const CASE = {
               </g>
               <text x="184" y="192" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#cfe4ea">two hikers off the ridge</text>
 
-              <rect x="452" y="186" width="152" height="54" rx="8" fill="#0d1a21" opacity=".9" stroke="#3a545f"/>
+              <rect x="452" y="186" width="152" height="54" rx="8" fill="#132630" opacity=".9" stroke="#3a545f"/>
               <text class="a-blink" style="--dur:1.8s" x="528" y="212" text-anchor="middle"
                     font-family="JetBrains Mono" font-size="17" font-weight="700" fill="#ffd27e">AGE: ?</text>
               <text x="528" y="230" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">19 SEPT 1991 &#183; 3,210 m</text>
-              <text x="372" y="348" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#1c3038">face down in the meltwater, head, shoulders and one arm clear</text>
+              <text x="372" y="348" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#223a44">face down in the meltwater, head, shoulders and one arm clear</text>
             </g>
 
             <!-- ============ chapter 2: where carbon-14 comes from, and where it stops ============ -->
             <g x-show="step===1">
               <!-- the ridge stays as texture but stops competing with the diagram -->
-              <rect x="0" y="0" width="640" height="360" rx="10" fill="#0d1a21" opacity=".74"/>
+              <rect x="0" y="0" width="640" height="360" rx="10" fill="#132630" opacity=".74"/>
 
               <!-- rays kept out to the sides so they never cross the caption -->
               <g stroke="#7fc4d0" stroke-width="2.5" stroke-linecap="round" opacity=".9">
@@ -210,7 +210,7 @@ export const CASE = {
               </g>
               <text x="320" y="24" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#7fc4d0">cosmic rays, hitting the upper atmosphere</text>
 
-              <rect x="160" y="40" width="320" height="44" rx="10" fill="#08131a" stroke="#4f93a0"/>
+              <rect x="160" y="40" width="320" height="44" rx="10" fill="#0c1c27" stroke="#4f93a0"/>
               <text x="320" y="68" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="#cfe4ea">n + N-14 &#8594; C-14 + p</text>
 
               <!-- fresh carbon-14 falling out of the equation and into the living world -->
@@ -221,7 +221,7 @@ export const CASE = {
               </g>
 
               <!-- LEFT: alive. Carbon goes in and comes out, so the fraction holds. -->
-              <rect x="44" y="146" width="262" height="196" rx="12" fill="#0e1f27" stroke="#2f8f5b" stroke-width="1.5"/>
+              <rect x="44" y="146" width="262" height="196" rx="12" fill="#142c37" stroke="#2f8f5b" stroke-width="1.5"/>
               <text x="175" y="168" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" letter-spacing="1.6" fill="#8fd9ae">ALIVE</text>
               <rect x="169" y="262" width="12" height="48" rx="3" fill="#6b5033"/>
               <g class="a-sway" style="--dur:6s; --deg:2.4deg; transform-origin: center bottom;">
@@ -243,13 +243,13 @@ export const CASE = {
               </g>
               <text x="106" y="240" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">in</text>
               <text x="244" y="240" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">out</text>
-              <rect x="96" y="318" width="158" height="7" rx="3.5" fill="#12313c"/>
+              <rect x="96" y="318" width="158" height="7" rx="3.5" fill="#163b49"/>
               <rect x="96" y="318" width="158" height="7" rx="3.5" fill="#2f8f5b"/>
               <text x="262" y="325" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#8fd9ae">100%</text>
               <text x="175" y="336" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">in and out: the fraction holds steady</text>
 
               <!-- RIGHT: dead. Nothing comes in, so the fraction only falls. -->
-              <rect x="334" y="146" width="262" height="196" rx="12" fill="#0e1f27" stroke="#8a5b4e" stroke-width="1.5"/>
+              <rect x="334" y="146" width="262" height="196" rx="12" fill="#142c37" stroke="#8a5b4e" stroke-width="1.5"/>
               <text x="465" y="168" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" letter-spacing="1.6" fill="#ffb3a7">DEAD</text>
               <g stroke="#6b5546" stroke-linecap="round" fill="none">
                 <path d="M 478,310 L 476,240" stroke-width="8"/>
@@ -281,7 +281,7 @@ export const CASE = {
                 <path d="M 384,186 L 408,220" stroke="#e0524a" stroke-width="3" stroke-linecap="round"/>
               </g>
               <text x="396" y="240" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">no way in</text>
-              <rect x="386" y="318" width="158" height="7" rx="3.5" fill="#12313c"/>
+              <rect x="386" y="318" width="158" height="7" rx="3.5" fill="#163b49"/>
               <rect x="386" y="318" width="84" height="7" rx="3.5" fill="#bf4a30"/>
               <text x="552" y="325" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#ffb3a7">53%</text>
               <text x="465" y="336" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#ffb3a7">only out: the fraction only falls</text>
@@ -289,8 +289,8 @@ export const CASE = {
 
             <!-- ============ chapter 3: the decay curve, read at 53 percent ============ -->
             <g x-show="step===2">
-              <rect x="0" y="0" width="640" height="360" rx="10" fill="#0d1a21" opacity=".74"/>
-              <rect x="40" y="46" width="560" height="284" rx="12" fill="#08131a" stroke="#33525f"/>
+              <rect x="0" y="0" width="640" height="360" rx="10" fill="#132630" opacity=".74"/>
+              <rect x="40" y="46" width="560" height="284" rx="12" fill="#0c1c27" stroke="#33525f"/>
               <text x="320" y="72" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">FOUR LABORATORIES, ONE FRACTION</text>
               <line x1="80" y1="92" x2="80" y2="292" stroke="#6e8794" stroke-width="2"/>
               <line x1="80" y1="292" x2="580" y2="292" stroke="#6e8794" stroke-width="2"/>
@@ -328,8 +328,8 @@ export const CASE = {
 
             <!-- ============ chapter 4: what the date explained ============ -->
             <g x-show="step===3">
-              <rect x="0" y="0" width="640" height="360" rx="10" fill="#0d1a21" opacity=".74"/>
-              <rect x="52" y="66" width="248" height="250" rx="10" fill="#08131a" stroke="#4f93a0"/>
+              <rect x="0" y="0" width="640" height="360" rx="10" fill="#132630" opacity=".74"/>
+              <rect x="52" y="66" width="248" height="250" rx="10" fill="#0c1c27" stroke="#4f93a0"/>
               <text x="176" y="92" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">WHAT HE CARRIED</text>
 
               <!-- the copper axe. The real one is a yew haft cut from a branch fork, so the
@@ -368,7 +368,7 @@ export const CASE = {
                 <path d="M 136.6,116.9 Q 144.3,129.2 143.9,141.8" fill="none" stroke="#e09a52" stroke-width="2" opacity=".85"/>
                 <!-- the brightest thing on the card, because the edge is the whole point of it -->
                 <path d="M 143.9,114.4 Q 151.6,127.3 151.2,142.4" fill="none" stroke="#f0c48a" stroke-width="3.5" stroke-linecap="round"/>
-                <g stroke="#463424" stroke-width="3.4" stroke-linecap="round">
+                <g stroke="#483625" stroke-width="3.4" stroke-linecap="round">
                   <path d="M 100,133.2 L 103.2,145.8"/>
                   <path d="M 105.5,132 L 108.7,144.6"/>
                   <path d="M 111,130.7 L 114.2,143.3"/>
@@ -398,8 +398,8 @@ export const CASE = {
 
               <!-- the date that makes every one of those objects legible -->
               <rect x="332" y="66" width="256" height="250" rx="10" fill="#f3f7f8" stroke="#c9d9de" stroke-width="2"/>
-              <text x="460" y="100" text-anchor="middle" font-family="Bitter" font-size="15" font-weight="700" fill="#1c2a31">Radiocarbon report</text>
-              <line x1="354" y1="112" x2="566" y2="112" stroke="#1c2a31" stroke-width="3"/>
+              <text x="460" y="100" text-anchor="middle" font-family="Bitter" font-size="15" font-weight="700" fill="#24363f">Radiocarbon report</text>
+              <line x1="354" y1="112" x2="566" y2="112" stroke="#24363f" stroke-width="3"/>
               <g font-family="JetBrains Mono" font-size="10" fill="#38484f">
                 <text x="354" y="140">fraction remaining</text>
                 <text x="566" y="140" text-anchor="end" font-weight="700">0.53</text>
@@ -408,8 +408,8 @@ export const CASE = {
                 <text x="354" y="192">half-lives elapsed</text>
                 <text x="566" y="192" text-anchor="end" font-weight="700">0.92</text>
               </g>
-              <line x1="354" y1="210" x2="566" y2="210" stroke="#1c2a31" stroke-width="2"/>
-              <text x="354" y="238" font-family="JetBrains Mono" font-size="11" fill="#1c2a31">age</text>
+              <line x1="354" y1="210" x2="566" y2="210" stroke="#24363f" stroke-width="2"/>
+              <text x="354" y="238" font-family="JetBrains Mono" font-size="11" fill="#24363f">age</text>
               <text x="566" y="240" text-anchor="end" font-family="JetBrains Mono" font-size="19" font-weight="700" fill="#2f8f5b">5,300 y</text>
               <!-- the conclusion gets its own stamp, so it cannot be misread as another
                    row of the table above it -->
