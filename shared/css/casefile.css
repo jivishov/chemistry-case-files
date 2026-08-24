@@ -8,17 +8,25 @@
      station is showing, so its ground sets the mood for four chapters of reading; at
      #14222b/#1d3440 it read as unlit rather than as night. Only --cf-muted moves with it (below);
      every other ink pair still clears AA by a wide margin on the new ground. */
-  --cf-bg-1: #1c2d37;
-  --cf-bg-2: #27424f;
+  /* Second pass: off the teal ramp and onto a dark grey, a step lighter again (0.024-0.049
+     relative luminance -> 0.040-0.070). This panel IS the page for four chapters of reading,
+     so it is the surface that most wanted to stop being a colour and start being paper. The
+     teal stays where it means something -- kicker, chapter chips, the chemistry rule -- and
+     reads louder now that the ground behind it is neutral. */
+  --cf-bg-1: #333940;
+  --cf-bg-2: #3e454c;
   --cf-ink: #eef6f8;
   --cf-ink-2: #c3d6dc;
-  /* Lifted with the ground it sits on. At #8fa9b2 the muted mono (.cf-cap, .cf-stat .k,
-     .cf-progress) measured 4.29:1 against the panel gradient's lightest corner -- it cleared
-     AA at the old darker ground and no longer did. #95afb8 is 4.60:1 there and still 1.6x
-     dimmer than --cf-ink-2, so it reads as secondary rather than as body text. */
-  --cf-muted: #95afb8;
+  /* This token is what caps how light the panel may get, so the two are tuned together.
+     .cf-progress sits on the gradient's LIGHTEST corner with no card under it, which makes it
+     the binding pair in the whole component; .cf-cap and .cf-stat .k sit on the dark stage and
+     on --cf-card and have room to spare. #8fa9b2 -> #95afb8 -> #9db6bf across the two lifts,
+     each step the smallest that holds 4.5:1 at that corner (it is 4.57:1 now). The ceiling is
+     real: at 1.46x dimmer than --cf-ink-2 this is as far as a MUTED tone can go before it stops
+     reading as secondary, which is why --cf-bg-2 stops at #3e454c rather than going lighter. */
+  --cf-muted: #9db6bf;
   --cf-line: rgba(151, 183, 194, .22);
-  --cf-card: rgba(13, 26, 33, .55);
+  --cf-card: rgba(22, 25, 26, .55);
   --cf-accent: #7fc4d0;
   --cf-accent-deep: #2a7d8a;
   --cf-good: #8fd9ae;
@@ -103,8 +111,14 @@
   position: relative; margin: 0; border-radius: var(--r-md); overflow: hidden;
   /* Most units' stage SVGs paint no ground of their own, so this colour IS their sky --
      which is why it was the darkest value in the system. Lifted with the panel it sits in so
-     the figure stops reading as a cut-out hole in the page. */
-  background: #101f28; border: 1px solid var(--cf-line);
+     the figure stops reading as a cut-out hole in the page.
+
+     Then neutralised with the panel, but at MATCHED luminance (0.0124) rather than lifted
+     again. That is the whole trick: contrast is a luminance ratio, so moving only hue leaves
+     every one of the 116 lifted art tones at exactly the separation it was tuned to, and the
+     stage keeps its same step down from the panel it sits in. A second lift here would have
+     wanted a second re-tone of eleven drawings; this wants none. */
+  background: #1b1e20; border: 1px solid var(--cf-line);
 }
 /* A hair of contrast, not a brightness lift: raising brightness on a near-black stage lifts
    the ground with the ink and nets nothing. Contrast pushes the two apart. */

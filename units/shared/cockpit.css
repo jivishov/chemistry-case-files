@@ -793,8 +793,14 @@ body > [x-data] {
      the largest dark surface in the shell and it sits beside two near-white panels, so at the
      old value the contrast against its neighbours read as a hole rather than as a screen. The
      ink on it is unchanged and every pair still clears 7:1 -- this moves the ground, not the
-     type. The reference and instincts cards float on it at 62% alpha, so they ride up with it. */
-  background: linear-gradient(180deg, #0f2c37, #1a3f4b);
+     type. The reference and instincts cards float on it at 62% alpha, so they ride up with it.
+   *
+   * Second pass: off the teal ramp entirely and onto a dark grey, one more step up
+   * (0.022-0.043 relative luminance -> 0.033-0.059). The teal INK stays teal, so the column
+   * still reads as a lit screen rather than a slab of chrome -- what changes is that the
+   * ground stops competing with it. Every dark overlay in this column moved with it, on the
+   * same cool-grey axis, so the panel is one material and not a grey box with teal insets. */
+  background: linear-gradient(180deg, #2e343a, #3d464f);
   border-color: color-mix(in srgb, var(--accent-700) 58%, #ffffff);
   color: #eaf8fb;
 }
@@ -815,7 +821,11 @@ body > [x-data] {
   overflow: hidden;
   border-radius: var(--r-md);
   border: 1px solid rgb(149 219 230 / 45%);
-  background: radial-gradient(circle at 50% 45%, rgb(67 160 173 / 34%), rgb(5 20 27 / 88%) 72%);
+  /* The teal centre glow stays -- it is the screen being lit, and the tone-* variants tint it.
+     Only the outer stop is neutralised, and at MATCHED luminance (0.0061), so every mission
+     scene in art.js keeps the exact separation it was drawn against: contrast is a luminance
+     ratio, and this moves only hue. */
+  background: radial-gradient(circle at 50% 45%, rgb(67 160 173 / 34%), rgb(17 18 20 / 88%) 72%);
 }
 
 .mission-screen-art {
@@ -839,7 +849,7 @@ body > [x-data] {
   inset: 0;
   background:
     repeating-linear-gradient(to bottom, rgb(255 255 255 / 5%) 0 1px, transparent 1px 8px),
-    linear-gradient(180deg, transparent, rgb(9 33 43 / 44%));
+    linear-gradient(180deg, transparent, rgb(28 31 33 / 44%));
   pointer-events: none;
 }
 
@@ -849,7 +859,7 @@ body > [x-data] {
   padding: 6px 9px;
   border-left: 3px solid var(--accent-300);
   border-radius: var(--r-sm);
-  background: rgb(4 17 23 / 72%);
+  background: rgb(14 16 17 / 72%);
 }
 
 .screen-system,
@@ -929,7 +939,7 @@ body > [x-data] {
   padding: 7px 9px;
   border: 1px solid rgb(149 219 230 / 30%);
   border-radius: var(--r-sm);
-  background: rgb(6 26 34 / 62%);
+  background: rgb(21 24 26 / 62%);
 }
 
 /* The rows live in their own box, and that box is what makes the fold real.
@@ -1454,7 +1464,7 @@ details.screen-reference[open] > summary { margin-bottom: 2px; }
   padding: 7px 9px;
   border: 1px solid rgb(149 219 230 / 30%);
   border-radius: var(--r-sm);
-  background: rgb(6 26 34 / 62%);
+  background: rgb(21 24 26 / 62%);
 }
 
 .mission-screen > .cockpit-instincts .command-kicker {
