@@ -73,7 +73,6 @@ export const FAMILY_LABELS = {
   noble: 'Noble gas'
 };
 
-// C.5(A): development of the Periodic Table.
 export const TABLE_HISTORY = [
   { who: 'Döbereiner', year: 1829,
     idea: 'Triads: grouped some elements in threes with similar properties; the middle atomic mass was often close to the average of the other two.',
@@ -139,8 +138,6 @@ export const MASS_ORDER_INVERSIONS = [
     note: 'Tellurium has a greater atomic mass than iodine, but atomic number places Te (52) before I (53). Mendeleev had already kept that chemical order; Moseley later established atomic number as the basis of the sequence.' }
 ];
 
-// C.5(B): named chemical families. These are Grade-10 generalizations; exceptions
-// are stated where a single family rule would otherwise be misleading.
 export const FAMILIES = [
   { key: 'alkali', name: 'Alkali metals', group: 'Group 1', valence: 1, ionCharge: '+1',
     members: ['Li', 'Na', 'K'],
@@ -170,40 +167,19 @@ export const FAMILIES = [
 ];
 
 export const FAMILY_QUIZ = [
-  { sym: 'K', prompt: 'Potassium sits in Group 1. What ion charge does it commonly form?',
-    choices: ['+1', '+2', '-1', '0'], answer: '+1',
-    explain: 'Potassium has one valence electron. Losing it gives K+, a +1 cation.' },
-  { sym: 'Ca', prompt: 'Calcium sits in Group 2. What ion charge does it commonly form?',
-    choices: ['+1', '+2', '-2', '0'], answer: '+2',
-    explain: 'Calcium has two valence electrons and commonly loses both to form Ca2+.' },
-  { sym: 'Cl', prompt: 'Chlorine sits in Group 17. What monatomic ion charge does it commonly form?',
-    choices: ['+1', '-1', '-2', '+7'], answer: '-1',
-    explain: 'A chlorine atom has seven valence electrons and can gain one electron to form Cl-.' },
-  { sym: 'Ar', prompt: 'Argon sits in Group 18. What monatomic ion charge does it normally form?',
-    choices: ['0', '+1', '-1', '+8'], answer: '0',
-    explain: 'Argon has a filled valence shell and does not normally form a monatomic ion.' },
-  { sym: 'Mg', prompt: 'Magnesium sits in Group 2. What ion charge does it commonly form?',
-    choices: ['+1', '+2', '-2', '0'], answer: '+2',
-    explain: 'Magnesium has two valence electrons and commonly loses both to form Mg2+.' },
-  { sym: 'F', prompt: 'Fluorine sits in Group 17. What monatomic ion charge does it commonly form?',
-    choices: ['-1', '+1', '-7', '0'], answer: '-1',
-    explain: 'A fluorine atom can gain one electron to complete its valence shell, forming F-.' }
+  { sym: 'K', prompt: 'Potassium sits in Group 1. What ion charge does it commonly form?', choices: ['+1', '+2', '-1', '0'], answer: '+1', explain: 'Potassium has one valence electron. Losing it gives K+, a +1 cation.' },
+  { sym: 'Ca', prompt: 'Calcium sits in Group 2. What ion charge does it commonly form?', choices: ['+1', '+2', '-2', '0'], answer: '+2', explain: 'Calcium has two valence electrons and commonly loses both to form Ca2+.' },
+  { sym: 'Cl', prompt: 'Chlorine sits in Group 17. What monatomic ion charge does it commonly form?', choices: ['+1', '-1', '-2', '+7'], answer: '-1', explain: 'A chlorine atom has seven valence electrons and can gain one electron to form Cl-.' },
+  { sym: 'Ar', prompt: 'Argon sits in Group 18. What monatomic ion charge does it normally form?', choices: ['0', '+1', '-1', '+8'], answer: '0', explain: 'Argon has a filled valence shell and does not normally form a monatomic ion.' },
+  { sym: 'Mg', prompt: 'Magnesium sits in Group 2. What ion charge does it commonly form?', choices: ['+1', '+2', '-2', '0'], answer: '+2', explain: 'Magnesium has two valence electrons and commonly loses both to form Mg2+.' },
+  { sym: 'F', prompt: 'Fluorine sits in Group 17. What monatomic ion charge does it commonly form?', choices: ['-1', '+1', '-7', '0'], answer: '-1', explain: 'A fluorine atom can gain one electron to complete its valence shell, forming F-.' }
 ];
 
-// C.5(C): chartable periodic properties.
 export const TREND_PROPS = [
-  { key: 'radius', label: 'Atomic radius', unit: 'pm', field: 'radius',
-    across: 'generally decreases', down: 'increases',
-    why: 'Across a period, increasing effective nuclear charge generally pulls valence electrons closer. Down a group, an additional occupied electron shell makes atoms larger.' },
-  { key: 'ie1', label: 'First ionization energy', unit: 'kJ/mol', field: 'ie1',
-    across: 'generally increases', down: 'generally decreases',
-    why: 'Across a period, the stronger effective nuclear attraction generally makes an electron harder to remove. Down a group, the outer electron is farther from the nucleus and more shielded.' },
-  { key: 'en', label: 'Electronegativity', unit: 'Pauling', field: 'en',
-    across: 'generally increases', down: 'generally decreases',
-    why: 'Across much of the table, atoms attract shared bonding electrons more strongly toward the upper right. Pauling values are commonly omitted here for noble gases because this scale is based on bonding data and ordinary noble-gas bonding is limited.' },
-  { key: 'mass', label: 'Atomic mass', unit: 'u', field: 'mass',
-    across: 'generally increases', down: 'generally increases',
-    why: 'Atomic mass usually increases as atomic number increases, but the order is not perfectly monotonic. The History tab shows important mass-order exceptions.' }
+  { key: 'radius', label: 'Atomic radius', unit: 'pm', field: 'radius', across: 'generally decreases', down: 'increases', why: 'Across a period, increasing effective nuclear charge generally pulls valence electrons closer. Down a group, an additional occupied electron shell makes atoms larger.' },
+  { key: 'ie1', label: 'First ionization energy', unit: 'kJ/mol', field: 'ie1', across: 'generally increases', down: 'generally decreases', why: 'Across a period, the stronger effective nuclear attraction generally makes an electron harder to remove. Down a group, the outer electron is farther from the nucleus and more shielded.' },
+  { key: 'en', label: 'Electronegativity', unit: 'Pauling', field: 'en', across: 'generally increases', down: 'generally decreases', why: 'Across much of the table, atoms attract shared bonding electrons more strongly toward the upper right. Pauling values are commonly omitted here for noble gases because this scale is based on bonding data and ordinary noble-gas bonding is limited.' },
+  { key: 'mass', label: 'Atomic mass', unit: 'u', field: 'mass', across: 'generally increases', down: 'generally increases', why: 'Atomic mass usually increases as atomic number increases, but the order is not perfectly monotonic. The History tab shows important mass-order exceptions.' }
 ];
 
 export const TREND_RUNS = [
@@ -217,122 +193,84 @@ export const TREND_RUNS = [
 ];
 
 export const TREND_QUIZ = [
-  { property: 'radius', a: 'Na', b: 'Cl', answer: 'Na',
-    explain: 'Across Period 3, increasing effective nuclear charge generally pulls the valence shell inward, so sodium has a larger atomic radius than chlorine.' },
-  { property: 'radius', a: 'Li', b: 'K', answer: 'K',
-    explain: 'Down Group 1, each element adds an occupied electron shell, so potassium has a larger atomic radius than lithium.' },
-  { property: 'ie1', a: 'Na', b: 'Cl', answer: 'Cl',
-    explain: 'Across Period 3, first ionization energy generally increases, so chlorine requires more energy to remove its first electron than sodium.' },
-  { property: 'ie1', a: 'Li', b: 'K', answer: 'Li',
-    explain: 'Down Group 1, the outer electron becomes farther from the nucleus and more shielded, so potassium has the lower first ionization energy.' },
-  { property: 'en', a: 'F', b: 'I', answer: 'F',
-    explain: 'Electronegativity generally decreases down Group 17. Fluorine has the higher Pauling electronegativity.' },
-  { property: 'radius', a: 'Mg', b: 'Ba', answer: 'Ba',
-    explain: 'Atomic radius increases down Group 2 because additional occupied electron shells are added.' },
-  { property: 'en', a: 'Mg', b: 'S', answer: 'S',
-    explain: 'Across Period 3, electronegativity generally increases toward the right, so sulfur has the higher Pauling electronegativity.' }
+  { property: 'radius', a: 'Na', b: 'Cl', answer: 'Na', explain: 'Across Period 3, increasing effective nuclear charge generally pulls the valence shell inward, so sodium has a larger atomic radius than chlorine.' },
+  { property: 'radius', a: 'Li', b: 'K', answer: 'K', explain: 'Down Group 1, each element adds an occupied electron shell, so potassium has a larger atomic radius than lithium.' },
+  { property: 'ie1', a: 'Na', b: 'Cl', answer: 'Cl', explain: 'Across Period 3, first ionization energy generally increases, so chlorine requires more energy to remove its first electron than sodium.' },
+  { property: 'ie1', a: 'Li', b: 'K', answer: 'Li', explain: 'Down Group 1, the outer electron becomes farther from the nucleus and more shielded, so potassium has the lower first ionization energy.' },
+  { property: 'en', a: 'F', b: 'I', answer: 'F', explain: 'Electronegativity generally decreases down Group 17. Fluorine has the higher Pauling electronegativity.' },
+  { property: 'radius', a: 'Mg', b: 'Ba', answer: 'Ba', explain: 'Atomic radius increases down Group 2 because additional occupied electron shells are added.' },
+  { property: 'en', a: 'Mg', b: 'S', answer: 'S', explain: 'Across Period 3, electronegativity generally increases toward the right, so sulfur has the higher Pauling electronegativity.' }
 ];
 
 export const IE_ANOMALIES = [
-  { label: 'Be to B', from: 'Be', to: 'B', group: 'Groups 2 to 13',
-    explain: 'Boron loses a higher-energy 2p electron, while removing another electron from beryllium would disrupt its filled 2s subshell. The 2p electron is easier to remove, so the first ionization energy dips from Be to B.' },
-  { label: 'N to O', from: 'N', to: 'O', group: 'Groups 15 to 16',
-    explain: 'Nitrogen has a half-filled 2p subshell with one electron in each p orbital. Oxygen pairs one of its 2p electrons, increasing electron-electron repulsion and making one electron easier to remove. The first ionization energy therefore dips from N to O.' }
+  { label: 'Be to B', from: 'Be', to: 'B', group: 'Groups 2 to 13', explain: 'Boron loses a higher-energy 2p electron, while removing another electron from beryllium would disrupt its filled 2s subshell. The 2p electron is easier to remove, so the first ionization energy dips from Be to B.' },
+  { label: 'N to O', from: 'N', to: 'O', group: 'Groups 15 to 16', explain: 'Nitrogen has a half-filled 2p subshell with one electron in each p orbital. Oxygen pairs one of its 2p electrons, increasing electron-electron repulsion and making one electron easier to remove. The first ionization energy therefore dips from N to O.' }
 ];
 
-// Scenario layer. Real-world context is deliberately separated from the scientific
-// claim being graded. When an activity-specific score or decision rule is used, the
-// copy identifies it as a simulation convention rather than a universal scientific rule.
 export const SCENARIOS = [
-  { id: 'a-datasheet', stage: 'table', skill: 'a', type: 'decision',
-    system: 'The datasheet with a missing row', icon: '\u{1F4C4}', cell: 'Sc', family: 'transition',
-    goal: 'A supplier datasheet has one missing row. Use the surrounding periodic pattern to identify the element before placing the order.',
-    why: 'Mendeleev used gaps in his table to predict undiscovered elements. Eka-boron was predicted near an atomic mass of 44 and to form an oxide like Eb2O3; scandium, discovered in 1879, fit that position and formed Sc2O3.',
-    consequences: { order: 'The identified part is added to the order.', hold: 'The order stays on hold until the missing element is identified.' },
-    effect: { good: { add: 'Sc' }, bad: { drop: 'transition' } } },
+  { id: 'a-datasheet', stage: 'table', skill: 'a', type: 'decision', system: 'The datasheet with a missing row', icon: '\u{1F4C4}', cell: 'Sc', family: 'transition',
+    goal: 'Use the periodic pattern to identify the missing element before placing the order.',
+    why: 'Mendeleev used gaps to predict missing elements. Scandium later matched his eka-boron position and key predicted properties.',
+    consequences: { order: 'The identified part is added to the order.', hold: 'The order stays on hold until the missing element is identified.' }, effect: { good: { add: 'Sc' }, bad: { drop: 'transition' } } },
 
-  { id: 'a-warehouse', stage: 'table', skill: 'a', type: 'decision',
-    system: 'Two bins in the wrong order', icon: '\u{1F4E6}', cell: 'Ar', family: 'noble',
-    goal: 'The warehouse sorted element bins by atomic mass. Use Ar/K and Co/Ni to determine which quantity should set the periodic-table order.',
-    why: 'Atomic mass is not perfectly monotonic: K is slightly lighter than Ar, and Ni is slightly lighter than Co. Moseley established atomic number—not atomic mass—as the basis of the modern sequence.',
-    consequences: { znumber: 'The bins are relabeled by atomic number.', mass: 'The mass-based order keeps the same sequence errors.' },
-    effect: { good: { add: 'Ar' }, bad: { drop: 'noble' } } },
+  { id: 'a-warehouse', stage: 'table', skill: 'a', type: 'decision', system: 'Two bins in the wrong order', icon: '\u{1F4E6}', cell: 'Ar', family: 'noble',
+    goal: 'Use Ar/K and Co/Ni to determine what should set periodic-table order.',
+    why: 'K is slightly lighter than Ar, and Ni is slightly lighter than Co. The modern table uses atomic number, not atomic mass, to set the sequence.',
+    consequences: { znumber: 'The bins are relabeled by atomic number.', mass: 'The mass-based order keeps the same sequence errors.' }, effect: { good: { add: 'Ar' }, bad: { drop: 'noble' } } },
 
-  { id: 'a-manual', stage: 'table', skill: 'a', type: 'decision',
-    system: 'The historical repair manual', icon: '\u{1F4D6}', cell: 'Na', family: 'alkali',
-    goal: 'An old manual uses early mass-based patterns such as triads and octaves. Explain why those patterns were useful but could not organize the complete table.',
-    why: 'Döbereiner and Newlands identified real repeating patterns among some elements. Their arrangements were limited because atomic mass alone is not the variable that defines the modern periodic sequence; atomic number is.',
-    consequences: { retire: 'The manual is kept as a historical reference while the modern table is used for current work.', keep: 'The incomplete historical arrangement remains in use and misplaces later elements.' },
-    effect: { good: { add: 'Na' }, bad: { drop: 'alkali' } } },
+  { id: 'a-manual', stage: 'table', skill: 'a', type: 'decision', system: 'The historical repair manual', icon: '\u{1F4D6}', cell: 'Na', family: 'alkali',
+    goal: 'Explain why early mass-based patterns were useful but could not organize the complete table.',
+    why: 'Triads and octaves revealed real repeating patterns, but they did not organize all known elements. Atomic number is the basis of the modern sequence.',
+    consequences: { retire: 'The manual is kept as a historical reference while the modern table is used for current work.', keep: 'The incomplete historical arrangement remains in use and misplaces later elements.' }, effect: { good: { add: 'Na' }, bad: { drop: 'alkali' } } },
 
-  { id: 'b-remote', stage: 'families', skill: 'b', type: 'decision',
-    system: 'The leaking alkaline battery', icon: '\u{1F50B}', cell: 'K', family: 'alkali',
-    goal: 'A remote has white residue around a leaking alkaline cell. Identify potassium\'s family and the charge of potassium in KOH, then choose the safe next step from the activity options.',
-    why: 'Potassium hydroxide contains K+ and OH-. Potassium is a Group 1 element, so +1 is its common monatomic ion charge. A failed battery seal allows electrolyte to escape; the periodic family explains the K+ charge, not why the seal failed.',
-    consequences: { clean: 'The cells are removed and the residue is handled according to the battery maker\'s cleanup guidance.', swap: 'New cells are installed without first addressing the leaked residue.' },
-    effect: { good: { add: 'K' }, bad: { drop: 'alkali' } } },
+  { id: 'b-remote', stage: 'families', skill: 'b', type: 'decision', system: 'The leaking alkaline battery', icon: '\u{1F50B}', cell: 'K', family: 'alkali',
+    goal: 'Identify potassium\'s family and its charge in KOH, then choose the safe next step.',
+    why: 'KOH contains K+ and OH-. Group 1 explains K+; a failed battery seal, not potassium\'s family, caused the leak.',
+    consequences: { clean: 'The cells are removed and the residue is handled according to the battery maker\'s cleanup guidance.', swap: 'New cells are installed without first addressing the leaked residue.' }, effect: { good: { add: 'K' }, bad: { drop: 'alkali' } } },
 
-  { id: 'b-contact', stage: 'families', skill: 'b', type: 'decision',
-    system: 'Two metal contacts', icon: '\u{1F4BF}', cell: 'Ag', family: 'transition',
-    goal: 'A silver-plated contact is tarnished while a gold-plated contact is not. Identify the periodic-table family used in this activity, then interpret the provided material note before choosing a replacement.',
-    why: 'Silver and gold are both in Group 11 and are treated as transition metals in this course. Their real corrosion and tarnish behavior depends on electrochemistry and environment. The 0–100 reactivity values in this activity are simulation scores, not standardized measurements.',
-    consequences: { gold: 'The repair follows the supplied material specification and uses gold plating.', silver: 'The repair uses silver plating instead of the specified corrosion-resistant option.' },
-    effect: { good: { add: 'Ag' }, bad: { drop: 'transition' } } },
+  { id: 'b-contact', stage: 'families', skill: 'b', type: 'decision', system: 'Two metal contacts', icon: '\u{1F4BF}', cell: 'Ag', family: 'transition',
+    goal: 'Identify the Ag/Au family, then use the supplied material note to choose the replacement.',
+    why: 'Ag and Au are both Group 11 metals. Real corrosion depends on material and environment; the activity values are simulation scores.',
+    consequences: { gold: 'The repair follows the supplied material specification and uses gold plating.', silver: 'The repair uses silver plating instead of the specified corrosion-resistant option.' }, effect: { good: { add: 'Ag' }, bad: { drop: 'transition' } } },
 
-  { id: 'b-plastic', stage: 'families', skill: 'b', type: 'decision',
-    system: 'The brominated plastic marking', icon: '\u{1F525}', cell: 'Br', family: 'halogen',
-    goal: 'A laptop case is marked as containing a brominated flame retardant. Identify bromine\'s family and typical monatomic ion charge, then follow the disposal route provided by the activity.',
-    why: 'Bromine is a Group 17 halogen and commonly forms Br- in ionic compounds. In brominated flame retardants, bromine is part of a compound; flame-retardant action involves combustion chemistry, not simply formation of Br-. Waste handling follows product and local disposal guidance, not a periodic-family rule.',
-    consequences: { separate: 'The offcuts follow the activity\'s designated electronics-waste route.', bin: 'The offcuts are placed in the household-waste route instead of the activity\'s designated route.' },
-    effect: { good: { add: 'Br' }, bad: { drop: 'halogen' } } },
+  { id: 'b-plastic', stage: 'families', skill: 'b', type: 'decision', system: 'The brominated plastic marking', icon: '\u{1F525}', cell: 'Br', family: 'halogen',
+    goal: 'Identify bromine\'s family and common ion, then follow the activity\'s disposal route.',
+    why: 'Br is a Group 17 halogen and commonly forms Br-. Flame-retardant action and waste handling depend on the compound and guidance, not the Br- ion rule.',
+    consequences: { separate: 'The offcuts follow the activity\'s designated electronics-waste route.', bin: 'The offcuts are placed in the household-waste route instead of the activity\'s designated route.' }, effect: { good: { add: 'Br' }, bad: { drop: 'halogen' } } },
 
-  { id: 'c-cell', stage: 'trends', skill: 'c', type: 'decision',
-    system: 'Lithium and sodium cells', icon: '\u{1F4F1}', cell: 'Li', family: 'alkali',
-    goal: 'Compare lithium and sodium using the periodic data, then choose the cell chemistry specified for this repair.',
-    why: 'Li and Na are both Group 1 elements, but Na has a larger atomic radius and greater atomic mass. Those trends are useful comparisons; they do not imply that a sodium-ion battery would weigh three times as much or have a predictable voltage. Whole-cell performance depends on electrochemistry, electrode materials, and design.',
-    consequences: { lithium: 'The repair uses the lithium-ion cell specified for the device.', sodium: 'A different battery chemistry is selected even though the device specifies a lithium-ion cell.' },
-    effect: { good: { add: 'Li' }, bad: { drop: 'alkali' } } },
+  { id: 'c-cell', stage: 'trends', skill: 'c', type: 'decision', system: 'Lithium and sodium cells', icon: '\u{1F4F1}', cell: 'Li', family: 'alkali',
+    goal: 'Compare Li and Na using periodic data, then choose the cell chemistry specified for this repair.',
+    why: 'Na is larger and heavier than Li. Those atomic trends do not predict whole-cell mass or voltage; battery performance also depends on chemistry and design.',
+    consequences: { lithium: 'The repair uses the lithium-ion cell specified for the device.', sodium: 'A different battery chemistry is selected even though the device specifies a lithium-ion cell.' }, effect: { good: { add: 'Li' }, bad: { drop: 'alkali' } } },
 
-  { id: 'c-connector', stage: 'trends', skill: 'c', type: 'decision',
-    system: 'Gold on the connector', icon: '\u{1F50C}', cell: 'Au', family: 'transition',
-    goal: 'Compare gold and copper using the assigned periodic property, then use the supplied corrosion note to select the connector finish.',
-    why: 'Periodic properties let you compare Au and Cu, but electronegativity or atomic radius alone does not measure connector corrosion. The material note identifies gold as the more corrosion-resistant finish; the activity\'s reactivity score is only a simulation aid.',
-    consequences: { gold: 'The connector follows the supplied specification and receives gold plating.', copper: 'The connector is left as bare copper instead of using the specified corrosion-resistant finish.' },
-    effect: { good: { add: 'Au' }, bad: { drop: 'transition' } } },
+  { id: 'c-connector', stage: 'trends', skill: 'c', type: 'decision', system: 'Gold on the connector', icon: '\u{1F50C}', cell: 'Au', family: 'transition',
+    goal: 'Compare Au and Cu, then use the supplied corrosion note to select the finish.',
+    why: 'Periodic data compare Au and Cu but do not measure connector corrosion. Use the material note for the repair choice; the reactivity score is a simulation aid.',
+    consequences: { gold: 'The connector follows the supplied specification and receives gold plating.', copper: 'The connector is left as bare copper instead of using the specified corrosion-resistant finish.' }, effect: { good: { add: 'Au' }, bad: { drop: 'transition' } } },
 
-  { id: 'c-case', stage: 'trends', skill: 'c', type: 'decision',
-    system: 'Aluminum and iron', icon: '\u{1F4BB}', cell: 'Al', family: 'post-transition',
-    goal: 'Compare aluminum and iron using the assigned periodic property, then use the supplied case specification to choose the replacement material.',
-    why: 'Atomic mass compares individual atoms; it does not equal material density or predict the mass of an entire case. Aluminum is commonly used where low density and corrosion resistance are useful, but those engineering properties require material data beyond this periodic-trend comparison.',
-    consequences: { aluminium: 'The repair uses the aluminum case specified for the device.', iron: 'A different case material is selected without the required material specification.' },
-    effect: { good: { add: 'Al' }, bad: { drop: 'post-transition' } } },
+  { id: 'c-case', stage: 'trends', skill: 'c', type: 'decision', system: 'Aluminum and iron', icon: '\u{1F4BB}', cell: 'Al', family: 'post-transition',
+    goal: 'Compare Al and Fe, then use the supplied case specification to choose the replacement.',
+    why: 'Atomic mass is not material density or case mass. Use periodic data for the comparison and the supplied material specification for the repair choice.',
+    consequences: { aluminium: 'The repair uses the aluminum case specified for the device.', iron: 'A different case material is selected without the required material specification.' }, effect: { good: { add: 'Al' }, bad: { drop: 'post-transition' } } },
 
-  { id: 'h1-shielding', stage: 'trends', skill: 'h1', type: 'decision',
-    system: 'Why the row tightens', icon: '\u{1F9F2}', cell: 'Si', family: 'metalloid',
-    goal: 'Across Period 3, atomic radius generally decreases while first ionization energy generally increases. Use the activity\'s simplified effective-nuclear-charge model to explain the pattern.',
-    why: 'This activity uses the simplified model Zeff = Z - core electrons: core electrons are treated as shielding fully and same-shell shielding is neglected. The model therefore increases across a period and helps explain the general trend, but it is an approximation rather than a measured Zeff value.',
-    consequences: { right: 'The explanation connects the general trend to the simplified Zeff model.', left: 'The explanation assigns the stronger attraction to the wrong end of the period.' },
-    effect: { good: { add: 'Si' }, bad: { drop: 'metalloid' } } },
+  { id: 'h1-shielding', stage: 'trends', skill: 'h1', type: 'decision', system: 'Why the row tightens', icon: '\u{1F9F2}', cell: 'Si', family: 'metalloid',
+    goal: 'Use the simplified Zeff model to explain Period 3 radius and ionization-energy trends.',
+    why: 'This activity uses Zeff = Z - core electrons. It explains the general trend but is an approximation, not a measured Zeff value.',
+    consequences: { right: 'The explanation connects the general trend to the simplified Zeff model.', left: 'The explanation assigns the stronger attraction to the wrong end of the period.' }, effect: { good: { add: 'Si' }, bad: { drop: 'metalloid' } } },
 
-  { id: 'h2-dip', stage: 'trends', skill: 'h2', type: 'decision',
-    system: 'Two dips in the trend', icon: '\u{1F4C9}', cell: 'B', family: 'metalloid',
-    goal: 'First ionization energy generally rises across Period 2, but it dips from Be to B and from N to O. Identify the electron-configuration reason for the highlighted dip.',
-    why: 'From Be to B, the electron removed from B is a higher-energy 2p electron. From N to O, electron pairing in one 2p orbital increases repulsion. These local electron-configuration effects produce dips even while nuclear charge increases across the period.',
-    consequences: { subshell: 'The exception is recorded with its electron-configuration explanation.', charge: 'The real exception is incorrectly treated as random measurement noise.' },
-    effect: { good: { add: 'B' }, bad: { drop: 'metalloid' } } },
+  { id: 'h2-dip', stage: 'trends', skill: 'h2', type: 'decision', system: 'Two dips in the trend', icon: '\u{1F4C9}', cell: 'B', family: 'metalloid',
+    goal: 'Explain the Be→B and N→O dips in Period 2 first ionization energy.',
+    why: 'The dips come from electron-configuration effects. Nuclear charge still increases across the period.',
+    consequences: { subshell: 'The exception is recorded with its electron-configuration explanation.', charge: 'The real exception is incorrectly treated as random measurement noise.' }, effect: { good: { add: 'B' }, bad: { drop: 'metalloid' } } },
 
-  { id: 'cap-substitute', stage: 'capstone', skill: 'cap', type: 'decision',
-    system: 'The substitute part', icon: '\u{1F527}', cell: 'Ni', family: 'transition',
-    goal: 'Estimate nickel\'s atomic radius from the neighboring values, then apply the activity\'s stated compatibility rule to the offered substitute.',
-    why: 'The radius estimate practices interpolation from periodic data. The substitute decision uses a simulation compatibility rule so you can combine evidence in one capstone. The 0–100 reactivity score and its cutoff are activity criteria—not universal corrosion measurements or engineering standards.',
-    consequences: { fit: 'The substitute meets the activity\'s stated compatibility criterion and is fitted.', wait: 'The activity rule does not support the substitute, so the specified part is ordered.', nofit: 'The substitute is rejected under the activity\'s compatibility criterion.' },
-    effect: { good: { add: 'Ni' }, bad: { drop: 'transition' } } }
+  { id: 'cap-substitute', stage: 'capstone', skill: 'cap', type: 'decision', system: 'The substitute part', icon: '\u{1F527}', cell: 'Ni', family: 'transition',
+    goal: 'Estimate nickel\'s radius from neighboring values, then apply the stated compatibility rule.',
+    why: 'The radius estimate practices interpolation. The 0–100 score and ≥13 cutoff are activity criteria, not corrosion standards.',
+    consequences: { fit: 'The substitute meets the activity\'s stated compatibility criterion and is fitted.', wait: 'The activity rule does not support the substitute, so the specified part is ordered.', nofit: 'The substitute is rejected under the activity\'s compatibility criterion.' }, effect: { good: { add: 'Ni' }, bad: { drop: 'transition' } } }
 ];
 
 export const BOARD_CELLS = SCENARIOS.map(s => ({ sym: s.cell, family: s.family, from: s.id }));
 
-// Supplier notes for the capstone simulation. These are scenario constraints, not
-// universal engineering rules.
 export const CAP_SUBSTITUTES = [
   { sym: 'Cu', note: 'Activity note: conductive, but the offered finish does not meet the supplied corrosion specification.' },
   { sym: 'Zn', note: 'Activity note: its simulation score is close to nickel, so it may meet the stated compatibility rule.' },
@@ -343,116 +281,17 @@ export const CAP_SUBSTITUTES = [
 ];
 
 export const SCENARIO_TASKS = {
-  'a-datasheet': {
-    ask: 'Which element belongs in the missing row?', pool: 'gap',
-    explain: MENDELEEV_GAP.explain,
-    actions: [{ k: 'order', label: 'Order the identified part' }, { k: 'hold', label: 'Hold the order' }],
-    actionTrue: 'order' },
-
-  'a-warehouse': {
-    ask: 'Which quantity should determine the periodic-table order?',
-    options: [
-      { k: 'znumber', label: 'Atomic number' },
-      { k: 'mass', label: 'Atomic mass' },
-      { k: 'alpha', label: 'Alphabetical order by symbol' },
-      { k: 'density', label: 'Density' }
-    ],
-    answer: 'znumber',
-    explain: 'Atomic mass is not perfectly monotonic: Ar/K and Co/Ni appear in opposite mass order. Moseley established atomic number as the basis of the modern periodic sequence.',
-    actions: [{ k: 'znumber', label: 'Relabel by atomic number' }, { k: 'mass', label: 'Keep the mass ordering' }],
-    actionTrue: 'znumber' },
-
-  'a-manual': {
-    ask: 'Why can the early mass-based arrangement not organize the complete periodic table?',
-    options: [
-      { k: 'weight', label: 'Atomic mass alone does not define the modern periodic sequence' },
-      { k: 'threes', label: 'Any group of three elements is too small to show a pattern' },
-      { k: 'printing', label: 'The later rows were missing only because they were not printed' },
-      { k: 'metals', label: 'The pattern fails only because nonmetals are included' }
-    ],
-    answer: 'weight',
-    explain: 'Triads and octaves revealed real periodic similarities, especially among lighter elements, but they did not organize all known elements. Atomic number—not atomic mass—is the basis of the modern sequence.',
-    actions: [{ k: 'retire', label: 'Use the modern table' }, { k: 'keep', label: 'Keep using the old arrangement' }],
-    actionTrue: 'retire' },
-
-  'b-remote': {
-    ask: 'Which family contains potassium, and what charge does potassium have in KOH?',
-    options: [
-      { k: 'alkali', label: 'Alkali metals; K+' },
-      { k: 'alkaline-earth', label: 'Alkaline earth metals; K2+' },
-      { k: 'halogen', label: 'Halogens; K-' },
-      { k: 'transition', label: 'Transition metals; variable charge' }
-    ],
-    answer: 'alkali',
-    explain: 'Potassium is a Group 1 alkali metal and commonly forms K+. In potassium hydroxide, the ions are K+ and OH-. A failed seal causes the electrolyte leak; Group 1 membership explains the potassium ion charge, not the seal failure.',
-    actions: [{ k: 'clean', label: 'Remove cells and follow cleanup guidance' }, { k: 'swap', label: 'Install new cells without cleaning residue' }],
-    actionTrue: 'clean' },
-
-  'b-contact': {
-    ask: 'How should the Ag/Au family and reactivity information be interpreted?',
-    options: [
-      { k: 'transition', label: 'Both are Group 11 metals; the 0–100 reactivity values are simulation scores' },
-      { k: 'different', label: 'Silver is a transition metal, but gold is a post-transition metal' },
-      { k: 'alkali', label: 'Both are alkali metals because +1 ions are possible' },
-      { k: 'metalloid', label: 'Both are metalloids because they conduct electricity' }
-    ],
-    answer: 'transition',
-    explain: 'Silver and gold are both in Group 11 and are treated as transition metals in this course. The activity reactivity numbers are simulation scores; they are not a standardized scale and do not by themselves predict real connector service life.',
-    actions: [{ k: 'gold', label: 'Use the specified gold plating' }, { k: 'silver', label: 'Use silver plating instead' }],
-    actionTrue: 'gold' },
-
-  'b-plastic': {
-    ask: 'Which family contains bromine, and what monatomic ion does bromine commonly form?',
-    options: [
-      { k: 'halogen', label: 'Halogens; Br-' },
-      { k: 'noble', label: 'Noble gases; no common monatomic ion' },
-      { k: 'nonmetal', label: 'Nonmetals generally; no predictable ion charge' },
-      { k: 'alkaline-earth', label: 'Alkaline earth metals; Br2+' }
-    ],
-    answer: 'halogen',
-    explain: 'Bromine is a Group 17 halogen and commonly forms Br- in ionic compounds. Brominated flame retardants are compounds; their combustion behavior and disposal requirements cannot be inferred from the Br- ion rule alone.',
-    actions: [{ k: 'separate', label: 'Follow the listed electronics-waste route' }, { k: 'bin', label: 'Use the household-waste route' }],
-    actionTrue: 'separate' },
-
-  'c-cell': {
-    ask: null, pool: 'pair',
-    actions: [{ k: 'lithium', sym: 'Li', label: 'Use the specified lithium-ion cell' },
-              { k: 'sodium', sym: 'Na', label: 'Substitute a sodium-ion cell' }],
-    actionTrue: 'lithium' },
-  'c-connector': {
-    ask: null, pool: 'pair',
-    actions: [{ k: 'gold', sym: 'Au', label: 'Use the specified gold plating' },
-              { k: 'copper', sym: 'Cu', label: 'Leave the contact as bare copper' }],
-    actionTrue: 'gold' },
-  'c-case': {
-    ask: null, pool: 'pair',
-    actions: [{ k: 'aluminium', sym: 'Al', label: 'Use the specified aluminum case' },
-              { k: 'iron', sym: 'Fe', label: 'Substitute a steel case' }],
-    actionTrue: 'aluminium' },
-
-  'h1-shielding': {
-    ask: 'Which model explains the general radius and ionization-energy trends across Period 3?',
-    options: [
-      { k: 'zeff', label: 'A simplified Zeff model: nuclear charge rises while core-electron shielding stays about the same' },
-      { k: 'mass', label: 'Greater atomic mass directly pulls valence electrons inward' },
-      { k: 'shells', label: 'A new occupied electron shell is added at every step across the period' },
-      { k: 'neutrons', label: 'Additional neutrons directly increase the electrostatic attraction on electrons' }
-    ],
-    answer: 'zeff',
-    explain: 'This activity uses the simplified model Zeff = Z - core electrons. Across Period 3, the number of core electrons stays the same while proton count rises, so this model Zeff rises. Real electron shielding is more detailed because same-shell electrons also contribute some shielding.',
-    actions: [{ k: 'right', label: 'The right side generally holds valence electrons more strongly' }, { k: 'left', label: 'The left side does' }],
-    actionTrue: 'right' },
-
-  'h2-dip': {
-    ask: 'Why does first ionization energy drop at the highlighted step?', pool: 'anomaly',
-    options: [
-      { k: 'p-electron', label: 'The electron removed from B is a higher-energy 2p electron than the 2s electron in Be' },
-      { k: 'pairing', label: 'Electron pairing in O increases repulsion within one 2p orbital' },
-      { k: 'charge', label: 'Nuclear charge decreases between the two elements' },
-      { k: 'size', label: 'A new occupied electron shell is added between the two elements' }
-    ],
-    actions: [{ k: 'subshell', label: 'Record the electron-configuration explanation' }, { k: 'charge', label: 'Treat the dip as measurement noise' }],
-    actionTrue: 'subshell' }
+  'a-datasheet': { ask: 'Which element belongs in the missing row?', pool: 'gap', explain: MENDELEEV_GAP.explain, actions: [{ k: 'order', label: 'Order the identified part' }, { k: 'hold', label: 'Hold the order' }], actionTrue: 'order' },
+  'a-warehouse': { ask: 'Which quantity should determine the periodic-table order?', options: [{ k: 'znumber', label: 'Atomic number' }, { k: 'mass', label: 'Atomic mass' }, { k: 'alpha', label: 'Alphabetical order by symbol' }, { k: 'density', label: 'Density' }], answer: 'znumber', explain: 'Atomic mass is not perfectly monotonic: Ar/K and Co/Ni appear in opposite mass order. Moseley established atomic number as the basis of the modern periodic sequence.', actions: [{ k: 'znumber', label: 'Relabel by atomic number' }, { k: 'mass', label: 'Keep the mass ordering' }], actionTrue: 'znumber' },
+  'a-manual': { ask: 'Why can the early mass-based arrangement not organize the complete periodic table?', options: [{ k: 'weight', label: 'Atomic mass alone does not define the modern periodic sequence' }, { k: 'threes', label: 'Any group of three elements is too small to show a pattern' }, { k: 'printing', label: 'The later rows were missing only because they were not printed' }, { k: 'metals', label: 'The pattern fails only because nonmetals are included' }], answer: 'weight', explain: 'Triads and octaves revealed real periodic similarities, especially among lighter elements, but they did not organize all known elements. Atomic number—not atomic mass—is the basis of the modern sequence.', actions: [{ k: 'retire', label: 'Use the modern table' }, { k: 'keep', label: 'Keep using the old arrangement' }], actionTrue: 'retire' },
+  'b-remote': { ask: 'Which family contains potassium, and what charge does potassium have in KOH?', options: [{ k: 'alkali', label: 'Alkali metals; K+' }, { k: 'alkaline-earth', label: 'Alkaline earth metals; K2+' }, { k: 'halogen', label: 'Halogens; K-' }, { k: 'transition', label: 'Transition metals; variable charge' }], answer: 'alkali', explain: 'Potassium is a Group 1 alkali metal and commonly forms K+. In potassium hydroxide, the ions are K+ and OH-. A failed seal causes the electrolyte leak; Group 1 membership explains the potassium ion charge, not the seal failure.', actions: [{ k: 'clean', label: 'Remove cells and follow cleanup guidance' }, { k: 'swap', label: 'Install new cells without cleaning residue' }], actionTrue: 'clean' },
+  'b-contact': { ask: 'How should the Ag/Au family and reactivity information be interpreted?', options: [{ k: 'transition', label: 'Both are Group 11 metals; the 0–100 reactivity values are simulation scores' }, { k: 'different', label: 'Silver is a transition metal, but gold is a post-transition metal' }, { k: 'alkali', label: 'Both are alkali metals because +1 ions are possible' }, { k: 'metalloid', label: 'Both are metalloids because they conduct electricity' }], answer: 'transition', explain: 'Silver and gold are both in Group 11 and are treated as transition metals in this course. The activity reactivity numbers are simulation scores; they are not a standardized scale and do not by themselves predict real connector service life.', actions: [{ k: 'gold', label: 'Use the specified gold plating' }, { k: 'silver', label: 'Use silver plating instead' }], actionTrue: 'gold' },
+  'b-plastic': { ask: 'Which family contains bromine, and what monatomic ion does bromine commonly form?', options: [{ k: 'halogen', label: 'Halogens; Br-' }, { k: 'noble', label: 'Noble gases; no common monatomic ion' }, { k: 'nonmetal', label: 'Nonmetals generally; no predictable ion charge' }, { k: 'alkaline-earth', label: 'Alkaline earth metals; Br2+' }], answer: 'halogen', explain: 'Bromine is a Group 17 halogen and commonly forms Br- in ionic compounds. Brominated flame retardants are compounds; their combustion behavior and disposal requirements cannot be inferred from the Br- ion rule alone.', actions: [{ k: 'separate', label: 'Follow the listed electronics-waste route' }, { k: 'bin', label: 'Use the household-waste route' }], actionTrue: 'separate' },
+  'c-cell': { ask: null, pool: 'pair', actions: [{ k: 'lithium', sym: 'Li', label: 'Use the specified lithium-ion cell' }, { k: 'sodium', sym: 'Na', label: 'Substitute a sodium-ion cell' }], actionTrue: 'lithium' },
+  'c-connector': { ask: null, pool: 'pair', actions: [{ k: 'gold', sym: 'Au', label: 'Use the specified gold plating' }, { k: 'copper', sym: 'Cu', label: 'Leave the contact as bare copper' }], actionTrue: 'gold' },
+  'c-case': { ask: null, pool: 'pair', actions: [{ k: 'aluminium', sym: 'Al', label: 'Use the specified aluminum case' }, { k: 'iron', sym: 'Fe', label: 'Substitute a steel case' }], actionTrue: 'aluminium' },
+  'h1-shielding': { ask: 'Which model explains the general radius and ionization-energy trends across Period 3?', options: [{ k: 'zeff', label: 'A simplified Zeff model: nuclear charge rises while core-electron shielding stays about the same' }, { k: 'mass', label: 'Greater atomic mass directly pulls valence electrons inward' }, { k: 'shells', label: 'A new occupied electron shell is added at every step across the period' }, { k: 'neutrons', label: 'Additional neutrons directly increase the electrostatic attraction on electrons' }], answer: 'zeff', explain: 'This activity uses the simplified model Zeff = Z - core electrons. Across Period 3, the number of core electrons stays the same while proton count rises, so this model Zeff rises. Real electron shielding is more detailed because same-shell electrons also contribute some shielding.', actions: [{ k: 'right', label: 'The right side generally holds valence electrons more strongly' }, { k: 'left', label: 'The left side does' }], actionTrue: 'right' },
+  'h2-dip': { ask: 'Why does first ionization energy drop at the highlighted step?', pool: 'anomaly', options: [{ k: 'p-electron', label: 'The electron removed from B is a higher-energy 2p electron than the 2s electron in Be' }, { k: 'pairing', label: 'Electron pairing in O increases repulsion within one 2p orbital' }, { k: 'charge', label: 'Nuclear charge decreases between the two elements' }, { k: 'size', label: 'A new occupied electron shell is added between the two elements' }], actions: [{ k: 'subshell', label: 'Record the electron-configuration explanation' }, { k: 'charge', label: 'Treat the dip as measurement noise' }], actionTrue: 'subshell' }
 };
 
 export const ANOMALY_ANSWER = { 'Be to B': 'p-electron', 'N to O': 'pairing' };
