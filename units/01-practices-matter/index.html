@@ -23,7 +23,7 @@
   <main class="codex-shell cockpit-shell" aria-label="Unit 1 chemistry practice workspace">
     <header class="cockpit-command">
       <div class="command-brand">
-        <span class="command-kicker">Unit 1 · Scientific &amp; Engineering Practices</span>
+        <span class="command-kicker">Unit 1 · TEKS C.1-C.4</span>
         <a class="command-home" href="../index.html" title="All units">Practices, Measurement &amp; Matter</a>
         <span x-text="activeStationName"></span>
       </div>
@@ -51,12 +51,12 @@
         <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
         <div class="teks-wrap" @click.outside="teksOpen = false" @keydown.escape="teksOpen = false">
           <button type="button" class="teks-badge" :class="{ complete: teksMasteredCount === coreSkills.length }"
-                  :aria-expanded="teksOpen ? 'true' : 'false'" aria-label="Scientific and engineering practices progress"
+                  :aria-expanded="teksOpen ? 'true' : 'false'" aria-label="TEKS standards progress"
                   @click="teksOpen = !teksOpen">
-            <span>SEP</span>
+            <span>TEKS</span>
             <strong><span x-text="teksMasteredCount"></span>/<span x-text="coreSkills.length"></span></strong>
           </button>
-          <div class="teks-popover" x-show="teksOpen" x-cloak role="group" aria-label="Scientific and engineering practice progress">
+          <div class="teks-popover" x-show="teksOpen" x-cloak role="group" aria-label="TEKS C.1 to C.4 standards">
             <template x-for="se in coreSkills" :key="se.id">
               <div class="teks-row" :class="{ active: se.mode===mode, mastered: gMastered(se.id) }">
                 <span class="teks-row-head">
@@ -497,7 +497,7 @@
   window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
   const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
          { mountColumnResizers }] = await Promise.all([
-    import('./js/main.js?v=u1-3'),
+    import('./js/main.js?v=u1-4'),
     import('../../shared/js/render.js'),
     import('../../shared/js/gauge.js'),
     import('../../shared/js/casefile.js'),
