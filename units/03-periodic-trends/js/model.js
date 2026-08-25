@@ -272,12 +272,12 @@ export const SCENARIOS = [
 export const BOARD_CELLS = SCENARIOS.map(s => ({ sym: s.cell, family: s.family, from: s.id }));
 
 export const CAP_SUBSTITUTES = [
-  { sym: 'Cu', note: 'Activity note: conductive, but the offered finish does not meet the supplied corrosion specification.' },
-  { sym: 'Zn', note: 'Activity note: its simulation score is close to nickel, so it may meet the stated compatibility rule.' },
-  { sym: 'Ag', note: 'Activity note: conductive but not the specified finish for this contact.' },
-  { sym: 'Fe', note: 'Activity note: the unplated steel option does not meet the supplied corrosion specification.' },
-  { sym: 'Al', note: 'Activity note: its surface oxide makes this offered part unsuitable for the stated contact specification.' },
-  { sym: 'Pb', note: 'Activity note: this substitute is not approved by the supplied consumer-device specification.' }
+  { sym: 'Cu', note: 'Activity data: Period 4, Group 11.' },
+  { sym: 'Zn', note: 'Activity data: Period 4, Group 12.' },
+  { sym: 'Ag', note: 'Activity data: Period 5, Group 11.' },
+  { sym: 'Fe', note: 'Activity data: Period 4, Group 8.' },
+  { sym: 'Al', note: 'Activity data: Period 3, Group 13.' },
+  { sym: 'Pb', note: 'Activity data: Period 6, Group 14.' }
 ];
 
 export const SCENARIO_TASKS = {
