@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Unit 2 · Atomic Structure &amp; Theory</title>
-<meta name="description" content="Build atoms and isotopes, average atomic mass from isotopic composition, read emission spectra, and write electron configurations and Lewis dot structures. TEKS C.6, C.5.">
+<meta name="description" content="Compare atomic models, build atoms and ions, calculate average atomic mass, analyze emission spectra, and study electron configurations and valence patterns. TEKS C.6, C.5(B).">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -20,481 +20,198 @@
 <body>
 <div x-data="sim()" x-cloak>
 
-  <main class="codex-shell cockpit-shell" aria-label="Unit 2 Glow Room cockpit">
+  <main class="codex-shell cockpit-shell" aria-label="Unit 2 atomic structure workspace">
     <header class="cockpit-command">
       <div class="command-brand"><span class="command-kicker">Unit 2 · TEKS C.6 / C.5(B)</span><a class="command-home" href="../index.html" title="All units">Atomic Structure &amp; Theory</a><span x-text="activeStationName"></span></div>
-      <nav class="station-nav" role="tablist" aria-label="Glow Room benches">
+      <nav class="station-nav" role="tablist" aria-label="Unit 2 activities">
         <button class="tab" role="tab" :aria-selected="mode==='models'" @click="setMode('models')" aria-label="Atomic models"><span class="tab-full" aria-hidden="true">Atomic models</span><span class="tab-short" aria-hidden="true">Models</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='build'" @click="setMode('build')" aria-label="Build an atom"><span class="tab-full" aria-hidden="true">Build an atom</span><span class="tab-short" aria-hidden="true">Build</span></button>
-        <button class="tab" role="tab" :aria-selected="mode==='mass'" @click="setMode('mass')" aria-label="Average mass"><span class="tab-full" aria-hidden="true">Average mass</span><span class="tab-short" aria-hidden="true">Mass</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='mass'" @click="setMode('mass')" aria-label="Average atomic mass"><span class="tab-full" aria-hidden="true">Average mass</span><span class="tab-short" aria-hidden="true">Mass</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='spectra'" @click="setMode('spectra')" aria-label="Emission spectra"><span class="tab-full" aria-hidden="true">Emission spectra</span><span class="tab-short" aria-hidden="true">Spectra</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='config'" @click="setMode('config')" aria-label="Electron configuration"><span class="tab-full" aria-hidden="true">Electron configuration</span><span class="tab-short" aria-hidden="true">Electrons</span></button>
-        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="Cylinder call"><span class="tab-full" aria-hidden="true">Cylinder call</span><span class="tab-short" aria-hidden="true">Cylinder</span></button>
+        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="Final evidence"><span class="tab-full" aria-hidden="true">Final evidence</span><span class="tab-short" aria-hidden="true">Final</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')" aria-label="Case file"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
       </nav>
       <div class="command-actions">
-      <label class="switch" title="Reveal advanced content for Honors sections">
-        <input type="checkbox" x-model="honors">
-        <span class="track"></span>
-        <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
-      </label>
+        <label class="switch" title="Show advanced Honors content">
+          <input type="checkbox" x-model="honors">
+          <span class="track"></span>
+          <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
+        </label>
         <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
       </div>
       <div class="command-metrics"><span class="metric-chip">XP <strong x-text="g_xp"></strong></span><span class="metric-chip">Streak <strong x-text="g_streak"></strong></span><span class="teks-badge" :class="{ complete: teksMasteredCount===coreSkills.length }">TEKS <strong><span x-text="teksMasteredCount"></span>/6</strong></span></div>
     </header>
+
     <div class="workbench-grid" x-show="mode!=='casefile'">
-      <section class="mission-screen panel" :class="'tone-'+activeTone" aria-label="Active Glow Room job">
+      <section class="mission-screen panel" :class="'tone-'+activeTone" aria-label="Active chemistry task">
         <div class="mission-frame"><div class="mission-screen-art" x-html="scArt(activeArtId)"></div><div class="screen-scanline" aria-hidden="true"></div></div>
         <div class="screen-status"><span class="screen-system" x-text="activeStationName"></span><span class="screen-state" x-show="activeStateLabel" x-text="activeStateLabel"></span></div>
         <div class="screen-copy"><p class="screen-goal" x-prose="activeBrief ? activeBrief.goal : ''"></p><p class="screen-outcome" x-prose="activeOutcomeText"></p></div>
-        <!-- A native <details>, so the standing facts can be folded away and the art and the
-             prompt take the rows back. Open by default, because facts a learner has to hunt
-             for are not standing facts. The summary keeps .command-kicker: it is the same
-             chrome eyebrow it was before it became a disclosure, and that class is what
-             exempts it from the 14px legibility floor in tests/unit5a-layout.test.mjs.
-             shared/cockpit.css styles it; the height media queries there still drop the whole
-             card on a short viewport, which is the shell deciding there is no room rather
-             than the learner deciding they want it elsewhere. -->
         <details class="screen-reference" aria-label="Reference facts" open><summary class="command-kicker">Reference</summary><div class="screen-reference-body"><template x-for="r in activeReference" :key="r.k"><p class="ref-item"><span class="ref-k" x-text="r.k"></span><span class="ref-v" x-prose="r.v"></span></p></template></div></details>
-        <section class="cockpit-instincts"><span class="command-kicker">Saturday shift</span><p>Day <strong x-text="shiftDay"></strong> · <strong x-text="clockLabel"></strong></p></section>
+        <section class="cockpit-instincts"><span class="command-kicker">Practice round</span><p>Round <strong x-text="shiftDay"></strong></p></section>
       </section>
+
       <section class="task-stack chem-console">
         <div class="panel" :class="{ 'is-active': mode==='models' }" x-show="mode==='models'">
-          <p class="muted">A model is an evidence-backed explanation, not a scientist-name timeline. Read the work order, identify the evidence it hinges on, then make the call.</p>
+          <p class="muted">Scientific models change when new evidence requires a better explanation. Read the evidence and select the historical model it supports.</p>
           <div class="models mt-3"><template x-for="m in ATOMIC_MODELS" :key="m.who"><button class="model-card choice" :data-state="modelState(m.who)" @click="modelPick=m.who"><span class="model-head"><strong x-text="m.who"></strong><span class="mono" x-text="m.year"></span></span><span class="model-name" x-text="m.model"></span><span class="model-idea" x-text="m.idea"></span></button></template></div>
-          <div class="row call-row mt-3"><button class="btn btn-accent" @click="commitModel()" :disabled="!modelPick">Certify the evidence</button><button class="btn" @click="nextModels()">Next work order</button><span class="call-hint" x-show="!modelPick" x-text="'Say which model the evidence supports first.'"></span></div>
+          <div class="row call-row mt-3"><button class="btn btn-accent" @click="commitModel()" :disabled="!modelPick">Submit model</button><button class="btn" @click="nextModels()">Next evidence</button><span class="call-hint" x-show="!modelPick">Select a model first.</span></div>
         </div>
 
-        <!-- ---------- C.6(A/B) BUILD AN ATOM ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='build' }" x-show="mode==='build'">
-          <p class="muted" style="margin-bottom: var(--s-4);">Protons set the element. Change neutrons to make isotopes; change electrons to make ions. The shells follow the Bohr energy-level model.</p>
-          <section class="work-order"><span class="command-kicker">Current build order</span><p x-prose="buildSc.goal"></p><div class="row call-row"><button class="btn btn-accent" @click="commitBuild()">Certify this atom</button><button class="btn" @click="nextBuild()">Next build</button></div></section>
+          <p class="muted" style="margin-bottom: var(--s-4);">Protons determine the element. Neutrons determine the isotope; electrons determine net charge. The diagram uses a Bohr-style shell model.</p>
+          <section class="work-order"><span class="command-kicker">Current atom</span><p x-prose="buildSc.goal"></p><div class="row call-row"><button class="btn btn-accent" @click="commitBuild()">Check atom</button><button class="btn" @click="nextBuild()">Next atom</button></div></section>
 
           <div class="a-row">
             <div>
-              <svg viewBox="0 0 300 300" class="bohr" role="img" aria-label="Bohr model of the atom">
+              <svg viewBox="0 0 300 300" class="bohr" role="img" aria-label="Bohr-style shell diagram of the atom">
                 <g x-html="bohrSvg()"></g>
                 <circle cx="150" cy="150" r="26" fill="#fde7e1" stroke="#bf4a30" stroke-width="1.5"></circle>
                 <text x="150" y="146" text-anchor="middle" font-size="12" font-family="JetBrains Mono" font-weight="700" fill="#bf4a30" x-text="elZ + ' p+'"></text>
                 <text x="150" y="162" text-anchor="middle" font-size="12" font-family="JetBrains Mono" fill="#687a82" x-text="nNeutrons + ' n'"></text>
               </svg>
-              <div class="iso-symbol">
-                <span class="iso-stack"><sup x-text="massNumber"></sup><sub x-text="elZ"></sub></span>
-                <span class="iso-sym" x-text="el.sym"></span>
-                <sup class="iso-charge" x-show="charge!==0" x-text="ionNotation"></sup>
-              </div>
+              <div class="iso-symbol"><span class="iso-stack"><sup x-text="massNumber"></sup><sub x-text="elZ"></sub></span><span class="iso-sym" x-text="el.sym"></span><sup class="iso-charge" x-show="charge!==0" x-text="ionNotation"></sup></div>
             </div>
 
             <div class="a-side">
               <div class="field" style="max-width: 280px; margin-bottom: var(--s-4);">
                 <label for="el">Element</label>
-                <select id="el" x-model.number="elZ">
-                  <template x-for="e in buildElements" :key="e.z">
-                    <option :value="e.z" x-text="e.z + '  ' + e.sym + '  ' + e.name"></option>
-                  </template>
-                </select>
+                <select id="el" x-model.number="elZ"><template x-for="e in buildElements" :key="e.z"><option :value="e.z" x-text="e.z + '  ' + e.sym + '  ' + e.name"></option></template></select>
               </div>
 
               <div class="stepper-grid">
-                <div class="stepper">
-                  <span class="stp-label">Protons</span>
-                  <div class="stp-fixed mono" x-text="elZ"></div>
-                  <span class="stp-sub">defines the element</span>
-                </div>
-                <div class="stepper">
-                  <span class="stp-label">Neutrons</span>
-                  <div class="stp-ctl">
-                    <button class="btn btn-sm" @click="stepNeutrons(-1)">−</button>
-                    <span class="mono stp-val" x-text="nNeutrons"></span>
-                    <button class="btn btn-sm" @click="stepNeutrons(1)">+</button>
-                  </div>
-                  <span class="stp-sub">sets the isotope</span>
-                </div>
-                <div class="stepper">
-                  <span class="stp-label">Electrons</span>
-                  <div class="stp-ctl">
-                    <button class="btn btn-sm" @click="stepElectrons(-1)">−</button>
-                    <span class="mono stp-val" x-text="nElectrons"></span>
-                    <button class="btn btn-sm" @click="stepElectrons(1)">+</button>
-                  </div>
-                  <span class="stp-sub">sets the charge</span>
-                </div>
+                <div class="stepper"><span class="stp-label">Protons</span><div class="stp-fixed mono" x-text="elZ"></div><span class="stp-sub">determines the element</span></div>
+                <div class="stepper"><span class="stp-label">Neutrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepNeutrons(-1)" aria-label="Decrease neutrons">−</button><span class="mono stp-val" x-text="nNeutrons"></span><button class="btn btn-sm" @click="stepNeutrons(1)" aria-label="Increase neutrons">+</button></div><span class="stp-sub">determines the isotope</span></div>
+                <div class="stepper"><span class="stp-label">Electrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepElectrons(-1)" aria-label="Decrease electrons">−</button><span class="mono stp-val" x-text="nElectrons"></span><button class="btn btn-sm" @click="stepElectrons(1)" aria-label="Increase electrons">+</button></div><span class="stp-sub">determines net charge</span></div>
               </div>
-
             </div>
           </div>
 
-          <!-- Z has no dial on purpose: it does not respond to the steppers, it
-               IS the element. A and charge do move, so each carries one. -->
           <div class="stat-row has-dials" style="margin-top: var(--s-4);">
             <div class="stat"><div class="k">atomic number Z</div><div class="v" x-text="elZ"></div></div>
-            <div class="stat">
-              <div class="k">mass number A</div>
-              <div class="v" x-text="massNumber"></div>
-              <!-- Axis = the isotope range the neutron stepper can actually reach
-                   for this element, so it re-scales when the element changes and
-                   the series key drops the stale trend with it. -->
-              <div x-gauge="{ kind:'span', value: massNumber, min: elZ, max: elZ*2+12, digits: 3,
-                              series: elZ, label:'mass number A', tone:'indigo' }"></div>
-            </div>
-            <div class="stat">
-              <div class="k">charge</div>
-              <div class="v" x-text="charge>0 ? '+'+charge : charge"></div>
-              <!-- A signed axis with neutral at the centre: adding electrons walks
-                   the needle left into anion territory, removing them walks it
-                   right into cation territory. The band names what side it landed
-                   on, which is the reading the bare number leaves implicit. -->
-              <div x-gauge="{ kind:'span', value: charge, min: -4, max: 4, ref: 0, digits: 2,
-                              refLabel:'neutral', label:'net charge',
-                              tone:'plum',
-                              bands: [{ upTo: 0, label:'anion · more electrons than protons' },
-                                      { upTo: 1, label:'neutral · electrons balance protons' },
-                                      { upTo: Infinity, label:'cation · fewer electrons than protons' }] }"></div>
-            </div>
+            <div class="stat"><div class="k">mass number A</div><div class="v" x-text="massNumber"></div><div x-gauge="{ kind:'span', value: massNumber, min: elZ, max: elZ*2+12, digits: 3, series: elZ, label:'mass number A', tone:'indigo' }"></div></div>
+            <div class="stat"><div class="k">net charge</div><div class="v" x-text="charge>0 ? '+'+charge : charge"></div><div x-gauge="{ kind:'span', value: charge, min: -4, max: 4, ref: 0, digits: 2, refLabel:'neutral', label:'net charge', tone:'plum', bands: [{ upTo: -0.5, label:'anion · more electrons than protons' }, { upTo: 0.5, label:'neutral · electrons equal protons' }, { upTo: Infinity, label:'cation · fewer electrons than protons' }] }"></div></div>
           </div>
 
           <div class="note note-info" style="margin-top: var(--s-4);" x-show="modeVerdict.build">
-            This is <strong x-text="isotopeName"></strong>, a <strong x-text="chargeStr"></strong>.
-            Protons and neutrons (mass &#8776; <span class="mono" x-text="massNumber"></span> u) sit in the nucleus; the
-            <span class="mono" x-text="nElectrons"></span> electrons fill shells around it. The periodic-table average mass of
-            <span x-text="el.name"></span> is <span class="mono" x-text="fmt(massRef,5)"></span> u.
+            This is <strong x-text="isotopeName"></strong>, a <strong x-text="chargeStr"></strong>. Its nucleus contains <span class="mono" x-text="elZ"></span> protons and <span class="mono" x-text="nNeutrons"></span> neutrons, so A = <span class="mono" x-text="massNumber"></span>. The periodic-table average atomic mass of <span x-text="el.name"></span> is <span class="mono" x-text="fmt(massRef,5)"></span> u.
           </div>
 
-          <!-- The history is the evidence behind the model, kept reachable rather than
-               reduced away: a reference tool is something you consult, and the build is what
-               you do. Same door as Unit 3's evidence file. -->
-          <details class="lesson-reference mt-3">
-            <summary>How the model of the atom developed &middot; C.6(A)</summary>
-            <div class="lesson-reference-body">
-              <div class="models">
-                <template x-for="m in ATOMIC_MODELS" :key="m.who">
-                  <div class="model-card" :class="{ 'is-bohr': m.who==='Bohr' }">
-                    <div class="model-head"><strong x-text="m.who"></strong><span class="mono" x-text="m.year"></span></div>
-                    <div class="model-name" x-text="m.model"></div>
-                    <div class="model-idea" x-text="m.idea"></div>
-                  </div>
-                </template>
-              </div>
-            </div>
-          </details>
+          <details class="lesson-reference mt-3"><summary>How atomic models developed · C.6(A)</summary><div class="lesson-reference-body"><div class="models"><template x-for="m in ATOMIC_MODELS" :key="m.who"><div class="model-card" :class="{ 'is-bohr': m.who==='Bohr' }"><div class="model-head"><strong x-text="m.who"></strong><span class="mono" x-text="m.year"></span></div><div class="model-name" x-text="m.model"></div><div class="model-idea" x-text="m.idea"></div></div></template></div></div></details>
         </div>
 
-        <!-- ---------- C.6(D) AVERAGE ATOMIC MASS ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='mass' }" x-show="mode==='mass'">
-          <p class="muted" style="margin-bottom: var(--s-4);">Average atomic mass is a weighted average: each isotope's mass counts in proportion to how common it is. Adjust the abundances and watch the average move.</p>
-          <section class="work-order"><span class="command-kicker">Current assay</span><p x-prose="massSc.goal"></p><p class="mono muted" x-text="massSc.assay"></p><div class="field field-260"><label>Certified average mass (u)</label><input type="number" step="any" x-model="massInput" placeholder="Calculate from the fixed assay"></div><div class="row call-row"><button class="btn btn-accent" @click="commitMass()" :disabled="massInput === ''">Certify the weighted mass</button><button class="btn" @click="nextMass()">Next assay</button><span class="call-hint" x-show="massInput === ''" x-text="'Work the weighted average out from the assay, then type it.'"></span></div></section>
+          <p class="muted" style="margin-bottom: var(--s-4);">Average atomic mass is a weighted average. Each isotope contributes according to its fractional abundance.</p>
+          <section class="work-order"><span class="command-kicker">Reference isotope data</span><p x-prose="massSc.goal"></p><p class="mono muted" x-text="massSc.assay"></p><div class="field field-260"><label>Calculated average atomic mass (u)</label><input type="number" step="any" x-model="massInput" placeholder="Enter the weighted average"></div><div class="row call-row"><button class="btn btn-accent" @click="commitMass()" :disabled="massInput === ''">Check calculation</button><button class="btn" @click="nextMass()">Next element</button><span class="call-hint" x-show="massInput === ''">Calculate the weighted average first.</span></div></section>
 
           <div class="a-row" style="margin-bottom: var(--s-3); align-items: flex-end;">
-            <div class="field" style="max-width: 280px;">
-              <label for="iso">Element</label>
-              <select id="iso" x-model="isoKey">
-                <template x-for="e in ISOTOPE_ELEMENTS" :key="e.sym">
-                  <option :value="e.sym" x-text="e.name"></option>
-                </template>
-              </select>
-            </div>
-            <div>
-              <button class="btn btn-accent" @click="resetNatural()">Reset to natural abundance</button>
-            </div>
+            <div class="field" style="max-width: 280px;"><label for="iso">Element</label><select id="iso" x-model="isoKey"><template x-for="e in ISOTOPE_ELEMENTS" :key="e.sym"><option :value="e.sym" x-text="e.name"></option></template></select></div>
+            <div><button class="btn btn-accent" @click="resetNatural()">Reset reference abundances</button></div>
           </div>
 
-          <svg viewBox="0 0 600 90" class="massline" role="img" aria-label="isotope mass number line">
-            <g x-html="massLineSvg()"></g>
-          </svg>
+          <svg viewBox="0 0 600 90" class="massline" role="img" aria-label="Isotope mass scale and weighted average"><g x-html="massLineSvg()"></g></svg>
 
-          <div class="iso-controls">
-            <template x-for="m in isoRows" :key="m.a">
-              <div class="iso-ctl">
-                <div class="iso-name mono"><span x-text="iso.sym + '-' + m.a"></span><span class="muted" x-text="m.mass.toFixed(4) + ' u'"></span></div>
-                <input type="range" min="0" max="100" step="0.01" x-model.number="isoAbund[m.a]">
-                <div class="iso-amt mono"><input type="number" min="0" max="100" step="0.01" x-model.number="isoAbund[m.a]"><span>%</span></div>
-              </div>
-            </template>
+          <div class="iso-controls"><template x-for="m in isoRows" :key="m.a"><div class="iso-ctl"><div class="iso-name mono"><span x-text="iso.sym + '-' + m.a"></span><span class="muted" x-text="m.mass.toFixed(4) + ' u'"></span></div><input type="range" min="0" max="100" step="0.01" x-model.number="isoAbund[m.a]" :aria-label="iso.sym + '-' + m.a + ' abundance percent'"><div class="iso-amt mono"><input type="number" min="0" max="100" step="0.01" x-model.number="isoAbund[m.a]" :aria-label="iso.sym + '-' + m.a + ' abundance percent value'"><span>%</span></div></div></template></div>
+
+          <p class="small" :class="Math.abs(abundSum-100) < 0.05 ? 'muted' : 'abund-off'" style="margin-top: var(--s-2);">Abundances total <strong class="mono" x-text="fmt(abundSum,4) + ' %'"></strong>. <span x-show="Math.abs(abundSum-100) >= 0.05">Reference abundances normally total 100%. For this activity, entries are normalized before the average is calculated.</span></p>
+
+          <details class="lesson-reference" style="margin-top: var(--s-4);"><summary>Weighted sum, isotope by isotope</summary><div class="lesson-reference-body"><div class="calc-steps"><template x-for="m in isoRows" :key="'c'+m.a"><div class="step-line mono"><span x-text="m.mass.toFixed(4) + ' u'"></span> × <span x-text="fmt(m.frac,4)"></span> <span class="muted" x-text="'(' + fmt(m.ab,4) + '%)'"></span> = <span class="calc" x-text="fmt(m.contrib,5) + ' u'"></span></div></template><div class="step-line mono total">sum = <span class="calc" x-text="fmt(avgMass,5) + ' u'"></span></div></div></div></details>
+
+          <div class="stat-row has-dials" style="margin-top: var(--s-4);" x-show="massInput !== '' || modeVerdict.mass">
+            <div class="stat"><div class="k">entered average</div><div class="v" x-text="massInput === '' ? '—' : fmt(massDialValue,5)"></div><div x-gauge="{ kind:'span', value: massDialValue, min: isoMassAxis.lo, max: isoMassAxis.hi, ref: iso.accepted, refLabel:'table reference', digits: 5, series: isoKey, label:'weighted average atomic mass', tone:'teal' }"></div></div>
+            <div class="stat"><div class="k">periodic-table reference</div><div class="v" x-text="iso.accepted"></div></div>
           </div>
-
-          <p class="small" :class="Math.abs(abundSum-100) < 0.05 ? 'muted' : 'abund-off'" style="margin-top: var(--s-2);">
-            Abundances total <strong class="mono" x-text="fmt(abundSum,4) + ' %'"></strong>.
-            <span x-show="Math.abs(abundSum-100) >= 0.05">They should sum to 100 %. Each isotope's fraction below is normalized so the average is still valid.</span>
-          </p>
-
-          <details class="lesson-reference" style="margin-top: var(--s-4);">
-            <summary>The weighted sum, isotope by isotope</summary>
-            <div class="lesson-reference-body">
-              <div class="calc-steps">
-                <template x-for="m in isoRows" :key="'c'+m.a">
-                  <div class="step-line mono">
-                    <span x-text="m.mass.toFixed(4) + ' u'"></span> ×
-                    <span x-text="fmt(m.frac,4)"></span>
-                    <span class="muted" x-text="'(' + fmt(m.ab,4) + '%)'"></span>
-                    = <span class="calc" x-text="fmt(m.contrib,5) + ' u'"></span>
-                  </div>
-                </template>
-                <div class="step-line mono total">sum = <span class="calc" x-text="fmt(avgMass,5) + ' u'"></span></div>
-              </div>
-            </div>
-          </details>
-
-          <!-- The instrument appears when it has something to read. Empty, this row is 212px
-               of "entered average —" at the top of the fold; the panel is 460. Same shape the
-               spectra bench two panels down already uses for its own stat row. -->
-          <div class="stat-row has-dials" style="margin-top: var(--s-4);"
-               x-show="massInput !== '' || modeVerdict.mass">
-            <div class="stat">
-              <div class="k">entered average</div>
-              <div class="v" x-text="massInput === '' ? '—' : fmt(massDialValue,5)"></div>
-              <!-- Same axis as the mass line above, with the periodic-table value as
-                   the reference tick. Dragging an abundance slider now answers the
-                   question the two bare numbers left open: did that move take the
-                   average toward the accepted mass or away from it. -->
-              <div x-gauge="{ kind:'span', value: massDialValue, min: isoMassAxis.lo, max: isoMassAxis.hi,
-                              ref: iso.accepted, refLabel:'table value', digits: 5,
-                              series: isoKey, label:'weighted average atomic mass', tone:'teal' }"></div>
-            </div>
-            <div class="stat"><div class="k">periodic-table value</div><div class="v" x-text="iso.accepted"></div></div>
-          </div>
-          <div class="note note-info" style="margin-top: var(--s-3);" x-show="modeVerdict.mass && avgError < 0.05">
-            With natural abundances the weighted average matches the periodic-table mass of <span x-text="iso.name"></span>. The mass is closest to the most abundant isotope.
-          </div>
+          <div class="note note-info" style="margin-top: var(--s-3);" x-show="modeVerdict.mass && avgError < 0.05">With the reference isotopic composition, the weighted average is close to the periodic-table value for <span x-text="iso.name"></span>. The average lies closer to the more abundant isotope.</div>
         </div>
 
-        <!-- ---------- C.6(C) EMISSION SPECTRA ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='spectra' }" x-show="mode==='spectra'">
-          <p class="muted" style="margin-bottom: var(--s-4);">Heated atoms emit light only at specific wavelengths, because electrons release fixed packets of energy when they fall between levels. Those discrete lines are an element's fingerprint.</p>
+          <p class="muted" style="margin-bottom: var(--s-4);">Excited atoms emit characteristic wavelengths when electrons move to lower allowed energy states. A pattern of emission lines can help identify an element.</p>
           <section class="work-order"><span class="command-kicker">Current spectrum</span><p x-prose="spectraSc.goal"></p></section>
 
-          <div class="field" style="max-width: 280px; margin-bottom: var(--s-4);">
-            <label for="spec">Element</label>
-            <select id="spec" x-model="specKey">
-              <template x-for="s in SPECTRA" :key="s.key">
-                <option :value="s.key" x-text="s.name"></option>
-              </template>
-            </select>
-          </div>
+          <div class="field" style="max-width: 280px; margin-bottom: var(--s-4);"><label for="spec">Element</label><select id="spec" x-model="specKey"><template x-for="s in SPECTRA" :key="s.key"><option :value="s.key" x-text="s.name"></option></template></select></div>
 
           <div class="spectrum-cap"><span>continuous spectrum</span><span>emission lines</span></div>
-          <svg viewBox="0 0 640 115" class="spectrum" role="img" aria-label="emission spectrum">
-            <g x-html="spectrumSvg()"></g>
-          </svg>
+          <svg viewBox="0 0 640 115" class="spectrum" role="img" aria-label="Continuous spectrum and selected element emission lines"><g x-html="spectrumSvg()"></g></svg>
           <div class="muted" style="font-size: var(--fs-xs); text-align:center; margin-top: 2px;">wavelength (nm)</div>
-
           <p class="note note-info" style="margin-top: var(--s-3);" x-prose="spec.note"></p>
 
           <div class="a-row" style="margin-top: var(--s-4);">
-            <div>
-              <label style="display:block; margin-bottom: var(--s-2);">Select a line to inspect</label>
-              <div class="line-chips">
-                <template x-for="(ln,i) in lines" :key="i">
-                  <button class="line-chip" :class="{ on: selLine===i }" @click="selLine=i" :style="'--lc:'+ln.color">
-                    <span class="lc-sw" :style="'background:'+ln.color"></span>
-                    <span class="mono" x-text="ln.wl.toFixed(1) + ' nm'"></span>
-                  </button>
-                </template>
-              </div>
-            </div>
+            <div><label style="display:block; margin-bottom: var(--s-2);">Select a line to inspect</label><div class="line-chips"><template x-for="(ln,i) in lines" :key="i"><button class="line-chip" :class="{ on: selLine===i }" @click="selLine=i" :style="'--lc:'+ln.color" :aria-label="'Select emission line at ' + ln.wl.toFixed(1) + ' nanometers'"><span class="lc-sw" :style="'background:'+ln.color"></span><span class="mono" x-text="ln.wl.toFixed(1) + ' nm'"></span></button></template></div></div>
             <div class="field field-260"><label>Selected-line energy (J)</label><input type="number" step="any" x-model="specEnergyInput" placeholder="Use E = hc/λ"></div>
           </div>
-          <div class="row call-row mt-3"><button class="btn btn-accent" @click="commitSpectra()" :disabled="specEnergyInput==='' || !selectedLine">Certify the photon energy</button><button class="btn" @click="nextSpectra()">Next spectrum</button><span class="call-hint" x-show="(specEnergyInput === '' || !selectedLine)" x-text="!selectedLine ? 'Select a line to inspect first.' : 'Now type the energy of that line.'"></span></div>
+          <div class="row call-row mt-3"><button class="btn btn-accent" @click="commitSpectra()" :disabled="specEnergyInput==='' || !selectedLine">Check photon energy</button><button class="btn" @click="nextSpectra()">Next spectrum</button><span class="call-hint" x-show="(specEnergyInput === '' || !selectedLine)" x-text="!selectedLine ? 'Select a line first.' : 'Enter the photon energy.'"></span></div>
 
           <div x-show="selectedLine" class="stat-row has-dials" style="margin-top: var(--s-4);">
-            <div class="stat">
-              <div class="k">wavelength λ</div>
-              <div class="v" x-text="selectedLine ? selectedLine.wl.toFixed(1)+' nm' : ''"></div>
-              <div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.wl : null,
-                              min: specAxis.wlLo, max: specAxis.wlHi, unit:' nm', digits: 4,
-                              series: specKey, label:'wavelength across the visible strip', tone:'green' }"></div>
-            </div>
-            <div class="stat">
-              <div class="k">frequency ν</div>
-              <div class="v" style="font-size:var(--fs-lg)" x-text="selectedLine ? fmt(selectedLine.freq,3)+' Hz' : ''"></div>
-              <div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.freq : null,
-                              min: specAxis.vLo, max: specAxis.vHi, unit:' Hz', digits: 3,
-                              series: specKey, label:'frequency across the same strip', tone:'indigo' }"></div>
-            </div>
-            <div class="stat">
-              <div class="k">photon energy E</div>
-              <div class="v" style="font-size:var(--fs-lg)" x-prose="selectedLine ? fmt(selectedLine.energy,3)+' J' : ''"></div>
-              <!-- All three gauges span the SAME 380-700 nm strip. Energy and frequency
-                   read it one way and wavelength the other, so picking a line swings
-                   the wavelength needle against the other two while those two stay
-                   locked together. That is E = h nu = hc/lambda made visible instead
-                   of asserted: two proportional quantities and one inverse. -->
-              <div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.energy : null,
-                              min: specAxis.eLo, max: specAxis.eHi, unit:' J', digits: 3,
-                              series: specKey, label:'photon energy across the same strip', tone:'plum' }"></div>
-            </div>
+            <div class="stat"><div class="k">wavelength λ</div><div class="v" x-text="selectedLine ? selectedLine.wl.toFixed(1)+' nm' : ''"></div><div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.wl : null, min: specAxis.wlLo, max: specAxis.wlHi, unit:' nm', digits: 4, series: specKey, label:'wavelength across the visible strip', tone:'green' }"></div></div>
+            <div class="stat"><div class="k">frequency ν</div><div class="v" style="font-size:var(--fs-lg)" x-text="selectedLine ? fmt(selectedLine.freq,3)+' Hz' : ''"></div><div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.freq : null, min: specAxis.vLo, max: specAxis.vHi, unit:' Hz', digits: 3, series: specKey, label:'frequency across the same strip', tone:'indigo' }"></div></div>
+            <div class="stat"><div class="k">photon energy E</div><div class="v" style="font-size:var(--fs-lg)" x-prose="selectedLine ? fmt(selectedLine.energy,3)+' J' : ''"></div><div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.energy : null, min: specAxis.eLo, max: specAxis.eHi, unit:' J', digits: 3, series: specKey, label:'photon energy across the same strip', tone:'plum' }"></div></div>
           </div>
-          <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-show="selectedLine">All three gauges span the same 380-700 nm strip. Frequency and energy always point the same way as each other and the opposite way to wavelength, because a shorter wave is a faster, more energetic photon: E = h&nu; = hc/&lambda;.</p>
+          <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-show="selectedLine">Frequency and photon energy increase as wavelength decreases. In vacuum, all wavelengths travel at the same speed, c: E = h&nu; = hc/&lambda;.</p>
 
           <div class="honors-block" x-show="honors">
             <span class="honors-tag">Honors · E = hν quantization</span>
-            <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0;">Energy, frequency, and wavelength are locked together. Light comes in quantized packets (photons), so each spectral line corresponds to one exact energy:</p>
+            <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0;">Energy, frequency, and wavelength are linked. Each spectral line corresponds to a characteristic photon energy associated with an allowed transition.</p>
             <div class="eqn" style="margin: var(--s-2) 0;"><span x-tex.display="'E = h\\nu = \\dfrac{hc}{\\lambda}'"></span></div>
-            <div x-show="selectedLine" style="margin-top: var(--s-2);">
-              <div class="step-line mono">λ = <span x-text="selectedLine ? selectedLine.wl.toFixed(1)+' nm' : ''"></span> = <span x-prose="selectedLine ? fmt(selectedLine.wl*1e-9,3)+' m' : ''"></span></div>
-              <div class="step-line mono">E = hc/λ = (6.626 × 10<sup>-34</sup> J·s)(2.998 × 10<sup>8</sup> m/s) ÷ <span x-prose="selectedLine ? fmt(selectedLine.wl*1e-9,3)+' m' : ''"></span>
-                = <span class="calc" x-prose="selectedLine ? fmt(selectedLine.energy,3)+' J' : ''"></span>
-                <span class="muted" x-text="selectedLine ? '(' + fmt(selectedLine.energy/1.602e-19,3) + ' eV)' : ''"></span></div>
-            </div>
-            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-show="!selectedLine">Pick a line above to see its energy calculated.</p>
+            <div x-show="selectedLine" style="margin-top: var(--s-2);"><div class="step-line mono">λ = <span x-text="selectedLine ? selectedLine.wl.toFixed(1)+' nm' : ''"></span> = <span x-prose="selectedLine ? fmt(selectedLine.wl*1e-9,3)+' m' : ''"></span></div><div class="step-line mono">E = hc/λ = (6.626 × 10<sup>-34</sup> J·s)(2.998 × 10<sup>8</sup> m/s) ÷ <span x-prose="selectedLine ? fmt(selectedLine.wl*1e-9,3)+' m' : ''"></span> = <span class="calc" x-prose="selectedLine ? fmt(selectedLine.energy,3)+' J' : ''"></span> <span class="muted" x-text="selectedLine ? '(' + fmt(selectedLine.energy/1.602e-19,3) + ' eV)' : ''"></span></div></div>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-show="!selectedLine">Select a line above to see its photon energy calculated.</p>
             <div class="field field-260 mt-3"><label>Photon energy (J)</label><input type="number" step="any" x-model="h1EnergyInput" placeholder="E = hc/λ"></div>
-            <div class="row call-row mt-3"><button class="btn btn-honors" @click="commitH1()" :disabled="h1EnergyInput==='' || !selectedLine">Certify photon calculation</button><span class="call-hint" x-show="(h1EnergyInput === '' || !selectedLine)" x-text="!selectedLine ? 'Select a line above first.' : 'Now type the photon energy.'"></span></div>
+            <div class="row call-row mt-3"><button class="btn btn-honors" @click="commitH1()" :disabled="h1EnergyInput==='' || !selectedLine">Check photon calculation</button><span class="call-hint" x-show="(h1EnergyInput === '' || !selectedLine)" x-text="!selectedLine ? 'Select a line first.' : 'Enter the photon energy.'"></span></div>
 
-            <template x-if="specKey==='H'">
-              <div style="margin-top: var(--s-4);">
-                <div class="ref-title">Hydrogen energy levels (Balmer drops to n=2)</div>
-                <svg viewBox="0 0 320 230" class="elevels" role="img" aria-label="hydrogen energy levels">
-                  <defs>
-                    <marker id="arrh" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto">
-                      <path d="M0,0 L4,6 L8,0 Z" fill="#687a82"></path>
-                    </marker>
-                  </defs>
-                  <g x-html="energyLevelSvg()"></g>
-                </svg>
-                <p class="muted" style="font-size: var(--fs-xs);">Levels crowd together near the top: energy is quantized, so only certain drops are allowed and only certain colors appear.</p>
-              </div>
-            </template>
-            <template x-if="specKey!=='H'">
-              <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-3);">The same idea applies to <span x-text="spec.name"></span>: its electrons have a more complex set of energy levels, producing this element's unique pattern of lines.</p>
-            </template>
+            <template x-if="specKey==='H'"><div style="margin-top: var(--s-4);"><div class="ref-title">Hydrogen energy levels (Balmer transitions to n = 2)</div><svg viewBox="0 0 320 230" class="elevels" role="img" aria-label="Hydrogen energy levels and Balmer transitions"><defs><marker id="arrh" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto"><path d="M0,0 L4,6 L8,0 Z" fill="#687a82"></path></marker></defs><g x-html="energyLevelSvg()"></g></svg><p class="muted" style="font-size: var(--fs-xs);">Energy levels get closer together as n increases. Only allowed transitions occur, producing characteristic photon energies and wavelengths.</p></div></template>
+            <template x-if="specKey!=='H'"><p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-3);"><span x-text="spec.name"></span> has a more complex set of allowed energy states, producing its characteristic pattern of emission lines.</p></template>
           </div>
         </div>
 
-        <!-- ---------- C.6(E)/C.5(B) ELECTRONS ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='config' }" x-show="mode==='config'">
-          <p class="muted" style="margin-bottom: var(--s-4);">Electrons fill subshells from lowest energy up (the Aufbau order). The outermost electrons (valence) decide how an element behaves.</p>
-          <section class="work-order"><span class="command-kicker">Configuration order</span><p x-prose="configSc.goal"></p><div class="row call-row"><button class="btn btn-accent" @click="commitConfig()">Certify configuration</button><button class="btn" @click="nextConfig()">Next configuration</button></div></section>
+          <p class="muted" style="margin-bottom: var(--s-4);">Electron configurations describe how electrons occupy subshells. The simple Aufbau order is a useful starting model, but some atoms have observed ground-state exceptions.</p>
+          <section class="work-order"><span class="command-kicker">Current element</span><p x-prose="configSc.goal"></p><div class="row call-row"><button class="btn btn-accent" @click="commitConfig()">Check configuration</button><button class="btn" @click="nextConfig()">Next element</button></div></section>
 
-          <!-- The tool and its reading, side by side. Stacked, the 280px select owned a
-               716px row and the configuration sat under it with 400px of empty panel beside
-               both -- 87px of a 460px bench spent on nothing. -->
           <div class="a-row" style="margin-bottom: var(--s-4);">
-            <div class="field" style="max-width: 280px;">
-              <label for="cfg">Element</label>
-              <select id="cfg" x-model.number="cfgZ">
-                <template x-for="e in cfgElements" :key="e.z">
-                  <option :value="e.z" x-text="e.z + '  ' + e.sym + '  ' + e.name"></option>
-                </template>
-              </select>
-            </div>
-
-            <div>
-              <div class="ref-title">Electron configuration</div>
-              <div class="config-pills">
-                <template x-for="(sub,i) in cfgConfig" :key="i">
-                  <span class="cfg-pill"><span x-text="sub.n"></span><span x-text="sub.l"></span><sup x-text="sub.e"></sup></span>
-                </template>
-              </div>
-              <div class="cfg-strings">
-                <div><span class="muted">full:</span> <span class="mono" x-config="cfgString"></span></div>
-                <div><span class="muted">noble-gas core:</span> <span class="mono" x-config="cfgShorthand"></span></div>
-              </div>
-            </div>
+            <div class="field" style="max-width: 280px;"><label for="cfg">Element</label><select id="cfg" x-model.number="cfgZ"><template x-for="e in cfgElements" :key="e.z"><option :value="e.z" x-text="e.z + '  ' + e.sym + '  ' + e.name"></option></template></select></div>
+            <div><div class="ref-title">Ground-state electron configuration</div><div class="config-pills"><template x-for="(sub,i) in cfgConfig" :key="i"><span class="cfg-pill"><span x-text="sub.n"></span><span x-text="sub.l"></span><sup x-text="sub.e"></sup></span></template></div><div class="cfg-strings"><div><span class="muted">full:</span> <span class="mono" x-config="cfgString"></span></div><div><span class="muted">noble-gas core:</span> <span class="mono" x-config="cfgShorthand"></span></div></div><p class="muted" style="font-size:var(--fs-xs); margin-top:var(--s-2);" x-show="cfgIsException">Observed exception to the simple Aufbau prediction.</p></div>
           </div>
 
           <div class="a-row" style="margin-top: var(--s-4); align-items: flex-start;">
-            <div class="lewis-wrap">
-              <div class="ref-title">Lewis dot structure</div>
-              <template x-if="isMainGroup">
-                <svg viewBox="0 0 140 110" class="lewis" role="img" aria-label="Lewis dot structure">
-                  <g x-html="lewisSvg()"></g>
-                  <text x="70" y="60" text-anchor="middle" font-size="30" font-family="Bitter" font-weight="700" fill="#1c2a31" x-text="cfgEl.sym"></text>
-                </svg>
-              </template>
-              <template x-if="!isMainGroup">
-                <p class="muted" style="font-size: var(--fs-sm); max-width: 200px;">Lewis dot diagrams are drawn for representative (main-group) elements. <span x-text="cfgEl.name"></span> is a transition metal with a partly filled d subshell.</p>
-              </template>
-            </div>
-
-            <div class="a-side">
-              <div class="stat-row">
-                <div class="stat"><div class="k">valence electrons</div><div class="v" x-text="isMainGroup ? valence : '—'"></div></div>
-                <div class="stat"><div class="k">predicted ion charge</div><div class="v" style="font-size:var(--fs-lg)" x-text="family.charge"></div></div>
-              </div>
-              <!-- 113px of standing family reference in the narrow half of a split, on the one
-                   bench in this unit that carries two decisions. Behind the door: it is what you
-                   consult, and the two calls are what you do. -->
-              <details class="lesson-reference" style="margin-top: var(--s-3);">
-                <summary>What this family does</summary>
-                <div class="lesson-reference-body">
-                  <p class="small" style="margin: 0;">
-                    <strong x-text="family.name"></strong>. <span x-prose="family.behavior"></span>
-                    <span x-show="isMainGroup"> Elements in the same family share the same valence count, so they react alike (C.5B).</span>
-                  </p>
-                </div>
-              </details>
-            </div>
+            <div class="lewis-wrap"><div class="ref-title">Lewis dot structure</div><template x-if="isMainGroup"><svg viewBox="0 0 140 110" class="lewis" role="img" aria-label="Lewis dot structure"><g x-html="lewisSvg()"></g><text x="70" y="60" text-anchor="middle" font-size="30" font-family="Bitter" font-weight="700" fill="#1c2a31" x-text="cfgEl.sym"></text></svg></template><template x-if="!isMainGroup"><p class="muted" style="font-size: var(--fs-sm); max-width: 220px;">Lewis dot diagrams are most useful for representative (main-group) elements. This activity does not assign <span x-text="cfgEl.name"></span> a simple Lewis-dot count.</p></template></div>
+            <div class="a-side"><div class="stat-row"><div class="stat"><div class="k">valence electrons</div><div class="v" x-text="isMainGroup ? valence : '—'"></div></div><div class="stat"><div class="k">typical simple-ion charge</div><div class="v" style="font-size:var(--fs-lg)" x-text="family.charge"></div></div></div><details class="lesson-reference" style="margin-top: var(--s-3);"><summary>What this group suggests</summary><div class="lesson-reference-body"><p class="small" style="margin: 0;"><strong x-text="family.name"></strong>. <span x-prose="family.behavior"></span><span x-show="isMainGroup"> Elements in the same group often have similar chemical properties because they have similar valence-electron patterns.</span></p></div></details></div>
           </div>
 
-          <!-- valence quiz (main-group only) -->
           <div x-show="isMainGroup" style="margin-top: var(--s-4);">
             <label style="display:block; margin-bottom: var(--s-2);">How many valence electrons does <span x-text="cfgEl.name"></span> have?</label>
-            <div class="choice-grid valence-pad">
-              <template x-for="n in [1,2,3,4,5,6,7,8]" :key="n">
-                <button class="choice choice-tight" :data-state="vState(n)" @click="pickV(n)" x-text="n"></button>
-              </template>
-            </div>
-            <div class="row call-row" style="margin-top: var(--s-3);">
-              <button class="btn btn-accent" @click="checkV()" :disabled="vQuiz===null || vChecked">Check</button>
-              <span class="call-hint" x-show="vQuiz === null && !vChecked" x-text="'Pick a count first.'"></span>
-            </div>
-            <div x-show="vChecked" class="note" :class="vCorrect ? 'note-ok' : 'note-bad'" style="margin-top: var(--s-3);">
-              <span x-show="vCorrect">Correct.</span><span x-show="!vCorrect">Not quite.</span>
-              <span x-text="cfgEl.name"></span> has <strong x-text="valence"></strong> valence electrons (the s and p electrons in shell <span x-text="cfgConfig[cfgConfig.length-1].n"></span>).
-            </div>
+            <div class="choice-grid valence-pad"><template x-for="n in [1,2,3,4,5,6,7,8]" :key="n"><button class="choice choice-tight" :data-state="vState(n)" @click="pickV(n)" x-text="n"></button></template></div>
+            <div class="row call-row" style="margin-top: var(--s-3);"><button class="btn btn-accent" @click="checkV()" :disabled="vQuiz===null || vChecked">Check</button><span class="call-hint" x-show="vQuiz === null && !vChecked">Select a number first.</span></div>
+            <div x-show="vChecked" class="note" :class="vCorrect ? 'note-ok' : 'note-bad'" style="margin-top: var(--s-3);"><span x-show="vCorrect">Correct.</span><span x-show="!vCorrect">Not quite.</span> <span x-text="cfgEl.name"></span> has <strong x-text="valence"></strong> valence electrons in its highest occupied s and p subshells.</div>
           </div>
 
           <div class="honors-block" x-show="honors">
-            <span class="honors-tag">Honors · orbital diagram &amp; exceptions</span>
-            <div class="ref-title" style="margin-top: var(--s-2);">Orbital filling (Hund's rule: one electron per orbital before pairing)</div>
-            <div class="orbitals">
-              <template x-for="sub in orbitalDiagram" :key="sub.label">
-                <div class="orb-sub">
-                  <div class="orb-boxes">
-                    <template x-for="(st,i) in sub.boxes" :key="i">
-                      <span class="orb-box" x-text="arrows(st)"></span>
-                    </template>
-                  </div>
-                  <div class="orb-label mono" x-text="sub.label"></div>
-                </div>
-              </template>
-            </div>
+            <span class="honors-tag">Honors · orbital diagrams &amp; exceptions</span>
+            <div class="ref-title" style="margin-top: var(--s-2);">Orbital filling (Hund's rule: occupy equal-energy orbitals singly before pairing)</div>
+            <div class="orbitals"><template x-for="sub in orbitalDiagram" :key="sub.label"><div class="orb-sub"><div class="orb-boxes"><template x-for="(st,i) in sub.boxes" :key="i"><span class="orb-box" x-text="arrows(st)"></span></template></div><div class="orb-label mono" x-text="sub.label"></div></div></template></div>
 
-            <div class="note note-warn" style="margin-top: var(--s-4);" x-show="cfgIsException">
-              Heads up: <strong x-text="cfgEl.name"></strong> is an exception. The Aufbau rule predicts
-              <span class="mono" x-config="shorthandOf(cfgZ)"></span>, but the real arrangement differs.
-            </div>
+            <div class="note note-warn" style="margin-top: var(--s-4);" x-show="cfgIsException"><strong x-text="cfgEl.name"></strong> is a listed exception. The simple Aufbau order predicts <span class="mono" x-config="shorthandOf(cfgZ)"></span>, while the observed ground-state configuration is <span class="mono" x-config="cfgShorthand"></span>.</div>
 
             <div class="ref-title" style="margin-top: var(--s-4);">Configuration exceptions</div>
-            <table class="data" style="margin-top: var(--s-2);">
-              <thead><tr><th>Element</th><th>Aufbau predicts</th><th>Actual</th></tr></thead>
-              <tbody>
-                <template x-for="x in CONFIG_EXCEPTIONS" :key="x.sym">
-                  <tr>
-                    <td class="mono" x-text="x.sym + ' (' + x.z + ')'"></td>
-                    <td class="mono" style="font-size: var(--fs-xs)" x-config="shorthandOf(x.z)"></td>
-                    <td class="mono" style="font-size: var(--fs-xs)" x-config="x.actual"></td>
-                  </tr>
-                </template>
-              </tbody>
-            </table>
-            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">A half-filled or completely filled d subshell is unusually stable, so one s electron shifts into d.</p>
-            <div class="row call-row mt-3"><button class="choice" :data-state="h2State('exception')" @click="h2Pick='exception'">Listed exception</button><button class="choice" :data-state="h2State('standard')" @click="h2Pick='standard'">Standard filling</button><button class="btn btn-honors" @click="commitH2()" :disabled="!h2Pick">Certify orbital call</button><span class="call-hint" x-show="!h2Pick" x-text="'Say which of the two this filling is.'"></span></div>
+            <table class="data" style="margin-top: var(--s-2);"><thead><tr><th>Element</th><th>Simple prediction</th><th>Observed ground state</th></tr></thead><tbody><template x-for="x in CONFIG_EXCEPTIONS" :key="x.sym"><tr><td class="mono" x-text="x.sym + ' (' + x.z + ')'"></td><td class="mono" style="font-size: var(--fs-xs)" x-config="shorthandOf(x.z)"></td><td class="mono" style="font-size: var(--fs-xs)" x-config="x.actual"></td></tr></template></tbody></table>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">Cr, Cu, and some other atoms are exceptions to simple Aufbau filling. Their subshell energies are close, so use the observed configurations rather than a universal half-filled/filled rule.</p>
+            <div class="row call-row mt-3"><button class="choice" :data-state="h2State('exception')" @click="h2Pick='exception'">Listed exception</button><button class="choice" :data-state="h2State('standard')" @click="h2Pick='standard'">Simple prediction holds</button><button class="btn btn-honors" @click="commitH2()" :disabled="!h2Pick">Check classification</button><span class="call-hint" x-show="!h2Pick">Choose one classification first.</span></div>
           </div>
 
-          <section class="work-order mt-4"><span class="command-kicker">Family behavior order</span><p x-prose="familySc.goal"></p><p class="muted" style="font-size: var(--fs-sm);">On the order: <strong x-text="famEl.name"></strong> (<span class="mono">Z <span x-text="famZ"></span></span>, <span class="mono" x-text="famEl.sym"></span>). The element is given; the call is the family behaviour.</p><div class="choice-grid choice-grid-wide"><template x-for="m in ['Noble gas (Group 18)','Boron group (Group 13)','Halogen (Group 17)','Transition metal']" :key="m"><button class="choice" :data-state="familyState(m)" @click="familyPick=m" x-text="m"></button></template></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="commitFamily()" :disabled="!familyPick">Certify family behavior</button><button class="btn" @click="nextFamily()">Next family order</button><span class="call-hint" x-show="!familyPick" x-text="'Name the family behaviour first.'"></span></div></section>
+          <section class="work-order mt-4"><span class="command-kicker">Group pattern</span><p x-prose="familySc.goal"></p><p class="muted" style="font-size: var(--fs-sm);">Element: <strong x-text="famEl.name"></strong> (<span class="mono">Z = <span x-text="famZ"></span></span>, <span class="mono" x-text="famEl.sym"></span>). Main-group valence electrons: <strong x-text="famValence"></strong>.</p><div class="choice-grid choice-grid-wide"><template x-for="m in ['Noble gas (Group 18)','Boron group (Group 13)','Halogen (Group 17)','Transition metal']" :key="m"><button class="choice" :data-state="familyState(m)" @click="familyPick=m" x-text="m"></button></template></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="commitFamily()" :disabled="!familyPick">Check group</button><button class="btn" @click="nextFamily()">Next element</button><span class="call-hint" x-show="!familyPick">Choose the group first.</span></div></section>
         </div>
 
         <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
-          <div class="note note-info" x-show="!capUnlocked">The cylinder call unlocks after all six core skills are certified.</div>
-          <template x-if="capUnlocked"><div><p class="screen-goal" x-prose="SCENARIOS.find(s=>s.id==='cap-glowroom').goal"></p><p class="muted">A fill is justified only when this shift has both spectral and family evidence. The rack is the learner’s accumulated evidence, not a decorative score.</p><div class="choice-grid choice-grid-wide"><button class="choice" :data-state="capState('fill')" @click="capPick='fill'">Fill the tube</button><button class="choice" :data-state="capState('return')" @click="capPick='return'">Send it back for evidence</button><button class="choice" :data-state="capState('hazard')" @click="capPick='hazard'">Call it in as hazardous</button></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="commitCap()" :disabled="!capPick">Make the cylinder call</button><span class="call-hint" x-show="!capPick" x-text="'Choose what happens to the cylinder.'"></span></div></div></template>
+          <div class="note note-info" x-show="!capUnlocked">Final evidence unlocks after all six core skills are mastered.</div>
+          <template x-if="capUnlocked"><div><p class="screen-goal" x-prose="SCENARIOS.find(s=>s.id==='cap-glowroom').goal"></p><p class="muted">Use the spectrum and the cylinder's identification status. Practice progress does not determine the answer.</p><div class="choice-grid choice-grid-wide"><button class="choice" :data-state="capState('fill')" @click="capPick='fill'">Use the cylinder</button><button class="choice" :data-state="capState('return')" @click="capPick='return'">Return for verified ID</button><button class="choice" :data-state="capState('hazard')" @click="capPick='hazard'">Mark as hazardous</button></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="commitCap()" :disabled="!capPick">Submit decision</button><span class="call-hint" x-show="!capPick">Choose an action first.</span></div></div></template>
         </div>
       </section>
-      <aside class="life-support-board panel" aria-label="Glow Room rack">
-        <div class="life-header"><div><span class="command-kicker">Glow Room rack</span><strong x-text="rackState"></strong></div><span class="sol-chip">Day <strong x-text="shiftDay"></strong></span></div>
-        <div class="crew-status cockpit-crew"><div class="crew-bar"><div class="life-meter-label"><span>Jobs</span><span class="mono" x-text="rack.length+'/6'"></span></div><div class="meter"><div class="meter-fill" :style="`width:${rack.length/6*100}%; background:var(--accent)`"></div></div></div></div>
-        <div class="system-grid"><template x-for="r in rackReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span x-text="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template><svg class="rack-figure" viewBox="0 0 232 64" role="img" aria-label="Glow Room tube rack"><g x-html="rackSvg()"></g></svg></div>
-        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest consequence</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'The bench is ready for the first work order.'"></p></section>
-        <section class="mission-log"><span class="command-kicker">Shift log</span><p class="worldstate-empty" x-show="!worldLog.length">No job is logged yet.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success'?'good':'bad'"><span x-text="w.text"></span></li></template></ul></section>
+
+      <aside class="life-support-board panel" aria-label="Practice progress">
+        <div class="life-header"><div><span class="command-kicker">Practice rack</span><strong x-text="rackState"></strong></div><span class="sol-chip">Round <strong x-text="shiftDay"></strong></span></div>
+        <div class="crew-status cockpit-crew"><div class="crew-bar"><div class="life-meter-label"><span>Completed</span><span class="mono" x-text="rack.length+'/6'"></span></div><div class="meter"><div class="meter-fill" :style="`width:${rack.length/6*100}%; background:var(--accent)`"></div></div></div></div>
+        <div class="system-grid"><template x-for="r in rackReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span x-text="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template><svg class="rack-figure" viewBox="0 0 232 64" role="img" aria-label="Practice task markers"><g x-html="rackSvg()"></g></svg></div>
+        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest feedback</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'Choose an activity to begin.'"></p></section>
+        <section class="mission-log"><span class="command-kicker">Practice log</span><p class="worldstate-empty" x-show="!worldLog.length">No task is logged yet.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success'?'good':'bad'"><span x-text="w.text"></span></li></template></ul></section>
       </aside>
     </div>
 
@@ -516,8 +233,6 @@
   mountCaseFile(Alpine, CASE);
   window.Alpine = Alpine;
   Alpine.start();
-  // After start(), so the handles are appended to a workbench Alpine has already claimed.
-  // The two gutter buttons carry no bindings, so Alpine never walks them.
   mountColumnResizers();
 </script>
 </body>
