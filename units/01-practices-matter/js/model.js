@@ -1,6 +1,6 @@
 // model.js — Unit 1 domain data (Practices, Measurement & Matter, SEP C.1-C.4).
 // Pure data. Measurement math lives in shared/js/chem.js; this file holds the pools,
-// standards/practice map, and scenario layer used by the Unit 1 simulation.
+// standards map, and scenario layer used by the Unit 1 simulation.
 
 // ---- C.1: SI reference shown beside the graduated cylinder ----
 export const SI_UNITS = [
@@ -57,28 +57,20 @@ export const AP_BOARDS = [
     dots: [[0.45, 0.5], [0.7, 0.2], [0.3, 0.75], [0.8, 0.55], [0.55, 0.3]] }
 ];
 
-// Student-facing practice map. The stable `id`s remain the mastery keys; the displayed
-// codes are neutral practice labels rather than claims about official TEKS numbering.
+// Keep the compact C.1-C.4 display codes used by the original Unit 1 header/popover.
 export const SE = [
-  { id: 'a',  code: 'Practice 1', mode: 'measure',  honors: false, text: 'Plan and safely conduct investigations using appropriate tools, models, and SI units.' },
-  { id: 'b',  code: 'Practice 2', mode: 'sigfig',   honors: false, text: 'Analyze and interpret data, including significant figures, precision, and error.' },
-  { id: 'c',  code: 'Practice 3', mode: 'density',  honors: false, text: 'Develop and communicate evidence-based explanations and conclusions.' },
-  { id: 'd',  code: 'Practice 4', mode: 'evaluate', honors: false, text: 'Evaluate the accuracy, precision, and reliability of scientific measurements.' },
+  { id: 'a',  code: 'C.1', mode: 'measure',  honors: false, text: 'Plan and safely conduct investigations using appropriate tools, models, and SI units.' },
+  { id: 'b',  code: 'C.2', mode: 'sigfig',   honors: false, text: 'Analyze and interpret data, including significant figures, precision, and error.' },
+  { id: 'c',  code: 'C.3', mode: 'density',  honors: false, text: 'Develop and communicate evidence-based explanations and conclusions.' },
+  { id: 'd',  code: 'C.4', mode: 'evaluate', honors: false, text: 'Evaluate the accuracy, precision, and reliability of scientific measurements.' },
   { id: 'h1', code: 'Honors', mode: 'density',  honors: true, text: 'Honors: estimate the maximum relative uncertainty in density and decide whether the measurement supports an identification.' },
   { id: 'h2', code: 'Honors', mode: 'evaluate', honors: true, text: 'Honors: calculate standard deviation and use it with a reference value to evaluate the test kit.' }
 ];
 
-// ---------------------------------------------------------------- bands
-// The measuring band is absolute because the instrument's reporting increment is absolute.
 export const MEASURE_BANDS = { mode: 'absolute', ideal: 0.05, acceptable: 0.10 };
-// Density is graded with a relative band so a passing result remains useful for identifying
-// nearby candidate densities in this activity.
 export const DENSITY_BANDS = { mode: 'relative', ideal: 0.01, acceptable: 0.02 };
-// Honors typed calculations use a slightly wider grading tolerance because they are
-// hand-computed statistics/uncertainty estimates.
 export const HONORS_BANDS = { mode: 'relative', ideal: 0.02, acceptable: 0.05 };
 
-// ---------------------------------------------------------------- the simulation world
 export const TANK = {
   nominalGal: 20,
   realGal: 18.4,
@@ -88,13 +80,12 @@ export const TANK = {
   fish: 6
 };
 
-// ---------------------------------------------------------------- scenarios
 export const SCENARIOS = [
   // ---------- C.1 read the tool ----------
   { id: 'a-dechlor', stage: 'measure', skill: 'a', type: 'dose',
     system: 'Dechlorinator measurement', icon: '\u{1F489}',
-    goal: 'A water change is ready. Dechlorinator has been poured into a 50 mL graduated cylinder. Read the bottom of the meniscus at eye level and record the volume to the nearest 0.1 mL.',
-    why: 'A measured volume should be reported to the precision allowed by the instrument. An incorrect reading can lead to an incorrect amount of solution being used.',
+    goal: 'Read the bottom of the meniscus at eye level and record the dechlorinator volume to the nearest 0.1 mL.',
+    why: 'Report only the precision supported by the graduated cylinder; an incorrect reading can change the amount used.',
     constraints: { unit: 'mL', tool: 'cylinder' }, bands: MEASURE_BANDS,
     actionLabel: 'Record the volume',
     effect: { good: { water: -3 }, low: { water: 0.55 }, high: { water: -3, shock: 28 }, fail: { water: 0.2 } },
@@ -106,8 +97,8 @@ export const SCENARIOS = [
 
   { id: 'a-plantfood', stage: 'measure', skill: 'a', type: 'dose',
     system: 'Plant nutrient measurement', icon: '\u{1F331}',
-    goal: 'Plant nutrient solution has been transferred from the bottle cap to a 50 mL graduated cylinder. Read the bottom of the meniscus and record the actual volume to the nearest 0.1 mL.',
-    why: 'A graduated cylinder provides a more reliable volume measurement than estimating with a bottle cap. Record only the precision supported by the instrument.',
+    goal: 'Read the bottom of the meniscus and record the plant nutrient solution to the nearest 0.1 mL.',
+    why: 'A graduated cylinder provides a more reliable volume than estimating with a bottle cap.',
     constraints: { unit: 'mL', tool: 'cylinder' }, bands: MEASURE_BANDS,
     actionLabel: 'Record the volume',
     effect: { good: { water: -0.15 }, low: { shock: 7 }, high: { shock: 24 }, fail: { shock: 4 } },
@@ -119,8 +110,8 @@ export const SCENARIOS = [
 
   { id: 'a-meds', stage: 'measure', skill: 'a', type: 'dose',
     system: 'Aquarium treatment measurement', icon: '\u{1F41F}',
-    goal: 'An aquarium treatment solution has been placed in a 50 mL graduated cylinder. Read the bottom of the meniscus and record the volume to the nearest 0.1 mL.',
-    why: 'Accurate measurement matters whenever a specified amount of solution is needed. Report only the digits supported by the measuring device.',
+    goal: 'Read the bottom of the meniscus and record the aquarium treatment solution to the nearest 0.1 mL.',
+    why: 'Accurate measurement is important whenever a specified amount of solution is required.',
     constraints: { unit: 'mL', tool: 'cylinder' }, bands: MEASURE_BANDS,
     actionLabel: 'Record the volume',
     effect: { good: { shock: -18 }, low: { shock: 11 }, high: { shock: 30 }, fail: { shock: 6 } },
@@ -133,24 +124,24 @@ export const SCENARIOS = [
   // ---------- C.2 significant figures ----------
   { id: 'b-log', stage: 'sigfig', skill: 'b', type: 'identity',
     system: 'Measurement record', icon: '\u{1F4D2}',
-    goal: 'Record the value using the correct number of significant figures. The digits you report should match the precision of the measurement.',
-    why: 'Significant figures communicate the precision of measured data. Extra digits imply precision that was not measured; removing valid digits loses information.',
+    goal: 'Record the value using the correct number of significant figures.',
+    why: 'Significant figures communicate measurement precision; extra digits imply unsupported precision.',
     success: 'The value is reported with the appropriate number of significant figures.',
     fail: 'The reported value does not match the precision supported by the measurement.',
     effect: { good: { log: 22 }, bad: { log: -16 } } },
 
   { id: 'b-volume', stage: 'sigfig', skill: 'b', type: 'identity',
     system: 'Measured tank volume', icon: '\u{1F4CF}',
-    goal: 'The tank is labeled 20 gallons, but measurements show a different actual water volume. Report the measured volume using the appropriate significant figures.',
-    why: 'A measured or calculated value should not imply greater precision than the measurements used to obtain it.',
+    goal: 'Report the measured tank volume using the appropriate significant figures.',
+    why: 'A result should not imply greater precision than the measurements used to obtain it.',
     success: 'The measured volume is reported with appropriate significant figures.',
     fail: 'Recheck which measured value limits the precision of the result.',
     effect: { good: { log: 22 }, bad: { log: -18 } } },
 
   { id: 'b-pergallon', stage: 'sigfig', skill: 'b', type: 'identity',
     system: 'Amount per gallon × tank volume', icon: '\u{1F9EE}',
-    goal: 'Multiply the amount needed per gallon by the tank volume. Report the product using the correct number of significant figures.',
-    why: 'For multiplication and division, the answer should have the same number of significant figures as the measured value with the fewest significant figures.',
+    goal: 'Multiply the amount per gallon by the tank volume and report the product with the correct significant figures.',
+    why: 'For multiplication or division, match the fewest significant figures in the measured inputs.',
     success: 'The product is reported with the correct number of significant figures.',
     fail: 'The calculator may display extra digits. Round the result to the significant figures supported by the inputs.',
     effect: { good: { log: 22 }, bad: { log: -16 } } },
@@ -158,8 +149,8 @@ export const SCENARIOS = [
   // ---------- C.3 density by displacement ----------
   { id: 'c-ornament', stage: 'density', skill: 'c', type: 'decision',
     system: 'Unlabeled metal ornament', icon: '\u{1F3EF}',
-    goal: 'Measure the sample\'s mass. Determine its volume by water displacement, calculate its density, and use the reference data to identify the metal. Then use the aquarium compatibility information provided in this activity to decide whether the sample should remain in the tank.',
-    why: 'Density is a characteristic physical property that can help identify a substance. A scientific conclusion should be supported by measurements and reference data.',
+    goal: 'Measure mass and displacement volume, calculate density, and identify the metal. Then use the activity reference to decide whether it should remain in the tank.',
+    why: 'Density is a characteristic physical property that can support identification when compared with reference values.',
     consequences: {
       keep: 'Based on the activity reference, the identified metal is allowed to remain in the simulated tank.',
       pull: 'Based on the activity reference, the sample is removed from the simulated tank.'
@@ -168,8 +159,8 @@ export const SCENARIOS = [
 
   { id: 'c-pendant', stage: 'density', skill: 'c', type: 'decision',
     system: 'Pendant from the gravel', icon: '\u{1F48D}',
-    goal: 'A small pendant found in the gravel was sold as silver. Measure its mass and volume, calculate its density, and compare the result with the reference densities to identify the metal.',
-    why: 'Appearance alone cannot identify a material. Density provides quantitative evidence that can be compared with known values. Use this activity\'s compatibility reference for the tank decision.',
+    goal: 'Measure the pendant’s mass and volume, calculate density, and compare with reference densities to identify the metal.',
+    why: 'Appearance alone cannot identify a material; density provides quantitative evidence.',
     constraints: { substances: ['Silver', 'Zinc', 'Copper', 'Aluminum', 'Lead'] },
     consequences: {
       keep: 'Based on the activity reference, the identified metal is allowed to remain in the simulated tank.',
@@ -179,8 +170,8 @@ export const SCENARIOS = [
 
   { id: 'c-anchor', stage: 'density', skill: 'c', type: 'decision',
     system: 'Unlabeled plant weight', icon: '\u{1FAA8}',
-    goal: 'An unlabeled plant weight is on the balance. Determine its mass and volume, calculate its density, and identify the metal using the reference data.',
-    why: 'The identification should be based on quantitative evidence rather than an assumption about what the object is made of. Use the compatibility reference provided in this activity for the final decision.',
+    goal: 'Measure the plant weight’s mass and volume, calculate density, and identify the metal from the reference data.',
+    why: 'Base the identification on quantitative evidence rather than an assumption about the material.',
     constraints: { substances: ['Lead', 'Zinc', 'Iron'] },
     consequences: {
       keep: 'Based on the activity reference, the identified metal is allowed to remain in the simulated tank.',
@@ -191,8 +182,8 @@ export const SCENARIOS = [
   // ---------- C.4 accuracy and precision ----------
   { id: 'd-dropkit', stage: 'evaluate', skill: 'd', type: 'decision',
     system: 'Liquid test kit', icon: '\u{1F9EA}',
-    goal: 'Five measurements were made with the liquid test kit on the same water sample. Compare the repeated measurements with the reference value and classify the data as accurate and precise, precise but not accurate, accurate but not precise, or neither.',
-    why: 'Precision describes how closely repeated measurements agree with one another. Accuracy describes how close a result is to an accepted or reference value.',
+    goal: 'Measure the same water sample five times with the liquid test kit. Compare the results with the reference value and classify the data as accurate, precise, both, or neither.',
+    why: 'Accuracy compares results with a reference value; precision describes how closely repeated measurements agree.',
     consequences: {
       both: 'The measurements are close to the reference value and tightly grouped.',
       precise: 'The measurements are tightly grouped but shifted from the reference value, indicating a systematic bias in this dataset.',
@@ -203,8 +194,8 @@ export const SCENARIOS = [
 
   { id: 'd-penmeter', stage: 'evaluate', skill: 'd', type: 'decision',
     system: 'Digital pen meter', icon: '\u{1F4DF}',
-    goal: 'The digital meter displays two decimal places. Examine five measurements of the same sample and compare them with the reference value to determine whether the readings are accurate and precise.',
-    why: 'A digital display can show more digits than the instrument can reliably reproduce. Resolution is the smallest displayed increment; precision describes the agreement among repeated measurements.',
+    goal: 'Compare five readings of the same sample with the reference value and classify their accuracy and precision.',
+    why: 'Display resolution is not the same as precision; use repeated readings and the reference value to evaluate the meter.',
     constraints: { quantity: 'pH' },
     consequences: {
       both: 'The readings are close to the reference value and repeat closely.',
@@ -216,8 +207,8 @@ export const SCENARIOS = [
 
   { id: 'd-strips', stage: 'evaluate', skill: 'd', type: 'decision',
     system: 'Heat-exposed test strips', icon: '\u{1F321}\u{FE0F}',
-    goal: 'These test strips were stored at high temperature. Examine five measurements of the same sample and determine the accuracy and precision of the results.',
-    why: 'Storage conditions can affect chemical test reagents. Repeated measurements and comparison with a reference value help reveal scatter, systematic shift, or both.',
+    goal: 'Compare five readings from the heat-exposed test strips with the reference value and classify their accuracy and precision.',
+    why: 'Storage conditions can affect reagents; repeated measurements and a reference value reveal scatter or systematic shift.',
     consequences: {
       both: 'The measurements are close to the reference value and tightly grouped.',
       precise: 'The measurements are tightly grouped but shifted from the reference value.',
@@ -251,8 +242,8 @@ export const SCENARIOS = [
   // ---------- Capstone ----------
   { id: 'cap-waterchange', stage: 'capstone', skill: 'cap', type: 'decision',
     system: 'Water-change challenge', icon: '\u{1FAA3}',
-    goal: 'Use the current tank data to calculate the expected free-chlorine concentration after the water change. Then use all available evidence to choose the appropriate next step.',
-    why: 'This challenge combines measurement, significant figures, density-based identification, and evaluation of accuracy and precision.',
+    goal: 'Calculate the expected free-chlorine concentration after the water change, then use all available data to choose the next step.',
+    why: 'This challenge combines the measurement and data-analysis skills from Unit 1.',
     options: [
       { key: 'tonight', label: 'Put the fish back in tonight' },
       { key: 'hold',    label: 'Hold them in the bucket another day' },
