@@ -122,6 +122,22 @@
 .chem-console .stepper { min-width: 0; }
 .chem-console .stp-ctl .btn { padding-inline: var(--s-2); }
 
+/* The latest-feedback card owns the full explanation. The Practice Log is only a compact
+   history, so its three recent rows stay single-line and cannot paint over each other when
+   the right rail gets short. No scrollbar is introduced; overflow is an ellipsis instead. */
+.life-support-board .mission-log .worldstate-list {
+  align-content: start;
+  grid-auto-rows: 29px;
+}
+.life-support-board .mission-log .worldstate-entry {
+  min-height: 29px;
+  padding: 4px 7px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Unit 2 has seven tabs. Short labels are used at the 15-inch laptop widths so the
    command bar keeps the same one-row height as the other units. */
 @media (max-width: 1600px) {
