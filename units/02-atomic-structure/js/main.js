@@ -28,14 +28,91 @@ function wavelengthToRGB(nm) {
 }
 
 const ORBITALS = { s: 1, p: 3, d: 5, f: 7 };
-const pick = a => a[(Math.random() * a.length) | 0];
 const skills = [
   { id:'a', code:'C.6(A)', label:'Atomic models', target:3 }, { id:'b', code:'C.6(B)', label:'Atomic structure', target:3 },
   { id:'d', code:'C.6(D)', label:'Average mass', target:3 }, { id:'c', code:'C.6(C)', label:'Spectra', target:3 },
-  { id:'e', code:'C.6(E)', label:'Configuration', target:3 }, { id:'f', code:'C.5(B)', label:'Family behavior', target:3 },
+  { id:'e', code:'C.6(E)', label:'Configuration', target:3 }, { id:'f', code:'C.5(B)', label:'Group patterns', target:3 },
   { id:'h1', code:'Honors', label:'Photon energy', target:2, honors:true }, { id:'h2', code:'Honors', label:'Orbital exceptions', target:2, honors:true },
-  { id:'cap', code:'Capstone', label:'Cylinder call', target:1, honors:true }
+  { id:'cap', code:'Capstone', label:'Final evidence', target:1, honors:true }
 ];
+
+// The scene geometry is intentionally unchanged because the 400×150 banners are tightly
+// fitted to the mission column. Normalize only the student-visible SVG copy here so the
+// language/science refactor does not disturb the artwork layout.
+const ART_COPY = [
+  ['THE JUNK-SHELF CRT · THE BEAM BENDS', 'CRT EVIDENCE · THE BEAM BENDS'],
+  ['a charged part', 'a charged particle'],
+  ['THE COLOR TUBE · FOUR SHARP COLORS, NOT A RAINBOW', 'LINE SPECTRUM · DISCRETE LINES, NOT A CONTINUUM'],
+  ['a continuous rainbow', 'continuous spectrum'],
+  ['what the tube gives', 'observed line spectrum'],
+  ['discrete lines mean discrete drops', 'discrete lines → discrete energies'],
+  ['one photon per drop', 'photon from a transition'],
+  ['THE SUPPLIER ASSAY · THE SAME RATIO, TWICE', 'COMPOSITION DATA · THE SAME RATIO, TWICE'],
+  ['two suppliers, two sacks', 'two samples, same compound'],
+  ['supplier A', 'sample A'], ['supplier B', 'sample B'],
+  ['identical, every batch', 'same composition'],
+  ['THE ARGON-40 CYLINDER · NEUTRAL, AND SET RIGHT', 'ARGON-40 · NEUTRAL ATOM'],
+  ['off the shelf', 'sample record'], ['THE SERVICE TAG', 'PARTICLE COUNTS'],
+  ['THE HOT SIGN TUBE · ONE ELECTRON GONE', 'Ne+ ION · ONE ELECTRON REMOVED'],
+  ['the tube ran hot', 'neon discharge'], ['it ionised in service', 'Ne atom loses 1 e−'],
+  ['BUILD Ne+', 'MODEL Ne+'],
+  ['THE CHLORINE-37 TRACER · MASS NUMBER, NOT AVERAGE', 'CHLORINE-37 · MASS NUMBER, NOT AVERAGE MASS'],
+  ['the leak-check bottle', 'isotope sample'], ['NOT THE TABLE VALUE', 'MASS NUMBER ≠ TABLE AVERAGE'],
+  ['one bottle, one isotope', 'one atom, one isotope'],
+  ['THE TUBING INVOICE · THE BEAM BALANCES AT 10.81', 'BORON ISOTOPES · WEIGHTED AVERAGE 10.81 u'],
+  ['borosilicate, boxed', 'reference isotope data'], ['INVOICE', 'B SAMPLE'],
+  ['THE ASSAY, WEIGHED', 'WEIGHTED CONTRIBUTIONS'], ['THE ASSAY', 'REFERENCE DATA'],
+  ['THE COPPER SPOOL · WHAT THE SCRAP BUYER PAYS FOR', 'COPPER ISOTOPES · WEIGHTED AVERAGE 63.55 u'],
+  ['the spool, on the scale', 'copper sample'],
+  ['THE POOL TABLETS · A THREE-QUARTER MIX', 'CHLORINE ISOTOPES · 75.77% Cl-35'],
+  ['the shop sells these too', 'chlorine sample'], ['POOL Cl', 'Cl DATA'],
+  ['THE DEAD STREETLIGHT · SODIUM, AT 589 nm', 'SODIUM EMISSION · STRONG LINES NEAR 589 nm'],
+  ['out since Thursday', 'selected Na spectrum'], ['the handheld', 'spectroscope'],
+  ['four lines, and one doublet', 'strong yellow doublet near 589 nm'], ['that is the yellow you see', 'characteristic sodium emission'],
+  ["THE LOBBY SIGN · NEON'S RED-ORANGE CLUSTER", 'NEON EMISSION · RED-ORANGE LINE CLUSTER'],
+  ['one segment dead', 'selected Ne spectrum'], ['is why neon looks like neon', 'characteristic neon pattern'],
+  ['THE CEILING TUBE · MERCURY, INTO THE VIOLET', 'MERCURY EMISSION · VISIBLE LINE PATTERN'],
+  ['the shop’s own ceiling', 'selected Hg spectrum'], ['the same grammar, new positions', 'different element, different pattern'],
+  ['lines are a fingerprint', 'line pattern supports identity'],
+  ['THE MAGNESIUM ELECTRODE · FILL IT, THEN DOT IT', 'MAGNESIUM · CONFIGURATION AND VALENCE DOTS'],
+  ['CERTIFY', 'CHECK'],
+  ['THE CHROMIUM ELECTRODE · ONE ELECTRON MOVES', 'CHROMIUM · OBSERVED CONFIGURATION EXCEPTION'],
+  ['AUFBAU PREDICTS', 'SIMPLE PREDICTION'], ['THE BENCH FINDS', 'OBSERVED GROUND STATE'],
+  ['a half-filled d row is worth the move', 'Cr differs from the simple prediction'],
+  ['THE COPPER COIL · A FILLED d ROW WINS TOO', 'COPPER · OBSERVED CONFIGURATION EXCEPTION'],
+  ['the last gap in d closes', 'Cu differs from the simple prediction'],
+  ['THE SEALED ARGON TUBE · A FULL SHELL DOES NOTHING', 'ARGON · FULL VALENCE SHELL, LOW REACTIVITY'],
+  ['SEALED · 10 YEARS', 'GROUP 18'], ['FAMILY CALL', 'GROUP PATTERN'], ['inert', 'very unreactive'], ['seal it in', 'low reactivity'],
+  ['THE ALUMINUM ELECTRODE · THREE TO GIVE AWAY', 'ALUMINUM · THREE VALENCE ELECTRONS'],
+  ['gives 3', 'often forms'], ['away', 'Al 3+ ions'],
+  ['THE GETTER ORDER · ONE SHORT, AND GRABBING', 'CHLORINE · SEVEN VALENCE ELECTRONS'],
+  ['the getter cartridge', 'chlorine sample'], ['takes one', 'often forms'], ['and is done', 'Cl− ions'], ['Cl -', 'Cl−'],
+  ['THE LINE CHECK · ONE DROP, ONE PHOTON, ONE ENERGY', 'PHOTON ENERGY · E = hc / λ'],
+  ['the drop that made the line', 'allowed transition'], ['E = hc / L', 'E = hc / λ'],
+  ['THE ORBITAL CHECK · IS THIS ONE AN EXCEPTION?', 'CONFIGURATION CHECK · PREDICTED VS OBSERVED'],
+  ['PREDICTED BY FILLING ORDER', 'SIMPLE AUFBAU PREDICTION'], ['WHAT THE BENCH SHOWS', 'OBSERVED GROUND STATE'],
+  ['an exception is evidence, not a typo', 'compare prediction with observed data'],
+  ['THE UNLABELLED CYLINDER · NAME IT, THEN CALL IT', 'UNLABELED CYLINDER · EVIDENCE IS NOT A VERIFIED LABEL'],
+  ['no stencil', 'no verified label'], ['READ IT', 'SPECTRUM'], ['full shell?', 'Group 18 pattern'],
+  ['THE LAST CALL', 'EVIDENCE DECISION'], ['fill the tube', 'use cylinder'], ['send it back', 'return for ID'],
+  ['call it in', 'mark hazardous'], ['on the evidence', 'verify before use']
+];
+
+function refineSceneArt(svg) {
+  return ART_COPY.reduce((out, [from, to]) => out.split(from).join(to), svg);
+}
+
+function observedConfiguration(z) {
+  const predicted = electronConfiguration(z);
+  const ex = CONFIG_EXCEPTIONS.find(x => x.z === z);
+  if (!ex) return predicted;
+  const actual = [...ex.actual.matchAll(/(\d+)([spdf])(\d+)/g)]
+    .map(m => ({ n:Number(m[1]), l:m[2], e:Number(m[3]) }));
+  return predicted.map(sub => {
+    const hit = actual.find(a => a.n === sub.n && a.l === sub.l);
+    return hit ? { ...sub, e:hit.e } : sub;
+  });
+}
 
 export { SE };
 
@@ -47,12 +124,10 @@ export function createSim() {
     teksOpen: false,
     mode: 'models',
 
-    // Scenario and consequence state.  The old unit's instruments remain the source of
-    // each calculation; these values bind a meaningful work order and a consequence to it.
     scIdx: { a:-1, b:-1, d:-1, c:-1, e:-1, f:-1 },
     modelsSc: null, buildSc: null, massSc: null, spectraSc: null, configSc: null, familySc: null,
     modelPick: null, familyPick: null, massInput: '', specEnergyInput: '', h1EnergyInput: '', h2Pick: null, capPick: null,
-    modeVerdict: {}, activeScenario: {}, rack: [], shiftEvidence: [], shiftMin: 0, shiftDay: 1, worldLog: [], _wid: 0,
+    modeVerdict: {}, activeScenario: {}, rack: [], shiftDay: 1, worldLog: [], _wid: 0,
 
     // ---- C.6(A/B) build an atom ----
     elZ: 6, nNeutrons: 6, nElectrons: 6,
@@ -61,11 +136,7 @@ export function createSim() {
     // ---- C.6(C) emission spectra ----
     specKey: 'H', selLine: null,
     // ---- C.6(E)/C.5(B) electrons ----
-    // cfgZ is the configuration tool the learner drives; famZ is the element the family
-    // work order hands them. Two orders, two elements: see the block comment above on why
-    // one shared value made them mutually unsatisfiable.
     cfgZ: 11, famZ: 18, vQuiz: null, vChecked: false,
-    // Per-commit reveal state for the three commits that share this bench.
     cfgVerdict: null, famVerdict: null, h2Verdict: null,
 
     init() {
@@ -78,8 +149,7 @@ export function createSim() {
       this.$watch('specKey', () => { this.selLine = null; });
       this.$watch('cfgZ', () => { this.vQuiz = null; this.vChecked = false; });
       // A <select x-model> binds before its child x-for has rendered its <option>s,
-      // so an initial value that is not the first option does not stick. Re-apply
-      // each selected value once the option lists exist.
+      // so re-apply each selected value after those options exist.
       this.$nextTick(() => {
         ['elZ', 'isoKey', 'specKey', 'cfgZ'].forEach(k => { const v = this[k]; this[k] = null; this[k] = v; });
       });
@@ -90,7 +160,7 @@ export function createSim() {
       if (m === 'capstone' && this.capUnlocked && !this.capPick) this.capPick = null;
     },
     resetProgress() {
-      this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftEvidence = []; this.shiftMin = 0; this.shiftDay = 1; this.worldLog = [];
+      this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftDay = 1; this.worldLog = [];
       this.cfgVerdict = null; this.famVerdict = null; this.h2Verdict = null; this.h2Pick = null;
       this.scIdx = { a:-1, b:-1, d:-1, c:-1, e:-1, f:-1 };
       this.nextModels(); this.nextBuild(); this.nextMass(); this.nextSpectra(); this.nextFamily(); this.nextConfig();
@@ -109,32 +179,24 @@ export function createSim() {
     nextConfig() { this.configSc = this.nextScenario('e'); this.cfgZ = this.configSc.z; this.vQuiz = null; this.vChecked = false; this.cfgVerdict = null; this.focusScenario('config', this.configSc); },
     nextFamily() { this.familySc = this.nextScenario('f'); this.famZ = this.familySc.z; this.familyPick = null; this.famVerdict = null; this.focusScenario('config', this.familySc); },
     focusScenario(mode, sc) { this.activeScenario[mode] = sc; delete this.modeVerdict[mode]; },
-    get clockLabel() { const min = 13 * 60 + this.shiftMin; return `${String(Math.floor(min / 60) % 24).padStart(2,'0')}:${String(min % 60).padStart(2,'0')}`; },
-    get rackState() { return this.rack.length >= 5 ? 'The last tube is on the rack' : (this.rack.length ? 'Jobs moving through the shop' : 'Rack open for the first job'); },
+    get rackState() { return this.rack.length >= 5 ? 'One task left in this practice round' : (this.rack.length ? 'Practice tasks in progress' : 'Ready for the first practice task'); },
     recordWorld({ sc, good, detail, color = '#2a7d8a' }) {
-      const minutes = good ? 18 : 48;
-      this.shiftMin += minutes;
-      if (good) {
-        this.rack.push({ id:`${sc.id}-${this._wid}`, label:sc.system, color });
-        this.shiftEvidence = [...new Set([...this.shiftEvidence, sc.skill])];
-      }
-      this.worldLog.unshift({ id:++this._wid, tone:good ? 'success' : 'fail', text:`${this.clockLabel} ${detail}` });
+      if (good) this.rack.push({ id:`${sc.id}-${this._wid}`, label:sc.system, color });
+      this.worldLog.unshift({ id:++this._wid, tone:good ? 'success' : 'fail', text:`${sc.system}: ${good ? 'correct' : 'recheck'}. ${detail}` });
       if (this.worldLog.length > 6) this.worldLog.pop();
-      // Six slots are one day's jobs, not a score cap.  Closing the rack advances the
-      // shift and opens an empty next-day rack so continued practice remains meaningful.
       if (this.rack.length === SHOP.tubeSlots) {
-        this.worldLog.unshift({ id:++this._wid, tone:'success', text:`${this.clockLabel} Six tubes shipped; next shift opens a fresh rack.` });
-        this.rack = []; this.shiftDay += 1; this.shiftMin = 0;
+        this.worldLog.unshift({ id:++this._wid, tone:'success', text:'Practice rack complete; a new round begins.' });
+        this.rack = []; this.shiftDay += 1;
       }
     },
     verdict(sc, good, detail, color) {
       const v = good
-        ? { tone:'success', state:'SHIPPED', headline:'Evidence supports the call', detail }
-        : { tone:'fail', state:'RETURN TO BENCH', headline:'The evidence does not support that call', detail };
+        ? { tone:'success', state:'CORRECT', headline:'The evidence supports this answer', detail }
+        : { tone:'fail', state:'RECHECK', headline:'Review the evidence and try again', detail };
       this.gRecord(sc.skill, good, true);
       this.modeVerdict[sc.stage] = v;
       this.activeScenario[sc.stage] = sc;
-      this.recordWorld({ sc, good, detail:`${sc.system}: ${good ? 'job shipped' : 'job held for rework'}. ${detail}`, color });
+      this.recordWorld({ sc, good, detail, color });
       return v;
     },
     modelState(name) { const sc=this.modelsSc; if (!this.modeVerdict.models) return this.modelPick===name?'on':''; return name===sc.correct?'correct':(name===this.modelPick?'wrong':''); },
@@ -143,47 +205,79 @@ export function createSim() {
       const sc = this.modelsSc, evidence = EVIDENCE[sc.evidence], ok = this.modelPick === sc.correct;
       this.verdict(sc, ok, `${this.modelPick}: ${evidence.consequence[this.modelPick]}`);
     },
-    commitBuild() { const sc=this.buildSc; const ok=this.elZ===sc.z && this.nNeutrons===sc.n && this.nElectrons===sc.e; this.verdict(sc, ok, ok ? `${this.isotopeName} is built with the requested charge.` : `The job requires Z ${sc.z}, ${sc.n} neutrons, and ${sc.e} electrons.`); },
+    commitBuild() {
+      const sc=this.buildSc, ok=this.elZ===sc.z && this.nNeutrons===sc.n && this.nElectrons===sc.e;
+      this.verdict(sc, ok, ok ? `${this.isotopeName} has the requested proton, neutron, and electron counts.` : `Target: Z = ${sc.z}, ${sc.n} neutrons, and ${sc.e} electrons.`);
+    },
     get massDialValue() { const v = parseFloat(this.massInput); return isFinite(v) ? v : this.avgMass; },
     commitMass() {
       const sc = this.massSc, value = parseFloat(this.massInput), target = sc.expected;
       const ok = this.isoKey === sc.iso && isFinite(value) && outcomeBand(value, target, MASS_BANDS).withinSpec;
       this.verdict(sc, ok,
-        ok ? `${fmt(value,5)} u matches the weighted ${this.iso.name} assay.` : `Calculate the fixed assay and enter a value within 0.3% of ${fmt(target,5)} u.`);
+        ok ? `${fmt(value,5)} u matches the weighted result for the reference ${this.iso.name} isotope data.` : 'Recalculate the weighted average: multiply each isotope mass by its fractional abundance, then add the contributions.');
     },
-    commitSpectra() { const sc=this.spectraSc, val=parseFloat(this.specEnergyInput), line=this.selectedLine; const ok=this.specKey===sc.spec && !!line && isFinite(val) && outcomeBand(val,line.energy,SPECTRA_BANDS).withinSpec; this.verdict(sc, ok, ok ? `${line.wl.toFixed(1)} nm corresponds to ${fmt(line.energy,3)} J per photon.` : `Select a ${sc.spec} line and calculate E = hc/λ in joules.` , line ? line.color : '#2a7d8a'); },
-    commitConfig() { const sc=this.configSc; const ok=this.cfgZ===sc.z; this.cfgVerdict = this.verdict(sc, ok, ok ? `${this.cfgEl.name}: ${this.cfgShorthand}. ${this.cfgIsException ? 'The d-subshell exception is identified.' : 'The configuration follows the displayed filling order.'}` : `Set the electron tool to Z ${sc.z} before certifying the configuration.`); },
-    // The family element is given, so the graded call is the family behaviour and nothing
-    // else -- which is what the f-* goals ask for and all that C.5(B) is about.
+    commitSpectra() {
+      const sc=this.spectraSc, val=parseFloat(this.specEnergyInput), line=this.selectedLine;
+      const ok=this.specKey===sc.spec && !!line && isFinite(val) && outcomeBand(val,line.energy,SPECTRA_BANDS).withinSpec;
+      this.verdict(sc, ok, ok ? `${line.wl.toFixed(1)} nm corresponds to ${fmt(line.energy,3)} J per photon.` : `Use a ${sc.spec} line and calculate E = hc/λ in joules.`, line ? line.color : '#2a7d8a');
+    },
+    commitConfig() {
+      const sc=this.configSc, ok=this.cfgZ===sc.z;
+      this.cfgVerdict = this.verdict(sc, ok,
+        ok ? `${this.cfgEl.name}: ${this.cfgShorthand}. ${this.cfgIsException ? 'This is the observed ground-state exception to the simple Aufbau prediction.' : 'This ground-state configuration follows the simple filling prediction.'}` : `Set the electron tool to Z = ${sc.z} before checking the configuration.`);
+    },
     get famEl() { return ELEMENTS.find(e => e.z === this.famZ); },
+    get famValence() { return valenceElectrons(this.famZ); },
     familyState(name) { if (!this.famVerdict) return this.familyPick===name?'on':''; return name===this.familySc.correct?'correct':(name===this.familyPick?'wrong':''); },
-    commitFamily() { const sc=this.familySc; const ok=this.familyPick===sc.correct; this.famVerdict = this.verdict(sc, ok, ok ? `${this.famEl.name} is correctly identified as ${sc.correct}.` : `${this.famEl.name} is not ${this.familyPick}. Read its valence count off the table and choose again.`); },
-    commitH1() { const sc=SCENARIOS.find(s=>s.id==='h1-photon'), val=parseFloat(this.h1EnergyInput), line=this.selectedLine; const ok=!!line && isFinite(val) && outcomeBand(val,line.energy,HONORS_BANDS).withinSpec; this.verdict(sc, ok, ok ? `The selected photon carries ${fmt(line.energy,3)} J.` : 'Select a line and calculate E = hc/λ after converting nm to m.', line ? line.color : '#7651a8'); },
+    commitFamily() {
+      const sc=this.familySc, ok=this.familyPick===sc.correct;
+      this.famVerdict = this.verdict(sc, ok, ok ? `${this.famEl.name} is in ${sc.correct}; its valence-electron pattern is consistent with that group.` : `${this.famEl.name} has ${this.famValence} main-group valence electrons. Use that pattern to choose its group.`);
+    },
+    commitH1() {
+      const sc=SCENARIOS.find(s=>s.id==='h1-photon'), val=parseFloat(this.h1EnergyInput), line=this.selectedLine;
+      const ok=!!line && isFinite(val) && outcomeBand(val,line.energy,HONORS_BANDS).withinSpec;
+      this.verdict(sc, ok, ok ? `The selected photon carries ${fmt(line.energy,3)} J.` : 'Select a line and calculate E = hc/λ after converting nm to m.', line ? line.color : '#7651a8');
+    },
     h2State(v) { if (!this.h2Verdict) return this.h2Pick===v?'on':''; const correct=this.cfgIsException?'exception':'standard'; return v===correct?'correct':(v===this.h2Pick?'wrong':''); },
-    commitH2() { const sc=SCENARIOS.find(s=>s.id==='h2-orbital'), correct=this.cfgIsException?'exception':'standard', ok=this.h2Pick===correct; this.h2Verdict = this.verdict(sc, ok, ok ? `${this.cfgEl.name} is ${correct==='exception'?'an explicit configuration exception':'not one of the listed exceptions'}.` : 'Compare the selected element to the explicit exception list.'); },
+    commitH2() {
+      const sc=SCENARIOS.find(s=>s.id==='h2-orbital'), correct=this.cfgIsException?'exception':'standard', ok=this.h2Pick===correct;
+      this.h2Verdict = this.verdict(sc, ok, ok ? `${this.cfgEl.name} ${correct==='exception'?'has a listed observed exception':'follows the simple Aufbau prediction in this activity'}.` : 'Compare the displayed simple prediction with the observed ground-state configuration.');
+    },
     get capUnlocked() { return this.gOverall() === 1; },
-    get capCorrect() { return this.shiftEvidence.includes('c') && this.shiftEvidence.includes('f') ? 'fill' : 'return'; },
+    get capCorrect() { return SCENARIOS.find(s=>s.id==='cap-glowroom').correct; },
     capState(v) { if (!this.modeVerdict.capstone) return this.capPick===v?'on':''; return v===this.capCorrect?'correct':(v===this.capPick?'wrong':''); },
-    commitCap() { if (!this.capPick) return; const sc=SCENARIOS.find(s=>s.id==='cap-glowroom'), ok=this.capPick===this.capCorrect; this.verdict(sc, ok, ok ? `The rack evidence supports “${this.capPick}” for this cylinder.` : 'The final call must follow the spectrum and family evidence assembled in this shift.', '#2f8f5b'); },
+    commitCap() {
+      if (!this.capPick) return;
+      const sc=SCENARIOS.find(s=>s.id==='cap-glowroom'), ok=this.capPick===this.capCorrect;
+      this.verdict(sc, ok, ok ? 'The spectrum is consistent with neon, but the cylinder is unlabeled. Return it for verified identification before use.' : 'The spectral evidence supports a likely identity, but it does not replace verified cylinder identification.', '#2f8f5b');
+    },
     get coreSkills() { return SE.filter(se=>!se.honors); },
     get teksMasteredCount() { return this.coreSkills.filter(se=>this.gMastered(se.id)).length; },
     get activeBrief() { return this.activeScenario[this.mode] || ({models:this.modelsSc,build:this.buildSc,mass:this.massSc,spectra:this.spectraSc,config:this.configSc,capstone:SCENARIOS.find(s=>s.id==='cap-glowroom')})[this.mode] || null; },
     get activeVerdict() { return this.modeVerdict[this.mode] || null; },
     get activeTone() { const t=this.activeVerdict&&this.activeVerdict.tone; return t==='success'?'safe':(t?'danger':'standby'); },
     get activeArtId() { return (this.activeBrief&&this.activeBrief.id)||'a-crt'; },
-    get activeStationName() { return (this.activeBrief&&this.activeBrief.system)||'The Glow Room'; },
+    get activeStationName() { return (this.activeBrief&&this.activeBrief.system)||'Atomic structure'; },
     get activeStateLabel() { return (this.activeVerdict&&this.activeVerdict.state)||''; },
-    get activeOutcomeText() { const v=this.activeVerdict,b=this.activeBrief; return (v&&(v.detail||v.headline))||(b&&(b.why||b.goal))||'Choose a work order from the shop bench.'; },
-    get activeReference() { if(this.mode==='spectra') return [{k:'Equation',v:'E = hc/λ'},{k:'Unit',v:'convert nm to m'}]; if(this.mode==='mass') return [{k:'Average',v:'sum(mass × fraction)'},{k:'Check',v:'fractions sum to 1'}]; if(this.mode==='config') return [{k:'Family',v:'main-group valence pattern'},{k:'Exception',v:'Cr and Cu have explicit cases'}]; return [{k:'Shop',v:'one correct call lights one tube'},{k:'Shift',v:'six tubes make one day'}]; },
-    scArt(id) { return sceneArt(id); },
-    get rackReadings() { return [{key:'jobs',label:'Jobs',raw:`${this.rack.length}/6`,pct:this.rack.length/6*100,color:'var(--accent)'},{key:'core',label:'Core',raw:`${this.teksMasteredCount}/6`,pct:this.gOverall()*100,color:'var(--accent-700)'},{key:'day',label:'Day',raw:`${this.shiftDay}`,pct:Math.min(100,this.shiftDay/3*100),color:'var(--success)'},{key:'log',label:'Log',raw:`${this.worldLog.length}`,pct:Math.min(100,this.worldLog.length/6*100),color:'var(--warn)'}]; },
+    get activeOutcomeText() { const v=this.activeVerdict,b=this.activeBrief; return (v&&(v.detail||v.headline))||(b&&(b.why||b.goal))||'Choose an activity from the tabs above.'; },
+    get activeReference() {
+      if(this.mode==='models') return [{k:'Method',v:'observation → model'},{k:'History',v:'choose the model asked for in this sequence'}];
+      if(this.mode==='build') return [{k:'Identity',v:'atomic number = protons'},{k:'Charge',v:'protons − electrons'}];
+      if(this.mode==='spectra') return [{k:'Equation',v:'E = hc/λ'},{k:'Unit',v:'convert nm to m'}];
+      if(this.mode==='mass') return [{k:'Average',v:'Σ(mass × fraction)'},{k:'Data',v:'use the reference isotope abundances'}];
+      if(this.mode==='config') return [{k:'Ground state',v:'observed configuration is shown'},{k:'Aufbau',v:'simple prediction has listed exceptions'}];
+      if(this.mode==='capstone') return [{k:'Evidence',v:'spectrum supports identity'},{k:'Use',v:'verified label is still required'}];
+      return [{k:'Progress',v:'correct responses add one practice marker'},{k:'Round',v:'six markers complete one practice round'}];
+    },
+    scArt(id) { return refineSceneArt(sceneArt(id)); },
+    get rackReadings() { return [{key:'jobs',label:'Tasks',raw:`${this.rack.length}/6`,pct:this.rack.length/6*100,color:'var(--accent)'},{key:'core',label:'Core',raw:`${this.teksMasteredCount}/6`,pct:this.gOverall()*100,color:'var(--accent-700)'},{key:'day',label:'Round',raw:`${this.shiftDay}`,pct:Math.min(100,this.shiftDay/3*100),color:'var(--success)'},{key:'log',label:'Log',raw:`${this.worldLog.length}`,pct:Math.min(100,this.worldLog.length/6*100),color:'var(--warn)'}]; },
     rackSvg() { return this.rack.map((r,i)=>`<g transform="translate(${8+i*36},4)"><title>${r.label}</title><rect x="7" y="8" width="18" height="48" rx="8" fill="${r.color}" opacity=".85"/><rect x="12" y="2" width="8" height="8" rx="2" fill="#dcebee"/></g>`).join(''); },
 
     // ======================= C.6(A/B) BUILD =======================
     get buildElements() { return ELEMENTS.filter(e => BUILD_SET.includes(e.z)); },
     get el() { return ELEMENTS.find(e => e.z === this.elZ); },
     onElement() {
-      if (!this.el) return; // guard the transient null during the select re-apply
+      if (!this.el) return;
       const mass = ATOMIC_MASS[this.el.sym];
       this.nNeutrons = Math.max(0, Math.round(mass) - this.elZ);
       this.nElectrons = this.elZ;
@@ -205,7 +299,6 @@ export function createSim() {
     get isotopeName() { return `${this.el.name}-${this.massNumber}`; },
     get massRef() { return ATOMIC_MASS[this.el.sym]; },
     get buildShells() { return shellOccupancy(this.nElectrons); },
-    // Bohr shells + electrons are built as a string (x-for inside <svg> does not bind).
     bohrSvg() {
       const c = 150; let s = '';
       this.buildShells.forEach((count, i) => {
@@ -235,9 +328,6 @@ export function createSim() {
       return averageAtomicMass(this.iso.isotopes.map(m => ({ mass: m.mass, abundance: +this.isoAbund[m.a] || 0 })));
     },
     get avgError() { return Math.abs(this.avgMass - this.iso.accepted); },
-    // The mass number line and the average-mass dial read off ONE axis: from just
-    // under the lightest isotope to just over the heaviest. Extracted so the SVG
-    // and the dial can never drift apart and disagree about where the average is.
     get isoMassAxis() {
       const ms = this.iso.isotopes.map(m => m.mass);
       return { lo: Math.floor(Math.min(...ms)) - 1, hi: Math.ceil(Math.max(...ms)) + 1 };
@@ -267,16 +357,9 @@ export function createSim() {
     rgb(nm) { return wavelengthToRGB(nm); },
     nmToX(nm) { return 30 + (Math.max(380, Math.min(700, nm)) - 380) / 320 * 580; },
     get spec() { return SPECTRA.find(s => s.key === this.specKey); },
-    // The visible strip drawn above runs 380-700 nm, so the wavelength and the
-    // photon-energy dials share exactly those two endpoints. Because E = hc/λ the
-    // energy axis is the wavelength axis inverted, which is the whole point of
-    // showing the pair: one line puts the two needles on opposite sides, and
-    // picking a different line swings them in opposite directions.
     get specAxis() {
       return {
         wlLo: 380, wlHi: 700,
-        // Frequency and energy are the same axis twice over (E = h nu), so their
-        // two needles move together while the wavelength needle opposes them.
         vLo: frequencyOf(700e-9), vHi: frequencyOf(380e-9),
         eLo: photonEnergy({ wavelength: 700e-9 }),
         eHi: photonEnergy({ wavelength: 380e-9 })
@@ -311,7 +394,6 @@ export function createSim() {
       }
       return s;
     },
-    // Honors: hydrogen energy-level diagram showing the quantized Balmer drops.
     energyLevelSvg() {
       const top = 22, bot = 205, yOf = n => top + (1 / (n * n)) * (bot - top);
       let s = '';
@@ -331,9 +413,10 @@ export function createSim() {
     // ======================= C.6(E)/C.5(B) ELECTRONS =======================
     get cfgEl() { return ELEMENTS.find(e => e.z === this.cfgZ); },
     get cfgElements() { return ELEMENTS.filter(e => BUILD_SET.includes(e.z)); },
-    get cfgConfig() { return electronConfiguration(this.cfgZ); },
+    get cfgException() { return CONFIG_EXCEPTIONS.find(x => x.z === this.cfgZ) || null; },
+    get cfgConfig() { return observedConfiguration(this.cfgZ); },
     get cfgString() { return formatConfig(this.cfgConfig); },
-    // Noble-gas shorthand for any Z, in the same fill order as the full config.
+    // Simple Aufbau prediction used only for comparison with listed exceptions.
     shorthandOf(z) {
       const core = NOBLE_CORES.filter(n => n.z < z).pop();
       const full = electronConfiguration(z);
@@ -341,7 +424,7 @@ export function createSim() {
       const beyond = full.slice(electronConfiguration(core.z).length);
       return `[${core.sym}] ${formatConfig(beyond)}`;
     },
-    get cfgShorthand() { return this.shorthandOf(this.cfgZ); },
+    get cfgShorthand() { return this.cfgException ? this.cfgException.actual : this.shorthandOf(this.cfgZ); },
     get valence() { return valenceElectrons(this.cfgZ); },
     get cfgLastL() { return this.cfgConfig[this.cfgConfig.length - 1].l; },
     get isMainGroup() { return this.cfgLastL === 's' || this.cfgLastL === 'p'; },
@@ -369,24 +452,22 @@ export function createSim() {
     },
     get family() {
       const z = this.cfgZ, v = this.valence;
-      if (z === 1) return { name: 'Hydrogen (a nonmetal)', charge: '+1 or -1', behavior: 'It has 1 valence electron but stands alone; it can lose or gain one.' };
-      if (z === 2) return { name: 'Noble gas (Group 18)', charge: '0', behavior: 'Helium fills the first shell with 2 electrons, so it is inert.' };
-      if (!this.isMainGroup) return { name: 'Transition metal', charge: 'varies', behavior: 'It loses outer s and some d electrons, forming more than one possible ion.' };
+      if (z === 1) return { name: 'Hydrogen (a nonmetal)', charge: '+1 or -1', behavior: 'Hydrogen has 1 valence electron and can participate in bonding in several ways.' };
+      if (z === 2) return { name: 'Noble gas (Group 18)', charge: 'none common', behavior: 'Helium has a filled first shell and is very unreactive under ordinary conditions.' };
+      if (!this.isMainGroup) return { name: 'Transition metal', charge: 'varies', behavior: 'Common ion charges vary; many transition metals form ions with more than one charge.' };
       const map = {
-        1: { name: 'Alkali metal (Group 1)', charge: '+1', behavior: 'Loses its 1 valence electron readily; very reactive.' },
-        2: { name: 'Alkaline earth metal (Group 2)', charge: '+2', behavior: 'Loses 2 valence electrons.' },
-        3: { name: 'Boron group (Group 13)', charge: '+3', behavior: 'Tends to lose 3 valence electrons.' },
-        4: { name: 'Carbon group (Group 14)', charge: '±4', behavior: 'Usually shares electrons rather than transferring them.' },
-        5: { name: 'Nitrogen group (Group 15)', charge: '-3', behavior: 'Tends to gain 3 electrons.' },
-        6: { name: 'Chalcogens (Group 16)', charge: '-2', behavior: 'Tends to gain 2 electrons.' },
-        7: { name: 'Halogen (Group 17)', charge: '-1', behavior: 'Gains 1 electron; a very reactive nonmetal.' },
-        8: { name: 'Noble gas (Group 18)', charge: '0', behavior: 'Full valence shell, so it is very unreactive.' }
+        1: { name: 'Alkali metal (Group 1)', charge: '+1', behavior: 'Often forms +1 ions and is generally reactive.' },
+        2: { name: 'Alkaline earth metal (Group 2)', charge: '+2', behavior: 'Often forms +2 ions.' },
+        3: { name: 'Boron group (Group 13)', charge: '+3', behavior: 'Often forms +3 ions or covalent bonds.' },
+        4: { name: 'Carbon group (Group 14)', charge: 'varies', behavior: 'Often forms covalent bonds; simple monatomic ±4 ions are uncommon.' },
+        5: { name: 'Nitrogen group (Group 15)', charge: '-3 common', behavior: 'Can form -3 ions in ionic compounds and also forms many covalent bonds.' },
+        6: { name: 'Chalcogens (Group 16)', charge: '-2 common', behavior: 'Often forms -2 ions in ionic compounds and also forms covalent bonds.' },
+        7: { name: 'Halogen (Group 17)', charge: '-1', behavior: 'Often forms -1 ions in ionic compounds; halogens are reactive nonmetals.' },
+        8: { name: 'Noble gas (Group 18)', charge: 'none common', behavior: 'A filled valence shell is associated with very low reactivity under ordinary conditions.' }
       };
       return map[v] || { name: 'Main-group element', charge: 'varies', behavior: '' };
     },
-    // configuration-exception cross-check (Honors)
-    get cfgIsException() { return CONFIG_EXCEPTIONS.some(x => x.z === this.cfgZ); },
-    // valence quiz (assessment)
+    get cfgIsException() { return !!this.cfgException; },
     pickV(n) { if (!this.vChecked) this.vQuiz = n; },
     checkV() { if (this.vQuiz !== null) this.vChecked = true; },
     vState(n) {
