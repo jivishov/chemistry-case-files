@@ -1,60 +1,57 @@
 // case.js — Unit 1 case file: the Mars Climate Orbiter unit error (1999).
 // Carries the story AND the stage art; rendered by the shared casefile component.
-// The same story units/01-practices-matter tells, carried here in full so the units_new
-// tree stands on its own. The only edit is the closing call to action, which names this
-// build's setMode() instead of assigning `mode` directly.
 
 export const CASE = {
   id: 'mars-orbiter-units',
   number: '001',
-  kicker: 'a true story',
-  title: 'The $327 million unit mistake',
-  teaser: 'The unit mistake that killed a $327M Mars mission',
-  hook: 'In 1999 a NASA spacecraft flew 669 million kilometers to Mars, then vanished in under a minute. No explosion on camera, no alien mystery. The killer was a measurement habit you are building right now.',
+  kicker: 'a real engineering case',
+  title: 'The Unit-Conversion Error That Cost a Mars Mission',
+  teaser: 'How a mismatch between lbf·s and N·s contributed to the loss of Mars Climate Orbiter',
+  hook: 'In 1999, NASA lost contact with Mars Climate Orbiter as the spacecraft arrived at Mars. Investigators found that a ground-software file reported thruster impulse in pound-force seconds (lbf·s), while the navigation software expected newton-seconds (N·s). Because the units did not match, the effect of the thruster firings was underestimated.',
   stats: [
-    { v: '$327M', k: 'mission lost' },
-    { v: '4.45x', k: 'size of the unit error' },
-    { v: '57 km', k: 'arrival altitude, not 226' }
+    { v: '4.45×', k: 'conversion-factor difference' },
+    { v: '226 km', k: 'planned first periapsis' },
+    { v: '≈57 km', k: 'post-mishap estimate' }
   ],
   steps: [
     {
-      t: 'Two teams, one spacecraft',
-      body: 'Lockheed Martin wrote the thruster software in Colorado. NASA JPL flew the spacecraft from California. For nine months of cruise, that software reported every small course-correction burn to the JPL navigators.',
-      chem: 'A measurement is a number AND a unit. Drop the unit and the number means nothing. That is why every value you record in this unit carries its label.',
-      cap: 'Cruise phase: Earth to Mars, 669 million km, steered by dozens of small burns.'
+      t: 'One spacecraft, several teams',
+      body: 'Different engineering teams produced and used data needed to navigate the spacecraft. During the nine-month trip to Mars, small thruster firings changed the spacecraft\'s motion. Navigation software used information about those firings to calculate the spacecraft\'s trajectory.',
+      chem: 'A measurement consists of both a number and a unit. A numerical value cannot be interpreted correctly unless its unit is known.',
+      cap: 'During the cruise to Mars, small thruster firings gradually affected the spacecraft\'s trajectory.'
     },
     {
-      t: 'The invisible mismatch',
-      body: 'The Lockheed code output thruster impulse in pound-seconds, a US customary unit. The JPL navigation code expected newton-seconds, the SI unit. Nobody converted. Every burn was silently logged 4.45 times weaker than it really was.',
-      chem: '1 pound-force = 4.45 newtons. A conversion factor is the bridge between unit systems. Skip the bridge and the data lies to you with a straight face.',
-      cap: 'Same data line, two languages: lbf-s sent, N-s assumed.'
+      t: 'The unit mismatch',
+      body: 'A ground-software file reported thruster impulse in pound-force seconds (lbf·s), but the software interface required newton-seconds (N·s). The navigation software treated the values as if they were already in N·s. Because 1 pound-force is approximately 4.45 newtons, the effect of the thruster firings was underestimated by a factor of 4.45.',
+      chem: 'Conversion factors allow measurements to be expressed in different units without changing the physical quantity. Dimensional analysis helps verify that the units in a calculation are consistent.',
+      cap: 'The file supplied lbf·s where the navigation system expected N·s.'
     },
     {
-      t: 'Nine months of tiny drifts',
-      body: 'Each individual error was small, so the trajectory looked almost right. Navigators noticed odd residuals, but the anomaly reports were never fully run down. The little biases stacked, all in the same direction.',
-      chem: 'That is systematic error: precise, repeatable, and consistently wrong the same way. Repeating the measurement cannot fix it. Checking the method can.',
-      cap: 'Planned path vs actual path: the gap grows with every burn.'
+      t: 'A systematic navigation error',
+      body: 'The incorrect unit conversion affected the modeling of repeated thruster firings. Small differences between the predicted and observed trajectory appeared during the mission, but the cause was not identified before the spacecraft reached Mars.',
+      chem: 'A systematic error creates a consistent bias in measurements or calculations. Repeating the same method can produce results that are precise but still inaccurate if the source of the bias is not corrected.',
+      cap: 'Small modeling errors accumulated during the nine-month trip to Mars.'
     },
     {
-      t: 'September 23, 1999',
-      body: 'The plan was a safe pass 226 km above Mars. The orbiter actually arrived at about 57 km, deep inside the atmosphere, and was torn apart or skipped away into space. Ten months of flight ended inside a minute.',
-      chem: 'The accident board wrote a fix that reads like your lab checklist: label units on every value, verify every conversion, chase every anomaly. Measurement discipline is mission discipline.',
-      cap: 'Loss of signal, 09:06 UTC. The orbiter was never heard from again.'
+      t: 'Arrival at Mars',
+      body: 'The planned first periapsis—the lowest point of the initial orbit—was 226 km above Mars. About one hour before arrival, the navigation solution indicated that the spacecraft might pass as low as 110 km. After the loss, calculations using corrected thruster data estimated a periapsis of about 57 km, which investigators judged too low for the spacecraft to survive. Contact with Mars Climate Orbiter was never restored.',
+      chem: 'Reliable scientific work requires correct units, careful conversions, validation of calculations, and investigation of unexpected results.',
+      cap: 'Planned periapsis: 226 km. Post-mishap estimate: about 57 km.'
     }
   ],
   quiz: {
-    q: 'A burn log read "1.0". Lockheed meant 1.0 pound-seconds; JPL read it as 1.0 newton-seconds. The real push was 4.45 N-s. What did the navigation model believe?',
+    q: 'A thruster impulse was 1.0 lbf·s. The navigation software incorrectly treated the numerical value as 1.0 N·s. Since 1 lbf ≈ 4.45 N, how did the value used by the navigation software compare with the actual impulse?',
     options: [
-      { label: 'It recorded about 4.45 times too much push', correct: false },
-      { label: 'It recorded only about 22% of the real push', correct: true },
-      { label: 'Nothing changed, the numbers matched', correct: false }
+      { label: 'It was about 4.45 times greater than the actual impulse.', correct: false },
+      { label: 'It was only about 22% of the actual impulse.', correct: true },
+      { label: 'It was the same because the numerical value was still 1.0.', correct: false }
     ],
-    explain: '1 lbf-s equals 4.45 N-s, so reading it as 1.0 N-s undercounts the burn by a factor of 4.45. The model believed the craft had barely been pushed when it had. Burn after undercounted burn dragged the arrival point 169 km too low.'
+    explain: '1.0 lbf·s is approximately 4.45 N·s. Treating that value as only 1.0 N·s underestimates the impulse by a factor of 4.45. In other words, the navigation model used about 22% of the actual impulse.'
   },
-  punch: 'A $327 million spacecraft died of a skipped conversion factor. The units, sig figs, and error analysis in this unit are exactly the skills that would have caught it.',
-  careers: ['Spacecraft navigator', 'Forensic analyst', 'Pharmacy tech', 'Quality engineer'],
-  cta: { label: 'Train the skills that would have saved it', call: "setMode('measure')" },
-  stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: the Mars Climate Orbiter drifts off its planned path and is lost in the Martian atmosphere">
+  punch: 'The Mars Climate Orbiter case shows why units are part of every measurement. Correct units, conversion factors, and dimensional analysis are essential whenever scientific data are shared or used in calculations.',
+  careers: ['Aerospace engineer', 'Spacecraft navigator', 'Laboratory scientist', 'Quality-control chemist'],
+  cta: { label: 'Practice measurement and unit skills', call: "setMode('measure')" },
+  stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated diagram comparing the planned and estimated Mars Climate Orbiter trajectories">
             <defs>
               <radialGradient id="cf1-mars" cx="35%" cy="35%" r="80%">
                 <stop offset="0%" stop-color="#e08a5a"/><stop offset="60%" stop-color="#b85433"/><stop offset="100%" stop-color="#6e2f1c"/>
@@ -91,7 +88,7 @@ export const CASE = {
               <text x="512" y="118" text-anchor="middle" dominant-baseline="middle" font-family="JetBrains Mono" font-size="11" fill="#f6dfd2" opacity=".85">MARS</text>
             </g>
 
-            <!-- planned trajectory (dashed, safe pass) -->
+            <!-- planned trajectory -->
             <path d="M 80,294 C 220,236 360,208 448,170" fill="none" stroke="#7fc4d0" stroke-width="1.6" stroke-dasharray="6 7" opacity=".75"/>
             <path d="M 448,170 A 92,92 0 0 1 566,204" fill="none" stroke="#7fc4d0" stroke-width="1.6" stroke-dasharray="6 7" opacity=".55"/>
 
@@ -100,7 +97,6 @@ export const CASE = {
               <g class="a-flow" style="--fx:360px; --fy:-116px; --dur:7s">
                 <g transform="translate(84,290) rotate(-16)">
                   <g class="a-swim" style="--dur:3.2s">
-                    <!-- thruster plume, flickering off the rear nozzle -->
                     <polygon class="a-flicker" style="--dur:.45s; --org:100% 50%" points="-33,0 -20,-3 -20,3" fill="#ffd27e" opacity=".9"/>
                     <polygon class="a-flicker" style="--dur:.3s; --delay:.1s; --org:100% 50%" points="-27,0 -20,-1.6 -20,1.6" fill="#fff4dc"/>
                     <rect x="-7" y="-5" width="14" height="10" rx="2" fill="#dcebee"/>
@@ -112,7 +108,7 @@ export const CASE = {
               </g>
             </g>
 
-            <!-- step 2: the two unit labels that never matched -->
+            <!-- step 2: the two unit labels that did not match -->
             <g x-show="step===1">
               <g class="a-float" style="--dur:3.5s">
                 <rect x="176" y="120" width="92" height="30" rx="6" fill="#132630" stroke="#ff9a82"/>
@@ -126,22 +122,20 @@ export const CASE = {
               <text x="296" y="170" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">no conversion applied</text>
             </g>
 
-            <!-- step 3+: actual decaying trajectory -->
+            <!-- step 3+: estimated low trajectory -->
             <g x-show="step>=2">
               <path class="a-draw" style="--dash:520; --dur:2.6s" d="M 80,294 C 236,252 392,238 484,164" fill="none" stroke="#ff9a82" stroke-width="2.2"/>
-              <text x="300" y="262" font-family="JetBrains Mono" font-size="10" fill="#ff9a82">actual path (drifting low)</text>
+              <text x="300" y="262" font-family="JetBrains Mono" font-size="10" fill="#ff9a82">estimated path (too low)</text>
               <text x="236" y="204" font-family="JetBrains Mono" font-size="10" fill="#7fc4d0">planned path</text>
             </g>
 
-            <!-- step 4: impact + loss of signal -->
+            <!-- step 4: loss of signal / estimated low pass -->
             <g x-show="step===3">
-              <!-- atmospheric heating streak just before breakup -->
               <line class="a-pulse" style="--dur:.7s" x1="450" y1="184" x2="481" y2="167" stroke="#ffd27e" stroke-width="3" stroke-linecap="round" opacity=".85"/>
               <g class="a-burst" style="--dur:2.2s">
                 <circle cx="484" cy="164" r="13" fill="#ffd27e"/>
                 <circle cx="484" cy="164" r="22" fill="none" stroke="#ff9a82" stroke-width="2"/>
               </g>
-              <!-- debris glitter thrown from the breakup -->
               <g fill="#ffd27e">
                 <circle class="a-spark" style="--dur:1.6s" cx="468" cy="148" r="2.4"/>
                 <circle class="a-spark" style="--dur:1.9s; --delay:.5s" cx="502" cy="174" r="2"/>
@@ -149,9 +143,9 @@ export const CASE = {
                 <circle class="a-spark" style="--dur:2.1s; --delay:.8s" cx="462" cy="176" r="1.8"/>
               </g>
               <line x1="484" y1="164" x2="592" y2="112" stroke="#8fa9b2" stroke-width="1" stroke-dasharray="3 3"/>
-              <text x="596" y="104" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#ff9a82">57 km: atmosphere</text>
+              <text x="596" y="104" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#ff9a82">57 km: post-mishap estimate</text>
               <line x1="566" y1="204" x2="606" y2="244" stroke="#8fa9b2" stroke-width="1" stroke-dasharray="3 3"/>
-              <text x="608" y="258" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#7fc4d0">226 km: planned pass</text>
+              <text x="608" y="258" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#7fc4d0">226 km: planned periapsis</text>
               <text class="a-blink" style="--dur:1.1s" x="320" y="330" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#ff9a82" font-weight="700">. . . LOSS OF SIGNAL . . .</text>
             </g>
           </svg>`
