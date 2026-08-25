@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Unit 4 · Bonding, Nomenclature &amp; Geometry</title>
-<meta name="description" content="Move-in week in your first apartment: nothing gets used, mixed, cooked with or poured away until you know what holds it together. Predict bond type from electronegativity, name compounds, rotate 3D VSEPR shapes, and classify a solid from a dry pan and a meter. TEKS C.7.">
+<meta name="description" content="Unit 4 chemistry practice: classify bonding from electronegativity, apply IUPAC nomenclature, explore VSEPR geometry and molecular polarity, and connect bonding and intermolecular forces to substance properties. TEKS C.7.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="../../shared/css/components.css">
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
-<link rel="stylesheet" href="css/style.css?v=u4-1">
+<link rel="stylesheet" href="css/style.css?v=u4-2">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
 <!-- js/vsepr.js imports a bare `three` specifier, which cannot resolve without this. -->
@@ -28,30 +28,25 @@
 <body>
 <div x-data="sim()" x-cloak>
 
-  <main class="codex-shell cockpit-shell" aria-label="Unit 4 move-in week cockpit">
+  <main class="codex-shell cockpit-shell" aria-label="Unit 4 chemistry interactive workspace">
     <header class="cockpit-command">
       <div class="command-brand">
         <span class="command-kicker">Unit 4 · TEKS C.7</span>
-        <!-- See the note in 05-the-mole: the title carries the link home, it replaces the
-             <strong> instead of adding a row, and it must not be a <span>. -->
         <a class="command-home" href="../index.html" title="All units">Bonding, Nomenclature &amp; Geometry</a>
         <span x-text="activeStationName"></span>
       </div>
 
-      <nav class="station-nav" role="tablist" aria-label="Move-in week benches">
-        <button class="tab" role="tab" :aria-selected="mode==='bond'"     @click="setMode('bond')"     aria-label="Bond type" title="Bond type · C.7(A) electronegativity and bonding"><span class="tab-full" aria-hidden="true">Bond type</span><span class="tab-short" aria-hidden="true">Bond</span></button>
-        <button class="tab" role="tab" :aria-selected="mode==='name'"     @click="setMode('name')"     aria-label="Naming" title="Naming · C.7(B) names and formulas"><span class="tab-full" aria-hidden="true">Naming</span><span class="tab-short" aria-hidden="true">Names</span></button>
+      <nav class="station-nav" role="tablist" aria-label="Unit 4 chemistry activities">
+        <button class="tab" role="tab" :aria-selected="mode==='bond'" @click="setMode('bond')" aria-label="Bond type" title="Bond type · C.7(A) electronegativity and bonding"><span class="tab-full" aria-hidden="true">Bond type</span><span class="tab-short" aria-hidden="true">Bond</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='name'" @click="setMode('name')" aria-label="Naming" title="Naming · C.7(B) names and formulas"><span class="tab-full" aria-hidden="true">Naming</span><span class="tab-short" aria-hidden="true">Names</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='geometry'" @click="setMode('geometry')" aria-label="3D geometry" title="3D geometry · C.7(C) VSEPR shapes"><span class="tab-full" aria-hidden="true">3D geometry</span><span class="tab-short" aria-hidden="true">Shapes</span></button>
-        <button class="tab" role="tab" :aria-selected="mode==='forces'"   @click="setMode('forces')"   aria-label="Forces &amp; properties" title="Forces &amp; properties · C.7(D) forces and properties"><span class="tab-full" aria-hidden="true">Forces &amp; properties</span><span class="tab-short" aria-hidden="true">Forces</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='forces'" @click="setMode('forces')" aria-label="Forces &amp; properties" title="Forces &amp; properties · C.7(D) forces and properties"><span class="tab-full" aria-hidden="true">Forces &amp; properties</span><span class="tab-short" aria-hidden="true">Forces</span></button>
         <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="The last bottle" title="The last bottle · capstone"><span class="tab-full" aria-hidden="true">The last bottle</span><span class="tab-short" aria-hidden="true">Bottle</span></button>
-        <!-- The Case File is a bench like any other, so it lives in this strip rather than
-             as a teaser chip: the cockpit header has no spare row for a chip, and a story
-             the learner cannot see is a story they never open. -->
         <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')" aria-label="Case file" title="Case file · why ice floats"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
       </nav>
 
       <div class="command-actions">
-        <label class="switch" title="Reveal advanced content for Honors sections">
+        <label class="switch" title="Show advanced Honors content">
           <input type="checkbox" x-model="honors">
           <span class="track"></span>
           <span class="label-text" :style="honors ? 'color:var(--honors-700)' : 'color:var(--muted)'">Honors</span>
@@ -59,12 +54,9 @@
         <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
       </div>
 
-      <div class="command-metrics" aria-label="Progress and shelf telemetry">
+      <div class="command-metrics" aria-label="Progress and shelf status">
         <span class="metric-chip">XP <strong x-text="g_xp"></strong></span>
         <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
-        <!-- Standards tracking is secondary to the calls: one badge, expanded on demand,
-             instead of four chips competing with the bench tabs. Click, not hover:
-             hover-to-open fights the click toggle and does not exist on a touch screen. -->
         <div class="teks-wrap" @click.outside="teksOpen = false" @keydown.escape="teksOpen = false">
           <button type="button" class="teks-badge" :class="{ complete: teksMasteredCount === coreSkills.length }"
                   :aria-expanded="teksOpen ? 'true' : 'false'" aria-label="TEKS standards progress"
@@ -88,19 +80,13 @@
       </div>
     </header>
 
-    <!-- The Case File is a MODE, not a section at the foot of the page: the three working
-         columns give up the shell's flexible row while the story is showing, and the bench
-         strip stays above it so there is always a way back. -->
     <div class="workbench-grid" x-show="mode!=='casefile'">
 
-      <!-- ============ LEFT: the container you are holding ============ -->
-      <section class="mission-screen panel" :class="'tone-' + activeTone" aria-label="Active container">
+      <section class="mission-screen panel" :class="'tone-' + activeTone" aria-label="Active chemistry scenario">
         <div class="mission-frame">
           <div class="mission-screen-art" x-html="scArt(activeArtId)"></div>
           <div class="screen-scanline" aria-hidden="true"></div>
         </div>
-        <!-- Container + state read as a heading, not as an overlay: at the art's true 8:3
-             aspect an inset caption would cover 40% of the drawing. -->
         <div class="screen-status">
           <span class="screen-system" x-text="activeStationName"></span>
           <span class="screen-state" x-text="activeStateLabel"></span>
@@ -109,14 +95,6 @@
           <p class="screen-goal" x-show="activeBrief" x-prose="activeBrief ? activeBrief.goal : ''"></p>
           <p class="screen-outcome" x-prose="activeOutcomeText"></p>
         </div>
-        <!-- A native <details>, so the standing facts can be folded away and the art and the
-             prompt take the rows back. Open by default, because facts a learner has to hunt
-             for are not standing facts. The summary keeps .command-kicker: it is the same
-             chrome eyebrow it was before it became a disclosure, and that class is what
-             exempts it from the 14px legibility floor in tests/unit5a-layout.test.mjs.
-             shared/cockpit.css styles it; the height media queries there still drop the whole
-             card on a short viewport, which is the shell deciding there is no room rather
-             than the learner deciding they want it elsewhere. -->
         <details class="screen-reference" aria-label="Reference facts" open>
           <summary class="command-kicker">Reference</summary>
           <div class="screen-reference-body">
@@ -128,22 +106,18 @@
             </template>
           </div>
         </details>
-        <!-- One line, not a card: this row is the last thing in a fixed-height column and
-             every line it takes is a line off the goal text above it. -->
-        <section class="instincts cockpit-instincts" aria-label="Move-in week">
+        <section class="instincts cockpit-instincts" aria-label="Move-in week progress">
           <span class="command-kicker">Move-in week</span>
-          <p><strong>12</strong> containers came with the place &middot;
-            <strong x-text="shelfBottles.length"></strong> dealt with &middot;
+          <p><strong>12</strong> containers in the activity &middot;
+            <strong x-text="shelfBottles.length"></strong> reviewed &middot;
             day <strong x-text="day"></strong></p>
         </section>
       </section>
 
-      <!-- ============ CENTER: the bench ============ -->
       <section class="task-stack chem-console">
 
-        <!-- ---------- C.7(A) two element symbols, one bond ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='bond' }" x-show="mode==='bond'">
-          <p class="muted mb-2">Two element symbols are all the label has left. The predicted bond stays hidden until you commit, so the bench poses the question rather than answering it.</p>
+          <p class="muted mb-2">Use the two element symbols and electronegativity values to classify the bonding. The result stays hidden until you submit your answer.</p>
 
           <template x-if="bd">
             <div>
@@ -166,7 +140,7 @@
 
               <div class="mt-3">
                 <div class="bondbar"><span class="marker" :style="'left:'+Math.min(100, bondResult.dEN/3.3*100)+'%'"></span></div>
-                <div class="bondbar-labels"><span>&Delta;EN 0 · identical</span><span>&Delta;EN 3.3 · large gap</span></div>
+                <div class="bondbar-labels"><span>&Delta;EN 0 · same EN</span><span>&Delta;EN 3.3 · large difference</span></div>
               </div>
 
               <div class="stat-row mt-3">
@@ -175,7 +149,7 @@
               </div>
               <p class="small muted mt-2" x-show="bondChecked" x-prose="bondNote"></p>
 
-              <p class="small muted mt-3 mb-2">What kind of bond holds it together?</p>
+              <p class="small muted mt-3 mb-2">Which bonding model best fits this pair?</p>
               <div class="bondgrid">
                 <template x-for="o in BOND_OPTIONS" :key="o.key">
                   <button class="choice" :data-state="bondState(o.key)" @click="pickBond(o.key)">
@@ -186,9 +160,9 @@
               </div>
 
               <div class="row call-row mt-3">
-                <button class="btn btn-accent" @click="bondCommit()" :disabled="bondDone || !bondPick">Write the label</button>
+                <button class="btn btn-accent" @click="bondCommit()" :disabled="bondDone || !bondPick">Submit bond type</button>
                 <button class="btn btn-ghost" x-show="bondChecked" @click="bondNext()">Next container</button>
-                <span class="call-hint" x-show="!bondPick && !bondDone" x-text="'Say what kind of bond holds it together.'"></span>
+                <span class="call-hint" x-show="!bondPick && !bondDone">Select a bond type.</span>
               </div>
 
               <template x-if="bondVerdict">
@@ -202,33 +176,29 @@
                 </div>
               </template>
 
-              <!-- Honors h1: where this bond sits on the ionic-covalent continuum -->
               <div class="honors-block mt-4" x-show="honors">
                 <span class="honors-tag">Honors · % ionic character</span>
-                <div class="note note-info mt-2" x-show="!gMastered('a')">Certify the bond-type bench (three correct in a row) to unlock the percent ionic character bench.</div>
+                <div class="note note-info mt-2" x-show="!gMastered('a')">Get three bond-type questions correct in a row to unlock percent ionic character.</div>
                 <template x-if="gMastered('a') &amp;&amp; pi">
                   <div class="mt-2">
-                    <!-- The Honors task is stated here rather than on the mission screen:
-                         both benches are on this one panel at the same time, so only one of
-                         the two goals can hold the screen. See screenOf in js/main.js. -->
                     <p class="small muted mb-2" x-prose="pi.sc.goal"></p>
-                    <p class="small muted mb-2" x-text="'The label on ' + pi.pair.where + ' reads ' + pi.pair.a + ' and ' + pi.pair.b + '.'"></p>
+                    <p class="small muted mb-2" x-text="'The reference entry lists ' + pi.pair.a + ' and ' + pi.pair.b + ' for ' + pi.pair.where + '.'"></p>
                     <div class="readout">
                       <div class="cell"><div class="k" x-text="'EN ' + pi.pair.a"></div><div class="v" x-text="fmt(en(pi.pair.a),3)"></div></div>
                       <div class="cell"><div class="k" x-text="'EN ' + pi.pair.b"></div><div class="v" x-text="fmt(en(pi.pair.b),3)"></div></div>
                       <div class="cell"><div class="k">&Delta;EN</div><div class="v" x-text="fmt(pi.dEN,2)"></div></div>
                       <div class="cell" x-show="piChecked"><div class="k">% ionic</div><div class="v" x-text="fmt(pi.pct,3)+'%'"></div></div>
                     </div>
-                    <p class="small muted mt-2">% ionic = (1 &minus; e^(&minus;0.25&middot;&Delta;EN&sup2;)) &times; 100. No bond is purely one type; this places it on the ionic-covalent continuum.</p>
+                    <p class="small muted mt-2">% ionic = (1 &minus; e^(&minus;0.25&middot;&Delta;EN&sup2;)) &times; 100. This is an estimate of ionic character; the activity bands are classification criteria, not universal boundaries.</p>
                     <div class="choice-grid mt-3">
                       <template x-for="o in PCT_OPTIONS" :key="'pi'+o.key">
                         <button class="choice" :data-state="piState(o.key)" @click="piPickBand(o.key)" x-text="o.label"></button>
                       </template>
                     </div>
                     <div class="row call-row mt-3">
-                      <button class="btn btn-honors" @click="piCommit()" :disabled="piDone || !piPick">Place it</button>
-                      <button class="btn btn-ghost" x-show="piChecked" @click="piNext()">Next bottle</button>
-                      <span class="call-hint" x-show="!piPick && !piDone" x-text="'Choose the band that dEN puts this bond in.'"></span>
+                      <button class="btn btn-honors" @click="piCommit()" :disabled="piDone || !piPick">Submit classification</button>
+                      <button class="btn btn-ghost" x-show="piChecked" @click="piNext()">Next pair</button>
+                      <span class="call-hint" x-show="!piPick && !piDone">Choose the activity band for this estimate.</span>
                     </div>
                     <template x-if="piVerdict">
                       <div class="verdict mt-3" :class="'verdict-' + piVerdict.tone">
@@ -244,14 +214,13 @@
                 </template>
               </div>
 
-              <div class="note note-info mt-3">The &Delta;EN cutoffs (0.4 and 1.7) are teaching guidelines, not hard boundaries.</div>
+              <div class="note note-info mt-3">Activity criterion: the &Delta;EN cutoffs 0.4 and 1.7 are approximate teaching guidelines, not hard scientific boundaries.</div>
             </div>
           </template>
         </div>
 
-        <!-- ---------- C.7(B) the label somebody else will trust ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='name' }" x-show="mode==='name'">
-          <p class="muted mb-2">Match the formula to the name, either direction. Whatever you print goes on a container the next person will not double check.</p>
+          <p class="muted mb-2">Match each chemical formula with its correct name, in either direction.</p>
 
           <template x-if="nm &amp;&amp; nameQ">
             <div>
@@ -275,9 +244,9 @@
               </div>
 
               <div class="row call-row mt-3">
-                <button class="btn btn-accent" @click="nameCommit()" :disabled="nameDone || !nameChosen">Print the label</button>
-                <button class="btn btn-ghost" x-show="nameChecked" @click="nameNext()">Next jar</button>
-                <span class="call-hint" x-show="!nameChosen && !nameDone" x-text="nameDir === 'f2n' ? 'Pick the name this formula reads as.' : 'Pick the formula this name writes as.'"></span>
+                <button class="btn btn-accent" @click="nameCommit()" :disabled="nameDone || !nameChosen">Check label</button>
+                <button class="btn btn-ghost" x-show="nameChecked" @click="nameNext()">Next compound</button>
+                <span class="call-hint" x-show="!nameChosen && !nameDone" x-text="nameDir === 'f2n' ? 'Select the correct name.' : 'Select the correct formula.'"></span>
               </div>
 
               <template x-if="nameVerdict">
@@ -291,20 +260,19 @@
                 </div>
               </template>
 
-              <div class="note note-info mt-3">Two nonmetals take prefixes (mono, di, tri, tetra). A metal with a nonmetal takes none: the nonmetal just ends in -ide.</div>
+              <div class="note note-info mt-3">Binary molecular compounds use prefixes such as mono-, di-, tri-, and tetra-; mono- is usually omitted on the first element. Binary ionic compounds do not use these prefixes.</div>
             </div>
           </template>
         </div>
 
-        <!-- ---------- C.7(C) rotate it, then classify the shape ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='geometry' }" x-show="mode==='geometry'">
-          <p class="muted mb-2">Drag to rotate. Lone pairs are drawn as pale lobes with the two electrons they stand for inside them, because they are what pushes the visible atoms out of position.</p>
+          <p class="muted mb-2">Drag to rotate. Pale lobes show lone-pair electron domains. Lone pairs repel bonding domains and can change molecular geometry and bond angles.</p>
 
           <template x-if="gm &amp;&amp; currentMol">
             <div>
               <div class="bench-controls">
                 <div class="field">
-                  <label for="mol">On the bench</label>
+                  <label for="mol">Molecule</label>
                   <select id="mol" x-model="molKey" :disabled="!geoDone">
                     <template x-for="m in MOLECULES" :key="m.key"><option :value="m.key" x-text="m.formula+' · '+m.name"></option></template>
                   </select>
@@ -321,16 +289,16 @@
                 <span class="legend-atom" x-show="currentMol.lone>0"><span class="dot dot-lone"></span>lone pair (2 e&#8315;)</span>
               </div>
 
-              <p class="small muted mt-3 mb-2">Which geometry is this?</p>
+              <p class="small muted mt-3 mb-2">Which molecular geometry is shown?</p>
               <div class="choice-grid">
                 <template x-for="g in GEOMETRIES" :key="g">
                   <button class="choice" :data-state="geoState(g)" @click="pickGeo(g)" x-text="g"></button>
                 </template>
               </div>
               <div class="row call-row mt-3">
-                <button class="btn btn-accent" @click="geoCommit()" :disabled="geoDone || !geoGuess">Call the shape</button>
-                <button class="btn btn-ghost" x-show="geoChecked" @click="geoNext()">Next container</button>
-                <span class="call-hint" x-show="!geoGuess && !geoDone" x-text="'Name the geometry first.'"></span>
+                <button class="btn btn-accent" @click="geoCommit()" :disabled="geoDone || !geoGuess">Submit geometry</button>
+                <button class="btn btn-ghost" x-show="geoChecked" @click="geoNext()">Next molecule</button>
+                <span class="call-hint" x-show="!geoGuess && !geoDone">Select the molecular geometry.</span>
               </div>
 
               <template x-if="geoVerdict">
@@ -346,28 +314,27 @@
 
               <div class="fact-grid" x-show="geoChecked">
                 <div class="stat"><div class="k">electron domains</div><div class="v v-num" x-text="gm.mol.bonds + gm.mol.lone"></div></div>
-                <div class="stat"><div class="k">bonding pairs</div><div class="v v-num" x-text="gm.mol.bonds"></div></div>
+                <div class="stat"><div class="k">bonding domains</div><div class="v v-num" x-text="gm.mol.bonds"></div></div>
                 <div class="stat"><div class="k">lone pairs</div><div class="v v-num" x-text="gm.mol.lone"></div></div>
                 <div class="stat"><div class="k">bond angle</div><div class="v v-num" x-text="gm.mol.angle"></div></div>
               </div>
 
-              <!-- Honors h2: the molecule as a whole, not the bonds -->
               <div class="honors-block mt-4" x-show="honors">
                 <span class="honors-tag">Honors · molecular polarity</span>
-                <div class="note note-info mt-2" x-show="!gMastered('c')">Certify the VSEPR bench (three correct in a row) to unlock the molecular polarity bench.</div>
+                <div class="note note-info mt-2" x-show="!gMastered('c')">Get three VSEPR questions correct in a row to unlock molecular polarity.</div>
                 <template x-if="gMastered('c') &amp;&amp; pol">
                   <div class="mt-2">
                     <p class="small muted mb-2" x-prose="pol.sc.goal"></p>
-                    <p class="small muted mb-2" x-text="pol.mol.name + ' is on the bench: ' + pol.mol.bonds + ' bonding and ' + pol.mol.lone + ' lone pairs on the ' + pol.mol.central + '.'"></p>
+                    <p class="small muted mb-2" x-text="pol.mol.name + ': ' + pol.mol.bonds + ' bonding domains and ' + pol.mol.lone + ' lone pairs on ' + pol.mol.central + '.'"></p>
                     <div class="choice-grid mt-3">
                       <template x-for="o in POLAR_OPTIONS" :key="'pol'+o.key">
                         <button class="choice" :data-state="polState(o.key)" @click="polPickCall(o.key)" x-text="o.label"></button>
                       </template>
                     </div>
                     <div class="row call-row mt-3">
-                      <button class="btn btn-honors" @click="polCommit()" :disabled="polDone || !polPick">Make the call</button>
-                      <button class="btn btn-ghost" x-show="polChecked" @click="geoNext()">Next container</button>
-                      <span class="call-hint" x-show="!polPick && !polDone" x-text="'Say whether the molecule as a whole is polar.'"></span>
+                      <button class="btn btn-honors" @click="polCommit()" :disabled="polDone || !polPick">Submit polarity</button>
+                      <button class="btn btn-ghost" x-show="polChecked" @click="geoNext()">Next molecule</button>
+                      <span class="call-hint" x-show="!polPick && !polDone">Select the molecular polarity.</span>
                     </div>
                     <template x-if="polVerdict">
                       <div class="verdict mt-3" :class="'verdict-' + polVerdict.tone">
@@ -386,18 +353,17 @@
           </template>
         </div>
 
-        <!-- ---------- C.7(D) a dry pan, a meter, a drop onto the tiles ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='forces' }" x-show="mode==='forces'">
-          <p class="muted mb-2">Two observations, and between them they name the class of solid. The comparison table below is the reference you read them against.</p>
+          <p class="muted mb-2">Compare the supplied property observations with the activity model. Choose the best-matching solid type.</p>
 
           <template x-if="fx &amp;&amp; fxClue">
             <div>
               <div class="clue-card">
-                <div class="clue-line"><span class="k">heat</span><span x-text="fxClue.melt"></span></div>
+                <div class="clue-line"><span class="k">property</span><span x-text="fxClue.melt"></span></div>
                 <div class="clue-line"><span class="k">current</span><span x-text="fxClue.conduct"></span></div>
               </div>
 
-              <p class="small muted mt-3 mb-2">What kind of solid is it?</p>
+              <p class="small muted mt-3 mb-2">Which solid type best matches the evidence?</p>
               <div class="choice-grid">
                 <template x-for="s in SUBSTANCE_TYPES" :key="'fx'+s.type">
                   <button class="choice" :data-state="fxState(s.type)" @click="pickFx(s.type)" x-text="s.type"></button>
@@ -405,9 +371,9 @@
               </div>
 
               <div class="row call-row mt-3">
-                <button class="btn btn-accent" @click="fxCommit()" :disabled="fxDone || !fxChosen">Classify it</button>
-                <button class="btn btn-ghost" x-show="fxChecked" @click="fxNext()">Next test</button>
-                <span class="call-hint" x-show="!fxChosen && !fxDone" x-text="'Say what kind of solid it is.'"></span>
+                <button class="btn btn-accent" @click="fxCommit()" :disabled="fxDone || !fxChosen">Submit classification</button>
+                <button class="btn btn-ghost" x-show="fxChecked" @click="fxNext()">Next sample</button>
+                <span class="call-hint" x-show="!fxChosen && !fxDone">Select the best-matching solid type.</span>
               </div>
 
               <template x-if="fxVerdict">
@@ -421,10 +387,10 @@
                 </div>
               </template>
 
-              <p class="small muted mt-3 mb-2">The four classes, for reference.</p>
+              <p class="small muted mt-3 mb-2">Representative patterns used in this activity; real substances can have exceptions.</p>
               <div class="table-wrap">
                 <table class="data compare">
-                  <thead><tr><th>Type</th><th>Held by</th><th>Melting point</th><th>Conductivity</th></tr></thead>
+                  <thead><tr><th>Type</th><th>Bonding/attraction</th><th>Melting point</th><th>Conductivity</th></tr></thead>
                   <tbody>
                     <template x-for="s in SUBSTANCE_TYPES" :key="s.type">
                       <tr>
@@ -438,25 +404,24 @@
                 </table>
               </div>
 
-              <!-- Honors h3: the force BETWEEN the molecules -->
               <div class="honors-block mt-4" x-show="honors">
                 <span class="honors-tag">Honors · intermolecular forces</span>
-                <div class="note note-info mt-2" x-show="!gMastered('d')">Certify the properties bench (three correct in a row) to unlock the intermolecular-force bench.</div>
+                <div class="note note-info mt-2" x-show="!gMastered('d')">Get three properties questions correct in a row to unlock intermolecular forces.</div>
                 <template x-if="gMastered('d') &amp;&amp; im &amp;&amp; imfEx">
                   <div class="mt-2">
                     <p class="small muted mb-2" x-prose="im.sc.goal"></p>
-                    <p class="small muted mb-2" x-text="'In front of you: ' + imfEx.where + '.'"></p>
+                    <p class="small muted mb-2" x-text="'Reference example: ' + imfEx.where + '.'"></p>
                     <div class="eqn"><span x-ce="imfEx.formula"></span></div>
-                    <p class="small muted mt-2">Strength: London &lt; dipole-dipole &lt; hydrogen bonding.</p>
+                    <p class="small muted mt-2">For comparable small molecules, hydrogen bonding is generally stronger than ordinary dipole-dipole attraction, and both act in addition to London dispersion forces.</p>
                     <div class="choice-grid mt-3">
                       <template x-for="t in IMF_TYPES" :key="'imf'+t">
                         <button class="choice" :data-state="imfState(t)" @click="pickImf(t)" x-text="t"></button>
                       </template>
                     </div>
                     <div class="row call-row mt-3">
-                      <button class="btn btn-honors" @click="imfCommit()" :disabled="imfDone || !imfChosen">Rank it</button>
-                      <button class="btn btn-ghost" x-show="imfChecked" @click="imfNext()">Next bottle</button>
-                      <span class="call-hint" x-show="!imfChosen && !imfDone" x-text="'Name the strongest force between these molecules.'"></span>
+                      <button class="btn btn-honors" @click="imfCommit()" :disabled="imfDone || !imfChosen">Submit force</button>
+                      <button class="btn btn-ghost" x-show="imfChecked" @click="imfNext()">Next molecule</button>
+                      <span class="call-hint" x-show="!imfChosen && !imfDone">Select the strongest intermolecular force listed.</span>
                     </div>
                     <template x-if="imfVerdict">
                       <div class="verdict mt-3" :class="'verdict-' + imfVerdict.tone">
@@ -475,31 +440,30 @@
           </template>
         </div>
 
-        <!-- ---------- Capstone: the last bottle under the sink ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
           <div class="note note-info" x-show="!capUnlocked">
-            The last bottle unlocks once all four benches (C.7 A to D) are certified. Certified so far: <span x-text="Math.round(gOverall()*4)"></span> of 4.
+            Master all four core activities (C.7 A–D) to unlock the last bottle. Mastered: <span x-text="Math.round(gOverall()*4)"></span> of 4.
           </div>
-          <button class="btn btn-accent" x-show="capUnlocked &amp;&amp; !cap" @click="genCapstone()">Reach under the sink</button>
+          <button class="btn btn-accent" x-show="capUnlocked &amp;&amp; !cap" @click="genCapstone()">Analyze the last bottle</button>
 
           <template x-if="capUnlocked &amp;&amp; cap">
             <div>
-              <p class="muted mb-2">Everything below is derived from what is actually in the bottle, so the one defensible action follows from the chemistry rather than from a stored key.</p>
+              <p class="muted mb-2">Use only the supplied reference record and simulation data. Do not taste, smell, mix, heat, or drain-test an unknown chemical.</p>
 
               <div class="readout">
-                <div class="cell"><div class="k">symbols left</div><div class="v" x-text="cap.syms[0] + ' + ' + cap.syms[1]"></div></div>
-                <div class="cell"><div class="k">heat test</div><div class="v v-word" x-text="cap.heat"></div></div>
-                <div class="cell"><div class="k">conductivity</div><div class="v v-word" x-text="cap.conduct"></div></div>
+                <div class="cell"><div class="k">elements</div><div class="v" x-text="cap.syms[0] + ' + ' + cap.syms[1]"></div></div>
+                <div class="cell"><div class="k">bonding model</div><div class="v v-word" x-text="cap.bond"></div></div>
+                <div class="cell"><div class="k">substance class</div><div class="v v-word" x-text="cap.klass"></div></div>
               </div>
               <div class="clue-card mt-3">
-                <div class="clue-line"><span class="k">on the bench</span><span x-prose="cap.c.clue"></span></div>
+                <div class="clue-line"><span class="k">record</span><span x-prose="cap.c.clue"></span></div>
               </div>
 
               <div class="note note-info mt-3">
-                Keep it if it is useful and safe. Rinse it down the drain only if it is soluble, non-toxic, and nothing in the pipe will react with it. Bag it for hazardous waste if it is reactive with water or toxic.
+                In real life, use the original label, SDS or manufacturer information, and local waste guidance. Chemistry clues alone do not authorize disposal of an unknown chemical.
               </div>
 
-              <p class="small muted mt-3 mb-2">Make the call.</p>
+              <p class="small muted mt-3 mb-2">Which handling category is supported by the supplied information?</p>
               <div class="choice-grid">
                 <template x-for="o in cap.sc.options" :key="o.key">
                   <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
@@ -507,8 +471,8 @@
               </div>
 
               <div class="row call-row mt-3">
-                <button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Deal with it</button>
-                <span class="call-hint" x-show="!capPick && !capWin" x-text="'Choose what to do with the bottle.'"></span>
+                <button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Submit action</button>
+                <span class="call-hint" x-show="!capPick && !capWin">Select the supported handling category.</span>
               </div>
 
               <template x-if="capVerdict">
@@ -527,8 +491,7 @@
 
       </section>
 
-      <!-- ============ RIGHT: the shelf under the sink ============ -->
-      <aside class="life-support-board shelf-board panel" aria-label="The shelf under the sink">
+      <aside class="life-support-board shelf-board panel" aria-label="Activity shelf status">
         <div class="life-header">
           <div>
             <span class="command-kicker">Under the sink</span>
@@ -548,11 +511,7 @@
           </div>
         </div>
 
-        <!-- Four counts and the shelf itself. The counts are what a screen reader and a
-             short viewport can both use; the figure is the at-a-glance view, string-built
-             and injected on a <g> because Alpine's x-for does not bind scope inside an
-             <svg> (RETROFIT-U1-U4.md section 8, trap 2). -->
-        <div class="system-grid shelf-grid" aria-label="Shelf counts">
+        <div class="system-grid shelf-grid" aria-label="Shelf progress counts">
           <template x-for="r in shelfReadings" :key="r.key">
             <div class="ship-stock">
               <div class="life-meter-label">
@@ -563,21 +522,21 @@
             </div>
           </template>
           <figure class="shelf-figure">
-            <svg viewBox="0 0 236 112" role="img" aria-label="The shelf under the sink: twelve container slots, labeled or flagged">
+            <svg viewBox="0 0 236 112" role="img" aria-label="Activity shelf with twelve container slots, classified or flagged for review">
               <g x-html="shelfSvg()"></g>
             </svg>
           </figure>
         </div>
 
-        <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest consequence">
-          <span class="command-kicker">Latest consequence</span>
+        <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest result">
+          <span class="command-kicker">Latest result</span>
           <strong x-text="activeStateLabel"></strong>
-          <p x-text="worldLog.length ? worldLog[0].text : 'Twelve unlabeled containers, and nothing decided yet.'"></p>
+          <p x-text="worldLog.length ? worldLog[0].text : 'Twelve activity containers are ready to review.'"></p>
         </section>
 
-        <section class="mission-log" aria-label="Move-in log">
-          <span class="command-kicker">Move-in log</span>
-          <p class="worldstate-empty" x-show="!worldLog.length">Nothing written down yet.</p>
+        <section class="mission-log" aria-label="Activity log">
+          <span class="command-kicker">Activity log</span>
+          <p class="worldstate-empty" x-show="!worldLog.length">No results recorded yet.</p>
           <ul class="worldstate-list" x-show="worldLog.length">
             <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
               <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
@@ -590,8 +549,6 @@
       </aside>
     </div>
 
-    <!-- Filled in by mountCaseFile() before Alpine.start(), so every binding inside the
-         injected story (including its animated stage SVG) initializes with the page. -->
     <div data-casefile></div>
   </main>
 </div>
@@ -600,11 +557,11 @@
   window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
   const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
          { mountColumnResizers }] = await Promise.all([
-    import('./js/main.js?v=u4-1'),
+    import('./js/main.js?v=u4-2'),
     import('../../shared/js/render.js'),
     import('../../shared/js/gauge.js'),
     import('../../shared/js/casefile.js'),
-    import('./js/case.js?v=u4-1'),
+    import('./js/case.js?v=u4-2'),
     import('../shared/columns.js?v=cockpit-3')
   ]);
   window.sim = createSim;
@@ -612,12 +569,10 @@
   registerRender(Alpine);
   registerGauge(Alpine);
   Alpine.data('sim', createSim);
-  mountCaseFile(Alpine, CASE);          // must precede start(): it injects markup + x-data
+  mountCaseFile(Alpine, CASE);
   window.Alpine = Alpine;
   if (window.__startAlpine) window.__startAlpine();
   else Alpine.start();
-  // After start(), so the handles are appended to a workbench Alpine has already claimed.
-  // The two gutter buttons carry no bindings, so Alpine never walks them.
   mountColumnResizers();
 </script>
 </body>

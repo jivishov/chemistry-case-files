@@ -1,62 +1,57 @@
-// case.js - Unit 4 case file, water's bent shape is why ice floats.
+// case.js - Unit 4 case file: molecular geometry, hydrogen bonding, and floating ice.
 // Carries the story AND the stage art; rendered by the shared casefile component.
-//
-// The units_new build. Copied whole from units/04-bonding-geometry/js/case.js, including
-// the animated stage SVG, with exactly one change: cta.call goes through setMode() rather
-// than assigning `mode` directly, because the cockpit's setMode is what generates the
-// capstone and it is the only supported way to move the station strip.
 
 export const CASE = {
   id: 'water-bend-ice',
   number: '004',
-  kicker: 'every winter, every lake',
-  title: 'The 104.5° bend that keeps fish alive',
-  teaser: 'One 104.5&#176; bond angle is why lakes never freeze solid',
-  hook: 'Every winter, lakes freeze from the top down and life keeps swimming underneath. That survival trick is not luck. It is molecular geometry, the same VSEPR shapes you are rotating in this unit.',
+  kicker: 'why ice floats',
+  title: 'Why ice floats: from molecular shape to hydrogen bonding',
+  teaser: 'Water’s bent shape helps create the hydrogen-bond network that makes ice less dense.',
+  hook: 'Water’s bent geometry makes the molecule polar. That polarity allows extensive hydrogen bonding, and the ordered hydrogen-bond network in ice holds water molecules farther apart than in liquid water.',
   stats: [
-    { v: '104.5°', k: 'bond angle of water' },
-    { v: '~9%', k: 'ice less dense than water' },
-    { v: '2', k: 'lone pairs doing the pushing' }
+    { v: '104.5°', k: 'H–O–H bond angle' },
+    { v: '~9%', k: 'density decrease on freezing' },
+    { v: '2', k: 'lone pairs on oxygen' }
   ],
   steps: [
     {
-      t: 'A frozen lake, alive underneath',
-      body: 'January. A lake seals over with ice, yet underneath, water hovers near 4 degrees Celsius all winter and the fish keep cruising. Almost any other substance would freeze from the bottom up and lock the lake solid.',
-      chem: 'Solids are normally denser than their liquids, so they sink. Water is the famous exception, and the reason is pure geometry.',
-      cap: 'Ice floats; the water below stays near 4 C all winter.'
+      t: 'Ice forms at the surface',
+      body: 'In many lakes and ponds, surface water cools and freezes first. Ice is less dense than liquid water, so it floats and can form an insulating layer while liquid water remains below.',
+      chem: 'Most solids are denser than their liquids. Water is an important exception because the solid has a more open molecular arrangement.',
+      cap: 'Floating ice can insulate liquid water below.'
     },
     {
-      t: 'Blame the lone pairs',
-      body: 'Oxygen in H2O holds two bonding pairs and two lone pairs. Four electron domains want a tetrahedron, but the two invisible lone pairs shove the O-H bonds together to 104.5 degrees. Water is bent, and because oxygen hogs electrons, it is strongly polar.',
-      chem: 'Bent shape plus electronegative oxygen equals a permanent dipole: a negative O end, positive H ends. A tiny magnet, built by VSEPR.',
-      cap: 'Two lone pairs push the hydrogens into the famous bend.'
+      t: 'Why water is bent',
+      body: 'The oxygen atom in H2O has four electron domains: two O–H bonds and two lone pairs. VSEPR theory places the domains approximately tetrahedrally, but the molecular geometry is bent, with an H–O–H angle of about 104.5°. The O–H bond dipoles do not cancel, so water is polar.',
+      chem: 'Lone-pair electron domains repel bonding domains more strongly than bonding domains repel one another. This helps compress the H–O–H angle below the ideal tetrahedral angle of 109.5°.',
+      cap: 'Two bonds + two lone pairs → bent H2O at about 104.5°.'
     },
     {
-      t: 'Freezing locks an open cage',
-      body: 'Liquid water molecules grab and release each other with hydrogen bonds millions of times a second. Chill them and the dipoles lock into a hexagonal lattice full of empty space. The solid takes MORE room than the liquid, so ice is about 9% less dense. It has to float.',
-      chem: 'Hydrogen bonding is an intermolecular force born from polarity, which was born from shape. Shape, then polarity, then forces, then the density anomaly.',
-      cap: 'The hexagonal ice lattice: strong hydrogen bonds, lots of empty space.'
+      t: 'Hydrogen bonds organize ice',
+      body: 'In liquid water, hydrogen bonds continually form and break. When water freezes, the molecules become organized in an open crystal lattice maintained by hydrogen bonding. The molecules are farther apart than in liquid water, so the density decreases by about 9%.',
+      chem: 'The chain of ideas is shape → molecular polarity → hydrogen bonding → crystal structure → lower density of ice.',
+      cap: 'The open hydrogen-bonded lattice makes ice less dense.'
     },
     {
-      t: 'The universe without the bend',
-      body: 'If water were linear like CO2, its bond dipoles would cancel. Weak forces, no open lattice, ice denser than liquid. Lakes and oceans would freeze from the bottom into solid blocks and aquatic ecosystems would not survive a single winter. One bond angle is holding up a biosphere.',
-      chem: 'CO2 has no lone pairs on its central atom: two domains, 180 degrees, nonpolar. Nearly the same atom count as water, opposite destiny. Geometry decides.',
-      cap: 'Linear water would mean sinking ice and lakes frozen solid. Not our universe.'
+      t: 'Compare water with carbon dioxide',
+      body: 'CO2 provides a useful comparison. Each C=O bond is polar, but the molecule is linear, so the two equal bond dipoles point in opposite directions and cancel. H2O is bent, so its bond dipoles do not cancel.',
+      chem: 'Molecular shape affects whether bond dipoles cancel. Ice floats specifically because water molecules form an open hydrogen-bonded crystal structure, not simply because H2O has a 104.5° bond angle.',
+      cap: 'Bent H2O is polar; linear CO2 is nonpolar overall.'
     }
   ],
   quiz: {
-    q: 'CO2 also has a central atom with two attachments, yet it is dead straight while water bends. Why?',
+    q: 'Why is H2O polar while CO2 is nonpolar overall?',
     options: [
-      { label: 'Carbon holds no lone pairs, so its two domains spread to 180°', correct: true },
-      { label: 'Oxygen atoms are heavier and sag the molecule', correct: false },
-      { label: 'Double bonds are rigid and cannot bend', correct: false }
+      { label: 'H2O is bent, so its O–H bond dipoles do not cancel; CO2 is linear, so its C=O bond dipoles cancel', correct: true },
+      { label: 'H2O is polar only because oxygen is heavier than hydrogen', correct: false },
+      { label: 'CO2 is nonpolar because double bonds cannot have bond dipoles', correct: false }
     ],
-    explain: 'Shape follows electron domains. Carbon in CO2 carries two double-bond domains and zero lone pairs, so they spread to 180 degrees and the dipoles cancel. Oxygen in H2O carries four domains, and the two lone pairs crowd the bonds down to 104.5 degrees. Lone pairs never appear in the formula, but they run the show.'
+    explain: 'Molecular polarity depends on both bond polarity and geometry. H2O is bent because oxygen has two bonding domains and two lone-pair domains, so its O–H bond dipoles give a net molecular dipole. CO2 is linear, so its two C=O bond dipoles cancel.'
   },
-  punch: 'From one bond angle you just explained floating ice, dissolving salt, and life surviving winter. Molecular shape is a superpower; medicine designs drugs with it every day.',
-  careers: ['Drug designer', 'Climate scientist', 'Materials engineer', 'Marine biologist'],
-  cta: { label: 'Spin the 3D shapes yourself', call: "setMode('geometry')" },
-  stage: `          <svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: a frozen lake with fish alive below the ice, and the bent water molecule whose shape makes ice float">
+  punch: 'The evidence chain is geometry → polarity → hydrogen bonding → crystal structure → density. Molecular shape helps explain why ice floats and why surface ice can insulate the water below.',
+  careers: ['Materials chemist', 'Climate scientist', 'Environmental chemist', 'Aquatic ecologist'],
+  cta: { label: 'Explore the 3D molecular shapes', call: "setMode('geometry')" },
+  stage: `          <svg viewBox="0 0 640 360" role="img" aria-label="Animated scene showing floating lake ice, bent polar water molecules, an open ice lattice, and a comparison with linear carbon dioxide">
             <!-- winter sky -->
             <rect x="0" y="0" width="640" height="110" fill="#152b38"/>
             <g fill="#dcebee" opacity=".8">
@@ -110,27 +105,23 @@ export const CASE = {
                   </g>
                 </g>
               </g>
-              <!-- stray bubbles from the fish, wobbling up to the ice -->
               <g fill="#cfe4ea" opacity=".7">
                 <circle class="a-rise" style="--rise:-96px; --wob:3px; --dur:4.6s; --delay:1s" cx="250" cy="248" r="2"/>
                 <circle class="a-rise" style="--rise:-140px; --wob:4px; --dur:5.4s; --delay:3.2s" cx="420" cy="292" r="2.4"/>
               </g>
             </g>
-            <!-- bottom temperature -->
-            <text x="614" y="348" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#7fc4d0">4&#176;C down here, all winter</text>
+            <text x="614" y="348" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#7fc4d0">LIQUID WATER BELOW THE ICE</text>
 
             <!-- step 2: the bent molecule card -->
             <g x-show="step===1">
               <rect x="36" y="160" width="230" height="172" rx="10" fill="#132630" stroke="#2c414d"/>
               <text x="151" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">H2O: BENT + POLAR</text>
-              <!-- lone pairs -->
               <g fill="#ffd27e">
                 <circle class="a-pulse" style="--dur:2s" cx="128" cy="212" r="4"/>
                 <circle class="a-pulse" style="--dur:2s; --delay:.3s" cx="140" cy="206" r="4"/>
                 <circle class="a-pulse" style="--dur:2s; --delay:.6s" cx="162" cy="206" r="4"/>
                 <circle class="a-pulse" style="--dur:2s; --delay:.9s" cx="174" cy="212" r="4"/>
               </g>
-              <!-- O and H -->
               <circle cx="151" cy="238" r="22" fill="#ff8a70"/>
               <text x="151" y="243" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#132630" font-weight="700">O</text>
               <g class="a-float" style="--dur:3.4s">
@@ -145,13 +136,13 @@ export const CASE = {
               <line x1="164" y1="252" x2="187" y2="270" stroke="#8fa9b2" stroke-width="3"/>
               <path d="M 124,268 A 34,34 0 0 1 178,268" fill="none" stroke="#7fc4d0" stroke-width="1.4" stroke-dasharray="3 3"/>
               <text x="151" y="292" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#7fc4d0">104.5&#176;</text>
-              <text x="151" y="318" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">&#948;- on O &#183; &#948;+ on H: a tiny magnet</text>
+              <text x="151" y="318" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">BOND DIPOLES &#8594; NET MOLECULAR DIPOLE</text>
             </g>
 
             <!-- step 3: open hexagonal lattice -->
             <g x-show="step===2">
               <rect x="36" y="160" width="230" height="172" rx="10" fill="#132630" stroke="#2c414d"/>
-              <text x="151" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">FROZEN: AN OPEN CAGE</text>
+              <text x="151" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">ICE: OPEN H-BONDED LATTICE</text>
               <g stroke="#9fd0dd" stroke-width="2" fill="none">
                 <path class="a-pulse" style="--dur:2.6s" d="M 151,206 l 30,17 0,34 -30,17 -30,-17 0,-34 z"/>
                 <path class="a-pulse" style="--dur:2.6s; --delay:.5s" d="M 211,240 l 24,14 0,27 -24,14 -24,-14 0,-27 z" opacity=".65"/>
@@ -161,28 +152,28 @@ export const CASE = {
                 <circle cx="151" cy="206" r="4"/><circle cx="181" cy="223" r="4"/><circle cx="181" cy="257" r="4"/>
                 <circle cx="151" cy="274" r="4"/><circle cx="121" cy="257" r="4"/><circle cx="121" cy="223" r="4"/>
               </g>
-              <text x="151" y="318" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">same molecules, +9% volume &#8594; floats</text>
+              <text x="151" y="318" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">MOLECULES FARTHER APART &#8594; LOWER DENSITY</text>
             </g>
 
-            <!-- step 4: the alternate universe -->
+            <!-- step 4: compare with real linear CO2 -->
             <g x-show="step===3">
-              <rect x="36" y="160" width="230" height="172" rx="10" fill="#132630" stroke="#ff9a82"/>
-              <text x="151" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#ff9a82">IF WATER WERE LINEAR&#8230;</text>
+              <rect x="36" y="160" width="230" height="172" rx="10" fill="#132630" stroke="#7fc4d0"/>
+              <text x="151" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#7fc4d0">COMPARE: LINEAR CO2</text>
               <g>
-                <circle cx="106" cy="212" r="11" fill="#dcebee"/>
-                <circle cx="151" cy="212" r="15" fill="#ff8a70"/>
-                <circle cx="196" cy="212" r="11" fill="#dcebee"/>
-                <line x1="117" y1="212" x2="136" y2="212" stroke="#8fa9b2" stroke-width="3"/>
-                <line x1="166" y1="212" x2="185" y2="212" stroke="#8fa9b2" stroke-width="3"/>
-                <text x="151" y="238" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">180&#176;: dipoles cancel</text>
+                <circle cx="106" cy="222" r="13" fill="#ff8a70"/>
+                <circle cx="151" cy="222" r="16" fill="#60676b"/>
+                <circle cx="196" cy="222" r="13" fill="#ff8a70"/>
+                <line x1="119" y1="219" x2="135" y2="219" stroke="#8fa9b2" stroke-width="2.4"/>
+                <line x1="119" y1="225" x2="135" y2="225" stroke="#8fa9b2" stroke-width="2.4"/>
+                <line x1="167" y1="219" x2="183" y2="219" stroke="#8fa9b2" stroke-width="2.4"/>
+                <line x1="167" y1="225" x2="183" y2="225" stroke="#8fa9b2" stroke-width="2.4"/>
+                <text x="106" y="227" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#132630" font-weight="700">O</text>
+                <text x="151" y="227" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#e8f2f4" font-weight="700">C</text>
+                <text x="196" y="227" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#132630" font-weight="700">O</text>
+                <text x="151" y="252" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">180&#176;: BOND DIPOLES CANCEL</text>
               </g>
-              <g class="a-fall" style="--fy:56px; --sway:3px; --dur:2.8s">
-                <rect class="a-sway" style="--deg:9deg; --dur:2.8s" x="120" y="252" width="26" height="26" rx="4" fill="#9fd0dd" opacity=".9"/>
-              </g>
-              <g class="a-fall" style="--fy:56px; --sway:2px; --dur:3.3s; --delay:1.1s">
-                <rect class="a-sway" style="--deg:7deg; --dur:3.3s; --delay:.4s" x="168" y="248" width="20" height="20" rx="4" fill="#9fd0dd" opacity=".8"/>
-              </g>
-              <text x="151" y="322" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#ff9a82">ice sinks &#8594; lakes freeze solid</text>
+              <text x="151" y="300" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">LINEAR + SYMMETRIC &#8594; NONPOLAR OVERALL</text>
+              <text x="151" y="318" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#8fa9b2">SHAPE CHANGES THE VECTOR SUM OF BOND DIPOLES</text>
             </g>
           </svg>`
 };
