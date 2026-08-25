@@ -3,7 +3,7 @@ import {
   ELEMENTS, COMPOUNDS, MOLECULES, GEOMETRIES, SUBSTANCE_TYPES,
   IMF_TYPES, IMF_EXAMPLES, BOND_PAIRS, SCENARIOS, SE
 } from './model.js';
-import { sceneArt } from './art.js';
+import { sceneArt } from './art-refined.js';
 import {
   ELECTRONEGATIVITY, bondType, percentIonicCharacter, parseFormula, fmt
 } from '../../../shared/js/chem.js';
