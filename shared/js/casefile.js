@@ -42,7 +42,7 @@
 // ---------------------------------------------------------------------------
 // id       string   stable kebab-case slug, unique across units
 // number   string   display number, e.g. '001'
-// kicker   string   short line after the number, e.g. 'a true story'
+// kicker   string   short line after the number, e.g. 'a real engineering case'
 // title    string   the headline
 // teaser   string   one-line hook for the chip under the unit's <h1>
 // hook     string   the opening paragraph that earns the next click
@@ -50,7 +50,7 @@
 // steps    array    2+ x { t, body, chem, cap }: chapters of the story
 //                     t    chapter title (rail button)
 //                     body the narration
-//                     chem the chemistry callout ("The chemistry ...")
+//                     chem the chemistry callout ("Chemistry connection ...")
 //                     cap  the stage caption for this chapter
 // quiz     object   { q, options: [{ label, correct }], explain }
 //                     exactly one option must be correct
@@ -224,7 +224,7 @@ export function caseFileMarkup(CASE) {
         <template x-for="(st,i) in cs.steps" :key="'n'+i">
           <div x-show="i===step" x-transition:enter.opacity.duration.400ms>
             <p x-text="st.body"></p>
-            <p class="cf-chem"><strong>The chemistry</strong> <span x-text="st.chem"></span></p>
+            <p class="cf-chem"><strong>Chemistry connection</strong> <span x-text="st.chem"></span></p>
           </div>
         </template>
       </div>
@@ -237,7 +237,7 @@ export function caseFileMarkup(CASE) {
   </div>
 
   <div class="cf-quiz">
-    <span class="cf-quiz-label">Your call</span>
+    <span class="cf-quiz-label">Check your understanding</span>
     <p class="cf-quiz-q" x-text="cs.quiz.q"></p>
     <div class="cf-choices">
       <template x-for="(o,i) in cs.quiz.options" :key="i">
@@ -245,11 +245,11 @@ export function caseFileMarkup(CASE) {
       </template>
     </div>
     <div class="cf-quiz-actions">
-      <button class="btn cf-btn cf-btn-accent" @click="checkQuiz()" :disabled="quizPick===null || quizChecked">Lock it in</button>
+      <button class="btn cf-btn cf-btn-accent" @click="checkQuiz()" :disabled="quizPick===null || quizChecked">Check answer</button>
       <button class="btn cf-btn" x-show="quizChecked &amp;&amp; !quizCorrect" @click="retryQuiz()">Try again</button>
     </div>
     <div class="cf-explain" :class="quizCorrect ? 'good' : 'bad'" x-show="quizChecked">
-      <strong x-text="quizCorrect ? 'Called it. ' : 'Not this time. '"></strong>
+      <strong x-text="quizCorrect ? 'Correct. ' : 'Not quite. Review the explanation and try again. '"></strong>
       <span x-text="cs.quiz.explain"></span>
     </div>
   </div>
