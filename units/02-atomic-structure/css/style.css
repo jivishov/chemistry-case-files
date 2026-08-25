@@ -7,7 +7,6 @@
 .rule { border: none; border-top: 1px solid var(--border); margin: var(--s-5) 0; }
 .ref-title { font-family: var(--font-mono); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: var(--s-2); }
 
-/* calculation step lines (shared idiom across units) */
 .step-line { font-size: var(--fs-sm); color: var(--ink-2); padding: 3px 0; }
 .step-line .calc { color: var(--accent-700); font-weight: 700; }
 .step-line.total { border-top: 1px solid var(--border); margin-top: var(--s-2); padding-top: var(--s-2); font-size: var(--fs-md); }
@@ -20,9 +19,6 @@
 .iso-sym { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-2xl); color: var(--accent-700); line-height: 1; }
 .iso-charge { font-family: var(--font-mono); font-weight: 700; color: var(--danger); font-size: var(--fs-md); }
 
-/* auto-fit, not repeat(3, 1fr): the -/+ row gives a stepper a hard min-content width, so
-   three fixed tracks push past a 375 px viewport instead of reflowing. The floor is that
-   min-content width, which keeps every track wide enough for the buttons at any count. */
 .stepper-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.75rem, 1fr)); gap: var(--s-3); }
 .stepper { min-width: 0; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s-3); text-align: center; }
 .stp-label { display: block; font-size: var(--fs-xs); font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: .06em; }
@@ -32,7 +28,7 @@
 .stp-val { font-weight: 700; font-size: var(--fs-xl); min-width: 2ch; }
 .stp-sub { display: block; font-size: var(--fs-xs); color: var(--muted); }
 
-/* atomic-model timeline cards */
+/* atomic-model cards */
 .models { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: var(--s-3); }
 .model-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s-3); }
 .model-card.is-bohr { border-color: var(--accent); background: var(--accent-050); }
@@ -78,11 +74,7 @@
 .cfg-strings { font-size: var(--fs-sm); line-height: 1.7; }
 .cfg-strings .mono { color: var(--ink); }
 
-/* 1-8 valence answer pad. Eight tracks across need ~420 px, so phones get two rows of
-   four; minmax(0, ...) keeps a track from being widened by its own button. */
 .valence-pad { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 26rem; }
-/* The digits were centred by an inline style on each button; .choice-tight carries it now,
-   along with the corner indicator an 80px cell has room for. */
 .valence-pad .choice { text-align: center; }
 @media (min-width: 620px) { .valence-pad { grid-template-columns: repeat(8, minmax(0, 1fr)); max-width: none; } }
 
@@ -99,8 +91,9 @@
 }
 .orb-label { font-size: var(--fs-xs); color: var(--muted); margin-top: 3px; }
 
-/* Cockpit-specific contract repairs.  Panels scroll internally when their scientific
-   apparatus genuinely exceeds a short viewport; document scrolling remains prohibited. */
+/* Core panels may scroll when the scientific apparatus genuinely exceeds the available
+   center-column height. Mission-copy overflow is left to the shared cockpit rules so the
+   default 15-inch laptop view does not gain a copy-induced internal scrollbar. */
 .chem-console > .panel.is-active { display: block !important; overflow-y: auto; overscroll-behavior: contain; }
 .chem-console .brief { display: none; }
 .work-order { margin: 0 0 var(--s-4); padding: var(--s-3); border: 1px solid var(--accent-100); border-left: 3px solid var(--accent); background: var(--accent-050); }
@@ -115,20 +108,9 @@
 .chem-console > .panel.is-active .small { font-size: var(--fs-sm); }
 .eqn { position: relative; }
 .rack-figure { grid-column: 1 / -1; width: 100%; height: clamp(58px, 8.5vh, 92px); display: block; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-sm); }
-.screen-copy { overflow-y: auto; overscroll-behavior: contain; }
 .choice-grid-wide { grid-template-columns: 1fr; }
 @media (min-width: 620px) { .choice-grid-wide { grid-template-columns: repeat(3, minmax(0,1fr)); } }
-/* The console is intentionally its own scroll port at every shell breakpoint. Letting it
-   spill on the narrow stacked layout makes the document scroll and leaves the lower tools
-   behind the rail. */
-/* The bench's two halves side by side whenever the column is wide enough to hold them.
- *
- * This was pinned to ONE track, which is why "Build an atom" scrolled 1045px on a 15in
- * laptop: the 280px Bohr model and the 260px control side stacked in a 694px column and the
- * panel had to be twice as tall as the screen to hold them. auto-fit does the arithmetic
- * against the column's real width, so it also answers the drag handles -- narrow the bench
- * and the halves stack again on their own. (The single-repeat minmax(min(100%, N)) form is
- * the valid one; it is a FIXED track beside an auto-repeat that Chromium drops.) */
+
 .chem-console .a-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
@@ -136,56 +118,23 @@
   gap: var(--s-4);
 }
 .chem-console .a-row > *, .chem-console .a-side { min-width: 0; }
-/* The cockpit's centre bench is narrower than the worksheet's three stepper cards. A
-   vertical, full-width sequence keeps the - / value / + controls honest at every shell
-   width instead of squeezing their minimum controls through a false three-column grid.
-   This is load-bearing, and it costs 263px of panel on purpose: a stepper's -/+ row has a
-   hard min-content width, .stepper carries min-width: 0 so the track never grows to meet it,
-   and two tracks inside the a-row's half were 93px narrower than the controls they held.
-   tests/unit5a-layout.test.mjs reports that as content wider than its box, at six viewports. */
 .chem-console .stepper-grid { grid-template-columns: minmax(0, 1fr); }
 .chem-console .stepper { min-width: 0; }
 .chem-console .stp-ctl .btn { padding-inline: var(--s-2); }
-/* This unit's seven full labels only fit above 1600px, not the shell's 1536px, so the swap
-   to the short names happens 64px earlier here. That part stays.
- *
- * What is gone is `grid-auto-columns: auto`, which came along with it and should not have.
- * The shared strip gives its tabs equal `minmax(0, 1fr)` tracks down to 1120px, so on a
- * 1536px screen the other units' six tabs are 132px wide and fill the 813px nav. Content
- * tracks sized this unit's seven SHORT labels to their own text instead: 57/45/45/59/69/71/44
- * = 390px of the same 813px strip, so Unit 2's controls read as half-size pills beside every
- * other unit's. Equal tracks are also what stops one long label ellipsing while a short one
- * keeps slack -- the reason the shared sheet uses them. The short labels' widest is
- * "Electrons" at 69px against a 113px track, so nothing clips at the recovered size.
- *
- * The `overflow: visible; text-overflow: clip` that also lived here is gone with it. It was
- * harmless beside content tracks -- a track sized to its own label cannot overflow -- but
- * beside equal tracks it turns a clip into a SPILL: at 1121px "Electrons" is 10px wider than
- * its share and would print across the tab's own border instead of ellipsing. The shared
- * strip's hidden/ellipsis is the correct last resort, and the block below means it is never
- * actually reached. */
+
+/* Unit 2 has seven tabs. Short labels are used at the 15-inch laptop widths so the
+   command bar keeps the same one-row height as the other units. */
 @media (max-width: 1600px) {
   .station-nav .tab-full { display: none; }
   .station-nav .tab-short { display: inline; }
 }
 
-/* Equal tracks are right while the strip has slack to share, and wrong once it does not.
-   The shared sheet draws that line at 1120px, which is calibrated for six tabs; seven need it
-   earlier, because the seventh track takes ~16px off each of the others. Measured: the short
-   labels sit inside their equal share down to 1280px and start exceeding it at 1152px. 1240px
-   is the shared sheet's own next step down (where the tabs give up side padding), so the
-   switch rides that existing boundary rather than inventing a new one. */
 @media (max-width: 1240px) {
   .station-nav { grid-auto-columns: auto; }
 }
 
-/* “Electron configuration” is the one full desktop label that reaches the seven-tab
-   strip's edge. Recover it locally without changing the shared shell's measurements. */
 @media (min-width: 1601px) {
   .station-nav .tab { padding-inline: 5px; }
 }
 
-/* The abundance total reads as a warning by ink, not by a callout box: the box was 48px of a
-   460px bench for one live number, and .note-warn is a shape the shell uses for things that
-   need a reply. This one just needs to be noticed. */
 .abund-off { color: var(--danger); }
