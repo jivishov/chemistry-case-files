@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Unit 9 · Acids &amp; Bases</title>
-<meta name="description" content="One night shift on a poison-control bench, with an acidotic patient next door at pH 7.20. Name acids and bases, find conjugate pairs, sort strong from weak, neutralize a spill, and drive a pH meter. TEKS C.12.">
+<meta name="description" content="Practice acid/base naming, definitions, strength, neutralization stoichiometry, and pH calculations aligned to TEKS C.12.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
 <body>
 <div x-data="sim()" x-cloak>
 
-  <main class="codex-shell cockpit-shell" aria-label="Unit 9 night shift cockpit">
+  <main class="codex-shell cockpit-shell" aria-label="Unit 9 acids and bases practice">
     <header class="cockpit-command">
       <div class="command-brand">
         <span class="command-kicker">Unit 9 · TEKS C.12</span>
@@ -35,17 +35,17 @@
         <span x-text="activeStationName"></span>
       </div>
 
-      <nav class="station-nav" role="tablist" aria-label="Poison control benches">
+      <nav class="station-nav" role="tablist" aria-label="Acid-base practice stations">
         <button class="tab" role="tab" :aria-selected="mode==='naming'"     @click="setMode('naming')"     aria-label="Naming" title="Naming · C.12(A) acid and base names"><span class="tab-full" aria-hidden="true">Naming</span><span class="tab-short" aria-hidden="true">Naming</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='define'"     @click="setMode('define')"     aria-label="Definitions" title="Definitions · C.12(B) frameworks and conjugate pairs"><span class="tab-full" aria-hidden="true">Definitions</span><span class="tab-short" aria-hidden="true">Define</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='strength'"   @click="setMode('strength')"   aria-label="Strong vs weak" title="Strong vs weak · C.12(C) extent of dissociation"><span class="tab-full" aria-hidden="true">Strong vs weak</span><span class="tab-short" aria-hidden="true">Strength</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='neutralize'" @click="setMode('neutralize')" aria-label="Neutralize" title="Neutralize · C.12(D) salt plus water, and the moles it takes"><span class="tab-full" aria-hidden="true">Neutralize</span><span class="tab-short" aria-hidden="true">Neutral</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='meter'"      @click="setMode('meter')"      aria-label="pH meter" title="pH meter · C.12(E) pH from the ion concentration"><span class="tab-full" aria-hidden="true">pH meter</span><span class="tab-short" aria-hidden="true">Meter</span></button>
-        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="Triage" title="Triage · the last call of the night"><span class="tab-full" aria-hidden="true">Triage</span><span class="tab-short" aria-hidden="true">Triage</span></button>
+        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="Triage" title="Capstone · connect the Unit 9 skills"><span class="tab-full" aria-hidden="true">Triage</span><span class="tab-short" aria-hidden="true">Triage</span></button>
         <!-- The Case File is a bench like any other, so it lives in this strip rather than
              as a teaser chip: the cockpit header has no spare row for a chip, and a story
              the learner cannot see is a story they never open. -->
-        <button class="tab" role="tab" :aria-selected="mode==='casefile'"   @click="setMode('casefile')"   aria-label="Case file" title="Case file · what a can of soda does to your teeth"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='casefile'"   @click="setMode('casefile')"   aria-label="Case file" title="Case file · acidic drinks and tooth enamel"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
       </nav>
 
       <div class="command-actions">
@@ -57,7 +57,7 @@
         <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
       </div>
 
-      <div class="command-metrics" aria-label="Progress and patient telemetry">
+      <div class="command-metrics" aria-label="Practice progress">
         <span class="metric-chip">XP <strong x-text="g_xp"></strong></span>
         <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
         <!-- Standards tracking is secondary to the calls: one badge, expanded on demand,
@@ -92,7 +92,7 @@
     <div class="workbench-grid" x-show="mode!=='casefile'">
 
       <!-- ============ LEFT: the call in front of you ============ -->
-      <section class="mission-screen panel" :class="'tone-' + activeTone" aria-label="Active call">
+      <section class="mission-screen panel" :class="'tone-' + activeTone" aria-label="Active activity">
         <div class="mission-frame">
           <div class="mission-screen-art" x-html="scArt(activeArtId)"></div>
           <div class="screen-scanline" aria-hidden="true"></div>
@@ -135,11 +135,11 @@
         </details>
         <!-- One line, not a card: this row is the last thing in a fixed-height column and
              every line it takes is a line off the goal text above it. -->
-        <section class="instincts cockpit-instincts" aria-label="The night shift">
-          <span class="command-kicker">The night shift</span>
+        <section class="instincts cockpit-instincts" aria-label="Simulation shift">
+          <span class="command-kicker">Simulation shift</span>
           <p><strong x-text="clockLabel"></strong> on a 23:00 to 07:00 shift &middot;
-            <strong x-text="calls"></strong> calls logged &middot;
-            arterial pH <strong x-text="phLabel"></strong></p>
+            <strong x-text="calls"></strong> cases submitted &middot;
+            reference arterial pH <strong x-text="phLabel"></strong></p>
         </section>
       </section>
 
@@ -151,11 +151,11 @@
           <template x-if="na">
           <div>
             <p class="muted mb-2">
-              Build the IUPAC name of <span class="formula-lg" x-ce="na.f"></span>
+              Build the acid/base name of <span class="formula-lg" x-ce="na.f"></span>
               (<span x-text="na.kind==='base' ? 'a base' : 'an acid'"></span>) from its rule parts.
               The naming rules are on the reference card beside you.
             </p>
-            <p class="small muted mb-2">Where it turns up: <span x-text="na.where"></span></p>
+            <p class="small muted mb-2">Example context: <span x-text="na.where"></span></p>
 
             <!-- acid name builder -->
             <div class="name-grid" x-show="na.kind!=='base'">
@@ -324,7 +324,7 @@
               Neutralize it with <span x-ce="nu.base.f"></span> (<span x-text="nu.base.name"></span>).
             </p>
 
-            <p class="small muted mb-2">Step 1. Predict the salt. Acid plus base always makes a salt plus water; criss-cross the ion charges to set each subscript.</p>
+            <p class="small muted mb-2">Step 1. Predict the salt. For the acids and metal hydroxides in this activity, neutralization forms a salt and water. Balance the ion charges to set the subscripts.</p>
             <div class="stepper-row">
               <div class="stepper">
                 <span class="el mono" x-text="nu.base.cation"></span>
@@ -341,7 +341,7 @@
             </div>
             <p class="eqn mt-3">Reaction: <span x-ce="nu.acid.f"></span> + <span x-ce="nu.base.f"></span> &rarr; <span class="formula" x-ce="nuStudentSalt"></span> + <span x-ce="'H2O'"></span></p>
 
-            <p class="small muted mt-4 mb-2">Step 2. Work out the moles of base that make moles of H+ equal moles of OH-, and call it. The beaker meter is read back to you once the call is in.</p>
+            <p class="small muted mt-4 mb-2">Step 2. Use the balanced mole ratio to calculate the base required for stoichiometric neutralization. Submit the amount to reveal the modeled pH.</p>
             <div class="field field-narrow">
               <label for="nuBase">moles of <span x-text="nu.base.cationName"></span> base to add</label>
               <input id="nuBase" type="number" step="0.01" min="0" x-model="nuBaseInput" :disabled="nuDone">
@@ -358,7 +358,7 @@
               <button class="btn btn-accent" @click="nuCheck()" :disabled="nuDone || nuBaseInput===''" x-text="nu.sc.actionLabel"></button>
               <span class="grow"></span>
               <button class="btn btn-sm" @click="nuNext()">Next spill</button>
-              <span class="call-hint" x-show="nuBaseInput === '' && !nuDone" x-text="'Work out the moles of base, then type them.'"></span>
+              <span class="call-hint" x-show="nuBaseInput === '' && !nuDone" x-text="'Calculate the moles of base, then enter the value.'"></span>
             </div>
 
             <template x-if="nuVerdict">
@@ -398,7 +398,7 @@
                      mission screen, so a core "Next spill" can take the screen back without
                      leaving this block's question nowhere on the page (porting trap 17). -->
                 <p class="small muted mb-2" x-prose="ti.sc.goal"></p>
-                <p class="small mb-2">Titrate <span x-text="ti.Va"></span> mL of <span x-text="ti.Ca.toFixed(2)"></span> M strong acid with <span x-text="ti.Cb.toFixed(2)"></span> M strong base. Drive the added volume to the equivalence point, then pick the indicator. The calculated equivalence volume is drawn on the chart once you commit, not before.</p>
+                <p class="small mb-2">Titrate <span x-text="ti.Va"></span> mL of <span x-text="ti.Ca.toFixed(2)"></span> M strong acid with <span x-text="ti.Cb.toFixed(2)"></span> M strong base. Move the added volume to the equivalence point, then choose the listed indicator whose transition range includes pH 7.00. The calculated equivalence volume appears after you submit.</p>
               </div>
               </template>
               <div class="canvas-wrap"><canvas x-ref="titrCanvas"></canvas></div>
@@ -408,7 +408,7 @@
                   <label for="tiVb">base added: <span class="mono" x-text="tiVb.toFixed(1)"></span> mL &middot; pH <span class="mono" x-text="tiCurrentPH.toFixed(2)"></span></label>
                   <input id="tiVb" type="range" min="0" :max="ti.Vmax" step="0.1" x-model.number="tiVb" @input="updateTitrPoint()" :disabled="tiDone">
                 </div>
-                <p class="small muted mt-3 mb-2">Indicator (its color-change range should bracket the equivalence pH):</p>
+                <p class="small muted mt-3 mb-2">Activity criterion: choose the listed indicator whose transition range includes pH 7.00:</p>
                 <div class="choice-grid">
                   <template x-for="ind in indicators" :key="ind.name">
                     <button class="choice" :data-state="tiIndState(ind.name)" @click="tiPickInd(ind.name)" :disabled="tiDone">
@@ -420,7 +420,7 @@
                   <button class="btn btn-honors" @click="tiCheck()" :disabled="tiDone || !tiInd" x-text="ti.sc.actionLabel"></button>
                   <span class="grow"></span>
                   <button class="btn btn-sm" @click="tiNext()">New titration</button>
-                  <span class="call-hint" x-show="!tiInd && !tiDone" x-text="'Choose the indicator whose range brackets the equivalence point.'"></span>
+                  <span class="call-hint" x-show="!tiInd && !tiDone" x-text="'Choose the listed indicator whose range includes pH 7.00.'"></span>
                 </div>
 
                 <template x-if="tiVerdict">
@@ -501,7 +501,7 @@
             <template x-if="h2Unlocked && wa">
             <div class="mt-2">
               <p class="small muted mb-2" x-prose="wa.sc.goal"></p>
-              <p class="small eqn mb-2"><span x-text="wa.C.toFixed(3)"></span> M <span x-ce="wa.acid.f"></span> (<span x-text="wa.acid.name"></span>), <span x-tex="waKaTeX()"></span>. A weak acid only partly ionizes, so solve Ka = x^2/(C - x) for x = [H+], then set the meter.</p>
+              <p class="small eqn mb-2"><span x-text="wa.C.toFixed(3)"></span> M <span x-ce="wa.acid.f"></span> (<span x-text="wa.acid.name"></span>), <span x-tex="waKaTeX()"></span>. For this monoprotic weak-acid model, solve Ka = x²/(C - x) for x = [H+], then calculate the pH.</p>
               <p class="small muted mb-2" x-show="wa.acid.note" x-prose="wa.acid.note"></p>
               <div class="ph-readout" :style="`color:${phColor(waGuess)}`">pH = <span x-text="waGuess.toFixed(2)"></span></div>
               <div class="ph-scale" aria-hidden="true"><div class="ph-needle" :style="`left:${waGuess/14*100}%`"></div></div>
@@ -536,8 +536,8 @@
 
         <!-- ---------- Capstone: the last call of the night ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
-          <div class="note note-info" x-show="!capUnlocked">The last call unlocks once all five core skills (C.12 A to E) are mastered. Mastered so far: <span x-text="Math.round(gOverall()*5)"></span> of 5.</div>
-          <button class="btn btn-accent" x-show="capUnlocked && !cap" @click="genCapstone()">Take the last call</button>
+          <div class="note note-info" x-show="!capUnlocked">The capstone unlocks once all five core C.12 practice skills meet the activity mastery criterion. Mastered so far: <span x-text="Math.round(gOverall()*5)"></span> of 5.</div>
+          <button class="btn btn-accent" x-show="capUnlocked && !cap" @click="genCapstone()">Start capstone</button>
 
           <template x-if="capUnlocked && cap">
           <div>
@@ -589,14 +589,14 @@
               <span class="formula eqn" x-ce="capStudentSalt"></span>
             </div>
 
-            <p class="small muted mt-4 mb-2">4. Neutralize to pH 7 with <span x-ce="cap.base.f"></span>:</p>
+            <p class="small muted mt-4 mb-2">4. Calculate stoichiometric neutralization with <span x-ce="cap.base.f"></span>:</p>
             <div class="field field-narrow">
               <label for="capBase">moles of base to add</label>
               <input id="capBase" type="number" step="0.01" min="0" x-model="capBaseInput" :disabled="capWin">
             </div>
 
             <div class="row call-row mt-4">
-              <button class="btn btn-accent" @click="capCertify()" :disabled="capWin || !capReady">Hand it over</button>
+              <button class="btn btn-accent" @click="capCertify()" :disabled="capWin || !capReady">Submit capstone</button>
               <span class="call-hint" x-show="!capReady && !capWin" x-text="!capNaSel.suffix ? 'Name the acid first.' : (!capClass ? 'Now say whether it is strong or weak.' : 'Now type the moles of base to add.')"></span>
             </div>
 
@@ -616,11 +616,11 @@
 
       </section>
 
-      <!-- ============ RIGHT: the patient next door ============ -->
-      <aside class="life-support-board patient-board panel" aria-label="The patient next door">
+      <!-- ============ RIGHT: reference pH + activity progress ============ -->
+      <aside class="life-support-board patient-board panel" aria-label="pH reference and practice progress">
         <div class="life-header">
           <div>
-            <span class="command-kicker">Next door</span>
+            <span class="command-kicker">pH reference</span>
             <strong x-text="phState"></strong>
           </div>
           <span class="sol-chip" x-text="clockLabel"></span>
@@ -634,7 +634,7 @@
           <span class="crew-face" x-text="phMood"></span>
           <div class="crew-bar">
             <div class="life-meter-label">
-              <span title="arterial blood pH, against the 7.35 to 7.45 reference range">Arterial</span>
+              <span title="reference arterial blood pH example; typical arterial range 7.35 to 7.45">Reference</span>
               <span class="mono" x-text="'pH ' + phLabel"></span>
             </div>
             <div class="pt-scale" aria-hidden="true">
@@ -652,7 +652,7 @@
              The patient is the crew row above, so these four are the night's WORK: the six
              calls that reach them, the share of every call that was right, the sub-skills
              certified, and the clock. Each can move while the others do not. -->
-        <div class="system-grid" aria-label="Night shift readings">
+        <div class="system-grid" aria-label="Practice progress readings">
           <template x-for="r in railReadings" :key="r.key">
             <div class="ship-stock">
               <div class="life-meter-label">
@@ -664,15 +664,15 @@
           </template>
         </div>
 
-        <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest consequence">
-          <span class="command-kicker">Latest consequence</span>
+        <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest feedback">
+          <span class="command-kicker">Latest feedback</span>
           <strong x-text="activeStateLabel"></strong>
-          <p x-text="worldLog.length ? worldLog[0].text : 'The clock starts at 23:00 and the patient is already outside the window.'"></p>
+          <p x-text="worldLog.length ? worldLog[0].text : 'The simulation clock starts at 23:00. The pH figure above is a fixed reference example.'"></p>
         </section>
 
-        <section class="mission-log" aria-label="Night log">
-          <span class="command-kicker">Night log</span>
-          <p class="worldstate-empty" x-show="!worldLog.length">Nothing called yet.</p>
+        <section class="mission-log" aria-label="Activity log">
+          <span class="command-kicker">Activity log</span>
+          <p class="worldstate-empty" x-show="!worldLog.length">Nothing submitted yet.</p>
           <ul class="worldstate-list" x-show="worldLog.length">
             <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
               <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
@@ -695,15 +695,15 @@
   window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
   const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
          { mountColumnResizers }] = await Promise.all([
-    import('./js/main.js?v=u9-1'),
+    import('./js/main.js?v=u9-fidelity-20260826'),
     import('../../shared/js/render.js'),
     import('../../shared/js/gauge.js'),
     import('../../shared/js/casefile.js'),
-    import('./js/case.js?v=u9-1'),
+    import('./js/case.js?v=u9-fidelity-20260826'),
     import('../shared/columns.js?v=cockpit-3')
   ]);
   window.sim = createSim;
-  const { default: Alpine } = await import('../../shared/vendor/alpine-3.14.1.esm.min.js');
+  const { default: Alpine } = await import('https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js');
   registerRender(Alpine);
   registerGauge(Alpine);
   Alpine.data('sim', createSim);

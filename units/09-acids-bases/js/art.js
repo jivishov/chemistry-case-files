@@ -472,7 +472,7 @@ export const SCENE_ART = {
 
   // ================= C.12(C) strength: the same concentration is not the same call =================
 
-  'c-sink': scene('c-sink', { caption: 'THE KITCHEN AND GARAGE · SAME M, DIFFERENT pH', body: k => {
+  'c-sink': scene('c-sink', { caption: 'SAME CONCENTRATION · DIFFERENT pH', body: k => {
     return benchTop(k, 96)
       + bottle(72, 96, 46, 60, { k, tint: ['#3c2016', '#8a4726', '#d88946'], lines: ['VINEGAR', 'ACID'], id: 'vin' })
       + bottle(156, 96, 46, 60, { k, tint: ['#2b3415', '#607c28', '#b7c15c'], lines: ['POOL', 'ACID'], id: 'pool' })
@@ -489,7 +489,7 @@ export const SCENE_ART = {
       + mono(321, 73, 'WHY THE GAP?', { size: 6.5, fill: C.steelLt, ls: '.06em' });
   } }),
 
-  'c-cart': scene('c-cart', { caption: 'THE CLEANING CART · FOUR BASES, ONE DECISION', body: k => {
+  'c-cart': scene('c-cart', { caption: 'FOUR BASES · CLASSIFY STRENGTH', body: k => {
     const cart = `<g><rect x="30" y="52" width="230" height="37" rx="5" fill="#263c42" stroke="${C.chrome}" stroke-width="1.5"/>`
       + `<path d="M38 62 H252 M38 76 H252" stroke="#4d6870" stroke-width="1.2"/>`
       + `<circle cx="54" cy="94" r="8" fill="#17262b" stroke="${C.chrome}" stroke-width="1.3"/><circle cx="234" cy="94" r="8" fill="#17262b" stroke="${C.chrome}" stroke-width="1.3"/></g>`;
@@ -510,7 +510,7 @@ export const SCENE_ART = {
   // The packet that changes the patient’s pH has the curtain gap and monitor trace. Four
   // bottle silhouettes stay on the clipboard so the scene asks for a classification, not a
   // pre-filled answer.
-  'c-sheet': scene('c-sheet', { caption: 'FOUR BOTTLES · WHICH ONE REACHED HIM?', body: k => {
+  'c-sheet': scene('c-sheet', { caption: 'FOUR ACIDS · COMPARE STRENGTH', body: k => {
     return benchTop(k, 96, { bay: true })
       + sheet(27, 17, 140, 76, { board: true, tilt: -2, lines: [
         ['TRANSFER ROOM LIST', 6.5, 700, '#8a8272'],
@@ -524,12 +524,12 @@ export const SCENE_ART = {
       })).join('')
       + mono(259, 39, 'THE ROOM', { size: 7, fill: C.dim, ls: '.1em' })
       + `<path d="M180 58 C196 48 214 47 232 52" fill="none" stroke="${C.warn}" stroke-width="1.5" stroke-dasharray="3 4"/>`
-      + mono(191, 72, 'ACID LOAD?', { size: 7, fill: C.warn, ls: '.07em', anchor: 'start' });
+      + mono(191, 72, 'STRENGTH?', { size: 7, fill: C.warn, ls: '.07em', anchor: 'start' });
   } }),
 
   // ================= C.12(D) neutralization: call the dose, do not improvise it =================
 
-  'd-bucket': scene('d-bucket', { caption: 'THE GARAGE BUCKET · CALL THE MOLES FIRST', body: k => {
+  'd-bucket': scene('d-bucket', { caption: 'ACID + BASE · COMPARE MOLES', body: k => {
     return benchTop(k, 96)
       + pail(106, 97, 86, 106, 61, { k, liquid: '#b04a32', level: .42, id: 'spill' })
       + mono(106, 61, 'ACID', { size: 8, fill: '#f1d1c5', w: 700, ls: '.08em' })
@@ -537,13 +537,13 @@ export const SCENE_ART = {
       + bottle(195, 96, 42, 54, { k, tint: ['#163229', '#2f735a', '#75b98e'], lines: ['BASE', 'SHELF'], id: 'dose' })
       + flow(152, 180, 70, { color: C.copper1, dash: '4 4', op: .68 })
       + panelBox(250, 18, 126, 62)
-      + mono(313, 33, 'DOSE CARD', { size: 6.5, fill: C.dim, ls: '.1em' })
+      + mono(313, 33, 'MOLE RATIO', { size: 6.5, fill: C.dim, ls: '.1em' })
       + mono(313, 50, 'mol H+  =  mol OH-', { size: 8.5, fill: C.white, w: 700 })
       + `<path d="M268 62 H358" stroke="${C.steel}" stroke-width="1.2" stroke-dasharray="3 4"/>`
-      + mono(313, 74, 'CALL:  ?  mol', { size: 7.5, fill: C.warn, ls: '.06em' });
+      + mono(313, 74, 'TARGET:  ?  mol', { size: 7.5, fill: C.warn, ls: '.06em' });
   } }),
 
-  'd-decon': scene('d-decon', { caption: 'THE DECON DRUM · NOT READY FOR THE DRAIN', body: k => {
+  'd-decon': scene('d-decon', { caption: 'NEUTRALIZATION MODEL · USE MOLE RATIOS', body: k => {
     return benchTop(k, 96)
       + pail(126, 98, 108, 132, 68, { k, liquid: '#4b8090', level: .52, id: 'drum', lid: false })
       + `<rect x="81" y="47" width="90" height="23" rx="4" fill="#23424b" stroke="${C.chrome}" stroke-width="1.2"/>`
@@ -553,12 +553,12 @@ export const SCENE_ART = {
       + panelBox(263, 19, 110, 62)
       + mono(318, 34, 'MEASURED ACID', { size: 6.5, fill: C.dim, ls: '.07em' })
       + mono(318, 52, 'SALT  +  WATER', { size: 8.5, fill: C.white, w: 700 })
-      + mono(318, 70, 'DRAIN AFTER  ?', { size: 7, fill: C.warn, ls: '.06em' });
+      + mono(318, 70, 'BASE NEEDED  ?', { size: 7, fill: C.warn, ls: '.06em' });
   } }),
 
   // ================= C.12(E) pH: read the ion concentration, then the scale =================
 
-  'e-soda': scene('e-soda', { caption: 'THE CORRIDOR SODA · A COLOUR IS NOT A NUMBER', body: k => {
+  'e-soda': scene('e-soda', { caption: 'SOFT-DRINK SAMPLE · pH FROM [H+]', body: k => {
     const can = k.lin('can', [[0, '#692525'], [.34, '#b54238'], [.58, '#e57552'], [1, '#6d2728']], true);
     return benchTop(k, 96)
       + `<ellipse cx="83" cy="97" rx="23" ry="3.5" fill="#040c10" opacity=".38"/>`
@@ -574,7 +574,7 @@ export const SCENE_ART = {
       + mono(291, 73, 'pH  =  ?', { size: 8, fill: C.warn, ls: '.08em' });
   } }),
 
-  'e-bleach': scene('e-bleach', { caption: 'THE BUCKET THAT WOULD NOT RINSE · START WITH OH-', body: k => {
+  'e-bleach': scene('e-bleach', { caption: 'HYDROXIDE SAMPLE · pH FROM [OH-]', body: k => {
     return benchTop(k, 96)
       + pail(102, 97, 84, 106, 57, { k, liquid: '#7398b9', level: .44, id: 'bleach' })
       + bottle(60, 94, 33, 47, { k, tint: ['#183143', '#285b80', '#74a9ce'], lines: ['OH-'], id: 'hydrox' })
@@ -588,7 +588,7 @@ export const SCENE_ART = {
 
   // The printed gas has hydrogen-ion concentration rather than a pH. It is one of the calls
   // that reaches the patient, so the complete bay rather than a closed bench owns the frame.
-  'e-gas': scene('e-gas', { theme: 'bay', caption: 'THE BLOOD GAS · THE PROTOCOL SPEAKS pH', body: k => {
+  'e-gas': scene('e-gas', { theme: 'bay', caption: 'NEAR-NEUTRAL SAMPLE · CALCULATE pH', body: k => {
     const blood = k.glass('gasblood', ['#491d28', '#8d3142', '#d66a72']);
     return bayRoom(k, 99)
       + panelBox(22, 19, 107, 55, { fill: '#07161b', stroke: C.teal3 })
@@ -598,7 +598,7 @@ export const SCENE_ART = {
       + `<path d="M146 46 H184" fill="none" stroke="${C.copper1}" stroke-width="1.7" stroke-dasharray="3 4"/>`
       + `<path d="M190 46 l-9 -5 v10 z" fill="${C.copper1}"/>`
       + panelBox(202, 22, 106, 49, { fill: '#10242c', stroke: C.teal3 })
-      + mono(255, 38, 'UPSTAIRS', { size: 6.5, fill: C.dim, ls: '.08em' })
+      + mono(255, 38, 'CALCULATE', { size: 6.5, fill: C.dim, ls: '.08em' })
       + mono(255, 57, 'pH =  ?', { size: 12, fill: C.white, w: 700 })
       + `<g transform="translate(348 72)"><rect x="-12" y="-27" width="24" height="43" rx="4" fill="${blood}" stroke="${C.chrome}" stroke-width="1.2"/>`
       + `<rect x="-8" y="-22" width="4" height="24" rx="2" fill="#ffffff" opacity=".25"/><rect x="-14" y="-32" width="28" height="6" rx="2" fill="${C.chrome}"/></g>`
@@ -609,7 +609,7 @@ export const SCENE_ART = {
 
   // The Honors graph is decorative here: it names the apparatus and the relation students
   // are about to explore without leaking the endpoint or an indicator choice.
-  'h1-titrate': scene('h1-titrate', { theme: 'copper', caption: 'THE TITRATION BENCH · FIND THE ENDPOINT', body: k => {
+  'h1-titrate': scene('h1-titrate', { theme: 'copper', caption: 'TITRATION · FIND EQUIVALENCE', body: k => {
     return benchTop(k, 96, { bay: true })
       + burette(98, 15, 63, { k, fill: .63, id: 'titrbu' })
       + `<path d="M98 89 C102 91 106 92 110 95" fill="none" stroke="${C.teal3}" stroke-width="1.7" stroke-dasharray="2 3"/>`
@@ -619,10 +619,10 @@ export const SCENE_ART = {
       + mono(304, 33, 'STANDARD BASE', { size: 6.5, fill: '#e0b483', ls: '.08em' })
       + mono(304, 51, 'n H+  =  n OH-', { size: 10, fill: C.white, w: 700 })
       + `<path d="M244 62 H364" stroke="#8a6a3c" stroke-width="1.2" stroke-dasharray="3 4"/>`
-      + mono(304, 75, 'ENDPOINT  ?', { size: 8, fill: C.copper1, w: 700, ls: '.08em' });
+      + mono(304, 75, 'EQUIVALENCE  ?', { size: 8, fill: C.copper1, w: 700, ls: '.08em' });
   } }),
 
-  'h2-weak': scene('h2-weak', { theme: 'copper', caption: 'THE FIVE-PERCENT BOTTLE · EQUILIBRIUM, NOT A GUESS', body: k => {
+  'h2-weak': scene('h2-weak', { theme: 'copper', caption: 'WEAK ACID · USE Ka AND C', body: k => {
     const acid = k.glass('weakacid', ['#4b2417', '#9b4f2d', '#df9b56']);
     return benchTop(k, 96)
       + bottle(82, 96, 49, 61, { k, tint: ['#4a2417', '#994d2b', '#df9b54'], lines: ['5%', 'WEAK ACID'], id: 'weakb' })
@@ -639,11 +639,11 @@ export const SCENE_ART = {
 
   // ================= Capstone: one unlabelled beaker, then handover =================
 
-  'cap-last': scene('cap-last', { theme: 'bay', caption: 'THE LAST CALL · HANDOVER IN ONE HOUR', body: k => {
+  'cap-last': scene('cap-last', { theme: 'bay', caption: 'CAPSTONE · CONNECT THE SKILLS', body: k => {
     const unknown = k.glass('unknown', ['#24343a', '#516d76', '#a7c5cc']);
     return bayRoom(k, 98)
       + `<rect x="20" y="18" width="83" height="35" rx="5" fill="#132c33" stroke="${C.chrome}" stroke-width="1.2"/>`
-      + mono(61, 32, 'HANDOVER', { size: 6.5, fill: C.dim, ls: '.08em' })
+      + mono(61, 32, 'CAPSTONE', { size: 6.5, fill: C.dim, ls: '.08em' })
       + mono(61, 45, '06:00', { size: 12, fill: C.warn, w: 700 })
       + beaker(159, 96, 66, 57, { k, level: .51, liquid: '#7a9ba2', id: 'lastbeaker' })
       + `<path d="M126 59 q33 -15 66 0 q-8 15 -33 15 q-25 0 -33 -15 z" fill="${unknown}" opacity=".45"/>`
@@ -652,7 +652,7 @@ export const SCENE_ART = {
         ['ONE BEAKER', 6.5, 700, '#8a8272'],
         ['NAME  →  STRENGTH', 7.5, 700],
         ['SALT  →  DOSE', 7.5, 700],
-        ['ALL FOUR STEPS', 6.5, 500, '#a89a86']
+        ['CHECK FOUR STEPS', 6.5, 500, '#a89a86']
       ] })
       + `<path d="M194 58 C209 48 218 45 230 47" fill="none" stroke="${C.copper1}" stroke-width="1.5" stroke-dasharray="3 4"/>`
       + `<path d="M328 89 h11 l4 -12 l6 24 l4 -10 h35" fill="none" stroke="${C.trace}" stroke-width="1.6" stroke-linejoin="round" opacity=".85"/>`;

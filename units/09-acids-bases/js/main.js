@@ -31,12 +31,12 @@ import {
   BASE_METALS, BASE_ROMANS, BASE_SUFFIXES, DEFINE_POOL, STRENGTH, STRENGTH_REASON,
   NEUT_ACIDS, NEUT_BASES, WEAK_ACIDS, WEAK_CONCS, INDICATORS,
   SCENARIOS, NEUT_BANDS, METER_BANDS, METER_MANTISSAS, WEAK_BANDS, titrBands
-} from './model.js';
+} from './model.js?v=u9-fidelity-20260826';
 import {
   pH, pOH, pHfromPOH, equivalenceVolume, titrationPH, phWeakAcid,
   moleRatio, gcd, fmt
 } from '../../../shared/js/chem.js';
-import { sceneArt } from './art.js';
+import { sceneArt } from './art.js?v=u9-fidelity-20260826';
 import { createGame, outcomeBand } from '../../../shared/js/game.js';
 import { lineChart } from '../../../shared/js/render.js';
 
@@ -99,7 +99,7 @@ const skills = [
   { id: 'b',  code: 'C.12(B)', label: 'Definitions/conjugates', target: 3 },
   { id: 'c',  code: 'C.12(C)', label: 'Strong vs weak',         target: 3 },
   { id: 'd',  code: 'C.12(D)', label: 'Neutralization',         target: 3 },
-  { id: 'e',  code: 'C.12(E)', label: 'pH from [H+]',           target: 3 },
+  { id: 'e',  code: 'C.12(E)', label: 'pH calculations',           target: 3 },
   { id: 'h1', code: 'Honors',  label: 'Titration curve',        target: 2, honors: true },
   { id: 'h2', code: 'Honors',  label: 'Weak-acid Ka',           target: 2, honors: true },
   { id: 'cap', code: 'Capstone', label: 'Last call',            target: 1, honors: true }
@@ -231,19 +231,10 @@ export function createSim() {
     // titrates the patient toward the window and never past it (PH_CEIL), which is what an
     // intervention that is dosed correctly looks like.
     recordWorld({ icon, tone, text, minutes, delta = 0 }) {
-      // Only the minutes that fit inside the shift are spent, and the patient drifts by
-      // exactly those, so the clock and the drift never disagree. Past the handover the
-      // clock reads 07:00 and the drift stops: the shift is over, and the stage is practice.
+      // The clock is a simulation timer only. Student answers do not alter a physiological
+      // measurement; the reference arterial pH shown in the rail remains fixed at 7.20.
       const spent = Math.min(minutes, SHIFT_LEN - this.clockMin);
       this.clockMin += spent;
-      // The drift models a patient who is NOT yet corrected. Once the gas is back inside the
-      // reference range they are stable and holding, so time stops costing them; a wrong
-      // call on one of the six scenarios that reach them can still knock them back out, and
-      // then the drift resumes. Without this, a learner who keeps practising correctly after
-      // stabilising the patient would push them back into acidosis for doing nothing wrong.
-      const drift = this.phInWindow ? 0 : DRIFT_PER_MIN * spent;
-      const moved = this.ph - drift + delta;
-      this.ph = rN(clamp(moved, PH_FLOOR, PH_CEIL), 3);
       this.worldLog.unshift({ id: ++this._wid, icon, tone, text: `${this.clockLabel} ${text}` });
       if (this.worldLog.length > 6) this.worldLog.pop();
     },
@@ -261,12 +252,8 @@ export function createSim() {
     get phNeedlePct() { return clamp((this.ph - SCALE_LO) / (SCALE_HI - SCALE_LO), 0, 1) * 100; },
     get phBandLeftPct() { return (WIN_LO - SCALE_LO) / (SCALE_HI - SCALE_LO) * 100; },
     get phBandWidthPct() { return (WIN_HI - WIN_LO) / (SCALE_HI - SCALE_LO) * 100; },
-    get phMood() { return this.phInWindow ? '\u{1F642}' : this.ph >= PH_CRASH ? '\u{1F630}' : '\u{1F635}'; },
-    get phState() {
-      if (this.phInWindow) return 'Patient stable, the gas is in the window';
-      if (this.ph >= PH_CRASH) return 'Patient acidotic, still compensating';
-      return 'Patient crashing';
-    },
+    get phMood() { return '\u{1F9EA}'; },
+    get phState() { return 'Reference blood-gas example'; },
     get phTone() { return this.phInWindow ? 'var(--success)' : this.ph >= PH_CRASH ? 'var(--warn)' : 'var(--danger)'; },
     get winLo() { return WIN_LO; },
     get winHi() { return WIN_HI; },
@@ -289,27 +276,28 @@ export function createSim() {
     // as "7.3" against a target of "7.301" and read as two different measurements (trap 43).
     doseVerdict(sc, val, target, bands, unit, detail, dp) {
       if (!isFinite(val)) {
-        return { v: { tone: 'fail', icon: '\u{26A0}\u{FE0F}', state: 'NO NUMBER', headline: 'Nothing to act on', detail: sc.fail, gauge: null }, good: false, dir: 'fail' };
+        return { v: { tone: 'fail', icon: '\u{26A0}\u{FE0F}', state: 'ENTER A NUMBER', headline: 'Enter a numerical answer', detail: sc.fail, gauge: null }, good: false, dir: 'fail' };
       }
       const band = outcomeBand(val, target, bands);
       const good = band.withinSpec;
       const n = x => x.toFixed(dp);
       const yours = `${n(val)} ${unit}`;
-      const needTxt = `${n(target)} ${unit}`;
+      const targetTxt = `${n(target)} ${unit}`;
       if (good) {
-        return { v: { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Called it right',
-          detail: `You called ${yours}; the bench needs ${needTxt}. ${detail} ${sc.safe}`, gauge: 'on' }, good: true, dir: 'ok' };
+        const headline = band.band === 'ideal' ? 'Correct' : 'Within activity tolerance';
+        return { v: { tone: 'success', icon: sc.icon, state: sc.safeState, headline,
+          detail: `Your result is ${yours}; the target is ${targetTxt}. ${detail} ${sc.safe}`, gauge: 'on' }, good: true, dir: 'ok' };
       }
       const off = `${n(Math.abs(val - target))} ${unit}`;
       const low = band.direction === 'low';
       return { v: { tone: 'fail', icon: '\u{1F6A8}', state: low ? sc.lowState : sc.highState,
-        headline: low ? 'Called it low' : 'Called it high',
-        detail: `You called ${yours}, ${off} ${low ? 'under' : 'over'} the ${needTxt} it needs. ${detail} ${low ? sc.low : sc.high}`,
+        headline: low ? 'Below target' : 'Above target',
+        detail: `Your result is ${yours}; the target is ${targetTxt}. The difference is ${off}. ${detail} ${low ? sc.low : sc.high}`,
         gauge: low ? 'low' : 'high' }, good: false, dir: low ? 'low' : 'high' };
     },
     decisionVerdict(sc, good, state, headline, detail, consequence) {
       return good
-        ? { tone: 'success', icon: sc.icon, state: 'CALLED IT', headline, detail: `${detail} ${consequence}`, gauge: null }
+        ? { tone: 'success', icon: sc.icon, state: 'CORRECT', headline, detail: `${detail} ${consequence}`, gauge: null }
         : { tone: 'fail', icon: '\u{1F6A8}', state, headline, detail: `${detail} ${consequence}`, gauge: null };
     },
     // The tail every commit handler shares: book the world move, then re-apply the selects
@@ -382,7 +370,7 @@ export function createSim() {
       if (v) return v.detail || v.headline || v.state;
       const b = this.activeBrief;
       if (b) return b.why || b.goal || '';
-      return 'Pick a bench. The phone is downstairs, the patient is next door, and the clock is running either way.';
+      return 'Choose a practice station. Use the chemistry evidence to complete the current task.';
     },
 
     // The facts a learner should never have to leave the bench to look up: a rule, a
@@ -400,40 +388,40 @@ export function createSim() {
       const out = [];
       if (this.mode === 'naming') {
         out.push({ k: 'Binary acid', v: 'no oxygen: hydro- + root + -ic acid' });
-        out.push({ k: 'Oxyacid', v: '-ate ion gives -ic acid, -ite ion gives -ous acid' });
-        out.push({ k: 'Hydroxide base', v: 'metal + hydroxide, roman numeral if the charge varies' });
+        out.push({ k: 'Oxyacid', v: '-ate ion gives -ic acid; -ite ion gives -ous acid' });
+        out.push({ k: 'Hydroxide base', v: 'metal name + hydroxide; use a Roman numeral for a variable-charge metal' });
       } else if (this.mode === 'define') {
-        out.push({ k: 'Arrhenius', v: 'releases H+ or OH- in water, and nothing else' });
-        out.push({ k: 'Bronsted-Lowry', v: 'donates or accepts a proton, water optional' });
-        out.push({ k: 'Conjugate pair', v: 'two species one H+ apart, nothing more' });
+        out.push({ k: 'Arrhenius', v: 'in water: acid increases H3O+; base increases OH-' });
+        out.push({ k: 'Brønsted-Lowry', v: 'acid donates H+; base accepts H+' });
+        out.push({ k: 'Conjugate pair', v: 'two species that differ by exactly one H+' });
       } else if (this.mode === 'strength') {
-        out.push({ k: 'Strong', v: 'ionizes completely, so all of it is in solution as ions' });
-        out.push({ k: 'Not concentration', v: 'strength is what fraction comes apart, not how much is in the bottle' });
-        out.push({ k: 'Not danger', v: 'HF is weak and one of the worst things on the shelf' });
+        out.push({ k: 'Strong acid', v: 'ionizes essentially completely in water' });
+        out.push({ k: 'Strong hydroxide', v: 'a soluble ionic hydroxide dissociates essentially completely' });
+        out.push({ k: 'Strength ≠ hazard', v: 'strength describes ionization, not overall chemical danger' });
       } else if (this.mode === 'neutralize') {
         if (this.screenIsHonors && this.ti) {
-          out.push({ k: 'Equivalence', v: 'Veq = Ca x Va / Cb' });
-          out.push({ k: 'On the bench', v: this.ti.Ca.toFixed(2) + ' M x ' + this.ti.Va + ' mL against ' + this.ti.Cb.toFixed(2) + ' M' });
-          out.push({ k: 'Strong vs strong', v: 'neutral at equivalence, so the indicator has to turn at pH 7' });
+          out.push({ k: 'Equivalence', v: 'acid equivalents = base equivalents' });
+          out.push({ k: 'On the bench', v: this.ti.Ca.toFixed(2) + ' M × ' + this.ti.Va + ' mL against ' + this.ti.Cb.toFixed(2) + ' M' });
+          out.push({ k: 'Activity criterion', v: 'choose the listed indicator range that includes pH 7.00' });
         } else {
-          out.push({ k: 'Neutral', v: 'mol H+ equals mol OH-, and that is the whole condition' });
-          out.push({ k: 'Per formula unit', v: 'H2SO4 gives 2 H+; Ca(OH)2 gives 2 OH-' });
-          out.push({ k: 'The salt', v: 'criss-cross the ion charges to set each subscript' });
+          out.push({ k: 'Neutralization', v: 'match acid equivalents with hydroxide equivalents' });
+          out.push({ k: 'Stoichiometry', v: 'use the balanced coefficients to get the mole ratio' });
+          out.push({ k: 'Salt formula', v: 'balance cation and anion charges to the lowest whole-number ratio' });
         }
       } else if (this.mode === 'meter') {
         if (this.screenIsHonors && this.wa) {
-          out.push({ k: 'Weak acid', v: 'Ka = x^2 / (C - x), and x is [H+]' });
+          out.push({ k: 'Weak acid', v: 'Ka = x²/(C - x), where x = [H+]' });
           out.push({ k: 'On the bench', v: this.wa.C.toFixed(3) + ' M ' + this.wa.acid.f + ', Ka ' + this.wa.acid.Ka.toExponential(1) });
-          out.push({ k: 'Not the answer', v: '-log(Ka) and -log(C) are both wrong, in opposite directions' });
+          out.push({ k: 'Then', v: 'pH = -log[H+]' });
         } else {
           out.push({ k: 'pH', v: 'pH = -log[H+]' });
-          out.push({ k: 'Hydroxide reading', v: 'pH + pOH = 14 at 25 C, because Kw is 1.0 x 10^-14' });
-          out.push({ k: 'One whole step', v: 'a tenfold change in [H+]' });
+          out.push({ k: 'At 25 °C', v: 'pH + pOH = 14.00' });
+          out.push({ k: 'One pH unit', v: 'a tenfold change in [H+]' });
         }
       } else if (this.mode === 'capstone') {
-        out.push({ k: 'Four steps', v: 'name it, class it, predict the salt, neutralize it' });
-        out.push({ k: 'Neutral', v: 'mol H+ equals mol OH-' });
-        out.push({ k: 'One step out', v: 'is a handover the day shift redoes from the beginning' });
+        out.push({ k: 'Four steps', v: 'name, classify strength, predict the salt, neutralize' });
+        out.push({ k: 'Neutralization', v: 'match acid and hydroxide equivalents' });
+        out.push({ k: 'Check', v: 'use the first incorrect step to guide your revision' });
       }
       return out.slice(0, 3);
     },
@@ -452,24 +440,25 @@ export function createSim() {
     get railReadings() {
       const left = Math.max(0, SHIFT_LEN - this.clockMin);
       const leftLabel = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
-      const right = this.calls ? Math.round(this.callsRight / this.calls * 100) : 100;
+      const right = this.calls ? Math.round(this.callsRight / this.calls * 100) : 0;
       const certs = this.teksMasteredCount, coreN = this.coreSkills.length;
+      const caseTarget = 15;
       return [
-        { key: 'reached', label: 'Reached', raw: `${this.reached.length}/${REACHING.length}`,
-          pct: this.reached.length / REACHING.length * 100,
-          hint: 'of the six calls that physically reach this patient, the ones called right' },
-        { key: 'right', label: 'Right', raw: `${right}%`, pct: right,
-          hint: 'of the calls you have made, the share that were right' },
+        { key: 'cases', label: 'Cases', raw: `${Math.min(this.calls, caseTarget)}/${caseTarget}`,
+          pct: Math.min(this.calls / caseTarget, 1) * 100,
+          hint: 'activity progress: this practice bar fills after 15 submitted cases' },
+        { key: 'right', label: 'Accuracy', raw: `${right}%`, pct: right,
+          hint: 'percentage of submitted cases answered correctly' },
         { key: 'skills', label: 'Skills', raw: `${certs}/${coreN}`, pct: certs / coreN * 100,
-          hint: 'C.12 sub-skills certified: three correct in a row on that bench' },
-        { key: 'shift', label: 'Shift', raw: leftLabel, pct: left / SHIFT_LEN * 100,
-          hint: 'hours and minutes left before the day shift takes the handover at 07:00' }
+          hint: 'activity mastery for the five C.12 practice skills' },
+        { key: 'shift', label: 'Sim time', raw: leftLabel, pct: left / SHIFT_LEN * 100,
+          hint: 'simulated time remaining in the activity shift; this is not a scientific measurement' }
       ];
     },
     stockColor(v) { return v >= 67 ? 'var(--success)' : v >= 34 ? 'var(--warn)' : 'var(--danger)'; },
 
     seCaption(se) {
-      if (this.gMastered(se.id)) return 'Mastered';
+      if (this.gMastered(se.id)) return 'Activity mastered';
       const sk = this.g_skills[se.id];
       const def = this.g_skillDefs.find(d => d.id === se.id) || {};
       return `${sk ? sk.run : 0} of ${def.target || 3} correct in a row`;
@@ -537,11 +526,11 @@ export function createSim() {
       const stemOk = this.naStemOk;
       const ok = this.naOk;
       const consequence = ok ? sc.right : (stemOk ? sc.wrongSuffix : sc.wrongStem);
-      const v = this.decisionVerdict(sc, ok, stemOk ? 'WRONG ENDING' : 'WRONG SUBSTANCE',
-        ok ? `${n.name}: named right` : `It is ${n.name}, not ${this.naPreview(this.naSel)}`,
+      const v = this.decisionVerdict(sc, ok, stemOk ? 'CHECK THE ENDING' : 'CHECK THE FORMULA',
+        ok ? `${n.name}: correctly named` : `It is ${n.name}, not ${this.naPreview(this.naSel)}`,
         this.naExplain, consequence);
       this.gRecord('a', ok, !this.naAttempted);
-      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'named' : 'misnamed'}`, ok ? sc.delta.ok : sc.delta.wrong);
+      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'named' : 'name needs revision'}`, ok ? sc.delta.ok : sc.delta.wrong);
       this.naAttempted = true; this.naChecked = true; this.naVerdict = v;
       this.claimScreen('naming', sc, v, false);
       if (ok) this.naDone = true;
@@ -597,11 +586,11 @@ export function createSim() {
       const answer = this.df.kind === 'conjugate'
         ? `The partner is ${this.df.qA.answer}, and ${this.df.ce} is acting as ${article(this.df.qB.answer)}`
         : `It is the ${this.df.qA.answer} definition, describing ${article(this.df.qB.answer)}`;
-      const v = this.decisionVerdict(sc, ok, aOk ? 'WRONG ON THE ROLE' : 'WRONG ON THE SPECIES',
-        ok ? 'Both halves hold' : answer,
+      const v = this.decisionVerdict(sc, ok, aOk ? 'CHECK THE ROLE' : 'CHECK THE PARTNER',
+        ok ? 'Both parts are correct' : answer,
         this.df.explain, consequence);
       this.gRecord('b', ok, !this.dfAttempted);
-      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'pair called' : 'pair misread'}`, ok ? sc.delta.ok : sc.delta.wrong);
+      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'pair identified' : 'pair needs revision'}`, ok ? sc.delta.ok : sc.delta.wrong);
       this.dfAttempted = true; this.dfChecked = true; this.dfVerdict = v;
       this.claimScreen('define', sc, v, false);
       if (ok) this.dfDone = true;
@@ -670,9 +659,12 @@ export function createSim() {
     get stExplain() {
       const strong = this.st.bottles.filter(b => b.strong).map(b => b.f);
       const weak = this.st.bottles.filter(b => !b.strong).map(b => b.f);
-      const ion = this.st.fam === 'acid' ? 'H+' : 'OH-';
-      return `${strong.join(', ') || 'None'} ionize completely, so at equal concentration they put the most ${ion} into solution; ` +
-        `${weak.join(', ') || 'none'} ionize only partly, so most of what is in the bottle stays intact in water.`;
+      if (this.st.fam === 'acid') {
+        return `${strong.join(', ') || 'None'} are treated as strong acids in this activity and ionize essentially completely in water; ` +
+          `${weak.join(', ') || 'none'} are weak acids and ionize only partially.`;
+      }
+      return `${strong.join(', ') || 'None'} are strong soluble hydroxides and dissociate essentially completely; ` +
+        `${weak.join(', ') || 'none'} are weak molecular bases and react with water only partially to form OH-.`;
     },
     stCheck() {
       if (this.stDone || !this.stAllClassified || !this.stReason) return;
@@ -680,11 +672,11 @@ export function createSim() {
       const classOk = this.stClassOk;
       const ok = this.stOk;
       const consequence = ok ? sc.right : (classOk ? sc.wrongReason : sc.wrongSort);
-      const v = this.decisionVerdict(sc, ok, classOk ? 'WRONG ON THE REASON' : 'WRONG ON THE SHELF',
-        ok ? `The ${this.st.fam}s are sorted` : `The sort the bottles actually make is not the one you called`,
+      const v = this.decisionVerdict(sc, ok, classOk ? 'CHECK THE EXPLANATION' : 'CHECK THE CLASSIFICATION',
+        ok ? `The ${this.st.fam}s are classified correctly` : `At least one ${this.st.fam} needs a different classification`,
         this.stExplain, consequence);
       this.gRecord('c', ok, !this.stAttempted);
-      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'shelf sorted' : 'shelf misread'}`, ok ? sc.delta.ok : sc.delta.wrong);
+      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'classification correct' : 'classification needs revision'}`, ok ? sc.delta.ok : sc.delta.wrong);
       this.stAttempted = true; this.stChecked = true; this.stVerdict = v;
       this.claimScreen('strength', sc, v, false);
       if (ok) this.stDone = true;
@@ -744,9 +736,9 @@ export function createSim() {
     nuPhColor(p) { return phColor(p); },
     get nuExplain() {
       const n = this.nu;
-      return `${n.acid.f} gives ${n.acid.protons} H+ per formula unit and ${n.base.f} gives ${n.base.hydroxides} OH-, ` +
-        `so the balanced neutralization is ${n.coefAcid} ${n.acid.f} + ${n.coefBase} ${n.base.f}, a ${n.coefAcid} to ${n.coefBase} mole ratio. ` +
-        `${n.molAcid.toFixed(2)} mol of acid therefore takes ${n.neutralBase.toFixed(3)} mol of base to reach pH 7, and the salt is ${this.nuCorrectSalt} plus water.`;
+      return `The balanced neutralization uses ${n.coefAcid} ${n.acid.f} for every ${n.coefBase} ${n.base.f}, a ${n.coefAcid}:${n.coefBase} mole ratio. ` +
+        `${n.molAcid.toFixed(2)} mol of acid therefore requires ${n.neutralBase.toFixed(3)} mol of base for stoichiometric neutralization, ` +
+        `and charge balance gives the salt ${this.nuCorrectSalt}.`;
     },
     nuCheck() {
       if (this.nuDone || this.nuBaseInput === '') return;
@@ -760,13 +752,13 @@ export function createSim() {
       // was exactly right, which is the contradiction trap 30 is about. The gauge still
       // reads `on`, because the gauge describes the number.
       if (r.good && !saltOk) {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'SALT CALLED WRONG', headline: 'Amount right, salt wrong',
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'SALT INCORRECT', headline: 'Amount correct; salt incorrect',
           detail: `${this.nuExplain}${saltNote} ${sc.saltWrong}`, gauge: 'on' };
         dir = 'salt';
       }
       const d = sc.delta;
       this.gRecord('d', ok, !this.nuAttempted);
-      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'brought to neutral' : (dir === 'salt' ? 'salt called wrong' : 'dose missed')}`,
+      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'brought to neutral' : (dir === 'salt' ? 'salt formula incorrect' : 'amount outside tolerance')}`,
         ok ? d.ok : (dir === 'high' ? d.high : d.low));
       this.nuAttempted = true; this.nuChecked = true; this.nuVerdict = v;
       this.claimScreen('neutralize', sc, v, false);
@@ -810,26 +802,25 @@ export function createSim() {
     get tiExplain() {
       const t = this.ti;
       const ind = INDICATORS.find(i => i.name === this.tiCorrectInd);
-      return `Moles of acid are ${(t.Ca * t.Va / 1000).toFixed(4)}, so equivalence needs the same moles of base: ` +
-        `Veq = Ca x Va / Cb = (${t.Ca.toFixed(2)} M)(${t.Va} mL) / ${t.Cb.toFixed(2)} M = ${t.Veq.toFixed(1)} mL. ` +
-        `A strong acid against a strong base is neutral at equivalence, so the indicator has to change colour around pH 7, ` +
-        `which is ${ind.name} (${ind.lo} to ${ind.hi}).`;
+      return `Moles of acid are ${(t.Ca * t.Va / 1000).toFixed(4)}, so the strong-base titration reaches equivalence at ` +
+        `Veq = Ca × Va / Cb = (${t.Ca.toFixed(2)} M)(${t.Va} mL) / ${t.Cb.toFixed(2)} M = ${t.Veq.toFixed(1)} mL. ` +
+        `Activity criterion: choose the listed indicator whose transition range includes pH 7.00; that is ${ind.name} (${ind.lo} to ${ind.hi}).`;
     },
     tiCheck() {
       if (this.tiDone || !this.tiInd) return;
       const sc = this.ti.sc;
       const indOk = this.tiIndOk;
-      const indNote = indOk ? '' : ` The indicator is also wrong: ${this.tiInd} changes colour outside pH 7.`;
+      const indNote = indOk ? '' : ` The selected indicator does not meet this activity criterion: its transition range does not include pH 7.00.`;
       const r = this.doseVerdict(sc, this.tiVb, this.ti.Veq, this.ti.bands, 'mL', this.tiExplain + indNote, 1);
       let v = r.v, ok = r.good && indOk, dir = r.dir;
       if (r.good && !indOk) {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'INDICATOR WRONG', headline: 'Volume right, indicator wrong',
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'INDICATOR INCORRECT', headline: 'Volume correct; indicator incorrect',
           detail: `${this.tiExplain}${indNote} ${sc.indWrong}`, gauge: 'on' };
         dir = 'ind';
       }
       const d = sc.delta;
       this.gRecord('h1', ok, !this.tiAttempted);
-      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'endpoint confirmed' : (dir === 'ind' ? 'indicator called wrong' : 'endpoint missed')}`,
+      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'equivalence identified' : (dir === 'ind' ? 'indicator needs revision' : 'equivalence volume outside tolerance')}`,
         ok ? d.ok : (dir === 'high' ? d.high : d.low));
       this.tiAttempted = true; this.tiChecked = true; this.tiVerdict = v;
       this.claimScreen('neutralize', sc, v, true);
@@ -916,13 +907,13 @@ export function createSim() {
       const r = this.doseVerdict(sc, this.meGuess, this.me.truePH, this.me.bands, 'pH', this.meExplain + clsNote, 2);
       let v = r.v, ok = r.good && classOk, dir = r.dir;
       if (r.good && !classOk) {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'CLASS CALLED WRONG', headline: 'Reading right, class wrong',
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'CLASSIFICATION INCORRECT', headline: 'pH correct; classification incorrect',
           detail: `${this.meExplain}${clsNote} ${sc.classWrong}`, gauge: 'on' };
         dir = 'class';
       }
       const d = sc.delta;
       this.gRecord('e', ok, !this.meAttempted);
-      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'pH posted' : (dir === 'class' ? 'class called wrong' : 'pH misread')}`,
+      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'pH correct' : (dir === 'class' ? 'classification incorrect' : 'pH outside tolerance')}`,
         ok ? d.ok : (dir === 'high' ? d.high : d.low));
       this.meAttempted = true; this.meChecked = true; this.meVerdict = v;
       this.claimScreen('meter', sc, v, false);
@@ -954,8 +945,9 @@ export function createSim() {
     get waExplain() {
       const w = this.wa;
       const h = Math.pow(10, -w.truePH);
-      return `Solving Ka = x^2 / (C - x) exactly, with C = ${w.C.toFixed(3)} M, gives x = [H+] = ${h.toExponential(2)} M, so pH = ${w.truePH.toFixed(2)}. ` +
-        `Note what it is not: -log(Ka) is ${(-Math.log10(w.acid.Ka)).toFixed(2)} and -log(C) is ${(-Math.log10(w.C)).toFixed(2)}, and neither is the answer.`;
+      return `For the monoprotic weak-acid model, solving Ka = x²/(C - x) with C = ${w.C.toFixed(3)} M gives ` +
+        `x = [H+] = ${h.toExponential(2)} M, so pH = ${w.truePH.toFixed(2)}. ` +
+        `Neither -log(Ka) nor -log(C) alone gives the equilibrium pH.`;
     },
     waCheck() {
       if (this.waDone) return;
@@ -963,7 +955,7 @@ export function createSim() {
       const r = this.doseVerdict(sc, this.waGuess, this.wa.truePH, this.wa.bands, 'pH', this.waExplain, 2);
       const d = sc.delta;
       this.gRecord('h2', r.good, !this.waAttempted);
-      this.commitWorld(sc, r.good, `${sc.system}, ${r.good ? 'pH called' : 'pH missed'}`,
+      this.commitWorld(sc, r.good, `${sc.system}, ${r.good ? 'pH correct' : 'pH outside tolerance'}`,
         r.good ? d.ok : (r.dir === 'high' ? d.high : d.low));
       this.waAttempted = true; this.waChecked = true; this.waVerdict = r.v;
       this.claimScreen('meter', sc, r.v, true);
@@ -1037,10 +1029,10 @@ export function createSim() {
         ? `${this.cap.acid.f} is ${this.cap.acid.name}, a strong acid; with ${this.cap.base.f} it gives ${this.capCorrectSalt} plus water, ` +
           `and ${this.cap.molAcid.toFixed(2)} mol of it takes ${this.cap.neutralBase.toFixed(3)} mol of base to reach pH 7.`
         : step;
-      const v = this.decisionVerdict(sc, ok, 'HANDOVER REJECTED',
-        ok ? 'The beaker stands up' : 'The beaker does not stand up', detail, ok ? sc.right : sc.wrong);
+      const v = this.decisionVerdict(sc, ok, 'REVIEW NEEDED',
+        ok ? 'Capstone complete' : 'Review the capstone steps', detail, ok ? sc.right : sc.wrong);
       this.gRecord('cap', ok, !this.capAttempted);
-      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'handed over clean' : 'handover rejected'}`, ok ? sc.delta.ok : sc.delta.wrong);
+      this.commitWorld(sc, ok, `${sc.system}, ${ok ? 'capstone complete' : 'capstone needs revision'}`, ok ? sc.delta.ok : sc.delta.wrong);
       this.capAttempted = true; this.capChecked = true; this.capVerdict = v;
       this.claimScreen('capstone', sc, v, false);
       if (ok) this.capWin = true;

@@ -10,53 +10,54 @@
 export const CASE = {
   id: 'soda-enamel-ph',
   number: '009',
-  kicker: 'in your hand at lunch',
-  title: 'What a can of soda does to your teeth',
-  teaser: 'What a $1 can of soda does to the hardest thing you own',
-  hook: 'Enamel is the hardest material your body makes. A drink you can buy for a dollar dissolves it, and the reason is a number you can now calculate: pH.',
+  kicker: 'acid-base chemistry in everyday life',
+  title: 'Why acidic drinks can demineralize tooth enamel',
+  teaser: 'A four-unit pH change means 10,000× greater [H+]',
+  hook: 'Tooth enamel is the hardest tissue in the human body. Repeated exposure to acidic drinks can shift its mineral balance toward demineralization.',
   stats: [
-    { v: '2.5', k: 'pH of cola' },
-    { v: '5.5', k: 'pH where enamel dissolves' },
-    { v: '~10,000x', k: 'more acidic than saliva' }
+    { v: '2.5', k: 'example cola pH' },
+    { v: '~5.5', k: 'common enamel reference' },
+    { v: '10,000×', k: 'greater [H+] at pH 2.5 than pH 6.5' }
   ],
   steps: [
     {
-      t: 'The hardest thing you own',
-      body: 'Tooth enamel is mostly hydroxyapatite, a calcium-phosphate crystal harder than steel. It has to survive a lifetime of chewing. Its one weakness is acid, and your mouth normally guards against that by holding a near-neutral pH around 6.5 to 7.',
-      chem: 'pH measures the hydrogen-ion concentration, [H+]. Neutral is 7. Below 7 is acidic, and every step down is ten times as many H+ ions.',
-      cap: 'Saliva holds the mouth near neutral, pH ~ 6.5 to 7.'
+      t: 'Enamel is mineral',
+      body: 'Tooth enamel is made mostly of hydroxyapatite, a calcium-phosphate mineral. It is extremely hard, but its surface can dissolve when the surrounding chemical environment becomes sufficiently acidic.',
+      chem: 'Higher hydrogen-ion concentration can shift the mineral equilibrium toward dissolution, releasing calcium and phosphate from the enamel surface.',
+      cap: 'ENAMEL · HYDROXYAPATITE MINERAL'
     },
     {
-      t: 'The pour',
-      body: 'A typical cola lands around pH 2.5, from phosphoric and carbonic acids. That is not a little below neutral; the pH scale is logarithmic, so pH 2.5 carries roughly 10,000 times the H+ of neutral saliva. The whole mouth acidifies in seconds.',
-      chem: 'Each pH unit is a factor of 10 in [H+]. From pH 6.5 to 2.5 is 4 units, so 10^4, about ten thousand times more acidic. That is why the log scale matters.',
-      cap: 'One sip: mouth pH crashes from ~6.5 toward 2.5.'
+      t: 'Read the pH scale',
+      body: 'Suppose saliva is at pH 6.5 and an acidic drink is at pH 2.5. The difference is 4.0 pH units. Because pH is logarithmic, the drink has 10^4, or 10,000 times, the hydrogen-ion concentration.',
+      chem: 'Each decrease of one pH unit represents a tenfold increase in [H+].',
+      cap: 'pH 6.5 → 2.5 · [H+] ×10,000'
     },
     {
-      t: 'Below 5.5, enamel loses',
-      body: 'Around pH 5.5, the critical threshold, acid starts stripping calcium and phosphate out of the enamel crystal. This is demineralization. Every acidic sip restarts the attack, and constant sipping keeps the clock from ever resetting.',
-      chem: 'H+ pulls the mineral apart: hydroxyapatite plus acid gives dissolved calcium and phosphate. It is an acid-base neutralization eating your teeth, ion by ion.',
-      cap: 'Below the red line at 5.5: calcium leaves the crystal.'
+      t: 'Demineralization',
+      body: 'For tooth enamel, pH 5.5 is often used as a reference point for increased demineralization. It is not a universal cutoff; the exact balance depends on factors such as calcium and phosphate concentrations and saliva composition.',
+      chem: 'When acidic conditions favor mineral dissolution, enamel loses calcium and phosphate ions. This process is called demineralization.',
+      cap: '~pH 5.5 · A USEFUL REFERENCE, NOT A FIXED LIMIT'
     },
     {
-      t: 'Saliva fights back (and how to help)',
-      body: 'Saliva is a buffer: it slowly neutralizes acid and, with fluoride, redeposits mineral, called remineralization. But the recovery takes 30 to 60 minutes, so sipping soda all afternoon means demineralization always wins. Water rinse, a straw, and not grazing all day tilt the fight back.',
-      chem: 'A buffer resists pH change by mopping up added H+. It is the same equilibrium behind blood-pH control and the titration curves in this unit.',
-      cap: 'Buffer recovery: ~30-60 min to climb back above 5.5.'
+      t: 'Saliva shifts the balance back',
+      body: 'Saliva buffers acids and supplies calcium and phosphate ions. As the mouth becomes less acidic, conditions can again favor remineralization. Fluoride can help make remineralized enamel more resistant to later acid exposure.',
+      chem: 'Demineralization and remineralization are competing processes influenced by the chemical environment around the enamel.',
+      cap: 'BUFFERING SUPPORTS REMINERALIZATION'
     }
   ],
   quiz: {
-    q: 'Saliva sits near pH 6.5; cola is about pH 2.5. Roughly how many times more hydrogen ions does the cola have?',
+    q: 'Saliva is at pH 6.5 and a drink is at pH 2.5. How many times greater is the hydrogen-ion concentration in the drink?',
     options: [
-      { label: 'About 10,000 times more (4 pH units)', correct: true },
-      { label: 'About 4 times more', correct: false },
-      { label: 'About 40 times more', correct: false }
+      { label: 'About 10,000 times greater', correct: true },
+      { label: 'About 4 times greater', correct: false },
+      { label: 'About 40 times greater', correct: false },
+      { label: 'About 1,000 times greater', correct: false }
     ],
-    explain: 'pH is logarithmic, so each unit is a factor of 10 in [H+]. From 6.5 to 2.5 is 4 units: 10^4 = 10,000 times more acidic. That enormous jump, hiding inside a small-looking number change, is exactly why the scale is built on logs.'
+    explain: 'The difference is 4.0 pH units. Each pH unit represents a factor of 10 in [H+], so 10^4 = 10,000.'
   },
-  punch: 'You just quantified an attack on your own body and found three ways to blunt it. pH is not a worksheet number; it runs your blood, your pool, your soil, and your smile.',
-  careers: ['Dentist', 'Food scientist', 'Biochemist', 'Environmental analyst'],
-  cta: { label: 'Read the pH meter yourself', call: "setMode('meter')" },
+  punch: 'A small-looking change in pH can represent a very large change in hydrogen-ion concentration. That helps explain why repeated acid exposure can shift enamel toward demineralization.',
+  careers: ['Dentist', 'Dental hygienist', 'Dental researcher', 'Food scientist'],
+  cta: { label: 'Use the pH meter', call: "setMode('meter')" },
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: a soda pour drops the mouth pH below the enamel-dissolving threshold, stripping mineral from a tooth until saliva buffers it back">
             <defs>
               <linearGradient id="cf9-scale" x1="0" y1="0" x2="1" y2="0">
@@ -74,7 +75,7 @@ export const CASE = {
               </g>
               <!-- critical 5.5 line -->
               <line x1="205" y1="54" x2="205" y2="84" stroke="#ff9a82" stroke-width="1.6" stroke-dasharray="3 3"/>
-              <text x="205" y="112" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#ff9a82">5.5: enamel dissolves</text>
+              <text x="205" y="112" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#ff9a82">~5.5: demineralization can increase</text>
               <!-- moving marker: pH per step -->
               <g style="transition: transform .9s var(--ease);" :style="\`transform: translateX(\${[(6.5/14)*420,(2.5/14)*420,(2.5/14)*420,(6.0/14)*420][step]}px)\`">
                 <polygon points="40,44 34,32 46,32" fill="#eef6f8"/>
@@ -156,7 +157,7 @@ export const CASE = {
                 <circle class="a-float" style="--dur:3s" cx="220" cy="220" r="4"/>
                 <circle class="a-float" style="--dur:3.4s; --delay:.6s" cx="384" cy="236" r="4"/>
               </g>
-              <text x="300" y="330" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fd9ae">saliva holds neutral: enamel safe</text>
+              <text x="300" y="330" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fd9ae">saliva buffers acids</text>
             </g>
 
             <!-- step 3: saliva buffer + remineralization -->
@@ -176,14 +177,14 @@ export const CASE = {
                 <circle class="a-spark" style="--dur:2.2s; --delay:.6s" cx="286" cy="196" r="2.4"/>
                 <circle class="a-spark" style="--dur:2.5s; --delay:1.6s" cx="314" cy="208" r="2.2"/>
               </g>
-              <text x="150" y="200" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">buffer + F- rebuild</text>
-              <text class="a-blink" style="--dur:1.8s" x="300" y="330" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#8fd9ae" font-weight="700">REMINERALIZATION (~30-60 min)</text>
+              <text x="150" y="200" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">buffering + mineral recovery</text>
+              <text class="a-blink" style="--dur:1.8s" x="300" y="330" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#8fd9ae" font-weight="700">REMINERALIZATION</text>
             </g>
 
             <!-- clock strip -->
             <g transform="translate(500,150)">
               <circle cx="0" cy="0" r="46" fill="#0d1a21" stroke="#2c414d"/>
-              <text x="0" y="-56" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">ACID CLOCK</text>
+              <text x="0" y="-56" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">ACID EXPOSURE</text>
               <circle cx="0" cy="0" r="38" fill="none" stroke="#1c313d" stroke-width="6"/>
               <circle cx="0" cy="0" r="38" fill="none" stroke-width="6" stroke-linecap="round"
                       :stroke="step===3 ? '#8fd9ae' : '#ff6f5e'"
@@ -191,7 +192,7 @@ export const CASE = {
                       :stroke-dashoffset="[239,60,20,150][step]" transform="rotate(-90)"/>
               <text x="0" y="4" text-anchor="middle" font-family="JetBrains Mono" font-size="11"
                     :fill="step===3 ? '#8fd9ae' : '#ff9a82'"
-                    x-text="['safe','attack','attack','healing'][step]"></text>
+                    x-text="['baseline','acidic','low pH','recovery'][step]"></text>
             </g>
           </svg>`
 };
