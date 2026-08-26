@@ -339,16 +339,16 @@ const compressor = (x, y, s = 1) =>
   + `<path d="M62 14 h12" stroke="${C.steelLt}" stroke-width="4" stroke-linecap="round"/>`
   + `</g>`;
 
-// The dive truck, side on: a flat-fronted van with the trailer hitch and one tyre drawn
-// large enough to be the subject when b-tyre needs it to be.
-const truck = (x, y, s = 1, { tyreTint = C.rubber } = {}) =>
+// The dive truck, side on: a flat-fronted van with the trailer hitch and one tire drawn
+// large enough to be the subject when b-tire needs it to be.
+const truck = (x, y, s = 1, { tireTint = C.rubber } = {}) =>
   `<g transform="translate(${x},${y}) scale(${s})">`
   + `<path d="M0 0 h74 v-22 h20 l14 16 v6 h6 v16 H0 z" fill="${C.slate}" stroke="${C.steelLt}" stroke-width="1.4"/>`
   + `<path d="M78 -18 h12 l10 12 h-22 z" fill="${C.tealLt}" opacity=".35"/>`
   + `<rect x="8" y="-14" width="58" height="14" rx="2" fill="${C.teal7}" opacity=".55"/>`
-  + `<circle cx="26" cy="16" r="11" fill="${tyreTint}" stroke="#0a0f12" stroke-width="1.4"/>`
+  + `<circle cx="26" cy="16" r="11" fill="${tireTint}" stroke="#0a0f12" stroke-width="1.4"/>`
   + `<circle cx="26" cy="16" r="4.5" fill="${C.steelLt}"/>`
-  + `<circle cx="92" cy="16" r="11" fill="${tyreTint}" stroke="#0a0f12" stroke-width="1.4"/>`
+  + `<circle cx="92" cy="16" r="11" fill="${tireTint}" stroke="#0a0f12" stroke-width="1.4"/>`
   + `<circle cx="92" cy="16" r="4.5" fill="${C.steelLt}"/>`
   + `</g>`;
 
@@ -375,8 +375,8 @@ const depthColumn = (x, yTop, w, h, { marks = [], diver = null } = {}) => {
   return out;
 };
 
-// The oxygen analyser: a handheld box with a two-digit readout and its sampling probe.
-const analyser = (x, y, { read = '20.9%', tint = C.o2, probe = 'left' } = {}) =>
+// The oxygen analyzer: a handheld box with a two-digit readout and its sampling probe.
+const analyzer = (x, y, { read = '20.9%', tint = C.o2, probe = 'left' } = {}) =>
   `<g>`
   + `<rect x="${x}" y="${y}" width="46" height="34" rx="4" fill="#1a262d" stroke="${C.steelLt}" stroke-width="1.4"/>`
   + `<rect x="${x + 5}" y="${y + 5}" width="36" height="14" rx="2" fill="#04120f" stroke="${C.steel}" stroke-width=".9"/>`
@@ -430,8 +430,8 @@ export const SCENE_ART = {
   // the particles that are the reason for it, because the bench is asking you to connect
   // exactly those two.
 
-  // The whip: oxygen goes in at one end and the analyser reads the same everywhere.
-  'a-whip': scene('a-whip', { caption: 'THE BLENDING WHIP · IT MIXES ITSELF', body: k => {
+  // The whip: oxygen goes in at one end and the analyzer reads the same everywhere.
+  'a-whip': scene('a-whip', { caption: 'RANDOM MOTION · GAS PARTICLES SPREAD', body: k => {
     const clip = k.clip('barrel', barrelPath(96, 20, 46, 72));
     return fillRoom()
       + whip('M18 34 C46 28 44 12 74 10 C96 9 104 7 119 9')
@@ -445,22 +445,22 @@ export const SCENE_ART = {
       + sticker(96, 20, 46, 'EAN32')
       // two sample points, top and bottom of the same cylinder, reading the same
       + `<path d="M142 30 H176 M142 80 H176" stroke="${C.steelLt}" stroke-width="1.2" stroke-dasharray="3 3"/>`
-      + analyser(178, 14, { read: '32.0%' })
-      + analyser(178, 64, { read: '32.0%' })
+      + analyzer(178, 14, { read: '32.0%' })
+      + analyzer(178, 64, { read: '32.0%' })
       + mono(255, 26, 'top of the barrel', { size: 7.5, fill: C.dim, anchor: 'start' })
       + mono(255, 78, 'bottom of the barrel', { size: 7.5, fill: C.dim, anchor: 'start' })
-      + mono(255, 52, 'SAME READING', { size: 9, fill: C.o2, anchor: 'start', w: 700, ls: '.08em' })
+      + mono(255, 52, 'UNIFORM AFTER MIXING', { size: 9, fill: C.o2, anchor: 'start', w: 700, ls: '.08em' })
       + `<path d="M250 42 v18" stroke="${C.o2}" stroke-width="1.4" opacity=".7"/>`;
   } }),
 
   // The compressor: a room full of air goes into a rack of steel. Same molecules, and the
   // volume they end up in is a fraction of the one they came out of.
-  'a-steel': scene('a-steel', { caption: 'THE COMPRESSOR · A ROOM OF AIR INTO STEEL', body: k => {
+  'a-steel': scene('a-steel', { caption: 'GAS PARTICLES · LARGE SPACES BETWEEN THEM', body: k => {
     const clip = k.clip('barrel', barrelPath(292, 26, 40, 62));
     return fillRoom()
       + `<rect x="12" y="14" width="126" height="74" rx="3" fill="#0c2029" opacity=".8" stroke="${C.steelLt}" stroke-width="1.2" stroke-dasharray="5 4"/>`
       + particles(16, 18, 118, 66, { n: 26, seed: 5, tint: C.tealLt, r: 2, op: .7 })
-      + mono(75, 98, '1 m3 of shop air', { size: 8, fill: C.pale, w: 700 })
+      + mono(75, 98, 'large gas volume', { size: 8, fill: C.pale, w: 700 })
       + compressor(154, 34, 1)
       + `<path d="M138 44 h14" stroke="${C.steelLt}" stroke-width="3" stroke-linecap="round"/>`
       + whip('M228 48 C252 48 258 54 276 54')
@@ -469,13 +469,13 @@ export const SCENE_ART = {
       + particles(292, 26, 40, 62, { n: 26, seed: 5, tint: C.tealLt, r: 2, op: .85 })
       + `</g>`
       + gauge(356, 34, 15, { read: .82, label: '200', unit: 'atm' })
-      + mono(312, 100, 'same molecules', { size: 8, fill: C.o2, w: 700 })
-      + mono(258, 24, '1/200 the room', { size: 7.5, fill: C.ember, w: 700 })
+      + mono(312, 100, 'same particles', { size: 8, fill: C.o2, w: 700 })
+      + mono(258, 24, 'much smaller volume', { size: 7.5, fill: C.ember, w: 700 })
       + `<path d="M244 30 C258 34 268 38 282 44" fill="none" stroke="${C.ember}" stroke-width="1.2" stroke-dasharray="3 3"/>`;
   } }),
 
   // The hot deck: nobody touched the cylinder, and the needle has moved anyway.
-  'a-deck': scene('a-deck', { caption: 'THE HOT DECK · THE NEEDLE MOVED ON ITS OWN', theme: 'out', body: k => {
+  'a-deck': scene('a-deck', { caption: 'HIGHER T · HIGHER AVERAGE KINETIC ENERGY', theme: 'out', body: k => {
     const halo = k.hot('sun');
     const clip = k.clip('barrel', barrelPath(96, 22, 44, 68));
     return outside('sea', 66)
@@ -486,7 +486,7 @@ export const SCENE_ART = {
       + `<g clip-path="${clip}">`
       + particles(96, 22, 44, 68, { n: 22, seed: 9, tint: C.ember, r: 2, streak: 9, op: .85 })
       + `</g>`
-      + thermometer(166, 22, 56, { frac: .84, tint: C.ember, label: '41 C' })
+      + thermometer(166, 22, 56, { frac: .84, tint: C.ember, label: '41 °C' })
       + gauge(250, 46, 24, { read: .78, ghost: .62, label: '215', unit: 'atm' })
       + mono(250, 82, '05:00 read 200', { size: 7.5, fill: C.steel })
       + `<path d="M296 40 h14 m0 0 l-5 -4 m5 4 l-5 4" stroke="${C.ember}" stroke-width="1.4" fill="none" stroke-linecap="round"/>`
@@ -499,13 +499,13 @@ export const SCENE_ART = {
   // ================= C.10(B) ideal gas: three given, the fourth committed =================
   // One grammar: the vessel on the left, the state card on the right, the unknown in ember.
 
-  // The truck: tyres set cold this morning, a day of tarmac later.
-  'b-tyre': scene('b-tyre', { caption: 'THE TRUCK IN THE LOT · SET COLD, READ HOT', theme: 'out', body: k => {
+  // The truck: tires set cold this morning, a day of tarmac later.
+  'b-tire': scene('b-tire', { caption: 'THE TRUCK IN THE LOT · SET COLD, READ HOT', theme: 'out', body: k => {
     const halo = k.hot('sun');
     return outside('tarmac', 70)
       + `<circle cx="52" cy="18" r="42" fill="${halo}"/>`
       + truck(14, 62, .92)
-      // the near tyre, blown up: same air, hotter tarmac
+      // the near tire, blown up: same air, hotter tarmac
       + `<circle cx="176" cy="54" r="30" fill="${C.rubber}" stroke="${C.steelLt}" stroke-width="1.4"/>`
       + `<circle cx="176" cy="54" r="19" fill="#0d1a20" stroke="${C.steel}" stroke-width="1.2"/>`
       + `<circle cx="176" cy="54" r="9" fill="${C.steelLt}"/>`
@@ -571,13 +571,13 @@ export const SCENE_ART = {
   // right, and the slice the bench is asking for called out.
 
   // Plain air on the dock, before the first fill. The reference every blend is checked on.
-  'c-air': scene('c-air', { caption: 'THE AIR ON THE DOCK · RECOVER AIR OUT OF AIR', theme: 'out', body: k => {
+  'c-air': scene('c-air', { caption: 'PARTIAL PRESSURE · MOLE FRACTION × TOTAL P', theme: 'out', body: k => {
     return outside('sea', 64)
       // the dock rail, and the barometer nailed to the post
       + `<g stroke="${C.steelLt}" stroke-width="3" opacity=".7" stroke-linecap="round">`
       + `<path d="M22 96 V40"/><path d="M96 96 V40"/><path d="M12 42 H106"/><path d="M12 64 H106"/></g>`
       + gauge(59, 22, 16, { read: .5, tint: C.tealLt, label: '1.00', unit: 'atm' })
-      + analyser(126, 44, { read: '20.9%', probe: 'left' })
+      + analyzer(126, 44, { read: '20.9%', probe: 'left' })
       + particles(112, 12, 130, 28, { n: 16, seed: 23, tint: C.tealLt, r: 1.7, streak: 4, op: .5 })
       + mono(178, 92, 'open air at the rail', { size: 7.5, fill: C.dim })
       + barStack(252, 92, 46, 74, [
@@ -591,7 +591,7 @@ export const SCENE_ART = {
   } }),
 
   // The blend: two feed lines summing into one cylinder.
-  'c-blend': scene('c-blend', { caption: 'THE NITROX BLEND · TWO LINES, ONE TOTAL', body: k => {
+  'c-blend': scene('c-blend', { caption: 'DALTON MODEL · PARTIAL PRESSURES ADD TO TOTAL P', body: k => {
     const clip = k.clip('barrel', barrelPath(120, 22, 44, 70));
     return fillRoom()
       // the two feeds: oxygen from the top line, bank air from the bottom one
@@ -616,15 +616,15 @@ export const SCENE_ART = {
         ['pN2', .68, C.n2]
       ], { total: 'P total 200 atm' })
       + `<path d="M284 80 h14" stroke="${C.o2}" stroke-width="1.4" stroke-dasharray="3 2"/>`
-      + mono(302, 28, 'the sticker is', { size: 7.5, fill: C.dim, anchor: 'start' })
-      + mono(302, 41, 'a partial', { size: 7.5, fill: C.dim, anchor: 'start' })
-      + mono(302, 54, 'pressure', { size: 7.5, fill: C.dim, anchor: 'start' })
+      + mono(302, 28, 'the O2 fraction', { size: 7.5, fill: C.dim, anchor: 'start' })
+      + mono(302, 41, 'sets pO2 at', { size: 7.5, fill: C.dim, anchor: 'start' })
+      + mono(302, 54, 'a stated P total', { size: 7.5, fill: C.dim, anchor: 'start' })
       + mono(302, 74, 'pO2 + pN2', { size: 8, fill: C.o2, anchor: 'start', w: 700 })
       + mono(302, 87, '= P total', { size: 8, fill: C.o2, anchor: 'start', w: 700 });
   } }),
 
   // The plan: the same mix, taken down. Depth multiplies every partial pressure in it.
-  'c-ppo2': scene('c-ppo2', { caption: 'THE DIVE PLAN · DEPTH MULTIPLIES THE OXYGEN', theme: 'out', body: k => {
+  'c-ppo2': scene('c-ppo2', { caption: 'DEPTH · ABSOLUTE PRESSURE RAISES pO2', theme: 'out', body: k => {
     return outside('sea', 20)
       + depthColumn(24, 20, 54, 78, {
         marks: [[0, '0 m · 1 atm'], [.32, '10 m · 2 atm'], [.64, '20 m · 3 atm'], [.96, '30 m · 4 atm']],
@@ -646,7 +646,7 @@ export const SCENE_ART = {
   // ================= Honors: the two curves this unit is really about =================
 
   // h1: the Maxwell-Boltzmann distribution. Same rack, same temperature, two molar masses.
-  'h1-speeds': scene('h1-speeds', { caption: 'THE RACK · SAME ENERGY, DIFFERENT SPEEDS', theme: 'copper', body: k => {
+  'h1-speeds': scene('h1-speeds', { caption: 'SAME T · SAME AVERAGE KE · DIFFERENT SPEEDS', theme: 'copper', body: k => {
     const cHe = k.clip('bHe', barrelPath(20, 22, 34, 64)), cAir = k.clip('bAir', barrelPath(62, 22, 34, 64));
     return `<rect width="400" height="102" fill="#160f07" opacity=".35"/>`
       // the two bottles standing in one rack, at one temperature
@@ -677,7 +677,7 @@ export const SCENE_ART = {
   } }),
 
   // h2: compressibility. The ideal line at 1, and the real gas leaving it as P climbs.
-  'h2-real': scene('h2-real', { caption: 'THE HIGH-PRESSURE BANK · WHERE IDEAL GIVES OUT', theme: 'copper', body: k => {
+  'h2-real': scene('h2-real', { caption: 'REAL GAS · DEVIATION FROM IDEAL BEHAVIOR', theme: 'copper', body: k => {
     // Z = PV/nRT for a real gas: attraction pulls it under 1, then the molecules' own
     // volume pushes it back over. Drawn on a 0.6..1.3 axis.
     const zAt = u => {
@@ -711,8 +711,8 @@ export const SCENE_ART = {
       + mono(334, 90, 'up room', { size: 7.5, fill: C.copper1, anchor: 'start' });
   } }),
 
-  // h3: gas over water. What the tube reads is your gas plus vapour that came for free.
-  'h3-water': scene('h3-water', { caption: 'THE COLLECTION TUBE · VAPOUR CAME FOR FREE', theme: 'copper', body: k => {
+  // h3: gas over water. What the tube reads is your gas plus vapor that came for free.
+  'h3-water': scene('h3-water', { caption: 'GAS OVER WATER · SUBTRACT WATER VAPOR P', theme: 'copper', body: k => {
     const water = k.lin('w', [[0, '#2b5f6e'], [1, '#123943']]);
     const glass = k.glass('g', ['#1a3b45', '#356f7c', '#9ccbd6']);
     return `<rect width="400" height="102" fill="#160f07" opacity=".3"/>`
@@ -732,10 +732,10 @@ export const SCENE_ART = {
       // the delivery tube coming in under the mouth
       + `<path d="M138 70 C120 70 106 82 92 84" fill="none" stroke="${C.rubber}" stroke-width="4" stroke-linecap="round"/>`
       + `<rect x="138" y="60" width="20" height="22" rx="3" fill="${C.steelLt}" opacity=".6"/>`
-      + thermometer(178, 34, 42, { frac: .42, tint: C.copper, label: '25 C' })
+      + thermometer(178, 34, 42, { frac: .42, tint: C.copper, label: '25 °C' })
       + barStack(216, 92, 44, 80, [['P dry gas', .94, C.copper], ['H2O', .06, C.tankLt]], { total: 'what the tube reads' })
       + `<path d="M262 22 h16" stroke="${C.tankLt}" stroke-width="1.3" stroke-dasharray="3 2"/>`
-      + mono(282, 18, 'vapour at 25 C', { size: 7.5, fill: C.tankLt, anchor: 'start', w: 700 })
+      + mono(282, 18, 'vapor at 25 C', { size: 7.5, fill: C.tankLt, anchor: 'start', w: 700 })
       + mono(282, 30, '= 0.0313 atm', { size: 7.5, fill: C.tankLt, anchor: 'start' })
       + mono(282, 52, 'P dry =', { size: 8, fill: C.copper1, anchor: 'start', w: 700 })
       + mono(282, 65, 'P total', { size: 8, fill: C.copper1, anchor: 'start' })
@@ -745,7 +745,7 @@ export const SCENE_ART = {
   // ================= Capstone: the last fill of the day =================
   // Everything at once: what the bank has left, what the fill takes, and what the mix does
   // at the depth the diver asked for.
-  'cap-lastfill': scene('cap-lastfill', { caption: 'THE LAST FILL · BANK, DEPTH AND ONE CALL', theme: 'copper', body: k => {
+  'cap-lastfill': scene('cap-lastfill', { caption: 'CAPSTONE · COMPARE THE CALCULATED VALUES', theme: 'copper', body: k => {
     const clip = k.clip('barrel', barrelPath(96, 24, 40, 64));
     return `<rect width="400" height="102" fill="#160f07" opacity=".35"/>`
       // what is left in the bank
@@ -754,7 +754,7 @@ export const SCENE_ART = {
       + `<path d="M8 44 H80" stroke="${C.steelLt}" stroke-width="2.2" opacity=".45"/></g>`
       + `<rect x="10" y="90" width="68" height="8" rx="3" fill="#0c1c24" stroke="${C.steelLt}" stroke-width="1"/>`
       + `<rect x="11.5" y="91.5" width="19" height="5" rx="2.5" fill="${C.danger}"/>`
-      + mono(44, 13, 'BANK LOW', { size: 7.5, fill: C.danger, w: 700, ls: '.06em' })
+      + mono(44, 13, 'RESERVE LOW', { size: 7.5, fill: C.danger, w: 700, ls: '.06em' })
       + whip('M80 58 C88 58 88 30 100 20', { color: '#2b2118', tint: C.copper1 })
       + cylinder(96, 24, 40, 64, { k, n: 'cyl', boot: true })
       + `<g clip-path="${clip}">`
@@ -768,10 +768,10 @@ export const SCENE_ART = {
       + `<path d="M286 66 H302" stroke="${C.danger}" stroke-width="1.3" stroke-dasharray="4 3"/>`
       + mono(294, 61, '1.4', { size: 7, fill: C.danger, w: 700 })
       + `<rect x="310" y="14" width="78" height="78" rx="3" fill="${C.card}" stroke="${C.steelLt}" stroke-width="1.2"/>`
-      + mono(318, 26, 'ONE CALL', { size: 7, fill: C.steel, anchor: 'start', ls: '.1em', w: 700 })
+      + mono(318, 26, 'DECIDE', { size: 7, fill: C.steel, anchor: 'start', ls: '.1em', w: 700 })
       + `<path d="M310 31 H388" stroke="${C.steelLt}" stroke-width=".9"/>`
       + `<g>`
-      + [['fill it', 45], ['re-blend', 62], ['call it off', 79]].map(([t, y]) =>
+      + [['criteria met', 45], ['pO2 high', 62], ['reserve low', 79]].map(([t, y]) =>
         `<circle cx="321" cy="${y - 3.5}" r="3.5" fill="none" stroke="${C.copper7}" stroke-width="1.3"/>`
         + mono(330, y, t, { size: 8, fill: C.ink, anchor: 'start' })).join('')
       + `</g>`;

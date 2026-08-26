@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Unit 7 · Gas Laws &amp; Kinetic Theory</title>
-<meta name="description" content="Watch a 3D kinetic particle box, solve PV = nRT for any variable, and split a mixture with Dalton's law of partial pressures. TEKS C.10.">
+<meta name="description" content="Explore kinetic molecular theory, ideal-gas relationships, PV = nRT, and Dalton's law of partial pressure. TEKS C.10.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -28,10 +28,10 @@
 <body>
 <div x-data="sim()" x-cloak>
 
-  <main class="codex-shell cockpit-shell" aria-label="Unit 7 dive-boat cockpit">
+  <main class="codex-shell cockpit-shell" aria-label="Unit 7 gas laws interactive workspace">
     <header class="cockpit-command">
       <div class="command-brand"><span class="command-kicker">Unit 7 · TEKS C.10</span><a class="command-home" href="../index.html" title="All units">Gas Laws &amp; Kinetic Theory</a><span x-text="activeStationName"></span></div>
-      <nav class="station-nav" role="tablist" aria-label="Dive-boat fill benches">
+      <nav class="station-nav" role="tablist" aria-label="Gas laws activity tabs">
         <button class="tab" role="tab" :aria-selected="mode==='kmt'" @click="setMode('kmt')" aria-label="Kinetic theory"><span class="tab-full" aria-hidden="true">Kinetic theory</span><span class="tab-short" aria-hidden="true">Kinetic</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='ideal'" @click="setMode('ideal')" aria-label="Ideal gas law"><span class="tab-full" aria-hidden="true">Ideal gas law</span><span class="tab-short" aria-hidden="true">Ideal</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='dalton'" @click="setMode('dalton')" aria-label="Partial pressures"><span class="tab-full" aria-hidden="true">Partial pressures</span><span class="tab-short" aria-hidden="true">Dalton</span></button>
@@ -49,7 +49,7 @@
       <div class="command-metrics"><span class="metric-chip">XP <strong x-text="g_xp"></strong></span><span class="metric-chip">Streak <strong x-text="g_streak"></strong></span><span class="teks-badge" :class="{ complete: teksMasteredCount===coreSkills.length }">TEKS <strong><span x-text="teksMasteredCount"></span>/3</strong></span></div>
     </header>
     <div class="workbench-grid" x-show="mode!=='casefile'">
-      <section class="mission-screen panel" :class="'tone-'+activeTone" aria-label="Active dive-boat job">
+      <section class="mission-screen panel" :class="'tone-'+activeTone" aria-label="Current chemistry scenario">
         <div class="mission-frame"><div class="mission-screen-art" x-html="scArt(activeArtId)"></div><div class="screen-scanline" aria-hidden="true"></div></div>
         <div class="screen-status"><span class="screen-system" x-text="activeStationName"></span><span class="screen-state" x-show="activeStateLabel" x-text="activeStateLabel"></span></div>
         <div class="screen-copy"><p class="screen-goal" x-prose="activeBrief ? activeBrief.goal : ''"></p><p class="screen-outcome" x-prose="activeOutcomeText"></p></div>
@@ -62,7 +62,7 @@
              card on a short viewport, which is the shell deciding there is no room rather
              than the learner deciding they want it elsewhere. -->
         <details class="screen-reference" aria-label="Reference facts" open><summary class="command-kicker">Reference</summary><div class="screen-reference-body"><template x-for="r in activeReference" :key="r.k"><p class="ref-item"><span class="ref-k" x-text="r.k"></span><span class="ref-v" x-prose="r.v"></span></p></template></div></details>
-        <section class="cockpit-instincts"><span class="command-kicker">The shift</span><p><strong x-text="clockLabel"></strong> · bank <strong x-text="fmt(bank)+' atm'"></strong></p></section>
+        <section class="cockpit-instincts"><span class="command-kicker">Simulation</span><p><strong x-text="clockLabel"></strong> · reserve <strong x-text="fmt(bank)+' pts'"></strong></p></section>
       </section>
       <section class="task-stack chem-console">
 
@@ -76,7 +76,7 @@
                 <div class="brief-why" x-prose="kq.sc.why"></div>
               </div>
 
-              <p class="small muted" style="margin-bottom: var(--s-3);">Every particle is in constant, random motion. Change the temperature, particle count, and volume, then watch how the model responds. Drag to rotate.</p>
+              <p class="small muted" style="margin-bottom: var(--s-3);">This ideal-gas particle model shows continuous random motion. Change temperature, particle count, and volume, then observe the relative kinetic-energy and pressure readouts. Drag to rotate.</p>
 
               <div class="stage" x-ref="stage"></div>
 
@@ -124,7 +124,7 @@
               <details class="lesson-reference" style="margin-top: var(--s-3);">
                 <summary>The five postulates, and how to read the &times;-numbers</summary>
                 <div class="lesson-reference-body">
-                  <p class="muted" style="font-size: var(--fs-sm);">Every ×-number compares this box with one baseline box: 40 particles, 300 K, ×1 volume. Average kinetic energy depends only on temperature (postulate 5). Pressure comes from wall collisions, so it rises with more particles or higher temperature and falls as the volume grows: P &#8733; nT/V.</p>
+                  <p class="muted" style="font-size: var(--fs-sm);">Each ×-number compares the model with a baseline of 40 particles, 300 K, and ×1 volume. In the ideal-gas model, average translational kinetic energy depends on temperature. The relative pressure model follows P &#8733; NT/V.</p>
                   <ol class="postulates">
                     <template x-for="p in KMT_POSTULATES" :key="'ref'+p.id">
                       <li><strong x-text="p.short + ' · '"></strong><span x-text="p.text"></span></li>
@@ -142,10 +142,10 @@
                 </template>
               </div>
               <div class="row call-row" style="margin-top: var(--s-3);">
-                <button class="btn btn-accent" @click="kCommit()" :disabled="kPick===null || kDone">Call it</button>
+                <button class="btn btn-accent" @click="kCommit()" :disabled="kPick===null || kDone">Check answer</button>
                 <span class="grow"></span>
                 <button class="btn btn-sm" @click="kNext()">Next observation</button>
-                <span class="call-hint" x-show="kPick === null && !kDone" x-text="'Say which postulate explains it first.'"></span>
+                <span class="call-hint" x-show="kPick === null && !kDone" x-text="'Select the postulate that best explains the observation.'"></span>
               </div>
 
               <template x-if="kVerdict">
@@ -163,7 +163,7 @@
         <!-- ---------- Honors h1: speed against energy (parent C.10A) ---------- -->
         <div class="honors-block" x-show="honors">
           <span class="honors-tag">Honors · Maxwell-Boltzmann distribution</span>
-          <div class="note note-info" x-show="!h1Unlocked" style="margin-top: var(--s-3);">Certify C.10(A) first: three postulate calls right in a row unlocks this bench.</div>
+          <div class="note note-info" x-show="!h1Unlocked" style="margin-top: var(--s-3);">Master C.10(A) first: three correct postulate answers in a row unlock this Honors section.</div>
           <template x-if="h1Unlocked && h1s">
             <div>
               <div class="brief">
@@ -192,10 +192,10 @@
                 <button class="choice" :data-state="h1State('same')" @click="h1PickOption('same')">The two are the same</button>
               </div>
               <div class="row call-row" style="margin-top: var(--s-4);">
-                <button class="btn btn-accent" @click="h1Commit()" :disabled="h1Done || !h1Pick">Call it</button>
+                <button class="btn btn-accent" @click="h1Commit()" :disabled="h1Done || !h1Pick">Check answer</button>
                 <span class="grow"></span>
                 <button class="btn btn-sm" @click="h1Next()">Next pair</button>
-                <span class="call-hint" x-show="!h1Pick && !h1Done" x-text="'Say which bottle holds more molecules.'"></span>
+                <span class="call-hint" x-show="!h1Pick && !h1Done" x-text="'Compare the gases using the quantity named in the question.'"></span>
               </div>
               <template x-if="h1Verdict">
                 <div class="verdict" :class="'verdict-' + h1Verdict.tone">
@@ -215,10 +215,10 @@
                DOM from the start and Chart.js only ever builds it once. Nothing in here
                dereferences a nullable stage object without a guard. -->
           <div x-show="h1Unlocked && h1Checked" style="margin-top: var(--s-5);">
-            <p class="eyebrow">What the curve actually says</p>
+            <p class="eyebrow">What the distribution shows</p>
             <div class="row" style="margin-top: var(--s-3); gap: var(--s-4);">
               <div class="field" style="width: 180px;">
-                <label>Gas on the orange curve</label>
+                <label>Gas A (first curve)</label>
                 <select x-model="mbGasKey" @change="updateMB()">
                   <template x-for="g in REAL_GASES" :key="g.key"><option :value="g.key" x-text="g.name"></option></template>
                 </select>
@@ -227,7 +227,7 @@
             </div>
             <div class="canvas-wrap"><canvas x-ref="mbCanvas"></canvas></div>
             <table class="data" style="margin-top: var(--s-3);">
-              <thead><tr><th>Gas</th><th class="num">molar mass</th><th class="num">most probable</th><th class="num">rms speed</th></tr></thead>
+              <thead><tr><th>Gas</th><th class="num">molar mass</th><th class="num">most probable speed</th><th class="num">rms speed</th></tr></thead>
               <tbody>
                 <template x-for="r in mbCompare" :key="'mb'+r.name">
                   <tr>
@@ -239,7 +239,7 @@
                 </template>
               </tbody>
             </table>
-            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">Particles share a spread of speeds, not one. Raising the temperature broadens the curve and shifts it faster; at one temperature the heavier gas peaks slower, carrying the same average energy as the lighter one.</p>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">Particles have a distribution of speeds. Raising temperature broadens the distribution and shifts it toward higher speeds. At the same temperature, the heavier gas has lower characteristic speeds while both gases have the same average translational kinetic energy.</p>
           </div>
         </div>
         </div>
@@ -262,7 +262,7 @@
                   </div>
                 </template>
                 <div class="given-cell">
-                  <span class="k">Work out</span>
+                  <span class="k">Calculate</span>
                   <span class="v mono"><span x-text="ig.label"></span> (<span x-text="ig.unit"></span>)</span>
                 </div>
               </div>
@@ -282,34 +282,35 @@
                   <label>Pressure P (atm)</label>
                   <input type="number" step="0.1" min="0" x-model.number="igP" @input="onIdeal()" x-show="solveFor!=='P'" :disabled="!igDone">
                   <div class="solved" x-show="solveFor==='P' && igChecked" x-text="fmt(igResult,4)+' atm'"></div>
-                  <div class="solved solved-hidden" x-show="solveFor==='P' && !igChecked">your call</div>
+                  <div class="solved solved-hidden" x-show="solveFor==='P' && !igChecked">answer pending</div>
                 </div>
                 <div class="field">
                   <label>Volume V (L)</label>
                   <input type="number" step="0.5" min="0" x-model.number="igV" @input="onIdeal()" x-show="solveFor!=='V'" :disabled="!igDone">
                   <div class="solved" x-show="solveFor==='V' && igChecked" x-text="fmt(igResult,4)+' L'"></div>
-                  <div class="solved solved-hidden" x-show="solveFor==='V' && !igChecked">your call</div>
+                  <div class="solved solved-hidden" x-show="solveFor==='V' && !igChecked">answer pending</div>
                 </div>
                 <div class="field">
                   <label>Moles n (mol)</label>
                   <input type="number" step="0.1" min="0" x-model.number="ign" @input="onIdeal()" x-show="solveFor!=='n'" :disabled="!igDone">
                   <div class="solved" x-show="solveFor==='n' && igChecked" x-text="fmt(igResult,4)+' mol'"></div>
-                  <div class="solved solved-hidden" x-show="solveFor==='n' && !igChecked">your call</div>
+                  <div class="solved solved-hidden" x-show="solveFor==='n' && !igChecked">answer pending</div>
                 </div>
                 <div class="field">
                   <label>Temperature T (K)</label>
                   <input type="number" step="1" min="0" x-model.number="igT" @input="onIdeal()" x-show="solveFor!=='T'" :disabled="!igDone">
                   <div class="solved" x-show="solveFor==='T' && igChecked" x-text="fmt(igResult,4)+' K'"></div>
-                  <div class="solved solved-hidden" x-show="solveFor==='T' && !igChecked">your call</div>
+                  <div class="solved solved-hidden" x-show="solveFor==='T' && !igChecked">answer pending</div>
                 </div>
               </div>
 
               <div class="eqn" style="margin-top: var(--s-4);"><span x-tex="idealFormula"></span></div>
               <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--s-2);">R = <span class="mono" x-text="R"></span> L&#183;atm&#183;mol&#8315;&#185;&#183;K&#8315;&#185;. Keep units in atm, L, mol, and K.</p>
+              <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-1);"><strong>Activity tolerance:</strong> answers within 3% of the calculated value are accepted.</p>
 
               <div class="row call-row" style="gap: var(--s-4); align-items: flex-end; margin-top: var(--s-4);">
                 <div class="field" style="width: 210px;">
-                  <label for="igInput">Your call (<span x-text="ig.unit"></span>)</label>
+                  <label for="igInput">Your answer (<span x-text="ig.unit"></span>)</label>
                   <input id="igInput" type="number" step="any" x-model="igInput" :disabled="igDone">
                 </div>
                 <button class="btn btn-accent" @click="igCommit()" :disabled="igDone || igInput===''" x-text="ig.sc.actionLabel"></button>
@@ -328,9 +329,9 @@
                   <span class="verdict-detail" x-prose="igVerdict.detail"></span>
                   <template x-if="igVerdict && igVerdict.gauge">
                     <div class="gauge">
-                      <div class="gauge-seg" :class="igVerdict && igVerdict.gauge==='low' ? 'miss' : ''">too little</div>
-                      <div class="gauge-seg" :class="igVerdict && igVerdict.gauge==='on' ? 'on' : ''">on spec</div>
-                      <div class="gauge-seg" :class="igVerdict && igVerdict.gauge==='high' ? 'miss' : ''">too much</div>
+                      <div class="gauge-seg" :class="igVerdict && igVerdict.gauge==='low' ? 'miss' : ''">below result</div>
+                      <div class="gauge-seg" :class="igVerdict && igVerdict.gauge==='on' ? 'on' : ''">within tolerance</div>
+                      <div class="gauge-seg" :class="igVerdict && igVerdict.gauge==='high' ? 'miss' : ''">above result</div>
                     </div>
                   </template>
                 </div>
@@ -372,7 +373,7 @@
         <!-- ---------- Honors h2: real-gas correction (parent C.10B) ---------- -->
         <div class="honors-block" x-show="honors">
           <span class="honors-tag">Honors · real gases deviate from ideal</span>
-          <div class="note note-info" x-show="!h2Unlocked" style="margin-top: var(--s-3);">Certify C.10(B) first: three ideal-gas calls right in a row unlocks this bench.</div>
+          <div class="note note-info" x-show="!h2Unlocked" style="margin-top: var(--s-3);">Master C.10(B) first: three correct ideal-gas answers in a row unlock this Honors section.</div>
           <template x-if="h2Unlocked && h2s">
             <div>
               <div class="brief">
@@ -411,7 +412,7 @@
                 <button class="btn btn-accent" @click="h2Commit()" :disabled="h2Done || h2Input===''" x-text="h2s.sc.actionLabel"></button>
                 <span class="grow"></span>
                 <button class="btn btn-sm" @click="h2Next()">Next bank state</button>
-                <span class="call-hint" x-show="h2Input === '' && !h2Done" x-text="'Work the van der Waals pressure out, then type it.'"></span>
+                <span class="call-hint" x-show="h2Input === '' && !h2Done" x-text="'Calculate the van der Waals pressure, then enter it.'"></span>
               </div>
               <template x-if="h2Verdict">
                 <div class="verdict" :class="'verdict-' + h2Verdict.tone">
@@ -423,9 +424,9 @@
                   <span class="verdict-detail" x-prose="h2Verdict.detail"></span>
                   <template x-if="h2Verdict && h2Verdict.gauge">
                     <div class="gauge">
-                      <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='low' ? 'miss' : ''">corrected short</div>
-                      <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='on' ? 'on' : ''">on spec</div>
-                      <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='high' ? 'miss' : ''">corrected long</div>
+                      <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='low' ? 'miss' : ''">below result</div>
+                      <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='on' ? 'on' : ''">within tolerance</div>
+                      <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='high' ? 'miss' : ''">above result</div>
                     </div>
                   </template>
                 </div>
@@ -437,7 +438,7 @@
             <div class="stat-row has-dials">
               <div class="stat"><div class="k">ideal P</div><div class="v" style="font-size: var(--fs-lg)" x-text="h2s ? fmt(h2s.ideal,4)+' atm' : '-'"></div></div>
               <div class="stat"><div class="k">van der Waals P</div><div class="v" style="font-size: var(--fs-lg)" x-text="h2s ? fmt(h2s.target,4)+' atm' : '-'"></div></div>
-              <!-- Z is already a ratio against ideal behaviour, so the ratio dial is
+              <!-- Z is already a ratio against ideal behavior, so the ratio dial is
                    literally the right picture: which side of Z = 1 this state fell on,
                    and how far. The series key drops the trend when the gas changes,
                    because a delta between two different gases means nothing. -->
@@ -446,11 +447,11 @@
                 <div class="v" style="font-size: var(--fs-lg)" x-text="h2s ? fmt(h2s.Z,3) : '-'"></div>
                 <div x-gauge="{ kind:'ratio', value: h2s ? h2s.Z : null, fold: 3, digits: 3,
                                 series: rgKey, label:'compressibility factor Z',
-                                refLabel:'ideal behaviour (Z = 1)', tone:'plum' }"></div>
+                                refLabel:'ideal behavior (Z = 1)', tone:'plum' }"></div>
               </div>
             </div>
             <div class="canvas-wrap"><canvas x-ref="zCanvas"></canvas></div>
-            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">An ideal gas holds Z = 1 at every pressure. A real gas dips below 1 where attractions dominate, then rises above 1 once the particles' own volume takes over. Deviations grow at high pressure and low temperature.</p>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);">An ideal gas has Z = 1. For many real gases, attractions can produce Z < 1 in some conditions, while finite particle volume can produce Z > 1 at higher pressures. Deviations from ideal behavior generally become more important at high pressure and lower temperature.</p>
           </div>
         </div>
         </div>
@@ -465,7 +466,7 @@
                 <div class="brief-why" x-prose="dl.sc.why"></div>
               </div>
 
-              <p class="small muted" style="margin-bottom: var(--s-3);">In a mixture, each gas pushes on the walls independently. Its share of the total pressure equals its mole fraction.</p>
+              <p class="small muted" style="margin-bottom: var(--s-3);">For an ideal-gas mixture, each component contributes a partial pressure: pᵢ = xᵢPtotal. The partial pressures add to the total pressure.</p>
 
               <!-- The mixer is frozen while the call is open, so the numbers on screen are
                    the numbers the brief states, then unlocks for exploring after the call. -->
@@ -495,7 +496,7 @@
 
               <div class="given-row" style="margin-top: var(--s-4);">
                 <div class="given-cell">
-                  <span class="k">Work out</span>
+                  <span class="k">Calculate</span>
                   <span class="v mono">partial P of <span x-text="dl.find.name"></span> (atm)</span>
                 </div>
                 <div class="given-cell" x-show="dl.depth">
@@ -506,7 +507,7 @@
 
               <div class="row call-row" style="gap: var(--s-4); align-items: flex-end; margin-top: var(--s-4);">
                 <div class="field" style="width: 210px;">
-                  <label for="dlInput">Your call (atm)</label>
+                  <label for="dlInput">Your answer (atm)</label>
                   <input id="dlInput" type="number" step="any" min="0" x-model="dlInput" :disabled="dlDone">
                 </div>
                 <button class="btn btn-accent" @click="dlCommit()" :disabled="dlDone || dlInput===''" x-text="dl.sc.actionLabel"></button>
@@ -525,9 +526,9 @@
                   <span class="verdict-detail" x-prose="dlVerdict.detail"></span>
                   <template x-if="dlVerdict && dlVerdict.gauge">
                     <div class="gauge">
-                      <div class="gauge-seg" :class="dlVerdict && dlVerdict.gauge==='low' ? 'miss' : ''">too lean</div>
-                      <div class="gauge-seg" :class="dlVerdict && dlVerdict.gauge==='on' ? 'on' : ''">on spec</div>
-                      <div class="gauge-seg" :class="dlVerdict && dlVerdict.gauge==='high' ? 'miss' : ''">too rich</div>
+                      <div class="gauge-seg" :class="dlVerdict && dlVerdict.gauge==='low' ? 'miss' : ''">below result</div>
+                      <div class="gauge-seg" :class="dlVerdict && dlVerdict.gauge==='on' ? 'on' : ''">within tolerance</div>
+                      <div class="gauge-seg" :class="dlVerdict && dlVerdict.gauge==='high' ? 'miss' : ''">above result</div>
                     </div>
                   </template>
                 </div>
@@ -565,7 +566,7 @@
         <!-- ---------- Honors h3: gas collected over water (parent C.10C) ---------- -->
         <div class="honors-block" x-show="honors">
           <span class="honors-tag">Honors · gas collected over water</span>
-          <div class="note note-info" x-show="!h3Unlocked" style="margin-top: var(--s-3);">Certify C.10(C) first: three partial-pressure calls right in a row unlocks this bench.</div>
+          <div class="note note-info" x-show="!h3Unlocked" style="margin-top: var(--s-3);">Master C.10(C) first: three correct partial-pressure answers in a row unlock this Honors section.</div>
           <template x-if="h3Unlocked && h3s">
             <div>
               <div class="brief">
@@ -573,7 +574,7 @@
                 <div class="brief-goal" x-prose="h3s.sc.goal"></div>
                 <div class="brief-why" x-prose="h3s.sc.why"></div>
               </div>
-              <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0;">A gas bubbled into an inverted tube over water mixes with water vapor. Subtract water's vapor pressure to get the dry-gas pressure.</p>
+              <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0;">A gas collected over water contains the collected gas plus water vapor. Subtract the water-vapor partial pressure from the measured total pressure to obtain the dry-gas pressure.</p>
               <div class="row" style="gap: var(--s-4);">
                 <div class="field" style="width: 150px;">
                   <label>Water temp</label>
@@ -586,7 +587,7 @@
                   <input type="number" min="0" step="0.05" x-model.number="wTotal" :disabled="!h3Done">
                 </div>
                 <div class="field" style="width: 190px;">
-                  <label>Vapour pressure table</label>
+                  <label>Vapor pressure table</label>
                   <div class="solved"><span x-text="h3s.torr"></span> torr at <span x-text="h3s.tC"></span> °C</div>
                 </div>
               </div>
@@ -598,7 +599,7 @@
                 <button class="btn btn-accent" @click="h3Commit()" :disabled="h3Done || h3Input===''" x-text="h3s.sc.actionLabel"></button>
                 <span class="grow"></span>
                 <button class="btn btn-sm" @click="h3Next()">Next tube</button>
-                <span class="call-hint" x-show="h3Input === '' && !h3Done" x-text="'Subtract the vapour pressure first, then type the dry value.'"></span>
+                <span class="call-hint" x-show="h3Input === '' && !h3Done" x-text="'Subtract the vapor pressure first, then type the dry value.'"></span>
               </div>
               <template x-if="h3Verdict">
                 <div class="verdict" :class="'verdict-' + h3Verdict.tone">
@@ -610,9 +611,9 @@
                   <span class="verdict-detail" x-prose="h3Verdict.detail"></span>
                   <template x-if="h3Verdict && h3Verdict.gauge">
                     <div class="gauge">
-                      <div class="gauge-seg" :class="h3Verdict && h3Verdict.gauge==='low' ? 'miss' : ''">reported short</div>
-                      <div class="gauge-seg" :class="h3Verdict && h3Verdict.gauge==='on' ? 'on' : ''">on spec</div>
-                      <div class="gauge-seg" :class="h3Verdict && h3Verdict.gauge==='high' ? 'miss' : ''">reported long</div>
+                      <div class="gauge-seg" :class="h3Verdict && h3Verdict.gauge==='low' ? 'miss' : ''">below result</div>
+                      <div class="gauge-seg" :class="h3Verdict && h3Verdict.gauge==='on' ? 'on' : ''">within tolerance</div>
+                      <div class="gauge-seg" :class="h3Verdict && h3Verdict.gauge==='high' ? 'miss' : ''">above result</div>
                     </div>
                   </template>
                 </div>
@@ -629,7 +630,7 @@
 
         <!-- ---------- CAPSTONE: the last fill of the day ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
-          <div class="note note-info" x-show="!capUnlocked">Certify all three core skills to take this one. Kinetic theory, the ideal gas law and partial pressures each need three right in a row.</div>
+          <div class="note note-info" x-show="!capUnlocked">Master all three core skills to unlock the capstone. Each core skill requires three correct answers in a row.</div>
           <template x-if="capUnlocked && cap">
             <div>
               <div class="brief">
@@ -648,21 +649,21 @@
                   <span class="v mono"><span x-text="Math.round(cap.fO2*100)"></span> % O<sub>2</sub></span>
                 </div>
                 <div class="given-cell">
-                  <span class="k">This fill draws</span>
-                  <span class="v mono"><span x-text="cap.need"></span> atm of bank</span>
+                  <span class="k">Simulation requires</span>
+                  <span class="v mono"><span x-text="cap.need"></span> reserve points</span>
                 </div>
                 <div class="given-cell">
-                  <span class="k">Bank holds</span>
-                  <span class="v mono"><span x-text="fmt(cap.bankAt)"></span> atm</span>
+                  <span class="k">Simulated reserve</span>
+                  <span class="v mono"><span x-text="fmt(cap.bankAt)"></span> pts</span>
                 </div>
                 <div class="given-cell">
-                  <span class="k">Oxygen working limit</span>
+                  <span class="k">Activity pO₂ criterion</span>
                   <span class="v mono"><span x-text="PPO2_LIMIT"></span> atm</span>
                 </div>
               </div>
-              <p class="small muted" style="margin-top: var(--s-2);">Every 10 m of seawater adds 1 atm to the 1 atm already on the surface.</p>
+              <p class="small muted" style="margin-top: var(--s-2);">Activity model: absolute pressure is approximately 1 atm at the surface plus 1 atm for each 10 m of seawater.</p>
 
-              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">One call. What do you do?</p>
+              <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">Use the evidence. Which condition is supported?</p>
               <div class="choice-grid choice-grid-wide">
                 <template x-for="o in cap.sc.options" :key="o.key">
                   <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
@@ -670,8 +671,8 @@
               </div>
 
               <div class="row call-row" style="margin-top: var(--s-4);">
-                <button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Make the call</button>
-                <span class="call-hint" x-show="!capPick && !capWin" x-text="'Make the call on the fill first.'"></span>
+                <button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Check conclusion</button>
+                <span class="call-hint" x-show="!capPick && !capWin" x-text="'Select the conclusion supported by the calculated values.'"></span>
               </div>
 
               <template x-if="capVerdict">
@@ -691,7 +692,7 @@
         <!-- ---------- World-state: the bank and the dive-day clock ---------- -->
         <div class="panel worldstate">
           <div class="panel-head">
-            <span class="panel-title" style="font-size: var(--fs-md)">The bank &amp; the clock</span>
+            <span class="panel-title" style="font-size: var(--fs-md)">Simulation reserve &amp; clock</span>
             <span class="grow"></span>
             <span class="small muted" x-text="clockLabel"></span>
           </div>
@@ -700,16 +701,16 @@
             <div class="crew-bar">
               <div class="row" style="justify-content: space-between; align-items: baseline;">
                 <span class="small" style="font-weight:700;" x-text="bankState"></span>
-                <span class="small mono"><span x-text="fmt(bank)"></span> of 200 atm</span>
+                <span class="small mono"><span x-text="fmt(bank)"></span> of 200 pts</span>
               </div>
               <div class="meter"><div class="meter-fill" :style="`width:${bankPct}%; background:${bankColor}`"></div></div>
               <div class="tankfield" aria-hidden="true">
                 <template x-for="(t,i) in bankTanks" :key="'tank'+i"><span class="tank"></span></template>
               </div>
-              <p class="small muted" style="margin-top: var(--s-1);">One cylinder is 20 atm of storage. The bank drops when a call actually puts gas in a cylinder, and a missed call spends more of it than a right one.</p>
+              <p class="small muted" style="margin-top: var(--s-1);">Reserve points are an activity score, not a measured pressure or amount of gas. The score changes according to the simulation rules after selected problems.</p>
             </div>
           </div>
-          <p class="worldstate-empty" x-show="!worldLog.length">Nothing filled yet. Make a call and watch what your number costs the bank.</p>
+          <p class="worldstate-empty" x-show="!worldLog.length">No result recorded yet. Check an answer to update the simulation log.</p>
           <ul class="worldstate-list" x-show="worldLog.length">
             <template x-for="w in worldLog" :key="w.id">
               <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
@@ -721,12 +722,12 @@
         </div>
 
       </section>
-      <aside class="life-support-board panel" aria-label="Dive-boat bank status">
-        <div class="life-header"><div><span class="command-kicker">Storage bank</span><strong x-text="bankState"></strong></div><span class="sol-chip" x-text="clockLabel"></span></div>
-        <div class="crew-status cockpit-crew"><div class="crew-bar"><div class="life-meter-label"><span>Pressure</span><span class="mono" x-text="fmt(bank)+' / 200'"></span></div><div class="meter"><div class="meter-fill" :style="`width:${bankPct}%; background:${bankColor}`"></div></div></div></div>
+      <aside class="life-support-board panel" aria-label="Simulation status">
+        <div class="life-header"><div><span class="command-kicker">Simulated reserve</span><strong x-text="bankState"></strong></div><span class="sol-chip" x-text="clockLabel"></span></div>
+        <div class="crew-status cockpit-crew"><div class="crew-bar"><div class="life-meter-label"><span>Reserve</span><span class="mono" x-text="fmt(bank)+' / 200 pts'"></span></div><div class="meter"><div class="meter-fill" :style="`width:${bankPct}%; background:${bankColor}`"></div></div></div></div>
         <div class="system-grid" aria-label="Shift readings"><template x-for="r in bankReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span :title="r.hint" x-text="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template></div>
-        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest consequence</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'No fill is logged yet.'"></p></section>
-        <section class="mission-log"><span class="command-kicker">Fill log</span><p class="worldstate-empty" x-show="!worldLog.length">The first cylinder is waiting.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : 'bad'"><span class="ws-icon" x-text="w.icon"></span><span x-text="w.text"></span></li></template></ul></section>
+        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest result</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'No result is logged yet.'"></p></section>
+        <section class="mission-log"><span class="command-kicker">Activity log</span><p class="worldstate-empty" x-show="!worldLog.length">No result recorded yet.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : 'bad'"><span class="ws-icon" x-text="w.icon"></span><span x-text="w.text"></span></li></template></ul></section>
       </aside>
     </div>
 
@@ -738,9 +739,9 @@
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
   import { registerGauge } from '../../shared/js/gauge.js';
-  import { createSim } from './js/main.js';
+  import { createSim } from './js/main.js?v=u7-fidelity-20260825';
   import { mountCaseFile } from '../../shared/js/casefile.js';
-  import { CASE } from './js/case.js';
+  import { CASE } from './js/case.js?v=u7-fidelity-20260825';
   import { mountColumnResizers } from '../shared/columns.js?v=cockpit-3';
   registerRender(Alpine);
   registerGauge(Alpine);

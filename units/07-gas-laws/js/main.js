@@ -2,12 +2,12 @@
 import {
   KMT_POSTULATES, KMT_QUIZ, GAS_LAWS, RELATIONSHIPS, DALTON_GASES,
   REAL_GASES, WATER_VP, maxwellBoltzmann, rmsSpeed, mostProbableSpeed, SE, SCENARIOS
-} from './model.js';
+} from './model.js?v=u7-fidelity-20260825';
 import { idealGasSolve, vanderWaalsPressure, partialPressures, GAS_CONSTANT_R, fmt } from '../../../shared/js/chem.js';
 import { lineChart, speciesColor } from '../../../shared/js/render.js';
 import { createGasBox } from './gasbox.js';
 import { createGame, outcomeBand } from '../../../shared/js/game.js';
-import { sceneArt } from './art.js';
+import { sceneArt } from './art.js?v=u7-fidelity-20260825';
 
 // Three.js + Chart.js objects live at module scope, never inside Alpine's reactive proxy.
 let gasbox = null, lawChart = null, mbChart = null, zChart = null;
@@ -26,9 +26,9 @@ const VAR_LABEL = { P: 'Pressure P', V: 'Volume V', n: 'Moles n', T: 'Temperatur
 const VAR_UNIT = { P: 'atm', V: 'L', n: 'mol', T: 'K' };
 
 // ---- world-state constants: the bank, the dive-day clock, the oxygen ceiling ----
-const START_BANK = 200;     // atm of storage pressure in the bank at the start of the day
+const START_BANK = 200;     // simulation reserve points; not a physical pressure or gas quantity
 const SHIFT_START = 6 * 60; // the boat starts filling at 06:00
-const PPO2_LIMIT = 1.4;     // atm, the recreational working limit (1.6 is contingency)
+const PPO2_LIMIT = 1.4;     // atm, activity criterion based on NOAA's common nitrox working limit
 
 // Mastery targets. Built from shared/js/game.js's createGame contract, NOT from
 // GAMIFICATION.md's API block, which omits `honors` and would silently put honors
@@ -169,7 +169,7 @@ export function createSim() {
     // Advance the dive-day clock and draw gas off the bank. A wrong call costs roughly
     // three times the minutes of a right one, which is the feedback loop: the queue on
     // the dock does not wait while you re-run the arithmetic. Only calls that actually
-    // put gas in a cylinder carry a `spend`; reading a gauge or checking an analyser
+    // put gas in a cylinder carry a `spend`; reading a gauge or checking an analyzer
     // costs time and nothing else.
     recordWorld({ icon, tone, text, minutes, spend = 0 }) {
       this.clockMin += minutes;
@@ -182,11 +182,11 @@ export function createSim() {
       return `${String(Math.floor(t / 60) % 24).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`;
     },
     get bankPct() { return Math.max(0, Math.min(100, this.bank / START_BANK * 100)); },
-    get bankMood() { return this.bank >= START_BANK * 0.5 ? '\u{1F642}' : this.bank >= START_BANK * 0.2 ? '\u{1F630}' : '\u{1F635}'; },
+    get bankMood() { return this.bank >= START_BANK * 0.5 ? '●' : this.bank >= START_BANK * 0.2 ? '▲' : '■'; },
     get bankState() {
-      if (this.bank >= START_BANK * 0.5) return 'Bank full, everyone dives';
-      if (this.bank >= START_BANK * 0.2) return 'Bank low, fills are slow';
-      return 'Bank dry, the boat stays tied up';
+      if (this.bank >= START_BANK * 0.5) return 'Reserve high';
+      if (this.bank >= START_BANK * 0.2) return 'Reserve low';
+      return 'Reserve depleted';
     },
     get bankColor() { return this.bank >= START_BANK * 0.5 ? 'var(--success)' : this.bank >= START_BANK * 0.2 ? 'var(--warn)' : 'var(--danger)'; },
     // Storage cylinders still worth drawing on, one token per 20 atm.
@@ -218,23 +218,23 @@ export function createSim() {
       return tone === 'success' ? 'safe' : (tone === 'warn' ? 'warn' : (tone ? 'danger' : 'standby'));
     },
     get activeArtId() { return (this.activeBrief && this.activeBrief.id) || 'a-whip'; },
-    get activeStationName() { return (this.activeBrief && this.activeBrief.system) || 'Dive-boat fill station'; },
+    get activeStationName() { return (this.activeBrief && this.activeBrief.system) || 'Gas laws activity'; },
     get activeStateLabel() { return (this.activeVerdict && this.activeVerdict.state) || ''; },
     get activeOutcomeText() {
       const v = this.activeVerdict, b = this.activeBrief;
-      return (v && (v.detail || v.headline)) || (b && (b.why || b.goal)) || 'Read the tank, solve the relationship, and keep the bank honest.';
+      return (v && (v.detail || v.headline)) || (b && (b.why || b.goal)) || 'Read the values, calculate the relationship, and compare your result with the evidence.';
     },
     get activeReference() {
-      if (this.mode === 'ideal') return [{ k: 'Equation', v: 'PV = nRT' }, { k: 'Temperature', v: 'kelvin, not degrees Celsius' }];
-      if (this.mode === 'dalton') return [{ k: 'Dalton', v: 'Ptotal = sum of partial pressures' }, { k: 'Safety', v: 'use absolute pressure for a dive plan' }];
-      return [{ k: 'KMT', v: 'particles are in random, constant motion' }, { k: 'Bank', v: 'a call that fills a cylinder spends gas' }];
+      if (this.mode === 'ideal') return [{ k: 'Equation', v: 'PV = nRT' }, { k: 'Model', v: 'use kelvin and absolute pressure; treat the gas as ideal' }];
+      if (this.mode === 'dalton') return [{ k: 'Dalton', v: 'Ptotal = sum of partial pressures' }, { k: 'Depth problems', v: '1.40 atm pO₂ is the activity criterion' }];
+      return [{ k: 'KMT', v: 'these are ideal-gas model assumptions' }, { k: 'Simulation', v: 'reserve points are not a measured gas quantity' }];
     },
     get bankReadings() {
       return [
-        { key: 'bank', label: 'Bank', raw: `${fmt(this.bank)}/200`, pct: this.bankPct, color: this.bankColor, hint: 'available bank pressure in atmosphere equivalents' },
-        { key: 'clock', label: 'Clock', raw: this.clockLabel, pct: Math.min(100, this.clockMin / 480 * 100), color: 'var(--accent)', hint: 'shift time spent on fills and checks' },
-        { key: 'core', label: 'Core', raw: `${this.teksMasteredCount}/3`, pct: this.gOverall() * 100, color: 'var(--accent-700)', hint: 'core skills certified' },
-        { key: 'calls', label: 'Log', raw: `${this.worldLog.length}`, pct: Math.min(100, this.worldLog.length / 6 * 100), color: 'var(--success)', hint: 'recent calls recorded in the shift log' }
+        { key: 'bank', label: 'Reserve', raw: `${fmt(this.bank)}/200 pts`, pct: this.bankPct, color: this.bankColor, hint: 'simulated reserve score; not a physical pressure or amount of gas' },
+        { key: 'clock', label: 'Clock', raw: this.clockLabel, pct: Math.min(100, this.clockMin / 480 * 100), color: 'var(--accent)', hint: 'simulated activity time' },
+        { key: 'core', label: 'Core', raw: `${this.teksMasteredCount}/3`, pct: this.gOverall() * 100, color: 'var(--accent-700)', hint: 'core skills mastered' },
+        { key: 'answers', label: 'Log', raw: `${this.worldLog.length}`, pct: Math.min(100, this.worldLog.length / 6 * 100), color: 'var(--success)', hint: 'recent activity results' }
       ];
     },
 
@@ -285,19 +285,19 @@ export function createSim() {
       const good = this.kPick === item.answer;
       let v, minutes;
       if (good) {
-        v = { tone: 'success', icon: sc.icon, state: 'CALLED IT', headline: this.postShort(item.answer),
+        v = { tone: 'success', icon: sc.icon, state: 'CORRECT POSTULATE', headline: this.postShort(item.answer),
           detail: item.consequences[this.kPick], gauge: null };
         this.kDone = true; minutes = 5;
       } else {
         // Use each postulate's own label verbatim, as U6's limiting-reactant headline does.
         // Lower-casing it turned postulate 5's short label, "KE ∝ T", into "ke ∝ t".
-        v = { tone: 'fail', icon: '\u{26A0}\u{FE0F}', state: 'WRONG POSTULATE',
+        v = { tone: 'fail', icon: '\u{26A0}\u{FE0F}', state: 'CHECK POSTULATE',
           headline: `${this.postShort(item.answer)}, not ${this.postShort(this.kPick)}`,
           detail: `${item.consequences[this.kPick]} ${this.kAnswerText}`, gauge: null };
         minutes = 14;
       }
       this.gRecord('a', good, !this.kAttempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'read right' : 'misread'}`, minutes });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'postulate matched' : 'postulate missed'}`, minutes });
       this.kAttempted = true; this.kChecked = true; this.kVerdict = v;
     },
     kNext() { this.genKmt(); },
@@ -321,8 +321,8 @@ export function createSim() {
     get h1Question() {
       if (!this.h1s) return '';
       return this.h1s.kind === 'ke'
-        ? `At ${this.boxT} K, which bottle has the greater AVERAGE KINETIC ENERGY per particle?`
-        : `At ${this.boxT} K, which bottle has the greater AVERAGE MOLECULAR SPEED?`;
+        ? `At ${this.boxT} K, which bottle has greater average translational kinetic energy per particle?`
+        : `At ${this.boxT} K, which bottle has greater root-mean-square (rms) molecular speed?`;
     },
     h1PickOption(k) { if (!this.h1Done) this.h1Pick = k; },
     h1State(k) {
@@ -342,15 +342,15 @@ export function createSim() {
       const { sc, gA, gB, kind, correct } = this.h1s;
       const good = this.h1Pick === correct;
       const nums = kind === 'ke'
-        ? `Both are at ${this.boxT} K, so both average 3RT/2 per mole.`
-        : `At ${this.boxT} K, ${gA.name} runs at ${fmt(rmsSpeed(gA.M, this.boxT))} m/s rms against ${gB.name} at ${fmt(rmsSpeed(gB.M, this.boxT))} m/s.`;
+        ? `Both are at ${this.boxT} K, so both have average translational kinetic energy 3RT/2 per mole.`
+        : `At ${this.boxT} K, ${gA.name}: v_rms = ${fmt(rmsSpeed(gA.M, this.boxT))} m/s; ${gB.name}: v_rms = ${fmt(rmsSpeed(gB.M, this.boxT))} m/s.`;
       let v, minutes;
       if (good) {
-        v = { tone: 'success', icon: sc.icon, state: 'READ RIGHT', headline: 'Curve read correctly',
+        v = { tone: 'success', icon: sc.icon, state: 'CORRECT COMPARISON', headline: 'Curve read correctly',
           detail: `${sc.kinds[kind].right} ${nums}`, gauge: null };
         this.h1Done = true; minutes = 5;
       } else {
-        v = { tone: 'fail', icon: '\u{26A0}\u{FE0F}', state: 'CURVE MISREAD', headline: 'Speed and energy are not the same question',
+        v = { tone: 'fail', icon: '\u{26A0}\u{FE0F}', state: 'CHECK COMPARISON', headline: 'Speed and energy are not the same question',
           detail: `${sc.kinds[kind].wrong} ${nums}`, gauge: null };
         minutes = 13;
       }
@@ -439,7 +439,7 @@ export function createSim() {
       // idealGasSolve has no input guard: a zero volume returns Infinity and any NaN in
       // gives NaN out, and outcomeBand throws on a non-finite value. Guard unit-side.
       if (!isFinite(val)) {
-        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'NO NUMBER', headline: 'Nothing to act on', detail: sc.fail, gauge: null };
+        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'ENTER A NUMBER', headline: 'Enter a numerical answer', detail: sc.fail, gauge: null };
         minutes = 12;
       } else {
         const band = outcomeBand(val, this.ig.target, this.ig.bands);
@@ -447,21 +447,21 @@ export function createSim() {
         const yours = `${fmt(val, 4)} ${unit}`;
         const off = `${fmt(Math.abs(val - this.ig.target), 3)} ${unit}`;
         if (good) {
-          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Called it',
-            detail: `You called ${yours}; PV = nRT gives ${needTxt}. ${sc.safe}`, gauge: 'on' };
+          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Within activity tolerance',
+            detail: `Your answer is ${yours}; PV = nRT gives ${needTxt}. ${sc.safe}`, gauge: 'on' };
           this.igDone = true; minutes = 8; spend = sp.ok || 0;
         } else if (band.direction === 'low') {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Called it low',
-            detail: `You called ${yours}, ${off} under the ${needTxt} the equation gives. ${sc.low}`, gauge: 'low' };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Below the calculated value',
+            detail: `Your answer is ${yours}, ${off} under the ${needTxt} the equation gives. ${sc.low}`, gauge: 'low' };
           minutes = 22; spend = sp.low || 0;
         } else {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Called it high',
-            detail: `You called ${yours}, ${off} over the ${needTxt} the equation gives. ${sc.high}`, gauge: 'high' };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Above the calculated value',
+            detail: `Your answer is ${yours}, ${off} over the ${needTxt} the equation gives. ${sc.high}`, gauge: 'high' };
           minutes = 22; spend = sp.high || 0;
         }
       }
       this.gRecord('b', good, !this.igAttempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'fill sized' : 'fill missed'}`, minutes, spend });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'answer within tolerance' : 'answer outside tolerance'}`, minutes, spend });
       this.igAttempted = true; this.igChecked = true; this.igVerdict = v;
       // The relationship chart plots the solved variable, so it is revealed on commit,
       // never before it, and a canvas revealed from a hidden state needs a resize.
@@ -517,7 +517,7 @@ export function createSim() {
       const val = parseFloat(this.h2Input);
       let v, good = false, minutes;
       if (!isFinite(val)) {
-        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'NO NUMBER', headline: 'Nothing to correct', detail: sc.fail, gauge: null };
+        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'ENTER A NUMBER', headline: 'Enter a numerical answer', detail: sc.fail, gauge: null };
         minutes = 10;
       } else {
         const band = outcomeBand(val, this.h2s.target, this.h2s.bands);
@@ -527,18 +527,18 @@ export function createSim() {
         const side = this.h2s.Z < 1 ? 'below' : 'above';
         if (good) {
           v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Correction holds',
-            detail: `You called ${yours}; van der Waals gives ${needTxt} against an ideal ${fmt(this.h2s.ideal, 4)} atm, so this gas sits ${side} ideal here. ${sc.safe}`, gauge: 'on' };
+            detail: `Your answer is ${yours}; van der Waals gives ${needTxt} against an ideal ${fmt(this.h2s.ideal, 4)} atm, so this gas sits ${side} ideal here. ${sc.safe}`, gauge: 'on' };
           this.h2Done = true; minutes = 7;
         } else {
           const lowSide = band.direction === 'low';
           v = { tone: 'fail', icon: '\u{1F6A8}', state: lowSide ? sc.lowState : sc.highState,
             headline: lowSide ? 'Corrected short' : 'Corrected long',
-            detail: `You called ${yours} against ${needTxt}. ${lowSide ? sc.low : sc.high}`, gauge: lowSide ? 'low' : 'high' };
+            detail: `Your answer is ${yours} against ${needTxt}. ${lowSide ? sc.low : sc.high}`, gauge: lowSide ? 'low' : 'high' };
           minutes = 17;
         }
       }
       this.gRecord('h2', good, !this.h2Attempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'table corrected' : 'correction wrong'}`, minutes });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'answer within tolerance' : 'answer outside tolerance'}`, minutes });
       this.h2Attempted = true; this.h2Checked = true; this.h2Verdict = v;
       this.$nextTick(() => { this.buildCharts(); this.reapplySelects(); this.updateZ(); this.resizeCharts(); });
     },
@@ -630,7 +630,7 @@ export function createSim() {
       const sp = sc.spend || {};
       let v, good = false, minutes, spend = 0;
       if (!isFinite(val)) {
-        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'NO NUMBER', headline: 'Nothing to act on', detail: sc.fail, gauge: null };
+        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'ENTER A NUMBER', headline: 'Enter a numerical answer', detail: sc.fail, gauge: null };
         minutes = 12;
       } else {
         const band = outcomeBand(val, this.dl.target, this.dl.bands);
@@ -641,25 +641,25 @@ export function createSim() {
         // the 1.4 atm working limit is the other half, so the verdict says it out loud.
         const limitNote = this.dl.depth
           ? (this.dl.overLimit
-            ? ` That is past the ${PPO2_LIMIT} atm working limit at ${this.dl.depth} m, so this mix does not go to that depth.`
-            : ` That is inside the ${PPO2_LIMIT} atm working limit at ${this.dl.depth} m, so the depth stands.`)
+            ? ` This is above the ${PPO2_LIMIT} atm activity criterion at ${this.dl.depth} m.`
+            : ` This is at or below the ${PPO2_LIMIT} atm activity criterion at ${this.dl.depth} m.`)
           : '';
         if (good) {
-          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Called it',
-            detail: `You called ${yours}; ${frac} comes to ${needTxt}.${limitNote} ${sc.safe}`, gauge: 'on' };
+          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Within activity tolerance',
+            detail: `Your answer is ${yours}; ${frac} comes to ${needTxt}.${limitNote} ${sc.safe}`, gauge: 'on' };
           this.dlDone = true; minutes = 8; spend = sp.ok || 0;
         } else if (band.direction === 'low') {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Called it low',
-            detail: `You called ${yours}, under the ${needTxt} that ${frac} comes to.${limitNote} ${sc.low}`, gauge: 'low' };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Below the calculated value',
+            detail: `Your answer is ${yours}, under the ${needTxt} that ${frac} comes to.${limitNote} ${sc.low}`, gauge: 'low' };
           minutes = 22; spend = sp.low || 0;
         } else {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Called it high',
-            detail: `You called ${yours}, over the ${needTxt} that ${frac} comes to.${limitNote} ${sc.high}`, gauge: 'high' };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Above the calculated value',
+            detail: `Your answer is ${yours}, over the ${needTxt} that ${frac} comes to.${limitNote} ${sc.high}`, gauge: 'high' };
           minutes = 22; spend = sp.high || 0;
         }
       }
       this.gRecord('c', good, !this.dlAttempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'mix called' : 'mix missed'}`, minutes, spend });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'answer within tolerance' : 'answer outside tolerance'}`, minutes, spend });
       this.dlAttempted = true; this.dlChecked = true; this.dlVerdict = v;
       // Mastering C.10(C) here is what reveals the h3 bench for the first time, and its
       // <template x-if> subtree renders with the water-temp <select x-model> binding before
@@ -678,7 +678,7 @@ export function createSim() {
     },
     genHonors3() {
       const sc = scOf('h3-water');
-      // Keep the dry-gas pressure well clear of zero: at 100 degrees the vapour pressure
+      // Keep the dry-gas pressure well clear of zero: at 100 degrees the vapor pressure
       // IS one atmosphere, and a target of zero makes the relative band unusable.
       const row = pick(WATER_VP.filter(r => r.tC <= 60));
       const pw = row.torr / 760;
@@ -696,28 +696,28 @@ export function createSim() {
       const val = parseFloat(this.h3Input);
       let v, good = false, minutes;
       if (!isFinite(val)) {
-        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'NO NUMBER', headline: 'Nothing to report', detail: sc.fail, gauge: null };
+        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'ENTER A NUMBER', headline: 'Enter a numerical answer', detail: sc.fail, gauge: null };
         minutes = 10;
       } else {
         const band = outcomeBand(val, this.h3s.target, this.h3s.bands);
         good = band.withinSpec;
         const needTxt = `${fmt(this.h3s.target, 4)} atm`;
         const yours = `${fmt(val, 4)} atm`;
-        const sum = `${fmt(this.h3s.total, 4)} atm total minus ${fmt(this.h3s.pw, 3)} atm of water vapour at ${this.h3s.tC} °C`;
+        const sum = `${fmt(this.h3s.total, 4)} atm total minus ${fmt(this.h3s.pw, 3)} atm of water vapor at ${this.h3s.tC} °C`;
         if (good) {
-          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Dry gas reported',
-            detail: `You reported ${yours}; ${sum} comes to ${needTxt}. ${sc.safe}`, gauge: 'on' };
+          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Within activity tolerance',
+            detail: `Your answer is ${yours}; ${sum} comes to ${needTxt}. ${sc.safe}`, gauge: 'on' };
           this.h3Done = true; minutes = 6;
         } else {
           const lowSide = band.direction === 'low';
           v = { tone: 'fail', icon: '\u{1F6A8}', state: lowSide ? sc.lowState : sc.highState,
-            headline: lowSide ? 'Reported short' : 'Reported long',
-            detail: `You reported ${yours} against ${needTxt}, which is ${sum}. ${lowSide ? sc.low : sc.high}`, gauge: lowSide ? 'low' : 'high' };
+            headline: lowSide ? 'Below the calculated value' : 'Above the calculated value',
+            detail: `Your answer is ${yours} against ${needTxt}, which is ${sum}. ${lowSide ? sc.low : sc.high}`, gauge: lowSide ? 'low' : 'high' };
           minutes = 16;
         }
       }
       this.gRecord('h3', good, !this.h3Attempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'dry gas reported' : 'vapour miscounted'}`, minutes });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'answer within tolerance' : 'answer outside tolerance'}`, minutes });
       this.h3Attempted = true; this.h3Checked = true; this.h3Verdict = v;
     },
     h3Next() { this.genHonors3(); },
@@ -751,18 +751,18 @@ export function createSim() {
       if (this.capWin || !this.cap || !this.capPick) return;
       const c = this.cap, sc = c.sc;
       const opt = sc.options.find(o => o.key === this.capPick);
-      const fig = `${Math.round(c.fO2 * 100)} percent at ${c.depth} m is ${fmt(c.abs, 3)} atm absolute, so the oxygen runs at ${fmt(c.ppo2, 3)} atm against a ${PPO2_LIMIT} atm limit. The fill draws ${c.need} atm off a bank holding ${fmt(c.bankAt)} atm.`;
+      const fig = `${Math.round(c.fO2 * 100)} percent at ${c.depth} m is ${fmt(c.abs, 3)} atm absolute, so the oxygen runs at ${fmt(c.ppo2, 3)} atm against a ${PPO2_LIMIT} atm limit. The simulation requires ${c.need} reserve points, and ${fmt(c.bankAt)} points remain.`;
       const good = this.capPick === c.correct;
       let v, minutes;
       if (good) {
-        v = { tone: 'success', icon: sc.icon, state: 'RIGHT CALL', headline: 'Right call', detail: `${fig} ${opt.good}`, gauge: null };
+        v = { tone: 'success', icon: sc.icon, state: 'EVIDENCE MATCHED', headline: 'Conclusion supported', detail: `${fig} ${opt.good}`, gauge: null };
         this.capWin = true; minutes = 10;
       } else {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG CALL', headline: 'Wrong call', detail: `${fig} ${opt.consequence}`, gauge: null };
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'CHECK THE EVIDENCE', headline: 'Conclusion not supported', detail: `${fig} ${opt.consequence}`, gauge: null };
         minutes = 25;
       }
       this.gRecord('cap', good, !this.capAttempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'right call' : 'wrong call'}`, minutes });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'conclusion supported' : 'conclusion not supported'}`, minutes });
       this.capAttempted = true; this.capChecked = true; this.capVerdict = v;
     },
 

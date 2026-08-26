@@ -3,11 +3,11 @@
 
 // ---- C.10(A): the postulates of the kinetic molecular theory ----
 export const KMT_POSTULATES = [
-  { id: 1, short: 'Constant motion',  text: 'Gas particles are in constant, random, straight-line motion.' },
-  { id: 2, short: 'Tiny particles',   text: 'Particle volume is negligible compared with the space they move in.' },
-  { id: 3, short: 'Elastic collisions', text: 'Collisions with the walls and each other are perfectly elastic; no kinetic energy is lost.' },
-  { id: 4, short: 'No attractions',   text: 'There are no attractive or repulsive forces between particles.' },
-  { id: 5, short: 'KE ∝ T',      text: 'Average kinetic energy is proportional to the absolute (kelvin) temperature.' }
+  { id: 1, short: 'Constant motion', text: 'In the ideal-gas model, particles move continuously in random, straight-line paths between collisions.' },
+  { id: 2, short: 'Negligible particle volume', text: 'Ideal-gas particles are treated as extremely small compared with the space between them, so their own volume is negligible.' },
+  { id: 3, short: 'Elastic collisions', text: 'Collisions between ideal-gas particles and with container walls are elastic, so total kinetic energy is conserved during the collisions.' },
+  { id: 4, short: 'No intermolecular forces', text: 'The ideal-gas model assumes no attractive or repulsive forces between particles except during collisions.' },
+  { id: 5, short: 'KE ∝ T', text: 'Average translational kinetic energy is proportional to absolute temperature in kelvins.' }
 ];
 
 // Scenario -> which postulate explains it. Used by the C.10(A) check.
@@ -18,94 +18,94 @@ export const KMT_POSTULATES = [
 // the observation being explained, not of the setting it happens in.
 export const KMT_QUIZ = [
   { id: 'k-fill', answer: 1,
-    scenario: 'A gas spreads out to fill every corner of its container.',
-    where: 'a diesel smell that started at the stern and is now in the galley',
+    scenario: 'A gas released into one part of a container eventually spreads throughout the available space.',
+    where: 'diffusion of gas particles through a container',
     consequences: {
-      1: 'Right. Random straight-line motion with nothing to stop it means a particle keeps going until a wall turns it around, so the gas ends up everywhere. That is why a leak at one end of a boat is a problem at the other end within a minute.',
-      2: 'You call it particle size. Being mostly empty space explains why a gas compresses, not why it travels. A tiny particle sitting still fills nothing.',
-      3: 'You call it elastic collisions. That explains why the motion never runs down, but a gas that started still and lost nothing would stay still. Something has to be moving first.',
-      4: 'You call it no attractions. Removing attraction lets particles separate, but it does not put them in motion. A gas with no forces and no motion sits in a heap.',
-      5: 'You call it kinetic energy against temperature. That sets how fast, not that it moves at all. Cool the compartment and the smell still reaches you, just later.'
+      1: 'Correct. Continuous random motion carries particles throughout the available space.',
+      2: 'Negligible particle volume explains why gases are highly compressible, not why particles move through the container.',
+      3: 'Elastic collisions conserve kinetic energy during collisions, but the observation is about continuous random motion.',
+      4: 'The no-forces assumption helps describe ideal behavior, but it does not by itself create particle motion.',
+      5: 'Temperature affects average kinetic energy and characteristic speeds, but particles move at every temperature in this model.'
     } },
   { id: 'k-mix', answer: 1,
-    scenario: 'Cracking the oxygen line into one end of a cylinder leaves an even mix end to end, with nothing stirring it.',
-    where: 'the blending whip',
+    scenario: 'Two gases placed in the same container become distributed throughout the container over time.',
+    where: 'diffusion and mixing of gases',
     consequences: {
-      1: 'Right. Random straight-line motion does the stirring for you. Nobody rolls a cylinder to blend nitrox, because every particle has already been the length of it thousands of times before you close the valve.',
-      2: 'You call it particle size. Empty space is why the oxygen fits, not why it distributes. Small and stationary still leaves a layer of oxygen sitting in the bottom.',
-      3: 'You call it elastic collisions. That keeps the motion from dying out, but the mixing needs the motion to be random and everywhere in the first place.',
-      4: 'You call it no attractions. If oxygen and nitrogen did attract each other you would still get a mix, just a clumpier one. Absence of attraction is not what moves them.',
-      5: 'You call it kinetic energy against temperature. Warm the cylinder and it mixes faster, but it mixes at any temperature you can fill at.'
+      1: 'Correct. Random molecular motion causes gases to diffuse and become distributed throughout the available space.',
+      2: 'Small particle size helps explain compressibility, not the motion that produces diffusion.',
+      3: 'Elastic collisions conserve kinetic energy during collisions; random motion is the more direct explanation for diffusion.',
+      4: 'Neglecting intermolecular forces is an ideal-gas assumption, but random motion is the key idea in this observation.',
+      5: 'Higher temperature changes the speed distribution, but diffusion occurs because particles are already in continuous random motion.'
     } },
   { id: 'k-squeeze', answer: 2,
-    scenario: 'You can squeeze a large volume of gas into a small steel cylinder.',
-    where: 'the compressor, on every fill of the day',
+    scenario: 'A gas can be compressed to a much smaller volume because most of the sample volume is space between particles.',
+    where: 'compression of a gas in a cylinder',
     consequences: {
-      2: 'Right. Nearly all of a gas is the space between particles, so compressing it mostly removes gaps. That is why two hundred atmospheres of air fits in a cylinder one person can carry down a dock.',
-      1: 'You call it constant motion. Motion explains that a gas fills whatever it is in, not that the container can be two orders of magnitude smaller than the gas started out.',
-      3: 'You call it elastic collisions. Lossless bounces are why the pressure holds once it is in there. They are not what made room for it.',
-      4: 'You call it no attractions. If anything, attractions would help you compress it. What makes the room is that the particles are almost all gap.',
-      5: 'You call it kinetic energy against temperature. Cooling does help you get a full fill, but a cold gas is still mostly empty space, and the space is what you are squeezing out.'
+      2: 'Correct. In the ideal-gas model, particle volume is negligible compared with the space between particles, so compression mainly reduces that spacing.',
+      1: 'Constant motion explains how particles move through the container, not why the gas has so much compressible space.',
+      3: 'Elastic collisions describe energy conservation during collisions, not the large spacing between particles.',
+      4: 'The no-forces assumption is not the main reason a gas is highly compressible.',
+      5: 'Temperature affects kinetic energy; it does not explain why most of a gas sample is empty space.'
     } },
   { id: 'k-chips', answer: 2,
-    scenario: 'A bag of chips sealed at the harbour is drum-tight by the top of the pass.',
-    where: 'the drive over the pass to the harbour',
+    scenario: 'Air in a sealed syringe can be compressed much more than a comparable volume of liquid.',
+    where: 'a syringe used to compare gas and liquid compressibility',
     consequences: {
-      2: 'Right. The air inside is mostly gaps, so when the outside stops pushing so hard the gaps open up. Nothing was added to the bag; the same particles are simply taking more room.',
-      1: 'You call it constant motion. The particles were moving just as constantly at the harbour, and the bag was flat. What changed is how hard the outside air pushes back.',
-      3: 'You call it elastic collisions. Elastic bounces are why the bag holds any shape at all, and they are the same at both ends of the drive.',
-      4: 'You call it no attractions. The chips do not stick together any less at altitude. The bag grew because there was less air pressing in on it.',
-      5: 'You call it kinetic energy against temperature. It is colder at the top of the pass, which would shrink the bag rather than swell it. Temperature is the wrong lever on this one.'
+      2: 'Correct. Gas particles are separated by large distances compared with their own size, leaving space that can be reduced by compression.',
+      1: 'Particle motion occurs in both the original and compressed gas; it does not explain the large change in volume.',
+      3: 'Elastic collisions do not create the empty space that makes a gas easy to compress.',
+      4: 'Neglecting intermolecular forces is not the most direct explanation for the large compressibility difference.',
+      5: 'The comparison is about spacing between particles, not a temperature change.'
     } },
   { id: 'k-settle', answer: 3,
-    scenario: 'A sealed gas never slows down and settles at the bottom on its own.',
-    where: 'the reserve cylinder in the locker that nobody has touched since last season',
+    scenario: 'In the ideal-gas model, collisions do not gradually remove kinetic energy from the moving particles.',
+    where: 'the idealized particle model',
     consequences: {
-      3: 'Right. Every collision is perfectly elastic, so the motion has nowhere to leak away to. A cylinder filled last season still reads its pressure because nothing has been draining the particles of energy.',
-      1: 'You call it constant motion. That is the observation said back to you, not the reason for it. The question is why the motion never runs down.',
-      2: 'You call it particle size. Small particles would still settle if every bounce cost them energy. Size is not what keeps them up.',
-      4: 'You call it no attractions. Attractions would clump them, but a clump can still be moving. What stops the slowdown is that the collisions cost nothing.',
-      5: 'You call it kinetic energy against temperature. That tells you how much motion there is at a given temperature. It does not explain why none of it is lost.'
+      3: 'Correct. An elastic collision conserves the total kinetic energy of the colliding particles.',
+      1: 'Constant motion describes the motion, while elastic collisions explain why the model does not lose kinetic energy during collisions.',
+      2: 'Particle size is unrelated to whether a collision conserves kinetic energy.',
+      4: 'The no-forces assumption concerns interactions between collisions, not energy conservation in a collision.',
+      5: 'Temperature sets the average translational kinetic energy at equilibrium; the question is specifically about collision behavior.'
     } },
   { id: 'k-condense', answer: 4,
-    scenario: 'An ideal gas is assumed never to condense into a liquid.',
-    where: 'the fill tables, which treat bank air as ideal and the analyser line as not',
+    scenario: 'The ideal-gas model does not represent condensation caused by attractions between particles.',
+    where: 'the limits of the ideal-gas model',
     consequences: {
-      4: 'Right. Condensing needs particles to hold on to one another, and the ideal model says there is nothing to hold with. That is exactly the assumption that gives out on you: bank air is near enough ideal at bench temperatures, carbon dioxide is not.',
-      1: 'You call it constant motion. Real gases move constantly and still condense on a cold enough wall. Motion is not what keeps them apart.',
-      2: 'You call it particle size. Negligible size is what makes a gas compressible, and a compressible gas can still liquefy. Size is the other idealisation, not this one.',
-      3: 'You call it elastic collisions. Lossless collisions keep the energy in the gas, which helps, but the model rules out condensing by ruling out the attraction, not the loss.',
-      5: 'You call it kinetic energy against temperature. Temperature is precisely what you drop to condense a real gas. The ideal one refuses because it has nothing to condense with.'
+      4: 'Correct. The ideal-gas model neglects intermolecular attractions, so condensation is outside the model.',
+      1: 'Real gas particles remain in motion even when attractions become important; motion alone does not rule out condensation.',
+      2: 'Negligible particle volume is a different ideal-gas assumption and does not remove attractive forces.',
+      3: 'Elastic collisions concern kinetic-energy conservation during collisions, not intermolecular attraction.',
+      5: 'Lower temperature can promote condensation in real gases, but the ideal-gas assumption at issue is the absence of intermolecular attractions.'
     } },
   { id: 'k-balloon', answer: 5,
-    scenario: 'Heating a balloon makes its particles move faster on average.',
-    where: 'a cylinder gaining pressure on the sun side of the deck and losing it again overnight',
+    scenario: 'Heating a sample of the same gas increases its average translational kinetic energy.',
+    where: 'temperature changes in a gas sample',
     consequences: {
-      5: 'Right. Average kinetic energy is set by the absolute temperature and by nothing else, so heat is speed. It is why a cylinder reads high in the afternoon sun and back down at dawn.',
-      1: 'You call it constant motion. They were already moving before you heated it. Constant motion says the motion never stops, not that it answers to a heat source.',
-      2: 'You call it particle size. The balloon does grow, but a particle is the same size hot or cold. Size explains room, not speed.',
-      3: 'You call it elastic collisions. Elastic collisions conserve the energy the gas already has. They do not add any when you heat it.',
-      4: 'You call it no attractions. With attractions or without them, heating raises the average speed. This one is temperature, straight through.'
+      5: 'Correct. Average translational kinetic energy is proportional to absolute temperature, so characteristic molecular speeds also increase for the same gas.',
+      1: 'The particles were already moving before heating; constant motion does not describe how average kinetic energy changes with temperature.',
+      2: 'Heating does not make the individual gas particles larger.',
+      3: 'Elastic collisions conserve kinetic energy during collisions; heating changes the energy of the sample through energy transfer.',
+      4: 'The no-forces assumption is not the relationship between temperature and average translational kinetic energy.'
     } },
   { id: 'k-equalT', answer: 5,
-    scenario: 'Two gases of equal temperature have equal average kinetic energy.',
-    where: 'the helium bottle and the air bank standing side by side in the same rack',
+    scenario: 'Two ideal gases at the same temperature have the same average translational kinetic energy per particle.',
+    where: 'two different gases at the same temperature',
     consequences: {
-      5: 'Right. Temperature IS average kinetic energy, whatever the gas happens to be. Helium and air in the same rack carry the same average energy; the helium just carries it as speed, because it weighs less.',
-      1: 'You call it constant motion. Both gases move constantly, and that is true at every temperature, which is why it cannot be the thing that makes the two equal.',
-      2: 'You call it particle size. A helium particle is smaller than an oxygen molecule. If size drove the energy the two would not match, and they do.',
-      3: 'You call it elastic collisions. Both keep whatever energy they have. That says neither one loses any, not that the two started out equal.',
-      4: 'You call it no attractions. Attraction changes how a gas behaves near liquefying, not its average energy at a stated temperature.'
+      5: 'Correct. Average translational kinetic energy depends on absolute temperature, not molar mass. The lighter gas has greater characteristic molecular speeds at the same temperature.',
+      1: 'Both gases are in continuous motion, but that does not explain why their average translational kinetic energies are equal.',
+      2: 'Particle size is not what determines average translational kinetic energy in the ideal-gas model.',
+      3: 'Elastic collisions conserve energy during collisions; equal temperature is what gives the gases equal average translational kinetic energy.',
+      4: 'Intermolecular attractions are neglected in the ideal model, but the equality here follows from the temperature–kinetic-energy relationship.'
     } }
 ];
 
 // ---- C.10(B): named gas-law relationships for the reference table ----
 export const GAS_LAWS = [
-  { name: "Boyle's law",      rel: 'P \\propto 1/V',  held: 'n, T constant', note: 'Squeeze the volume and the pressure rises.' },
-  { name: "Charles's law",    rel: 'V \\propto T',    held: 'n, P constant', note: 'Heat a gas and it expands.' },
-  { name: "Gay-Lussac's law", rel: 'P \\propto T',    held: 'n, V constant', note: 'Heat a rigid tank and the pressure climbs.' },
-  { name: "Avogadro's law",   rel: 'V \\propto n',    held: 'P, T constant', note: 'More particles take more room.' },
-  { name: 'Combined law',     rel: 'PV/T = \\text{const}', held: 'n constant', note: 'The three simple laws in one.' }
+  { name: "Boyle's law", rel: 'P \\propto 1/V', held: 'n, T constant', note: 'At constant temperature, pressure increases as volume decreases.' },
+  { name: "Charles's law", rel: 'V \\propto T', held: 'n, P constant', note: 'At constant pressure, volume increases with kelvin temperature.' },
+  { name: "Gay-Lussac's law", rel: 'P \\propto T', held: 'n, V constant', note: 'At constant volume, pressure increases with kelvin temperature.' },
+  { name: "Avogadro's law", rel: 'V \\propto n', held: 'P, T constant', note: 'At constant pressure and temperature, volume increases with the number of moles.' },
+  { name: 'Combined law', rel: 'PV/T = \\text{const}', held: 'n constant', note: 'For a fixed amount of ideal gas, PV/T remains constant.' }
 ];
 
 // Plottable relationships for the C.10(B) curve. axis tells the chart what to vary.
@@ -118,11 +118,11 @@ export const RELATIONSHIPS = [
 // ---- C.10(C): gases offered in the Dalton partial-pressure mixer ----
 // `where` is additive: the part each gas plays on this boat. Nothing computes from it.
 export const DALTON_GASES = [
-  { name: 'N₂',  formula: 'N2',  mol: 1.5, where: 'the bulk of every fill, and the part that narcs you deep' },
-  { name: 'O₂',  formula: 'O2',  mol: 0.4, where: 'the line off the booster, and the only part with a ceiling' },
-  { name: 'CO₂', formula: 'CO2', mol: 0.1, where: 'what comes back out of the diver, and what the analyser watches' },
-  { name: 'He',       formula: 'He',  mol: 0, where: 'the trimix bottle nobody on this boat is signed off to blend' },
-  { name: 'Ar',       formula: 'Ar',  mol: 0, where: 'the drysuit inflation bottle in the locker' }
+  { name: 'N₂', formula: 'N2', mol: 1.5, where: 'major component in the simplified gas-mixture models' },
+  { name: 'O₂', formula: 'O2', mol: 0.4, where: 'component used for partial-pressure calculations' },
+  { name: 'CO₂', formula: 'CO2', mol: 0.1, where: 'example component for gas-mixture exploration' },
+  { name: 'He', formula: 'He', mol: 0, where: 'example light gas used in the Honors speed comparison' },
+  { name: 'Ar', formula: 'Ar', mol: 0, where: 'minor component included in the simplified dry-air sample' }
 ];
 
 // ---- Honors (C.10A): van der Waals constants for real gases ----
@@ -163,7 +163,7 @@ export const mostProbableSpeed = (M, T) => Math.sqrt((2 * 8.314 * T) / (M / 1000
 // Spec tolerance for the dose stages. Measured, not chosen. On `ideal`, at the unit's
 // own shipped default state (V = 12 L, n = 0.5 mol, T = 300 K, true P = 1.0257 atm),
 // using 27 degrees Celsius instead of 300 K is 91 percent off, R = 8.314 instead of
-// 0.08206 is 10032 percent off, and millilitres for litres is 99.9 percent off. On
+// 0.08206 is 10032 percent off, and milliliters for litres is 99.9 percent off. On
 // `dalton`, taking an equal share instead of the mole fraction is 56 to 567 percent off
 // on the shipped default mix. A 3 percent acceptable window is far narrower than the
 // smallest error either skill's own failure mode can produce. Relative mode is not
@@ -189,169 +189,130 @@ const DOSE_BANDS = { mode: 'relative', ideal: 0.01, acceptable: 0.03 };
 //     plus the three ranges pin the ideal-gas state; `mix`/`find`/`total`/`depth` pin
 //     the Dalton blend.
 //   spend: bank pressure (atm) a call actually commits, per outcome. Most calls commit
-//     nothing: reading a gauge or checking an analyser costs time, not gas. Only the
+//     nothing: reading a gauge or checking an analyzer costs time, not gas. Only the
 //     two that put gas in a cylinder carry a spend, so the world-state moves for a
 //     reason the story can defend.
 export const SCENARIOS = [
-  // ---------- C.10(A) kinetic theory: name the postulate behind what you can see ----------
   { id: 'a-whip', stage: 'kmt', skill: 'a', type: 'decision',
-    system: 'The blending whip', icon: '\u{1F4A8}',
-    goal: 'Two things on this boat today are the same physics. The cylinder on the whip took the oxygen line at one end and analysed even end to end, and the diesel that went over at the stern is in the galley now. Read the observation on the card and name the postulate behind it.',
-    why: 'The postulates are the reason you can trust an analyser reading taken at the valve instead of stirring the cylinder first, and the reason a leak anywhere on a boat is a leak everywhere on it inside a minute.',
+    system: 'Gas diffusion', icon: '\u{1F4A8}',
+    goal: 'Read the observation and identify the ideal-gas KMT postulate that best explains it.',
+    why: 'Kinetic molecular theory is a model that connects particle motion and spacing to observable gas behavior.',
     constraints: { quiz: ['k-mix', 'k-fill', 'k-settle'] } },
   { id: 'a-steel', stage: 'kmt', skill: 'a', type: 'decision',
-    system: 'The compressor', icon: '\u{2699}\u{FE0F}',
-    goal: 'The compressor has been running since five, putting a room full of air into a rack of steel. Somewhere in the postulates is the reason that is possible at all. Name the one the observation on the card rests on.',
-    why: 'Every fill you do is an argument that a gas is mostly nothing. Knowing which idealisation you are leaning on is the same as knowing when it will give out, which on this bench is when the pressure goes high or the gas goes cold.',
+    system: 'Gas compression', icon: '\u{2699}\u{FE0F}',
+    goal: 'Use the observation to identify the ideal-gas assumption involved in compression or condensation behavior.',
+    why: 'The ideal-gas assumptions are useful because they also show where the model can fail for real gases.',
     constraints: { quiz: ['k-squeeze', 'k-chips', 'k-condense'] } },
   { id: 'a-deck', stage: 'kmt', skill: 'a', type: 'decision',
-    system: 'The hot deck', icon: '\u{2600}\u{FE0F}',
-    goal: 'A cylinder that read 200 atm at dawn is reading 215 on the afternoon deck and nobody has been near it. Name the postulate behind the observation you are given.',
-    why: 'A gauge that moves on its own is either a leak or a temperature, and telling those apart on a hot deck is a daily call. It is the same postulate that says a light gas and a heavy one at the same temperature are carrying the same energy.',
+    system: 'Temperature and motion', icon: '\u{2600}\u{FE0F}',
+    goal: 'Connect absolute temperature with the average translational kinetic energy of gas particles.',
+    why: 'At the same temperature, different ideal gases have the same average translational kinetic energy even though their characteristic speeds differ.',
     constraints: { quiz: ['k-balloon', 'k-equalT'] } },
 
-  // ---------- C.10(B) ideal gas: dose. Three of P, V, n, T given, the fourth committed ----------
-  { id: 'b-tyre', stage: 'ideal', skill: 'b', type: 'dose',
-    system: 'The truck in the lot', icon: '\u{1F697}',
-    goal: 'The dive truck has sat in the lot all day on tyres you set cold this morning. You know the air in one tyre and how hot the tarmac has made it. Work out the pressure that tyre is actually carrying now, in atmospheres.',
-    why: 'This is the gas-law calculation most people do without knowing they are doing it. Set them by a hot gauge and they are soft by morning; read a hot gauge as if it were cold and you bleed off air the tyre needed.',
-    constraints: { solveFor: 'P', rel: 'gaylussac', V: [12, 16], n: [1.4, 2.0], T: [305, 325] },
-    bands: DOSE_BANDS,
-    actionLabel: 'Call the pressure',
-    safeState: 'SET RIGHT', lowState: 'UNDER-CALLED', highState: 'OVER-CALLED',
-    safe: 'The number matches the gauge when the truck cools, the tyres come back to where you set them, and the trailer tows straight all the way to the harbour.',
-    low: 'You call it low, so you top the tyre up to a figure it had already passed. By morning it is over-pressure and riding on the middle of the tread.',
-    high: 'You call it high, so you bleed a tyre that was fine. It is soft and running hot by the time the trailer is on the highway.',
-    fail: 'The number never resolved, so the tyres get set by thumb and nobody writes anything down.' },
+  { id: 'b-tire', stage: 'ideal', skill: 'b', type: 'dose',
+    system: 'Constant-volume gas model', icon: '\u{1F697}',
+    goal: 'For this activity, treat the tire as a fixed-volume ideal-gas sample and use absolute pressure. Calculate the missing pressure with PV = nRT.',
+    why: 'This simplified model isolates the pressure–temperature relationship. A real tire is not perfectly rigid, so the calculated value is an approximation.',
+    constraints: { solveFor: 'P', rel: 'gaylussac', V: [12, 16], n: [1.4, 2.0], T: [305, 325] }, bands: DOSE_BANDS,
+    actionLabel: 'Check pressure', safeState: 'WITHIN TOLERANCE', lowState: 'BELOW RESULT', highState: 'ABOVE RESULT',
+    safe: 'Your answer agrees with the ideal-gas calculation within the activity tolerance.',
+    low: 'Your value is below the calculated result. Check the rearrangement, kelvin temperature, and pressure units.',
+    high: 'Your value is above the calculated result. Check the rearrangement, kelvin temperature, and pressure units.',
+    fail: 'Enter a finite numerical value before checking the result.' },
   { id: 'b-twinset', stage: 'ideal', skill: 'b', type: 'dose',
-    system: 'The twin-set on the bench', icon: '\u{1F9EF}',
-    goal: 'A twin-set is going out on a wreck at 30 m. You know the internal volume, the pressure the fill has to reach and the temperature on the bench. Work out how many moles of air that fill puts into the steel.',
-    why: 'The bank does not lose pressure, it loses gas. Moles are what you are handing over, and moles are what the next four divers are competing with this one for. Guess it and the bank runs out before the queue does.',
-    constraints: { solveFor: 'n', rel: 'boyle', P: [180, 230], V: [22, 26], T: [288, 300] },
-    bands: DOSE_BANDS,
-    spend: { ok: 24, low: 16, high: 38 },
-    actionLabel: 'Put the fill in',
-    safeState: 'FILL DELIVERED', lowState: 'SHORT FILL', highState: 'OVER-DRAWN',
-    safe: 'The draw off the bank matches what went into the steel. The diver has the gas the plan asked for and the bank has what the rest of the queue needs.',
-    low: 'You under-call it, so the fill stops short and the diver goes down on less gas than the plan. They turn the wreck early and come up on reserve.',
-    high: 'You over-call it and pull more off the bank than the cylinder ever needed. The extra vents to the deck at the end of the whip, and it is the last diver of the day who finds out.',
-    fail: 'The moles never resolved, so the fill goes on by eye and the log line stays blank.' },
+    system: 'Cylinder gas model', icon: '\u{1F9EF}',
+    goal: 'Use the ideal gas law to calculate the number of moles from the stated pressure, volume, and temperature.',
+    why: 'Moles measure the amount of gas. At high pressure, real gases can deviate from the ideal model; the Honors section explores that correction.',
+    constraints: { solveFor: 'n', rel: 'boyle', P: [180, 230], V: [22, 26], T: [288, 300] }, bands: DOSE_BANDS,
+    spend: { ok: 24, low: 16, high: 38 }, actionLabel: 'Check moles', safeState: 'WITHIN TOLERANCE', lowState: 'BELOW RESULT', highState: 'ABOVE RESULT',
+    safe: 'Your answer agrees with the ideal-gas calculation within the activity tolerance.',
+    low: 'Your value is below the calculated number of moles. Recheck PV/(RT) and the units.',
+    high: 'Your value is above the calculated number of moles. Recheck PV/(RT) and the units.',
+    fail: 'Enter a finite numerical value before checking the result.' },
   { id: 'b-sundeck', stage: 'ideal', skill: 'b', type: 'dose',
-    system: 'The cylinder on the swim deck', icon: '\u{1F321}\u{FE0F}',
-    goal: 'Somebody left a full cylinder lying on the swim deck in the sun and the gauge is reading high. You know the pressure, the internal volume and the moles that went in at the bench. Work out the temperature that steel has actually reached, in kelvin.',
-    why: 'A cylinder has a working pressure and a test pressure and the gap between them is not large. Before you decide whether that reading is a hot cylinder or an over-fill, you have to know which of the two the number is telling you about.',
-    constraints: { solveFor: 'T', rel: 'gaylussac', P: [200, 218], V: [11.5, 12.5], n: [92, 100] },
-    bands: DOSE_BANDS,
-    actionLabel: 'Call the steel temperature',
-    safeState: 'DIAGNOSED', lowState: 'CALLED TOO COOL', highState: 'CALLED TOO HOT',
-    safe: 'The temperature accounts for the whole of the extra pressure. The cylinder goes in the shade, comes back to its fill pressure, and goes out on the next dive.',
-    low: 'You call the steel cooler than it is, so the rest of the pressure has to be an over-fill. The cylinder gets bled down, and at dawn it is a hundred atmospheres short of what the diver paid for.',
-    high: 'You call the steel hotter than it is and write the reading off as sunshine. It was over-filled at the bench, and it is still over-filled when it goes back in the rack.',
-    fail: 'The temperature never resolved, so the cylinder sits on the deck in the sun while you work it out again.' },
+    system: 'Heated cylinder model', icon: '\u{1F321}\u{FE0F}',
+    goal: 'Treat the sealed cylinder as a fixed-volume ideal-gas sample. Calculate its temperature in kelvins from P, V, and n.',
+    why: 'For a fixed amount of gas at constant volume, the ideal-gas model predicts that pressure is proportional to kelvin temperature.',
+    constraints: { solveFor: 'T', rel: 'gaylussac', P: [200, 218], V: [11.5, 12.5], n: [92, 100] }, bands: DOSE_BANDS,
+    actionLabel: 'Check temperature', safeState: 'WITHIN TOLERANCE', lowState: 'BELOW RESULT', highState: 'ABOVE RESULT',
+    safe: 'Your answer agrees with the ideal-gas calculation within the activity tolerance.',
+    low: 'Your value is below the calculated temperature. Check that temperature is solved in kelvins.',
+    high: 'Your value is above the calculated temperature. Check the algebra and the gas-constant units.',
+    fail: 'Enter a finite numerical value before checking the result.' },
 
-  // ---------- C.10(C) Dalton: dose. The partial pressure is the thing that matters ----------
   { id: 'c-air', stage: 'dalton', skill: 'c', type: 'dose',
-    system: 'The air on the dock', icon: '\u{1F32C}\u{FE0F}',
-    goal: 'Before the first fill you check the analyser against plain air. You have the moles of each gas in the sample and the barometric pressure on the dock. Work out the partial pressure of the oxygen in it, in atmospheres.',
-    why: 'Every blend you make today gets compared against this one reading. If you cannot recover air out of air on a normal morning, the analyser is out, and so is every mix that goes over the rail behind it.',
-    constraints: { mix: 'air', find: 'O2', total: [0.96, 1.04] },
-    bands: DOSE_BANDS,
-    actionLabel: 'Log the check',
-    safeState: 'ANALYSER GOOD', lowState: 'READ LOW', highState: 'READ HIGH',
-    safe: 'The figure lands where air should land, the analyser agrees with it, and every blend behind it has a reference to be checked against.',
-    low: 'You log it low, so the analyser looks like it is reading rich. You trim it down, and every nitrox blend today comes out leaner than its sticker.',
-    high: 'You log it high, so the analyser looks lean and you trim it up. Now every mix reads richer than it is, which is the direction that puts a diver past their depth limit.',
-    fail: 'The check never resolved, so the analyser goes into the day unreferenced.' },
+    system: 'Simplified dry-air sample', icon: '\u{1F32C}\u{FE0F}',
+    goal: 'Calculate the oxygen partial pressure from its mole fraction and the total pressure.',
+    why: 'For an ideal-gas mixture, each component contributes a partial pressure: pᵢ = xᵢPtotal.',
+    constraints: { mix: 'air', find: 'O2', total: [0.96, 1.04] }, bands: DOSE_BANDS,
+    actionLabel: 'Check partial pressure', safeState: 'WITHIN TOLERANCE', lowState: 'BELOW RESULT', highState: 'ABOVE RESULT',
+    safe: 'Your answer agrees with the mole-fraction calculation within the activity tolerance.',
+    low: 'Your value is below the calculated partial pressure. Recheck the mole fraction and total pressure.',
+    high: 'Your value is above the calculated partial pressure. Recheck the mole fraction and total pressure.',
+    fail: 'Enter a finite numerical value before checking the result.' },
   { id: 'c-blend', stage: 'dalton', skill: 'c', type: 'dose',
-    system: 'The nitrox blend', icon: '\u{1F7E2}',
-    goal: 'A cylinder is going out as nitrox, blended from the oxygen line and bank air. You have the moles of each gas going in and the pressure the finished fill reads. Work out the partial pressure of the oxygen in that cylinder.',
-    why: 'Partial pressure is the whole of nitrox. The percentage on the sticker only matters because it becomes a partial pressure at depth, and the number you commit here is what the analyser has to agree with before the cylinder leaves the boat.',
-    constraints: { mix: 'nitrox', find: 'O2', total: [180, 232] },
-    bands: DOSE_BANDS,
-    spend: { ok: 26, low: 18, high: 42 },
-    actionLabel: 'Blend it',
-    safeState: 'BLEND ANALYSED', lowState: 'BLEND LEAN', highState: 'BLEND RICH',
-    safe: 'The oxygen goes in against the number you called, the analyser agrees inside a tenth of a percent, and the sticker on the cylinder is the truth.',
-    low: "You call the oxygen low, so you keep feeding the line to reach a partial pressure you had already passed. The finished mix is richer than its sticker, which is the direction that shortens the diver's depth limit without telling them.",
-    high: 'You call it high and stop the oxygen early. The mix is leaner than the sticker, the diver plans decompression on gas that is not in the cylinder, and the bank paid for the difference.',
-    fail: 'The partial pressure never resolved, so the whip stays open and the cylinder is not going anywhere.' },
+    system: 'Ideal gas-mixture model', icon: '\u{1F7E2}',
+    goal: 'Calculate the oxygen partial pressure in the model mixture from its mole fraction and total pressure.',
+    why: 'Dalton’s law connects gas composition with total pressure. This activity treats the mixture as ideal.',
+    constraints: { mix: 'nitrox', find: 'O2', total: [180, 232] }, bands: DOSE_BANDS,
+    spend: { ok: 26, low: 18, high: 42 }, actionLabel: 'Check partial pressure', safeState: 'WITHIN TOLERANCE', lowState: 'BELOW RESULT', highState: 'ABOVE RESULT',
+    safe: 'Your answer agrees with Dalton’s-law calculation within the activity tolerance.',
+    low: 'Your value is below the calculated partial pressure. Check xO₂ × Ptotal.',
+    high: 'Your value is above the calculated partial pressure. Check xO₂ × Ptotal.',
+    fail: 'Enter a finite numerical value before checking the result.' },
   { id: 'c-ppo2', stage: 'dalton', skill: 'c', type: 'dose',
-    system: 'The dive plan', icon: '\u{1F30A}',
-    goal: 'The blend is analysed and the diver wants a depth. You have the mix and the absolute pressure they will be breathing it at down there. Work out the oxygen partial pressure at that depth, in atmospheres, before anybody gets in.',
-    why: 'Recreational diving works to 1.4 atm of oxygen, with 1.6 atm as a contingency limit. The richer the mix, the shallower that limit falls: a 32 percent blend is comfortable at 30 m and past the working limit at 40 m, and a 36 percent blend is already past it at 30 m. This number is the difference between a dive plan and an incident report.',
-    constraints: { mix: 'nitrox', find: 'O2', depth: [20, 30, 40] },
-    bands: DOSE_BANDS,
-    actionLabel: 'Sign the plan',
-    safeState: 'PLAN SIGNED', lowState: 'CALLED LOW', highState: 'CALLED HIGH',
-    safe: 'The partial pressure is the one on the plan, the depth is inside the limit it implies, and the diver goes over the rail on a gas that matches the profile in their computer.',
-    low: 'You call it low, so the plan reads safer than the dive is and the margin you think you have is not there. Oxygen toxicity does not announce itself, and it happens at depth, on a diver holding a regulator.',
-    high: 'You call it high, so the plan reads tighter than the dive is and the depth gets cut to buy a margin the mix already had. Nobody is hurt, and the wreck they paid to see is below where you stopped them.',
-    fail: 'The partial pressure never resolved, so nothing gets signed and the diver waits on the rail.' },
+    system: 'Depth-pressure model', icon: '\u{1F30A}',
+    goal: 'Use the simplified seawater model to calculate oxygen partial pressure at depth, then compare it with the 1.40 atm activity criterion.',
+    why: 'For this activity, absolute pressure is approximated as 1 atm at the surface plus 1 atm for each 10 m of seawater. The 1.40 atm value is an activity criterion based on a common working oxygen limit, not a complete dive plan.',
+    constraints: { mix: 'nitrox', find: 'O2', depth: [20, 30, 40] }, bands: DOSE_BANDS,
+    actionLabel: 'Check partial pressure', safeState: 'WITHIN TOLERANCE', lowState: 'BELOW RESULT', highState: 'ABOVE RESULT',
+    safe: 'Use the calculated partial pressure to decide whether the activity criterion is met.',
+    low: 'Your value is below the calculated oxygen partial pressure. Recheck the oxygen fraction and absolute pressure.',
+    high: 'Your value is above the calculated oxygen partial pressure. Recheck the oxygen fraction and absolute pressure.',
+    fail: 'Enter a finite numerical value before checking the result.' },
 
-  // ---------- Honors h1 (parent a): speed against energy on the Boltzmann curve ----------
   { id: 'h1-speeds', stage: 'honors1', skill: 'h1', type: 'decision',
-    system: 'The rack', icon: '\u{1F4CA}',
-    goal: 'Two bottles standing in the same rack, at the temperature set on the kinetic-theory bench. Answer the question on the card: which one is greater, or are the two the same?',
-    why: 'The Maxwell-Boltzmann curve is the whole answer to why helium finds a seal that holds air. Speed and energy are not the same question, and running the two together is the most common mistake anybody makes on this topic.',
+    system: 'Maxwell–Boltzmann comparison', icon: '\u{1F4CA}',
+    goal: 'Compare two gases at the same temperature. Decide whether the question asks about average translational kinetic energy or root-mean-square molecular speed.',
+    why: 'At one temperature, ideal gases have the same average translational kinetic energy. The lighter gas has a greater rms speed and its speed distribution is shifted toward higher speeds.',
     kinds: {
-      ke: {
-        right: 'Right. Temperature fixes the average kinetic energy and nothing else does, so at one temperature every gas in the rack carries the same average energy whatever it weighs.',
-        wrong: 'Not that one. Average kinetic energy is set by the absolute temperature alone, so two bottles at the same temperature match, however far apart their molar masses are. What differs is how each gas carries that energy.'
-      },
-      speed: {
-        right: 'Right. With the same average energy to carry, the lighter gas has to move faster, so the light one always peaks further right on the speed curve.',
-        wrong: 'Not that one. Equal energy does not mean equal speed: energy goes as mass times speed squared, so the lighter gas has to run faster to carry the same amount, and it is the light bottle that peaks further right.'
-      }
+      ke: { right: 'Correct. At the same temperature, both gases have the same average translational kinetic energy per particle, regardless of molar mass.', wrong: 'Average translational kinetic energy depends on absolute temperature, not molar mass. Because both gases are at the same temperature, this quantity is the same.' },
+      speed: { right: 'Correct. At the same temperature, the lighter gas has the greater rms molecular speed and a distribution shifted toward higher speeds.', wrong: 'Equal average translational kinetic energy does not mean equal molecular speed. At the same temperature, the lighter gas has the greater rms speed.' }
     } },
-
-  // ---------- Honors h2 (parent b): the real-gas correction ----------
   { id: 'h2-real', stage: 'honors2', skill: 'h2', type: 'dose',
-    system: 'The high-pressure bank', icon: '\u{1F4C9}',
-    goal: 'At bank pressure the ideal gas law is a first guess, not the truth. You have the gas, the moles, the internal volume and the temperature. Work out the pressure the van der Waals equation actually gives, in atmospheres.',
-    why: 'This correction is why a bank gauge and a fill table stop agreeing at the top of the range. Attraction pulls the pressure below ideal, and the room the particles themselves take up pushes it back above. Which one wins tells you which way your fills are out.',
-    bands: DOSE_BANDS,
-    actionLabel: 'Correct the table',
-    safeState: 'TABLE CORRECTED', lowState: 'CORRECTION SHORT', highState: 'CORRECTION LONG',
-    safe: 'The corrected figure matches the gauge on the bank, the fill table gets the note in the margin, and the top of the range stops being guesswork.',
-    low: 'You correct it short. The table still over-states what the bank holds at the top end, and the last fill of the day is the one that finds the gap.',
-    high: 'You correct it long. Now the table under-states the bank, so you stop drawing on gas that was there, and cylinders go out light for no reason.',
-    fail: 'The correction never resolved, so the table keeps the ideal number and the note in the margin stays unwritten.' },
-
-  // ---------- Honors h3 (parent c): the water vapour that came along for free ----------
+    system: 'Real-gas correction', icon: '\u{1F4C9}',
+    goal: 'Calculate the pressure predicted by the van der Waals equation for the stated gas, amount, volume, and temperature.',
+    why: 'The van der Waals model accounts approximately for intermolecular attractions and finite particle volume, two effects omitted by the ideal gas law.',
+    bands: DOSE_BANDS, actionLabel: 'Check corrected pressure', safeState: 'WITHIN TOLERANCE', lowState: 'BELOW RESULT', highState: 'ABOVE RESULT',
+    safe: 'Your answer agrees with the van der Waals calculation within the activity tolerance.',
+    low: 'Your value is below the calculated van der Waals pressure. Recheck both correction terms and the units.',
+    high: 'Your value is above the calculated van der Waals pressure. Recheck both correction terms and the units.',
+    fail: 'Enter a finite numerical value before checking the result.' },
   { id: 'h3-water', stage: 'honors3', skill: 'h3', type: 'dose',
-    system: 'The collection tube', icon: '\u{1F4A7}',
-    goal: 'You are collecting a gas over water in the inverted tube on the bench. You know the total pressure the tube reads and the temperature of the water. Work out the pressure of the dry gas on its own, in atmospheres.',
-    why: 'What the tube reads is your gas plus water vapour that arrived for free. Report the total as if it were all yours and every mole you calculate off it is over-stated, every time, in the same direction.',
-    bands: DOSE_BANDS,
-    actionLabel: 'Report the dry gas',
-    safeState: 'DRY GAS REPORTED', lowState: 'REPORTED SHORT', highState: 'REPORTED LONG',
-    safe: 'The vapour comes off the total and what is left is the gas you actually collected. The mole figure downstream of it holds up.',
-    low: 'You take off more than the vapour table says. The dry gas reads short, and everything you calculate from it under-states what is in the tube.',
-    high: 'You leave some of the vapour in the number. The dry gas reads long, which is the standard version of this mistake, and it always points the same way.',
-    fail: 'The dry-gas pressure never resolved, so the tube gets logged as a total and the vapour goes down as gas.' },
-
-  // ---------- Capstone: the last fill of the day ----------
+    system: 'Gas collected over water', icon: '\u{1F4A7}',
+    goal: 'Subtract the water-vapor partial pressure from the measured total pressure to determine the dry-gas pressure.',
+    why: 'A gas collected over water contains both the collected gas and water vapor, so Ptotal = Pdry gas + PH₂O.',
+    bands: DOSE_BANDS, actionLabel: 'Check dry-gas pressure', safeState: 'WITHIN TOLERANCE', lowState: 'BELOW RESULT', highState: 'ABOVE RESULT',
+    safe: 'Your answer agrees with the Dalton’s-law subtraction within the activity tolerance.',
+    low: 'Your value is below the calculated dry-gas pressure. Check the water-vapor value and subtraction.',
+    high: 'Your value is above the calculated dry-gas pressure. Check the water-vapor value and subtraction.',
+    fail: 'Enter a finite numerical value before checking the result.' },
   { id: 'cap-lastfill', stage: 'capstone', skill: 'cap', type: 'decision',
-    system: 'The last fill', icon: '\u{1F6A4}',
-    goal: 'One diver left on the boat and one fill left in your shift. They want a depth, they want a mix, and the bank is down to whatever the day left in it. Read the cylinder, check the oxygen partial pressure at that depth against 1.4 atm, and make one call.',
-    why: 'This is the whole day in one decision. The gas laws give you what the fill takes, Dalton gives you what the mix does at depth, and the bank gives you what you actually have. The call is what you do when the three do not agree.',
+    system: 'Evidence check', icon: '\u{1F6A4}',
+    goal: 'Calculate the oxygen partial pressure and compare it with the 1.40 atm activity criterion. Then compare the simulated reserve points with the points required by the scenario.',
+    why: 'The capstone combines the chemistry result with a clearly labeled simulation resource. Reserve points are not a physical measurement of stored gas.',
     options: [
-      { key: 'send', label: 'Fill it and send them down',
-        good: 'The bank covers the fill and the mix is inside its limit at that depth. The cylinder goes over the rail analysed and stickered, and the last dive of the day is the uneventful kind.',
-        consequence: 'You send a diver down on a fill this bank could not cover or a mix that is past its oxygen limit at that depth. Neither of those announces itself at the surface, which is exactly why they get checked at the bench.' },
-      { key: 'reblend', label: 'Re-blend leaner and cap the depth',
-        good: 'The bank has the gas but the mix is past its oxygen limit at the depth they asked for. Leaner gas and a shallower cap puts the partial pressure back inside 1.4 atm, and they still get a dive.',
-        consequence: 'You re-blend a mix that did not need it. If the bank could not cover the fill in the first place, leaner gas does not create pressure, and if the mix was already inside its limit you have taken depth off a diver for nothing.' },
-      { key: 'off', label: 'Call it: the bank cannot do this one',
-        good: 'The bank is below what this fill takes. You cannot make gas out of a gauge reading, and half a fill on the last dive of the day is how somebody ends up on reserve at depth. The dive is off and the compressor runs overnight.',
-        consequence: 'You call off a dive the bank could have covered. The compressor was never the problem, the diver goes home without the dive they paid for, and the gas you were protecting is still sitting in the bank in the morning.' } ] }
+      { key: 'send', label: 'Both activity criteria are satisfied', good: 'The oxygen partial pressure is at or below the activity criterion, and the simulated reserve has enough points for this scenario.', consequence: 'At least one criterion is not satisfied. Recheck the oxygen partial pressure and the simulated reserve.' },
+      { key: 'reblend', label: 'The O₂ partial-pressure criterion is exceeded', good: 'The simulated reserve is sufficient, but the calculated oxygen partial pressure is above the 1.40 atm activity criterion.', consequence: 'The oxygen criterion is not the limiting condition in this scenario. Compare the calculated pO₂ and reserve points again.' },
+      { key: 'off', label: 'The simulated reserve is insufficient', good: 'The scenario requires more reserve points than remain in the simulation.', consequence: 'The simulated reserve is sufficient here. Compare the oxygen criterion before choosing another conclusion.' }
+    ] }
 ];
 
 export const SE = [
-  { id: 'a',  code: 'C.10(A)', mode: 'kmt',    honors: false, text: 'Describe the postulates of the kinetic molecular theory.' },
-  { id: 'b',  code: 'C.10(B)', mode: 'ideal',  honors: false, text: 'Calculate the relationships among volume, pressure, number of moles, and temperature for an ideal gas.' },
-  { id: 'c',  code: 'C.10(C)', mode: 'dalton', honors: false, text: "Apply Dalton's law of partial pressures to a mixture of gases." },
-  { id: 'h1', code: 'Honors',  mode: 'kmt',    honors: true,  text: 'Read the Maxwell-Boltzmann curve: molecular speed against kinetic energy.' },
-  { id: 'h2', code: 'Honors',  mode: 'ideal',  honors: true,  text: 'Correct an ideal-gas pressure for real-gas behaviour with van der Waals.' },
-  { id: 'h3', code: 'Honors',  mode: 'dalton', honors: true,  text: 'Subtract water vapour pressure from a gas collected over water.' }
+  { id: 'a', code: 'C.10(A)', mode: 'kmt', honors: false, text: 'Describe the postulates of the kinetic molecular theory.' },
+  { id: 'b', code: 'C.10(B)', mode: 'ideal', honors: false, text: 'Describe and calculate the relationships among volume, pressure, number of moles, and temperature for an ideal gas.' },
+  { id: 'c', code: 'C.10(C)', mode: 'dalton', honors: false, text: "Define and apply Dalton's law of partial pressure." },
+  { id: 'h1', code: 'Honors', mode: 'kmt', honors: true, text: 'Compare Maxwell–Boltzmann speed distributions, rms molecular speed, and average translational kinetic energy.' },
+  { id: 'h2', code: 'Honors', mode: 'ideal', honors: true, text: 'Compare ideal-gas pressure with a van der Waals real-gas correction.' },
+  { id: 'h3', code: 'Honors', mode: 'dalton', honors: true, text: 'Subtract water-vapor partial pressure from the total pressure of a gas collected over water.' }
 ];
