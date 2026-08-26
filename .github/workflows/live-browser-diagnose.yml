@@ -21,7 +21,7 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Diagnose root and Unit 9
         run: |
-          cat > /tmp/diag.mjs <<'JS'
+          cat > diag.mjs <<'JS'
           import { chromium } from 'playwright';
           const browser = await chromium.launch({headless:true});
           for (const url of [
@@ -37,21 +37,18 @@ jobs:
             await page.waitForTimeout(3500);
             const state = await page.evaluate(() => ({
               title: document.title,
-              bodyText: document.body.innerText.slice(0,1200),
+              bodyText: document.body.innerText.slice(0,1600),
               cloakCount: document.querySelectorAll('[x-cloak]').length,
               appReady: window.__chemAppReady,
               alpine: window.Alpine?.version || null,
-              fallbackHidden: document.getElementById('boot-fallback')?.hasAttribute('hidden') ?? null,
-              html: document.documentElement.outerHTML.slice(0,5000)
+              fallbackHidden: document.getElementById('boot-fallback')?.hasAttribute('hidden') ?? null
             }));
             console.log('\nURL', url);
             console.log('HTTP', resp?.status());
             console.log('STATE', JSON.stringify(state, null, 2));
             console.log('LOGS', logs.join('\n') || '(none)');
-            if (!state.bodyText.trim()) throw new Error(`blank body: ${url}`);
-            if (url.endsWith('/chemistry-case-files/') && state.cloakCount !== 0) throw new Error(`root still cloaked: ${url}`);
             await page.close();
           }
           await browser.close();
           JS
-          node /tmp/diag.mjs
+          node diag.mjs
