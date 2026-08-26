@@ -11,64 +11,64 @@
 export const CASE = {
   id: 'airbag-stoichiometry',
   number: '006',
-  kicker: 'riding shotgun right now',
-  title: 'Your airbag solves stoichiometry at 300 km/h',
-  teaser: 'The mole ratio that inflates an airbag in 30 ms',
-  hook: 'Between the crash sensor firing and your head reaching the steering wheel there are about 35 milliseconds. In that window a pellet of sodium azide must become exactly one bag of nitrogen gas. Not roughly. Exactly.',
+  kicker: 'historical airbag chemistry',
+  title: 'How Early Airbag Inflators Used Stoichiometry',
+  teaser: 'A solid propellant generated inflation gas in milliseconds',
+  hook: 'Airbags must inflate extremely quickly after a crash. Many older inflators used sodium azide to generate nitrogen gas; modern inflators use several other propellant chemistries.',
   stats: [
-    { v: '~30 ms', k: 'bag fully inflated' },
+    { v: '< 50 ms', k: 'rapid inflation timescale' },
     { v: '2 : 3', k: 'NaN3 to N2 mole ratio' },
-    { v: '~67 L', k: 'gas in a driver bag' }
+    { v: 'historical', k: 'sodium-azide inflator model' }
   ],
   steps: [
     {
-      t: 'The 50-millisecond window',
-      body: 'A crash stops the car faster than you can blink. Sensors call it in about 15 milliseconds, and the bag must be full before your body arrives at around 50. No pump on Earth moves that fast. Only a chemical reaction can.',
-      chem: 'The gas is not stored anywhere; it is manufactured on the spot. A solid becomes a gas in one reaction step, thousands of times faster than any compressor.',
-      cap: 'Impact detected at 15 ms. Head arrives near 50 ms. Chemistry gets 35.'
+      t: 'Milliseconds matter',
+      body: 'A crash sensor sends a signal to the inflator, which must generate gas rapidly enough to fill the bag before the occupant moves far forward.',
+      chem: 'Reaction rate controls how quickly gas is produced; stoichiometry determines the theoretical amount of gas a reaction can produce.',
+      cap: 'Crash detected -> inflator activated -> bag inflates.'
     },
     {
-      t: 'The pellet that becomes a bag',
-      body: 'The inflator holds about 130 grams of sodium azide, NaN3. An electric igniter heats it past 300 degrees Celsius and it decomposes almost instantly into sodium metal and a flood of nitrogen gas.',
-      chem: '2 NaN3 -> 2 Na + 3 N2. A decomposition reaction: one compound splitting into simpler substances, the exact pattern you classify in the Classify tab.',
-      cap: '2 NaN3 -> 2 Na + 3 N2: a pellet becomes a cushion.'
+      t: 'A historical gas generator',
+      body: 'Many early airbag inflators used sodium azide, NaN3, as part of the gas-generating system. A simplified reaction model is 2 NaN3 -> 2 Na + 3 N2.',
+      chem: 'This is a decomposition reaction. The coefficients give a fixed mole ratio: 2 mol NaN3 can produce 3 mol N2.',
+      cap: '2 mol NaN3 -> 3 mol N2.'
     },
     {
-      t: 'Why the mass is exact',
-      body: 'Engineers run the mole path backward from the bag: 67 liters of N2 is about 3 moles. The 2:3 ratio demands 2 moles of NaN3, and molar mass turns that into about 130 grams of pellet. Too little azide and the bag is soft and your head bottoms out. Too much and it is a wall.',
-      chem: 'Grams to moles, ratio, moles to volume: the same chain you run in the Stoichiometry tab, except a person lands on the answer.',
-      cap: 'The pellet mass IS the answer to a mole problem.'
+      t: 'Stoichiometry predicts product',
+      body: 'Once an amount of sodium azide is specified, the balanced equation can be used to calculate the theoretical amount of nitrogen gas. For example, 0.10 mol NaN3 corresponds to 0.15 mol N2.',
+      chem: 'Start with the known amount and multiply by the mole ratio from the balanced equation.',
+      cap: 'Known amount -> mole ratio -> theoretical N2.'
     },
     {
-      t: 'Cleaning up the leftovers',
-      body: 'That reaction also spits out sodium metal, which burns skin and reacts violently with water. So the pellet blends in KNO3 and SiO2, which capture the sodium in follow-up reactions and finish as harmless glassy silicate. The white dust after a deployment is planned chemistry.',
-      chem: 'Real safety design is a reaction SYSTEM: a gas generator plus scavenger reactions for the dangerous byproduct, all sized with the same mole ratios.',
-      cap: 'Follow-up reactions lock the leftover sodium into silicate glass.'
+      t: 'Real inflators are more complex',
+      body: 'An actual inflator must control reaction rate, gas production, temperature, pressure, solid byproducts, and the strength of the housing. Propellant formulations have also changed since early sodium-azide designs.',
+      chem: 'A balanced equation provides stoichiometric relationships, but safe engineering also requires kinetics, materials science, testing, and controlled reaction conditions.',
+      cap: 'Stoichiometry is one part of the engineering design.'
     }
   ],
   quiz: {
-    q: '2 NaN3 -> 2 Na + 3 N2. An engineer loads 0.10 mol of sodium azide. How much nitrogen gas does the bag receive?',
+    q: 'For the historical model 2 NaN3 -> 2 Na + 3 N2, how many moles of N2 can form from 0.10 mol NaN3?',
     options: [
       { label: '0.15 mol of N2', correct: true },
       { label: '0.10 mol of N2', correct: false },
       { label: '0.067 mol of N2', correct: false }
     ],
-    explain: 'The NaN3 to N2 ratio is 2 to 3, so multiply 0.10 mol by 3/2: the pellet yields 0.15 mol of N2. Scale that same move up and you have just sized a real inflator charge.'
+    explain: 'Use the 3 mol N2 / 2 mol NaN3 mole ratio: 0.10 mol NaN3 x 3/2 = 0.15 mol N2.'
   },
-  punch: 'Every airbag on the road is a pre-solved stoichiometry problem riding shotgun. Someone solved it once, exactly, so it can save strangers forever.',
-  careers: ['Automotive safety engineer', 'Propellant chemist', 'Crash-test analyst', 'Process engineer'],
-  cta: { label: 'Run the airbag math yourself', call: "setMode('stoich')" },
-  stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: a crash triggers sodium azide decomposition and the airbag inflates on a millisecond timeline">
+  punch: 'A balanced equation does not design an airbag by itself, but it gives engineers the mole relationships needed to predict how much gas a reaction can produce.',
+  careers: ['Automotive safety engineer', 'Propellant chemist', 'Crash-test engineer', 'Chemical process engineer'],
+  cta: { label: 'Practice the stoichiometry', call: "setMode('stoich')" },
+  stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene illustrating a historical sodium-azide airbag inflator and stoichiometric gas generation">
             <!-- millisecond timeline -->
             <g>
               <rect x="60" y="34" width="520" height="10" rx="5" fill="#0c1e27" stroke="#2c414d"/>
               <rect x="60" y="34" height="10" rx="5" fill="#7fc4d0" style="transition: width .9s var(--ease);"
                     :width="[80,180,340,520][step]"/>
               <g font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">
-                <text x="60" y="62">0 ms</text>
-                <text x="196" y="62">15 ms: ignite</text>
-                <text x="380" y="62">30 ms: full</text>
-                <text x="580" y="62" text-anchor="end">50 ms: impact absorbed</text>
+                <text x="60" y="62">crash</text>
+                <text x="196" y="62">sensor</text>
+                <text x="380" y="62">inflator</text>
+                <text x="580" y="62" text-anchor="end">bag deployed</text>
               </g>
             </g>
 
@@ -116,7 +116,7 @@ export const CASE = {
             <!-- step 1: pellet ignition inset -->
             <g x-show="step===1">
               <rect x="76" y="84" width="240" height="88" rx="10" fill="#132630" stroke="#2c414d"/>
-              <text x="196" y="104" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">INFLATOR: 130 g NaN3 PELLET</text>
+              <text x="196" y="104" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">HISTORICAL NaN3 INFLATOR</text>
               <circle class="a-glow" style="--dur:1.2s" cx="120" cy="138" r="19" fill="#ff9a82" opacity=".3"/>
               <circle class="a-flicker" style="--dur:.8s; --org:center" cx="120" cy="138" r="14" fill="#ffd27e"/>
               <circle class="a-spark" style="--dur:1.3s; --delay:.4s" cx="106" cy="124" r="2" fill="#fff4dc"/>
@@ -133,19 +133,19 @@ export const CASE = {
             <!-- step 2: the mole chain -->
             <g x-show="step===2" font-family="JetBrains Mono" font-size="10">
               <g class="a-float" style="--dur:3.4s">
-                <rect x="76" y="92" width="74" height="24" rx="12" fill="#132630" stroke="#7fc4d0"/><text x="113" y="108" text-anchor="middle" fill="#7fc4d0">130 g NaN3</text>
+                <rect x="76" y="92" width="74" height="24" rx="12" fill="#132630" stroke="#7fc4d0"/><text x="113" y="108" text-anchor="middle" fill="#7fc4d0">0.10 mol</text>
               </g>
               <text x="158" y="108" fill="#8fa9b2">&#8594;</text>
               <g class="a-float" style="--dur:3.4s; --delay:.4s">
-                <rect x="170" y="92" width="56" height="24" rx="12" fill="#132630" stroke="#7fc4d0"/><text x="198" y="108" text-anchor="middle" fill="#7fc4d0">2 mol</text>
+                <rect x="170" y="92" width="56" height="24" rx="12" fill="#132630" stroke="#7fc4d0"/><text x="198" y="108" text-anchor="middle" fill="#7fc4d0">NaN3</text>
               </g>
               <text x="234" y="108" fill="#8fa9b2">&#8594;</text>
               <g class="a-float" style="--dur:3.4s; --delay:.8s">
-                <rect x="246" y="92" width="86" height="24" rx="12" fill="#132630" stroke="#8fd9ae"/><text x="289" y="108" text-anchor="middle" fill="#8fd9ae">&#215;3/2 = 3 mol</text>
+                <rect x="246" y="92" width="86" height="24" rx="12" fill="#132630" stroke="#8fd9ae"/><text x="289" y="108" text-anchor="middle" fill="#8fd9ae">&#215;3/2</text>
               </g>
               <text x="340" y="108" fill="#8fa9b2">&#8594;</text>
               <g class="a-float" style="--dur:3.4s; --delay:1.2s">
-                <rect x="352" y="92" width="70" height="24" rx="12" fill="#132630" stroke="#8fd9ae"/><text x="387" y="108" text-anchor="middle" fill="#8fd9ae">~67 L N2</text>
+                <rect x="352" y="92" width="70" height="24" rx="12" fill="#132630" stroke="#8fd9ae"/><text x="387" y="108" text-anchor="middle" fill="#8fd9ae">0.15 mol N2</text>
               </g>
             </g>
 
@@ -158,7 +158,7 @@ export const CASE = {
               </g>
               <g class="a-float" style="--dur:3.4s">
                 <rect x="76" y="88" width="250" height="26" rx="13" fill="#132630" stroke="#ffd27e"/>
-                <text x="201" y="105" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#ffd27e">Na + KNO3 + SiO2 &#8594; safe silicate glass</text>
+                <text x="201" y="105" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#ffd27e">BYPRODUCTS REQUIRE CONTROL</text>
               </g>
             </g>
           </svg>`

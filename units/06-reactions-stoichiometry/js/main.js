@@ -20,8 +20,8 @@
 //
 // Nothing here re-paths. Both trees sit one level under the repo root, so
 // units/<slug>/js/ and units_new/<slug>/js/ are the same three levels from shared/.
-import { REACTIONS, STRUCTURAL_TYPES, SUBTYPES, SCENARIOS } from './model.js';
-import { sceneArt } from './art.js';
+import { REACTIONS, STRUCTURAL_TYPES, SUBTYPES, SCENARIOS } from './model.js?v=u6-3';
+import { sceneArt } from './art.js?v=u6-3';
 import {
   molarMass, atomTally, isBalanced, isLowestTerms,
   limitingReactant, moleRatio, percentYield, fmt, MOLAR_VOLUME_STP, AVOGADRO
@@ -40,7 +40,7 @@ export const SE = [
   { id: 'a',  code: 'C.9(A)', mode: 'balance',  honors: false, text: 'Interpret, write, and balance equations using conservation of mass.' },
   { id: 'b',  code: 'C.9(B)', mode: 'classify', honors: false, text: 'Differentiate acid-base, precipitation, and redox reactions.' },
   { id: 'c',  code: 'C.9(C)', mode: 'stoich',   honors: false, text: 'Perform stoichiometric calculations: mass, gas volume, percent yield.' },
-  { id: 'd',  code: 'C.9(D)', mode: 'lr',       honors: false, text: 'Describe and apply the concept of limiting reactants.' },
+  { id: 'd',  code: 'C.9(D)', mode: 'lr',       honors: false, text: 'Describe the concept of limiting reactants.' },
   { id: 'h1', code: 'Honors', mode: 'stoich',   honors: true,  text: 'Count particles with Avogadro’s number, a C.8 crossover beyond C.9.' },
   { id: 'h2', code: 'Honors', mode: 'lr',       honors: true,  text: 'Recover the excess reactant left once the limiting one is spent.' }
 ];
@@ -49,13 +49,13 @@ export const SE = [
 // GAMIFICATION.md's API block, which omits `honors` and would silently put honors
 // skills into the capstone gate.
 const skills = [
-  { id: 'a',   code: 'C.9(A)',   label: 'Balance it',         target: 3 },
-  { id: 'b',   code: 'C.9(B)',   label: 'Classify it',        target: 3 },
-  { id: 'c',   code: 'C.9(C)',   label: 'Size the dose',      target: 3 },
+  { id: 'a',   code: 'C.9(A)',   label: 'Balance equations',         target: 3 },
+  { id: 'b',   code: 'C.9(B)',   label: 'Classify reactions',        target: 3 },
+  { id: 'c',   code: 'C.9(C)',   label: 'Stoichiometry',      target: 3 },
   { id: 'd',   code: 'C.9(D)',   label: 'Limiting reactant',  target: 3 },
   { id: 'h1',  code: 'Honors',   label: 'Particle counts',    target: 2, honors: true },
-  { id: 'h2',  code: 'Honors',   label: 'Excess recovery',    target: 2, honors: true },
-  { id: 'cap', code: 'Capstone', label: 'The tanker',         target: 1, honors: true }
+  { id: 'h2',  code: 'Honors',   label: 'Excess remaining',    target: 2, honors: true },
+  { id: 'cap', code: 'Capstone', label: 'Capstone',         target: 1, honors: true }
 ];
 
 // ---- world-state constants: the truck, the clock, and the county's tanker ----
@@ -311,7 +311,7 @@ export function createSim() {
       if (v) return v.detail || v.headline || v.state;
       const b = this.activeBrief;
       if (b) return b.why || b.goal || '';
-      return 'Pick a bench. Every call comes down to the same question: what reaction is running, and how much of what does it take to stop it.';
+      return 'Choose an activity. Balance, classify, calculate, compare, and explain your answer from the chemical evidence.';
     },
 
     // The facts a learner should never have to leave the bench to look up: a route, a
@@ -327,37 +327,37 @@ export function createSim() {
     get activeReference() {
       const out = [];
       if (this.mode === 'balance') {
-        out.push({ k: 'Conservation', v: 'the same count of every element on both sides' });
+        out.push({ k: 'Conservation', v: 'the same number of each type of atom on both sides' });
         out.push({ k: 'Coefficients only', v: 'multiply a whole formula; never edit a subscript' });
-        out.push({ k: 'Lowest terms', v: 'divide the whole set by its common factor before you call it' });
+        out.push({ k: 'Lowest terms', v: 'use the smallest whole-number coefficient set' });
       } else if (this.mode === 'classify') {
         out.push({ k: 'Five patterns', v: 'synthesis, decomposition, single and double replacement, combustion' });
-        out.push({ k: 'A free element', v: 'on either side means oxidation states moved: redox' });
-        out.push({ k: 'Two solutions', v: 'leaving a solid is precipitation; acid plus base is acid-base' });
+        out.push({ k: 'Redox check', v: 'a free element can be a clue; confirm that oxidation numbers change' });
+        out.push({ k: 'Subtypes', v: 'a solid from aqueous ions indicates precipitation; acid plus base can be acid-base' });
       } else if (this.mode === 'stoich') {
         if (this.screenIsHonors && this.h1s) {
           out.push({ k: "Avogadro's number", v: '6.022e23 representative particles in one mole' });
           out.push({ k: 'The route', v: 'grams, then divide by molar mass, then times 6.022e23' });
           out.push({ k: 'On this sample', v: `${fmt(this.h1s.mass)} g/mol for ${this.h1s.species.f}` });
         } else {
-          out.push({ k: 'The route', v: 'grams, mol, mole ratio, mol, grams. Four steps, always' });
-          out.push({ k: 'Mole ratio', v: 'the coefficients of the balanced equation, nothing else' });
+          out.push({ k: 'Mass-to-mass route', v: 'grams -> moles -> mole ratio -> moles -> grams' });
+          out.push({ k: 'Mole ratio', v: 'use coefficients from the balanced equation' });
           out.push({ k: 'Gas at STP', v: 'one mole of any gas is 22.4 L' });
         }
       } else if (this.mode === 'lr') {
         if (this.screenIsHonors && this.h2s) {
-          out.push({ k: 'What is left', v: 'starting mol of the excess, minus the mol it actually used' });
-          out.push({ k: 'What it used', v: 'comes off the LIMITING reactant, through the mole ratio' });
-          out.push({ k: 'Then back', v: 'times its molar mass, because the compartment is weighed in grams' });
+          out.push({ k: 'What is left', v: 'starting moles of excess reactant minus moles consumed' });
+          out.push({ k: 'Moles consumed', v: 'use the limiting reactant and the balanced-equation mole ratio' });
+          out.push({ k: 'Return to grams', v: 'multiply remaining moles by molar mass' });
         } else {
-          out.push({ k: 'Both halves', v: 'which reactant runs out, then what that much can make' });
-          out.push({ k: 'The test', v: 'take each reactant all the way to product; the smaller answer wins' });
+          out.push({ k: 'Two steps', v: 'identify the limiting reactant, then calculate theoretical product' });
+          out.push({ k: 'Limiting test', v: 'calculate product from each reactant; the smaller product amount identifies the limiting reactant' });
           out.push({ k: 'Percent yield', v: 'actual over theoretical, times 100' });
         }
       } else if (this.mode === 'capstone') {
         out.push({ k: 'On the truck', v: `${fmt(this.soda)} kg of caustic soda, whatever the shift left in it` });
         out.push({ k: 'Mutual aid', v: `the county tanker brings ${AID_CAP} kg, and no more` });
-        out.push({ k: 'The call', v: 'lay it now, dam and hold for aid, or withdraw to the state team' });
+        out.push({ k: 'Activity choices', v: 'compare required mass with simulated available inventory' });
       }
       return out.slice(0, 3);
     },
@@ -383,13 +383,13 @@ export function createSim() {
       const burned = Math.min(100, this.clockMin / ROTATION * 100);
       return [
         { key: 'shift', label: 'Shift', raw: `${this.clockMin}m`, pct: 100 - burned,
-          hint: 'minutes burned out of a twelve hour rotation; a wrong call costs about three times a right one' },
+          hint: 'simulated minutes used; incorrect submissions use more simulated time than correct submissions' },
         { key: 'calls', label: 'Calls', raw: `${this.calls}`, pct: Math.min(100, this.calls / 12 * 100),
-          hint: 'calls you have logged on this rotation, right or wrong' },
+          hint: 'problems submitted in this simulation' },
         { key: 'right', label: 'Right', raw: right === null ? '-' : `${right}%`, pct: right ?? 0,
-          hint: 'of the calls you have made, the share that were right' },
+          hint: 'percentage of submitted problems answered correctly' },
         { key: 'skills', label: 'Skills', raw: `${this.teksMasteredCount}/4`, pct: this.teksMasteredCount / 4 * 100,
-          hint: 'core skills certified: three right in a row on each of C.9(A) to C.9(D)' }
+          hint: 'core skills mastered: three correct in a row on each of C.9(A) to C.9(D)' }
       ];
     },
     stockColor(v) { return v >= 67 ? 'var(--success)' : v >= 34 ? 'var(--warn)' : 'var(--danger)'; },
@@ -429,9 +429,9 @@ export function createSim() {
       this.balAnswerShown = true;
       this.gRecord('a', false, !this.balAttempted);
       this.balAttempted = true;
-      this.balVerdict = { tone: 'warn', icon: '\u{1F4D6}', state: 'READ FROM THE BOOK',
-        headline: 'You looked it up', detail: `The coefficients are on the page now, but this one does not count toward the run. ${sc.wrong}`, gauge: null };
-      this.recordWorld({ icon: '\u{1F4D6}', tone: 'warn', text: `${sc.system}, looked up`, minutes: 12 });
+      this.balVerdict = { tone: 'warn', icon: '\u{1F4D6}', state: 'ANSWER SHOWN',
+        headline: 'Answer shown', detail: `The coefficients are shown. This problem does not count toward mastery. ${sc.wrong}`, gauge: null };
+      this.recordWorld({ icon: '\u{1F4D6}', tone: 'warn', text: `${sc.system}, answer shown`, minutes: 12 });
       this.claimScreen('balance', sc, this.balVerdict, false);
     },
     balCommit() {
@@ -443,8 +443,8 @@ export function createSim() {
         v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Balanced', detail: sc.correct, gauge: null };
         this.balDone = true; minutes = 7;
       } else if (this.isBalanced) {
-        v = { tone: 'warn', icon: '\u{2696}\u{FE0F}', state: 'NOT LOWEST TERMS', headline: 'Atoms balance, coefficients do not reduce',
-          detail: `Every element tallies, but the coefficients share a common factor. An equation is not written until it is in the smallest whole numbers. ${sc.wrong}`, gauge: null };
+        v = { tone: 'warn', icon: '\u{2696}\u{FE0F}', state: 'NOT LOWEST TERMS', headline: 'Balanced, but not in lowest terms',
+          detail: `Every element is balanced, but the coefficients share a common factor. Divide the entire set to obtain the smallest whole-number coefficients. ${sc.wrong}`, gauge: null };
         minutes = 15;
       } else {
         v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.failState, headline: 'Not balanced', detail: sc.wrong, gauge: null };
@@ -498,16 +498,16 @@ export function createSim() {
       const subList = rxn.subs.join(' and ').toLowerCase();
       let v, minutes, spend;
       if (good) {
-        v = { tone: 'success', icon: sc.icon, state: 'CALLED IT', headline: `${rxn.structural}, and ${subList}`,
+        v = { tone: 'success', icon: sc.icon, state: 'CLASSIFIED', headline: `${rxn.structural}, and ${subList}`,
           detail: sc.consequences[this.clStructural], gauge: null };
         this.clDone = true; minutes = 6; spend = 0;
       } else if (!structOk) {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG CLASS', headline: 'Wrong reaction type',
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'INCORRECT TYPE', headline: 'Wrong reaction type',
           detail: `${sc.consequences[this.clStructural]} It was ${rxn.structural.toLowerCase()}.`, gauge: null };
         minutes = 17; spend = sc.spendWrong || 0;
       } else {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG SUB-TYPE', headline: 'Right type, wrong chemistry underneath',
-          detail: `${rxn.structural} is right, but the sub-classification is not: this one is ${subList}. That is the half that tells you what the products do once they are in the ditch.`, gauge: null };
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'INCORRECT SUBTYPE', headline: 'Type correct; subtype incorrect',
+          detail: `${rxn.structural} is correct, but the subtype selection is not. This reaction is ${subList}. Review what changes chemically in the reaction.`, gauge: null };
         minutes = 15; spend = sc.spendWrong || 0;
       }
       this.gRecord('b', good, !this.clAttempted);
@@ -558,7 +558,7 @@ export function createSim() {
       // (ventilation, a stage-back, an exclusion zone). What a wrong call costs is time.
       let v, good = false, minutes, spend = 0;
       if (!isFinite(val)) {
-        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'NO NUMBER', headline: 'Nothing to act on',
+        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'NO NUMBER', headline: 'Enter a numerical answer',
           detail: sc.fail, gauge: null };
         minutes = 14;
       } else {
@@ -567,21 +567,21 @@ export function createSim() {
         const yours = `${fmt(val)} g`;
         const off = `${fmt(Math.abs(val - this.st.target))} g`;
         if (good) {
-          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Called it',
-            detail: `You called ${yours}; it works out to ${needTxt}. ${sc.safe}`, gauge: 'on' };
+          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Calculation accepted',
+            detail: `You entered ${yours}; the theoretical value is ${needTxt}. ${sc.safe}`, gauge: 'on' };
           this.stDone = true; minutes = 8;
         } else if (band.direction === 'low') {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Called it low',
-            detail: `You called ${yours}, ${off} under the ${needTxt} it actually comes to. ${sc.low}`, gauge: 'low' };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Calculated value too low',
+            detail: `You entered ${yours}, which is ${off} below the theoretical value of ${needTxt}. ${sc.low}`, gauge: 'low' };
           minutes = 20;
         } else {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Called it high',
-            detail: `You called ${yours}, ${off} over the ${needTxt} it actually comes to. ${sc.high}`, gauge: 'high' };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Calculated value too high',
+            detail: `You entered ${yours}, which is ${off} above the theoretical value of ${needTxt}. ${sc.high}`, gauge: 'high' };
           minutes = 20;
         }
       }
       this.gRecord('c', good, !this.stAttempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'dose called' : 'dose missed'}`, minutes, spend });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'calculation correct' : 'calculation incorrect'}`, minutes, spend });
       this.stAttempted = true; this.stChecked = true; this.stVerdict = v;
       this.claimScreen('stoich', sc, v, false);
     },
@@ -655,7 +655,7 @@ export function createSim() {
       const sp = sc.spend || {};
       let v, good = false, minutes, spend = 0;
       if (!isFinite(val)) {
-        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'NO NUMBER', headline: 'Nothing to act on',
+        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'NO NUMBER', headline: 'Enter a numerical answer',
           detail: sc.fail, gauge: null };
         minutes = 14;
       } else {
@@ -664,25 +664,25 @@ export function createSim() {
         const yours = `${fmt(val)} g`;
         const off = `${fmt(Math.abs(val - this.lm.target))} g`;
         if (good) {
-          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: `${this.lm.limiting} runs out first`,
-            detail: `You called ${yours} and it comes to ${needTxt}. ${sc.safe}`, gauge: 'on' };
+          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: `${this.lm.limiting} is the limiting reactant`,
+            detail: `You entered ${yours}; the theoretical product is ${needTxt}. ${sc.safe}`, gauge: 'on' };
           this.lmDone = true; minutes = 9; spend = sp.ok || 0;
         } else if (!pickOk) {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG REACTANT', headline: `${this.lm.limiting} is what runs out, not ${this.lmPick}`,
-            detail: `Work the yield off ${this.lm.limiting} and it comes to ${needTxt}. Off ${this.lmPick}, which is still sitting there in excess when the reaction stops, you get a number the reaction was never going to reach. ${sc.high}`, gauge: band.withinSpec ? null : band.direction };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: 'INCORRECT REACTANT', headline: `${this.lm.limiting} is limiting, not ${this.lmPick}`,
+            detail: `Calculate theoretical yield from ${this.lm.limiting}; it gives ${needTxt}. ${this.lmPick} is in excess and cannot set the theoretical product amount. ${sc.high}`, gauge: band.withinSpec ? null : band.direction };
           minutes = 22; spend = sp.high || 0;
         } else if (band.direction === 'low') {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Right reactant, yield too low',
-            detail: `${this.lm.limiting} is the one that runs out, so that half is right. But you called ${yours}, ${off} under the ${needTxt} it makes. ${sc.low}`, gauge: 'low' };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Limiting reactant correct; yield too low',
+            detail: `${this.lm.limiting} is the limiting reactant, but ${yours} is ${off} below the theoretical value of ${needTxt}. ${sc.low}`, gauge: 'low' };
           minutes = 20; spend = sp.low || 0;
         } else {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Right reactant, yield too high',
-            detail: `${this.lm.limiting} is the one that runs out, so that half is right. But you called ${yours}, ${off} over the ${needTxt} it makes. ${sc.high}`, gauge: 'high' };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Limiting reactant correct; yield too high',
+            detail: `${this.lm.limiting} is the limiting reactant, but ${yours} is ${off} above the theoretical value of ${needTxt}. ${sc.high}`, gauge: 'high' };
           minutes = 20; spend = sp.high || 0;
         }
       }
       this.gRecord('d', good, !this.lmAttempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'yield called' : 'yield missed'}`, minutes, spend });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'yield correct' : 'yield incorrect'}`, minutes, spend });
       this.lmAttempted = true; this.lmChecked = true; this.lmVerdict = v;
       this.claimScreen('lr', sc, v, false);
     },
@@ -717,7 +717,7 @@ export function createSim() {
       const val = parseFloat(this.h1Input);
       let v, good = false, minutes;
       if (!isFinite(val) || val <= 0) {
-        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'NO COUNT', headline: 'Nothing to file', detail: sc.fail, gauge: null };
+        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'ENTER A COUNT', headline: 'Enter a particle count', detail: sc.fail, gauge: null };
         minutes = 10;
       } else {
         const band = outcomeBand(val, this.h1s.target, this.h1s.bands);
@@ -725,19 +725,19 @@ export function createSim() {
         const needTxt = `${this.h1s.target.toExponential(3)} particles`;
         const yours = `${val.toExponential(3)}`;
         if (good) {
-          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Count filed',
-            detail: `You filed ${yours}; the mass works out to ${needTxt}. ${sc.safe}`, gauge: 'on' };
+          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Particle count accepted',
+            detail: `You entered ${yours}; the mass corresponds to ${needTxt}. ${sc.safe}`, gauge: 'on' };
           this.h1Done = true; minutes = 6;
         } else {
           const lowSide = band.direction === 'low';
           v = { tone: 'fail', icon: '\u{1F6A8}', state: lowSide ? sc.lowState : sc.highState,
             headline: lowSide ? 'Count too low' : 'Count too high',
-            detail: `You filed ${yours} against ${needTxt}. ${lowSide ? sc.low : sc.high}`, gauge: lowSide ? 'low' : 'high' };
+            detail: `You entered ${yours}; the target is ${needTxt}. ${lowSide ? sc.low : sc.high}`, gauge: lowSide ? 'low' : 'high' };
           minutes = 16;
         }
       }
       this.gRecord('h1', good, !this.h1Attempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'count filed' : 'count rejected'}`, minutes });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'particle count correct' : 'particle count incorrect'}`, minutes });
       this.h1Attempted = true; this.h1Checked = true; this.h1Verdict = v;
       this.claimScreen('stoich', sc, v, true);
     },
@@ -765,7 +765,7 @@ export function createSim() {
       // the truck, which is why the honors bench is worth running before the capstone.
       let v, good = false, minutes, spend = 0;
       if (!isFinite(val)) {
-        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'NO FIGURE', headline: 'Nothing to book in', detail: sc.fail, gauge: null };
+        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'ENTER A MASS', headline: 'Enter the remaining mass', detail: sc.fail, gauge: null };
         minutes = 10;
       } else {
         const band = outcomeBand(val, this.h2s.target, this.h2s.bands);
@@ -773,19 +773,19 @@ export function createSim() {
         const needTxt = `${fmt(this.h2s.target)} g of ${this.h2s.excess.f}`;
         const yours = `${fmt(val)} g`;
         if (good) {
-          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Booked back in',
-            detail: `You booked ${yours}; ${needTxt} is what is actually left once ${this.h2s.limiting} is spent. ${sc.safe}`, gauge: 'on' };
+          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Remaining mass accepted',
+            detail: `You entered ${yours}; ${needTxt} remains after ${this.h2s.limiting} is consumed. ${sc.safe}`, gauge: 'on' };
           this.h2Done = true; minutes = 6; spend = -2;
         } else {
           const lowSide = band.direction === 'low';
           v = { tone: 'fail', icon: '\u{1F6A8}', state: lowSide ? sc.lowState : sc.highState,
-            headline: lowSide ? 'Booked back short' : 'Booked back long',
-            detail: `You booked ${yours} against ${needTxt}. ${lowSide ? sc.low : sc.high}`, gauge: lowSide ? 'low' : 'high' };
+            headline: lowSide ? 'Remaining mass too low' : 'Remaining mass too high',
+            detail: `You entered ${yours}; the calculated remainder is ${needTxt}. ${lowSide ? sc.low : sc.high}`, gauge: lowSide ? 'low' : 'high' };
           minutes = 16;
         }
       }
       this.gRecord('h2', good, !this.h2Attempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'recovery booked' : 'recovery wrong'}`, minutes, spend });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'remainder correct' : 'remainder incorrect'}`, minutes, spend });
       this.h2Attempted = true; this.h2Checked = true; this.h2Verdict = v;
       this.claimScreen('lr', sc, v, true);
     },
@@ -825,16 +825,16 @@ export function createSim() {
       const good = this.capPick === this.cap.correct;
       let v, minutes;
       if (good) {
-        v = { tone: 'success', icon: sc.icon, state: 'RIGHT CALL', headline: 'Right call',
+        v = { tone: 'success', icon: sc.icon, state: 'SUPPORTED CHOICE', headline: 'Evidence-supported choice',
           detail: `${fig} ${opt.good}`, gauge: null };
         this.capWin = true; minutes = 10;
       } else {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG CALL', headline: 'Wrong call',
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'UNSUPPORTED CHOICE', headline: 'Choice not supported by the activity data',
           detail: `${fig} ${opt.consequence}`, gauge: null };
         minutes = 25;
       }
       this.gRecord('cap', good, !this.capAttempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'right call' : 'wrong call'}`, minutes });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'supported choice' : 'unsupported choice'}`, minutes });
       this.capAttempted = true; this.capChecked = true; this.capVerdict = v;
       this.claimScreen('capstone', sc, v, false);
     }

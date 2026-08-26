@@ -351,7 +351,7 @@ export const SCENE_ART = {
   // shop order that gets written off the equation. The rail is drawn in section so the
   // scale has somewhere to be: clean steel under, oxide over.
   'a-ladder': scene('a-ladder', { theme: 'panel',
-    caption: 'THE LADDER TRUCK - Fe AND O2, NINE WINTERS ON', body: k => {
+    caption: 'IRON OXIDATION MODEL - BALANCE Fe + O2', body: k => {
     const steel = k.glass('st', ['#2a373d', '#5d6f78', '#9fb4bc']);
     const rust = k.lin('rs', [[0, '#7a3d1c'], [.5, '#b8632c'], [1, '#8a4a20']], true);
     return pumpPanel(6, { outlets: false })
@@ -371,10 +371,10 @@ export const SCENE_ART = {
       + [[40, 5], [70, 7], [110, 6], [146, 5]].map(([x, w]) =>
         `<path d="M${x} 88 q${w} 7 ${w * 2} 1 q-${w} -5 -${w * 2} -1 z"/>`).join('')
       + `</g>`
-      + mono(101, 24, 'SCALING OFF IN SHEETS', { size: 6.5, fill: '#d99a63', ls: '.05em' })
+      + mono(101, 24, 'SIMPLIFIED Fe2O3 MODEL', { size: 6.5, fill: '#d99a63', ls: '.05em' })
       // the shop order the equation is written onto
       + panelBox(212, 18, 172, 74)
-      + mono(298, 32, 'SHOP ORDER - STEEL AND PRIMER', { size: 6.5, fill: C.dim, ls: '.05em' })
+      + mono(298, 32, 'BALANCED-EQUATION COEFFICIENTS', { size: 6.5, fill: C.dim, ls: '.05em' })
       + ratioStrip(226, 42, 150, [
         ['Fe', 4, '#8b9aa2'], ['O2', 3, '#5f9fb5'], ['Fe2O3', 2, '#b8632c']
       ])
@@ -385,7 +385,7 @@ export const SCENE_ART = {
   // The grill bottle in the yard, fire out, the scorch still on the grass, and the one
   // number the report will actually be read for: the oxygen coefficient.
   'a-grill': scene('a-grill', {
-    caption: 'THE BACKYARD BOTTLE - THE FIVE IS THE STORY', body: k => {
+    caption: 'PROPANE : O2 = 1 : 5', body: k => {
     return roadside(80, { verge: false })
       // the scorched ring where it let go
       + `<ellipse cx="96" cy="92" rx="72" ry="12" fill="#241a12" opacity=".8"/>`
@@ -402,13 +402,13 @@ export const SCENE_ART = {
       ], { cell: 8 })
       // the oxygen row is the one anybody uses, so it gets the ring
       + `<rect x="222" y="46" width="66" height="12" rx="4" fill="none" stroke="${C.ember}" stroke-width="1.4"/>`
-      + mono(296, 56, 'HOW MUCH AIR IT NEEDED', { size: 6, fill: C.ember, ls: '.04em', anchor: 'start' });
+      + mono(296, 56, 'STOICHIOMETRIC O2 REQUIREMENT', { size: 6, fill: C.ember, ls: '.04em', anchor: 'start' });
   } }),
 
   // The co-op depot's ammonia line, and the pre-plan sheet going up on the board. The
   // three-to-one hydrogen ratio is drawn as the pipe's own contents, not as a table.
   'a-depot': scene('a-depot', {
-    caption: 'THE DEPOT AMMONIA LINE - PRE-PLAN, BEFORE 2 A.M.', body: k => {
+    caption: 'AMMONIA SYNTHESIS - N2 : H2 : NH3', body: k => {
     const tank = k.glass('tk', ['#2d3f4a', '#55707d', '#9ab6c0']);
     return roadside(86, { wash: false })
       // the depot: two horizontal receivers on saddles, silhouetted
@@ -429,7 +429,7 @@ export const SCENE_ART = {
       + ratioStrip(232, 40, 142, [
         ['N2', 1, '#5f9fb5'], ['H2', 3, '#d8e6ea'], ['NH3', 2, '#8fbf9f']
       ])
-      + mono(302, 88, 'THE H2 FIGURE SETS THE STAGE-BACK', { size: 6, fill: C.warn, ls: '.04em' });
+      + mono(302, 88, 'BALANCED RATIO: 1 : 3 : 2', { size: 6, fill: C.warn, ls: '.04em' });
   } }),
 
   // ================= C.9(B) classify the reaction =================
@@ -437,7 +437,7 @@ export const SCENE_ART = {
   // The jump kit open on the tailboard, peroxide foaming white on a forearm. One bottle
   // in, two things out - and the brown glass beside it, which is the same fact.
   'b-jumpkit': scene('b-jumpkit', { theme: 'panel',
-    caption: 'THE JUMP KIT - ONE IN, TWO OUT, COLD', body: k => {
+    caption: 'H2O2 DECOMPOSITION - ONE TO TWO', body: k => {
     const brown = k.glass('bn', ['#2e1c0c', '#6b4416', '#a97a33']);
     return pumpPanel(6, { outlets: false })
       // the open kit lid across the back
@@ -472,7 +472,7 @@ export const SCENE_ART = {
   // The darkroom on Third: two clear bottles on a bench and the grey-white crust where
   // they ran together. The crust is the subject, so it is drawn large and lit.
   'b-darkroom': scene('b-darkroom', {
-    caption: 'THE DARKROOM ON THIRD - A SOLID OUT OF TWO CLEARS', body: k => {
+    caption: 'AgCl PRECIPITATE FORMS', body: k => {
     const glassA = k.glass('ga', ['#1c2e34', '#38606c', '#8fb9c4']);
     const glassB = k.glass('gb', ['#1c2e34', '#38606c', '#8fb9c4']);
     return `<g>`
@@ -501,7 +501,7 @@ export const SCENE_ART = {
       + [[182, 80, 4], [204, 76, 3.2], [222, 79, 3.6], [196, 84, 3]].map(([cx, cy, r]) => `<circle cx="${cx}" cy="${cy}" r="${r}"/>`).join('')
       + `</g>`
       + mono(196, 62, 'GREY-WHITE CRUST', { size: 7, fill: '#cfd6d4', ls: '.06em', w: 700 })
-      + mono(196, 48, 'THE SILVER IS IN IT', { size: 6, fill: C.teal3, ls: '.03em' })
+      + mono(196, 48, 'AgCl(s) FORMS', { size: 6, fill: C.teal3, ls: '.03em' })
       // partners traded, drawn as two crossing arrows
       + panelBox(266, 16, 118, 62)
       + mono(325, 30, 'PARTNERS TRADED', { size: 6.5, fill: C.dim, ls: '.06em' })
@@ -516,7 +516,7 @@ export const SCENE_ART = {
   // reagent already laid, and the heat coming up off it. This is the scene the capstone
   // returns to, so it is drawn as its first act.
   'b-ditch': scene('b-ditch', { frame: C.danger,
-    caption: 'THE DITCH AT THE COUNTY LINE - WARM, AND DONE CLIMBING', body: k => {
+    caption: 'HCl + NaOH - ACID-BASE NEUTRALIZATION', body: k => {
     return roadside(58, { verge: true })
       // the ditch cut into the near shoulder
       + `<path d="M0 96 C90 76 210 76 400 92 L400 102 H0 Z" fill="#16232a"/>`
@@ -544,7 +544,7 @@ export const SCENE_ART = {
   // collecting at the ceiling, and a pilot light nine feet away. The gas layer is the
   // subject, so it gets the top third of the frame.
   'c-garage': scene('c-garage', { frame: C.danger,
-    caption: 'THE GARAGE ON BELL STREET - H2 AT THE CEILING', body: k => {
+    caption: 'Zn + HCl - CALCULATE THEORETICAL H2', body: k => {
     const jug = k.glass('jg', ['#2b2416', '#6b5c2a', '#b3a153']);
     return `<g>`
       // the garage box: ceiling line, back wall, floor
@@ -585,7 +585,7 @@ export const SCENE_ART = {
   // The loop is drawn as a real circuit, because "what is still in the pipe" is the whole
   // question and a straight line would not say it.
   'c-depot': scene('c-depot', { theme: 'panel',
-    caption: 'THE DEPOT LOOP - WHAT IS STILL IN THE PIPE', body: k => {
+    caption: 'AMMONIA SYNTHESIS - STOICHIOMETRIC H2', body: k => {
     return pumpPanel(6, { outlets: false })
       // the loop: a closed circuit of pipe with a compressor block on it
       + `<g fill="none" stroke="${C.steelLt}" stroke-width="7" stroke-linecap="round" opacity=".9">`
@@ -605,7 +605,7 @@ export const SCENE_ART = {
       + mono(97, 88, 'THREE H2 FOR EVERY N2', { size: 6.5, fill: C.teal3, ls: '.04em' })
       // the stage-back: the engine's distance from the depot, as a measured rule
       + panelBox(200, 16, 184, 78)
-      + mono(292, 30, 'STAGE-BACK, SET FROM THE H2 MASS', { size: 6, fill: C.dim, ls: '.04em' })
+      + mono(292, 30, 'CALCULATED STOICHIOMETRIC H2 MASS', { size: 6, fill: C.dim, ls: '.04em' })
       + `<path d="M214 62 H372" stroke="${C.steelLt}" stroke-width="1.4" opacity=".7"/>`
       + `<g stroke="${C.steelLt}" stroke-width="1.2" opacity=".6">`
       + [214, 254, 294, 334, 372].map(x => `<path d="M${x} 58 V66"/>`).join('') + `</g>`
@@ -614,14 +614,14 @@ export const SCENE_ART = {
       + `<rect x="211" y="41" width="8" height="4" rx="1.5" fill="#5aa8e0"/>`
       + `<rect x="222" y="41" width="8" height="4" rx="1.5" fill="${C.apparatusLt}"/>`
       + `<rect x="356" y="42" width="24" height="16" rx="3" fill="#4a5c65" stroke="${C.steelLt}" stroke-width="1.2"/>`
-      + mono(292, 78, 'TOO CLOSE AND THE PLUME REACHES YOU', { size: 5.8, fill: C.warn, ls: '.03em' });
+      + mono(292, 78, 'STOICHIOMETRY ONLY - NOT A HAZARD ZONE', { size: 5.8, fill: C.warn, ls: '.03em' });
   } }),
 
   // The propane bobtail on its side on the highway, product venting, and the exclusion
   // zone the oxygen demand sets. The cloud reaching past the tape is the consequence the
   // low band names, so the tape line is drawn where the cloud can be seen crossing it.
   'c-bobtail': scene('c-bobtail', { frame: C.danger,
-    caption: 'THE PROPANE BOBTAIL - THE AIR THE CLOUD HAS TO FIND', body: k => {
+    caption: 'PROPANE COMBUSTION - O2 REQUIRED', body: k => {
     return roadside(62, { verge: true })
       // the bobtail, over, cab crushed against the verge
       + `<g transform="rotate(-8 130 60)">`
@@ -636,7 +636,7 @@ export const SCENE_ART = {
       // the tape, and the cloud already past it
       + `<g>`
       + `<path d="M300 24 V96" stroke="${C.ember}" stroke-width="2.4" stroke-dasharray="9 6"/>`
-      + mono(304, 36, 'TAPE', { size: 6.5, fill: C.ember, ls: '.08em', anchor: 'start', w: 700 })
+      + mono(304, 36, 'SIM ZONE', { size: 6.5, fill: C.ember, ls: '.08em', anchor: 'start', w: 700 })
       + `</g>`
       + cone(288, 96, 19) + cone(316, 94, 17)
       + mono(92, 92, 'PRODUCT STILL VENTING', { size: 6.5, fill: C.dim, ls: '.05em', anchor: 'start' })
@@ -644,7 +644,7 @@ export const SCENE_ART = {
       + `<rect x="348" y="70" width="34" height="22" rx="2" fill="#2b3840" stroke="${C.steelLt}" stroke-width="1.2"/>`
       + `<path d="M348 70 l17 -11 l17 11 z" fill="#3d4d56" stroke="${C.steelLt}" stroke-width="1.2"/>`
       + `<rect x="360" y="80" width="8" height="12" fill="${C.ember}" opacity=".75"/>`
-      + mono(384, 52, 'PEOPLE INSIDE', { size: 5.8, fill: C.danger, ls: '.03em', anchor: 'end' });
+      + mono(384, 52, 'SIMULATION ONLY', { size: 5.8, fill: C.danger, ls: '.03em', anchor: 'end' });
   } }),
 
   // ================= C.9(D) limiting reactant =================
@@ -653,7 +653,7 @@ export const SCENE_ART = {
   // and the one that ran out first being the whole story. Drawn from outside and in at
   // once - the shack cut open, because the point is what is happening in the air inside.
   'd-shack': scene('d-shack', { frame: C.danger,
-    caption: 'THE ICE-FISHING SHACK - WHICHEVER RAN OUT FIRST', body: k => {
+    caption: 'LIMITING REACTANT - COMBUSTION MODEL', body: k => {
     const wood = k.glass('wd', ['#2b2119', '#54402c', '#8a6b48']);
     return `<g>`
       // lake ice, and a low blue night over it
@@ -669,12 +669,12 @@ export const SCENE_ART = {
       + `<rect x="38" y="34" width="124" height="54" fill="#0c1418" opacity=".78"/>`
       // the air inside: oxygen going, CO building at head height
       + cloud(42, 40, 116, 14, { tone: '#8d99a0', op: .34, n: 9, seed: 17 })
-      + mono(100, 44, 'CO', { size: 9, fill: '#c4ced3', ls: '.2em', w: 700 })
+      + mono(100, 44, 'O2 AVAILABLE', { size: 7, fill: '#c4ced3', ls: '.06em', w: 700 })
       // the heater, flame looking normal
       + `<rect x="118" y="62" width="34" height="26" rx="3" fill="#3b4a52" stroke="${C.steelLt}" stroke-width="1.3"/>`
       + `<rect x="124" y="68" width="22" height="14" rx="2" fill="#0f181c"/>`
       + flame(135, 82, .75)
-      + mono(135, 58, 'LOOKS NORMAL', { size: 5.8, fill: C.warn, ls: '.03em' })
+      + mono(135, 58, 'CH4 + O2', { size: 5.8, fill: C.warn, ls: '.03em' })
       // the person on the bunk
       + `<rect x="46" y="76" width="58" height="12" rx="5" fill="#3d4a3f"/>`
       + `<circle cx="54" cy="72" r="6" fill="#c69a72"/>`
@@ -685,14 +685,14 @@ export const SCENE_ART = {
         ['CH4', 6, '#c9d6da'], ['O2', 3, '#5f9fb5']
       ], { cell: 10 })
       + `<rect x="234" y="54" width="46" height="13" rx="4" fill="none" stroke="${C.danger}" stroke-width="1.5"/>`
-      + mono(288, 82, 'O2 GOES FIRST. THAT IS WHY IT IS CO.', { size: 6, fill: C.danger, ls: '.03em' });
+      + mono(288, 82, 'LIMITING REACTANT SETS MAXIMUM CO2', { size: 6, fill: C.danger, ls: '.03em' });
   } }),
 
   // The truck's caustic soda going into the ditch: the compartment open, the bags coming out,
   // and the line running to the far end. The creek at the culvert is what pays if the
   // line stops short, so it is in frame.
   'd-ditch': scene('d-ditch', {
-    caption: 'THE CAUSTIC SODA ON THE TRUCK - HOW FAR THE LINE REACHES', body: k => {
+    caption: 'LIMITING REACTANT -> THEORETICAL NaCl', body: k => {
     return roadside(54, { verge: true })
       // the engine's rear compartment, open, left of frame
       + `<g>`
@@ -727,7 +727,7 @@ export const SCENE_ART = {
   // on the stock and the rest of the gas still looking for the door. The split between
   // "on the stock" and "still in the air" is the reading.
   'd-shed': scene('d-shed', { frame: C.danger,
-    caption: 'THE CHLORINE SHED - ON THE STOCK, OR STILL IN THE AIR', body: k => {
+    caption: 'LIMITING REACTANT -> THEORETICAL AlCl3', body: k => {
     const al = k.glass('al', ['#3a444a', '#8695a0', '#cfdae0']);
     return `<g>`
       // the shed: board walls, one door standing open on the right
@@ -748,7 +748,7 @@ export const SCENE_ART = {
       + [[38, 60, 7, 3], [62, 66, 9, 3.4], [88, 61, 6, 2.6], [74, 78, 8, 3], [104, 72, 6, 2.6]]
         .map(([cx, cy, rx, ry]) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>`).join('')
       + `</g>`
-      + mono(68, 48, 'WHITE SOLID ON THE STOCK', { size: 6, fill: '#d3dcdc', ls: '.03em' })
+      + mono(68, 48, 'AlCl3 MODEL PRODUCT', { size: 6, fill: '#d3dcdc', ls: '.03em' })
       // the cylinder, leaking at the valve
       + cylinder(180, 92, 34, 62, { k, id: 'cl2', tint: ['#3a4416', '#767f28', '#c2c85c'] })
       + placard(180, 24, 11, { fill: C.hazGreen, num: 'Cl2', cls: '2.3' })
@@ -760,8 +760,8 @@ export const SCENE_ART = {
       + `<rect x="330" y="26" width="8" height="68" fill="#3d4a52"/>`
       + `<path d="M338 26 L392 16 V96 L338 94 Z" fill="#0c1519" opacity=".8" stroke="${C.steelLt}" stroke-width="1.2"/>`
       + cloud(300, 42, 92, 22, { tone: '#c9d46a', op: .24, n: 8, seed: 29 })
-      + mono(348, 62, 'STILL', { size: 6.5, fill: '#d6de92', ls: '.06em' })
-      + mono(348, 72, 'GAS', { size: 6.5, fill: '#d6de92', ls: '.06em' })
+      + mono(348, 62, 'EXCESS', { size: 6.5, fill: '#d6de92', ls: '.06em' })
+      + mono(348, 72, 'Cl2', { size: 6.5, fill: '#d6de92', ls: '.06em' })
       + flow(120, 168, 90, { color: '#c9d46a', dash: '3 4', op: .5 });
   } }),
 
@@ -771,7 +771,7 @@ export const SCENE_ART = {
   // what it weighs, and how many of it there are. Avogadro's number is the bridge, so it
   // is drawn as a bridge.
   'h1-particles': scene('h1-particles', { theme: 'copper',
-    caption: 'THE STATE LAB SAMPLE - MASS ON ONE SIDE, COUNT ON THE OTHER', body: k => {
+    caption: 'MASS -> MOLES -> PARTICLE COUNT', body: k => {
     const bagFill = k.glass('sb', ['#3a2a12', '#6d5222', '#c0a05a']);
     return `<g>`
       + `<rect width="400" height="150" fill="#20160b"/>`
@@ -817,7 +817,7 @@ export const SCENE_ART = {
   // out, and what is going back in. The difference is the number, and it is a number the
   // volunteer budget feels.
   'h2-recovery': scene('h2-recovery', { theme: 'copper',
-    caption: 'WHAT COMES BACK ON THE TRUCK - START, MINUS WHAT REACTED', body: k => {
+    caption: 'EXCESS REACTANT: START - REACTED', body: k => {
     return `<g>`
       + `<rect width="400" height="150" fill="#221709"/>`
       + `<rect y="92" width="400" height="10" fill="#3a2a16"/>`
@@ -852,7 +852,7 @@ export const SCENE_ART = {
   // holds, what mutual aid can bring, and the three routes out. The two numbers that have
   // to be compared are the two bars, and they are drawn against the same scale.
   'cap-tanker': scene('cap-tanker', { frame: C.danger,
-    caption: 'THE TANKER AT THE COUNTY LINE - ONE CALL, BOTH NUMBERS', body: k => {
+    caption: 'REQUIRED vs SIMULATED AVAILABLE', body: k => {
     return roadside(52, { verge: true })
       // the tanker, over, acid running out of the dome
       + `<g transform="rotate(-6 96 40)">`
@@ -869,7 +869,7 @@ export const SCENE_ART = {
       + cone(150, 96, 18) + cone(248, 96, 18)
       // the two numbers, against one scale, which IS the call
       + panelBox(238, 12, 148, 80)
-      + mono(312, 25, 'WHAT IT TAKES vs WHAT YOU HAVE', { size: 5.8, fill: C.dim, ls: '.03em' })
+      + mono(312, 25, 'REQUIRED vs SIMULATED AVAILABLE', { size: 5.8, fill: C.dim, ls: '.03em' })
       + `<g>`
       + [['NEEDED', .82, C.danger], ['ON TRUCK', .34, C.teal3], ['AID', .74, C.warn]].map(([lab, f, col], i) => {
         const y = 36 + i * 17;
@@ -878,7 +878,7 @@ export const SCENE_ART = {
           + `<rect x="298" y="${y}" width="${(76 * f).toFixed(1)}" height="10" rx="3" fill="${col}"/>`;
       }).join('')
       + `</g>`
-      + mono(312, 88, 'LAY IT, HOLD FOR AID, OR WITHDRAW', { size: 5.8, fill: C.ember, ls: '.03em' });
+      + mono(312, 88, 'SELECT FROM THE SIMULATION OPTIONS', { size: 5.8, fill: C.ember, ls: '.03em' });
   } })
 };
 

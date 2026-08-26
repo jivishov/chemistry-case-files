@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Unit 6 · Reactions &amp; Stoichiometry</title>
-<meta name="description" content="Second due on a rural fire and hazmat rotation: balance and classify the reaction that is running, then work out how much of what it takes to stop it. Limiting reactants, percent yield and gas volume, against a truck with 50 kg of caustic soda on it. TEKS C.9.">
+<meta name="description" content="Practice balancing and classifying chemical reactions, stoichiometric calculations, percent yield, gas volume, and limiting reactants. Includes an evidence-based simulation and TEKS C.9 alignment.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="../../shared/css/components.css">
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
-  <link rel="stylesheet" href="css/style.css?v=u6-2">
+  <link rel="stylesheet" href="css/style.css?v=u6-3">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <!-- mhchem, not optional here: this unit writes balanced equations and every bench binds
      x-ce to one. Without the contrib script the equations render as raw \ce{...}. -->
@@ -25,7 +25,7 @@
 <body>
 <div x-data="sim()" x-cloak>
 
-  <main class="codex-shell cockpit-shell" aria-label="Unit 6 hazmat rotation cockpit">
+  <main class="codex-shell cockpit-shell" aria-label="Unit 6 reactions and stoichiometry workspace">
     <header class="cockpit-command">
       <div class="command-brand">
         <span class="command-kicker">Unit 6 · TEKS C.9</span>
@@ -36,7 +36,7 @@
         <span x-text="activeStationName"></span>
       </div>
 
-      <nav class="station-nav" role="tablist" aria-label="Rotation benches">
+      <nav class="station-nav" role="tablist" aria-label="Unit 6 activities">
         <button class="tab" role="tab" :aria-selected="mode==='balance'" @click="setMode('balance')" aria-label="Balance" title="Balance · C.9(A) conservation of mass"><span class="tab-full" aria-hidden="true">Balance</span><span class="tab-short" aria-hidden="true">Balance</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='classify'" @click="setMode('classify')" aria-label="Classify" title="Classify · C.9(B) reaction types and sub-types"><span class="tab-full" aria-hidden="true">Classify</span><span class="tab-short" aria-hidden="true">Classify</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='stoich'" @click="setMode('stoich')" aria-label="Stoichiometry" title="Stoichiometry · C.9(C) mass, gas volume, percent yield"><span class="tab-full" aria-hidden="true">Stoichiometry</span><span class="tab-short" aria-hidden="true">Stoich</span></button>
@@ -136,9 +136,9 @@
         <!-- One line, not a card: this row is the last thing in a fixed-height column and
              every line it takes is a line off the goal text above it. -->
         <section class="instincts cockpit-instincts" aria-label="The rotation">
-          <span class="command-kicker">The rotation</span>
-          <p><strong x-text="calls"></strong> calls logged &middot;
-            <strong x-text="rightCalls"></strong> right &middot;
+          <span class="command-kicker">Simulation progress</span>
+          <p><strong x-text="calls"></strong> problems submitted &middot;
+            <strong x-text="rightCalls"></strong> correct &middot;
             it is <strong x-text="clockLabel"></strong></p>
         </section>
       </section>
@@ -187,11 +187,11 @@
               </div>
 
               <div class="row call-row mt-4" style="gap: var(--s-3);">
-                <button class="btn btn-accent" @click="balCommit()" :disabled="balDone || balAnswerShown">Call it in</button>
-                <button class="btn" @click="resetBalance()" :disabled="balDone">Reset to 1s</button>
+                <button class="btn btn-accent" @click="balCommit()" :disabled="balDone || balAnswerShown">Submit answer</button>
+                <button class="btn" @click="resetBalance()" :disabled="balDone">Reset coefficients</button>
                 <button class="btn btn-ghost" @click="showAnswer()" :disabled="balDone || balAnswerShown">Show answer</button>
                 <span class="grow"></span>
-                <button class="btn btn-sm" @click="balNext()">Next call</button>
+                <button class="btn btn-sm" @click="balNext()">Next problem</button>
               </div>
 
               <template x-if="balVerdict">
@@ -231,10 +231,10 @@
               </div>
 
               <div class="row call-row mt-4" style="gap: var(--s-3);">
-                <button class="btn btn-accent" @click="clCommit()" :disabled="clDone || !clStructural">Call it in</button>
+                <button class="btn btn-accent" @click="clCommit()" :disabled="clDone || !clStructural">Submit answer</button>
                 <span class="grow"></span>
-                <button class="btn btn-sm" @click="clNext()">Next call</button>
-                <span class="call-hint" x-show="!clStructural && !clDone" x-text="'Name the reaction type first. The second question is optional.'"></span>
+                <button class="btn btn-sm" @click="clNext()">Next problem</button>
+                <span class="call-hint" x-show="!clStructural && !clDone" x-text="'Select the reaction type first, then select every subtype that applies.'"></span>
               </div>
 
               <template x-if="clVerdict">
@@ -274,13 +274,13 @@
 
               <div class="row call-row mt-4" style="gap: var(--s-4); align-items: flex-end;">
                 <div class="field" style="width: 190px;">
-                  <label for="stInput">Your call (g <span x-formula="st.find.f"></span>)</label>
+                  <label for="stInput">Calculated mass (g <span x-formula="st.find.f"></span>)</label>
                   <input id="stInput" type="number" step="any" min="0" x-model="stInput" :disabled="stDone">
                 </div>
                 <button class="btn btn-accent" @click="stCommit()" :disabled="stDone || stInput===''" x-text="st.sc.actionLabel"></button>
                 <span class="grow"></span>
-                <button class="btn btn-sm" @click="stNext()">Next call</button>
-                <span class="call-hint" x-show="stInput === '' && !stDone" x-text="'Work the four-step route out, then type the grams.'"></span>
+                <button class="btn btn-sm" @click="stNext()">Next problem</button>
+                <span class="call-hint" x-show="stInput === '' && !stDone" x-text="'Use the mass-to-mass stoichiometry route, then enter the calculated grams.'"></span>
               </div>
 
               <template x-if="stVerdict">
@@ -294,9 +294,9 @@
                     <span class="verdict-detail" x-prose="stVerdict.detail"></span>
                     <template x-if="stVerdict && stVerdict.gauge">
                       <div class="gauge">
-                        <div class="gauge-seg" :class="stVerdict && stVerdict.gauge==='low' ? 'miss' : ''">too little</div>
-                        <div class="gauge-seg" :class="stVerdict && stVerdict.gauge==='on' ? 'on' : ''">on spec</div>
-                        <div class="gauge-seg" :class="stVerdict && stVerdict.gauge==='high' ? 'miss' : ''">too much</div>
+                        <div class="gauge-seg" :class="stVerdict && stVerdict.gauge==='low' ? 'miss' : ''">too low</div>
+                        <div class="gauge-seg" :class="stVerdict && stVerdict.gauge==='on' ? 'on' : ''">within activity tolerance</div>
+                        <div class="gauge-seg" :class="stVerdict && stVerdict.gauge==='high' ? 'miss' : ''">too high</div>
                       </div>
                     </template>
                   </div>
@@ -328,7 +328,7 @@
           <!-- Honors h1: particle counts (parent C.9C) -->
           <div class="honors-block mt-4" x-show="honors">
             <span class="honors-tag">Honors · particle counts</span>
-            <div class="note note-info mt-2" x-show="!h1Unlocked">Certify C.9(C) first: three stoichiometry calls right in a row unlocks this bench.</div>
+            <div class="note note-info mt-2" x-show="!h1Unlocked">Master C.9(C) first: three correct stoichiometry problems in a row unlock this activity.</div>
             <template x-if="h1Unlocked &amp;&amp; h1s">
               <div class="mt-2">
                 <!-- The Honors block states its own task beside its own controls. That is
@@ -352,7 +352,7 @@
                   </div>
                   <button class="btn btn-honors" @click="h1Commit()" :disabled="h1Done || h1Input===''" x-text="h1s.sc.actionLabel"></button>
                   <span class="grow"></span>
-                  <button class="btn btn-sm" @click="h1Next()">Next call</button>
+                  <button class="btn btn-sm" @click="h1Next()">Next problem</button>
                   <span class="call-hint" x-show="h1Input === '' && !h1Done" x-text="'Work out the particle count, then type it.'"></span>
                 </div>
                 <template x-if="h1Verdict">
@@ -365,9 +365,9 @@
                     <span class="verdict-detail" x-prose="h1Verdict.detail"></span>
                     <template x-if="h1Verdict && h1Verdict.gauge">
                       <div class="gauge">
-                        <div class="gauge-seg" :class="h1Verdict && h1Verdict.gauge==='low' ? 'miss' : ''">too few</div>
-                        <div class="gauge-seg" :class="h1Verdict && h1Verdict.gauge==='on' ? 'on' : ''">on spec</div>
-                        <div class="gauge-seg" :class="h1Verdict && h1Verdict.gauge==='high' ? 'miss' : ''">too many</div>
+                        <div class="gauge-seg" :class="h1Verdict && h1Verdict.gauge==='low' ? 'miss' : ''">too low</div>
+                        <div class="gauge-seg" :class="h1Verdict && h1Verdict.gauge==='on' ? 'on' : ''">within activity tolerance</div>
+                        <div class="gauge-seg" :class="h1Verdict && h1Verdict.gauge==='high' ? 'miss' : ''">too high</div>
                       </div>
                     </template>
                   </div>
@@ -406,8 +406,8 @@
                 </div>
                 <button class="btn btn-accent" @click="lmCommit()" :disabled="lmDone || !lmPick || lmInput===''" x-text="lm.sc.actionLabel"></button>
                 <span class="grow"></span>
-                <button class="btn btn-sm" @click="lmNext()">Next call</button>
-                <span class="call-hint" x-show="(!lmPick || lmInput === '') && !lmDone" x-text="!lmPick ? 'Say which reactant runs out first.' : 'Now type how much product that allows.'"></span>
+                <button class="btn btn-sm" @click="lmNext()">Next problem</button>
+                <span class="call-hint" x-show="(!lmPick || lmInput === '') && !lmDone" x-text="!lmPick ? 'Select the limiting reactant.' : 'Now enter the theoretical product mass.'"></span>
               </div>
 
               <template x-if="lmVerdict">
@@ -421,14 +421,14 @@
                     <span class="verdict-detail" x-prose="lmVerdict.detail"></span>
                     <template x-if="lmVerdict && lmVerdict.gauge">
                       <div class="gauge">
-                        <div class="gauge-seg" :class="lmVerdict && lmVerdict.gauge==='low' ? 'miss' : ''">too little</div>
-                        <div class="gauge-seg" :class="lmVerdict && lmVerdict.gauge==='on' ? 'on' : ''">on spec</div>
-                        <div class="gauge-seg" :class="lmVerdict && lmVerdict.gauge==='high' ? 'miss' : ''">too much</div>
+                        <div class="gauge-seg" :class="lmVerdict && lmVerdict.gauge==='low' ? 'miss' : ''">too low</div>
+                        <div class="gauge-seg" :class="lmVerdict && lmVerdict.gauge==='on' ? 'on' : ''">within activity tolerance</div>
+                        <div class="gauge-seg" :class="lmVerdict && lmVerdict.gauge==='high' ? 'miss' : ''">too high</div>
                       </div>
                     </template>
                   </div>
 
-                  <p class="eyebrow mt-4">What actually happened in there</p>
+                  <p class="eyebrow mt-4">Theoretical reaction result</p>
                   <div class="tokenfield">
                     <span class="eyebrow">Before</span>
                     <template x-for="row in lmViz.before" :key="'b'+row.f">
@@ -474,7 +474,7 @@
           <!-- Honors h2: excess recovered (parent C.9D) -->
           <div class="honors-block mt-4" x-show="honors">
             <span class="honors-tag">Honors · excess recovery</span>
-            <div class="note note-info mt-2" x-show="!h2Unlocked">Certify C.9(D) first: three limiting-reactant calls right in a row unlocks this bench.</div>
+            <div class="note note-info mt-2" x-show="!h2Unlocked">Master C.9(D) first: three correct limiting-reactant problems in a row unlock this activity.</div>
             <template x-if="h2Unlocked &amp;&amp; h2s">
               <div class="mt-2">
                 <p class="small muted mb-2" x-prose="h2s.sc.goal"></p>
@@ -494,7 +494,7 @@
                   </div>
                   <button class="btn btn-honors" @click="h2Commit()" :disabled="h2Done || h2Input===''" x-text="h2s.sc.actionLabel"></button>
                   <span class="grow"></span>
-                  <button class="btn btn-sm" @click="h2Next()">Next call</button>
+                  <button class="btn btn-sm" @click="h2Next()">Next problem</button>
                   <span class="call-hint" x-show="h2Input === '' && !h2Done" x-text="'Work out what is left over, then type it.'"></span>
                 </div>
                 <template x-if="h2Verdict">
@@ -507,9 +507,9 @@
                     <span class="verdict-detail" x-prose="h2Verdict.detail"></span>
                     <template x-if="h2Verdict && h2Verdict.gauge">
                       <div class="gauge">
-                        <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='low' ? 'miss' : ''">booked short</div>
-                        <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='on' ? 'on' : ''">on spec</div>
-                        <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='high' ? 'miss' : ''">booked long</div>
+                        <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='low' ? 'miss' : ''">too low</div>
+                        <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='on' ? 'on' : ''">within activity tolerance</div>
+                        <div class="gauge-seg" :class="h2Verdict && h2Verdict.gauge==='high' ? 'miss' : ''">too high</div>
                       </div>
                     </template>
                   </div>
@@ -522,7 +522,7 @@
         <!-- ---------- Capstone: the tanker call ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
           <div class="note note-info" x-show="!capUnlocked">
-            Certify all four core skills to take this call. Balance, classify, dose and limiting reactant each need three right in a row. Certified so far: <span x-text="teksMasteredCount"></span> of 4.
+            Master all four core skills to unlock the capstone. Balance, classify, stoichiometry, and limiting reactant each need three correct in a row. Mastered so far: <span x-text="teksMasteredCount"></span> of 4.
           </div>
           <template x-if="capUnlocked &amp;&amp; cap">
             <div>
@@ -547,7 +547,7 @@
                 </div>
               </div>
 
-              <p class="small muted mt-3 mb-2">One call. What do you do?</p>
+              <p class="small muted mt-3 mb-2">Compare the required and simulated available amounts. Which option is supported?</p>
               <div class="choice-grid choice-grid-wide">
                 <template x-for="o in cap.sc.options" :key="o.key">
                   <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
@@ -555,8 +555,8 @@
               </div>
 
               <div class="row call-row mt-4">
-                <button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Make the call</button>
-                <span class="call-hint" x-show="!capPick && !capWin" x-text="'Make the call on the tanker first.'"></span>
+                <button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Submit decision</button>
+                <span class="call-hint" x-show="!capPick && !capWin" x-text="'Select one option before submitting.'"></span>
               </div>
 
               <template x-if="capVerdict">
@@ -646,11 +646,11 @@
   window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
   const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
          { mountColumnResizers }] = await Promise.all([
-    import('./js/main.js?v=u6-2'),
+    import('./js/main.js?v=u6-3'),
     import('../../shared/js/render.js'),
     import('../../shared/js/gauge.js'),
     import('../../shared/js/casefile.js'),
-    import('./js/case.js?v=u6-1'),
+    import('./js/case.js?v=u6-2'),
     import('../shared/columns.js?v=cockpit-3')
   ]);
   window.sim = createSim;
