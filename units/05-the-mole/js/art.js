@@ -488,11 +488,11 @@ export const SCENE_ART = {
 
   // ---------- C.8(C) percent composition ----------
   // The breach that forces the question, the rock that might answer it, the foundry.
-  'c-ore': scene('c-ore', { caption: 'RUST ROCK · DOES THE ASSAY MATCH?', body: k => {
+  'c-ore': scene('c-ore', { caption: 'HEMATITE · CALCULATE % IRON', body: k => {
     const rock = k.rad('rock', [[0, '#b25630'], [.6, '#8a3a22'], [1, '#4e2012']], { cx: '32%', cy: '26%' });
     const fire = k.lin('fire', [[0, '#f8d489'], [.45, C.ember], [1, '#a13418']]);
     const plate = k.lin('plate', [[0, '#24444f'], [1, '#152d35']]);
-    return mono(61, 26, 'HULL BREACH', { size: 7, ls: '.1em' })
+    return mono(61, 26, 'HEMATITE SAMPLE', { size: 7, ls: '.08em' })
       // hull plate, cracked through
       + `<rect x="20" y="32" width="82" height="86" rx="4" fill="${plate}" stroke="${C.steel}" stroke-width="2"/>`
       + rivets('28,40 94,40 28,110 94,110')
@@ -524,7 +524,7 @@ export const SCENE_ART = {
   } }),
 
   // Fertilizer whose label may be lying, and the only crop aboard that eats it.
-  'c-greenhouse': scene('c-greenhouse', { caption: 'FERTILIZER · REAL % NITROGEN?', body: k => {
+  'c-greenhouse': scene('c-greenhouse', { caption: 'FERTILIZER · CALCULATE % NITROGEN', body: k => {
     const jug = k.tube('jug', ['#12414c', '#2a7d8a', '#45a0ad']);
     const glass = k.lin('glass', [[0, '#16404c'], [1, '#0d222a']]);
     return bulkhead(20)
@@ -557,7 +557,7 @@ export const SCENE_ART = {
   } }),
 
   // Pod claiming pure methane, an inline assay, and the engine it would feed.
-  'c-fuelpurity': scene('c-fuelpurity', { caption: 'FUEL POD · VERIFY % CARBON', body: k => {
+  'c-fuelpurity': scene('c-fuelpurity', { caption: 'FUEL REPORT · CHECK % CARBON', body: k => {
     const tank = k.pipe('tank', ['#12414c', '#2a7d8a', '#4aa3b0']);
     const bell = k.lin('bell', [[0, '#b9c7cd'], [.5, '#7d8c94'], [1, '#4a5a62']]);
     const chamber = k.pipe('chamber', ['#39464e', '#7d8c94', '#c2d0d6']);
@@ -574,7 +574,7 @@ export const SCENE_ART = {
       + flow(164, 178, 80, { dash: '2 4', w: 1.6 })
       + `<rect x="178" y="46" width="60" height="66" rx="6" fill="#0e242c" stroke="${C.slate}" stroke-width="1.6"/>`
       + donut(208, 74, 18, '% C')
-      + mono(208, 105, 'PURITY', { size: 7, ls: '.12em' })
+      + mono(208, 105, '% BY MASS', { size: 7, ls: '.08em' })
       + flow(240, 268, 80, { dash: '2 4', w: 1.6 })
       // the engine it either feeds or does not
       + `<path d="M266 80 H292" stroke="${C.steel}" stroke-width="7" stroke-linecap="round"/>`
@@ -588,7 +588,7 @@ export const SCENE_ART = {
 
   // ---------- C.8(D) empirical / molecular ----------
   // Something is coming through the vent and the spectrometer only has masses.
-  'd-leak': scene('d-leak', { caption: 'UNKNOWN GAS · BUILD THE FORMULA, ID IT', bg: ['#0b1a22', '#241818'], frame: C.danger, capColor: '#cda99a', body: k => {
+  'd-leak': scene('d-leak', { caption: 'UNKNOWN GAS · BUILD AND COMPARE FORMULAS', bg: ['#0b1a22', '#241818'], frame: C.danger, capColor: '#cda99a', body: k => {
     const plate = k.lin('plate', [[0, '#23414b'], [1, '#132b33']]);
     return bulkhead(22)
       // alarm beacon over a louvred vent
@@ -663,7 +663,7 @@ export const SCENE_ART = {
   } }),
 
   // Coolant weeping out of a cracked joint, creeping toward live boards.
-  'd-coolant': scene('d-coolant', { caption: 'COOLANT LEAK · ID THE FLUID', body: k => {
+  'd-coolant': scene('d-coolant', { caption: 'UNKNOWN FLUID · BUILD AND COMPARE FORMULAS', body: k => {
     const pipe = k.lin('pipe', [[0, '#8a97a0'], [.24, '#e2ebee'], [.6, '#97a4ac'], [1, '#57646c']]);
     const board = k.lin('board', [[0, '#1a5138'], [1, '#0f3324']]);
     return bulkhead(18)
@@ -756,7 +756,7 @@ export const SCENE_ART = {
 
   // ---------- Capstone ----------
   // Unlabelled pod, one scan, three ways it can go.
-  'cap-pod': scene('cap-pod', { caption: 'RESUPPLY POD · ID, CHECK PURITY, DECIDE', body: k => {
+  'cap-pod': scene('cap-pod', { caption: 'RESUPPLY POD · IDENTIFY, CHECK, DECIDE', body: k => {
     const pod = k.pipe('pod', ['#78868e', '#c2d0d6', '#f4f9fa']);
     // Icons read as one glyph each: into the hold, locked, or out the door.
     const IN = `<rect x="1" y="-6" width="8" height="12" rx="1.5"/><path d="M-8 0 H-1 M-4 -4 L0 0 L-4 4"/>`;

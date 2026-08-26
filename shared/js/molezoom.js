@@ -43,7 +43,7 @@
 // standing for a hundred dots or three hundred thousand. Emitting a <circle> each
 // was 400 ms and 4 MB at 100k; this is ~1 ms and holds the slider at 60 fps.
 
-export const ZOOM_MAX_POW = 23;      // the slider's top notch, one decade under a mole
+export const ZOOM_MAX_POW = 23;      // the slider's top notch; 10^23 is below one mole
 
 // The stage the geometry is written against; overridable per call, but the units
 // both draw a 320x200 viewBox and zoomWatch() measures against this width.
@@ -81,12 +81,12 @@ export const ZOOM_DOT_CAP = zoomDotCap();
 // the milestone at or just below the current power of ten. Makes the scale
 // viscerally real one decade at a time.
 export const ZOOM_ANALOGIES = [
-  { pow: 0,  text: 'one particle, far too small to see.' },
-  { pow: 2,  text: 'about a hundred, a small classroom of them.' },
-  { pow: 6,  text: 'a million, a packed stadium crowd.' },
-  { pow: 12, text: 'a trillion, the grains of sand on a long beach.' },
-  { pow: 18, text: 'a quintillion, every grain of sand on every beach on Earth.' },
-  { pow: 23, text: 'a mole, about eighty thousand times every grain of sand on every beach on Earth.' }
+  { pow: 0,  text: 'At 10^0: one particle.' },
+  { pow: 2,  text: 'At 10^2: one hundred particles.' },
+  { pow: 6,  text: 'At 10^6: one million particles.' },
+  { pow: 12, text: 'At 10^12: one trillion particles.' },
+  { pow: 18, text: 'At 10^18: one quintillion particles.' },
+  { pow: 23, text: 'At 10^23: about one-sixth of a mole; one mole contains 6.022 × 10^23 particles.' }
 ];
 
 // PURE. How to print 10^pow. Small powers read better in full with separators;

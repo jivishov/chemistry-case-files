@@ -12,14 +12,14 @@
 // from shared/js/molezoom.js (node-tested) rather than being reimplemented per build.
 // Lab/ladder state persists under chem.lab.units_new/05-the-mole, separate from mastery.
 import { SE, SUBSTANCES, FORMULA_POOL, HYDRATES, COMBUSTION, SCENARIOS,
-  TYPED_BANDS, MISCONCEPTIONS, ARI_INTRO } from './model.js?v=u5-1';
-import { sceneArt } from './art.js?v=u5-1';
+  TYPED_BANDS, MISCONCEPTIONS, ARI_INTRO } from './model.js?v=u5-2';
+import { sceneArt } from './art.js?v=u5-2';
 import {
   molarMass, percentComposition, parseFormula, ATOMIC_MASS, AVOGADRO,
   empiricalFormula, combustionFormula, fmt
 } from '../../../shared/js/chem.js';
 import { createGame, outcomeBand } from '../../../shared/js/game.js';
-import { createMoleZoom } from '../../../shared/js/molezoom.js';
+import { createMoleZoom } from '../../../shared/js/molezoom.js?v=u5-fidelity-2';
 
 const pick = a => a[(Math.random() * a.length) | 0];
 const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -31,7 +31,7 @@ const mm = M => M.toFixed(2);
 // number). flipped/generic are taught live, not via an audit. ARI_OK_CLAIM is what ARI
 // asserts on the ~30% of audits where its solution is actually correct.
 const AUDIT_FLAWS = ['wrongMass', 'decade', 'noConvert'];
-const ARI_OK_CLAIM = 'Ran it twice and the units cancel clean. I would sign off on this one.';
+const ARI_OK_CLAIM = 'I used the stated conversion factor, checked the unit cancellation, and obtained this result.';
 // Build a formula string from {el: subscript}; 1s are implicit (C1 -> C).
 const sub1 = n => (n > 1 ? n : '');
 
@@ -46,9 +46,9 @@ const skills = [
   { id: 'b',  code: 'C.8(B)', label: 'Moles and particles',  target: 3 },
   { id: 'c',  code: 'C.8(C)', label: 'Percent composition',  target: 3 },
   { id: 'd',  code: 'C.8(D)', label: 'Empirical/molecular',  target: 3 },
-  { id: 'h1', code: 'Honors', label: 'Hydrate recovery',     target: 2, honors: true },
+  { id: 'h1', code: 'Honors', label: 'Hydrate formula',     target: 2, honors: true },
   { id: 'h2', code: 'Honors', label: 'Combustion analysis',  target: 2, honors: true },
-  { id: 'cap', code: 'Capstone', label: 'Food-grade audit',  target: 1, honors: true }
+  { id: 'cap', code: 'Capstone', label: 'Resupply analysis',  target: 1, honors: true }
 ];
 
 export { SE };
@@ -99,10 +99,10 @@ export function createSim() {
     // are session-only (reset to 100; never persisted), so crewMood/crewState keep working.
     stocks: { air: 100, power: 100, food: 100, hull: 100 },
     shipStocks: [
-      { key: 'air',   label: 'Air' },
-      { key: 'power', label: 'Power' },
-      { key: 'food',  label: 'Food' },
-      { key: 'hull',  label: 'Hull' }
+      { key: 'air',   label: 'Air score' },
+      { key: 'power', label: 'Power score' },
+      { key: 'food',  label: 'Food score' },
+      { key: 'hull',  label: 'Hull score' }
     ],
     crew: 100,
     sol: 0,
@@ -240,19 +240,19 @@ export function createSim() {
     },
     stockColor(v) { return v >= 67 ? 'var(--success)' : v >= 34 ? 'var(--warn)' : 'var(--danger)'; },
     get crewMood() { return this.crew >= 67 ? '\u{1F642}' : this.crew >= 34 ? '\u{1F630}' : '\u{1F635}'; },
-    get crewState() { return this.crew >= 67 ? 'Crew safe' : this.crew >= 34 ? 'Crew strained' : 'Crew in danger'; },
+    get crewState() { return this.crew >= 67 ? 'Simulation stable' : this.crew >= 34 ? 'Simulation caution' : 'Simulation critical'; },
     // ---- PART B: Instincts panel readout (derived from calib; formative only, gates nothing) ----
     get calibReady() { return this.calib.est >= 8; },
     get instinctNudge() {
       if (!this.calibReady) return '';
       const estRate = this.calib.estOk / this.calib.est;
       // 1. the size sense is the foundation: if the ballpark is often off, fix that first
-      if (estRate <= 0.4) return 'Your gut keeps missing the size. Count the powers of ten before you commit.';
+      if (estRate <= 0.4) return 'Your estimates often miss the order of magnitude. Check the powers of ten before calculating.';
       // 2. size sense is decent but the final number drifts off even when the gut was right
       if (estRate >= 0.6 && this.calib.estOk >= 4 && this.calib.goodOfOk / this.calib.estOk <= 0.5)
-        return 'Your size sense is good, but the final number often slips. Slow down on the arithmetic.';
+        return 'Your estimates are usually reasonable, but the final result often differs. Recheck the arithmetic and units.';
       // 3. both the ballpark and the follow-through are strong
-      if (estRate >= 0.8) return 'Your sense of size is sharp. Trust your gut.';
+      if (estRate >= 0.8) return 'Your order-of-magnitude estimates are consistently strong.';
       return '';
     },
     clearOutcome() {
@@ -300,7 +300,7 @@ export function createSim() {
     get activeStationName() {
       const brief = this.activeBrief;
       if (brief && brief.system) return brief.system;
-      if (this.mode === 'zoom') return 'Feel a mole';
+      if (this.mode === 'zoom') return 'Mole scale';
       if (this.mode === 'capstone') return 'Resupply pod';
       return 'Mission control';
     },
@@ -313,8 +313,8 @@ export function createSim() {
       if (v) return v.detail || v.headline || v.state;
       const brief = this.activeBrief;
       if (brief) return brief.why || brief.goal || '';
-      if (this.mode === 'zoom') return 'Scale from one particle to a mole without pretending the whole mole fits on screen.';
-      return 'Pick a station and make the number protect the crew.';
+      if (this.mode === 'zoom') return 'Compare powers of ten up to 10^23 particles. One mole contains 6.022 × 10^23 particles.';
+      return 'Select a station and use the chemistry to complete the scenario.';
     },
 
     // The facts a learner should never have to remember or hunt for while working the
@@ -378,7 +378,7 @@ export function createSim() {
       // trueValue is derived from the rounded reading, so a correct chain lands on it exactly
       const trueValue = gval * factor;
       const tiles = shuffle(specs).map((s, i) => ({ id: 't' + i, ...s }));
-      const explain = `Cancel ${srcUnit === 'g' ? 'grams' : 'moles'} so the chain resolves to ${this.unitLabel(to)}: ${fmt(gval)} ${this.unitLabel(srcUnit)} resolves to ${fmt(trueValue)} ${this.unitLabel(to)}.`;
+      const explain = `Cancel ${srcUnit === 'g' ? 'grams' : 'moles'} so the chain converts to ${this.unitLabel(to)}: ${fmt(gval)} ${this.unitLabel(srcUnit)} converts to ${fmt(trueValue)} ${this.unitLabel(to)}.`;
 
       // Effective rung (single-step scope): skill a is always single-step; skill b has
       // exactly one two-step case (b-sample, g->particles). That two-step stays scaffolded
@@ -442,11 +442,11 @@ export function createSim() {
     // ---- rung indicator (quiet, drives the dose-panel pill) ----
     get rungText() {
       if (!this.cv) return '';
-      if (this.cv.rungForced) return 'Two-step conversion · tap the ready-made tiles';
+      if (this.cv.rungForced) return 'Two-step conversion · select the provided factors';
       const r = this.cv.rung;
-      if (r === 1) return 'Setup level 1 of 3 · tap the ready-made tiles';
-      if (r === 2) return 'Setup level 2 of 3 · build the factor yourself';
-      return 'Setup level 3 of 3 · solve it and type the amount';
+      if (r === 1) return 'Level 1 of 3 · select conversion factors';
+      if (r === 2) return 'Level 2 of 3 · build the conversion factor';
+      return 'Level 3 of 3 · calculate and enter the result';
     },
 
     // ---- Mechanic B: gut-check gate (rung >= 2) ----
@@ -483,7 +483,7 @@ export function createSim() {
       const value = this.cvCurrentValue;
       const yDec = (isFinite(value) && value !== 0) ? Math.floor(Math.log10(Math.abs(value))) : this.cvEstimate;
       const u = this.cv.targetUnit;
-      return `Your gut said ${this.estLabel(this.cvEstimate, u)} but your answer is ${this.estLabel(yDec, u)}. One is lying. Fix it.`;
+      return `Your estimate was ${this.estLabel(this.cvEstimate, u)}, but your calculation is ${this.estLabel(yDec, u)}. Compare the powers of ten and revise either the estimate or the calculation.`;
     },
 
     // ---- Mechanic A: rung-2 BUILD (hybrid factor) ----
@@ -585,11 +585,10 @@ export function createSim() {
 
       let v, good = false, delta;
       if (!reached) {
-        // the value must resolve to the target unit before the system can act on it
         const detail = rung === 3
-          ? `${sc.fail} Enter a number for the amount in ${tgt}.`
-          : `${sc.fail} ${this.cv.explain}`;
-        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'CALC STALLED', headline: 'Numbers did not resolve',
+          ? `Enter a numerical result in ${tgt}. ${sc.fail}`
+          : `${this.cv.explain} ${sc.fail}`;
+        v = { tone: 'fail', icon: '\u{2699}\u{FE0F}', state: 'CALCULATION INCOMPLETE', headline: 'Conversion incomplete',
           detail, gauge: null };
         delta = -5;
       } else {
@@ -598,16 +597,16 @@ export function createSim() {
         const dev = `${Math.abs((value - this.cv.trueValue) / this.cv.trueValue * 100).toFixed(0)}%`;
         const yourTxt = `${fmt(value)} ${tgt}`;
         if (good) {
-          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'On target',
-            detail: `You delivered ${yourTxt}, right on the ${needTxt} the ship needed. ${sc.safe}`, gauge: 'on' };
+          v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'Meets activity target',
+            detail: `Your result is ${yourTxt}; the simulation target is ${needTxt}. ${sc.safe}`, gauge: 'on' };
           this.cvDone = true; delta = 6;
         } else if (band.direction === 'low') {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Too little',
-            detail: `You delivered ${yourTxt}, ${dev} short of the ${needTxt} needed. ${sc.low}`, gauge: 'low' };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Below activity target',
+            detail: `Your result is ${yourTxt}, about ${dev} below the simulation target of ${needTxt}. ${sc.low}`, gauge: 'low' };
           delta = -12;
         } else {
-          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Too much',
-            detail: `You delivered ${yourTxt}, ${dev} over the ${needTxt} needed. ${sc.high}`, gauge: 'high' };
+          v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Above activity target',
+            detail: `Your result is ${yourTxt}, about ${dev} above the simulation target of ${needTxt}. ${sc.high}`, gauge: 'high' };
           delta = -12;
         }
       }
@@ -699,14 +698,14 @@ export function createSim() {
     auditWorking(cv, flaw) {
       const g = fmt(cv.given.value), srcU = this.unitLabel(cv.given.unit), tgtU = this.unitLabel(cv.targetUnit);
       const usesMass = cv.given.unit === 'g' || cv.targetUnit === 'g';
-      if (flaw === 'noConvert') return `I read ${g} ${srcU} off the gauge and logged it straight across as ${tgtU}. The two track close, so I skipped the factor.`;
-      if (flaw === 'wrongMass') return `I used ${mm(cv.wrongM)} g per mol as the molar mass and ran ${g} ${srcU} through to ${tgtU}.`;
+      if (flaw === 'noConvert') return `I copied ${g} ${srcU} as ${tgtU} without applying a conversion factor.`;
+      if (flaw === 'wrongMass') return `I used ${mm(cv.wrongM)} g/mol as the molar mass and converted ${g} ${srcU} to ${tgtU}.`;
       if (flaw === 'decade') return usesMass
-        ? `I ran ${g} ${srcU} through ${mm(cv.M)} g per mol down to ${tgtU}, carrying the powers of ten by eye.`
-        : `I multiplied ${g} ${srcU} by Avogadro's number to get ${tgtU}, carrying the powers of ten by eye.`;
+        ? `I converted ${g} ${srcU} using ${mm(cv.M)} g/mol and handled the powers of ten mentally.`
+        : `I multiplied ${g} ${srcU} by Avogadro’s number and handled the powers of ten mentally.`;
       return usesMass
-        ? `I used ${mm(cv.M)} g per mol as the molar mass and ran ${g} ${srcU} through, letting the units cancel to ${tgtU}.`
-        : `I multiplied ${g} ${srcU} by Avogadro's number, letting the units cancel to ${tgtU}.`;
+        ? `I used ${mm(cv.M)} g/mol and checked that the units cancel to ${tgtU}.`
+        : `I multiplied ${g} ${srcU} by Avogadro’s number and checked that the units cancel to ${tgtU}.`;
     },
     get auditClaim() {
       if (!this.cv || !this.cv.audit) return '';
@@ -744,29 +743,27 @@ export function createSim() {
       let v, delta;
       if (a.correct) {
         if (this.auditPick === 'trust') {
-          v = { tone: 'success', icon: sc.icon, state: 'SIGNED OFF', headline: 'Good sign-off',
-            detail: `You checked ARI's ${aiTxt}, it held up, and you let it run. ${sc.safe}` };
+          v = { tone: 'success', icon: sc.icon, state: 'CALCULATION CORRECT', headline: 'Correct evaluation',
+            detail: `ARI calculated ${aiTxt}; the reference result is ${trueTxt}. You correctly accepted the calculation.` };
           delta = 5;
         } else {
-          v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'FALSE ALARM', headline: 'False alarm',
-            detail: `ARI's ${aiTxt} was right all along. Flagging good work burns time the crew cannot spare. Check the numbers before you call it.` };
+          v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'CALCULATION CORRECT', headline: 'Recheck your evaluation',
+            detail: `ARI calculated ${aiTxt}, which matches the reference result ${trueTxt}. The calculation should be accepted.` };
           delta = -3;
         }
       } else if (this.auditPick === 'trust') {
-        // the wrong number actually shipped: play out the scenario's real over/under harm
-        const conseq = a.aiValue > this.cv.trueValue ? sc.high : sc.low;
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'BAD CALL SHIPPED', headline: 'You let it through',
-          detail: `ARI logged ${aiTxt}, but the real amount was ${trueTxt}. You signed off without checking, and it went live. ${conseq}` };
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'CALCULATION INCORRECT', headline: 'Error missed',
+          detail: `ARI calculated ${aiTxt}, but the reference result is ${trueTxt}. ${MISCONCEPTIONS[a.flaw].fix}` };
         delta = -12;
       } else if (this.auditFlaw === a.flaw) {
-        this.missTally[sk][a.flaw] = 0;                    // caught and named: that pattern is retired
-        v = { tone: 'success', icon: '\u{1F50D}', state: 'CAUGHT IT', headline: 'Caught it',
-          detail: `You flagged ARI's ${aiTxt} and named the slip. The real amount was ${trueTxt}. ${MISCONCEPTIONS[a.flaw].fix} You just caught your own habit in someone else's work.` };
+        this.missTally[sk][a.flaw] = 0;
+        v = { tone: 'success', icon: '\u{1F50D}', state: 'ERROR IDENTIFIED', headline: 'Correct evaluation',
+          detail: `You correctly marked ${aiTxt} as incorrect and identified the error. The reference result is ${trueTxt}. ${MISCONCEPTIONS[a.flaw].fix}` };
         delta = 8;
       } else {
         this.missTally[sk][a.flaw] = Math.max(0, (this.missTally[sk][a.flaw] || 0) - 1);
-        v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'CLOSE', headline: 'Right to flag it',
-          detail: `Flagging it was the right move, but you named the wrong slip. ARI logged ${aiTxt}; the real amount was ${trueTxt}. ${MISCONCEPTIONS[a.flaw].fix}` };
+        v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'ERROR IDENTIFIED', headline: 'Check the error type',
+          detail: `You correctly marked the calculation as incorrect, but selected the wrong error type. ARI calculated ${aiTxt}; the reference result is ${trueTxt}. ${MISCONCEPTIONS[a.flaw].fix}` };
         delta = -4;
       }
       this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, audit ${v.state.toLowerCase()}`, stock: sc.stock, delta });
@@ -782,7 +779,7 @@ export function createSim() {
       const comp = percentComposition(formula);
       const target = comp.find(c => c.el === element) || comp[0];
       const theo = target.percent;
-      const tol = 1.5;                                   // percent (absolute) accept window
+      const tol = 1.5;                                   // percentage-point activity criterion
       const within = Math.random() < 0.5;
       let measured;
       if (within) {
@@ -811,21 +808,20 @@ export function createSim() {
       const el = this.pc.target.el;
       const opt = sc.options.find(o => o.key === this.pcDecision);
       const gap = Math.abs(this.pc.measured - this.pc.theo);
-      const dirTxt = this.pc.measured < this.pc.theo ? 'low' : 'high';
-      // quantified figure that fronts every decision verdict
-      const fig = `The label reads ${this.pc.measured}% ${el}, but the real value works out to ${fmt(this.pc.theo)}% ${el}, ${fmt(gap)} points ${dirTxt}.`;
+      const dirTxt = this.pc.measured < this.pc.theo ? 'below' : 'above';
+      const fig = `The reported value is ${this.pc.measured}% ${el}; the theoretical value from the formula is ${fmt(this.pc.theo)}% ${el}. The difference is ${fmt(gap)} percentage points ${dirTxt} the theoretical value.`;
       let v, good = false, delta, feed;
       if (!this.pcInputOk) {
-        v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'RECHECK', headline: 'Your math is off',
-          detail: `Your percent for ${el} is off, so you cannot trust the call yet. The real value is ${fmt(this.pc.theo)}% ${el}.`, gauge: null };
-        delta = -5; feed = `${sc.system}, miscalculated`;
+        v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'RECHECK CALCULATION', headline: 'Recalculate percent composition',
+          detail: `Your calculated percent by mass does not match the formula. The theoretical value is ${fmt(this.pc.theo)}% ${el}.`, gauge: null };
+        delta = -5; feed = `${sc.system}, calculation needs review`;
       } else if (this.pcDecision === this.pc.correctKey) {
         good = true;
-        v = { tone: 'success', icon: sc.icon, state: 'GOOD CALL', headline: 'Right call', detail: `${fig} ${opt.good}`, gauge: null };
-        this.pcDone = true; delta = 6; feed = `${sc.system}, good call`;
+        v = { tone: 'success', icon: sc.icon, state: 'DECISION CORRECT', headline: 'Correct decision', detail: `${fig} ${opt.good}`, gauge: null };
+        this.pcDone = true; delta = 6; feed = `${sc.system}, decision correct`;
       } else {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG CALL', headline: 'Wrong call', detail: `${fig} ${opt.consequence}`, gauge: null };
-        delta = -12; feed = `${sc.system}, wrong call`;
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'DECISION INCORRECT', headline: 'Recheck the decision', detail: `${fig} ${opt.consequence}`, gauge: null };
+        delta = -12; feed = `${sc.system}, decision incorrect`;
       }
       this.gRecord('c', good, !this.pcAttempted);
       this.recordWorld({ icon: v.icon, tone: v.tone, text: feed, stock: sc.stock, delta });
@@ -867,12 +863,14 @@ export function createSim() {
       const ok = this.foEmpOk && this.foMolOk;
       let v;
       if (ok) {
-        v = { tone: 'success', icon: sc.icon, state: 'IDENTIFIED', headline: 'Identified', detail: `It is ${this.fo.item.name} (${this.fo.item.molecular}), ${sc.success}`, gauge: null };
+        v = { tone: 'success', icon: sc.icon, state: 'FORMULA MATCH', headline: 'Formula matches the data',
+          detail: `Your empirical and molecular formulas match the sample data. Among the activity candidates, ${this.fo.item.molecular} corresponds to ${this.fo.item.name}.`, gauge: null };
         this.foDone = true;
-        this.recordWorld({ icon: sc.icon, tone: 'success', text: `${sc.system}, identified`, stock: sc.stock, delta: 6 });
+        this.recordWorld({ icon: sc.icon, tone: 'success', text: `${sc.system}, formula matched`, stock: sc.stock, delta: 6 });
       } else {
-        v = { tone: 'fail', icon: '\u{2753}', state: 'NO MATCH', headline: 'No match', detail: `${sc.fail} It was actually ${this.fo.item.molecular} (${this.fo.item.name}).`, gauge: null };
-        this.recordWorld({ icon: '\u{1F6A8}', tone: 'fail', text: `${sc.system}, misidentified`, stock: sc.stock, delta: -12 });
+        v = { tone: 'fail', icon: '\u{2753}', state: 'RECHECK FORMULA', headline: 'Formula does not match',
+          detail: `Recheck the mole ratios and the molecular-formula multiplier. The expected molecular formula is ${this.fo.item.molecular}.`, gauge: null };
+        this.recordWorld({ icon: '\u{1F6A8}', tone: 'fail', text: `${sc.system}, formula needs review`, stock: sc.stock, delta: -12 });
       }
       this.gRecord('d', ok, !this.foAttempted);
       this.foAttempted = true; this.foChecked = true; this.foVerdict = v; this.lastVerdict = v;
@@ -899,12 +897,14 @@ export function createSim() {
       const ok = this.hyX === this.hy.xCorrect;
       let v;
       if (ok) {
-        v = { tone: 'success', icon: sc.icon, state: 'WATER RECOVERED', headline: 'Water recovered', detail: `x = ${this.hy.xCorrect}. ${sc.success}`, gauge: null };
+        v = { tone: 'success', icon: sc.icon, state: 'FORMULA CORRECT', headline: 'Hydrate ratio correct',
+          detail: `x = ${this.hy.xCorrect}. ${sc.success}`, gauge: null };
         this.hyDone = true;
-        this.recordWorld({ icon: sc.icon, tone: 'success', text: `${sc.system}, water recovered`, stock: sc.stock, delta: 6 });
+        this.recordWorld({ icon: sc.icon, tone: 'success', text: `${sc.system}, hydrate ratio correct`, stock: sc.stock, delta: 6 });
       } else {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WATER LOST', headline: 'Setpoint off', detail: `${sc.fail} The correct value is x = ${this.hy.xCorrect}.`, gauge: null };
-        this.recordWorld({ icon: '\u{1F6A8}', tone: 'fail', text: `${sc.system}, water lost`, stock: sc.stock, delta: -12 });
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'RECHECK FORMULA', headline: 'Recalculate x',
+          detail: `${sc.fail} The expected value is x = ${this.hy.xCorrect}.`, gauge: null };
+        this.recordWorld({ icon: '\u{1F6A8}', tone: 'fail', text: `${sc.system}, hydrate ratio needs review`, stock: sc.stock, delta: -12 });
       }
       this.gRecord('h1', ok, !this.hyAttempted);
       this.hyAttempted = true; this.hyChecked = true; this.hyVerdict = v; this.lastVerdict = v;
@@ -934,12 +934,14 @@ export function createSim() {
       const ok = this.cbOk;
       let v;
       if (ok) {
-        v = { tone: 'success', icon: sc.icon, state: 'FUEL IDENTIFIED', headline: 'Fuel identified', detail: `${sc.success} Empirical formula ${this.cb.empStr}.`, gauge: null };
+        v = { tone: 'success', icon: sc.icon, state: 'FORMULA CORRECT', headline: 'Empirical formula correct',
+          detail: `${sc.success} Empirical formula: ${this.cb.empStr}.`, gauge: null };
         this.cbDone = true;
-        this.recordWorld({ icon: sc.icon, tone: 'success', text: `${sc.system}, fuel identified`, stock: sc.stock, delta: 6 });
+        this.recordWorld({ icon: sc.icon, tone: 'success', text: `${sc.system}, empirical formula correct`, stock: sc.stock, delta: 6 });
       } else {
-        v = { tone: 'fail', icon: '\u{2753}', state: 'NO MATCH', headline: 'No match', detail: `${sc.fail} The empirical formula was ${this.cb.empStr}.`, gauge: null };
-        this.recordWorld({ icon: '\u{1F6A8}', tone: 'fail', text: `${sc.system}, no match`, stock: sc.stock, delta: -12 });
+        v = { tone: 'fail', icon: '\u{2753}', state: 'RECHECK FORMULA', headline: 'Empirical formula does not match',
+          detail: `${sc.fail} The expected empirical formula is ${this.cb.empStr}.`, gauge: null };
+        this.recordWorld({ icon: '\u{1F6A8}', tone: 'fail', text: `${sc.system}, empirical formula needs review`, stock: sc.stock, delta: -12 });
       }
       this.gRecord('h2', ok, !this.cbAttempted);
       this.cbAttempted = true; this.cbChecked = true; this.cbVerdict = v; this.lastVerdict = v;
@@ -996,7 +998,7 @@ export function createSim() {
       if (k === this.capPick) return 'wrong';
       return '';
     },
-    capActionWord(k) { return k === 'approve' ? 'approved' : k === 'quarantine' ? 'quarantined' : 'rejected'; },
+    capActionWord(k) { return k === 'approve' ? 'accepted' : k === 'quarantine' ? 'held for recheck' : 'rejected'; },
     get capEmpOk() { return this.cap.els.every(el => this.capEmp[el] === this.cap.empMap[el]); },
     get capMolOk() { return this.capN === this.cap.nCorrect; },
     get capFormulaOk() { return this.capEmpOk && this.capMolOk; },
@@ -1006,29 +1008,30 @@ export function createSim() {
       if (this.capWin || !this.capPick) return;
       const sc = this.cap.sc;
       const opt = sc.options.find(o => o.key === this.capPick);
-      // a quantified read of where the pod actually stands (identity + purity)
       const idTxt = this.cap.labelWrong
-        ? `The manifest claims ${this.cap.claimed.name}, but the data resolves to ${this.cap.item.molecular} (${this.cap.item.name}), so the contents are wrong.`
-        : `The data confirms ${this.cap.item.molecular} (${this.cap.item.name}).`;
-      const purTxt = this.cap.labelWrong
+        ? `The manifest lists ${this.cap.claimed.name}, but the sample data gives ${this.cap.item.molecular} (${this.cap.item.name}).`
+        : `The sample data is consistent with ${this.cap.item.molecular} (${this.cap.item.name}), matching the manifest.`;
+      const compTxt = this.cap.labelWrong
         ? ''
-        : ` Purity read ${this.cap.measured}% ${this.cap.targetEl.el} vs the ${fmt(this.cap.theo)}% spec, so purity ${this.cap.purityPass ? 'passes' : 'fails'}.`;
-      const fig = `${idTxt}${purTxt}`;
+        : ` The reported ${this.cap.targetEl.el} value is ${this.cap.measured}%; the theoretical value is ${fmt(this.cap.theo)}%. Under the activity criterion, the composition ${this.cap.purityPass ? 'meets' : 'does not meet'} the tolerance.`;
+      const fig = `${idTxt}${compTxt}`;
       let v, good = false, delta, feed;
       if (!this.capFormulaOk) {
-        v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'IDENTIFY FIRST', headline: 'Identify it first', detail: `Derive the molecular formula before you act. The pod holds ${this.cap.item.molecular} (${this.cap.item.name}).`, gauge: null };
-        delta = -5; feed = `${sc.system}, contents not identified`;
+        v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'RECHECK FORMULA', headline: 'Complete the formula first',
+          detail: `Derive the molecular formula from the data before deciding. The expected formula is ${this.cap.item.molecular}.`, gauge: null };
+        delta = -5; feed = `${sc.system}, formula needs review`;
       } else if (!this.capPurityInputOk) {
-        v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'RECHECK', headline: 'Purity math off', detail: `Recheck the percent before you act. The real value is ${fmt(this.cap.theo)}% ${this.cap.targetEl.el}.`, gauge: null };
-        delta = -5; feed = `${sc.system}, purity miscalculated`;
+        v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'RECHECK COMPOSITION', headline: 'Recalculate percent composition',
+          detail: `The theoretical value is ${fmt(this.cap.theo)}% ${this.cap.targetEl.el}. Recheck the percent-by-mass calculation.`, gauge: null };
+        delta = -5; feed = `${sc.system}, composition calculation needs review`;
       } else if (this.capPick === this.cap.correctAction) {
         good = true;
-        v = { tone: 'success', icon: sc.icon, state: 'POD HANDLED', headline: 'Right call', detail: `${fig} ${opt.good}`, gauge: null };
+        v = { tone: 'success', icon: sc.icon, state: 'DECISION CORRECT', headline: 'Correct decision', detail: `${fig} ${opt.good}`, gauge: null };
         this.capWin = true; delta = 6;
         feed = `${sc.system}, ${this.capActionWord(this.capPick)} correctly`;
       } else {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG CALL', headline: 'Wrong call', detail: `${fig} ${opt.consequence}`, gauge: null };
-        delta = -12; feed = `${sc.system}, wrong call`;
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'DECISION INCORRECT', headline: 'Recheck the decision', detail: `${fig} ${opt.consequence}`, gauge: null };
+        delta = -12; feed = `${sc.system}, decision incorrect`;
       }
       this.gRecord('cap', good, !this.capAttempted);
       this.recordWorld({ icon: v.icon, tone: v.tone, text: feed, stock: sc.stock, delta });

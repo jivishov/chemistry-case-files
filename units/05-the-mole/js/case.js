@@ -6,53 +6,53 @@
 export const CASE = {
   id: 'apollo-13-scrubber',
   number: '005',
-  kicker: 'declassified survival math',
-  title: 'Apollo 13: the mole math that brought them home',
-  teaser: 'This job was real once: Apollo 13, April 1970',
-  hook: 'Your Meridian shift is fiction. In April 1970 it was real: three astronauts in a crippled ship, carbon dioxide creeping toward lethal, and survival hanging on exactly the conversions you are running above.',
+  kicker: 'scientific case study',
+  title: 'Apollo 13: Carbon Dioxide Control in a Lifeboat',
+  teaser: 'Apollo 13 · April 1970',
+  hook: 'After an oxygen-tank explosion forced Apollo 13 to abandon its Moon landing, the lunar module Aquarius became a lifeboat for three astronauts. Carbon dioxide removal became one of the mission’s critical life-support problems.',
   stats: [
-    { v: '320,000 km', k: 'from Earth at the explosion' },
-    { v: '~20 mol', k: 'CO2 exhaled per person, per day' },
-    { v: '2 : 1', k: 'LiOH to CO2 mole ratio' }
+    { v: '~320,000 km', k: 'from Earth when the crisis began' },
+    { v: '3 crew', k: 'living in the lunar module during the return' },
+    { v: '2 : 1', k: 'LiOH : CO2 stoichiometric mole ratio' }
   ],
   steps: [
     {
-      t: 'Houston, we have a problem',
-      body: 'Two days into the flight, an oxygen tank exploded. Three astronauts crowded into the lunar module Aquarius, a lifeboat designed to keep two people alive for two days. It now had to hold three people for four.',
-      chem: 'Life support is chemistry on a timer. The first system to run out of margin was not oxygen. It was the capacity to REMOVE carbon dioxide.',
-      cap: 'April 13, 1970: the service module blows; the LM becomes a lifeboat.'
+      t: 'An oxygen tank explodes',
+      body: 'On April 13, 1970, an oxygen tank in Apollo 13’s service module exploded. The Moon landing was abandoned, and the crew moved into the lunar module Aquarius as a lifeboat for the return to Earth.',
+      chem: 'The crisis turned consumables into quantitative problems. Oxygen, water, electrical power, and carbon dioxide removal all had limited supplies and operating constraints.',
+      cap: 'April 13, 1970 · Apollo 13 changes from a lunar mission to a survival mission.'
     },
     {
-      t: 'The poison is your own breath',
-      body: 'Every exhale is about 4% CO2. Sealed in a small cabin, it accumulates. Above roughly 8 mmHg of CO2, headaches and clouded thinking begin, and it gets worse from there. The gauge climbed hour after hour.',
-      chem: 'One astronaut exhales roughly 0.9 kg of CO2 per day. Divide by the molar mass, 44 g/mol, and that is about 20 mol per person per day that must be captured.',
-      cap: 'Three crew, one small cabin: the CO2 needle keeps climbing.'
+      t: 'Carbon dioxide becomes a life-support concern',
+      body: 'Aquarius had been designed for two astronauts on the lunar surface, not three people living in it for several days. As the crew exhaled, carbon dioxide accumulated, and the available lunar-module scrubber cartridges became a critical constraint.',
+      chem: 'The amount of CO2 can be expressed in moles. With a molar mass of about 44.01 g/mol, a measured mass of CO2 can be converted to moles for stoichiometric calculations.',
+      cap: 'Three crew members in Aquarius · carbon dioxide removal becomes critical.'
     },
     {
-      t: 'Lithium hydroxide does the catching',
-      body: 'Scrubber canisters pull cabin air through lithium hydroxide, where each CO2 molecule is locked up by two LiOH. The balanced equation is the whole safety spec: it says exactly how many grams of LiOH buy how many hours of breathing.',
-      chem: '2 LiOH + CO2 -> Li2CO3 + H2O. Capturing 20 mol of CO2 takes 40 mol of LiOH, about 960 g per astronaut per day. Canister life IS a mole calculation.',
-      cap: '2 LiOH + CO2 -> Li2CO3 + H2O: one breath, captured.'
+      t: 'Lithium hydroxide removes carbon dioxide',
+      body: 'Apollo spacecraft used lithium hydroxide canisters to remove carbon dioxide from cabin air. A simplified stoichiometric model for the sorbent reaction is 2 LiOH + CO2 → Li2CO3 + H2O.',
+      chem: 'The equation gives a 2:1 mole ratio. Removing 20 mol of CO2 would require 40 mol of LiOH, about 960 g theoretically. Actual cartridge capacity also depends on design, airflow, operating conditions, and test data.',
+      cap: '2 LiOH + CO2 → Li2CO3 + H2O · stoichiometry gives the theoretical ratio.'
     },
     {
-      t: 'The duct-tape adapter',
-      body: 'Aquarius used round canisters and had too few. The dead command module carried square ones, plenty, but the wrong shape. Engineers on the ground built an adapter out of a flight-plan cover, a sock, a hose, and duct tape, then read the recipe up to the crew. CO2 started falling within the hour.',
-      chem: 'The fix was improvised; the numbers were not. Mission control already knew the moles of CO2 per hour and the moles of LiOH per canister before anyone cut tape.',
-      cap: 'The mailbox: a square canister sealed onto a round system with tape.'
+      t: 'Engineers adapt the canisters',
+      body: 'The command module had additional square lithium hydroxide canisters, but the lunar module used a different canister arrangement. Engineers on the ground developed and tested an adapter made from materials already on the spacecraft, then sent the assembly procedure to the crew.',
+      chem: 'The chemistry supplied the sorbent reaction; the engineering solution made cabin air flow through the available sorbent. Both were necessary for effective CO2 removal.',
+      cap: 'Square command-module canisters adapted for the lunar-module system.'
     }
   ],
   quiz: {
-    q: 'One astronaut exhales about 20 mol of CO2 per day. Using 2 LiOH + CO2 -> Li2CO3 + H2O (LiOH is about 24 g/mol), how much LiOH protects ONE astronaut for one day?',
+    q: 'If 20 mol of CO2 reacts completely according to 2 LiOH + CO2 → Li2CO3 + H2O, what theoretical mass of LiOH is required? Use 24.0 g/mol for LiOH.',
     options: [
-      { label: 'About 480 g (20 mol)', correct: false },
-      { label: 'About 960 g (40 mol)', correct: true },
-      { label: 'About 240 g (10 mol)', correct: false }
+      { label: 'About 480 g (20 mol LiOH)', correct: false },
+      { label: 'About 960 g (40 mol LiOH)', correct: true },
+      { label: 'About 240 g (10 mol LiOH)', correct: false }
     ],
-    explain: 'The ratio is 2 LiOH for every 1 CO2, so 20 mol of CO2 demands 40 mol of LiOH. At about 24 g/mol that is roughly 960 g per astronaut per day. That single conversion set the canister schedule that kept the crew conscious.'
+    explain: 'The balanced equation requires 2 mol LiOH for every 1 mol CO2. Therefore, 20 mol CO2 requires 40 mol LiOH. At 24.0 g/mol, the theoretical mass is 960 g. Real cartridge performance also depends on engineering design and operating conditions.'
   },
-  punch: 'The scrubber math has not changed: the ISS, submarines, and your Meridian shifts all run on it. Clear the sim and you are running Apollo 13 procedure.',
-  careers: ['Life-support engineer', 'Flight controller', 'Submarine engineer', 'Anesthesiologist'],
-  cta: { label: 'Back to your own life-support shift', call: "setMode('molg')" },
+  punch: 'Apollo 13 shows how mole ratios translate a chemical equation into material requirements. Real life-support performance also depends on system design, airflow, testing, and operating limits.',
+  careers: ['Environmental control and life-support engineer', 'Chemical engineer', 'Flight controller', 'Aerospace systems engineer'],
+  cta: { label: 'Return to mole conversions', call: "setMode('molg')" },
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: inside the Apollo 13 lunar module, exhaled CO2 climbs a gauge until the improvised lithium hydroxide scrubber pulls it back down">
             <!-- space + stars -->
             <g fill="#cfe4ea">
