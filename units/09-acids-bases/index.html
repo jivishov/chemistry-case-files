@@ -703,7 +703,7 @@
     import('../shared/columns.js?v=cockpit-3')
   ]);
   window.sim = createSim;
-  const { default: Alpine } = await import('https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js');
+  const { default: Alpine } = await import('../../shared/vendor/alpine-3.14.1.esm.min.js');
   registerRender(Alpine);
   registerGauge(Alpine);
   Alpine.data('sim', createSim);

@@ -17,6 +17,19 @@
 <link rel="stylesheet" href="shared/css/components.css">
 </head>
 <body>
+<div id="boot-fallback" hidden role="alert" style="max-width:720px;margin:48px auto;padding:20px;font-family:system-ui,sans-serif;border:1px solid #c9c9c9;border-radius:10px;background:#fff;">
+  <strong>Chemistry Case Files could not start.</strong> Reload the page. If the problem continues, the site may be temporarily unable to load one of its local modules.
+</div>
+<script>
+  window.__chemAppReady = false;
+  window.addEventListener('alpine:initialized', () => {
+    window.__chemAppReady = true;
+    document.getElementById('boot-fallback')?.setAttribute('hidden', '');
+  });
+  window.setTimeout(() => {
+    if (!window.__chemAppReady) document.getElementById('boot-fallback')?.removeAttribute('hidden');
+  }, 2500);
+</script>
 <div x-data="hub" x-cloak>
 
   <header class="site-header">
@@ -111,7 +124,7 @@
 </div>
 
 <script type="module">
-  import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
+  import Alpine from './shared/vendor/alpine-3.14.1.esm.min.js';
   import { UNITS, COURSE, SEP } from './shared/js/teks.js';
 
   // Which units actually exist in THIS tree.
