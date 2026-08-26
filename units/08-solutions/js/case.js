@@ -1,57 +1,57 @@
-// case.js: Unit 8 case file: Lake Nyos, the lake that exhaled (gas solubility).
+// case.js: Unit 8 case file: Lake Nyos and gas solubility.
 // Carries this unit's story AND its stage art; rendered by the shared casefile component.
 
 export const CASE = {
   id: 'lake-nyos-co2',
   number: '008',
   kicker: 'Cameroon, 1986',
-  title: 'The night a lake exhaled',
-  teaser: 'The lake that dissolved a disaster, then exhaled it',
-  hook: 'August 21, 1986, Cameroon. No eruption, no earthquake, no warning. Lake Nyos released the carbon dioxide it had been quietly dissolving for decades, and 1,746 people in the valleys below never woke up. The science that explains it is a solubility curve.',
+  title: 'Lake Nyos: when dissolved CO2 escaped',
+  teaser: 'How pressure, temperature, and dissolved CO2 shaped a deadly lake event',
+  hook: 'On August 21, 1986, Lake Nyos in Cameroon suddenly released a large cloud of carbon dioxide. At least 1,700 people died in nearby valleys. Investigations found that CO2 had accumulated in the lake\'s deep water; there was no significant direct volcanic eruption during the disaster.',
   stats: [
-    { v: '100k+ t', k: 'CO2 released in hours' },
-    { v: '~200 m', k: 'of water that held it down' },
-    { v: '70 km/h', k: 'speed of the invisible cloud' }
+    { v: '~1,700', k: 'people killed' },
+    { v: '~200 m', k: 'lake depth' },
+    { v: '2001', k: 'controlled degassing began' }
   ],
   steps: [
     {
-      t: 'A soda bottle the size of a lake',
-      body: 'Lake Nyos fills a volcanic crater. For decades, magma below leaked CO2 into the cold bottom water, where the weight of 200 meters of lake kept it dissolved. The surface looked ordinary while the depths charged up like an unopened soda.',
-      chem: 'Gas solubility rises with pressure and with cold. Deep water is both pressurized and cold, so it can stockpile an enormous dissolved load. That loading rule is Henry\'s law.',
-      cap: 'Decades of loading: CO2 dissolving into cold, pressurized bottom water.'
+      t: 'CO2 accumulated in deep water',
+      body: 'Lake Nyos occupies a volcanic crater. Carbon dioxide from a deep magmatic source entered the lake and accumulated in its dense, poorly mixed bottom water. The deep water was cold and under high pressure, allowing a large amount of CO2 to remain dissolved.',
+      chem: 'For a gas in equilibrium with a solution, greater gas pressure increases the dissolved concentration. Lower temperature also generally increases the solubility of CO2 in water. These conditions helped deep Lake Nyos store a large dissolved-gas load.',
+      cap: 'Deep, cold water under pressure accumulated dissolved CO2.'
     },
     {
-      t: 'Something shook the bottle',
-      body: 'On that night, likely a landslide, deep water got shoved upward. Rising water loses pressure, and its dissolved CO2 crossed the saturation line: bubbles formed. Bubbly water is lighter, so it rose faster and pulled more up behind it. A runaway loop.',
-      chem: 'Drop the pressure and solubility drops with it; gas above the new limit MUST leave solution. Saturated became supersaturated became eruption. Your solubility curves draw exactly that line.',
-      cap: 'Disturbed: rising water loses pressure; dissolved gas becomes bubbles.'
+      t: 'Rising water released gas',
+      body: 'The exact trigger of the 1986 event is not certain. A large landslide has been proposed as one likely trigger. Once gas-rich deep water began rising, the pressure decreased and CO2 came out of solution as bubbles. The gas-water mixture became less dense, which could drive more water upward and accelerate the release.',
+      chem: 'When pressure decreases, the equilibrium amount of dissolved gas decreases. Water containing more CO2 than the new equilibrium allows can release the excess gas. This pressure-solubility relationship helped turn upward motion into rapid degassing.',
+      cap: 'As gas-rich water rose, lower pressure allowed CO2 to leave solution.'
     },
     {
-      t: 'The invisible flood',
-      body: 'A fountain of water and gas burst about 100 meters over the lake. CO2 is roughly 1.5 times denser than air, so the cloud hugged the ground and poured downhill through sleeping villages, displacing the air itself.',
-      chem: 'Density decides where a gas settles. It is the same reason CO2 extinguishers smother fires from below: heavy gas sinks and pushes oxygen out.',
-      cap: 'Heavier than air: the CO2 flood follows the valleys, in silence.'
+      t: 'CO2 moved into nearby valleys',
+      body: 'A large amount of CO2 entered the air around the lake. Carbon dioxide is denser than air under similar conditions, so the gas-rich cloud flowed into low-lying areas. People and animals exposed to very high CO2 concentrations were overcome by an asphyxiating atmosphere.',
+      chem: 'Solubility explains how the lake stored and then released CO2. After release, gas density, terrain, and air movement affected where the cloud traveled. These are separate physical processes that together explain the hazard.',
+      cap: 'Released CO2 collected in low-lying areas and created an asphyxiation hazard.'
     },
     {
-      t: 'Engineers uncorked it gently',
-      body: 'Since 2001, degassing pipes stand in the lake. Lift deep water partway up a tube and it self-pumps: gas comes out of solution, the column lightens, and a controlled fountain vents CO2 a little at a time, forever. The bomb became a lake again.',
-      chem: 'The disaster and the fix are the same solubility equation run at different speeds. Control the pressure drop and you control the outgassing. Scientists now watch the saturation level like a fuel gauge.',
-      cap: 'The fix: a permanent, controlled fizz instead of one catastrophic one.'
+      t: 'Engineers began controlled degassing',
+      body: 'Controlled degassing at Lake Nyos began in 2001. A pipe carries gas-rich deep water upward. As pressure falls in the pipe, CO2 forms bubbles and helps drive the water upward without a conventional pump. The gas is then released at the surface at a controlled rate.',
+      chem: 'The degassing system deliberately uses the same pressure-solubility relationship involved in the natural release. Monitoring and controlled removal reduce the amount of dissolved CO2 stored in the deep lake.',
+      cap: 'Degassing pipes remove CO2 from deep water in a controlled process.'
     }
   ],
   quiz: {
-    q: 'Why could the deep water of Lake Nyos hold vastly more CO2 than the surface water ever could?',
+    q: 'Which conditions helped deep Lake Nyos water store a large amount of dissolved CO2?',
     options: [
-      { label: 'High pressure and cold both raise gas solubility', correct: true },
-      { label: 'Deep water is saltier, and salt attracts CO2', correct: false },
-      { label: 'CO2 is denser than water, so it sank and stayed', correct: false }
+      { label: 'High pressure and low temperature', correct: true },
+      { label: 'Low pressure and high temperature', correct: false },
+      { label: 'The greater density of CO2 than water', correct: false }
     ],
-    explain: 'Gas solubility climbs as pressure climbs and as temperature falls, exactly what your solubility curves show. Two hundred meters of overhead water plus cold bottom temperatures made deep Nyos a high-capacity CO2 sponge. The instant pressure fell, the surplus had to leave solution.'
+    explain: 'Deep water was under high pressure and remained relatively cold. Higher gas pressure favors a greater dissolved-gas concentration, and CO2 is generally more soluble in colder water. When gas-rich water rose and pressure fell, CO2 could come out of solution.'
   },
-  punch: 'A solubility curve predicted, explained, and finally disarmed a disaster. Learn to read the curve and you can see a lake breathing before it screams.',
-  careers: ['Limnologist', 'Hazard scientist', 'Environmental engineer', 'Water-treatment chemist'],
-  cta: { label: 'Master the curves that explain it', call: "setMode('curve')" },
-  stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: dissolved CO2 loads into the deep water of Lake Nyos, erupts as an invisible cloud, and is finally vented safely by degassing pipes">
+  punch: 'Lake Nyos shows why gas solubility is more than a graph. Pressure, temperature, and dissolved-gas concentration can help explain a real natural hazard and the engineering used to reduce it.',
+  careers: ['Limnologist', 'Volcanic-hazards scientist', 'Environmental engineer', 'Water chemist'],
+  cta: { label: 'Practice solubility curves', call: "setMode('curve')" },
+  stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: dissolved CO2 accumulates in deep Lake Nyos, rapidly leaves solution during the 1986 event, and is later removed by controlled degassing pipes">
             <!-- night sky -->
             <rect x="0" y="0" width="640" height="360" fill="#112837"/>
             <g fill="#cfe4ea">
@@ -71,7 +71,7 @@ export const CASE = {
             <path class="a-flow" style="--fx:20px; --dur:5s" d="M 150,142 q 35,-5 70,0 q 35,5 70,0 q 35,-5 70,0 q 35,5 70,0" fill="none" stroke="#7fc4d0" stroke-width="2" opacity=".5"/>
             <text x="290" y="128" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">LAKE NYOS &#183; crater lake</text>
 
-            <!-- magma vent feeding CO2 (always) -->
+            <!-- deep source feeding CO2 -->
             <path d="M 250,360 Q 290,330 330,360 Z" fill="#7c3520"/>
             <circle class="a-glow" style="--dur:2.4s" cx="290" cy="352" r="13" fill="#e08a5a" opacity=".35"/>
             <circle class="a-flicker" style="--dur:1.4s; --org:center" cx="290" cy="352" r="9" fill="#e08a5a" opacity=".85"/>
@@ -80,7 +80,7 @@ export const CASE = {
               <circle class="a-rise" style="--rise:-38px; --wob:3px; --dur:4.8s; --delay:1.6s" cx="298" cy="346" r="2.4"/>
             </g>
 
-            <!-- dissolved CO2 stockpile in the deep layer (always, jiggling) -->
+            <!-- dissolved CO2 in the deep layer -->
             <g fill="#8fa9b2">
               <circle class="a-float" style="--dur:2.8s; --fy:-3px" cx="190" cy="300" r="3"/>
               <circle class="a-float" style="--dur:3.2s; --fy:-4px; --delay:.4s" cx="222" cy="312" r="3"/>
@@ -92,9 +92,9 @@ export const CASE = {
               <circle class="a-float" style="--dur:3.3s; --fy:-4px; --delay:2.9s" cx="240" cy="326" r="3"/>
               <circle class="a-float" style="--dur:2.8s; --fy:-3px; --delay:3.3s" cx="340" cy="328" r="3"/>
             </g>
-            <text x="290" y="292" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2" opacity=".9" x-show="step===0">high P + cold = CO2 stays dissolved</text>
+            <text x="290" y="292" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2" opacity=".9" x-show="step===0">deep water &#183; high dissolved CO2</text>
 
-            <!-- step 1: landslide + runaway bubbles -->
+            <!-- step 1: one proposed trigger + rapid bubble formation -->
             <g x-show="step===1">
               <g class="a-fall" style="--fy:34px; --sway:2px; --dur:2.2s">
                 <path class="a-tumble" style="--dur:2.2s" d="M 428,150 L 452,138 L 458,158 L 436,166 Z" fill="#3f5a68"/>
@@ -106,10 +106,10 @@ export const CASE = {
                 <circle class="a-rise" style="--rise:-135px; --wob:5px; --dur:1.9s; --delay:1.4s" cx="368" cy="292" r="3.6"/>
                 <circle class="a-rise" style="--rise:-125px; --wob:7px; --dur:2.6s; --delay:1.8s" cx="292" cy="302" r="2.8"/>
               </g>
-              <text class="a-blink" style="--dur:1.4s" x="290" y="188" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#ffd27e" font-weight="700">PRESSURE DROPS &#8594; GAS OUT</text>
+              <text class="a-blink" style="--dur:1.4s" x="290" y="188" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#ffd27e" font-weight="700">PRESSURE DROPS &#8594; CO2 RELEASES</text>
             </g>
 
-            <!-- steps 2: eruption fountain + ground-hugging cloud + village -->
+            <!-- step 2: gas release + low-lying cloud + village -->
             <g x-show="step===2">
               <g fill="#dcebee">
                 <circle class="a-rise" style="--rise:-70px; --wob:8px; --dur:1.6s" cx="282" cy="140" r="4"/>
@@ -123,7 +123,7 @@ export const CASE = {
               <g class="a-drift" style="--fx:130px; --fy:56px; --o:.4; --dur:5.2s; --delay:1.8s">
                 <ellipse cx="410" cy="262" rx="70" ry="20" fill="#9db4bd"/>
               </g>
-              <text x="470" y="216" font-family="JetBrains Mono" font-size="10" fill="#9db4bd">denser than air</text>
+              <text x="470" y="216" font-family="JetBrains Mono" font-size="10" fill="#9db4bd">CO2-rich air in low areas</text>
             </g>
             <!-- village in the valley (steps 2-3) -->
             <g x-show="step>=2">
@@ -146,7 +146,7 @@ export const CASE = {
               <path d="M 294,64 q 14,10 8,24" fill="none" stroke="#7fc4d0" stroke-width="2"/>
               <g class="a-float" style="--dur:3.4s">
                 <rect x="366" y="70" width="150" height="26" rx="13" fill="#132630" stroke="#8fd9ae"/>
-                <text x="441" y="87" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fd9ae" font-weight="700">CONTROLLED VENTING</text>
+                <text x="441" y="87" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fd9ae" font-weight="700">CONTROLLED DEGASSING</text>
               </g>
             </g>
           </svg>`
