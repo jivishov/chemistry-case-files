@@ -17,7 +17,10 @@ jobs:
           fetch-depth: 0
 
       - name: Refine Unit 7 copy and scientific fidelity
-        run: python3 tools/u7_refine_once.py
+        shell: bash
+        run: |
+          sed -i "s/'activity criterion'/'Activity pO₂ criterion'/" tools/u7_refine_once.py
+          python3 tools/u7_refine_once.py
 
       - name: Basic static checks
         shell: bash
