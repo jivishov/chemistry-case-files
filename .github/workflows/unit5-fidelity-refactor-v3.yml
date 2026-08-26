@@ -1,0 +1,206 @@
+name: Unit 5 fidelity refactor v3
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/unit5-fidelity-refactor-v3.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refactor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Normalize legacy source and helper substitution handling
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('units/05-the-mole/js/model.js')
+          t = p.read_text(encoding='utf-8')
+          old = 'export const ARI_INTRO = "ARI, the ship\'s junior AI, ran this job while you were off shift. It is still learning, and it picks up your habits, slips and all. Check its work before the number goes live.";'
+          new = "export const ARI_INTRO = 'ARI, the ship\\'s junior AI, ran this job while you were off shift. It is still learning, and it picks up your habits, slips and all. Check its work before the number goes live.';"
+          if t.count(old) != 1:
+              raise SystemExit(f'Expected one legacy ARI_INTRO string, found {t.count(old)}')
+          p.write_text(t.replace(old, new, 1), encoding='utf-8')
+
+          p = Path('scripts/unit5_fidelity_refactor.py')
+          t = p.read_text(encoding='utf-8')
+          old = 'pat.subn(repl, t, count=1)'
+          count = t.count(old)
+          if count < 1:
+              raise SystemExit('Expected at least one regex replacement call to normalize')
+          p.write_text(t.replace(old, 'pat.subn(lambda m: repl, t, count=1)'), encoding='utf-8')
+          print(f'Normalized {count} regex replacement call(s).')
+          PY
+
+      - name: Apply reviewed Unit 5 copy and fidelity changes
+        run: python3 scripts/unit5_fidelity_refactor.py
+
+      - name: Basic JavaScript syntax checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in \
+            units/05-the-mole/js/model.js \
+            units/05-the-mole/js/main.js \
+            units/05-the-mole/js/art.js \
+            units/05-the-mole/js/case.js \
+            shared/js/molezoom.js; do
+            node --input-type=module --check < "$f"
+          done
+
+      - name: Second-pass source audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          files = [
+              Path('units/05-the-mole/index.html'),
+              Path('units/05-the-mole/js/model.js'),
+              Path('units/05-the-mole/js/main.js'),
+              Path('units/05-the-mole/js/art.js'),
+              Path('units/05-the-mole/js/case.js'),
+              Path('shared/js/molezoom.js'),
+          ]
+          joined = '\n'.join(p.read_text(encoding='utf-8') for p in files)
+          forbidden = [
+              'Lock in an estimate', 'Commit your call', 'Commit the call', 'Make the call',
+              'Wrong call', 'Right call', 'Feel a mole', 'Purity check', 'DOES THE ASSAY MATCH?',
+              'REAL % NITROGEN?', 'ID THE FLUID', 'CHECK PURITY', 'real value works out',
+              'does the number hold up', 'sign off', 'a mole, about eighty thousand',
+          ]
+          found = [s for s in forbidden if s in joined]
+          if found:
+              raise SystemExit('Second-pass wording remnants: ' + ', '.join(found))
+          index = files[0].read_text(encoding='utf-8')
+          if 'percentage points' not in index:
+              raise SystemExit('Percent-composition activity threshold is not labeled in percentage points')
+          if 'Crew safety score' not in index:
+              raise SystemExit('Simulation score label missing')
+          zoom = files[-1].read_text(encoding='utf-8')
+          if 'one-sixth of a mole' not in zoom:
+              raise SystemExit('10^23 particle-scale correction missing')
+          print('Second-pass static student-facing source audit passed.')
+          PY
+
+      - name: Laptop layout fidelity check
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8000 >/tmp/u5-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          mkdir -p /tmp/u5check
+          cd /tmp/u5check
+          npm init -y >/dev/null 2>&1
+          npm install --silent playwright@1.55.0
+          npx playwright install chromium >/dev/null
+          cat > check.cjs <<'EOF'
+          const { chromium } = require('playwright');
+          const sizes = [
+            { width: 1536, height: 864, name: '1536x864' },
+            { width: 1366, height: 768, name: '1366x768' },
+          ];
+          function geometry() {
+            const visible = el => !!el && el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
+            const header = document.querySelector('.cockpit-command');
+            const copy = document.querySelector('.screen-copy');
+            const tabs = [...document.querySelectorAll('.station-nav .tab')].filter(visible);
+            return {
+              width: innerWidth,
+              docWidth: document.documentElement.scrollWidth,
+              bodyWidth: document.body.scrollWidth,
+              headerHeight: header ? Math.round(header.getBoundingClientRect().height) : null,
+              tabRows: [...new Set(tabs.map(el => Math.round(el.getBoundingClientRect().top)))],
+              copyClientHeight: copy ? copy.clientHeight : null,
+              copyScrollHeight: copy ? copy.scrollHeight : null,
+            };
+          }
+          function inspect(g, label, failures) {
+            if (g.docWidth > g.width + 1 || g.bodyWidth > g.width + 1) failures.push(`${label}: horizontal overflow`);
+            if (g.tabRows.length !== 1) failures.push(`${label}: navigation wrapped to ${g.tabRows.length} rows`);
+            if (g.copyScrollHeight > g.copyClientHeight + 2) failures.push(`${label}: mission copy clipped (${g.copyScrollHeight}>${g.copyClientHeight})`);
+            if (g.headerHeight > 92) failures.push(`${label}: header too tall (${g.headerHeight}px)`);
+          }
+          async function runSize(browser, size) {
+            const page = await browser.newPage({ viewport: { width: size.width, height: size.height } });
+            const failures = [];
+            await page.goto('http://127.0.0.1:8000/units/05-the-mole/', { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForFunction(() => window.Alpine && document.querySelector('[x-data="sim()"]'), null, { timeout: 30000 });
+            await page.waitForTimeout(300);
+            inspect(await page.evaluate(geometry), 'initial', failures);
+            const states = [
+              ['molg', 'genConversion', 'molg', 3], ['particles', 'genConversion', 'particles', 3],
+              ['percent', 'genPercent', null, 3], ['formula', 'genFormula', null, 3],
+              ['capstone', 'genCapstone', null, 2],
+            ];
+            for (const [mode, fn, arg, repeats] of states) {
+              for (let i = 0; i < repeats; i++) {
+                await page.evaluate(({ mode, fn, arg }) => {
+                  const s = window.Alpine.$data(document.querySelector('[x-data="sim()"]'));
+                  if (mode === 'capstone') { s.genCapstone(); s.mode = 'capstone'; }
+                  else { s.mode = mode; if (arg === null) s[fn](); else s[fn](arg); }
+                }, { mode, fn, arg });
+                await page.waitForTimeout(50);
+                inspect(await page.evaluate(geometry), `${mode}-${i + 1}`, failures);
+              }
+            }
+            await page.evaluate(() => {
+              const s = window.Alpine.$data(document.querySelector('[x-data="sim()"]'));
+              s.honors = true; s.mode = 'formula'; s.genFormula(); s.genHydrate(); s.genCombustion();
+            });
+            await page.waitForTimeout(60);
+            inspect(await page.evaluate(geometry), 'Honors', failures);
+            await page.getByRole('tab', { name: 'Case file' }).click();
+            await page.waitForTimeout(100);
+            const cg = await page.evaluate(() => {
+              const cf = document.querySelector('.casefile');
+              const title = document.querySelector('.cf-title');
+              return { visible: !!cf && cf.getClientRects().length > 0, right: cf ? cf.getBoundingClientRect().right : 0, titleRight: title ? title.getBoundingClientRect().right : 0, width: innerWidth };
+            });
+            if (!cg.visible) failures.push('Case File did not open');
+            if (cg.right > cg.width + 1 || cg.titleRight > cg.width + 1) failures.push('Case File horizontal clipping');
+            console.log(size.name, JSON.stringify(await page.evaluate(geometry)));
+            await page.close();
+            if (failures.length) throw new Error(`${size.name}:\n- ${failures.join('\n- ')}`);
+          }
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            try { for (const size of sizes) await runSize(browser, size); }
+            finally { await browser.close(); }
+            console.log('Unit 5 layout checks passed at 1536x864 and 1366x768, including Honors and Case File.');
+          })().catch(err => { console.error(err); process.exit(1); });
+          EOF
+          node check.cjs
+
+      - name: Remove temporary refactor helpers
+        run: |
+          rm -f scripts/unit5_fidelity_refactor.py
+          rm -f .github/workflows/unit5-fidelity-refactor.yml
+          rm -f .github/workflows/unit5-fidelity-refactor-v2.yml
+          rm -f .github/workflows/unit5-fidelity-refactor-v3.yml
+          rmdir .github/workflows 2>/dev/null || true
+          rmdir .github 2>/dev/null || true
+          rmdir scripts 2>/dev/null || true
+
+      - name: Commit refined Unit 5
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git status --short
+          git commit -m "Refine Unit 5 language and scientific fidelity"
+          git push origin HEAD:main
