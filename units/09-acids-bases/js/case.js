@@ -58,7 +58,7 @@ export const CASE = {
   punch: 'A small-looking change in pH can represent a very large change in hydrogen-ion concentration. That helps explain why repeated acid exposure can shift enamel toward demineralization.',
   careers: ['Dentist', 'Dental hygienist', 'Dental researcher', 'Food scientist'],
   cta: { label: 'Use the pH meter', call: "setMode('meter')" },
-  stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: a soda pour drops the mouth pH below the enamel-dissolving threshold, stripping mineral from a tooth until saliva buffers it back">
+  stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene showing an acidic drink lowering mouth pH, enamel demineralization, and recovery as saliva buffers acids">
             <defs>
               <linearGradient id="cf9-scale" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stop-color="#ff6f5e"/><stop offset="40%" stop-color="#ffd27e"/>

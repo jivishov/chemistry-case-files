@@ -60,7 +60,7 @@ const scOf = id => SCENARIOS.find(s => s.id === id);
 // it says which call is in front of you rather than which tab is open.
 const STATION_NAME = {
   naming: 'Naming', define: 'Definitions', strength: 'Strong vs weak',
-  neutralize: 'Neutralize', meter: 'pH meter', capstone: 'Triage'
+  neutralize: 'Neutralize', meter: 'pH meter', capstone: 'Capstone'
 };
 
 // The six calls that physically reach the patient next door, derived from the scenarios
@@ -359,7 +359,7 @@ export function createSim() {
     get activeStationName() {
       const b = this.activeBrief;
       if (b && b.system) return b.system;
-      return STATION_NAME[this.mode] || 'The night shift';
+      return STATION_NAME[this.mode] || 'Acid-base practice';
     },
     get activeStateLabel() {
       const v = this.activeVerdict;
