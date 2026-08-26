@@ -1,0 +1,103 @@
+name: Vendor Alpine runtime
+
+on:
+  push:
+    paths:
+      - '.github/workflows/vendor-alpine.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  vendor-alpine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Vendor Alpine 3.14.1 and update imports
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p shared/vendor
+          curl --fail --location --retry 5 --retry-delay 2 --retry-all-errors \
+            'https://raw.githubusercontent.com/cdnjs/cdnjs/master/ajax/libs/alpinejs/3.14.1/module.esm.min.js' \
+            --output shared/vendor/alpine-3.14.1.esm.min.js
+
+          expected='394ebd02c24ce4378de03e6bfc1005371a0fe00c'
+          actual="$(git hash-object shared/vendor/alpine-3.14.1.esm.min.js)"
+          if [[ "$actual" != "$expected" ]]; then
+            echo "Alpine artifact hash mismatch: expected $expected, got $actual" >&2
+            exit 1
+          fi
+
+          python3 - <<'PY'
+          from pathlib import Path
+
+          old = "https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js"
+          vendor = "alpine-3.14.1.esm.min.js"
+
+          targets = [Path("index.html"), Path("units/index.html")]
+          targets += sorted(Path("units").glob("*/index.html"))
+
+          changed = []
+          for path in targets:
+              text = path.read_text(encoding="utf-8")
+              if old not in text:
+                  continue
+              if path == Path("index.html"):
+                  new_import = f"./shared/vendor/{vendor}"
+              elif path == Path("units/index.html"):
+                  new_import = f"../shared/vendor/{vendor}"
+              else:
+                  new_import = f"../../shared/vendor/{vendor}"
+              text = text.replace(old, new_import)
+              path.write_text(text, encoding="utf-8")
+              changed.append(str(path))
+
+          expected_targets = 13
+          if len(changed) != expected_targets:
+              raise SystemExit(f"Expected to update {expected_targets} Alpine imports, updated {len(changed)}: {changed}")
+
+          # Make the landing page fail visibly instead of remaining completely blank if
+          # any future module-loading error prevents Alpine from initializing.
+          root = Path("index.html")
+          text = root.read_text(encoding="utf-8")
+          marker = '<body>\n<div x-data="hub" x-cloak>'
+          fallback = '''<body>\n<div id="boot-fallback" hidden role="alert" style="max-width:720px;margin:48px auto;padding:20px;font-family:system-ui,sans-serif;border:1px solid #c9c9c9;border-radius:10px;background:#fff;">\n  <strong>Chemistry Case Files could not start.</strong> Reload the page. If the problem continues, the site may be temporarily unable to load one of its local modules.\n</div>\n<script>\n  window.__chemAppReady = false;\n  window.addEventListener('alpine:initialized', () => {\n    window.__chemAppReady = true;\n    document.getElementById('boot-fallback')?.setAttribute('hidden', '');\n  });\n  window.setTimeout(() => {\n    if (!window.__chemAppReady) document.getElementById('boot-fallback')?.removeAttribute('hidden');\n  }, 2500);\n</script>\n<div x-data="hub" x-cloak>'''
+          if 'id="boot-fallback"' not in text:
+              if marker not in text:
+                  raise SystemExit("Could not locate root boot-fallback insertion point")
+              text = text.replace(marker, fallback, 1)
+              root.write_text(text, encoding="utf-8")
+          PY
+
+          if grep -R --include='*.html' -nF 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js' index.html units; then
+            echo 'External Alpine import remains.' >&2
+            exit 1
+          fi
+
+          test -s shared/vendor/alpine-3.14.1.esm.min.js
+          grep -qF "./shared/vendor/alpine-3.14.1.esm.min.js" index.html
+          grep -qF "../shared/vendor/alpine-3.14.1.esm.min.js" units/index.html
+          for page in units/*/index.html; do
+            grep -qF "../../shared/vendor/alpine-3.14.1.esm.min.js" "$page"
+          done
+          git diff --check
+
+      - name: Commit vendored runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html units shared/vendor/alpine-3.14.1.esm.min.js
+          if git diff --cached --quiet; then
+            echo 'No changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Vendor Alpine 3.14.1 locally'
+          git push origin HEAD:main
