@@ -147,7 +147,6 @@
   font-size: var(--fs-sm);
   line-height: 1.42;
 }
-
 .pair-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -363,6 +362,30 @@
 .board-figure svg { display: block; width: 100%; height: clamp(58px, 8.5vh, 86px); }
 .board-figure figcaption { margin-top: 3px; color: var(--muted); font-size: var(--fs-sm); line-height: 1.25; }
 .board-rail .life-meter-label span:first-child { white-space: nowrap; }
+
+/* The Latest Result card carries the full feedback. Activity Log is compact history, so
+ * its three rows stay single-line on laptop-height rails instead of being compressed until
+ * wrapped text paints over adjacent entries. This adds no scrollbar and does not shrink type. */
+.life-support-board .mission-log .worldstate-list {
+  align-content: start;
+  grid-auto-rows: 29px;
+}
+.life-support-board .mission-log .worldstate-entry {
+  min-height: 29px;
+  padding: 4px 7px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.life-support-board .mission-log .worldstate-entry > span:first-child {
+  flex: 0 0 auto;
+}
+.life-support-board .mission-log .worldstate-entry > span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* =============================== responsive =============================== */
 
