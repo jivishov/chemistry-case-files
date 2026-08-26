@@ -1,0 +1,74 @@
+name: Apply Unit 9 fidelity refinement
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refine-u9.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply Unit 9 language and scientific-fidelity patches
+        run: python scripts/refine_u9.py
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check units/09-acids-bases/js/model.js
+          node --check units/09-acids-bases/js/main.js
+          node --check units/09-acids-bases/js/art.js
+          node --check units/09-acids-bases/js/case.js
+          node --check shared/vendor/alpine-3.14.1.esm.min.js
+
+      - name: Verify Alpine loader and local page paths
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          cdn = 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js'
+          assert cdn in Path('index.html').read_text(encoding='utf-8')
+          assert cdn in Path('units/09-acids-bases/index.html').read_text(encoding='utf-8')
+          for p in [
+              'units/09-acids-bases/js/main.js',
+              'units/09-acids-bases/js/model.js',
+              'units/09-acids-bases/js/art.js',
+              'units/09-acids-bases/js/case.js',
+              'shared/js/render.js',
+              'shared/js/gauge.js',
+              'shared/js/casefile.js',
+              'units/shared/columns.js',
+          ]:
+              assert Path(p).exists(), p
+          print('loader and module-path checks passed')
+          PY
+
+      - name: Check patch whitespace
+        run: git diff --check
+
+      - name: Smoke-test static serving
+        run: |
+          python -m http.server 8000 >/tmp/chem-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill $server_pid' EXIT
+          sleep 1
+          curl --fail --silent --show-error http://127.0.0.1:8000/ >/dev/null
+          curl --fail --silent --show-error http://127.0.0.1:8000/units/09-acids-bases/ >/dev/null
+          curl --fail --silent --show-error http://127.0.0.1:8000/units/09-acids-bases/js/main.js >/dev/null
+          curl --fail --silent --show-error http://127.0.0.1:8000/units/09-acids-bases/js/model.js >/dev/null
+
+      - name: Commit refinement and remove temporary automation
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm scripts/refine_u9.py .github/workflows/refine-u9.yml
+          git add index.html units/index.html units/*/index.html units/09-acids-bases/js/model.js units/09-acids-bases/js/main.js units/09-acids-bases/js/art.js units/09-acids-bases/js/case.js
+          git commit -m 'Refine Unit 9 science and restore Alpine loading'
+          git push origin HEAD:main
