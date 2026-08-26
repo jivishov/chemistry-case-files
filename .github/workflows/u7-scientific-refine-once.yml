@@ -77,7 +77,7 @@ jobs:
           from pathlib import Path
           p = Path('tools/u7_layout_check.js')
           s = p.read_text(encoding='utf-8')
-          s = s.replace("await page.getByLabel('Reveal advanced content').check();", "await page.locator('.command-actions input[type=\"checkbox\"]').check();")
+          s = s.replace("await page.getByLabel('Reveal advanced content').check();", "await page.locator('.command-actions .switch').click();")
           p.write_text(s, encoding='utf-8')
           PY
           python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/u7-http.log 2>&1 &
