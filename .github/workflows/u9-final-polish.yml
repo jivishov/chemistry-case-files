@@ -1,0 +1,69 @@
+name: Unit 9 final completeness polish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/u9-final-polish.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove remaining old-theme student copy
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          idx = Path('units/09-acids-bases/index.html')
+          s = idx.read_text(encoding='utf-8')
+          old = '<button class="tab" role="tab" :class="{ \'is-locked\': !capUnlocked }" :aria-selected="mode===\'capstone\'" @click="setMode(\'capstone\')" aria-label="Triage" title="Capstone · connect the Unit 9 skills"><span class="tab-full" aria-hidden="true">Triage</span><span class="tab-short" aria-hidden="true">Triage</span></button>'
+          new = '<button class="tab" role="tab" :class="{ \'is-locked\': !capUnlocked }" :aria-selected="mode===\'capstone\'" @click="setMode(\'capstone\')" aria-label="Capstone" title="Capstone · connect the Unit 9 skills"><span class="tab-full" aria-hidden="true">Capstone</span><span class="tab-short" aria-hidden="true">Final</span></button>'
+          if old not in s:
+              raise SystemExit('capstone tab pattern not found')
+          idx.write_text(s.replace(old, new), encoding='utf-8')
+
+          main = Path('units/09-acids-bases/js/main.js')
+          s = main.read_text(encoding='utf-8')
+          s = s.replace("neutralize: 'Neutralize', meter: 'pH meter', capstone: 'Triage'", "neutralize: 'Neutralize', meter: 'pH meter', capstone: 'Capstone'")
+          s = s.replace("return STATION_NAME[this.mode] || 'The night shift';", "return STATION_NAME[this.mode] || 'Acid-base practice';")
+          main.write_text(s, encoding='utf-8')
+
+          case = Path('units/09-acids-bases/js/case.js')
+          s = case.read_text(encoding='utf-8')
+          old = 'aria-label="Animated scene: a soda pour drops the mouth pH below the enamel-dissolving threshold, stripping mineral from a tooth until saliva buffers it back"'
+          new = 'aria-label="Animated scene showing an acidic drink lowering mouth pH, enamel demineralization, and recovery as saliva buffers acids"'
+          if old not in s:
+              raise SystemExit('case-file aria pattern not found')
+          case.write_text(s.replace(old, new), encoding='utf-8')
+          PY
+
+      - name: Validate
+        run: |
+          node --check units/09-acids-bases/js/main.js
+          node --check units/09-acids-bases/js/case.js
+          git diff --check
+          grep -q 'aria-label="Capstone"' units/09-acids-bases/index.html
+          ! grep -q 'enamel-dissolving threshold' units/09-acids-bases/js/case.js
+          python -m http.server 8000 >/tmp/chem-http.log 2>&1 &
+          pid=$!
+          trap 'kill $pid' EXIT
+          sleep 1
+          curl --fail --silent http://127.0.0.1:8000/ >/dev/null
+          curl --fail --silent http://127.0.0.1:8000/units/09-acids-bases/ >/dev/null
+
+      - name: Commit and clean up
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm -f .github/workflows/u9-final-polish.yml
+          git add units/09-acids-bases/index.html units/09-acids-bases/js/main.js units/09-acids-bases/js/case.js
+          git commit -m 'Polish remaining Unit 9 student copy'
+          git push origin HEAD:main
