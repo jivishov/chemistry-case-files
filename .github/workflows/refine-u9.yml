@@ -18,6 +18,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Repair temporary patch-script escaping
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('scripts/refine_u9.py')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('new_dose = """', 'new_dose = r"""')
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Apply Unit 9 language and scientific-fidelity patches
         run: python scripts/refine_u9.py
 
