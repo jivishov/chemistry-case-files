@@ -18,13 +18,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Repair temporary patch-script escaping
+      - name: Repair temporary patch-script checks
         run: |
           python - <<'PY'
           from pathlib import Path
           p = Path('scripts/refine_u9.py')
           s = p.read_text(encoding='utf-8')
           s = s.replace('new_dose = """', 'new_dose = r"""')
+          s = s.replace('    "the patient next door",\n', '')
           p.write_text(s, encoding='utf-8')
           PY
 
