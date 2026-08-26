@@ -68,7 +68,7 @@ export const UNITS = [
   {
     n: 7, abbr: 'Gs', slug: '07-gas-laws',
     title: 'Gas Laws & Kinetic Theory',
-    hook: 'How does Boyle's law explain why scuba divers must not hold their breath during ascent?',
+    hook: "How does Boyle's law explain why scuba divers must not hold their breath during ascent?",
     case: "Boyle's law and scuba ascent",
     blurb: 'Kinetic molecular theory, ideal-gas relationships, PV = nRT, and Dalton’s law of partial pressure.',
     teks: ['C.10'], status: 'ready'
