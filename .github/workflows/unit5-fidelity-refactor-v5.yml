@@ -1,0 +1,128 @@
+name: Unit 5 fidelity refactor v5
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/unit5-fidelity-refactor-v5.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refactor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Normalize legacy source and helper substitutions
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('units/05-the-mole/js/model.js')
+          t = p.read_text(encoding='utf-8')
+          old = 'export const ARI_INTRO = "ARI, the ship\'s junior AI, ran this job while you were off shift. It is still learning, and it picks up your habits, slips and all. Check its work before the number goes live.";'
+          new = "export const ARI_INTRO = 'ARI, the ship\\'s junior AI, ran this job while you were off shift. It is still learning, and it picks up your habits, slips and all. Check its work before the number goes live.';"
+          if t.count(old) != 1:
+              raise SystemExit(f'Expected one legacy ARI_INTRO string, found {t.count(old)}')
+          p.write_text(t.replace(old, new, 1), encoding='utf-8')
+
+          p = Path('units/05-the-mole/js/main.js')
+          t = p.read_text(encoding='utf-8')
+          t = t.replace('Feel a mole', 'Mole scale')
+          p.write_text(t, encoding='utf-8')
+
+          p = Path('scripts/unit5_fidelity_refactor.py')
+          t = p.read_text(encoding='utf-8')
+          fixes = {
+              'pat.subn(repl, t, count=1)': 'pat.subn(lambda m: repl, t, count=1)',
+              'pat.subn(cap_method, t, count=1)': 'pat.subn(lambda m: cap_method, t, count=1)',
+          }
+          for old, new in fixes.items():
+              if old not in t:
+                  raise SystemExit(f'Missing expected helper pattern: {old}')
+              t = t.replace(old, new)
+          p.write_text(t, encoding='utf-8')
+          PY
+
+      - name: Apply reviewed Unit 5 copy and fidelity changes
+        run: python3 scripts/unit5_fidelity_refactor.py
+
+      - name: Basic JavaScript syntax checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in units/05-the-mole/js/model.js units/05-the-mole/js/main.js units/05-the-mole/js/art.js units/05-the-mole/js/case.js shared/js/molezoom.js; do
+            node --input-type=module --check < "$f"
+          done
+
+      - name: Second-pass student-facing source audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          paths = [
+              'units/05-the-mole/index.html', 'units/05-the-mole/js/model.js',
+              'units/05-the-mole/js/main.js', 'units/05-the-mole/js/art.js',
+              'units/05-the-mole/js/case.js', 'shared/js/molezoom.js'
+          ]
+          joined = '\n'.join(Path(p).read_text(encoding='utf-8') for p in paths)
+          forbidden = [
+              'Lock in an estimate', 'Commit your call', 'Commit the call', 'Make the call',
+              'Wrong call', 'Right call', 'Feel a mole', 'Purity check', 'DOES THE ASSAY MATCH?',
+              'REAL % NITROGEN?', 'ID THE FLUID', 'CHECK PURITY', 'real value works out',
+              'does the number hold up', 'sign off', 'a mole, about eighty thousand',
+          ]
+          found = [s for s in forbidden if s in joined]
+          if found: raise SystemExit('Second-pass wording remnants: ' + ', '.join(found))
+          index = Path(paths[0]).read_text(encoding='utf-8')
+          if 'percentage points' not in index: raise SystemExit('Missing percentage-point activity criterion')
+          if 'Crew safety score' not in index: raise SystemExit('Missing simulation score label')
+          if 'one-sixth of a mole' not in Path(paths[-1]).read_text(encoding='utf-8'): raise SystemExit('Missing 10^23 scale correction')
+          print('Second-pass static audit passed.')
+          PY
+
+      - name: Laptop layout fidelity check
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8000 >/tmp/u5-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          mkdir -p /tmp/u5check
+          cd /tmp/u5check
+          npm init -y >/dev/null 2>&1
+          npm install --silent playwright@1.55.0
+          npx playwright install chromium >/dev/null
+          cp "$GITHUB_WORKSPACE/scripts/unit5_layout_check.cjs" ./check.cjs
+          node check.cjs
+
+      - name: Remove temporary helpers
+        run: |
+          rm -f scripts/unit5_fidelity_refactor.py scripts/unit5_layout_check.cjs
+          rm -f .github/workflows/unit5-fidelity-refactor.yml
+          rm -f .github/workflows/unit5-fidelity-refactor-v2.yml
+          rm -f .github/workflows/unit5-fidelity-refactor-v3.yml
+          rm -f .github/workflows/unit5-fidelity-refactor-v4.yml
+          rm -f .github/workflows/unit5-fidelity-refactor-v5.yml
+          rmdir .github/workflows 2>/dev/null || true
+          rmdir .github 2>/dev/null || true
+          rmdir scripts 2>/dev/null || true
+
+      - name: Commit refined Unit 5
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git status --short
+          git commit -m "Refine Unit 5 language and scientific fidelity"
+          git push origin HEAD:main
