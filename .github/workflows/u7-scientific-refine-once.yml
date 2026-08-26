@@ -91,7 +91,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git rm tools/u7_refine_once.py tools/u7_layout_check.js
+          git rm -f tools/u7_refine_once.py tools/u7_layout_check.js
           git add units/07-gas-laws/index.html \
                   units/07-gas-laws/js/model.js \
                   units/07-gas-laws/js/main.js \
