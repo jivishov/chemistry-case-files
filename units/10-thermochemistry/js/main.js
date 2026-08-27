@@ -39,13 +39,11 @@ const pick = a => a[(Math.random() * a.length) | 0];
 const rN = (x, n) => { const p = 10 ** n; return Math.round(x * p) / p; };
 const rand = (lo, hi, dp = 0) => rN(lo + Math.random() * (hi - lo), dp);
 
-// The patient's core temperature is the world-state. These are the clinical bands a
-// rescue medic actually works to: the original simulation used a 32 C threshold, and 35 is the line between
+// The patient's core temperature is the world-state. These are fictional simulation bands, not clinical thresholds: the original simulation used a 32 C threshold, and 35 is the line between
 // mild and moderate hypothermia.
 const CORE_START = 33.4;
 const CORE_MIN = 28, CORE_MAX = 37.5;
-// Shivering is the patient's own heat source and it fails below this. It is already the
-// line coreState() reads; naming it lets the rail's second meter show the margin left.
+// This is an activity-only movement criterion used by the capstone.
 const ACTIVITY_MOVE_FLOOR = 33;
 
 // The station names the header falls back to before a scenario has been drawn for a
@@ -60,10 +58,10 @@ const skills = [
   { id: 'a',   code: 'C.13(A)',  label: 'Four laws',           target: 3 },
   { id: 'b',   code: 'C.13(B)',  label: 'Calorimetry',         target: 3 },
   { id: 'c',   code: 'C.13(C)',  label: 'Exo/endo + diagram',  target: 3 },
-  { id: 'd',   code: 'C.13(D)',  label: 'q = mc(dT)',          target: 3 },
+  { id: 'd',   code: 'C.13(D)',  label: 'q = mcΔT',          target: 3 },
   { id: 'h1',  code: 'Honors',   label: "Hess's law",          target: 2, honors: true },
   { id: 'h2',  code: 'Honors',   label: 'Formation enthalpy',  target: 2, honors: true },
-  { id: 'cap', code: 'Capstone', label: 'Evacuation call',     target: 1, honors: true }
+  { id: 'cap', code: 'Capstone', label: 'Evidence synthesis',     target: 1, honors: true }
 ];
 
 export { SE };
@@ -186,9 +184,9 @@ export function createSim() {
     // adds no counter and no mechanic to the world.
     //
     // Two of them read the same thermometer and that is deliberate: Core is the raw
-    // number the calls move, and Shiver is the clinical margin above 32 C, which is the
+    // number the calls move, and Shiver is the simulation margin relative to the activity criterion, which is the
     // temperature at which she stops making any heat of her own. Shiver hits zero while
-    // Core still shows a third of a bar, which is exactly the point a medic cares about.
+    // Core still shows a third of a bar, which keeps the two readouts distinct.
     // Recent is the one that can fall while the other three rise.
     //
     // Values are written "33.4C" and "2/4", not "33.4 degrees" or "2 of 4": at 1024x600
@@ -285,9 +283,9 @@ export function createSim() {
     // somebody actually reads.
     //
     // They are deliberately the facts the bench does NOT already print beside its own
-    // controls -- the four law statements are on the buttons, q = mc(dT) is set in KaTeX
+    // controls -- the four law statements are on the buttons, q = mcΔT is set in KaTeX
     // over the inputs, and repeating either would spend the card on nothing. What is not
-    // anywhere else is the clinical thresholds the consequences turn on, the unit trap in
+    // anywhere else is the simulation criteria used by the scenario, the unit trap in
     // each calculation, and the patient's current number.
     get activeReference() {
       const out = [];
@@ -448,7 +446,7 @@ out.push({ k: 'Activity tolerance', v: 'predictions within 1.2 °C of the model 
         <text x="454" y="${yEnd - 8}" text-anchor="end" font-family="JetBrains Mono" font-size="11" fill="#687a82">products</text>
         <line x1="${arrowX}" y1="${yStart}" x2="${arrowX}" y2="${yEnd}" stroke="${dHcolor}" stroke-width="2"/>
         <path d="M ${arrowX - 4},${yEnd + (exo ? -6 : 6)} L ${arrowX},${yEnd} L ${arrowX + 4},${yEnd + (exo ? -6 : 6)}" fill="none" stroke="${dHcolor}" stroke-width="2"/>
-        <text x="${arrowX + 8}" y="${(yStart + yEnd) / 2}" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="${dHcolor}">dH = ${p.dH > 0 ? '+' : ''}${p.dH} kJ</text>
+        <text x="${arrowX + 8}" y="${(yStart + yEnd) / 2}" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="${dHcolor}">ΔH = ${p.dH > 0 ? '+' : ''}${p.dH} kJ</text>
         <text x="260" y="${peak - 10}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#687a82">activation barrier</text>
         <text x="265" y="${H - 12}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#687a82">reaction progress</text>
         <text x="22" y="${top + 4}" font-family="JetBrains Mono" font-size="10" fill="#687a82">energy</text>`;
@@ -482,7 +480,7 @@ out.push({ k: 'Activity tolerance', v: 'predictions within 1.2 °C of the model 
     },
     pkNext() { this.genPack(); },
 
-    // ===================== C.13(D) q = mc(dT), the rewarming dose =====================
+    // ===================== C.13(D) q = mcΔT, the rewarming dose =====================
     // Dose task. The method precondition is choosing the right specific heat; the value
     // the learner commits is their own q in kJ, so it genuinely varies (a backwards dT
     // lands low, a forgotten division by 1000 lands far high) and the four bands mean something.
@@ -638,7 +636,7 @@ out.push({ k: 'Activity tolerance', v: 'predictions within 1.2 °C of the model 
         this.recordWorld({ icon: sc.icon, tone: 'success', text: `${sc.system}, reaction matched`, delta: 0.3 });
       } else {
         v = { tone: 'fail', icon: '\u{1F6A8}', state: 'REVISE', headline: 'Equation sum does not match',
-          detail: `Your steps sum to ${fmt(this.hsTotal)} kJ, but the target route is ${fmt(this.hs.target.dH)} kJ. ${sc.fail}`, gauge: null };
+          detail: `Your steps sum to ${fmt(this.hsTotal)} kJ, but the target enthalpy is ${fmt(this.hs.target.dH)} kJ. ${sc.fail}`, gauge: null };
         this.recordWorld({ icon: '\u{1F6A8}', tone: 'fail', text: `${sc.system}, equation sum needs revision`, delta: -0.4 });
       }
       this.gRecord('h1', ok, !this.hsAttempted);
@@ -675,7 +673,7 @@ out.push({ k: 'Activity tolerance', v: 'predictions within 1.2 °C of the model 
       const valueOk = this.fmValueOk;
       const classOk = this.fmClass === this.fm.trueClass;
       const good = valueOk && classOk;
-      const truth = `dHrxn works out to ${fmt(this.fm.trueDH)} kJ, which is ${this.fm.trueClass}.`;
+      const truth = `ΔH°rxn = ${fmt(this.fm.trueDH)} kJ, so the reaction is ${this.fm.trueClass}.`;
       let v, delta;
       if (good) {
         v = { tone: 'success', icon: sc.icon, state: 'ENTHALPY CHECKED', headline: 'Enthalpy confirmed',
@@ -687,7 +685,7 @@ out.push({ k: 'Activity tolerance', v: 'predictions within 1.2 °C of the model 
         delta = -0.4;
       } else {
         v = { tone: 'warn', icon: '\u{2699}\u{FE0F}', state: 'CHECK THE SIGN', headline: 'Right number, wrong label',
-          detail: `Your value is right, but the classification is not. ${truth} A negative dH releases heat.`, gauge: null };
+          detail: `Your value is right, but the classification is not. ${truth} A negative ΔH corresponds to an exothermic reaction under the stated conditions.`, gauge: null };
         delta = -0.2;
       }
       this.gRecord('h2', good, !this.fmAttempted);

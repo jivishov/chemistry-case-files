@@ -13,9 +13,8 @@
 // hessCombine, enthalpyFromFormation); this file only holds the pools the stages
 // draw from and the scenario fiction that turns each number into a consequence.
 //
-// World: "Heat Line". You are the thermal medic on a mountain rescue team. A climber
-// is going hypothermic on a ledge at 3,100 m. You carry chemical packs, a stove, a
-// pot, and a shelter, and every call you make is a heat calculation.
+// Scenario context: a fictional mountain setting connects the thermochemistry tasks.
+// Medical and aviation values in the capstone are activity criteria, not real-world guidance.
 
 // Standards map: each C.13 sub-letter drives one stage. Hess's law and enthalpy from
 // formation are NOT named in C.13, so both ride the Honors track. Stable ids key the
@@ -30,9 +29,9 @@ export const SE = [
   { id: 'd',  code: 'C.13(D)', mode: 'warm',        honors: false,
     text: 'Perform calculations involving heat, mass, temperature change, and specific heat.' },
   { id: 'h1', code: 'Honors',  mode: 'calorimeter', honors: true,
-    text: "Honors: combine measured steps with Hess's law to get the enthalpy of a route nobody can measure directly." },
+    text: "Honors: use Hess's law to combine thermochemical equations and determine the enthalpy change of a target reaction." },
   { id: 'h2', code: 'Honors',  mode: 'calorimeter', honors: true,
-    text: 'Honors: calculate a reaction enthalpy from standard heats of formation.' }
+    text: 'Honors: calculate a reaction enthalpy from standard enthalpies of formation.' }
 ];
 
 // The four laws, in the order a student meets them. `label` is the button text and
@@ -143,14 +142,13 @@ export const FORMATION_CASES = [
 const Q_BANDS = { mode: 'relative', ideal: 0.01, acceptable: 0.03 };
 const T_BANDS = { mode: 'absolute', ideal: 0.4, acceptable: 1.2 };
 
-// SCENARIOS — the game layer for Heat Line. One coherent world: a climber going
-// hypothermic on a ledge, a team with packs, a stove, a pot, and a shelter.
+// SCENARIOS — evidence-forward thermochemistry tasks in a fictional mountain context.
 //   laws (C.13A):        decision. Read the situation, name the law, and read the
 //                        direction of heat flow. Every option carries its real
 //                        consequence on the mountain.
 //   pack (C.13C):        decision. Pick the pack the injury needs and classify it
 //                        exothermic or endothermic; the energy diagram then draws it.
-//   warm (C.13D):        dose. q = mc(dT). Pick the specific heat, work out the
+//   warm (C.13D):        dose. q = mcΔT. Pick the specific heat, work out the
 //                        temperature change, commit the heat in kilojoules.
 //   calorimeter (C.13B): dose. Balance heat lost against heat gained and predict the
 //                        equilibrium temperature.

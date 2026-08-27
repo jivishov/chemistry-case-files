@@ -125,7 +125,7 @@ export const CASE = {
             <g x-show="step===2">
               <rect x="384" y="176" width="236" height="96" rx="10" fill="#132630" stroke="#7fc4d0"/>
               <text x="400" y="198" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">THE MEASUREMENT</text>
-              <text x="400" y="222" font-family="JetBrains Mono" font-size="12" fill="#7fc4d0">q = m c (dT)</text>
+              <text x="400" y="222" font-family="JetBrains Mono" font-size="12" fill="#7fc4d0">q = m c ΔT</text>
               <text x="400" y="242" font-family="JetBrains Mono" font-size="10" fill="#cfe4ea">2000 x 4.184 x 4.50</text>
               <text x="400" y="262" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#8fd9ae">= 37.7 kJ</text>
             </g>
@@ -149,9 +149,9 @@ export const CASE = {
               </g>
               <g x-show="step===3">
                 <line x1="416" y1="240" x2="584" y2="240" stroke="#24363f" stroke-width="2"/>
-                <text x="416" y="262" font-family="JetBrains Mono" font-size="10" fill="#24363f">Atwater total</text>
+                <text x="416" y="262" font-family="JetBrains Mono" font-size="10" fill="#24363f">4-9-4 estimate</text>
                 <text x="584" y="262" text-anchor="end" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#2f8f5b">229</text>
-                <text x="500" y="282" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#687a82">rounds to the 230 on the packet</text>
+                <text x="500" y="282" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#687a82">229 kcal before label rounding</text>
               </g>
             </g>
           </svg>`
