@@ -40,20 +40,20 @@ const rN = (x, n) => { const p = 10 ** n; return Math.round(x * p) / p; };
 const rand = (lo, hi, dp = 0) => rN(lo + Math.random() * (hi - lo), dp);
 
 // The patient's core temperature is the world-state. These are the clinical bands a
-// rescue medic actually works to: shivering stops near 32, and 35 is the line between
+// rescue medic actually works to: the original simulation used a 32 C threshold, and 35 is the line between
 // mild and moderate hypothermia.
 const CORE_START = 33.4;
 const CORE_MIN = 28, CORE_MAX = 37.5;
 // Shivering is the patient's own heat source and it fails below this. It is already the
 // line coreState() reads; naming it lets the rail's second meter show the margin left.
-const SHIVER_FLOOR = 32;
+const ACTIVITY_MOVE_FLOOR = 33;
 
 // The station names the header falls back to before a scenario has been drawn for a
 // bench. Every bench here generates in init(), so this is only ever seen on the capstone
 // before it is unlocked -- but a header reading "undefined" is not an acceptable state.
 const STATION_NAME = {
   laws: 'Read the situation', pack: 'Pick the pack', warm: 'Size the heat',
-  calorimeter: 'Calorimetry', capstone: 'The call'
+  calorimeter: 'Calorimetry', capstone: 'Evidence check'
 };
 
 const skills = [
@@ -172,10 +172,10 @@ export function createSim() {
     get corePct() { return Math.max(0, Math.min(100, (this.core - 30) / 7 * 100)); },
     get coreMood() { return this.core >= 35.5 ? '\u{1F642}' : this.core >= 33 ? '\u{1F630}' : '\u{1F635}'; },
     get coreState() {
-      if (this.core >= 35.5) return 'Rewarming, out of danger';
-      if (this.core >= 33) return 'Mild hypothermia';
-      if (this.core >= 32) return 'Shivering failing';
-      return 'Moderate hypothermia, critical';
+      if (this.core >= 35.5) return 'Simulation band: warmed';
+      if (this.core >= 33) return 'Simulation band: at or above 33 C';
+      if (this.core >= 32) return 'Simulation band: 32 to 33 C';
+      return 'Simulation band: below 32 C';
     },
     get coreColor() { return this.core >= 35.5 ? 'var(--success)' : this.core >= 33 ? 'var(--warn)' : 'var(--danger)'; },
 
@@ -198,19 +198,19 @@ export function createSim() {
     get coreReadings() {
       const logged = this.worldLog.length;
       const right = logged ? this.worldLog.filter(w => w.tone === 'success').length : 0;
-      const margin = rN(Math.max(0, this.core - SHIVER_FLOOR), 1);
+      const margin = rN(this.core - ACTIVITY_MOVE_FLOOR, 1);
       return [
         { key: 'core', label: 'Core', raw: `${fmt(this.core)}C`, pct: this.corePct,
-          hint: 'her core temperature: the bar is empty at 30 C and full at 37 C' },
-        { key: 'shiver', label: 'Shiver', raw: `+${fmt(margin)}C`,
-          pct: Math.max(0, Math.min(100, margin / (CORE_MAX - SHIVER_FLOOR) * 100)),
-          hint: 'degrees of margin above 32 C, where shivering stops and she has no heat source left' },
-        { key: 'systems', label: 'Systems', raw: `${Math.round(this.gOverall() * 4)}/4`,
+          hint: 'simulated core temperature used by this activity' },
+        { key: 'move', label: '33 C rule', raw: `${margin >= 0 ? '+' : ''}${fmt(margin)}C`,
+          pct: Math.max(0, Math.min(100, (margin + 3) / 6 * 100)),
+          hint: 'distance from the simulation-only 33 C movement criterion; not medical guidance' },
+        { key: 'systems', label: 'Topics', raw: `${Math.round(this.gOverall() * 4)}/4`,
           pct: this.gOverall() * 100,
-          hint: 'core benches certified, C.13 A to D. The evacuation call unlocks at four' },
+          hint: 'core TEKS topics completed, C.13(A) through C.13(D)' },
         { key: 'recent', label: 'Recent', raw: logged ? `${right}/${logged}` : '0/0',
           pct: logged ? right / logged * 100 : 100,
-          hint: 'of the calls still on the log, the share that went right' }
+          hint: 'share of the currently displayed recent results that were correct' }
       ];
     },
     stockColor(v) { return v >= 67 ? 'var(--success)' : v >= 34 ? 'var(--warn)' : 'var(--danger)'; },
@@ -276,7 +276,7 @@ export function createSim() {
       if (v) return v.detail || v.headline || v.state;
       const b = this.activeBrief;
       if (b) return b.why || b.goal || '';
-      return 'Pick a bench. She is losing heat while you decide, and every call you make is a heat calculation.';
+      return 'Choose a thermochemistry activity. Use the displayed evidence, equations, and stated model assumptions.';
     },
 
     // The facts a learner should never have to leave the bench to look up: a constant, a
@@ -292,35 +292,35 @@ export function createSim() {
     get activeReference() {
       const out = [];
       if (this.mode === 'laws') {
-        out.push({ k: 'Her core now', v: fmt(this.core) + ' C, ' + this.coreState.toLowerCase() });
-        out.push({ k: 'Below 32 C', v: 'shivering stops, and it was her last heat source' });
-        out.push({ k: 'Absolute zero', v: '0 K is -273.15 C, about 230 below this summit' });
+        out.push({ k: 'Temperature', v: 'net heat transfer stops at thermal equilibrium' });
+        out.push({ k: 'Activity model', v: 'core-temperature changes are simulated feedback, not clinical guidance' });
+        out.push({ k: 'Absolute zero', v: '0 K = -273.15 °C' });
       } else if (this.mode === 'pack') {
-        out.push({ k: 'Heat into her', v: 'take the pouch with the negative dH' });
-        out.push({ k: 'Heat out of it', v: 'take the pouch with the positive dH' });
-        out.push({ k: 'On the diagram', v: 'products below reactants means exothermic' });
+        out.push({ k: 'Exothermic', v: 'ΔH < 0 for the process; heat is released to the surroundings' });
+        out.push({ k: 'Endothermic', v: 'ΔH > 0 for the process; heat is absorbed from the surroundings' });
+        out.push({ k: 'Energy diagram', v: 'products below reactants indicates an exothermic process' });
       } else if (this.mode === 'warm') {
-        out.push({ k: 'q = mc(dT)', v: 'grams x J/g per C x degrees, so q comes out in joules' });
-        out.push({ k: 'Commit in kJ', v: 'divide the joules by 1000; the bench grades kilojoules' });
-        out.push({ k: 'dT', v: 'target minus start, and the sign travels with it' });
+        out.push({ k: 'q = mcΔT', v: 'g × J/(g·°C) × °C gives q in joules' });
+        out.push({ k: 'Enter kJ', v: 'divide joules by 1000 before submitting' });
+        out.push({ k: 'Activity tolerance', v: 'answers within 3% of the computed q are accepted' });
       } else if (this.mode === 'calorimeter') {
         if (this.screenIsHonors && this.screenSkill === 'h1') {
-          out.push({ k: 'State function', v: 'any set of steps summing to the target gives the same dH' });
-          out.push({ k: 'Flip a step', v: 'and the sign of its dH flips with it' });
-          out.push({ k: 'Scale a step', v: 'and its dH multiplies by the same factor' });
+out.push({ k: 'State function', v: 'the same initial and final states give the same ΔH' });
+out.push({ k: 'Reverse a step', v: 'reverse the sign of ΔH too' });
+out.push({ k: 'Scale a step', v: 'multiply ΔH by the same factor' });
         } else if (this.screenIsHonors && this.screenSkill === 'h2') {
-          out.push({ k: 'dHrxn', v: 'sum over products minus sum over reactants' });
-          out.push({ k: 'Every term', v: 'multiplied by its coefficient in the equation' });
-          out.push({ k: 'An element', v: 'in its standard state has dHf = 0 by definition' });
+out.push({ k: 'ΔH°rxn', v: 'ΣnΔH°f(products) − ΣnΔH°f(reactants)' });
+out.push({ k: 'Coefficients', v: 'multiply each ΔH°f by its stoichiometric coefficient' });
+out.push({ k: 'Standard element', v: 'ΔH°f = 0 for an element in its standard state' });
         } else {
-          out.push({ k: 'Settles between', v: 'the answer is never outside the two starting temperatures' });
-          out.push({ k: 'The bigger mc', v: 'moves least; the smaller body swings further' });
-          out.push({ k: 'Both in joules', v: 'mass in grams, c in J/g per C, before you set them equal' });
+out.push({ k: 'Activity model', v: 'perfect insulation; container heat capacity and phase changes are ignored' });
+out.push({ k: 'Heat balance', v: '|q lost| = |q gained|' });
+out.push({ k: 'Activity tolerance', v: 'predictions within 1.2 °C of the model result are accepted' });
         }
       } else if (this.mode === 'capstone') {
-        out.push({ k: 'Aircraft', v: 'needs cloud base above the ledge at 3,100 m' });
-        out.push({ k: 'Carrying her', v: 'safe only at or above 33 C core' });
-        out.push({ k: 'Neither', v: 'hold in the shelter and keep the heat going until light' });
+        out.push({ k: 'Aircraft rule', v: 'simulation requires cloud base above the 3,100 m ledge' });
+        out.push({ k: 'Movement rule', v: 'simulation uses core temperature ≥ 33.0 °C' });
+        out.push({ k: 'Important', v: 'these are activity criteria, not real-world medical or aviation guidance' });
       }
       return out.slice(0, 3);
     },
@@ -369,16 +369,16 @@ export function createSim() {
       const lawName = LAWS.find(l => l.key === sc.lawKey).tag;
       let v, delta, feed;
       if (good) {
-        v = { tone: 'success', icon: sc.icon, state: 'CALLED IT', headline: `${lawName} governs this`,
+        v = { tone: 'success', icon: sc.icon, state: 'CORRECT', headline: `${lawName} fits the evidence`,
           detail: sc.consequences[this.lwLaw], gauge: null };
         this.lwDone = true; delta = 0.3; feed = `${sc.system}, read correctly`;
       } else if (!lawOk) {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG LAW', headline: 'Wrong law',
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'REVISE', headline: 'Recheck the law',
           detail: `${sc.consequences[this.lwLaw]} It was the ${lawName.toLowerCase()}.`, gauge: null };
         delta = -0.5; feed = `${sc.system}, wrong law`;
       } else {
         const right = sc.flow.options.find(o => o.key === sc.flow.correct).label;
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG DIRECTION', headline: 'Right law, wrong direction',
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'REVISE', headline: 'Right law; recheck heat-transfer direction',
           detail: `You named the ${lawName.toLowerCase()} correctly, but read the heat flow backwards. ${right}.`, gauge: null };
         delta = -0.4; feed = `${sc.system}, flow misread`;
       }
@@ -460,14 +460,14 @@ export function createSim() {
       const packOk = this.pkPick === this.pk.correct.key;
       const classOk = this.pkClass === classifyThermal(chosen.dH);
       const good = packOk && classOk;
-      const sign = `${chosen.name} runs at dH = ${chosen.dH > 0 ? '+' : ''}${chosen.dH} kJ ${chosen.per}, so it is ${classifyThermal(chosen.dH)}.`;
+      const sign = `For this activity, ${chosen.name} has ΔH = ${chosen.dH > 0 ? '+' : ''}${chosen.dH} kJ ${chosen.per}, so the process is ${classifyThermal(chosen.dH)}.`;
       let v, delta, feed;
       if (good) {
-        v = { tone: 'success', icon: sc.icon, state: 'RIGHT PACK', headline: 'Right pack',
+        v = { tone: 'success', icon: sc.icon, state: 'CORRECT PACK', headline: 'Pack and classification agree',
           detail: `${sign} ${sc.consequences[this.pkPick]}`, gauge: null };
         this.pkDone = true; delta = 0.4; feed = `${sc.system}, right pack`;
       } else if (!packOk) {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG PACK', headline: 'Wrong pack',
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'REVISE', headline: 'Recheck the heat-transfer direction',
           detail: `${sign} ${sc.consequences[this.pkPick]}`, gauge: null };
         delta = -0.6; feed = `${sc.system}, wrong pack`;
       } else {
@@ -530,16 +530,16 @@ export function createSim() {
         const yours = `${fmt(q)} kJ`;
         if (good) {
           v = { tone: 'success', icon: sc.icon, state: sc.safeState, headline: 'On spec',
-            detail: `You called ${yours} against the ${needTxt} the job needs. ${sc.safe}`, gauge: 'on' };
+            detail: `You entered ${yours}; the model target is ${needTxt}. ${sc.safe}`, gauge: 'on' };
           this.wmDone = true; delta = 0.5;
           feed = `${sc.system}, on spec`;
         } else if (band.direction === 'low') {
           v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.lowState, headline: 'Too little heat',
-            detail: `You called ${yours}, ${dev} short of the ${needTxt} needed. ${sc.low}`, gauge: 'low' };
+            detail: `You entered ${yours}, ${dev} below the model target of ${needTxt}. ${sc.low}`, gauge: 'low' };
           delta = -0.7; feed = `${sc.system}, under-heated`;
         } else {
           v = { tone: 'fail', icon: '\u{1F6A8}', state: sc.highState, headline: 'Too much heat',
-            detail: `You called ${yours}, ${dev} over the ${needTxt} needed. ${sc.high}`, gauge: 'high' };
+            detail: `You entered ${yours}, ${dev} above the model target of ${needTxt}. ${sc.high}`, gauge: 'high' };
           delta = -0.7; feed = `${sc.system}, over-heated`;
         }
       }
@@ -632,14 +632,14 @@ export function createSim() {
       const ok = this.hsOk;
       let v;
       if (ok) {
-        v = { tone: 'success', icon: sc.icon, state: 'ROUTE PRICED', headline: 'Route priced',
+        v = { tone: 'success', icon: sc.icon, state: 'REACTION MATCHED', headline: 'Equation sum matches',
           detail: `Your steps sum to ${fmt(this.hsTotal)} kJ, matching the target. ${sc.success}`, gauge: null };
         this.hsDone = true;
-        this.recordWorld({ icon: sc.icon, tone: 'success', text: `${sc.system}, route priced`, delta: 0.3 });
+        this.recordWorld({ icon: sc.icon, tone: 'success', text: `${sc.system}, reaction matched`, delta: 0.3 });
       } else {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'ROUTE WRONG', headline: 'Steps do not add up',
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'REVISE', headline: 'Equation sum does not match',
           detail: `Your steps sum to ${fmt(this.hsTotal)} kJ, but the target route is ${fmt(this.hs.target.dH)} kJ. ${sc.fail}`, gauge: null };
-        this.recordWorld({ icon: '\u{1F6A8}', tone: 'fail', text: `${sc.system}, route wrong`, delta: -0.4 });
+        this.recordWorld({ icon: '\u{1F6A8}', tone: 'fail', text: `${sc.system}, equation sum needs revision`, delta: -0.4 });
       }
       this.gRecord('h1', ok, !this.hsAttempted);
       this.hsAttempted = true; this.hsChecked = true; this.hsVerdict = v;
@@ -706,7 +706,7 @@ export function createSim() {
       const ceilingOk = Math.random() < 0.5;
       const ceiling = ceilingOk ? rand(3400, 4200, 0) : rand(2300, 3000, 0);
       const ledge = 3100;
-      const movable = this.core >= 33;
+      const movable = this.core >= ACTIVITY_MOVE_FLOOR;
       const correct = ceilingOk ? 'heli' : (movable ? 'carry' : 'hold');
       this.cap = { sc, ceiling, ledge, ceilingOk, movable, correct, coreAtCall: this.core };
       this.capPick = null; this.capChecked = false; this.capAttempted = false;
@@ -723,20 +723,20 @@ export function createSim() {
       if (this.capWin || !this.capPick) return;
       const sc = this.cap.sc;
       const opt = sc.options.find(o => o.key === this.capPick);
-      const fig = `Cloud base is ${fmt(this.cap.ceiling)} m against a ledge at ${fmt(this.cap.ledge)} m, so an aircraft ${this.cap.ceilingOk ? 'can' : 'cannot'} get in. Her core is ${fmt(this.cap.coreAtCall)} degrees C, ${this.cap.movable ? 'stable enough to move' : 'too cold to move safely'}.`;
+      const fig = `Activity evidence: cloud base is ${fmt(this.cap.ceiling)} m and ledge elevation is ${fmt(this.cap.ledge)} m, so the aircraft criterion ${this.cap.ceilingOk ? 'is' : 'is not'} met. Core temperature is ${fmt(this.cap.coreAtCall)} °C, so the simulation-only 33.0 °C movement criterion ${this.cap.movable ? 'is' : 'is not'} met.`;
       const good = this.capPick === this.cap.correct;
       let v, delta;
       if (good) {
-        v = { tone: 'success', icon: sc.icon, state: 'RIGHT CALL', headline: 'Right call',
+        v = { tone: 'success', icon: sc.icon, state: 'SUPPORTED', headline: 'Evidence supports this option',
           detail: `${fig} ${opt.good}`, gauge: null };
         this.capWin = true; delta = 1.2;
       } else {
-        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'WRONG CALL', headline: 'Wrong call',
+        v = { tone: 'fail', icon: '\u{1F6A8}', state: 'NOT SUPPORTED', headline: 'Evidence does not support this option',
           detail: `${fig} ${opt.consequence}`, gauge: null };
         delta = -1.2;
       }
       this.gRecord('cap', good, !this.capAttempted);
-      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'right call' : 'wrong call'}`, delta });
+      this.recordWorld({ icon: v.icon, tone: v.tone, text: `${sc.system}, ${good ? 'supported option' : 'option not supported'}`, delta });
       this.capAttempted = true; this.capChecked = true; this.capVerdict = v;
       this.claimScreen('capstone', sc, v, false);
     }

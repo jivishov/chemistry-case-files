@@ -1,66 +1,56 @@
-// case.js — Unit 10 case file: every Calorie on every label was measured by burning food.
-// Carries the story AND the stage art; the shared casefile component renders the chrome.
-//
-// The units_new build: a copy of units/10-thermochemistry/js/case.js, deliberately keeping
-// the same id ('bomb-calorimeter-label') and number ('010') as its parent, which is why it
-// is registered in tests/casefile.test.js under NEW_TREE rather than UNITS -- UNITS doubles
-// as the id/number uniqueness set. The stage SVG below came across with the story; no art
-// was drawn for it during the port.
-//
-// The one field a port normally rewrites is cta.call, from `mode='x'` to `setMode('x')`,
-// because the cockpit shell routes station changes through setMode(). Unit 10 already
-// shipped `setMode('warm')` in the worksheet build, so this file is otherwise unchanged.
+// case.js — Unit 10 Case File: calorimetry, food energy, and the origin of Atwater factors.
+// The shared Case File component renders the interface; this file supplies the audited story and stage art.
 
 export const CASE = {
   id: 'bomb-calorimeter-label',
   number: '010',
-  kicker: 'on the back of every packet',
-  title: 'Every Calorie on that label came from setting food on fire',
-  teaser: 'The number on your snack label was measured by burning it underwater',
-  hook: 'Turn over any packet in your bag and there is a Calorie number on the back. Nobody estimated it. Somebody sealed that food in a steel bomb, burned it in pure oxygen underwater, and measured how much the water warmed up. The equation they used is q = mc(dT).',
+  kicker: 'how food energy became a number',
+  title: 'How calorimetry helped put Calories on food labels',
+  teaser: 'Bomb calorimetry helped establish the energy factors used in food labeling',
+  hook: 'Modern Nutrition Facts Calories are usually calculated from food composition and accepted energy factors. Those factors grew from calorimetry plus studies of how much food energy the human body actually makes available.',
   stats: [
-    { v: '4.184 J', k: 'to warm 1 g water by 1 C' },
-    { v: '1 Cal', k: 'is really 1000 calories' },
-    { v: '4-9-4', k: 'kcal per gram: carb, fat, protein' }
+    { v: '4.184 J', k: 'to warm 1 g of water by 1 °C' },
+    { v: '1 kcal', k: 'equals 4.184 kJ' },
+    { v: '4-9-4', k: 'general kcal/g factors: carbohydrate, fat, protein' }
   ],
   steps: [
     {
-      t: 'A number nobody questions',
-      body: 'The label says 230 Calories. You have read hundreds of those numbers without once asking where they come from. They are not calculated from a formula. Every one of them traces back to a measurement somebody actually made.',
-      chem: 'A food Calorie (capital C) is a kilocalorie: the heat that raises one kilogram of water by one degree Celsius. It is a unit of energy, so it can be measured with a thermometer.',
-      cap: 'The claim on the packet: 230 Calories. Where did that come from?'
-    },
-      {
-      t: 'Wilbur Atwater set it on fire',
-      body: 'In the 1890s, American chemist Wilbur Atwater built a bomb calorimeter: a thick steel chamber holding the food and pure oxygen, submerged in a weighed bucket of water inside an insulated jacket. An electric wire ignites the sample and it burns completely in seconds.',
-      chem: 'A sealed rigid bomb lets nothing escape, so all the energy released has nowhere to go but into the water and the hardware. That is a calorimeter: a container built so heat lost equals heat gained.',
-      cap: 'Ignition. The sample burns completely in pure oxygen.'
+      t: 'A label is usually calculated',
+      body: 'The Calories on a modern Nutrition Facts label are not obtained by burning every packaged serving in a bomb calorimeter. Food composition is measured or otherwise established, and energy can be calculated using methods allowed by labeling regulations, including general or food-specific energy factors.',
+      chem: 'A food Calorie is one kilocalorie (kcal), an energy unit equal to 4.184 kJ. The label reports physiologically available food energy, not simply the gross heat released by combustion.',
+      cap: 'Modern label: composition and accepted energy factors produce the Calorie value.'
     },
     {
-      t: 'The thermometer does the arithmetic',
-      body: 'The water temperature climbs and levels off. That rise is the entire measurement. Multiply the mass of water by its specific heat by the temperature change and you have the energy the food released, in joules.',
-      chem: 'q = mc(dT). Water needs 4.184 J per gram per degree, which is unusually high, and that is exactly what makes it a good measuring fluid: it takes a lot of energy to move it a little, so the reading is stable and easy to resolve.',
-      cap: 'q = mc(dT): the temperature rise IS the energy measurement.'
+      t: 'Bomb calorimetry measures gross energy',
+      body: 'In a bomb calorimeter, a small food sample burns in oxygen inside a sealed metal vessel. The released energy warms the calorimeter. A real instrument is calibrated so the temperature rise can be converted into the energy released by combustion.',
+      chem: 'In the simplified school model shown here, assume only the water absorbs energy, so qwater = mcΔT. Real bomb-calorimeter calculations use the calibrated heat capacity of the whole calorimeter and may include correction terms.',
+      cap: 'Idealized model: sample combustion warms 2000 g of water by 4.50 °C.'
     },
     {
-      t: 'Why labels no longer burn anything',
-      body: 'Atwater burned hundreds of foods and noticed a pattern: carbohydrate and protein land near 4 kcal per gram, fat near 9. Those Atwater factors are still how a label is built today. A food scientist measures the grams of each nutrient, multiplies, and adds. Your body is not a bomb calorimeter, so the factors are corrected for what you actually digest.',
-      chem: 'This is the payoff of a good measurement: once enough calorimetry is done, the pattern replaces the experiment. The 4-9-4 rule is thermochemistry compressed into arithmetic you can do in your head.',
-      cap: 'Carb 4, protein 4, fat 9 kcal per gram. Calorimetry, compressed.'
+      t: 'Atwater connected chemistry to metabolism',
+      body: 'Around the turn of the twentieth century, Wilbur O. Atwater and colleagues combined measurements of food composition and combustion energy with studies of digestion and human metabolism. This work led to factors for estimating metabolizable energy rather than treating the body as a bomb calorimeter.',
+      chem: 'The commonly taught general Atwater factors are about 4 kcal/g for carbohydrate, 9 kcal/g for fat, and 4 kcal/g for protein. More specific factors and additional rules are used for some foods and nutrients.',
+      cap: 'Calorimetry plus metabolism studies led to practical food-energy factors.'
+    },
+    {
+      t: 'From factors to the label',
+      body: 'Today, energy values can be calculated from nutrient composition using permitted conversion factors, and label values are rounded according to regulation. The historical calorimetry matters because it helped establish the quantitative link between food chemistry and usable energy.',
+      chem: 'Thermochemistry provides the energy measurements; nutrition science adds digestibility and metabolism. The label combines those ideas rather than reporting raw heat of combustion.',
+      cap: 'The label reports calculated food energy, not a direct burn test of each package.'
     }
   ],
   quiz: {
-    q: 'A bomb calorimeter holds 2000 g of water. Burning one cracker raises the water 4.50 degrees Celsius. Water needs 4.184 J per gram per degree. How much energy did the cracker release?',
+    q: 'Idealized model: 2000 g of water warms by 4.50 °C after a sample burns. Use cwater = 4.184 J/(g·°C), and assume all released heat warms the water. What magnitude of energy was released?',
     options: [
-      { label: 'About 37.7 kJ, which is about 9 food Calories', correct: true },
-      { label: 'About 9.0 kJ, which is about 9 food Calories', correct: false },
-      { label: 'About 377 kJ, which is about 90 food Calories', correct: false }
+      { label: 'About 37.7 kJ, or about 9.0 kcal', correct: true },
+      { label: 'About 9.0 kJ, or about 9.0 kcal', correct: false },
+      { label: 'About 377 kJ, or about 90 kcal', correct: false }
     ],
-    explain: 'q = mc(dT) = 2000 g x 4.184 J/g per degree x 4.50 degrees = 37,656 J, so about 37.7 kJ. Divide by 4.184 kJ per kilocalorie and it is 9.0 kcal, which a label prints as 9 Calories. You just did the measurement that puts numbers on packaging.'
+    explain: 'q = mcΔT = (2000 g)(4.184 J/(g·°C))(4.50 °C) = 37,656 J ≈ 37.7 kJ. Dividing by 4.184 kJ/kcal gives about 9.0 kcal. This is the simplified water-only model stated in the question.'
   },
-  punch: 'You now own the equation behind every nutrition label, every engine coolant spec, and every rescue rewarming decision. q = mc(dT) is the same three multiplications every time.',
-  careers: ['Food scientist', 'Calorimetry technician', 'HVAC engineer', 'Sports physiologist'],
-  cta: { label: 'Run the heat math yourself', call: "setMode('warm')" },
+  punch: 'Calorimetry measures energy transfer. Food labels then use chemistry, composition data, and accepted energy-conversion factors to estimate the energy available from food.',
+  careers: ['Food scientist', 'Calorimetry technician', 'Nutrition scientist', 'Analytical chemist'],
+  cta: { label: 'Practice q = mcΔT', call: "setMode('warm')" },
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: a bomb calorimeter ignites a food sample, the water temperature climbs, and the energy becomes the Calorie number on a nutrition label">
             <defs>
               <linearGradient id="cf10-water" x1="0" y1="0" x2="0" y2="1">

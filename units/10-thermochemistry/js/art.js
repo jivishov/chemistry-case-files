@@ -462,7 +462,7 @@ export const SCENE_ART = {
       + flow(160, 214, 90, { color: C.hot, w: 5, op: .6 })
       + mono(218, 93, 'into the shelter air', { size: 7.5, fill: C.dim, anchor: 'start' })
       + `<path d="M212 32 V96" stroke="${C.slate}" stroke-width="1" stroke-dasharray="3 4" opacity=".7"/>`
-      + mono(374, 22, 'NONE OF IT IS GONE', { size: 7, fill: C.success, ls: '.06em', w: 700, anchor: 'end' });
+      + mono(374, 22, 'ENERGY IS CONSERVED', { size: 7, fill: C.success, ls: '.06em', w: 700, anchor: 'end' });
   } }),
 
   // First law again, this time inside the patient. The sugar packet is not decorative:
@@ -491,7 +491,7 @@ export const SCENE_ART = {
       + `<path d="M244 86 q12 -24 33 -23 q22 1 29 23 z" fill="${C.snowMid}" stroke="${C.snow}" stroke-width="1.4"/>`
       + `<g stroke="${C.coldLt}" stroke-width="1.2" stroke-linecap="round"><path d="M264 62 l-4 -7"/><path d="M280 62 l3 -7"/><path d="M294 69 l6 -5"/></g>`
       + barred(314, 51, 12)
-      + mono(314, 31, 'NOT "COLD OUT"', { size: 7.5, fill: C.danger, w: 700, ls: '.06em' })
+      + mono(314, 31, 'HEAT FLOWS TO COLDER SNOW', { size: 7.5, fill: C.danger, w: 700, ls: '.06em' })
       + chip(284, 91, 'MELTS', { color: C.coldLt, w: 42, size: 8 });
   } }),
 
@@ -600,7 +600,7 @@ export const SCENE_ART = {
       + mono(216, 30, 'q = mc dT', { size: 11, fill: C.tealLt, w: 700, ls: '.04em' });
   } }),
 
-  'd-saline': scene('d-saline', { caption: 'FLUID WARMER · BODY TEMPERATURE, NOT A GUESS', theme: 'kit', body: k => {
+  'd-saline': scene('d-saline', { caption: 'WATER-BASED FLUID · CALCULATE THE REQUIRED HEAT', theme: 'kit', body: k => {
     return kitBoard(96)
       + dripBag(104, 28, 48, 58, { tint: C.cold, lineTo: [170, 92], label: 'COLD' })
       + `<rect x="162" y="48" width="64" height="42" rx="6" fill="#1e3238" stroke="${C.teal3}" stroke-width="1.5"/>`
@@ -611,7 +611,7 @@ export const SCENE_ART = {
       + chip(193, 29, 'q = mc dT', { color: C.tealLt, w: 62, size: 7 });
   } }),
 
-  'd-stone': scene('d-stone', { caption: 'GRANITE STORES HEAT · WRAP IT BEFORE IT REACHES SKIN', body: k => {
+  'd-stone': scene('d-stone', { caption: 'HEATED GRANITE · ENERGY TRANSFERS AS IT COOLS', body: k => {
     return ledge(98, { glow: [136, 54, C.hot] })
       + stove(110, 96, { lit: true, screen: true, w: 52 })
       + slab(190, 93, 70, 44, { hot: true })
@@ -648,7 +648,7 @@ export const SCENE_ART = {
       + mono(246, 31, 'COLD', { size: 8, fill: C.coldLt, w: 700, ls: '.1em' });
   } }),
 
-  'b-skillet': scene('b-skillet', { caption: 'GLOWING IRON · TEMPERATURE IS NOT STORED HEAT', theme: 'kit', body: k => {
+  'b-skillet': scene('b-skillet', { caption: 'HOT IRON · TEMPERATURE ALONE IS NOT STORED HEAT', theme: 'kit', body: k => {
     return kitBoard(96)
       + `<path d="M67 69 h83 l18 -14 h26 v13 h-22 l-18 18 H67 z" fill="#3b4348" stroke="${C.hot}" stroke-width="1.7"/>`
       + `<ellipse cx="110" cy="66" rx="37" ry="12" fill="#8f4d2b" opacity=".8"/>`
@@ -696,7 +696,7 @@ export const SCENE_ART = {
       + `</g>`;
   } }),
 
-  'cap-evac': scene('cap-evac', { caption: 'EVACUATION CALL · CORE, CLOUDS, AND LIGHT', body: k => {
+  'cap-evac': scene('cap-evac', { caption: 'ACTIVITY EVIDENCE · APPLY THE TWO STATED CRITERIA', body: k => {
     return ledge(98, { glow: [282, 37, C.ember] })
       + patient(112, 96, .88, { shiver: false })
       + `<path d="M196 72 h70 l20 -12 h50 l14 12 h-16 l-14 9 h-70 l-14 -9 z" fill="#44555d" stroke="${C.steelLt}" stroke-width="1.4"/>`

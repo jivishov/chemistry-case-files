@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Unit 10 · Thermochemistry</title>
-<meta name="description" content="Heat Line: make mountain-rescue heat calculations with the laws of thermodynamics, chemical packs, q = mc(dT), and calorimetry. TEKS C.13.">
+<meta name="description" content="Thermochemistry practice with the laws of thermodynamics, exothermic and endothermic processes, q = mcΔT, and idealized calorimetry. TEKS C.13.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bitter:wght@600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="../../shared/css/components.css">
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
-<link rel="stylesheet" href="css/style.css?v=u10-1">
+<link rel="stylesheet" href="css/style.css?v=u10-2">
 </head>
 <body>
 <div x-data="sim" x-cloak>
@@ -31,7 +31,7 @@
         <button class="tab" role="tab" :aria-selected="mode==='pack'" @click="setMode('pack')" aria-label="Pick the pack" title="Pick the pack · C.13(C) exothermic and endothermic processes"><span class="tab-full" aria-hidden="true">Pick the pack</span><span class="tab-short" aria-hidden="true">Pack</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='warm'" @click="setMode('warm')" aria-label="Size the heat" title="Size the heat · C.13(D) q = mc(dT)"><span class="tab-full" aria-hidden="true">Size the heat</span><span class="tab-short" aria-hidden="true">Heat</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='calorimeter'" @click="setMode('calorimeter')" aria-label="Calorimetry" title="Calorimetry · C.13(B) heat transfer"><span class="tab-full" aria-hidden="true">Calorimetry</span><span class="tab-short" aria-hidden="true">Calorim.</span></button>
-        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="The call" title="The call · capstone"><span class="tab-full" aria-hidden="true">The call</span><span class="tab-short" aria-hidden="true">Call</span></button>
+        <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="Evidence check" title="Evidence check · synthesis"><span class="tab-full" aria-hidden="true">Evidence check</span><span class="tab-short" aria-hidden="true">Evidence</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')" aria-label="Case file" title="Case file · bomb calorimetry"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
       </nav>
 
@@ -44,7 +44,7 @@
         <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
       </div>
 
-      <div class="command-metrics" aria-label="Progress and rescue telemetry">
+      <div class="command-metrics" aria-label="Progress and scenario readouts">
         <span class="metric-chip">XP <strong x-text="g_xp"></strong></span>
         <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
         <div class="teks-wrap" @click.outside="teksOpen = false" @keydown.escape="teksOpen = false">
@@ -69,7 +69,7 @@
     </header>
 
     <div class="workbench-grid" x-show="mode!=='casefile'">
-      <section class="mission-screen panel" :class="'tone-' + activeTone" aria-label="Active rescue mission">
+      <section class="mission-screen panel" :class="'tone-' + activeTone" aria-label="Active thermochemistry scenario">
         <div class="mission-frame">
           <div class="mission-screen-art" x-html="scArt(activeArtId)"></div>
           <div class="screen-scanline" aria-hidden="true"></div>
@@ -106,7 +106,7 @@
           </div>
         </details>
         <section class="instincts cockpit-instincts" aria-label="Rescue status">
-          <span class="command-kicker">Rescue clock</span>
+          <span class="command-kicker">Scenario time</span>
           <p>T+<strong x-text="elapsed"></strong> min · core <strong x-text="fmt(core) + ' C'"></strong></p>
         </section>
       </section>
@@ -115,7 +115,7 @@
         <div class="panel" :class="{ 'is-active': mode==='laws' && lw }" x-show="mode==='laws' && lw">
           <template x-if="lw">
             <div>
-              <p class="bench-intro">Name the law, then read the direction heat actually moves before committing the rescue call.</p>
+              <p class="bench-intro">Identify the thermodynamic law, then determine the direction of spontaneous heat transfer.</p>
               <p class="small muted mb-2">1. Which law settles this?</p>
               <div class="lawgrid">
                 <template x-for="l in LAWS" :key="l.key">
@@ -127,9 +127,9 @@
                 <template x-for="o in lw.sc.flow.options" :key="o.key"><button class="choice" :data-state="lwFlowState(o.key)" @click="lwPickFlow(o.key)" x-text="o.label"></button></template>
               </div>
               <div class="row call-row mt-3">
-                <button class="btn btn-accent" @click="lwCommit()" :disabled="lwDone || !lwLaw || !lwFlow">Make the call</button>
+                <button class="btn btn-accent" @click="lwCommit()" :disabled="lwDone || !lwLaw || !lwFlow">Check reasoning</button>
                 <button class="btn btn-ghost" x-show="lwChecked" @click="lwNext()">Next situation</button>
-                <span class="call-hint" x-show="(!lwLaw || !lwFlow) && !lwDone" x-text="!lwLaw ? 'Name the law this situation is about.' : 'Now say which way the energy moves.'"></span>
+                <span class="call-hint" x-show="(!lwLaw || !lwFlow) && !lwDone" x-text="!lwLaw ? 'Select the law illustrated by the situation.' : 'Now select the direction of heat transfer.'"></span>
               </div>
               <template x-if="lwVerdict"><div class="verdict mt-3" :class="'verdict-' + lwVerdict.tone"><div class="status"><span class="status-icon" x-text="lwVerdict.icon"></span><span class="status-state" x-text="lwVerdict.state"></span></div><span class="verdict-headline" x-prose="lwVerdict.headline"></span><span class="verdict-detail" x-prose="lwVerdict.detail"></span></div></template>
             </div>
@@ -139,20 +139,20 @@
         <div class="panel" :class="{ 'is-active': mode==='pack' && pk }" x-show="mode==='pack' && pk">
           <template x-if="pk">
             <div>
-              <p class="bench-intro" x-text="pk.need === 'hot' ? 'You need heat going INTO the patient.' : 'You need heat coming OUT of the injury.'"></p>
+              <p class="bench-intro" x-text="pk.need === 'hot' ? 'Choose a pack whose process releases heat to its surroundings.' : 'Choose a pack whose process absorbs heat from its surroundings.'"></p>
               <p class="small muted mb-2">1. Which pouch do you open?</p>
               <div class="packgrid">
                 <template x-for="p in pk.offered" :key="p.key"><button class="choice" :data-state="pkPackState(p.key)" @click="pkPickPack(p.key)"><span class="pname" x-text="p.name"></span><span class="mono small" x-ce="p.ce"></span><span class="pfeel" x-text="p.feel"></span></button></template>
               </div>
               <p class="small muted mt-3 mb-2">2. Classify the process running inside the pouch you picked.</p>
               <div class="choice-grid thermal-class-grid">
-                <button class="choice" :data-state="pkClassState('exothermic')" @click="pkPickClass('exothermic')" :disabled="!pkPick">Exothermic (releases heat, dH &lt; 0)</button>
-                <button class="choice" :data-state="pkClassState('endothermic')" @click="pkPickClass('endothermic')" :disabled="!pkPick">Endothermic (absorbs heat, dH &gt; 0)</button>
+                <button class="choice" :data-state="pkClassState('exothermic')" @click="pkPickClass('exothermic')" :disabled="!pkPick">Exothermic (releases heat, ΔH &lt; 0)</button>
+                <button class="choice" :data-state="pkClassState('endothermic')" @click="pkPickClass('endothermic')" :disabled="!pkPick">Endothermic (absorbs heat, ΔH &gt; 0)</button>
               </div>
               <div class="diagram-wrap" x-show="pkPick">
                 <svg viewBox="0 0 520 240" role="img" aria-label="Reaction-coordinate energy diagram for the selected pack"><g x-html="diagramSvg()"></g></svg>
               </div>
-              <p class="small muted mt-2" x-show="pkPick">The dH arrow is to scale against the value shown. The activation barrier height is schematic, drawn only to show that a reaction climbs before it falls.</p>
+              <p class="small muted mt-2" x-show="pkPick">The ΔH arrow shows the direction of the stated enthalpy change; its length is schematic. The activation barrier is also schematic and is not measured activation-energy data.</p>
               <div class="row call-row mt-3">
                 <button class="btn btn-accent" @click="pkCommit()" :disabled="pkDone || !pkPick || !pkClass">Use this pack</button>
                 <button class="btn btn-ghost" x-show="pkChecked" @click="pkNext()">Next patient</button>
@@ -166,7 +166,7 @@
         <div class="panel" :class="{ 'is-active': mode==='warm' && wm }" x-show="mode==='warm' && wm">
           <template x-if="wm">
             <div>
-              <p class="bench-intro">Choose the material constant and calculate the heat the stove must deliver. The answer you submit is in kJ.</p>
+              <p class="bench-intro">Select the specific heat capacity and calculate q = mcΔT. Enter the heat in kJ.</p>
               <div class="readout">
                 <div class="cell"><div class="k">material</div><div class="v" x-text="wm.material"></div></div>
                 <div class="cell"><div class="k">mass</div><div class="v" x-text="fmt(wm.m) + ' g'"></div></div>
@@ -176,15 +176,15 @@
               </div>
               <div class="eqn mt-3"><span x-tex="'q = m \\, c \\, \\Delta T'"></span></div>
               <div class="warm-inputs mt-3">
-                <div class="field"><label for="wmat">Which specific heat applies?</label><select id="wmat" x-model="wmMat" :disabled="wmDone"><option value="" disabled>choose a material</option><template x-for="mt in FIELD_MATERIALS" :key="mt"><option :value="mt" x-text="mt + '  (' + fmt(cOf(mt)) + ' J/g per C)'"></option></template></select></div>
+                <div class="field"><label for="wmat">Specific heat capacity, c</label><select id="wmat" x-model="wmMat" :disabled="wmDone"><option value="" disabled>choose a material</option><template x-for="mt in FIELD_MATERIALS" :key="mt"><option :value="mt" x-text="mt + '  (' + fmt(cOf(mt)) + ' J/g per C)'"></option></template></select></div>
                 <div class="field heat-answer"><label for="wq">Heat needed (kJ)</label><input id="wq" type="number" step="0.01" x-model="wmQ" :disabled="wmDone" placeholder="your value"></div>
               </div>
               <div class="eq-work mt-3" x-show="wmMat">
                 <div class="eqline"><span x-text="'m = ' + fmt(wm.m) + ' g'"></span><span x-text="'c = ' + fmt(cOf(wmMat) || 0) + ' J/g per C'"></span><span x-text="'dT = ' + fmt(wm.dT) + ' C'"></span></div>
-                <div class="eqline"><span>with that specific heat, q works out to</span><span class="calc" x-text="wmPreview === null ? '—' : fmt(wmPreview) + ' kJ'"></span></div>
+                <div class="eqline"><span>calculated q with that value of c</span><span class="calc" x-text="wmPreview === null ? '—' : fmt(wmPreview) + ' kJ'"></span></div>
               </div>
               <div class="row call-row mt-3"><button class="btn btn-accent" @click="wmRun()" :disabled="wmDone || !wmMat || wmQ===''" x-text="wm.sc.actionLabel"></button><button class="btn btn-ghost" x-show="wmChecked" @click="wmNext()">Next job</button><span class="call-hint" x-show="(!wmMat || wmQ === '') && !wmDone" x-text="!wmMat ? 'Say which specific heat applies.' : 'Now work out the heat and type it.'"></span></div>
-              <template x-if="wmVerdict"><div class="verdict mt-3" :class="'verdict-' + wmVerdict.tone"><div class="status"><span class="status-icon" x-text="wmVerdict.icon"></span><span class="status-state" x-text="wmVerdict.state"></span></div><span class="verdict-headline" x-prose="wmVerdict.headline"></span><span class="verdict-detail" x-prose="wmVerdict.detail"></span><template x-if="wmVerdict.gauge"><div class="gauge"><div class="gauge-seg" :class="wmVerdict.gauge==='low' ? 'miss' : ''">too little</div><div class="gauge-seg" :class="wmVerdict.gauge==='on' ? 'on' : ''">on spec</div><div class="gauge-seg" :class="wmVerdict.gauge==='high' ? 'miss' : ''">too much</div></div></template></div></template>
+              <template x-if="wmVerdict"><div class="verdict mt-3" :class="'verdict-' + wmVerdict.tone"><div class="status"><span class="status-icon" x-text="wmVerdict.icon"></span><span class="status-state" x-text="wmVerdict.state"></span></div><span class="verdict-headline" x-prose="wmVerdict.headline"></span><span class="verdict-detail" x-prose="wmVerdict.detail"></span><template x-if="wmVerdict.gauge"><div class="gauge"><div class="gauge-seg" :class="wmVerdict.gauge==='low' ? 'miss' : ''">below target</div><div class="gauge-seg" :class="wmVerdict.gauge==='on' ? 'on' : ''">within tolerance</div><div class="gauge-seg" :class="wmVerdict.gauge==='high' ? 'miss' : ''">above target</div></div></template></div></template>
             </div>
           </template>
         </div>
@@ -192,41 +192,41 @@
         <div class="panel" :class="{ 'is-active': mode==='calorimeter' && cl }" x-show="mode==='calorimeter' && cl">
           <template x-if="cl">
             <div>
-              <p class="bench-intro">Nothing escapes the insulated pot. Set the heat the hot body loses equal to the heat the cold body gains, then predict their common temperature.</p>
+              <p class="bench-intro">Activity model: treat the pot as perfectly insulated and ignore heat absorbed by the container. Set the magnitude of heat lost equal to the magnitude of heat gained, then predict the equilibrium temperature.</p>
               <div class="table-wrap"><table class="data calorimeter-data"><thead><tr><th>body</th><th>material</th><th class="num">mass (g)</th><th class="num">c (J/g per C)</th><th class="num">start (C)</th></tr></thead><tbody><tr><td>hot</td><td x-text="cl.hotMat"></td><td class="num" x-text="fmt(cl.hot.m)"></td><td class="num" x-text="fmt(cl.hot.c)"></td><td class="num" x-text="fmt(cl.hot.t)"></td></tr><tr><td>cold</td><td x-text="cl.coldMat"></td><td class="num" x-text="fmt(cl.cold.m)"></td><td class="num" x-text="fmt(cl.cold.c)"></td><td class="num" x-text="fmt(cl.cold.t)"></td></tr></tbody></table></div>
-              <div class="eqn mt-3"><span x-tex="'q_{lost} = q_{gained}'"></span></div>
-              <div class="field cal-answer mt-3"><label for="clt">Settling temperature (C)</label><input id="clt" type="number" step="0.01" x-model="clInput" :disabled="clDone" placeholder="your prediction"></div>
+              <div class="eqn mt-3"><span x-tex="'|q_{lost}| = |q_{gained}|'"></span></div>
+              <div class="field cal-answer mt-3"><label for="clt">Equilibrium temperature (C)</label><input id="clt" type="number" step="0.01" x-model="clInput" :disabled="clDone" placeholder="your prediction"></div>
               <div class="row call-row mt-3"><button class="btn btn-accent" @click="clCommit()" :disabled="clDone || clInput===''" x-text="cl.sc.actionLabel"></button><button class="btn btn-ghost" x-show="clChecked" @click="clNext()">Next mix</button><span class="call-hint" x-show="clInput === '' && !clDone" x-text="'Work out the settling temperature, then type it.'"></span></div>
               <template x-if="clVerdict"><div class="cal-result"><div class="verdict mt-3" :class="'verdict-' + clVerdict.tone"><div class="status"><span class="status-icon" x-text="clVerdict.icon"></span><span class="status-state" x-text="clVerdict.state"></span></div><span class="verdict-headline" x-prose="clVerdict.headline"></span><span class="verdict-detail" x-prose="clVerdict.detail"></span><template x-if="clVerdict.gauge"><div class="gauge"><div class="gauge-seg" :class="clVerdict.gauge==='low' ? 'miss' : ''">too cold</div><div class="gauge-seg" :class="clVerdict.gauge==='on' ? 'on' : ''">on target</div><div class="gauge-seg" :class="clVerdict.gauge==='high' ? 'miss' : ''">too hot</div></div></template></div><div class="stat-row mt-2"><div class="stat"><div class="k">heat that moved</div><div class="v" x-text="fmt(cl.q / 1000) + ' kJ'"></div></div><div class="stat"><div class="k">settles at</div><div class="v" x-text="fmt(cl.tFinal) + ' C'"></div></div></div></div></template>
 
               <section class="honors-block" x-show="honors">
                 <span class="honors-tag">Honors · Hess's law</span>
-                <div class="note note-info mt-2" x-show="!gMastered('b')">Lock in calorimetry (three correct in a row) to unlock the Honors bench.</div>
-                <template x-if="gMastered('b') && hs"><div class="mt-2"><p class="small muted mb-2" x-prose="hs.sc.goal"></p><p class="small" x-text="hs.route.story"></p><div class="note note-info mt-2">Target route: <span class="mono" x-ce="hs.target.ce"></span></div><p class="small muted mt-2 mb-2">Flip and scale the measurable steps until they add up to the target.</p><template x-for="(s,i) in hs.route.steps" :key="i"><div class="hess-row" :class="{ flipped: hsFlip[i] }"><span class="rxn mono small" x-ce="hsFlip[i] ? s.ce.split(' -> ').reverse().join(' -> ') : s.ce"></span><button class="btn btn-sm" @click="hsToggle(i)" x-text="hsFlip[i] ? 'Flipped' : 'Flip'"></button><span class="stepper"><span class="el">x</span><button class="btn btn-sm" @click="hsStep(i,-1)" :aria-label="'decrease scale on step ' + (i+1)">&minus;</button><span class="sub" x-text="hsScale[i]"></span><button class="btn btn-sm" @click="hsStep(i,1)" :aria-label="'increase scale on step ' + (i+1)">+</button></span><span class="term" x-text="(hsTermDH(i) > 0 ? '+' : '') + fmt(hsTermDH(i)) + ' kJ'"></span></div></template><div class="hess-total" :class="{ match: hsOk }"><span>your sum</span><span x-text="(hsTotal > 0 ? '+' : '') + fmt(hsTotal) + ' kJ'"></span><span class="muted small" x-text="'target ' + (hs.target.dH > 0 ? '+' : '') + fmt(hs.target.dH) + ' kJ'"></span></div><div class="row call-row mt-2"><button class="btn btn-honors" @click="hsCommit()" :disabled="hsDone">Send the number</button><button class="btn btn-ghost" x-show="hsChecked" @click="hsNext()">Next route</button></div><template x-if="hsVerdict"><div class="verdict mt-2" :class="'verdict-' + hsVerdict.tone"><div class="status"><span class="status-icon" x-text="hsVerdict.icon"></span><span class="status-state" x-text="hsVerdict.state"></span></div><span class="verdict-headline" x-prose="hsVerdict.headline"></span><span class="verdict-detail" x-prose="hsVerdict.detail"></span></div></template></div></template>
+                <div class="note note-info mt-2" x-show="!gMastered('b')">Complete three calorimetry problems correctly in a row to unlock the Honors bench.</div>
+                <template x-if="gMastered('b') && hs"><div class="mt-2"><p class="small muted mb-2" x-prose="hs.sc.goal"></p><p class="small" x-text="hs.route.story"></p><div class="note note-info mt-2">Target reaction: <span class="mono" x-ce="hs.target.ce"></span></div><p class="small muted mt-2 mb-2">Reverse and scale the given equations until they add to the target reaction.</p><template x-for="(s,i) in hs.route.steps" :key="i"><div class="hess-row" :class="{ flipped: hsFlip[i] }"><span class="rxn mono small" x-ce="hsFlip[i] ? s.ce.split(' -> ').reverse().join(' -> ') : s.ce"></span><button class="btn btn-sm" @click="hsToggle(i)" x-text="hsFlip[i] ? 'Flipped' : 'Flip'"></button><span class="stepper"><span class="el">x</span><button class="btn btn-sm" @click="hsStep(i,-1)" :aria-label="'decrease scale on step ' + (i+1)">&minus;</button><span class="sub" x-text="hsScale[i]"></span><button class="btn btn-sm" @click="hsStep(i,1)" :aria-label="'increase scale on step ' + (i+1)">+</button></span><span class="term" x-text="(hsTermDH(i) > 0 ? '+' : '') + fmt(hsTermDH(i)) + ' kJ'"></span></div></template><div class="hess-total" :class="{ match: hsOk }"><span>enthalpy sum</span><span x-text="(hsTotal > 0 ? '+' : '') + fmt(hsTotal) + ' kJ'"></span><span class="muted small" x-text="'target ' + (hs.target.dH > 0 ? '+' : '') + fmt(hs.target.dH) + ' kJ'"></span></div><div class="row call-row mt-2"><button class="btn btn-honors" @click="hsCommit()" :disabled="hsDone">Check sum</button><button class="btn btn-ghost" x-show="hsChecked" @click="hsNext()">Next route</button></div><template x-if="hsVerdict"><div class="verdict mt-2" :class="'verdict-' + hsVerdict.tone"><div class="status"><span class="status-icon" x-text="hsVerdict.icon"></span><span class="status-state" x-text="hsVerdict.state"></span></div><span class="verdict-headline" x-prose="hsVerdict.headline"></span><span class="verdict-detail" x-prose="hsVerdict.detail"></span></div></template></div></template>
               </section>
 
               <section class="honors-block" x-show="honors">
                 <span class="honors-tag">Honors · enthalpy from formation data</span>
-                <div class="note note-info mt-2" x-show="!gMastered('b')">Lock in calorimetry to unlock the formation-data job.</div>
-                <template x-if="gMastered('b') && fm"><div class="mt-2"><p class="small muted mb-2" x-prose="fm.sc.goal"></p><p class="small" x-text="fm.fc.story"></p><div class="eqn mt-2 mb-2"><span x-ce="fm.fc.ce"></span></div><div class="table-wrap"><table class="data fdata"><thead><tr><th>species</th><th class="num">dHf (kJ/mol)</th><th class="num">coefficient</th></tr></thead><tbody><tr><td class="side" colspan="3">reactants</td></tr><template x-for="s in fm.fc.reactants" :key="'r'+s.label"><tr><td class="mono" x-ce="s.label"></td><td class="num" x-text="fmt(s.dHf)"></td><td class="num" x-text="s.coefficient"></td></tr></template><tr><td class="side" colspan="3">products</td></tr><template x-for="s in fm.fc.products" :key="'p'+s.label"><tr><td class="mono" x-ce="s.label"></td><td class="num" x-text="fmt(s.dHf)"></td><td class="num" x-text="s.coefficient"></td></tr></template></tbody></table></div><p class="small muted mt-2">An element in its standard state has dHf = 0 by definition.</p><div class="formation-inputs mt-2"><div class="field heat-answer"><label for="fmv">dHrxn (kJ)</label><input id="fmv" type="number" step="0.1" x-model="fmInput" :disabled="fmDone" placeholder="your value"></div><div class="choice-grid"><button class="choice" :data-state="fmClassState('exothermic')" @click="fmPickClass('exothermic')">Exothermic</button><button class="choice" :data-state="fmClassState('endothermic')" @click="fmPickClass('endothermic')">Endothermic</button></div></div><div class="row call-row mt-2"><button class="btn btn-honors" @click="fmCommit()" :disabled="fmDone || fmInput==='' || !fmClass">File the report</button><button class="btn btn-ghost" x-show="fmChecked" @click="fmNext()">Next fuel</button><span class="call-hint" x-show="(fmInput === '' || !fmClass) && !fmDone" x-text="fmInput === '' ? 'Work out dHrxn from the formation values, then type it.' : 'Now say which way that number points.'"></span></div><template x-if="fmVerdict"><div class="verdict mt-2" :class="'verdict-' + fmVerdict.tone"><div class="status"><span class="status-icon" x-text="fmVerdict.icon"></span><span class="status-state" x-text="fmVerdict.state"></span></div><span class="verdict-headline" x-prose="fmVerdict.headline"></span><span class="verdict-detail" x-prose="fmVerdict.detail"></span></div></template></div></template>
+                <div class="note note-info mt-2" x-show="!gMastered('b')">Complete the calorimetry requirement to unlock the formation-data exercise.</div>
+                <template x-if="gMastered('b') && fm"><div class="mt-2"><p class="small muted mb-2" x-prose="fm.sc.goal"></p><p class="small" x-text="fm.fc.story"></p><div class="eqn mt-2 mb-2"><span x-ce="fm.fc.ce"></span></div><div class="table-wrap"><table class="data fdata"><thead><tr><th>species</th><th class="num">dHf (kJ/mol)</th><th class="num">coefficient</th></tr></thead><tbody><tr><td class="side" colspan="3">reactants</td></tr><template x-for="s in fm.fc.reactants" :key="'r'+s.label"><tr><td class="mono" x-ce="s.label"></td><td class="num" x-text="fmt(s.dHf)"></td><td class="num" x-text="s.coefficient"></td></tr></template><tr><td class="side" colspan="3">products</td></tr><template x-for="s in fm.fc.products" :key="'p'+s.label"><tr><td class="mono" x-ce="s.label"></td><td class="num" x-text="fmt(s.dHf)"></td><td class="num" x-text="s.coefficient"></td></tr></template></tbody></table></div><p class="small muted mt-2">An element in its standard state has dHf = 0 by definition.</p><div class="formation-inputs mt-2"><div class="field heat-answer"><label for="fmv">dHrxn (kJ)</label><input id="fmv" type="number" step="0.1" x-model="fmInput" :disabled="fmDone" placeholder="your value"></div><div class="choice-grid"><button class="choice" :data-state="fmClassState('exothermic')" @click="fmPickClass('exothermic')">Exothermic</button><button class="choice" :data-state="fmClassState('endothermic')" @click="fmPickClass('endothermic')">Endothermic</button></div></div><div class="row call-row mt-2"><button class="btn btn-honors" @click="fmCommit()" :disabled="fmDone || fmInput==='' || !fmClass">Check result</button><button class="btn btn-ghost" x-show="fmChecked" @click="fmNext()">Next fuel</button><span class="call-hint" x-show="(fmInput === '' || !fmClass) && !fmDone" x-text="fmInput === '' ? 'Work out dHrxn from the formation values, then type it.' : 'Now classify the reaction from the sign of ΔH.'"></span></div><template x-if="fmVerdict"><div class="verdict mt-2" :class="'verdict-' + fmVerdict.tone"><div class="status"><span class="status-icon" x-text="fmVerdict.icon"></span><span class="status-state" x-text="fmVerdict.state"></span></div><span class="verdict-headline" x-prose="fmVerdict.headline"></span><span class="verdict-detail" x-prose="fmVerdict.detail"></span></div></template></div></template>
               </section>
             </div>
           </template>
         </div>
 
         <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
-          <div class="note note-info" x-show="!capUnlocked">The evacuation call unlocks once all four core systems (C.13 A to D) are certified. Certified so far: <span x-text="Math.round(gOverall()*4)"></span> of 4.</div>
-          <button class="btn btn-accent" x-show="capUnlocked && !cap" @click="genCapstone()">Take the radio</button>
-          <template x-if="capUnlocked && cap"><div><p class="bench-intro">The defensible action is calculated from the cloud base and the core temperature your previous calls built.</p><div class="readout"><div class="cell"><div class="k">ledge</div><div class="v" x-text="fmt(cap.ledge) + ' m'"></div></div><div class="cell"><div class="k">cloud base</div><div class="v" x-text="fmt(cap.ceiling) + ' m'"></div></div><div class="cell"><div class="k">her core now</div><div class="v" x-text="fmt(cap.coreAtCall) + ' C'"></div></div></div><p class="small muted mt-2">An aircraft needs cloud base above the ledge to reach you. Moving a patient below 33 degrees Celsius risks washing cold blood from her limbs into her core.</p><p class="small muted mt-3 mb-2">Make the call.</p><div class="choice-grid"><template x-for="o in cap.sc.options" :key="o.key"><button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button></template></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Radio it in</button><span class="call-hint" x-show="!capPick && !capWin" x-text="'Make the call on the fire first.'"></span></div><template x-if="capVerdict"><div class="verdict mt-3" :class="'verdict-' + capVerdict.tone"><div class="status"><span class="status-icon" x-text="capVerdict.icon"></span><span class="status-state" x-text="capVerdict.state"></span></div><span class="verdict-headline" x-prose="capVerdict.headline"></span><span class="verdict-detail" x-prose="capVerdict.detail"></span></div></template></div></template>
+          <div class="note note-info" x-show="!capUnlocked">The final evidence check unlocks once all four core topics (C.13 A to D) are complete. Complete so far: <span x-text="Math.round(gOverall()*4)"></span> of 4.</div>
+          <button class="btn btn-accent" x-show="capUnlocked && !cap" @click="genCapstone()">Open evidence check</button>
+          <template x-if="capUnlocked && cap"><div><p class="bench-intro">Use the two stated activity criteria and the displayed values to select the supported option.</p><div class="readout"><div class="cell"><div class="k">ledge</div><div class="v" x-text="fmt(cap.ledge) + ' m'"></div></div><div class="cell"><div class="k">cloud base</div><div class="v" x-text="fmt(cap.ceiling) + ' m'"></div></div><div class="cell"><div class="k">core temperature</div><div class="v" x-text="fmt(cap.coreAtCall) + ' C'"></div></div></div><p class="small muted mt-2">Activity rules: an aircraft is treated as available only when cloud base is above the ledge. For this simulation, ground movement is allowed only when core temperature is at least 33.0 °C. These are scenario rules, not medical or aviation guidance.</p><p class="small muted mt-3 mb-2">Evaluate the evidence.</p><div class="choice-grid"><template x-for="o in cap.sc.options" :key="o.key"><button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button></template></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="capCommit()" :disabled="capWin || !capPick">Check decision</button><span class="call-hint" x-show="!capPick && !capWin" x-text="'Choose the option supported by both activity criteria.'"></span></div><template x-if="capVerdict"><div class="verdict mt-3" :class="'verdict-' + capVerdict.tone"><div class="status"><span class="status-icon" x-text="capVerdict.icon"></span><span class="status-state" x-text="capVerdict.state"></span></div><span class="verdict-headline" x-prose="capVerdict.headline"></span><span class="verdict-detail" x-prose="capVerdict.detail"></span></div></template></div></template>
         </div>
       </section>
 
-      <aside class="life-support-board panel" aria-label="Patient status rail">
-        <div class="life-header"><div><span class="command-kicker">Patient status</span><strong x-text="coreState"></strong></div><span class="sol-chip">T+<strong x-text="elapsed"></strong></span></div>
+      <aside class="life-support-board panel" aria-label="Scenario status rail">
+        <div class="life-header"><div><span class="command-kicker">Scenario status</span><strong x-text="coreState"></strong></div><span class="sol-chip">T+<strong x-text="elapsed"></strong></span></div>
         <div class="crew-status cockpit-crew"><span class="crew-face" x-text="coreMood"></span><div class="crew-bar"><div class="life-meter-label"><span>Core temperature</span><span class="mono" x-text="fmt(core) + ' C'"></span></div><div class="meter"><div class="meter-fill" :style="`width:${corePct}%; background:${coreColor}`"></div></div></div></div>
         <div class="system-grid" aria-label="Rescue readouts"><template x-for="r in coreReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span x-text="r.label" :title="r.hint"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${stockColor(r.pct)}`"></div></div></div></template></div>
-        <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest consequence"><span class="command-kicker">Latest consequence</span><strong x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'No calls logged yet. The clock starts when you make one.'"></p></section>
-        <section class="mission-log" aria-label="Rescue log"><span class="command-kicker">Rescue log</span><p class="worldstate-empty" x-show="!worldLog.length">No calls written down yet.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0, 3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')"><span class="ws-icon" x-text="w.icon"></span><span x-text="w.text"></span></li></template></ul></section>
+        <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest consequence"><span class="command-kicker">Latest result</span><strong x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'No calls logged yet. The clock starts when you make one.'"></p></section>
+        <section class="mission-log" aria-label="Scenario log"><span class="command-kicker">Scenario log</span><p class="worldstate-empty" x-show="!worldLog.length">No calls written down yet.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0, 3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')"><span class="ws-icon" x-text="w.icon"></span><span x-text="w.text"></span></li></template></ul></section>
       </aside>
     </div>
 
@@ -238,11 +238,11 @@
   window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
   const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
          { mountColumnResizers }] = await Promise.all([
-    import('./js/main.js?v=u10-1'),
+    import('./js/main.js?v=u10-2'),
     import('../../shared/js/render.js'),
     import('../../shared/js/gauge.js'),
     import('../../shared/js/casefile.js'),
-    import('./js/case.js?v=u10-1'),
+    import('./js/case.js?v=u10-2'),
     import('../shared/columns.js?v=cockpit-3')
   ]);
   window.sim = createSim;
