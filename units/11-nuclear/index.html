@@ -111,21 +111,6 @@
           <p class="screen-goal" x-prose="activeBrief ? activeBrief.goal : 'Choose a station to begin the morning shift.'"></p>
           <p class="screen-outcome" x-prose="activeOutcomeText"></p>
         </div>
-        <!-- A native <details>, so the standing facts can be folded away and the art and the
-             prompt take the rows back. Open by default, because facts a learner has to hunt
-             for are not standing facts. The summary keeps .command-kicker: it is the same
-             chrome eyebrow it was before it became a disclosure, and that class is what
-             exempts it from the 14px legibility floor in tests/unit5a-layout.test.mjs.
-             shared/cockpit.css styles it; the height media queries there still drop the whole
-             card on a short viewport, which is the shell deciding there is no room rather
-             than the learner deciding they want it elsewhere. -->
-        <!-- Closed by default, and only here. Unit 06's, 09's, 10's and 11's reference sets run
-             three wrapped facts to a 476px column -- a 150 to 170px card -- and this mission
-             column does not have that alongside a full scenario prompt at 726px of viewport.
-             The rows this unit used to reclaim it took by DROPPING the card outright below
-             760px, so on every laptop in the matrix the standing facts were unreachable. A
-             closed disclosure costs 23px, says the facts are there, and hands the choice to
-             the learner. The other seven units ship it open, which is the shell's default. -->
         <details class="screen-reference" aria-label="Reference facts" x-show="activeReference.length">
           <summary class="command-kicker">Reference</summary>
           <div class="screen-reference-body">
@@ -144,7 +129,6 @@
       </section>
 
       <section class="task-stack chem-console" aria-label="Nuclear Chemistry workbench">
-        <!-- ---------- C.14(A) name the emission, balance the equation ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='ident' }" x-show="mode==='ident' && id_">
           <template x-if="id_">
             <div>
@@ -267,7 +251,6 @@
           </template>
         </div>
 
-        <!-- ---------- C.14(C) half-life: what is left in the vial ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='dose' }" x-show="mode==='dose' && ds">
           <template x-if="ds">
             <div>
@@ -386,7 +369,6 @@
           </template>
         </div>
 
-        <!-- ---------- C.14(C) pick the isotope and justify it ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='apply' }" x-show="mode==='apply' && ap">
           <template x-if="ap">
             <div>
@@ -434,7 +416,6 @@
           </template>
         </div>
 
-        <!-- ---------- C.14(B) fission, fusion, or neither ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='power' }" x-show="mode==='power' && pw">
           <template x-if="pw">
             <div>
@@ -531,7 +512,6 @@
           </template>
         </div>
 
-        <!-- ---------- Capstone: the last patient of the morning ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
           <div class="note note-info" x-show="!capUnlocked">
             The last call unlocks once all four core benches (C.14 A to C, including the half-life bench) are certified. Certified so far: <span x-text="Math.round(gOverall()*4)"></span> of 4.
@@ -647,15 +627,19 @@
 
 <script type="module">
   window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
-  const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
-         { mountColumnResizers }] = await Promise.all([
-    import('./js/main.js?v=u11-1'),
+  const [{ createSim: baseCreateSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
+         { mountColumnResizers }, refinements] = await Promise.all([
+    import('./js/main.js?v=u11-2'),
     import('../../shared/js/render.js'),
     import('../../shared/js/gauge.js'),
     import('../../shared/js/casefile.js'),
-    import('./js/case.js?v=u11-1'),
-    import('../shared/columns.js?v=cockpit-3')
+    import('./js/case.js?v=u11-2'),
+    import('../shared/columns.js?v=cockpit-3'),
+    import('./js/refinements.js?v=u11-2')
   ]);
+  refinements.applyContentRefinements();
+  refinements.applyStaticCopy(document);
+  const createSim = refinements.refineCreateSim(baseCreateSim);
   window.sim = createSim;
   const { default: Alpine } = await import('https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js');
   registerRender(Alpine);
@@ -665,8 +649,6 @@
   window.Alpine = Alpine;
   if (window.__startAlpine) window.__startAlpine();
   else Alpine.start();
-  // After start(), so the handles are appended to a workbench Alpine has already claimed.
-  // The two gutter buttons carry no bindings, so Alpine never walks them.
   mountColumnResizers();
 </script>
 </body>
