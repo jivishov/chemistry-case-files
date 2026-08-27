@@ -13,102 +13,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 3
 
-      - name: Clean final wording and notation
+      - name: Apply audited cleanup
         shell: bash
         run: |
+          git show HEAD^:.github/workflows/unit10-final-cleanup.yml > /tmp/previous.yml
           python - <<'PY'
           from pathlib import Path
-
-          def apply(path, pairs):
-              p = Path(path)
-              s = p.read_text(encoding='utf-8')
-              for old, new in pairs:
-                  s = s.replace(old, new)
-              p.write_text(s, encoding='utf-8')
-
-          apply('units/10-thermochemistry/index.html', [
-            ('title="Size the heat · C.13(D) q = mc(dT)"', 'title="Size the heat · C.13(D) q = mcΔT"'),
-            ('aria-label="Rescue status"', 'aria-label="Scenario status"'),
-            ('1. Which pouch do you open?', '1. Which pack fits the required heat-transfer direction?'),
-            ('>Use this pack</button>', '>Check pack</button>'),
-            ('>Next patient</button>', '>Next scenario</button>'),
-            ('<div class="k">change dT</div>', '<div class="k">change ΔT</div>'),
-            ("'dT = ' + fmt(wm.dT) + ' C'", "'ΔT = ' + fmt(wm.dT) + ' C'"),
-            ('>Next job</button>', '>Next scenario</button>'),
-            ("!wmMat ? 'Say which specific heat applies.' : 'Now work out the heat and type it.'", "!wmMat ? 'Select the specific heat capacity first.' : 'Calculate the heat and enter it in kJ.'"),
-            ("'Work out the settling temperature, then type it.'", "'Calculate the equilibrium temperature, then enter it.'"),
-            ('>too cold</div>', '>prediction low</div>'),
-            ('>on target</div>', '>within tolerance</div>'),
-            ('>too hot</div>', '>prediction high</div>'),
-            ('<div class="k">heat that moved</div>', '<div class="k">heat transferred</div>'),
-            ('<div class="k">settles at</div>', '<div class="k">equilibrium T</div>'),
-            ('>Next route</button>', '>Next reaction</button>'),
-            ('<th class="num">dHf (kJ/mol)</th>', '<th class="num">ΔH°f (kJ/mol)</th>'),
-            ('An element in its standard state has dHf = 0 by definition.', 'An element in its standard state has ΔH°f = 0 by definition.'),
-            ('<label for="fmv">dHrxn (kJ)</label>', '<label for="fmv">ΔH°rxn (kJ)</label>'),
-            ("'Work out dHrxn from the formation values, then type it.'", "'Calculate ΔH°rxn from the formation values, then enter it.'"),
-            ('>Next fuel</button>', '>Next reaction</button>'),
-            ('aria-label="Rescue readouts"', 'aria-label="Scenario readouts"'),
-            ('aria-label="Latest consequence"', 'aria-label="Latest result"'),
-            ('main.js?v=u10-2', 'main.js?v=u10-3'),
-            ('case.js?v=u10-2', 'case.js?v=u10-3'),
-          ])
-
-          apply('units/10-thermochemistry/js/model.js', [
-            ("Honors: combine measured steps with Hess's law to get the enthalpy of a route nobody can measure directly.",
-             "Honors: use Hess's law to combine thermochemical equations and determine the enthalpy change of a target reaction."),
-            ('Honors: calculate a reaction enthalpy from standard heats of formation.',
-             'Honors: calculate a reaction enthalpy from standard enthalpies of formation.'),
-            ('// World: "Heat Line". You are the thermal medic on a mountain rescue team. A climber\n// is going hypothermic on a ledge at 3,100 m. You carry chemical packs, a stove, a\n// pot, and a shelter, and every call you make is a heat calculation.',
-             '// Scenario context: a fictional mountain setting connects the thermochemistry tasks.\n// Medical and aviation values in the capstone are activity criteria, not real-world guidance.'),
-            ('// SCENARIOS — the game layer for Heat Line. One coherent world: a climber going\n// hypothermic on a ledge, a team with packs, a stove, a pot, and a shelter.',
-             '// SCENARIOS — evidence-forward thermochemistry tasks in a fictional mountain context.'),
-          ])
-
-          apply('units/10-thermochemistry/js/main.js', [
-            ("label: 'q = mc(dT)'", "label: 'q = mcΔT'"),
-            ("label: 'Evacuation call'", "label: 'Evidence synthesis'"),
-            ('These are the clinical bands a\n// rescue medic actually works to:', 'These are fictional simulation bands, not clinical thresholds:'),
-            ('// Shivering is the patient\'s own heat source and it fails below this. It is already the\n// line coreState() reads; naming it lets the rail\'s second meter show the margin left.',
-             '// This is an activity-only movement criterion used by the capstone.'),
-            ('clinical margin above 32 C', 'simulation margin relative to the activity criterion'),
-            ('the\n// temperature at which she stops making any heat of her own', 'the\n// stated simulation criterion'),
-            ('which is exactly the point a medic cares about', 'which keeps the two readouts distinct'),
-            ('clinical thresholds the consequences turn on', 'simulation criteria used by the scenario'),
-            ('>dH = ${p.dH > 0 ? \'+\' : \'\'}${p.dH} kJ</text>', '>ΔH = ${p.dH > 0 ? \'+\' : \'\'}${p.dH} kJ</text>'),
-            ('but the target route is ${fmt(this.hs.target.dH)} kJ.', 'but the target enthalpy is ${fmt(this.hs.target.dH)} kJ.'),
-            ('const truth = `dHrxn works out to ${fmt(this.fm.trueDH)} kJ, which is ${this.fm.trueClass}.`;',
-             'const truth = `ΔH°rxn = ${fmt(this.fm.trueDH)} kJ, so the reaction is ${this.fm.trueClass}.`;'),
-            ('A negative dH releases heat.', 'A negative ΔH corresponds to an exothermic reaction under the stated conditions.'),
-          ])
-
-          apply('units/10-thermochemistry/js/case.js', [
-            ('q = m c (dT)', 'q = m c ΔT'),
-            ('>Atwater total</text>', '>4-9-4 estimate</text>'),
-            ('rounds to the 230 on the packet', '229 kcal before label rounding'),
-          ])
-
-          files = [
-            'units/10-thermochemistry/index.html', 'units/10-thermochemistry/js/model.js',
-            'units/10-thermochemistry/js/main.js', 'units/10-thermochemistry/js/case.js',
-            'units/10-thermochemistry/js/art.js']
-          text = '\n'.join(Path(f).read_text(encoding='utf-8') for f in files)
-          forbidden = [
-            'Every Calorie on that label came from setting food on fire', 'Nobody estimated it',
-            'Make the call', 'Next patient', 'Next job', 'q = mc(dT)', 'dHrxn works out',
-            'clinical margin above 32 C', 'safe only at or above 33 C core',
-            'The dH arrow is to scale', 'route nobody can measure directly'
-          ]
-          for phrase in forbidden:
-              if phrase in text:
-                  raise SystemExit(f'forbidden remnant: {phrase}')
-          required = ['q = mcΔT', 'ΔH°rxn', 'Evidence check', 'not medical or aviation guidance',
-                      'not obtained by burning every packaged serving', '4-9-4 estimate']
-          for phrase in required:
-              if phrase not in text:
-                  raise SystemExit(f'required audited wording missing: {phrase}')
+          text = Path('/tmp/previous.yml').read_text(encoding='utf-8')
+          start = "          python - <<'PY'\n"
+          end = "\n          PY\n          git diff --check"
+          a = text.index(start) + len(start)
+          b = text.index(end, a)
+          code = '\n'.join(line[10:] if line.startswith('          ') else line for line in text[a:b].splitlines())
+          marker = "files = ["
+          global_cleanup = """
+          # Normalize any remaining legacy ASCII notation anywhere in the audited Unit 10 source.
+          for _p in [
+              'units/10-thermochemistry/index.html', 'units/10-thermochemistry/js/model.js',
+              'units/10-thermochemistry/js/main.js', 'units/10-thermochemistry/js/case.js',
+              'units/10-thermochemistry/js/art.js']:
+              _f = Path(_p)
+              _s = _f.read_text(encoding='utf-8').replace('q = mc(dT)', 'q = mcΔT')
+              _f.write_text(_s, encoding='utf-8')
+          """
+          code = code.replace(marker, global_cleanup + '\n' + marker, 1)
+          exec(compile(code, '/tmp/unit10_final.py', 'exec'), {'__name__':'__main__'})
           PY
           git diff --check
 
@@ -118,32 +49,28 @@ jobs:
           npm install --no-save playwright@1.55.0 >/dev/null 2>&1
           npx playwright install chromium >/dev/null 2>&1
           python3 -m http.server 8000 >/tmp/u10-http.log 2>&1 &
-          SERVER_PID=$!
-          trap 'kill $SERVER_PID || true' EXIT
+          PID=$!
+          trap 'kill $PID || true' EXIT
           sleep 1
           node <<'JS'
           const { chromium } = require('playwright');
-          (async () => {
-            const browser = await chromium.launch({headless:true});
-            for (const vp of [{width:1536,height:864},{width:1366,height:768}]) {
-              const page = await browser.newPage({viewport:vp});
-              await page.goto('http://127.0.0.1:8000/units/10-thermochemistry/', {waitUntil:'networkidle'});
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            for(const vp of [{width:1536,height:864},{width:1366,height:768}]){
+              const page=await browser.newPage({viewport:vp});
+              await page.goto('http://127.0.0.1:8000/units/10-thermochemistry/',{waitUntil:'networkidle'});
               await page.waitForSelector('.station-nav');
-              const m = await page.evaluate(() => {
-                const q = s => document.querySelector(s), nav=q('.station-nav'), screen=q('.mission-screen'), con=q('.chem-console');
+              const m=await page.evaluate(()=>{
+                const q=s=>document.querySelector(s), nav=q('.station-nav'), screen=q('.mission-screen'), con=q('.chem-console');
                 const tabs=[...document.querySelectorAll('.station-nav .tab')];
-                return {
-                  bodyX:document.documentElement.scrollWidth-document.documentElement.clientWidth,
-                  navX:nav.scrollWidth-nav.clientWidth,
-                  screenX:screen.scrollWidth-screen.clientWidth,
+                return {bodyX:document.documentElement.scrollWidth-document.documentElement.clientWidth,
+                  navX:nav.scrollWidth-nav.clientWidth,screenX:screen.scrollWidth-screen.clientWidth,
                   consoleX:con.scrollWidth-con.clientWidth,
                   wrappedTabs:tabs.filter(t=>t.scrollHeight>t.clientHeight+1||t.scrollWidth>t.clientWidth+1).length,
-                  bodyH:document.documentElement.scrollHeight, viewportH:innerHeight
-                };
+                  bodyH:document.documentElement.scrollHeight,viewportH:innerHeight};
               });
               console.log(`${vp.width}x${vp.height}: ${JSON.stringify(m)}`);
-              if (m.bodyX>1 || m.navX>1 || m.screenX>1 || m.consoleX>1 || m.wrappedTabs>0)
-                throw new Error(`layout overflow/wrapping at ${vp.width}x${vp.height}`);
+              if(m.bodyX>1||m.navX>1||m.screenX>1||m.consoleX>1||m.wrappedTabs>0) throw new Error(`overflow/wrapping at ${vp.width}x${vp.height}`);
               await page.close();
             }
             await browser.close();
@@ -156,7 +83,8 @@ jobs:
           rm -rf node_modules package-lock.json package.json
           git rm .github/workflows/unit10-final-cleanup.yml
           git add units/10-thermochemistry/index.html units/10-thermochemistry/js/model.js \
-                  units/10-thermochemistry/js/main.js units/10-thermochemistry/js/case.js
+                  units/10-thermochemistry/js/main.js units/10-thermochemistry/js/case.js \
+                  units/10-thermochemistry/js/art.js
           git diff --cached --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
