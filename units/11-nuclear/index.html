@@ -628,18 +628,19 @@
 <script type="module">
   window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
   const [{ createSim: baseCreateSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
-         { mountColumnResizers }, refinements] = await Promise.all([
-    import('./js/main.js?v=u11-2'),
+         { mountColumnResizers }, refinements, outputRefinements] = await Promise.all([
+    import('./js/main.js?v=u11-3'),
     import('../../shared/js/render.js'),
     import('../../shared/js/gauge.js'),
     import('../../shared/js/casefile.js'),
-    import('./js/case.js?v=u11-2'),
+    import('./js/case.js?v=u11-3'),
     import('../shared/columns.js?v=cockpit-3'),
-    import('./js/refinements.js?v=u11-2')
+    import('./js/refinements.js?v=u11-3'),
+    import('./js/output-refinements.js?v=u11-3')
   ]);
   refinements.applyContentRefinements();
   refinements.applyStaticCopy(document);
-  const createSim = refinements.refineCreateSim(baseCreateSim);
+  const createSim = outputRefinements.refineOutputCreateSim(refinements.refineCreateSim(baseCreateSim));
   window.sim = createSim;
   const { default: Alpine } = await import('https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js');
   registerRender(Alpine);
