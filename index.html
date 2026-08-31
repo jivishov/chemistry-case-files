@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chemistry Case Files · Mission Cockpit</title>
-<meta name="description" content="TEKS-aligned interactive chemistry simulators for Texas high school, On-Level with Honors extensions. Mission-cockpit build.">
+<title>Chemistry Case Files · Interactive Texas Chemistry</title>
+<meta name="description" content="Interactive chemistry investigations and case studies for Texas students in Grades 10–12, with on-level learning and optional Honors extensions.">
+<script src="units/shared/design-mode.js?v=design-1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -15,10 +16,11 @@
 <link rel="stylesheet" href="shared/css/tokens.css">
 <link rel="stylesheet" href="shared/css/base.css">
 <link rel="stylesheet" href="shared/css/components.css">
+<link rel="stylesheet" href="units/shared/design-modes.css?v=design-4">
 </head>
 <body>
 <div id="boot-fallback" hidden role="alert" style="max-width:720px;margin:48px auto;padding:20px;font-family:system-ui,sans-serif;border:1px solid #c9c9c9;border-radius:10px;background:#fff;">
-  <strong>Chemistry Case Files could not start.</strong> Reload the page. If the problem continues, the site may be temporarily unable to load one of its local modules.
+  <strong>Chemistry Case Files did not finish loading.</strong> Refresh the page. If it still does not load, check your connection or tell your teacher which page you opened.
 </div>
 <script>
   window.__chemAppReady = false;
@@ -30,96 +32,143 @@
     if (!window.__chemAppReady) document.getElementById('boot-fallback')?.removeAttribute('hidden');
   }, 2500);
 </script>
-<div x-data="hub" x-cloak>
+<div x-data="hub" x-cloak class="course-hub">
 
-  <header class="site-header">
-    <div class="wrap">
-      <span class="brand"><span class="mark">Tx</span> Chemistry Case Files</span>
-      <span class="grow"></span>
-      <span class="badge" x-text="course.code"></span>
+  <header class="site-header hub-header">
+    <div class="wrap hub-header-inner">
+      <div class="brand hub-brand" aria-label="Chemistry Case Files course home">
+        <span class="mark hub-mark" aria-hidden="true">CF</span>
+        <span>
+          <span class="hub-brand-name">Chemistry Case Files</span>
+          <span class="hub-brand-sub">Interactive Texas Chemistry</span>
+        </span>
+      </div>
+      <div class="command-actions hub-actions">
+        <span class="badge hub-course-code" x-text="course.code"></span>
+      </div>
     </div>
   </header>
 
-  <main class="wrap page-main">
+  <main class="wrap page-main hub-main">
 
-    <section style="margin-bottom: var(--s-3);">
-      <div class="page-head page-head-hero">
-        <h1>Chemistry is the reason. Come find out why.</h1>
-        <p class="eyebrow">High School Chemistry · Learn it by doing it</p>
+    <section class="hub-intro" aria-labelledby="hub-title">
+      <div class="hub-intro-copy">
+        <p class="hub-kicker">Texas Chemistry · Designed for Grade 10 learners</p>
+        <h1 id="hub-title">Investigate matter.<br>Explain change with evidence.</h1>
+        <p class="hub-lead">
+          Chemistry connects particle structure and interactions to the properties and changes we can observe.
+          In each unit, you will use models, measurements, calculations, and data to build a scientific explanation.
+        </p>
+        <p class="hub-support">
+          Each investigation includes an applied <strong>Case File</strong> based on a real event, technology,
+          or scientific problem. Optional <strong>Honors</strong> work adds more quantitative reasoning and modeling
+          without changing the core learning path.
+        </p>
+        <div class="hub-legend" aria-label="Course features">
+          <span><span class="hub-legend-key">Investigation</span> test ideas with evidence</span>
+          <span><span class="hub-legend-key">Case File</span> apply chemistry in context</span>
+          <span><span class="hub-legend-key">Honors</span> extend the analysis</span>
+        </div>
+        <a class="hub-scroll-cue" href="#course-map">
+          <span>Explore the units below</span>
+          <span class="hub-scroll-cue-arrow" aria-hidden="true">↓</span>
+        </a>
       </div>
-      <p>
-        Eleven hands-on units, each one built around a real story where this exact chemistry
-        saved a life, solved a mystery, or wrecked a mission. Play the simulator, then open the
-        <strong>Case File</strong> to see where it got real. Every unit hides an
-        <strong>Honors</strong> mode for when you want to push further.
-      </p>
-      <div class="row legend" style="gap: var(--s-5); margin-top: var(--s-3);">
-        <span class="row" style="gap: var(--s-2);"><span class="pill pill-ready">Ready</span><span class="muted legend-note">jump in now</span></span>
-        <span class="row" style="gap: var(--s-2);"><span class="badge badge-honors">Honors</span><span class="muted legend-note">go deeper in every sim</span></span>
-        <span class="row" style="gap: var(--s-2);"><span class="badge">Case File</span><span class="muted legend-note">the true story behind it</span></span>
-      </div>
+
+      <aside class="hub-learning-path" aria-labelledby="path-title">
+        <p class="hub-kicker">How to work through a unit</p>
+        <h2 id="path-title">Follow the evidence path</h2>
+        <ol>
+          <li><span>01</span><p><strong>Start with the guiding question.</strong> Identify the chemical idea you need to explain.</p></li>
+          <li><span>02</span><p><strong>Run the investigation.</strong> Use observations, models, and calculations to test your thinking.</p></li>
+          <li><span>03</span><p><strong>Support a conclusion.</strong> Connect your claim to the evidence you collected.</p></li>
+          <li><span>04</span><p><strong>Open the Case File.</strong> Apply the same chemistry to an authentic situation.</p></li>
+        </ol>
+      </aside>
     </section>
 
-    <section>
-      <div class="cell-grid">
-        <template x-for="u in units" :key="u.n">
-          <!-- Relative to THIS page, so the slug alone is the path. A 'units_new/' prefix
-               here would resolve to units_new/units_new/<slug> and 404. -->
-          <a class="cell" :class="{ 'is-planned': u.status!=='ready' }"
-             :href="u.status==='ready' ? ('units/'+u.slug+'/index.html') : null"
-             :aria-disabled="u.status!=='ready'">
-            <span class="accentbar"></span>
-            <div class="row" style="justify-content: space-between; align-items: baseline;">
-              <span class="num" x-text="'Unit ' + u.n"></span>
-              <span class="pill" :class="u.status==='ready' ? 'pill-ready' : 'pill-planned'"
-                    x-text="u.status==='ready' ? 'Ready' : 'Soon'"></span>
-            </div>
-            <div class="abbr" x-text="u.abbr"></div>
-            <div class="ct" x-text="u.title"></div>
-            <p class="hook" x-text="u.hook"></p>
-            <div class="foot">
-              <span class="casewrap" x-show="u.status==='ready'">
-                <span class="case-ico" aria-hidden="true">&#9654;</span>
-                <span class="case-label" x-text="u.case"></span>
-              </span>
-              <span class="casewrap" x-show="u.status!=='ready'">
-                <span class="case-label muted" x-text="u.case"></span>
-              </span>
-            </div>
-          </a>
-        </template>
+    <section id="course-map" class="hub-course-map" aria-labelledby="course-map-title">
+      <div class="hub-section-head">
+        <div>
+          <p class="hub-kicker">Course map · 11 units</p>
+          <h2 id="course-map-title">Build from measurement to nuclear change</h2>
+        </div>
+        <p>
+          The sequence begins with reliable measurement and atomic structure, then develops the relationships
+          among bonding, quantity, reactions, energy, and the behavior of matter.
+        </p>
       </div>
+
+      <ol class="hub-unit-list">
+        <template x-for="u in units" :key="u.n">
+          <!-- Every available course route resolves from this root hub to
+               units/<slug>/index.html. -->
+          <li class="hub-unit-item">
+            <a class="hub-unit-link" :class="{ 'is-planned': u.status!=='ready' }"
+               :href="u.status==='ready' ? ('units/'+u.slug+'/index.html') : null"
+               :aria-disabled="u.status!=='ready'"
+               :tabindex="u.status==='ready' ? 0 : -1">
+              <span class="hub-unit-index" aria-hidden="true">
+                <span class="hub-unit-number" x-text="u.displayNumber"></span>
+                <span class="hub-unit-symbol" x-text="u.abbr"></span>
+              </span>
+              <span class="hub-unit-body">
+                <span class="hub-unit-overline">
+                  <span x-text="'Unit ' + u.n"></span>
+                  <span x-text="u.teks.join(' · ')"></span>
+                </span>
+                <strong class="hub-unit-title" x-text="u.title"></strong>
+                <span class="hub-unit-question" x-text="u.question"></span>
+                <span class="hub-unit-focus"><span>Study focus</span> <span x-text="u.focus"></span></span>
+                <span class="hub-unit-case"><span>Case File</span> <strong x-text="u.caseTitle"></strong></span>
+              </span>
+              <span class="hub-unit-action" x-text="u.status==='ready' ? ('Open Unit ' + u.n) : 'Coming soon'"></span>
+            </a>
+          </li>
+        </template>
+      </ol>
 
       <!-- The migration-temporary "N of 11 have moved" notice lived here and was deleted
            when `built` reached eleven, which is what HANDOFF-INDEX.md's front-door section
            asks for. `BUILT` is still the readiness list: a unit card stays inactive until
            its slug is in it, so the mechanism stays even though the notice is gone. -->
 
-      <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-4);">
-        Aligned to the Texas Chemistry TEKS (19 TAC §112.43). Standards are tracked inside each unit so you can focus on the chemistry, not the codes.
+      <p class="hub-alignment-note">
+        Course alignment: Texas Essential Knowledge and Skills for Chemistry,
+        <span x-text="course.code"></span>. Content standards appear in each unit; scientific and engineering
+        practices are integrated throughout the investigations.
       </p>
     </section>
 
-    <section class="panel" style="margin-top: var(--s-7);">
-      <div class="panel-head"><span class="panel-title">How the standards map</span></div>
-      <p class="muted" style="margin-bottom: var(--s-4);">
-        The scientific & engineering practices below are woven through every unit (at least 40% of instructional time),
-        not taught in isolation.
-      </p>
-      <table class="data">
-        <thead><tr><th>Code</th><th>Scientific & engineering practice</th></tr></thead>
+    <section class="hub-practices" aria-labelledby="practices-title">
+      <div class="hub-section-head hub-practices-head">
+        <div>
+          <p class="hub-kicker">Scientific and engineering practices</p>
+          <h2 id="practices-title">Use evidence, models, and scientific reasoning</h2>
+        </div>
+        <p>
+          These practices are integrated throughout the course. You will ask questions, plan investigations,
+          analyze data, construct explanations, and evaluate how chemistry connects to society and STEM work.
+        </p>
+      </div>
+      <div class="hub-practices-table-wrap">
+      <table class="data hub-practices-table">
+        <caption class="sr-only">Texas Chemistry scientific and engineering practices C.1 through C.4</caption>
+        <thead><tr><th>Code</th><th>Scientific and engineering practice</th></tr></thead>
         <tbody>
           <template x-for="s in sep" :key="s.code">
             <tr><td><span class="badge" x-text="s.code"></span></td><td x-text="s.text"></td></tr>
           </template>
         </tbody>
       </table>
+      </div>
     </section>
 
   </main>
 
-  <footer class="wrap" style="padding: var(--s-6) var(--s-5); border-top: 1px solid var(--border); color: var(--muted); font-size: var(--fs-sm);">
-    <span x-text="course.title + ' · ' + course.adopted"></span>. Built for On-Level mastery with Honors depth.
+  <footer class="wrap hub-footer">
+    <span x-text="course.title + ' · ' + course.code"></span>
+    <span>Interactive on-level investigations with optional Honors extensions.</span>
   </footer>
 </div>
 
@@ -150,10 +199,72 @@
     '11-nuclear',
   ];
 
+  // Hub copy is intentionally specific to the current investigations and Case Files.
+  // The shared TEKS catalog remains the source of unit titles and standards.
+  const HUB_COPY = Object.freeze({
+    '01-practices-matter': {
+      question: 'How do measurement precision, density, and unit conversions support reliable scientific conclusions?',
+      focus: 'SI units; significant figures; density; accuracy and precision; dimensional analysis',
+      caseTitle: 'Mars Climate Orbiter: a unit-conversion failure',
+    },
+    '02-atomic-structure': {
+      question: 'How do atomic models describe isotopes, and how do electron energy levels produce characteristic emission spectra?',
+      focus: 'Atomic models; isotopes; average atomic mass; electron configurations; emission spectra',
+      caseTitle: 'How chemistry produces firework colors',
+    },
+    '03-periodic-trends': {
+      question: 'How do electron arrangements explain periodic trends and the chemical behavior of element families?',
+      focus: 'Periodic organization; atomic radius; ionization energy; electronegativity; family behavior',
+      caseTitle: 'Why lithium is useful in rechargeable batteries',
+    },
+    '04-bonding-geometry': {
+      question: 'How do bond type, molecular geometry, polarity, and intermolecular forces determine substance properties?',
+      focus: 'Ionic, covalent, and metallic bonding; nomenclature; VSEPR geometry; intermolecular forces',
+      caseTitle: 'Why ice floats: molecular geometry and hydrogen bonding',
+    },
+    '05-the-mole': {
+      question: 'How does the mole connect particle count, molar mass, percent composition, and chemical formulas?',
+      focus: 'Avogadro’s number; molar mass; percent composition; empirical and molecular formulas',
+      caseTitle: 'Apollo 13: carbon dioxide control in a lifeboat',
+    },
+    '06-reactions-stoichiometry': {
+      question: 'How do balanced equations and mole ratios predict product quantities, limiting reactants, and excess reactants?',
+      focus: 'Reaction types; balanced equations; mole ratios; limiting reactants; product quantities',
+      caseTitle: 'How early airbag inflators used stoichiometry',
+    },
+    '07-gas-laws': {
+      question: 'How does kinetic molecular theory connect gas pressure, volume, temperature, and amount?',
+      focus: 'Particle motion; pressure–volume relationships; Dalton’s law; ideal-gas calculations',
+      caseTitle: 'Boyle’s law and safe scuba ascent',
+    },
+    '08-solutions': {
+      question: 'How do intermolecular attractions and temperature affect dissolving, and how do chemists represent solution concentration?',
+      focus: 'Dissolving; saturation; solubility curves; molarity; solution preparation and dilution',
+      caseTitle: 'Lake Nyos: when dissolved carbon dioxide escaped',
+    },
+    '09-acids-bases': {
+      question: 'How do hydrogen-ion concentration, acid strength, neutralization, and titration describe acid–base systems?',
+      focus: 'Hydrogen-ion concentration; pH; acid strength; neutralization; titration',
+      caseTitle: 'Why acidic drinks can demineralize tooth enamel',
+    },
+    '10-thermochemistry': {
+      question: 'How do calorimetry and energy diagrams represent energy transfer and change in physical and chemical processes?',
+      focus: 'Heat transfer; calorimetry; q = mcΔT; endothermic and exothermic processes; energy diagrams',
+      caseTitle: 'How calorimetry informs food-energy values',
+    },
+    '11-nuclear': {
+      question: 'How do radioactive decay, half-life, fission, and fusion differ from ordinary chemical reactions?',
+      focus: 'Nuclear equations; alpha, beta, and gamma decay; half-life; fission; fusion',
+      caseTitle: 'Dating Ötzi with carbon-14',
+    },
+  });
+
   // teks.js stays the single source of titles, hooks, abbreviations and the SEP table.
   // Only `status` is overridden.
   const units = UNITS.map(u => ({
     ...u,
+    ...HUB_COPY[u.slug],
+    displayNumber: String(u.n).padStart(2, '0'),
     status: BUILT.includes(u.slug) ? 'ready' : 'planned',
   }));
 
