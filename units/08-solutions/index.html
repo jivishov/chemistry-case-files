@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="../../shared/css/base.css">
 <link rel="stylesheet" href="../../shared/css/components.css">
 <link rel="stylesheet" href="../../shared/css/casefile.css">
-<link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
+<link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-4">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -99,16 +99,22 @@
               <span class="prompt-name" x-text="dp.name"></span>
               <span class="prompt-where small muted" x-text="dp.where"></span>
             </div>
-            <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">1. What kind of substance is it?</p>
-            <div class="choice-grid" style="max-width: 520px;">
-              <button class="choice" :data-state="dpKindState('ionic')" @click="dpPickKind('ionic')">Ionic</button>
-              <button class="choice" :data-state="dpKindState('polar')" @click="dpPickKind('polar')">Polar covalent</button>
-              <button class="choice" :data-state="dpKindState('nonpolar')" @click="dpPickKind('nonpolar')">Nonpolar covalent</button>
-            </div>
-            <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">2. How soluble is it in water for this activity?</p>
-            <div class="choice-grid" style="max-width: 420px;">
-              <button class="choice" :data-state="dpDisState(true)" @click="dpPickDis(true)">Appreciably soluble</button>
-              <button class="choice" :data-state="dpDisState(false)" @click="dpPickDis(false)">Low solubility</button>
+            <div class="dissolve-questions" aria-label="Substance and water-solubility classification">
+              <section class="dissolve-question">
+                <p class="small muted dissolve-question-label">1. What kind of substance is it?</p>
+                <div class="choice-grid dissolve-choice-grid dissolve-choice-grid-kind">
+                  <button class="choice" :data-state="dpKindState('ionic')" @click="dpPickKind('ionic')">Ionic</button>
+                  <button class="choice" :data-state="dpKindState('polar')" @click="dpPickKind('polar')">Polar covalent</button>
+                  <button class="choice" :data-state="dpKindState('nonpolar')" @click="dpPickKind('nonpolar')">Nonpolar covalent</button>
+                </div>
+              </section>
+              <section class="dissolve-question">
+                <p class="small muted dissolve-question-label">2. How soluble is it in water for this activity?</p>
+                <div class="choice-grid dissolve-choice-grid dissolve-choice-grid-solubility">
+                  <button class="choice" :data-state="dpDisState(true)" @click="dpPickDis(true)">Appreciably soluble</button>
+                  <button class="choice" :data-state="dpDisState(false)" @click="dpPickDis(false)">Low solubility</button>
+                </div>
+              </section>
             </div>
             <div class="row call-row" style="margin-top: var(--s-4);">
               <button class="btn btn-accent" @click="dpCertify()" :disabled="dpDone || dpKind===null || dpDis===null" x-text="dp.sc.actionLabel"></button>

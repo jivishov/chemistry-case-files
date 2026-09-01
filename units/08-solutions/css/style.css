@@ -19,6 +19,19 @@
 .prompt-name { color: var(--ink-2); }
 .prompt-where { flex-basis: 100%; }
 
+/* Keep each decision set aligned with the mission panel rather than shrinking it to a
+   left-hand slab. A separate group also gives the two questions a stable visual rhythm. */
+.dissolve-questions { display: grid; gap: var(--s-4); margin-top: var(--s-4); }
+.dissolve-question-label { margin: 0 0 var(--s-2); }
+.dissolve-choice-grid { width: 100%; max-width: none; }
+.dissolve-choice-grid-kind { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.dissolve-choice-grid-solubility { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+@media (max-width: 560px) {
+  .dissolve-choice-grid-kind,
+  .dissolve-choice-grid-solubility { grid-template-columns: 1fr; }
+}
+
 /* Clearwell world-state: the secondary-standard marker under the manganese meter */
 .limit-row { display: flex; align-items: flex-start; gap: var(--s-2); margin-top: var(--s-1); }
 .limit-mark {

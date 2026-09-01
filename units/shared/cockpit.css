@@ -1197,6 +1197,35 @@ details.screen-reference[open] > summary { margin-bottom: 2px; }
   gap: 6px;
 }
 
+/* Mission answers belong to the width of the active work column. Several early activities
+ * limited a two- or three-choice grid with local or inline max-width values, which left an
+ * arbitrary empty slab to the right and made equivalent choices feel inconsistently placed.
+ * Keep each grid full-width here; unit-specific grids can still choose a deliberate number
+ * of columns for long answer text, but no answer set is silently clamped to the left. */
+.chem-console .choice-grid {
+  width: 100%;
+  max-width: none !important;
+}
+
+/* Four or five short answers otherwise inherit the three-track auto-fit layout, leaving an
+ * orphaned button at the left edge of the final row. Two even tracks keep four choices as a
+ * balanced 2 × 2 decision set; five use the same rhythm and let the final option span the
+ * closing row. Numeric pads retain their deliberately denser arrangements. */
+.chem-console .choice-grid:not(.choice-counts):not(.valence-pad):has(> .choice:nth-of-type(4)):not(:has(> .choice:nth-of-type(6))) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.chem-console .choice-grid:not(.choice-counts):not(.valence-pad):has(> .choice:nth-of-type(5)):not(:has(> .choice:nth-of-type(6))) > .choice:last-of-type {
+  grid-column: 1 / -1;
+}
+
+/* When a question prompt follows an answer grid, make the step boundary visible instead of
+ * letting the next numbered prompt crowd the preceding controls. This covers the recurring
+ * two-part mission pattern without affecting the activity logic or the control states. */
+.chem-console :is(.choice-grid, .opt-grid, .bondgrid, .lawgrid, .packgrid, .emgrid, .isogrid, .reasongrid) + p.small {
+  margin-top: var(--s-4) !important;
+}
+
 .chem-console .miss-opt,
 .chem-console .choice {
   padding: 7px 9px;
