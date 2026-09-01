@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="../shared/design-modes.css?v=design-1">
+<link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
@@ -48,7 +48,31 @@
       </label>
         <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
       </div>
-      <div class="command-metrics"><span class="metric-chip">XP <strong x-text="g_xp"></strong></span><span class="metric-chip">Streak <strong x-text="g_streak"></strong></span><span class="teks-badge" :class="{ complete: teksMasteredCount===coreSkills.length }">TEKS <strong><span x-text="teksMasteredCount"></span>/3</strong></span></div>
+      <div class="command-metrics" aria-label="Progress and standards progress">
+        <span class="metric-chip">XP <strong x-text="g_xp"></strong></span>
+        <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
+        <div class="teks-wrap" @click.outside="teksOpen = false" @keydown.escape="teksOpen = false">
+          <button type="button" class="teks-badge" :class="{ complete: teksMasteredCount === coreSkills.length }"
+                  :aria-expanded="teksOpen ? 'true' : 'false'" aria-controls="teks-progress"
+                  aria-label="Show TEKS standards progress" @click="teksOpen = !teksOpen">
+            <span>TEKS</span>
+            <strong><span x-text="teksMasteredCount"></span>/<span x-text="coreSkills.length"></span></strong>
+          </button>
+          <div id="teks-progress" class="teks-popover" x-show="teksOpen" x-cloak role="group"
+               aria-label="TEKS C.10 standards progress">
+            <template x-for="se in coreSkills" :key="se.id">
+              <div class="teks-row" :class="{ active: se.mode === mode, mastered: gMastered(se.id) }">
+                <span class="teks-row-head">
+                  <span class="teks-row-code" x-text="se.code"></span>
+                  <span class="teks-row-cap" x-text="seCaption(se)"></span>
+                </span>
+                <span class="teks-row-text" x-prose="se.text"></span>
+                <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id) * 100}%`"></span></span>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
     </header>
     <div class="workbench-grid" x-show="mode!=='casefile'">
       <section class="mission-screen panel" :class="'tone-'+activeTone" aria-label="Current chemistry scenario">
@@ -129,14 +153,14 @@
                   <p class="muted" style="font-size: var(--fs-sm);">Each ×-number compares the model with a baseline of 40 particles, 300 K, and ×1 volume. In the ideal-gas model, average translational kinetic energy depends on temperature. The relative pressure model follows P &#8733; NT/V.</p>
                   <ol class="postulates">
                     <template x-for="p in KMT_POSTULATES" :key="'ref'+p.id">
-                      <li><strong x-text="p.short + ' · '"></strong><span x-text="p.text"></span></li>
+                      <li><strong x-text="p.short + ' · '"></strong><span x-prose="p.text"></span></li>
                     </template>
                   </ol>
                 </div>
               </details>
 
               <label style="display:block; margin: var(--s-5) 0 var(--s-2);">Which postulate explains this?</label>
-              <div class="clue-card" x-text="kq.item.scenario"></div>
+              <div class="clue-card" x-prose="kq.item.scenario"></div>
               <p class="small muted" style="margin-top: var(--s-2);">Where it turns up: <span x-text="kq.item.where"></span>.</p>
               <div class="choice-grid" style="margin-top: var(--s-3);">
                 <template x-for="p in KMT_POSTULATES" :key="'q'+p.id">
@@ -259,13 +283,13 @@
               <div class="given-row">
                 <template x-for="g in igGivens" :key="'ig'+g.key">
                   <div class="given-cell">
-                    <span class="k" x-text="g.label"></span>
+                    <span class="k" x-prose="g.label"></span>
                     <span class="v mono"><span x-text="g.value"></span> <span x-text="g.unit"></span></span>
                   </div>
                 </template>
                 <div class="given-cell">
                   <span class="k">Calculate</span>
-                  <span class="v mono"><span x-text="ig.label"></span> (<span x-text="ig.unit"></span>)</span>
+                  <span class="v mono"><span x-prose="ig.label"></span> (<span x-text="ig.unit"></span>)</span>
                 </div>
               </div>
 
@@ -668,7 +692,7 @@
               <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">Use the evidence. Which condition is supported?</p>
               <div class="choice-grid choice-grid-wide">
                 <template x-for="o in cap.sc.options" :key="o.key">
-                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
+                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-prose="o.label"></button>
                 </template>
               </div>
 
@@ -717,7 +741,7 @@
             <template x-for="w in worldLog" :key="w.id">
               <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
                 <span class="ws-icon" x-text="w.icon"></span>
-                <span x-text="w.text"></span>
+                <span x-prose="w.text"></span>
               </li>
             </template>
           </ul>
@@ -727,9 +751,9 @@
       <aside class="life-support-board panel" aria-label="Simulation status">
         <div class="life-header"><div><span class="command-kicker">Simulated reserve</span><strong x-text="bankState"></strong></div><span class="sol-chip" x-text="clockLabel"></span></div>
         <div class="crew-status cockpit-crew"><div class="crew-bar"><div class="life-meter-label"><span>Reserve</span><span class="mono" x-text="fmt(bank)+' / 200 pts'"></span></div><div class="meter"><div class="meter-fill" :style="`width:${bankPct}%; background:${bankColor}`"></div></div></div></div>
-        <div class="system-grid" aria-label="Shift readings"><template x-for="r in bankReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span :title="r.hint" x-text="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template></div>
-        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest result</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'No result is logged yet.'"></p></section>
-        <section class="mission-log"><span class="command-kicker">Activity log</span><p class="worldstate-empty" x-show="!worldLog.length">No result recorded yet.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : 'bad'"><span class="ws-icon" x-text="w.icon"></span><span x-text="w.text"></span></li></template></ul></section>
+        <div class="system-grid" aria-label="Shift readings"><template x-for="r in bankReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span :title="r.hint" x-prose="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template></div>
+        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest result</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-prose="worldLog.length ? worldLog[0].text : 'No result is logged yet.'"></p></section>
+        <section class="mission-log"><span class="command-kicker">Activity log</span><p class="worldstate-empty" x-show="!worldLog.length">No result recorded yet.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : 'bad'"><span class="ws-icon" x-text="w.icon"></span><span x-prose="w.text"></span></li></template></ul></section>
       </aside>
     </div>
 

@@ -6,7 +6,7 @@
 // be `el.textContent = expr`, which put raw mhchem on the page -- "H2O", "SO4^2-", "-> " --
 // and quietly turned every formula in the build into ASCII. shared/js/notation.js typesets the
 // same strings with real sub/sup markup and no dependency at all, so that is the fallback now.
-import { formulaHTML, registerNotation } from './notation.js';
+import { escapeHTML, formulaHTML, registerNotation } from './notation.js';
 
 // Stable color per chemical species for token visualizations + charts.
 const PALETTE = ['#2a7d8a', '#c0772f', '#5a6b9c', '#6b9c5a', '#9c5a87', '#b8881f', '#3f8f9c', '#a85a3f'];
@@ -25,11 +25,94 @@ export function renderCE(el, expr) {
   catch { el.innerHTML = formulaHTML(expr); }
 }
 
-// Render plain TeX (for math like q = mc\Delta T).
+// Render plain TeX (for math like q = mc\Delta T). KaTeX is preferred when it is
+// present, but course equations must remain scientific notation rather than raw TeX
+// when a CDN is blocked. This intentionally covers the small, authored subset used by
+// the activities: fractions, roots, overbars, Greek symbols, and scripts.
+const TEX_GLYPHS = {
+  Delta: 'Δ', rho: 'ρ', nu: 'ν', sigma: 'σ', sum: 'Σ',
+  cdot: '·', pm: '±', log: 'log',
+  ',': ' ', ';': ' ', '!': '', ':': ' ', '\\': ' '
+};
+
+function texGroup(source, start) {
+  if (source[start] !== '{') return null;
+  let depth = 1;
+  for (let i = start + 1; i < source.length; i++) {
+    if (source[i] === '{') depth++;
+    if (source[i] === '}' && --depth === 0) {
+      return { value: source.slice(start + 1, i), next: i + 1 };
+    }
+  }
+  return null;
+}
+
+export function texFallbackHTML(expr) {
+  const render = source => {
+    let out = '';
+    for (let i = 0; i < source.length;) {
+      const ch = source[i];
+
+      if (ch === '\\') {
+        const match = /^\\([A-Za-z]+|.)/.exec(source.slice(i));
+        if (!match) { out += '\\'; i++; continue; }
+        const command = match[1];
+        i += match[0].length;
+
+        if (command === 'left' || command === 'right') continue;
+        if (command === 'times') {
+          out += ' × ';
+          while (source[i] === ' ') i++;
+          continue;
+        }
+        if (command === 'frac' || command === 'dfrac' || command === 'tfrac') {
+          const numerator = texGroup(source, i);
+          const denominator = numerator && texGroup(source, numerator.next);
+          if (!numerator || !denominator) { out += escapeHTML(match[0]); continue; }
+          out += `<span class="tex-frac"><span class="tex-frac-n">${render(numerator.value)}</span><span class="tex-frac-d">${render(denominator.value)}</span></span>`;
+          i = denominator.next;
+          continue;
+        }
+        if (command === 'sqrt' || command === 'bar' || command === 'overline' || command === 'mathrm' || command === 'text') {
+          const group = texGroup(source, i);
+          if (!group) { out += escapeHTML(match[0]); continue; }
+          const rendered = render(group.value);
+          if (command === 'sqrt') out += `√<span class="tex-radical">(${rendered})</span>`;
+          else if (command === 'bar' || command === 'overline') out += `<span class="tex-overbar">${rendered}</span>`;
+          else out += rendered;
+          i = group.next;
+          continue;
+        }
+        out += TEX_GLYPHS[command] ?? escapeHTML(match[0]);
+        continue;
+      }
+
+      if (ch === '^' || ch === '_') {
+        const group = texGroup(source, i + 1);
+        const next = group ? group.next : i + 2;
+        const content = group ? render(group.value) : escapeHTML(source[i + 1] ?? '');
+        out += ch === '^' ? `<sup>${content}</sup>` : `<sub>${content}</sub>`;
+        i = next;
+        continue;
+      }
+
+      if (ch === '{') {
+        const group = texGroup(source, i);
+        if (group) { out += render(group.value); i = group.next; continue; }
+      }
+
+      out += escapeHTML(ch);
+      i++;
+    }
+    return out;
+  };
+  return render(String(expr ?? ''));
+}
+
 export function renderTeX(el, expr, displayMode = false) {
-  if (typeof katex === 'undefined') { el.textContent = expr; return; }
+  if (typeof katex === 'undefined') { el.innerHTML = texFallbackHTML(expr); return; }
   try { katex.render(expr, el, { throwOnError: false, displayMode }); }
-  catch { el.textContent = expr; }
+  catch { el.innerHTML = texFallbackHTML(expr); }
 }
 
 // Register Alpine directives: x-ce (chemistry) and x-tex (math), plus notation.js's

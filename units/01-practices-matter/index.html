@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
 <link rel="stylesheet" href="css/style.css?v=u1-7">
-<link rel="stylesheet" href="../shared/design-modes.css?v=design-1">
+<link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 </head>
 <body>
@@ -65,7 +65,7 @@
                   <span class="teks-row-code" x-text="se.code"></span>
                   <span class="teks-row-cap" x-text="seCaption(se)"></span>
                 </span>
-                <span class="teks-row-text" x-text="se.text"></span>
+                <span class="teks-row-text" x-prose="se.text"></span>
                 <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id)*100}%`"></span></span>
               </div>
             </template>
@@ -420,7 +420,7 @@
               <p class="small muted mt-4 mb-2">Step 2. Use the calculated chlorine concentration, the dissolved-metal reading, and the test-kit reliability score to choose the appropriate next step.</p>
               <div class="choice-grid choices-620">
                 <template x-for="o in cap.sc.options" :key="o.key">
-                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" :disabled="capWin" x-text="o.label"></button>
+                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" :disabled="capWin" x-prose="o.label"></button>
                 </template>
               </div>
 
@@ -462,7 +462,7 @@
           <template x-for="r in tankReadings" :key="r.key">
             <div class="ship-stock">
               <div class="life-meter-label">
-                <span x-text="r.label" :title="r.hint"></span>
+                <span x-prose="r.label" :title="r.hint"></span>
                 <span class="mono" x-text="r.raw"></span>
               </div>
               <div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${stockColor(r.pct)}`"></div></div>
@@ -473,7 +473,7 @@
         <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest result">
           <span class="command-kicker">Latest result</span>
           <strong x-show="activeStateLabel" x-text="activeStateLabel"></strong>
-          <p x-text="worldLog.length ? worldLog[0].text : 'Fresh tap water at ' + TANK.tapChlorine.toFixed(2) + ' mg/L free chlorine. No activity completed yet.'"></p>
+          <p x-prose="worldLog.length ? worldLog[0].text : 'Fresh tap water at ' + TANK.tapChlorine.toFixed(2) + ' mg/L free chlorine. No activity completed yet.'"></p>
         </section>
 
         <section class="mission-log" aria-label="Activity log">
@@ -483,7 +483,7 @@
             <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
               <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
                 <span class="ws-icon" x-text="w.icon"></span>
-                <span x-text="w.text"></span>
+                <span x-prose="w.text"></span>
               </li>
             </template>
           </ul>

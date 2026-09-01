@@ -68,6 +68,23 @@ sup { top: -.42em; }
   font-size: .68em;
   line-height: 1.05;
 }
+
+/* The no-network TeX fallback uses the same semantic sub/sup elements as the
+   chemistry renderer. Fractions remain compact and legible without switching
+   fonts or enlarging the surrounding instructional line. */
+.tex-frac {
+  display: inline-grid;
+  grid-template-rows: auto auto;
+  min-width: 1.4ch;
+  margin: 0 .08em;
+  vertical-align: -.48em;
+  text-align: center;
+  line-height: 1.03;
+}
+.tex-frac-n { border-bottom: 1px solid currentColor; padding: 0 .08em .04em; }
+.tex-frac-d { padding: .04em .08em 0; }
+.tex-radical { white-space: nowrap; }
+.tex-overbar { text-decoration: overline; text-decoration-thickness: 1px; }
 .eyebrow {
   font-family: var(--font-mono); font-size: var(--fs-xs);
   letter-spacing: .16em; text-transform: uppercase; color: var(--accent-700);

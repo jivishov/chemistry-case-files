@@ -634,6 +634,133 @@ html[data-design="atlas"] .station-nav .tab.is-locked::after {
   color: var(--muted);
 }
 
+/* Catalog-wide control and text refinement.
+   The activity shell already establishes the three-column workbench. This pass
+   keeps that efficient structure while making every interactive target read as
+   a deliberate control: labels share a left edge, fields carry their label
+   without crowding it, and selections remain comfortably tappable at laptop
+   density. The rules intentionally target the shared vocabulary used by all
+   eleven units rather than cloning fixes into individual missions. */
+html[data-design="clear"] .chem-console .btn,
+html[data-design="atlas"] .chem-console .btn,
+html[data-design="clear"] .command-reset,
+html[data-design="atlas"] .command-reset {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+html[data-design="clear"] .chem-console .choice,
+html[data-design="clear"] .chem-console .opt,
+html[data-design="clear"] .chem-console .pair,
+html[data-design="clear"] .chem-console .miss-opt,
+html[data-design="clear"] .chem-console .est-chip,
+html[data-design="clear"] .chem-console .fam-btn,
+html[data-design="clear"] .chem-console .job-pill,
+html[data-design="atlas"] .chem-console .choice,
+html[data-design="atlas"] .chem-console .opt,
+html[data-design="atlas"] .chem-console .pair,
+html[data-design="atlas"] .chem-console .miss-opt,
+html[data-design="atlas"] .chem-console .est-chip,
+html[data-design="atlas"] .chem-console .fam-btn,
+html[data-design="atlas"] .chem-console .job-pill {
+  min-height: 44px;
+  line-height: 1.32;
+  overflow-wrap: anywhere;
+}
+
+html[data-design="clear"] .chem-console .field,
+html[data-design="atlas"] .chem-console .field {
+  gap: 5px;
+}
+
+html[data-design="clear"] .chem-console .field > label,
+html[data-design="atlas"] .chem-console .field > label {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  line-height: 1.25;
+}
+
+html[data-design="clear"] .chem-console input:not([type="range"]),
+html[data-design="clear"] .chem-console select,
+html[data-design="clear"] .chem-console textarea,
+html[data-design="atlas"] .chem-console input:not([type="range"]),
+html[data-design="atlas"] .chem-console select,
+html[data-design="atlas"] .chem-console textarea {
+  min-height: 40px;
+  padding-block: 7px;
+  line-height: 1.2;
+}
+
+html[data-design="clear"] .chem-console .call-row,
+html[data-design="atlas"] .chem-console .call-row {
+  align-items: center;
+}
+
+html[data-design="clear"] .chem-console .call-hint,
+html[data-design="atlas"] .chem-console .call-hint {
+  max-width: 38rem;
+}
+
+/* Unit 2's wavelength chips are answer controls, not decorative legend dots.
+   Match their target size and baseline to the rest of the catalog while keeping
+   the compact spectrum color cue. */
+html[data-design="clear"] .chem-console .line-chip,
+html[data-design="atlas"] .chem-console .line-chip {
+  min-height: 40px;
+  padding: 6px 12px;
+  line-height: 1.2;
+}
+
+/* Unit 2's five historical-model cards are a fixed teaching set. Giving the
+   final (longest) card two tracks prevents the unbalanced, cramped 3 + 2 wrap
+   without changing the grid for the rest of the catalog. */
+html[data-design="clear"] .chem-console .models,
+html[data-design="atlas"] .chem-console .models {
+  gap: 8px;
+}
+
+html[data-design="clear"] .chem-console .model-card,
+html[data-design="atlas"] .chem-console .model-card {
+  padding: 10px;
+}
+
+html[data-design="clear"] .chem-console .model-card .model-idea,
+html[data-design="atlas"] .chem-console .model-card .model-idea {
+  line-height: 1.4;
+}
+
+@media (min-width: 600px) {
+  html[data-design="clear"] .chem-console .models > .model-card:last-child,
+  html[data-design="atlas"] .chem-console .models > .model-card:last-child {
+    grid-column: span 2;
+  }
+}
+
+/* Formula cards carry their chemical identity first, then the explanatory
+   label. It lets the eye find the species immediately without making the
+   surrounding scenario copy larger or heavier. */
+html[data-design="clear"] .chem-console .prompt-card,
+html[data-design="atlas"] .chem-console .prompt-card {
+  align-items: center;
+  gap: 6px 12px;
+  min-height: 64px;
+}
+
+html[data-design="clear"] .chem-console .prompt-card .prompt-formula,
+html[data-design="atlas"] .chem-console .prompt-card .prompt-formula {
+  color: var(--accent-700);
+  line-height: 1;
+}
+
+html[data-design="clear"] .chem-console .prompt-card .prompt-name,
+html[data-design="atlas"] .chem-console .prompt-card .prompt-name {
+  font-weight: 700;
+}
+
 html[data-design="atlas"] .life-support-board {
   background: var(--surface);
 }

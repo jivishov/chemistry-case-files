@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="../../shared/css/components.css">
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
-<link rel="stylesheet" href="../shared/design-modes.css?v=design-1">
+<link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
 </head>
@@ -78,7 +78,7 @@
                   <span class="teks-row-code" x-text="se.code"></span>
                   <span class="teks-row-cap" x-text="seCaption(se)"></span>
                 </span>
-                <span class="teks-row-text" x-text="se.text"></span>
+                <span class="teks-row-text" x-prose="se.text"></span>
                 <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id)*100}%`"></span></span>
               </div>
             </template>
@@ -168,7 +168,7 @@
           <p class="small muted mb-3">Molar mass of <span x-ce="cv.sub.f"></span> = <span x-text="fmt(cv.M)"></span> g/mol.</p>
 
           <!-- Rung indicator pill (always) -->
-          <div class="rung-indicator" x-text="rungText"></div>
+          <div class="rung-indicator" x-prose="rungText"></div>
 
           <!-- Mechanic B: gut-check gate (rung >= 2) -->
           <template x-if="cv.rung >= 2">
@@ -192,9 +192,9 @@
                   <span class="chain-op">
                     <span class="times">&times;</span>
                     <span class="frac" :class="{ bad: !s.cancels }">
-                      <span class="frac-n" x-text="s.tile.numText"></span>
+                      <span class="frac-n" x-prose="s.tile.numText"></span>
                       <span class="frac-bar"></span>
-                      <span class="frac-d" x-text="s.tile.denText"></span>
+                      <span class="frac-d" x-prose="s.tile.denText"></span>
                     </span>
                   </span>
                 </template>
@@ -207,9 +207,9 @@
               <div class="tile-tray">
                 <template x-for="t in cv.tiles" :key="t.id">
                   <button class="tile" @click="cvAdd(t.id)" :disabled="cvDone" :aria-label="'multiply by ' + t.numText + ' per ' + t.denText">
-                    <span class="frac-n" x-text="t.numText" aria-hidden="true"></span>
+                    <span class="frac-n" x-prose="t.numText" aria-hidden="true"></span>
                     <span class="frac-bar" aria-hidden="true"></span>
-                    <span class="frac-d" x-text="t.denText" aria-hidden="true"></span>
+                    <span class="frac-d" x-prose="t.denText" aria-hidden="true"></span>
                   </button>
                 </template>
               </div>
@@ -314,7 +314,7 @@
               <p class="miss-q">What caused the error? Select the best explanation.</p>
               <div class="miss-opts">
                 <template x-for="o in cvMissOptions" :key="o.key">
-                  <button class="miss-opt" :data-state="cvMissState(o.key)" @click="cvPickMiss(o.key)" :disabled="cvMissRevealed" x-text="o.label"></button>
+                  <button class="miss-opt" :data-state="cvMissState(o.key)" @click="cvPickMiss(o.key)" :disabled="cvMissRevealed" x-prose="o.label"></button>
                 </template>
               </div>
               <template x-if="cvMissRevealed">
@@ -362,7 +362,7 @@
                 <p class="miss-q">Which error did ARI make?</p>
                 <div class="miss-opts">
                   <template x-for="o in cv.audit.flawOpts" :key="o.key">
-                    <button class="miss-opt" :data-state="auditFlawState(o.key)" @click="auditNameFlaw(o.key)" :disabled="auditDone" x-text="o.label"></button>
+                    <button class="miss-opt" :data-state="auditFlawState(o.key)" @click="auditNameFlaw(o.key)" :disabled="auditDone" x-prose="o.label"></button>
                   </template>
                 </div>
               </div>
@@ -413,7 +413,7 @@
 
           <div class="choice-grid" style="max-width: 460px;">
             <template x-for="o in pc.sc.options" :key="o.key">
-              <button class="choice" :data-state="pcDecState(o.key)" @click="pcPick(o.key)" x-text="o.label"></button>
+              <button class="choice" :data-state="pcDecState(o.key)" @click="pcPick(o.key)" x-prose="o.label"></button>
             </template>
           </div>
 
@@ -682,7 +682,7 @@
             <p class="small muted mt-4 mb-2">Step 3. Decide using the activity rules: accept if formula and composition both meet the criteria, hold for recheck if the formula matches but composition does not, and reject if the formula conflicts with the manifest.</p>
             <div class="choice-grid" style="max-width: 560px;">
               <template x-for="o in cap.sc.options" :key="o.key">
-                <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
+                <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-prose="o.label"></button>
               </template>
             </div>
 
@@ -784,7 +784,7 @@
         <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest simulation result">
           <span class="command-kicker">Latest result</span>
           <strong x-text="activeStateLabel"></strong>
-          <p x-text="worldLog.length ? worldLog[0].text : 'No scenario result yet. Submit a chemistry answer to update the simulation.'"></p>
+          <p x-prose="worldLog.length ? worldLog[0].text : 'No scenario result yet. Submit a chemistry answer to update the simulation.'"></p>
         </section>
 
         <section class="mission-log" aria-label="Simulation log">
@@ -794,7 +794,7 @@
             <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
               <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
                 <span class="ws-icon" x-text="w.icon"></span>
-                <span x-text="w.text"></span>
+                <span x-prose="w.text"></span>
               </li>
             </template>
           </ul>

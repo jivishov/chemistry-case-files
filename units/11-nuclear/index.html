@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="../shared/design-modes.css?v=design-1">
+<link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
 </head>
@@ -206,7 +206,7 @@
                 <template x-if="gMastered('a') && sr">
                   <div style="margin-top: var(--s-3);">
                     <p class="small muted" x-prose="sr.sc.goal"></p>
-                    <p class="small" x-text="sr.s.story"></p>
+                    <p class="small" x-prose="sr.s.story"></p>
                     <div class="note note-info" style="margin-top: var(--s-3);">
                       <span x-text="sr.s.parent.sym"></span> ends on <span x-text="sr.s.end.sym"></span>, which is stable. How many of each decay does the whole chain take?
                     </div>
@@ -330,7 +330,7 @@
                 <template x-if="gMastered('hl') && ef">
                   <div style="margin-top: var(--s-3);">
                     <p class="small muted" x-prose="ef.sc.goal"></p>
-                    <p class="small" x-text="ef.c.story"></p>
+                    <p class="small" x-prose="ef.c.story"></p>
                     <p class="small muted" style="margin-top: var(--s-2);" x-prose="ef.c.why"></p>
                     <div class="readout" style="margin-top: var(--s-3);">
                       <div class="cell"><div class="k">agent</div><div class="v" style="font-size: var(--fs-sm)" x-text="ef.c.isotope"></div></div>
@@ -394,7 +394,7 @@
               <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">2. Which property actually decided it?</p>
               <div class="reasongrid">
                 <template x-for="r in REASONS" :key="r.key">
-                  <button class="choice" :data-state="apReasonState(r.key)" @click="apPickReason(r.key)" :disabled="!apPick" x-text="r.label"></button>
+                  <button class="choice" :data-state="apReasonState(r.key)" @click="apPickReason(r.key)" :disabled="!apPick" x-prose="r.label"></button>
                 </template>
               </div>
 
@@ -439,7 +439,7 @@
               <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);" x-text="'2. ' + pw.sc.question.prompt"></p>
               <div class="choice-grid">
                 <template x-for="o in pw.sc.question.options" :key="o.key">
-                  <button class="choice" :data-state="pwAnsState(o.key)" @click="pwPickAns(o.key)" x-text="o.label"></button>
+                  <button class="choice" :data-state="pwAnsState(o.key)" @click="pwPickAns(o.key)" x-prose="o.label"></button>
                 </template>
               </div>
 
@@ -541,7 +541,7 @@
               <p class="small muted" style="margin: var(--s-4) 0 var(--s-2);">Make the call.</p>
               <div class="choice-grid">
                 <template x-for="o in cap.sc.options" :key="o.key">
-                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
+                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-prose="o.label"></button>
                 </template>
               </div>
 
@@ -589,7 +589,7 @@
           <template x-for="r in vialReadings" :key="r.key">
             <div class="ship-stock">
               <div class="life-meter-label">
-                <span x-text="r.label" :title="r.hint"></span>
+                <span x-prose="r.label" :title="r.hint"></span>
                 <span class="mono" x-text="r.raw"></span>
               </div>
               <div class="meter"><div class="meter-fill" :style="'width:' + r.pct + '%; background:' + stockColor(r.pct)"></div></div>
@@ -605,7 +605,7 @@
         <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest consequence">
           <span class="command-kicker">Latest consequence</span>
           <strong x-text="activeStateLabel"></strong>
-          <p x-text="worldLog.length ? worldLog[0].text : 'The vial was eluted at 07:00. No call has been made yet.'"></p>
+          <p x-prose="worldLog.length ? worldLog[0].text : 'The vial was eluted at 07:00. No call has been made yet.'"></p>
         </section>
 
         <section class="mission-log" aria-label="Morning log">
@@ -615,7 +615,7 @@
             <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
               <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
                 <span class="ws-icon" x-text="w.icon"></span>
-                <span x-text="w.text"></span>
+                <span x-prose="w.text"></span>
               </li>
             </template>
           </ul>

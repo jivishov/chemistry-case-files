@@ -460,14 +460,16 @@
   align-items: start;
 }
 
-/* Actions are centre-set (a sentence-shaped label in a wide column), so the indicator
-   travels with the text as one centred group instead of pinning to the left edge. */
+/* Actions use the same left reading edge as answer choices. That keeps a long
+   two-line procedure readable as one label, instead of centring its second line
+   under a floating radio indicator. */
 .act-row > .opt-act {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  text-align: center;
+  justify-content: flex-start;
+  gap: 9px;
+  padding-inline: 12px;
+  text-align: left;
 }
 
 .opt::before,

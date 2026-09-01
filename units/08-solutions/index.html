@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="../shared/design-modes.css?v=design-1">
+<link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
@@ -50,8 +50,29 @@
         <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
       </div>
       <div class="command-metrics" aria-label="Progress">
-        <span class="metric-chip">XP <strong x-text="g_xp"></strong></span><span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
-        <span class="teks-badge" :class="{ complete: teksMasteredCount===coreSkills.length }">TEKS <strong><span x-text="teksMasteredCount"></span>/6</strong></span>
+        <span class="metric-chip">XP <strong x-text="g_xp"></strong></span>
+        <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
+        <div class="teks-wrap" @click.outside="teksOpen = false" @keydown.escape="teksOpen = false">
+          <button type="button" class="teks-badge" :class="{ complete: teksMasteredCount === coreSkills.length }"
+                  :aria-expanded="teksOpen ? 'true' : 'false'" aria-controls="teks-progress"
+                  aria-label="Show TEKS standards progress" @click="teksOpen = !teksOpen">
+            <span>TEKS</span>
+            <strong><span x-text="teksMasteredCount"></span>/<span x-text="coreSkills.length"></span></strong>
+          </button>
+          <div id="teks-progress" class="teks-popover" x-show="teksOpen" x-cloak role="group"
+               aria-label="TEKS C.11 standards progress">
+            <template x-for="se in coreSkills" :key="se.id">
+              <div class="teks-row" :class="{ active: se.mode === mode, mastered: gMastered(se.id) }">
+                <span class="teks-row-head">
+                  <span class="teks-row-code" x-text="se.code"></span>
+                  <span class="teks-row-cap" x-text="seCaption(se)"></span>
+                </span>
+                <span class="teks-row-text" x-prose="se.text"></span>
+                <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id) * 100}%`"></span></span>
+              </div>
+            </template>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -209,7 +230,7 @@
             <p class="muted" style="margin-bottom: var(--s-3);">Two aqueous ionic compounds are mixed. Exchange the anions mentally, then use the activity rule set to classify each product as aqueous or solid.</p>
             <details class="rules"><summary>Activity solubility rules</summary>
               <p class="small muted" style="margin: var(--s-2) 0;">These are simplified high-school rules used for the generated compounds in this activity.</p>
-              <ul><template x-for="r in SOLUBILITY_RULES" :key="r.id"><li x-text="r.text"></li></template></ul>
+              <ul><template x-for="r in SOLUBILITY_RULES" :key="r.id"><li x-prose="r.text"></li></template></ul>
             </details>
             <div class="reaction" style="margin-top: var(--s-4);">
               <span class="formula"><span x-ce="pr.rA.formula"></span><span class="phase">(aq)</span></span><span class="plus">+</span>
@@ -396,16 +417,16 @@
             </div>
           </div>
           <p class="worldstate-empty" x-show="!worldLog.length">No response logged yet. Submit an activity answer to update the simulation indicator.</p>
-          <ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')"><span class="ws-icon" x-text="w.icon"></span><span x-text="w.text"></span></li></template></ul>
+          <ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')"><span class="ws-icon" x-text="w.icon"></span><span x-prose="w.text"></span></li></template></ul>
         </div>
       </section>
 
       <aside class="life-support-board panel" aria-label="Simulation status">
         <div class="life-header"><div><span class="command-kicker">Simulation</span><strong x-text="mnState"></strong></div><span class="sol-chip" x-text="dayLabel"></span></div>
         <div class="crew-status cockpit-crew"><div class="crew-bar"><div class="life-meter-label"><span>Mn indicator</span><span class="mono" x-text="mnLabel+' mg/L'"></span></div><div class="meter"><div class="meter-fill" :style="`width:${mnPct}%; background:${mnColor}`"></div></div></div></div>
-        <div class="system-grid" aria-label="Activity readings"><template x-for="r in waterReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span :title="r.hint" x-text="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template></div>
-        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest result</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'No response is logged yet.'"></p></section>
-        <section class="mission-log"><span class="command-kicker">Activity log</span><p class="worldstate-empty" x-show="!worldLog.length">Complete an activity to begin the log.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : 'bad'"><span class="ws-icon" x-text="w.icon"></span><span x-text="w.text"></span></li></template></ul></section>
+        <div class="system-grid" aria-label="Activity readings"><template x-for="r in waterReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span :title="r.hint" x-prose="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template></div>
+        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest result</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-prose="worldLog.length ? worldLog[0].text : 'No response is logged yet.'"></p></section>
+        <section class="mission-log"><span class="command-kicker">Activity log</span><p class="worldstate-empty" x-show="!worldLog.length">Complete an activity to begin the log.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success' ? 'good' : 'bad'"><span class="ws-icon" x-text="w.icon"></span><span x-prose="w.text"></span></li></template></ul></section>
       </aside>
     </div>
 

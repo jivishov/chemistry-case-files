@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="../shared/design-modes.css?v=design-1">
+<link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 </head>
 <body>
@@ -42,7 +42,31 @@
         </label>
         <button class="btn btn-sm command-reset" @click="resetProgress()">Reset</button>
       </div>
-      <div class="command-metrics"><span class="metric-chip">XP <strong x-text="g_xp"></strong></span><span class="metric-chip">Streak <strong x-text="g_streak"></strong></span><span class="teks-badge" :class="{ complete: teksMasteredCount===coreSkills.length }">TEKS <strong><span x-text="teksMasteredCount"></span>/6</strong></span></div>
+      <div class="command-metrics" aria-label="Progress and standards progress">
+        <span class="metric-chip">XP <strong x-text="g_xp"></strong></span>
+        <span class="metric-chip">Streak <strong x-text="g_streak"></strong></span>
+        <div class="teks-wrap" @click.outside="teksOpen = false" @keydown.escape="teksOpen = false">
+          <button type="button" class="teks-badge" :class="{ complete: teksMasteredCount === coreSkills.length }"
+                  :aria-expanded="teksOpen ? 'true' : 'false'" aria-controls="teks-progress"
+                  aria-label="Show TEKS standards progress" @click="teksOpen = !teksOpen">
+            <span>TEKS</span>
+            <strong><span x-text="teksMasteredCount"></span>/<span x-text="coreSkills.length"></span></strong>
+          </button>
+          <div id="teks-progress" class="teks-popover" x-show="teksOpen" x-cloak role="group"
+               aria-label="TEKS C.6 and C.5(B) standards progress">
+            <template x-for="se in coreSkills" :key="se.id">
+              <div class="teks-row" :class="{ active: se.mode === mode, mastered: gMastered(se.id) }">
+                <span class="teks-row-head">
+                  <span class="teks-row-code" x-text="se.code"></span>
+                  <span class="teks-row-cap" x-text="seCaption(se)"></span>
+                </span>
+                <span class="teks-row-text" x-prose="se.text"></span>
+                <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id) * 100}%`"></span></span>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
     </header>
 
     <div class="workbench-grid" x-show="mode!=='casefile'">
@@ -57,7 +81,7 @@
       <section class="task-stack chem-console">
         <div class="panel" :class="{ 'is-active': mode==='models' }" x-show="mode==='models'">
           <p class="muted">Scientific models change when new evidence requires a better explanation. Read the evidence and select the historical model it supports.</p>
-          <div class="models mt-3"><template x-for="m in ATOMIC_MODELS" :key="m.who"><button class="model-card choice" :data-state="modelState(m.who)" @click="modelPick=m.who"><span class="model-head"><strong x-text="m.who"></strong><span class="mono" x-text="m.year"></span></span><span class="model-name" x-text="m.model"></span><span class="model-idea" x-text="m.idea"></span></button></template></div>
+          <div class="models mt-3"><template x-for="m in ATOMIC_MODELS" :key="m.who"><button class="model-card choice" :data-state="modelState(m.who)" @click="modelPick=m.who"><span class="model-head"><strong x-text="m.who"></strong><span class="mono" x-text="m.year"></span></span><span class="model-name" x-prose="m.model"></span><span class="model-idea" x-prose="m.idea"></span></button></template></div>
           <div class="row call-row mt-3"><button class="btn btn-accent" @click="commitModel()" :disabled="!modelPick">Submit model</button><button class="btn" @click="nextModels()">Next evidence</button><span class="call-hint" x-show="!modelPick">Select a model first.</span></div>
         </div>
 
@@ -100,7 +124,7 @@
             This is <strong x-text="isotopeName"></strong>, a <strong x-text="chargeStr"></strong>. Its nucleus contains <span class="mono" x-text="elZ"></span> protons and <span class="mono" x-text="nNeutrons"></span> neutrons, so A = <span class="mono" x-text="massNumber"></span>. The periodic-table average atomic mass of <span x-text="el.name"></span> is <span class="mono" x-text="fmt(massRef,5)"></span> u.
           </div>
 
-          <details class="lesson-reference mt-3"><summary>How atomic models developed · C.6(A)</summary><div class="lesson-reference-body"><div class="models"><template x-for="m in ATOMIC_MODELS" :key="m.who"><div class="model-card" :class="{ 'is-bohr': m.who==='Bohr' }"><div class="model-head"><strong x-text="m.who"></strong><span class="mono" x-text="m.year"></span></div><div class="model-name" x-text="m.model"></div><div class="model-idea" x-text="m.idea"></div></div></template></div></div></details>
+          <details class="lesson-reference mt-3"><summary>How atomic models developed · C.6(A)</summary><div class="lesson-reference-body"><div class="models"><template x-for="m in ATOMIC_MODELS" :key="m.who"><div class="model-card" :class="{ 'is-bohr': m.who==='Bohr' }"><div class="model-head"><strong x-text="m.who"></strong><span class="mono" x-text="m.year"></span></div><div class="model-name" x-prose="m.model"></div><div class="model-idea" x-prose="m.idea"></div></div></template></div></div></details>
         </div>
 
         <div class="panel" :class="{ 'is-active': mode==='mass' }" x-show="mode==='mass'">
@@ -146,7 +170,7 @@
 
           <div x-show="selectedLine" class="stat-row has-dials" style="margin-top: var(--s-4);">
             <div class="stat"><div class="k">wavelength λ</div><div class="v" x-text="selectedLine ? selectedLine.wl.toFixed(1)+' nm' : ''"></div><div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.wl : null, min: specAxis.wlLo, max: specAxis.wlHi, unit:' nm', digits: 4, series: specKey, label:'wavelength across the visible strip', tone:'green' }"></div></div>
-            <div class="stat"><div class="k">frequency ν</div><div class="v" style="font-size:var(--fs-lg)" x-text="selectedLine ? fmt(selectedLine.freq,3)+' Hz' : ''"></div><div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.freq : null, min: specAxis.vLo, max: specAxis.vHi, unit:' Hz', digits: 3, series: specKey, label:'frequency across the same strip', tone:'indigo' }"></div></div>
+            <div class="stat"><div class="k">frequency ν</div><div class="v" style="font-size:var(--fs-lg)" x-prose="selectedLine ? fmt(selectedLine.freq,3)+' Hz' : ''"></div><div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.freq : null, min: specAxis.vLo, max: specAxis.vHi, unit:' Hz', digits: 3, series: specKey, label:'frequency across the same strip', tone:'indigo' }"></div></div>
             <div class="stat"><div class="k">photon energy E</div><div class="v" style="font-size:var(--fs-lg)" x-prose="selectedLine ? fmt(selectedLine.energy,3)+' J' : ''"></div><div x-gauge="{ kind:'span', value: selectedLine ? selectedLine.energy : null, min: specAxis.eLo, max: specAxis.eHi, unit:' J', digits: 3, series: specKey, label:'photon energy across the same strip', tone:'plum' }"></div></div>
           </div>
           <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-show="selectedLine">Frequency and photon energy increase as wavelength decreases. In vacuum, all wavelengths travel at the same speed, c: E = h&nu; = hc/&lambda;.</p>
@@ -155,7 +179,7 @@
             <span class="honors-tag">Honors · E = hν quantization</span>
             <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0;">Energy, frequency, and wavelength are linked. Each spectral line corresponds to a characteristic photon energy associated with an allowed transition.</p>
             <div class="eqn" style="margin: var(--s-2) 0;"><span x-tex.display="'E = h\\nu = \\dfrac{hc}{\\lambda}'"></span></div>
-            <div x-show="selectedLine" style="margin-top: var(--s-2);"><div class="step-line mono">λ = <span x-text="selectedLine ? selectedLine.wl.toFixed(1)+' nm' : ''"></span> = <span x-prose="selectedLine ? fmt(selectedLine.wl*1e-9,3)+' m' : ''"></span></div><div class="step-line mono">E = hc/λ = (6.626 × 10<sup>-34</sup> J·s)(2.998 × 10<sup>8</sup> m/s) ÷ <span x-prose="selectedLine ? fmt(selectedLine.wl*1e-9,3)+' m' : ''"></span> = <span class="calc" x-prose="selectedLine ? fmt(selectedLine.energy,3)+' J' : ''"></span> <span class="muted" x-text="selectedLine ? '(' + fmt(selectedLine.energy/1.602e-19,3) + ' eV)' : ''"></span></div></div>
+            <div x-show="selectedLine" style="margin-top: var(--s-2);"><div class="step-line mono">λ = <span x-text="selectedLine ? selectedLine.wl.toFixed(1)+' nm' : ''"></span> = <span x-prose="selectedLine ? fmt(selectedLine.wl*1e-9,3)+' m' : ''"></span></div><div class="step-line mono">E = hc/λ = (6.626 × 10<sup>-34</sup> J·s)(2.998 × 10<sup>8</sup> m/s) ÷ <span x-prose="selectedLine ? fmt(selectedLine.wl*1e-9,3)+' m' : ''"></span> = <span class="calc" x-prose="selectedLine ? fmt(selectedLine.energy,3)+' J' : ''"></span> <span class="muted" x-prose="selectedLine ? '(' + fmt(selectedLine.energy/1.602e-19,3) + ' eV)' : ''"></span></div></div>
             <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-show="!selectedLine">Select a line above to see its photon energy calculated.</p>
             <div class="field field-260 mt-3"><label>Photon energy (J)</label><input type="number" step="any" x-model="h1EnergyInput" placeholder="E = hc/λ"></div>
             <div class="row call-row mt-3"><button class="btn btn-honors" @click="commitH1()" :disabled="h1EnergyInput==='' || !selectedLine">Check photon calculation</button><span class="call-hint" x-show="(h1EnergyInput === '' || !selectedLine)" x-text="!selectedLine ? 'Select a line first.' : 'Enter the photon energy.'"></span></div>
@@ -211,9 +235,9 @@
       <aside class="life-support-board panel" aria-label="Practice progress">
         <div class="life-header"><div><span class="command-kicker">Practice rack</span><strong x-text="rackState"></strong></div><span class="sol-chip">Round <strong x-text="shiftDay"></strong></span></div>
         <div class="crew-status cockpit-crew"><div class="crew-bar"><div class="life-meter-label"><span>Completed</span><span class="mono" x-text="rack.length+'/6'"></span></div><div class="meter"><div class="meter-fill" :style="`width:${rack.length/6*100}%; background:var(--accent)`"></div></div></div></div>
-        <div class="system-grid"><template x-for="r in rackReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span x-text="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template><svg class="rack-figure" viewBox="0 0 232 64" role="img" aria-label="Practice task markers"><g x-html="rackSvg()"></g></svg></div>
-        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest feedback</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-text="worldLog.length ? worldLog[0].text : 'Choose an activity to begin.'"></p></section>
-        <section class="mission-log"><span class="command-kicker">Practice log</span><p class="worldstate-empty" x-show="!worldLog.length">No task is logged yet.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success'?'good':'bad'"><span x-text="w.text"></span></li></template></ul></section>
+        <div class="system-grid"><template x-for="r in rackReadings" :key="r.key"><div class="ship-stock"><div class="life-meter-label"><span x-prose="r.label"></span><span class="mono" x-text="r.raw"></span></div><div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${r.color}`"></div></div></div></template><svg class="rack-figure" viewBox="0 0 232 64" role="img" aria-label="Practice task markers"><g x-html="rackSvg()"></g></svg></div>
+        <section class="latest-consequence" :class="'tone-'+activeTone"><span class="command-kicker">Latest feedback</span><strong x-show="activeStateLabel" x-text="activeStateLabel"></strong><p x-prose="worldLog.length ? worldLog[0].text : 'Choose an activity to begin.'"></p></section>
+        <section class="mission-log"><span class="command-kicker">Practice log</span><p class="worldstate-empty" x-show="!worldLog.length">No task is logged yet.</p><ul class="worldstate-list" x-show="worldLog.length"><template x-for="w in worldLog.slice(0,3)" :key="w.id"><li class="worldstate-entry" :class="w.tone==='success'?'good':'bad'"><span x-prose="w.text"></span></li></template></ul></section>
       </aside>
     </div>
 
@@ -225,7 +249,7 @@
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
   import { registerGauge } from '../../shared/js/gauge.js';
-  import { createSim } from './js/main.js';
+  import { createSim } from './js/main.js?v=u2-teks-progress-1';
   import { mountCaseFile } from '../../shared/js/casefile.js';
   import { CASE } from './js/case.js';
   import { mountColumnResizers } from '../shared/columns.js?v=cockpit-3';

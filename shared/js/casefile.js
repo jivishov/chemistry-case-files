@@ -33,9 +33,12 @@
 // the same string-built-SVG approach already used by units/01 (ticksSvg) because
 // Alpine cannot bind <template x-for> inside an <svg>.
 //
-// Story TEXT is never interpolated into the markup: the chrome binds it with
-// x-text from the CASE object, so only `stage` and `controls` are raw markup and
+// Story text is never interpolated into the markup: the chrome binds it with
+// x-prose from the CASE object. That directive escapes content before it adds
+// semantic sub/sup markup, so only `stage` and `controls` are raw markup and
 // they come from this repo, never from user input.
+
+import { notationHTML } from './notation.js';
 
 // ---------------------------------------------------------------------------
 // SCHEMA (validated by validateCase, gated by tests/casefile.test.js)
@@ -191,14 +194,14 @@ export function caseFileMarkup(CASE) {
        numbers where a magazine deck would put them. Below 880px the two stack. -->
   <div class="cf-top">
     <div class="cf-head">
-      <span class="cf-kicker"><span class="cf-dot"></span> <span x-text="'Case file ' + cs.number + ' &middot; ' + cs.kicker"></span></span>
-      <h2 class="cf-title" id="cf-title" x-text="cs.title"></h2>
-      <p class="cf-hook" x-text="cs.hook"></p>
+      <span class="cf-kicker"><span class="cf-dot"></span> <span x-prose="'Case file ' + cs.number + ' · ' + cs.kicker"></span></span>
+      <h2 class="cf-title" id="cf-title" x-prose="cs.title"></h2>
+      <p class="cf-hook" x-prose="cs.hook"></p>
     </div>
 
     <div class="cf-stats">
       <template x-for="st in cs.stats" :key="st.k">
-        <div class="cf-stat"><span class="v" x-text="st.v"></span><span class="k" x-text="st.k"></span></div>
+        <div class="cf-stat"><span class="v" x-prose="st.v"></span><span class="k" x-prose="st.k"></span></div>
       </template>
     </div>
   </div>
@@ -207,7 +210,7 @@ export function caseFileMarkup(CASE) {
     <figure class="cf-stage">
       ${CASE.stage}
       ${CASE.controls || ''}
-      <figcaption class="cf-cap" x-text="s.cap"></figcaption>
+      <figcaption class="cf-cap" x-prose="s.cap"></figcaption>
     </figure>
 
     <div>
@@ -215,7 +218,7 @@ export function caseFileMarkup(CASE) {
         <template x-for="(st,i) in cs.steps" :key="i">
           <li>
             <button class="cf-step" :class="{ on: i===step, done: i&lt;step }" @click="go(i)">
-              <span class="cf-step-n" x-text="i+1"></span><span x-text="st.t"></span>
+              <span class="cf-step-n" x-text="i+1"></span><span x-prose="st.t"></span>
             </button>
           </li>
         </template>
@@ -223,8 +226,8 @@ export function caseFileMarkup(CASE) {
       <div class="cf-narr">
         <template x-for="(st,i) in cs.steps" :key="'n'+i">
           <div x-show="i===step" x-transition:enter.opacity.duration.400ms>
-            <p x-text="st.body"></p>
-            <p class="cf-chem"><strong>Chemistry connection</strong> <span x-text="st.chem"></span></p>
+            <p x-prose="st.body"></p>
+            <p class="cf-chem"><strong>Chemistry connection</strong> <span x-prose="st.chem"></span></p>
           </div>
         </template>
       </div>
@@ -238,10 +241,10 @@ export function caseFileMarkup(CASE) {
 
   <div class="cf-quiz">
     <span class="cf-quiz-label">Check your understanding</span>
-    <p class="cf-quiz-q" x-text="cs.quiz.q"></p>
+    <p class="cf-quiz-q" x-prose="cs.quiz.q"></p>
     <div class="cf-choices">
       <template x-for="(o,i) in cs.quiz.options" :key="i">
-        <button class="cf-choice" :data-state="quizState(i)" @click="pickQuiz(i)" x-text="o.label"></button>
+        <button class="cf-choice" :data-state="quizState(i)" @click="pickQuiz(i)" x-prose="o.label"></button>
       </template>
     </div>
     <div class="cf-quiz-actions">
@@ -250,19 +253,19 @@ export function caseFileMarkup(CASE) {
     </div>
     <div class="cf-explain" :class="quizCorrect ? 'good' : 'bad'" x-show="quizChecked">
       <strong x-text="quizCorrect ? 'Correct. ' : 'Not quite. Review the explanation and try again. '"></strong>
-      <span x-text="cs.quiz.explain"></span>
+      <span x-prose="cs.quiz.explain"></span>
     </div>
   </div>
 
   <div class="cf-punch">
     <div>
-      <p class="cf-punch-lead" x-text="cs.punch"></p>
+      <p class="cf-punch-lead" x-prose="cs.punch"></p>
       <div class="cf-careers">
-        <template x-for="c in cs.careers" :key="c"><span class="cf-career" x-text="c"></span></template>
+        <template x-for="c in cs.careers" :key="c"><span class="cf-career" x-prose="c"></span></template>
       </div>
     </div>
     <button class="cf-cta" @click="${CASE.cta.call}; window.scrollTo({ top: 0, behavior: 'smooth' })">
-      <span x-text="cs.cta.label"></span> <span aria-hidden="true">&#8594;</span>
+      <span x-prose="cs.cta.label"></span> <span aria-hidden="true">&#8594;</span>
     </button>
   </div>
 </section>`;
@@ -276,7 +279,7 @@ export function caseFileMarkup(CASE) {
 export function teaserMarkup(CASE) {
   return `<a class="cf-teaser" href="#casefile" x-show="mode!=='casefile'" @click.prevent="mode='casefile'">`
     + `<span class="t-tag">Case file</span>`
-    + `<span>${CASE.teaser}</span>`
+    + `<span>${notationHTML(CASE.teaser)}</span>`
     + `<span class="t-go" aria-hidden="true">&#8594;</span>`
     + `</a>`;
 }

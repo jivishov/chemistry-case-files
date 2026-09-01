@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
 <link rel="stylesheet" href="css/style.css?v=u6-3">
-<link rel="stylesheet" href="../shared/design-modes.css?v=design-1">
+<link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <!-- mhchem, not optional here: this unit writes balanced equations and every bench binds
      x-ce to one. Without the contrib script the equations render as raw \ce{...}. -->
@@ -79,7 +79,7 @@
                   <span class="teks-row-code" x-text="se.code"></span>
                   <span class="teks-row-cap" x-text="seCaption(se)"></span>
                 </span>
-                <span class="teks-row-text" x-text="se.text"></span>
+                <span class="teks-row-text" x-prose="se.text"></span>
                 <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id)*100}%`"></span></span>
               </div>
             </template>
@@ -306,21 +306,21 @@
                   <!-- The worked solution is the explanation AFTER the call, never before it. -->
                   <p class="eyebrow mt-4">How it works out</p>
                   <div class="step-line">
-                    <span x-text="fmt(st.amount)+' g '+st.given.f"></span> ÷ <span x-text="fmt(st.mGiven)+' g/mol'"></span>
-                    = <span class="calc" x-text="fmt(st.givenMol)+' mol '+st.given.f"></span>
+                    <span x-prose="fmt(st.amount)+' g '+st.given.f"></span> ÷ <span x-prose="fmt(st.mGiven)+' g/mol'"></span>
+                    = <span class="calc" x-prose="fmt(st.givenMol)+' mol '+st.given.f"></span>
                   </div>
                   <div class="step-line">
                     mole ratio <span x-text="st.find.c+' : '+st.given.c"></span> →
-                    <span x-text="fmt(st.givenMol)+' mol × '+st.find.c+'/'+st.given.c"></span>
-                    = <span class="calc" x-text="fmt(st.findMol)+' mol '+st.find.f"></span>
+                    <span x-prose="fmt(st.givenMol)+' mol × '+st.find.c+'/'+st.given.c"></span>
+                    = <span class="calc" x-prose="fmt(st.findMol)+' mol '+st.find.f"></span>
                   </div>
                   <div class="step-line">
-                    <span x-text="fmt(st.findMol)+' mol × '+fmt(st.mFind)+' g/mol'"></span>
-                    = <span class="calc" x-text="fmt(st.target)+' g '+st.find.f"></span>
+                    <span x-prose="fmt(st.findMol)+' mol × '+fmt(st.mFind)+' g/mol'"></span>
+                    = <span class="calc" x-prose="fmt(st.target)+' g '+st.find.f"></span>
                   </div>
                   <!-- C.9(C) names gas volume relationships explicitly, so this is core. -->
                   <div class="stat-row mt-4" x-show="st.gasL!==null">
-                    <div class="stat"><div class="k" x-text="st.find.f+' volume at STP (22.4 L/mol)'"></div><div class="v" x-text="fmt(st.gasL)+' L'"></div></div>
+                    <div class="stat"><div class="k" x-prose="st.find.f+' volume at STP (22.4 L/mol)'"></div><div class="v" x-text="fmt(st.gasL)+' L'"></div></div>
                   </div>
                 </div>
               </template>
@@ -465,7 +465,7 @@
                   </div>
                   <div class="stat-row mt-3" x-show="lm.gasProducts.length">
                     <template x-for="g in lm.gasProducts" :key="g.f">
-                      <div class="stat"><div class="k" x-text="g.f+' volume at STP (L)'"></div><div class="v" x-text="fmt(gasVolume(g.f))"></div></div>
+                      <div class="stat"><div class="k" x-prose="g.f+' volume at STP (L)'"></div><div class="v" x-text="fmt(gasVolume(g.f))"></div></div>
                     </template>
                   </div>
                 </div>
@@ -552,7 +552,7 @@
               <p class="small muted mt-3 mb-2">Compare the required and simulated available amounts. Which option is supported?</p>
               <div class="choice-grid choice-grid-wide">
                 <template x-for="o in cap.sc.options" :key="o.key">
-                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
+                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-prose="o.label"></button>
                 </template>
               </div>
 
@@ -606,7 +606,7 @@
           <template x-for="r in truckReadings" :key="r.key">
             <div class="ship-stock">
               <div class="life-meter-label">
-                <span x-text="r.label" :title="r.hint"></span>
+                <span x-prose="r.label" :title="r.hint"></span>
                 <span class="mono" x-text="r.raw"></span>
               </div>
               <div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${stockColor(r.pct)}`"></div></div>
@@ -620,7 +620,7 @@
         <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest consequence">
           <span class="command-kicker">Latest consequence</span>
           <strong x-text="activeStateLabel"></strong>
-          <p x-text="worldLog.length ? worldLog[0].text : 'No calls logged yet. Make one and watch what your number costs the truck.'"></p>
+          <p x-prose="worldLog.length ? worldLog[0].text : 'No calls logged yet. Make one and watch what your number costs the truck.'"></p>
         </section>
 
         <section class="mission-log" aria-label="Incident log">
@@ -630,7 +630,7 @@
             <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
               <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
                 <span class="ws-icon" x-text="w.icon"></span>
-                <span x-text="w.text"></span>
+                <span x-prose="w.text"></span>
               </li>
             </template>
           </ul>

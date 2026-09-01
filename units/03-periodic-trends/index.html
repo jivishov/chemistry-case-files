@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
 <link rel="stylesheet" href="css/style.css?v=u3-5">
-<link rel="stylesheet" href="../shared/design-modes.css?v=design-1">
+<link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -63,7 +63,7 @@
                   <span class="teks-row-code" x-text="se.code"></span>
                   <span class="teks-row-cap" x-text="seCaption(se)"></span>
                 </span>
-                <span class="teks-row-text" x-text="se.text"></span>
+                <span class="teks-row-text" x-prose="se.text"></span>
                 <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id)*100}%`"></span></span>
               </div>
             </template>
@@ -108,17 +108,17 @@
         <div class="panel" :class="{ 'is-active': mode==='table' }" x-show="mode==='table'">
           <p class="muted mb-2">Use the historical evidence to identify the supported periodic pattern, then choose the next step.</p>
 
-          <p class="ask-line" x-text="aTask ? aTask.ask : ''"></p>
+          <p class="ask-line" x-prose="aTask ? aTask.ask : ''"></p>
           <div class="opt-grid" role="group" aria-label="Answer options">
             <template x-for="o in aOptions" :key="o.k">
-              <button class="opt" :class="aState(o.k)" @click="pickA(o.k)" :disabled="aChecked" x-text="o.label"></button>
+              <button class="opt" :class="aState(o.k)" @click="pickA(o.k)" :disabled="aChecked" x-prose="o.label"></button>
             </template>
           </div>
 
           <div class="act-row mt-3" role="group" aria-label="Next step">
             <span class="command-kicker">Next step</span>
             <template x-for="a in (aTask ? aTask.actions : [])" :key="a.k">
-              <button class="opt opt-act" :class="aActionState(a.k)" @click="pickAAction(a.k)" :disabled="aChecked" x-text="a.label"></button>
+              <button class="opt opt-act" :class="aActionState(a.k)" @click="pickAAction(a.k)" :disabled="aChecked" x-prose="a.label"></button>
             </template>
           </div>
 
@@ -128,7 +128,7 @@
             <span class="call-hint" x-show="!aReady && !aChecked" x-text="aPick ? 'Now choose the next step.' : 'Choose an answer, then the next step.'"></span>
           </div>
 
-          <p class="explain" x-show="aChecked && aTask" x-text="aTask ? aTask.explain : ''"></p>
+          <p class="explain" x-show="aChecked && aTask" x-prose="aTask ? aTask.explain : ''"></p>
 
           <details class="lesson-reference history-reference mt-3">
             <summary>Evidence file: how the table took shape</summary>
@@ -161,7 +161,7 @@
                 </div>
                 <div class="insp-body">
                   <div class="ref-title">Selected element</div>
-                  <div class="insp-config" x-text="selConfig"></div>
+                  <div class="insp-config" x-config="selConfig"></div>
                   <div class="insp-props">
                     <div class="insp-prop"><div class="k">family</div><div class="v small-value" x-text="selFamilyLabel"></div></div>
                     <div class="insp-prop"><div class="k">period / group</div><div class="v" x-text="selected.period + ' / ' + selected.group"></div></div>
@@ -276,17 +276,17 @@
         <div class="panel" :class="{ 'is-active': mode==='families' }" x-show="mode==='families'">
           <p class="muted mb-2">Identify the element family and common ion pattern. Then use the scenario information to choose the next step.</p>
 
-          <p class="ask-line" x-text="bTask ? bTask.ask : ''"></p>
+          <p class="ask-line" x-prose="bTask ? bTask.ask : ''"></p>
           <div class="opt-grid" role="group" aria-label="Answer options">
             <template x-for="o in (bTask ? bTask.options : [])" :key="o.k">
-              <button class="opt" :class="bState(o.k)" @click="pickB(o.k)" :disabled="bChecked" x-text="o.label"></button>
+              <button class="opt" :class="bState(o.k)" @click="pickB(o.k)" :disabled="bChecked" x-prose="o.label"></button>
             </template>
           </div>
 
           <div class="act-row mt-3" role="group" aria-label="Next step">
             <span class="command-kicker">Next step</span>
             <template x-for="a in (bTask ? bTask.actions : [])" :key="a.k">
-              <button class="opt opt-act" :class="bActionState(a.k)" @click="pickBAction(a.k)" :disabled="bChecked" x-text="a.label"></button>
+              <button class="opt opt-act" :class="bActionState(a.k)" @click="pickBAction(a.k)" :disabled="bChecked" x-prose="a.label"></button>
             </template>
           </div>
 
@@ -296,7 +296,7 @@
             <span class="call-hint" x-show="!bReady && !bChecked" x-text="bPick ? 'Now choose the next step.' : 'Identify the family, then choose the next step.'"></span>
           </div>
 
-          <p class="explain" x-show="bChecked && bTask" x-text="bTask ? bTask.explain : ''"></p>
+          <p class="explain" x-show="bChecked && bTask" x-prose="bTask ? bTask.explain : ''"></p>
 
           <details class="lesson-reference fam-card mt-3" aria-label="Family reference">
             <summary>Family reference · valence, ions, and reactivity</summary>
@@ -337,7 +337,7 @@
               <div class="family-reaction" x-show="family.reaction">
                 <span class="ref-title">Representative reaction</span>
                 <code x-formula="family.reaction"></code>
-                <p class="muted" x-text="family.reactionCaption"></p>
+                <p class="muted" x-prose="family.reactionCaption"></p>
               </div>
 
               <ul class="charge-list" x-show="familyCharges.length">
@@ -360,7 +360,7 @@
               </div>
               <div class="inspector compact-inspector">
                 <div class="insp-tile"><div class="z mono" x-text="selected.z"></div><div class="sym" x-text="selected.sym"></div><div class="nm" x-text="selected.name"></div></div>
-                <div class="insp-body"><div class="ref-title">Selected element</div><div class="insp-config" x-text="selConfig"></div><p><strong x-text="selFamilyLabel"></strong> · Group <span class="mono" x-text="selected.group"></span> · Period <span class="mono" x-text="selected.period"></span></p></div>
+                <div class="insp-body"><div class="ref-title">Selected element</div><div class="insp-config" x-config="selConfig"></div><p><strong x-text="selFamilyLabel"></strong> · Group <span class="mono" x-text="selected.group"></span> · Period <span class="mono" x-text="selected.period"></span></p></div>
               </div>
             </div>
           </details>
@@ -369,7 +369,7 @@
         <div class="panel" :class="{ 'is-active': mode==='trends' }" x-show="mode==='trends'">
           <p class="muted mb-2">Compare the two elements using the assigned periodic property. Then use the scenario specification to choose the repair option.</p>
 
-          <p class="ask-line" x-text="cAsk"></p>
+          <p class="ask-line" x-prose="cAsk"></p>
           <div class="pair-row" role="group" aria-label="The two candidates">
             <button class="pair" :class="cState(cPair.a)" @click="pickC(cPair.a)" :disabled="cChecked">
               <span class="pair-sym" x-text="cPair.a"></span>
@@ -387,7 +387,7 @@
           <div class="act-row mt-3" role="group" aria-label="Repair option">
             <span class="command-kicker">Next step</span>
             <template x-for="a in (cTask ? cTask.actions : [])" :key="a.k">
-              <button class="opt opt-act" :class="cActionState(a.k)" @click="pickCAction(a.k)" :disabled="cChecked" x-text="a.label"></button>
+              <button class="opt opt-act" :class="cActionState(a.k)" @click="pickCAction(a.k)" :disabled="cChecked" x-prose="a.label"></button>
             </template>
           </div>
 
@@ -419,7 +419,7 @@
                 <div class="insp-tile"><div class="z mono" x-text="selected.z"></div><div class="sym" x-text="selected.sym"></div><div class="nm" x-text="selected.name"></div></div>
                 <div class="insp-body">
                   <div class="ref-title">Selected element</div>
-                  <div class="insp-config" x-text="selConfig"></div>
+                  <div class="insp-config" x-config="selConfig"></div>
                   <div class="trend-selected-values"><span><strong x-text="prop.label"></strong> <span class="mono" x-text="selected[prop.field] == null ? 'n/a' : selected[prop.field] + ' ' + prop.unit"></span></span><span>radius <span class="mono" x-text="selected.radius + ' pm'"></span></span><span>first IE <span class="mono" x-text="selected.ie1 + ' kJ/mol'"></span></span></div>
                 </div>
               </div>
@@ -454,7 +454,7 @@
             <div class="note note-info" x-show="!gMastered('c')">Get three periodic-trend responses correct in a row to unlock the shielding analysis.</div>
             <template x-if="honors && gMastered('c')">
               <div class="honors-content">
-                <p class="screen-goal" x-text="h1Brief ? h1Brief.goal : ''"></p>
+                <p class="screen-goal" x-prose="h1Brief ? h1Brief.goal : ''"></p>
                 <p class="small muted">This activity uses a simplified model: core electrons are treated as shielding fully, while same-shell shielding is not included.</p>
                 <div class="zeff-formula">Activity model: Zeff = nuclear charge − core electrons</div>
 
@@ -475,13 +475,13 @@
 
                 <div class="opt-grid mt-2" role="group" aria-label="Honors answer options">
                   <template x-for="o in h1Task.options" :key="o.k">
-                    <button class="opt" :class="h1State(o.k)" @click="pickH1(o.k)" :disabled="h1Checked" x-text="o.label"></button>
+                    <button class="opt" :class="h1State(o.k)" @click="pickH1(o.k)" :disabled="h1Checked" x-prose="o.label"></button>
                   </template>
                 </div>
                 <div class="act-row mt-2" role="group" aria-label="Which side holds valence electrons more strongly">
                   <span class="command-kicker">Next step</span>
                   <template x-for="a in h1Task.actions" :key="a.k">
-                    <button class="opt opt-act" :class="h1ActionState(a.k)" @click="pickH1Action(a.k)" :disabled="h1Checked" x-text="a.label"></button>
+                    <button class="opt opt-act" :class="h1ActionState(a.k)" @click="pickH1Action(a.k)" :disabled="h1Checked" x-prose="a.label"></button>
                   </template>
                 </div>
                 <div class="row call-row mt-2">
@@ -490,8 +490,8 @@
                   <span class="call-hint" x-show="!h1Ready && !h1Checked" x-text="h1Pick ? 'Now choose the stronger side.' : 'Choose an explanation, then the stronger side.'"></span>
                 </div>
                 <div class="verdict" x-show="h1Verdict" :class="h1Verdict ? 'v-' + h1Verdict.tone : ''">
-                  <strong x-text="h1Verdict ? h1Verdict.headline : ''"></strong>
-                  <p x-text="h1Verdict ? h1Verdict.detail : ''"></p>
+                  <strong x-prose="h1Verdict ? h1Verdict.headline : ''"></strong>
+                  <p x-prose="h1Verdict ? h1Verdict.detail : ''"></p>
                 </div>
               </div>
             </template>
@@ -502,7 +502,7 @@
             <div class="note note-info" x-show="!gMastered('c')">Get three periodic-trend responses correct in a row to unlock the exception analysis.</div>
             <template x-if="honors && gMastered('c')">
               <div class="honors-content">
-                <p class="screen-goal" x-text="h2Brief ? h2Brief.goal : ''"></p>
+                <p class="screen-goal" x-prose="h2Brief ? h2Brief.goal : ''"></p>
                 <p class="small muted">First ionization energy generally rises across Period 2. The Be→B and N→O dips are explained by electron configuration, not random measurement noise.</p>
                 <p class="dip-line">Highlighted pair: <strong class="mono" x-text="h2Anom.label"></strong> ·
                   <span class="mono" x-text="h2Drop.from.sym + ' ' + h2Drop.from.ie1"></span> to
@@ -513,13 +513,13 @@
 
                 <div class="opt-grid mt-2" role="group" aria-label="Honors answer options">
                   <template x-for="o in h2Task.options" :key="o.k">
-                    <button class="opt" :class="h2State(o.k)" @click="pickH2(o.k)" :disabled="h2Checked" x-text="o.label"></button>
+                    <button class="opt" :class="h2State(o.k)" @click="pickH2(o.k)" :disabled="h2Checked" x-prose="o.label"></button>
                   </template>
                 </div>
                 <div class="act-row mt-2" role="group" aria-label="How to record the result">
                   <span class="command-kicker">Next step</span>
                   <template x-for="a in h2Task.actions" :key="a.k">
-                    <button class="opt opt-act" :class="h2ActionState(a.k)" @click="pickH2Action(a.k)" :disabled="h2Checked" x-text="a.label"></button>
+                    <button class="opt opt-act" :class="h2ActionState(a.k)" @click="pickH2Action(a.k)" :disabled="h2Checked" x-prose="a.label"></button>
                   </template>
                 </div>
                 <div class="row call-row mt-2">
@@ -528,8 +528,8 @@
                   <span class="call-hint" x-show="!h2Ready && !h2Checked" x-text="h2Pick ? 'Now choose how to record it.' : 'Choose an explanation, then how to record it.'"></span>
                 </div>
                 <div class="verdict" x-show="h2Verdict" :class="h2Verdict ? 'v-' + h2Verdict.tone : ''">
-                  <strong x-text="h2Verdict ? h2Verdict.headline : ''"></strong>
-                  <p x-text="h2Verdict ? h2Verdict.detail : ''"></p>
+                  <strong x-prose="h2Verdict ? h2Verdict.headline : ''"></strong>
+                  <p x-prose="h2Verdict ? h2Verdict.detail : ''"></p>
                 </div>
               </div>
             </template>
@@ -572,7 +572,7 @@
               <div class="act-row mt-3" role="group" aria-label="Activity decision">
                 <span class="command-kicker">Decision</span>
                 <template x-for="a in capActions" :key="a.k">
-                  <button class="opt opt-act" :class="capActionState(a.k)" @click="capPickAction(a.k)" :disabled="capWin" x-text="a.label"></button>
+                  <button class="opt opt-act" :class="capActionState(a.k)" @click="capPickAction(a.k)" :disabled="capWin" x-prose="a.label"></button>
                 </template>
               </div>
 
@@ -583,8 +583,8 @@
               </div>
 
               <div class="verdict" x-show="capVerdict" :class="capVerdict ? 'v-' + capVerdict.tone : ''">
-                <strong x-text="capVerdict ? capVerdict.headline : ''"></strong>
-                <p x-text="capVerdict ? capVerdict.detail : ''"></p>
+                <strong x-prose="capVerdict ? capVerdict.headline : ''"></strong>
+                <p x-prose="capVerdict ? capVerdict.detail : ''"></p>
               </div>
             </div>
           </template>
@@ -632,7 +632,7 @@
         <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest result">
           <span class="command-kicker">Latest result</span>
           <strong x-show="activeStateLabel" x-text="activeStateLabel"></strong>
-          <p x-text="worldLog.length ? worldLog[0].text : 'No responses recorded yet.'"></p>
+          <p x-prose="worldLog.length ? worldLog[0].text : 'No responses recorded yet.'"></p>
         </section>
 
         <section class="mission-log" aria-label="Activity log">
@@ -642,7 +642,7 @@
             <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
               <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
                 <span aria-hidden="true" x-text="w.icon"></span>
-                <span x-text="w.text"></span>
+                <span x-prose="w.text"></span>
               </li>
             </template>
           </ul>

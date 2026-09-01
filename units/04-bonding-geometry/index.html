@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-3">
 <link rel="stylesheet" href="css/style.css?v=u4-2">
-<link rel="stylesheet" href="../shared/design-modes.css?v=design-1">
+<link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/mhchem.min.js"></script>
 <!-- js/vsepr.js imports a bare `three` specifier, which cannot resolve without this. -->
@@ -73,7 +73,7 @@
                   <span class="teks-row-code" x-text="se.code"></span>
                   <span class="teks-row-cap" x-text="seCaption(se)"></span>
                 </span>
-                <span class="teks-row-text" x-text="se.text"></span>
+                <span class="teks-row-text" x-prose="se.text"></span>
                 <span class="teks-row-meter"><span class="teks-row-fill" :style="`width:${gMastery(se.id)*100}%`"></span></span>
               </div>
             </template>
@@ -155,7 +155,7 @@
               <div class="bondgrid">
                 <template x-for="o in BOND_OPTIONS" :key="o.key">
                   <button class="choice" :data-state="bondState(o.key)" @click="pickBond(o.key)">
-                    <span class="tag" x-text="o.label"></span>
+                    <span class="tag" x-prose="o.label"></span>
                     <span x-text="o.hint"></span>
                   </button>
                 </template>
@@ -194,7 +194,7 @@
                     <p class="small muted mt-2">% ionic = (1 &minus; e^(&minus;0.25&middot;&Delta;EN&sup2;)) &times; 100. This is an estimate of ionic character; the activity bands are classification criteria, not universal boundaries.</p>
                     <div class="choice-grid mt-3">
                       <template x-for="o in PCT_OPTIONS" :key="'pi'+o.key">
-                        <button class="choice" :data-state="piState(o.key)" @click="piPickBand(o.key)" x-text="o.label"></button>
+                        <button class="choice" :data-state="piState(o.key)" @click="piPickBand(o.key)" x-prose="o.label"></button>
                       </template>
                     </div>
                     <div class="row call-row mt-3">
@@ -330,7 +330,7 @@
                     <p class="small muted mb-2" x-text="pol.mol.name + ': ' + pol.mol.bonds + ' bonding domains and ' + pol.mol.lone + ' lone pairs on ' + pol.mol.central + '.'"></p>
                     <div class="choice-grid mt-3">
                       <template x-for="o in POLAR_OPTIONS" :key="'pol'+o.key">
-                        <button class="choice" :data-state="polState(o.key)" @click="polPickCall(o.key)" x-text="o.label"></button>
+                        <button class="choice" :data-state="polState(o.key)" @click="polPickCall(o.key)" x-prose="o.label"></button>
                       </template>
                     </div>
                     <div class="row call-row mt-3">
@@ -470,7 +470,7 @@
               <p class="small muted mt-3 mb-2">Which handling category is supported by the supplied information?</p>
               <div class="choice-grid">
                 <template x-for="o in cap.sc.options" :key="o.key">
-                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-text="o.label"></button>
+                  <button class="choice" :data-state="capActionState(o.key)" @click="capPickAction(o.key)" x-prose="o.label"></button>
                 </template>
               </div>
 
@@ -519,7 +519,7 @@
           <template x-for="r in shelfReadings" :key="r.key">
             <div class="ship-stock">
               <div class="life-meter-label">
-                <span x-text="r.label" :title="r.hint"></span>
+                <span x-prose="r.label" :title="r.hint"></span>
                 <span class="mono" x-text="r.raw"></span>
               </div>
               <div class="meter"><div class="meter-fill" :style="`width:${r.pct}%; background:${stockColor(r.pct)}`"></div></div>
@@ -535,7 +535,7 @@
         <section class="latest-consequence" :class="'tone-' + activeTone" aria-label="Latest result">
           <span class="command-kicker">Latest result</span>
           <strong x-text="activeStateLabel"></strong>
-          <p x-text="worldLog.length ? worldLog[0].text : 'Twelve activity containers are ready to review.'"></p>
+          <p x-prose="worldLog.length ? worldLog[0].text : 'Twelve activity containers are ready to review.'"></p>
         </section>
 
         <section class="mission-log" aria-label="Activity log">
@@ -545,7 +545,7 @@
             <template x-for="w in worldLog.slice(0, 3)" :key="w.id">
               <li class="worldstate-entry" :class="w.tone==='success' ? 'good' : (w.tone==='warn' ? 'warn' : 'bad')">
                 <span class="ws-icon" x-text="w.icon"></span>
-                <span x-text="w.text"></span>
+                <span x-prose="w.text"></span>
               </li>
             </template>
           </ul>

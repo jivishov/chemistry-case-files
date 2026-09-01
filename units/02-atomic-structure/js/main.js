@@ -251,6 +251,12 @@ export function createSim() {
       const sc=SCENARIOS.find(s=>s.id==='cap-glowroom'), ok=this.capPick===this.capCorrect;
       this.verdict(sc, ok, ok ? 'The spectrum is consistent with neon, but the cylinder is unlabeled. Return it for verified identification before use.' : 'The spectral evidence supports a likely identity, but it does not replace verified cylinder identification.', '#2f8f5b');
     },
+    seCaption(se) {
+      if (this.gMastered(se.id)) return 'Mastered';
+      const sk = this.g_skills[se.id];
+      const def = this.g_skillDefs.find(d => d.id === se.id) || {};
+      return `${sk ? sk.run : 0} of ${def.target || 3} correct in a row`;
+    },
     get coreSkills() { return SE.filter(se=>!se.honors); },
     get teksMasteredCount() { return this.coreSkills.filter(se=>this.gMastered(se.id)).length; },
     get activeBrief() { return this.activeScenario[this.mode] || ({models:this.modelsSc,build:this.buildSc,mass:this.massSc,spectra:this.spectraSc,config:this.configSc,capstone:SCENARIOS.find(s=>s.id==='cap-glowroom')})[this.mode] || null; },
