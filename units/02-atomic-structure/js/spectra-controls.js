@@ -120,25 +120,33 @@ function mountStyles() {
       max-width: 20rem !important;
     }
 
-    .spectra-gauges {
+    .spectra-gauges,
+    .mass-gauges {
       grid-template-columns: repeat(auto-fit, minmax(155px, 190px)) !important;
       justify-content: start;
       gap: var(--s-2) !important;
-      max-width: 610px;
     }
-    .spectra-gauges .stat {
+    .spectra-gauges { max-width: 610px; }
+    .mass-gauges { max-width: 420px; }
+    .spectra-gauges .stat,
+    .mass-gauges .stat {
       min-width: 0;
       padding: 6px 9px !important;
     }
-    .spectra-gauges .stat .k { font-size: var(--fs-2xs); }
-    .spectra-gauges .stat .v {
+    .spectra-gauges .stat .k,
+    .mass-gauges .stat .k { font-size: var(--fs-2xs); }
+    .spectra-gauges .stat .v,
+    .mass-gauges .stat .v {
       margin-top: 1px;
       font-size: var(--fs-lg) !important;
       line-height: 1.15;
     }
-    .spectra-gauges .dial-face { max-width: 118px; }
-    .spectra-gauges .dial-foot { gap: 0; margin-top: -2px; }
-    .spectra-gauges .dial-read { font-size: var(--fs-2xs); line-height: 1.2; }
+    .spectra-gauges .dial-face,
+    .mass-gauges .dial-face { max-width: 118px; }
+    .spectra-gauges .dial-foot,
+    .mass-gauges .dial-foot { gap: 0; margin-top: -2px; }
+    .spectra-gauges .dial-read,
+    .mass-gauges .dial-read { font-size: var(--fs-2xs); line-height: 1.2; }
 
     @media (max-width: 980px) {
       .mass-element-row { grid-template-columns: minmax(0, 1fr) !important; }
@@ -246,6 +254,9 @@ function mountMassControls() {
 
   const answerField = mounted.panel?.querySelector('.work-order .field.field-260');
   if (answerField) answerField.classList.add('mass-answer-field');
+
+  const gaugeRow = mounted.panel?.querySelector('.stat-row.has-dials');
+  if (gaugeRow) gaugeRow.classList.add('mass-gauges');
 }
 
 mountStyles();
