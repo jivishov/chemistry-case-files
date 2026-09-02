@@ -1,0 +1,230 @@
+name: Apply Unit 2 build assembler fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/unit2-build-assembler-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Convert Build into a particle assembler
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise RuntimeError(f"{label}: expected exactly 1 match, found {count}")
+              return text.replace(old, new, 1)
+
+          main_path = Path('units/02-atomic-structure/js/main.js')
+          html_path = Path('units/02-atomic-structure/index.html')
+          main = main_path.read_text(encoding='utf-8')
+          html = html_path.read_text(encoding='utf-8')
+
+          main = replace_once(
+              main,
+              "    elZ: 6, nNeutrons: 6, nElectrons: 6,",
+              "    elZ: 6, nNeutrons: 6, nElectrons: 6, buildChecked: false,",
+              'build checked state'
+          )
+
+          main = replace_once(
+              main,
+              "      this.gLoad();\n      this.onElement();\n      this.resetNatural();",
+              "      this.gLoad();\n      this.resetNatural();",
+              'remove automatic element initialization'
+          )
+
+          main = replace_once(
+              main,
+              "      this.$watch('elZ', () => this.onElement());\n      this.$watch('isoKey', () => this.resetNatural());",
+              "      this.$watch('isoKey', () => this.resetNatural());",
+              'remove proton-to-element auto-fill watcher'
+          )
+
+          main = replace_once(
+              main,
+              "        ['elZ', 'isoKey', 'specKey', 'cfgZ'].forEach(k => { const v = this[k]; this[k] = null; this[k] = v; });",
+              "        ['isoKey', 'specKey', 'cfgZ'].forEach(k => { const v = this[k]; this[k] = null; this[k] = v; });",
+              'remove proton count from select rebind list'
+          )
+
+          main = replace_once(
+              main,
+              "      this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftDay = 1; this.worldLog = []; this.electronTask = 'config';",
+              "      this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftDay = 1; this.worldLog = []; this.electronTask = 'config'; this.buildChecked = false;",
+              'reset build reveal state'
+          )
+
+          main = replace_once(
+              main,
+              "      // Start from a neutral carbon atom instead of preloading the requested answer.\n      this.elZ = 6; this.onElement();",
+              "      // Start from a neutral 6p/6n/6e assembly instead of preloading the requested answer.\n      // The particle counts are independent: changing protons must not rewrite neutrons or electrons.\n      this.elZ = 6; this.nNeutrons = 6; this.nElectrons = 6; this.buildChecked = false;",
+              'independent build baseline'
+          )
+
+          main = replace_once(
+              main,
+              """    commitBuild() {
+      const sc=this.buildSc, ok=this.elZ===sc.z && this.nNeutrons===sc.n && this.nElectrons===sc.e;
+      this.verdict(sc, ok, ok ? `${this.isotopeName} has the requested proton, neutron, and electron counts.` : 'Recheck the element, mass number, and charge in the mission. Use A = protons + neutrons and charge = protons − electrons.');
+    },""",
+              """    commitBuild() {
+      if (this.buildSolved) return;
+      const sc=this.buildSc, ok=this.elZ===sc.z && this.nNeutrons===sc.n && this.nElectrons===sc.e;
+      this.buildChecked = true;
+      this.verdict(sc, ok, ok ? `${this.isotopeName} has the requested proton, neutron, and electron counts.` : `Your current assembly is ${this.isotopeName}, a ${this.chargeStr}. Recheck the requested element, mass number, and charge.`);
+    },""",
+              'build check and reveal behavior'
+          )
+
+          main = replace_once(
+              main,
+              """    get buildElements() { return ELEMENTS.filter(e => BUILD_SET.includes(e.z)); },
+    get el() { return ELEMENTS.find(e => e.z === this.elZ); },
+    onElement() {
+      if (!this.el) return;
+      const mass = ATOMIC_MASS[this.el.sym];
+      this.nNeutrons = Math.max(0, Math.round(mass) - this.elZ);
+      this.nElectrons = this.elZ;
+    },
+    stepNeutrons(d) { this.nNeutrons = Math.max(0, Math.min(this.elZ + 12, this.nNeutrons + d)); },
+    stepElectrons(d) { this.nElectrons = Math.max(1, Math.min(this.elZ + 4, this.nElectrons + d)); },""",
+              """    get buildElements() { return ELEMENTS.filter(e => BUILD_SET.includes(e.z)); },
+    get el() { return ELEMENTS.find(e => e.z === this.elZ); },
+    get buildSolved() { return !!(this.modeVerdict.build && this.modeVerdict.build.tone === 'success'); },
+    clearBuildCheck() {
+      if (this.buildSolved) return false;
+      this.buildChecked = false;
+      delete this.modeVerdict.build;
+      return true;
+    },
+    stepProtons(d) {
+      if (!this.clearBuildCheck()) return;
+      this.elZ = Math.max(1, Math.min(20, this.elZ + d));
+    },
+    stepNeutrons(d) {
+      if (!this.clearBuildCheck()) return;
+      this.nNeutrons = Math.max(0, Math.min(40, this.nNeutrons + d));
+    },
+    stepElectrons(d) {
+      if (!this.clearBuildCheck()) return;
+      this.nElectrons = Math.max(0, Math.min(20, this.nElectrons + d));
+    },""",
+              'independent particle controls'
+          )
+
+          html = replace_once(
+              html,
+              '<section class="work-order"><span class="command-kicker">Current atom</span><p x-prose="buildSc.goal"></p><div class="row call-row"><button class="btn btn-accent" @click="commitBuild()">Check atom</button><button class="btn" @click="nextBuild()">Next atom</button></div></section>',
+              '<section class="work-order"><span class="command-kicker">Atom to assemble</span><p x-prose="buildSc.goal"></p><p class="muted" style="font-size:var(--fs-xs); margin:var(--s-2) 0 0;">Set all three particle counts yourself. The assembled element identity stays hidden until you check.</p><div class="row call-row"><button class="btn btn-accent" @click="commitBuild()" :disabled="buildSolved">Check atom</button><button class="btn" @click="nextBuild()">Next atom</button></div></section>',
+              'build mission instruction'
+          )
+
+          html = replace_once(
+              html,
+              '<div class="iso-symbol"><span class="iso-stack"><sup x-text="massNumber"></sup><sub x-text="elZ"></sub></span><span class="iso-sym" x-text="el.sym"></span><sup class="iso-charge" x-show="charge!==0" x-text="ionNotation"></sup></div>',
+              '<div class="iso-symbol" aria-live="polite"><template x-if="buildChecked"><span style="display:inline-flex; align-items:center; gap:2px;"><span class="iso-stack"><sup x-text="massNumber"></sup><sub x-text="elZ"></sub></span><span class="iso-sym" x-text="el.sym"></span><sup class="iso-charge" x-show="charge!==0" x-text="ionNotation"></sup></span></template><span class="mono muted" x-show="!buildChecked" style="font-size:var(--fs-sm);">Element identity hidden until Check atom</span></div>',
+              'hide isotope identity before check'
+          )
+
+          html = replace_once(
+              html,
+              """            <div class="a-side">
+              <div class="field" style="max-width: 280px; margin-bottom: var(--s-4);">
+                <label for="el">Element</label>
+                <select id="el" x-model.number="elZ"><template x-for="e in buildElements" :key="e.z"><option :value="e.z" x-text="e.z + '  ' + e.sym + '  ' + e.name"></option></template></select>
+              </div>
+
+              <div class="stepper-grid">
+                <div class="stepper"><span class="stp-label">Protons</span><div class="stp-fixed mono" x-text="elZ"></div><span class="stp-sub">determines the element</span></div>
+                <div class="stepper"><span class="stp-label">Neutrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepNeutrons(-1)" aria-label="Decrease neutrons">−</button><span class="mono stp-val" x-text="nNeutrons"></span><button class="btn btn-sm" @click="stepNeutrons(1)" aria-label="Increase neutrons">+</button></div><span class="stp-sub">determines the isotope</span></div>
+                <div class="stepper"><span class="stp-label">Electrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepElectrons(-1)" aria-label="Decrease electrons">−</button><span class="mono stp-val" x-text="nElectrons"></span><button class="btn btn-sm" @click="stepElectrons(1)" aria-label="Increase electrons">+</button></div><span class="stp-sub">determines net charge</span></div>
+              </div>
+            </div>""",
+              """            <div class="a-side">
+              <div class="ref-title" style="margin-bottom:var(--s-3);">Assembly controls</div>
+              <div class="stepper-grid">
+                <div class="stepper"><span class="stp-label">Protons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepProtons(-1)" :disabled="buildSolved || elZ<=1" aria-label="Decrease protons">−</button><span class="mono stp-val" x-text="elZ"></span><button class="btn btn-sm" @click="stepProtons(1)" :disabled="buildSolved || elZ>=20" aria-label="Increase protons">+</button></div><span class="stp-sub">determines the element</span></div>
+                <div class="stepper"><span class="stp-label">Neutrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepNeutrons(-1)" :disabled="buildSolved || nNeutrons<=0" aria-label="Decrease neutrons">−</button><span class="mono stp-val" x-text="nNeutrons"></span><button class="btn btn-sm" @click="stepNeutrons(1)" :disabled="buildSolved || nNeutrons>=40" aria-label="Increase neutrons">+</button></div><span class="stp-sub">determines the isotope</span></div>
+                <div class="stepper"><span class="stp-label">Electrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepElectrons(-1)" :disabled="buildSolved || nElectrons<=0" aria-label="Decrease electrons">−</button><span class="mono stp-val" x-text="nElectrons"></span><button class="btn btn-sm" @click="stepElectrons(1)" :disabled="buildSolved || nElectrons>=20" aria-label="Increase electrons">+</button></div><span class="stp-sub">determines net charge</span></div>
+              </div>
+            </div>""",
+              'three independent particle steppers'
+          )
+
+          html = replace_once(
+              html,
+              '<div class="note note-info" style="margin-top: var(--s-4);" x-show="modeVerdict.build">\n            This is <strong x-text="isotopeName"></strong>, a <strong x-text="chargeStr"></strong>. Its nucleus contains <span class="mono" x-text="elZ"></span> protons and <span class="mono" x-text="nNeutrons"></span> neutrons, so A = <span class="mono" x-text="massNumber"></span>. The periodic-table average atomic mass of <span x-text="el.name"></span> is <span class="mono" x-text="fmt(massRef,5)"></span> u.\n          </div>',
+              '<div class="note note-info" style="margin-top: var(--s-4);" x-show="buildChecked">\n            Your assembly represents <strong x-text="isotopeName"></strong>, a <strong x-text="chargeStr"></strong>. Its nucleus contains <span class="mono" x-text="elZ"></span> protons and <span class="mono" x-text="nNeutrons"></span> neutrons, so A = <span class="mono" x-text="massNumber"></span>. The periodic-table average atomic mass of <span x-text="el.name"></span> is <span class="mono" x-text="fmt(massRef,5)"></span> u.\n          </div>',
+              'post-check element reveal'
+          )
+
+          html = replace_once(
+              html,
+              "import { createSim } from './js/main.js?v=u2-mission-fix-4';",
+              "import { createSim } from './js/main.js?v=u2-build-assembler-1';",
+              'cache bust build assembler'
+          )
+
+          main_path.write_text(main, encoding='utf-8')
+          html_path.write_text(html, encoding='utf-8')
+          PY
+
+      - name: Validate Unit 2 build behavior
+        run: |
+          node --check units/02-atomic-structure/js/main.js
+          git diff --check
+          python3 - <<'PY'
+          from pathlib import Path
+          js = Path('units/02-atomic-structure/js/main.js').read_text(encoding='utf-8')
+          html = Path('units/02-atomic-structure/index.html').read_text(encoding='utf-8')
+          required = [
+              'buildChecked: false',
+              'get buildSolved()',
+              'stepProtons(d)',
+              'this.nNeutrons = 6; this.nElectrons = 6',
+              'Element identity hidden until Check atom',
+              '@click="stepProtons(-1)"',
+              '@click="stepProtons(1)"',
+              'x-show="buildChecked"',
+              ':disabled="buildSolved"',
+              'u2-build-assembler-1'
+          ]
+          blob = js + '\n' + html
+          missing = [x for x in required if x not in blob]
+          if missing:
+              raise SystemExit(f'Missing build assembler markers: {missing}')
+          forbidden = [
+              "this.$watch('elZ', () => this.onElement())",
+              'this.elZ = 6; this.onElement();',
+              '<select id="el"',
+              '<div class="stp-fixed mono" x-text="elZ"></div>'
+          ]
+          present = [x for x in forbidden if x in blob]
+          if present:
+              raise SystemExit(f'Old answer-revealing build behavior remains: {present}')
+          print('Unit 2 particle assembler static validation passed.')
+          PY
+
+      - name: Commit validated fix and remove temporary workflow
+        run: |
+          rm -f .github/workflows/unit2-build-assembler-fix.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: make Unit 2 Build a particle assembler"
+          git push origin main
