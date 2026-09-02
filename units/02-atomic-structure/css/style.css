@@ -109,6 +109,8 @@
 .eqn { position: relative; }
 .rack-figure { grid-column: 1 / -1; width: 100%; height: clamp(58px, 8.5vh, 92px); display: block; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-sm); }
 .choice-grid-wide { grid-template-columns: 1fr; }
+.config-choice-grid .choice { min-height: 44px; text-align: center; }
+.config-choice-grid .mono { font-size: var(--fs-sm); }
 @media (min-width: 620px) { .choice-grid-wide { grid-template-columns: repeat(3, minmax(0,1fr)); } }
 
 .chem-console .a-row {

@@ -28,6 +28,56 @@ function wavelengthToRGB(nm) {
 }
 
 const ORBITALS = { s: 1, p: 3, d: 5, f: 7 };
+const EV_J = 1.602176634e-19;
+
+// Prompts that need information not present in the original scenario wording.
+const SCENARIO_GOAL_OVERRIDES = {
+  'b-neon': 'Build a neon-20 ion, Ne+, formed when a neutral neon-20 atom loses one electron.'
+};
+
+// C.6(E) must ask students to choose a configuration before the interface reveals it.
+const CONFIG_CHALLENGES = {
+  'e-magnesium': {
+    goal: 'Which noble-gas electron configuration is the ground-state configuration of magnesium?',
+    correct: '[Ne] 3s2',
+    choices: ['[Ne] 3s1 3p1', '[Ne] 3s2', '[Ne] 3p2']
+  },
+  'e-chromium': {
+    goal: 'Which listed electron configuration is the observed ground-state configuration of chromium?',
+    correct: '[Ar] 4s1 3d5',
+    choices: ['[Ar] 4s2 3d4', '[Ar] 4s2 3d5', '[Ar] 4s1 3d5']
+  },
+  'e-copper': {
+    goal: 'Which listed electron configuration is the observed ground-state configuration of copper?',
+    correct: '[Ar] 4s1 3d10',
+    choices: ['[Ar] 4s1 3d10', '[Ar] 4s2 3d9', '[Ar] 4s2 3d10']
+  }
+};
+
+const CONFIG_ART_META = {
+  'e-magnesium': { sym:'Mg', z:12, name:'Magnesium' },
+  'e-chromium': { sym:'Cr', z:24, name:'Chromium' },
+  'e-copper': { sym:'Cu', z:29, name:'Copper' }
+};
+
+function configurationChallengeArt(id) {
+  const m = CONFIG_ART_META[id];
+  if (!m) return '';
+  return `<svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <defs><linearGradient id="${id}-question-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#102a34"/><stop offset="1" stop-color="#0c1d25"/></linearGradient></defs>
+    <rect width="400" height="150" fill="url(#${id}-question-bg)"/>
+    <rect x="20" y="18" width="74" height="74" rx="8" fill="#173844" stroke="#4f93a0"/>
+    <text x="57" y="57" text-anchor="middle" font-family="Bitter, serif" font-size="30" font-weight="700" fill="#dcebee">${m.sym}</text>
+    <text x="57" y="78" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#9fc8d0">Z = ${m.z}</text>
+    <text x="116" y="31" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#9fc8d0">GROUND-STATE CONFIGURATION</text>
+    <rect x="116" y="43" width="258" height="49" rx="6" fill="#122932" stroke="#385966"/>
+    <text x="245" y="72" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="21" font-weight="700" fill="#f0c47e">?</text>
+    <text x="245" y="86" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#abc1c8">choose an answer in the workspace</text>
+    <text x="20" y="117" font-family="JetBrains Mono, monospace" font-size="8" fill="#abc1c8">${m.name} · answer hidden until submitted</text>
+    <text x="20" y="139" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#cfe6ea">CONFIGURATION MISSION</text>
+  </svg>`;
+}
+
 const skills = [
   { id:'a', code:'C.6(A)', label:'Atomic models', target:3 }, { id:'b', code:'C.6(B)', label:'Atomic structure', target:3 },
   { id:'d', code:'C.6(D)', label:'Average mass', target:3 }, { id:'c', code:'C.6(C)', label:'Spectra', target:3 },
@@ -59,12 +109,12 @@ const ART_COPY = [
   ['THE CHLORINE-37 TRACER · MASS NUMBER, NOT AVERAGE', 'CHLORINE-37 · MASS NUMBER, NOT AVERAGE MASS'],
   ['the leak-check bottle', 'isotope sample'], ['NOT THE TABLE VALUE', 'MASS NUMBER ≠ TABLE AVERAGE'],
   ['one bottle, one isotope', 'one atom, one isotope'],
-  ['THE TUBING INVOICE · THE BEAM BALANCES AT 10.81', 'BORON ISOTOPES · WEIGHTED AVERAGE 10.81 u'],
+  ['THE TUBING INVOICE · THE BEAM BALANCES AT 10.81', 'BORON ISOTOPES · CALCULATE THE WEIGHTED AVERAGE'],
   ['borosilicate, boxed', 'reference isotope data'], ['INVOICE', 'B SAMPLE'],
   ['THE ASSAY, WEIGHED', 'WEIGHTED CONTRIBUTIONS'], ['THE ASSAY', 'REFERENCE DATA'],
-  ['THE COPPER SPOOL · WHAT THE SCRAP BUYER PAYS FOR', 'COPPER ISOTOPES · WEIGHTED AVERAGE 63.55 u'],
+  ['THE COPPER SPOOL · WHAT THE SCRAP BUYER PAYS FOR', 'COPPER ISOTOPES · CALCULATE THE WEIGHTED AVERAGE'],
   ['the spool, on the scale', 'copper sample'],
-  ['THE POOL TABLETS · A THREE-QUARTER MIX', 'CHLORINE ISOTOPES · 75.77% Cl-35'],
+  ['THE POOL TABLETS · A THREE-QUARTER MIX', 'CHLORINE ISOTOPES · CALCULATE THE WEIGHTED AVERAGE'],
   ['the shop sells these too', 'chlorine sample'], ['POOL Cl', 'Cl DATA'],
   ['THE DEAD STREETLIGHT · SODIUM, AT 589 nm', 'SODIUM EMISSION · STRONG LINES NEAR 589 nm'],
   ['out since Thursday', 'selected Na spectrum'], ['the handheld', 'spectroscope'],
@@ -82,7 +132,7 @@ const ART_COPY = [
   ['THE COPPER COIL · A FILLED d ROW WINS TOO', 'COPPER · OBSERVED CONFIGURATION EXCEPTION'],
   ['the last gap in d closes', 'Cu differs from the simple prediction'],
   ['THE SEALED ARGON TUBE · A FULL SHELL DOES NOTHING', 'ARGON · FULL VALENCE SHELL, LOW REACTIVITY'],
-  ['SEALED · 10 YEARS', 'GROUP 18'], ['FAMILY CALL', 'GROUP PATTERN'], ['inert', 'very unreactive'], ['seal it in', 'low reactivity'],
+  ['SEALED · 10 YEARS', 'LONG SERVICE RECORD'], ['FAMILY CALL', 'GROUP PATTERN'], ['inert', 'very unreactive'], ['seal it in', 'low reactivity'],
   ['THE ALUMINUM ELECTRODE · THREE TO GIVE AWAY', 'ALUMINUM · THREE VALENCE ELECTRONS'],
   ['gives 3', 'often forms'], ['away', 'Al 3+ ions'],
   ['THE GETTER ORDER · ONE SHORT, AND GRABBING', 'CHLORINE · SEVEN VALENCE ELECTRONS'],
@@ -92,14 +142,35 @@ const ART_COPY = [
   ['THE ORBITAL CHECK · IS THIS ONE AN EXCEPTION?', 'CONFIGURATION CHECK · PREDICTED VS OBSERVED'],
   ['PREDICTED BY FILLING ORDER', 'SIMPLE AUFBAU PREDICTION'], ['WHAT THE BENCH SHOWS', 'OBSERVED GROUND STATE'],
   ['an exception is evidence, not a typo', 'compare prediction with observed data'],
-  ['THE UNLABELLED CYLINDER · NAME IT, THEN CALL IT', 'UNLABELED CYLINDER · EVIDENCE IS NOT A VERIFIED LABEL'],
+  ['THE UNLABELLED CYLINDER · NAME IT, THEN CALL IT', 'UNLABELED CYLINDER · SPECTRUM + IDENTIFICATION STATUS'],
   ['no stencil', 'no verified label'], ['READ IT', 'SPECTRUM'], ['full shell?', 'Group 18 pattern'],
   ['THE LAST CALL', 'EVIDENCE DECISION'], ['fill the tube', 'use cylinder'], ['send it back', 'return for ID'],
-  ['call it in', 'mark hazardous'], ['on the evidence', 'verify before use']
+  ['call it in', 'mark hazardous'], ['on the evidence', 'choose the justified action']
 ];
 
-function refineSceneArt(svg) {
-  return ART_COPY.reduce((out, [from, to]) => out.split(from).join(to), svg);
+// Scene-specific redactions keep the illustration useful without printing the answer.
+// Replacements target complete SVG text nodes so numerical geometry is not altered.
+const ART_COPY_BY_SCENE = {
+  'a-assay': [['DALTON', 'MODEL ?']],
+  'b-argon': [['18p 22n', 'p ?  n ?'], ['18', '?'], ['22', '?']],
+  'b-neon': [['10p 10n', 'p ?  n ?'], ['10', '?'], ['9', '?']],
+  'b-chlorine': [['17p 20n', 'p ?  n ?'], ['17 + 20 = 37', 'protons + neutrons = 37']],
+  'd-boron': [['10.81 u', 'average ?']],
+  'd-copper': [['63.55 u', 'average ?']],
+  'd-chlorine': [['35.45 u', 'average ?']],
+  'f-argon': [['18', '?'], ['noble gas', 'family ?']],
+  'f-aluminum': [['13', '?']],
+  'f-chlorine': [['group 17', 'group ?']]
+};
+
+function replaceSvgText(svg, from, to) {
+  return svg.split(`>${from}<`).join(`>${to}<`);
+}
+
+function refineSceneArt(svg, id) {
+  let out = ART_COPY.reduce((result, [from, to]) => result.split(from).join(to), svg);
+  for (const [from, to] of ART_COPY_BY_SCENE[id] || []) out = replaceSvgText(out, from, to);
+  return out;
 }
 
 function observedConfiguration(z) {
@@ -126,7 +197,7 @@ export function createSim() {
 
     scIdx: { a:-1, b:-1, d:-1, c:-1, e:-1, f:-1 },
     modelsSc: null, buildSc: null, massSc: null, spectraSc: null, configSc: null, familySc: null,
-    modelPick: null, familyPick: null, massInput: '', specEnergyInput: '', h1EnergyInput: '', h2Pick: null, capPick: null,
+    modelPick: null, familyPick: null, configPick: null, massInput: '', specEnergyInput: '', h1EnergyInput: '', h2Pick: null, capPick: null,
     modeVerdict: {}, activeScenario: {}, rack: [], shiftDay: 1, worldLog: [], _wid: 0,
 
     // ---- C.6(A/B) build an atom ----
@@ -137,7 +208,7 @@ export function createSim() {
     specKey: 'H', selLine: null,
     // ---- C.6(E)/C.5(B) electrons ----
     cfgZ: 11, famZ: 18, vQuiz: null, vChecked: false,
-    cfgVerdict: null, famVerdict: null, h2Verdict: null,
+    cfgVerdict: null, famVerdict: null, h1Verdict: null, h2Verdict: null,
 
     init() {
       this.gLoad();
@@ -146,8 +217,8 @@ export function createSim() {
       this.nextModels(); this.nextBuild(); this.nextMass(); this.nextSpectra(); this.nextFamily(); this.nextConfig();
       this.$watch('elZ', () => this.onElement());
       this.$watch('isoKey', () => this.resetNatural());
-      this.$watch('specKey', () => { this.selLine = null; });
-      this.$watch('cfgZ', () => { this.vQuiz = null; this.vChecked = false; });
+      this.$watch('specKey', () => { this.selLine = null; this.specEnergyInput = ''; this.h1EnergyInput = ''; this.h1Verdict = null; });
+      this.$watch('cfgZ', () => { this.vQuiz = null; this.vChecked = false; this.configPick = null; this.cfgVerdict = null; this.h2Pick = null; this.h2Verdict = null; });
       // A <select x-model> binds before its child x-for has rendered its <option>s,
       // so re-apply each selected value after those options exist.
       this.$nextTick(() => {
@@ -161,7 +232,7 @@ export function createSim() {
     },
     resetProgress() {
       this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftDay = 1; this.worldLog = [];
-      this.cfgVerdict = null; this.famVerdict = null; this.h2Verdict = null; this.h2Pick = null;
+      this.cfgVerdict = null; this.famVerdict = null; this.h1Verdict = null; this.h2Verdict = null; this.configPick = null; this.h2Pick = null; this.h1EnergyInput = '';
       this.scIdx = { a:-1, b:-1, d:-1, c:-1, e:-1, f:-1 };
       this.nextModels(); this.nextBuild(); this.nextMass(); this.nextSpectra(); this.nextFamily(); this.nextConfig();
     },
@@ -172,13 +243,31 @@ export function createSim() {
     },
     nextModels() { this.modelsSc = this.nextScenario('a'); this.modelPick = null; this.focusScenario('models', this.modelsSc); },
     nextBuild() {
-      this.buildSc = this.nextScenario('b'); this.elZ = this.buildSc.z; this.onElement(); this.nNeutrons = this.buildSc.n; this.nElectrons = this.buildSc.e; this.focusScenario('build', this.buildSc);
+      const base = this.nextScenario('b');
+      this.buildSc = SCENARIO_GOAL_OVERRIDES[base.id] ? { ...base, goal:SCENARIO_GOAL_OVERRIDES[base.id] } : base;
+      // Start from a neutral carbon atom instead of preloading the requested answer.
+      this.elZ = 6; this.onElement();
+      this.focusScenario('build', this.buildSc);
     },
     nextMass() { this.massSc = this.nextScenario('d'); this.isoKey = this.massSc.iso; this.resetNatural(); this.massInput = ''; this.focusScenario('mass', this.massSc); },
-    nextSpectra() { this.spectraSc = this.nextScenario('c'); this.specKey = this.spectraSc.spec; this.selLine = 0; this.specEnergyInput = ''; this.focusScenario('spectra', this.spectraSc); },
-    nextConfig() { this.configSc = this.nextScenario('e'); this.cfgZ = this.configSc.z; this.vQuiz = null; this.vChecked = false; this.cfgVerdict = null; this.focusScenario('config', this.configSc); },
+    nextSpectra() {
+      this.spectraSc = this.nextScenario('c'); this.specKey = this.spectraSc.spec; this.specEnergyInput = ''; this.h1EnergyInput = ''; this.h1Verdict = null;
+      this.$nextTick(() => { this.selLine = 0; });
+      this.focusScenario('spectra', this.spectraSc);
+    },
+    nextConfig() {
+      const base = this.nextScenario('e'), challenge = CONFIG_CHALLENGES[base.id];
+      this.configSc = challenge ? { ...base, goal:challenge.goal } : base;
+      this.cfgZ = this.configSc.z; this.configPick = null; this.vQuiz = null; this.vChecked = false; this.cfgVerdict = null; this.h2Pick = null; this.h2Verdict = null;
+      this.focusScenario('config', this.configSc);
+    },
     nextFamily() { this.familySc = this.nextScenario('f'); this.famZ = this.familySc.z; this.familyPick = null; this.famVerdict = null; this.focusScenario('config', this.familySc); },
-    focusScenario(mode, sc) { this.activeScenario[mode] = sc; delete this.modeVerdict[mode]; },
+    focusScenario(mode, sc) {
+      if (!sc) return;
+      const current = this.activeScenario[mode];
+      if (!current || current.id !== sc.id) delete this.modeVerdict[mode];
+      this.activeScenario[mode] = sc;
+    },
     get rackState() { return this.rack.length >= 5 ? 'One task left in this practice round' : (this.rack.length ? 'Practice tasks in progress' : 'Ready for the first practice task'); },
     recordWorld({ sc, good, detail, color = '#2a7d8a' }) {
       if (good) this.rack.push({ id:`${sc.id}-${this._wid}`, label:sc.system, color });
@@ -190,12 +279,22 @@ export function createSim() {
       }
     },
     verdict(sc, good, detail, color) {
+      const prior = this.modeVerdict[sc.stage], active = this.activeScenario[sc.stage];
+      if (prior && prior.tone === 'success' && active && active.id === sc.id) return prior;
       const v = good
         ? { tone:'success', state:'CORRECT', headline:'The evidence supports this answer', detail }
         : { tone:'fail', state:'RECHECK', headline:'Review the evidence and try again', detail };
       this.gRecord(sc.skill, good, true);
       this.modeVerdict[sc.stage] = v;
       this.activeScenario[sc.stage] = sc;
+      this.recordWorld({ sc, good, detail, color });
+      return v;
+    },
+    practiceVerdict(sc, good, detail, color = '#7651a8') {
+      const v = good
+        ? { tone:'success', state:'CORRECT', headline:'The extension is correct', detail }
+        : { tone:'fail', state:'RECHECK', headline:'Recheck the extension', detail };
+      this.gRecord(sc.skill, good, true);
       this.recordWorld({ sc, good, detail, color });
       return v;
     },
@@ -207,7 +306,7 @@ export function createSim() {
     },
     commitBuild() {
       const sc=this.buildSc, ok=this.elZ===sc.z && this.nNeutrons===sc.n && this.nElectrons===sc.e;
-      this.verdict(sc, ok, ok ? `${this.isotopeName} has the requested proton, neutron, and electron counts.` : `Target: Z = ${sc.z}, ${sc.n} neutrons, and ${sc.e} electrons.`);
+      this.verdict(sc, ok, ok ? `${this.isotopeName} has the requested proton, neutron, and electron counts.` : 'Recheck the element, mass number, and charge in the mission. Use A = protons + neutrons and charge = protons − electrons.');
     },
     get massDialValue() { const v = parseFloat(this.massInput); return isFinite(v) ? v : this.avgMass; },
     commitMass() {
@@ -221,10 +320,19 @@ export function createSim() {
       const ok=this.specKey===sc.spec && !!line && isFinite(val) && outcomeBand(val,line.energy,SPECTRA_BANDS).withinSpec;
       this.verdict(sc, ok, ok ? `${line.wl.toFixed(1)} nm corresponds to ${fmt(line.energy,3)} J per photon.` : `Use a ${sc.spec} line and calculate E = hc/λ in joules.`, line ? line.color : '#2a7d8a');
     },
+    get configChallenge() { return this.configSc ? CONFIG_CHALLENGES[this.configSc.id] : null; },
+    get configChoices() { return this.configChallenge ? this.configChallenge.choices : []; },
+    configState(value) {
+      if (!this.cfgVerdict) return this.configPick === value ? 'on' : '';
+      const correct = this.configChallenge && this.configChallenge.correct;
+      return value === correct ? 'correct' : (value === this.configPick ? 'wrong' : '');
+    },
     commitConfig() {
-      const sc=this.configSc, ok=this.cfgZ===sc.z;
+      const sc=this.configSc, challenge=this.configChallenge;
+      if (!challenge || !this.configPick) return;
+      const ok=this.cfgZ===sc.z && this.configPick===challenge.correct;
       this.cfgVerdict = this.verdict(sc, ok,
-        ok ? `${this.cfgEl.name}: ${this.cfgShorthand}. ${this.cfgIsException ? 'This is the observed ground-state exception to the simple Aufbau prediction.' : 'This ground-state configuration follows the simple filling prediction.'}` : `Set the electron tool to Z = ${sc.z} before checking the configuration.`);
+        ok ? `${this.cfgEl.name}: ${this.cfgShorthand}. ${this.cfgIsException ? 'This is the observed ground-state exception to the simple Aufbau prediction.' : 'This ground-state configuration follows the simple filling prediction.'}` : (this.cfgZ!==sc.z ? `Use the mission element (Z = ${sc.z}) before submitting.` : 'Compare the subshell occupancies in the choices and select the ground-state configuration.'));
     },
     get famEl() { return ELEMENTS.find(e => e.z === this.famZ); },
     get famValence() { return valenceElectrons(this.famZ); },
@@ -234,14 +342,17 @@ export function createSim() {
       this.famVerdict = this.verdict(sc, ok, ok ? `${this.famEl.name} is in ${sc.correct}; its valence-electron pattern is consistent with that group.` : `${this.famEl.name} has ${this.famValence} main-group valence electrons. Use that pattern to choose its group.`);
     },
     commitH1() {
+      if (this.h1Verdict && this.h1Verdict.tone === 'success') return;
       const sc=SCENARIOS.find(s=>s.id==='h1-photon'), val=parseFloat(this.h1EnergyInput), line=this.selectedLine;
-      const ok=!!line && isFinite(val) && outcomeBand(val,line.energy,HONORS_BANDS).withinSpec;
-      this.verdict(sc, ok, ok ? `The selected photon carries ${fmt(line.energy,3)} J.` : 'Select a line and calculate E = hc/λ after converting nm to m.', line ? line.color : '#7651a8');
+      const target=line ? line.energy / EV_J : NaN;
+      const ok=!!line && isFinite(val) && outcomeBand(val,target,HONORS_BANDS).withinSpec;
+      this.h1Verdict = this.practiceVerdict(sc, ok, ok ? `The selected photon carries ${fmt(target,3)} eV.` : 'Convert the verified energy in joules to electronvolts by dividing by 1.602 × 10^-19 J/eV.', line ? line.color : '#7651a8');
     },
     h2State(v) { if (!this.h2Verdict) return this.h2Pick===v?'on':''; const correct=this.cfgIsException?'exception':'standard'; return v===correct?'correct':(v===this.h2Pick?'wrong':''); },
     commitH2() {
+      if (this.h2Verdict && this.h2Verdict.tone === 'success') return;
       const sc=SCENARIOS.find(s=>s.id==='h2-orbital'), correct=this.cfgIsException?'exception':'standard', ok=this.h2Pick===correct;
-      this.h2Verdict = this.verdict(sc, ok, ok ? `${this.cfgEl.name} ${correct==='exception'?'has a listed observed exception':'follows the simple Aufbau prediction in this activity'}.` : 'Compare the displayed simple prediction with the observed ground-state configuration.');
+      this.h2Verdict = this.practiceVerdict(sc, ok, ok ? `${this.cfgEl.name} ${correct==='exception'?'has a listed observed exception':'follows the simple Aufbau prediction in this activity'}.` : 'Compare the simple Aufbau prediction with the observed ground-state configuration.');
     },
     get capUnlocked() { return this.gOverall() === 1; },
     get capCorrect() { return SCENARIOS.find(s=>s.id==='cap-glowroom').correct; },
@@ -265,17 +376,32 @@ export function createSim() {
     get activeArtId() { return (this.activeBrief&&this.activeBrief.id)||'a-crt'; },
     get activeStationName() { return (this.activeBrief&&this.activeBrief.system)||'Atomic structure'; },
     get activeStateLabel() { return (this.activeVerdict&&this.activeVerdict.state)||''; },
-    get activeOutcomeText() { const v=this.activeVerdict,b=this.activeBrief; return (v&&(v.detail||v.headline))||(b&&(b.why||b.goal))||'Choose an activity from the tabs above.'; },
+    get activeOutcomeText() {
+      const v=this.activeVerdict, b=this.activeBrief;
+      if (v) return v.detail || v.headline;
+      if (!b) return 'Choose an activity from the tabs above.';
+      if (this.mode==='models') return 'Compare the observation with what each historical model could explain.';
+      if (this.mode==='build') return 'Use atomic number, mass number, and charge to set the particle counts.';
+      if (this.mode==='mass') return 'Multiply each isotope mass by its fractional abundance, then add the contributions.';
+      if (this.mode==='spectra') return 'Convert the selected wavelength to meters, then use E = hc/λ.';
+      if (this.mode==='config' && b.skill==='f') return 'Use the displayed valence-electron count as evidence for the periodic-table group.';
+      if (this.mode==='config') return 'Choose the ground-state configuration; the full representation appears after a correct response.';
+      if (this.mode==='capstone') return 'Use the spectrum together with the cylinder identification status to choose the justified action.';
+      return b.goal;
+    },
     get activeReference() {
       if(this.mode==='models') return [{k:'Method',v:'observation → model'},{k:'History',v:'choose the model asked for in this sequence'}];
       if(this.mode==='build') return [{k:'Identity',v:'atomic number = protons'},{k:'Charge',v:'protons − electrons'}];
       if(this.mode==='spectra') return [{k:'Equation',v:'E = hc/λ'},{k:'Unit',v:'convert nm to m'}];
       if(this.mode==='mass') return [{k:'Average',v:'Σ(mass × fraction)'},{k:'Data',v:'use the reference isotope abundances'}];
-      if(this.mode==='config') return [{k:'Ground state',v:'observed configuration is shown'},{k:'Aufbau',v:'simple prediction has listed exceptions'}];
+      if(this.mode==='config') return [{k:'Ground state',v:'choose the configuration before the solution is shown'},{k:'Aufbau',v:'simple filling has listed observed exceptions'}];
       if(this.mode==='capstone') return [{k:'Evidence',v:'spectrum supports identity'},{k:'Use',v:'verified label is still required'}];
       return [{k:'Progress',v:'correct responses add one practice marker'},{k:'Round',v:'six markers complete one practice round'}];
     },
-    scArt(id) { return refineSceneArt(sceneArt(id)); },
+    scArt(id) {
+      if (id && id.startsWith('e-') && !(this.cfgVerdict && this.cfgVerdict.tone === 'success')) return configurationChallengeArt(id);
+      return refineSceneArt(sceneArt(id), id);
+    },
     get rackReadings() { return [{key:'jobs',label:'Tasks',raw:`${this.rack.length}/6`,pct:this.rack.length/6*100,color:'var(--accent)'},{key:'core',label:'Core',raw:`${this.teksMasteredCount}/6`,pct:this.gOverall()*100,color:'var(--accent-700)'},{key:'day',label:'Round',raw:`${this.shiftDay}`,pct:Math.min(100,this.shiftDay/3*100),color:'var(--success)'},{key:'log',label:'Log',raw:`${this.worldLog.length}`,pct:Math.min(100,this.worldLog.length/6*100),color:'var(--warn)'}]; },
     rackSvg() { return this.rack.map((r,i)=>`<g transform="translate(${8+i*36},4)"><title>${r.label}</title><rect x="7" y="8" width="18" height="48" rx="8" fill="${r.color}" opacity=".85"/><rect x="12" y="2" width="8" height="8" rx="2" fill="#dcebee"/></g>`).join(''); },
 
@@ -352,10 +478,12 @@ export function createSim() {
         s += `<circle cx="${px}" cy="${ty}" r="4" fill="#2a7d8a"></circle>`;
         s += `<text x="${px}" y="${(60 - h - 7).toFixed(1)}" font-size="9" fill="#1d5b66" text-anchor="middle" font-family="JetBrains Mono">${m.a}</text>`;
       });
-      const ax = x(this.avgMass).toFixed(1);
-      s += `<line x1="${ax}" y1="20" x2="${ax}" y2="68" stroke="#bf4a30" stroke-width="1.6" stroke-dasharray="4 3"></line>`;
-      s += `<polygon points="${ax - 5},20 ${+ax + 5},20 ${ax},28" fill="#bf4a30"></polygon>`;
-      s += `<text x="${ax}" y="15" font-size="9" fill="#bf4a30" text-anchor="middle" font-family="JetBrains Mono">avg ${this.avgMass.toFixed(2)}</text>`;
+      if (this.modeVerdict.mass && this.modeVerdict.mass.tone === 'success') {
+        const ax = x(this.avgMass).toFixed(1);
+        s += `<line x1="${ax}" y1="20" x2="${ax}" y2="68" stroke="#bf4a30" stroke-width="1.6" stroke-dasharray="4 3"></line>`;
+        s += `<polygon points="${ax - 5},20 ${+ax + 5},20 ${ax},28" fill="#bf4a30"></polygon>`;
+        s += `<text x="${ax}" y="15" font-size="9" fill="#bf4a30" text-anchor="middle" font-family="JetBrains Mono">avg ${this.avgMass.toFixed(2)}</text>`;
+      }
       return s;
     },
 
