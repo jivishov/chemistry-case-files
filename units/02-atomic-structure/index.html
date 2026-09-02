@@ -243,7 +243,7 @@
 
           </div>
 
-          <section class="work-order mt-3" x-show="electronTask==='family'" @focusin="focusScenario('config', familySc)" @click="focusScenario('config', familySc)"><span class="command-kicker">Group pattern</span><p x-prose="familySc.goal"></p><p class="muted" style="font-size: var(--fs-sm);">Element: <strong x-text="famEl.name"></strong> (<span class="mono">Z = <span x-text="famZ"></span></span>, <span class="mono" x-text="famEl.sym"></span>). Main-group valence electrons: <strong x-text="famValence"></strong>.</p><div class="choice-grid choice-grid-wide"><template x-for="m in ['Noble gas (Group 18)','Boron group (Group 13)','Halogen (Group 17)','Transition metal']" :key="m"><button class="choice" :data-state="familyState(m)" @click="familyPick=m" x-text="m"></button></template></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="commitFamily()" :disabled="!familyPick">Check group</button><button class="btn" @click="nextFamily()">Next element</button><span class="call-hint" x-show="!familyPick">Choose the group first.</span></div></section>
+          <section class="work-order mt-3" x-show="electronTask==='family'" @focusin="focusScenario('config', familySc)" @click="focusScenario('config', familySc)"><span class="command-kicker">Group pattern</span><p x-prose="familySc.goal"></p><p class="muted" style="font-size: var(--fs-sm);">Element: <strong x-text="famEl.name"></strong> (<span class="mono">Z = <span x-text="famZ"></span></span>, <span class="mono" x-text="famEl.sym"></span>). Main-group valence electrons: <strong x-text="famValence"></strong>.</p><div class="choice-grid choice-grid-wide"><template x-for="m in ['Noble gas (Group 18)','Boron group (Group 13)','Halogen (Group 17)','Transition metal']" :key="m"><button class="choice" :data-state="familyState(m)" @click="familyPick=m" x-text="m"></button></template></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="commitFamily()" :disabled="!familyPick || (famVerdict && famVerdict.tone==='success')">Check group</button><button class="btn" @click="nextFamily()">Next element</button><span class="call-hint" x-show="!familyPick">Choose the group first.</span></div></section>
         </div>
 
         <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
@@ -269,7 +269,7 @@
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
   import { registerGauge } from '../../shared/js/gauge.js';
-  import { createSim } from './js/main.js?v=u2-mission-fix-3';
+  import { createSim } from './js/main.js?v=u2-mission-fix-4';
   import { mountCaseFile } from '../../shared/js/casefile.js';
   import { CASE } from './js/case.js';
   import { mountColumnResizers } from '../shared/columns.js?v=cockpit-3';

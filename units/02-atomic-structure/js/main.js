@@ -335,6 +335,7 @@ export function createSim() {
       return value === correct ? 'correct' : (value === this.configPick ? 'wrong' : '');
     },
     commitConfig() {
+      if (this.cfgVerdict && this.cfgVerdict.tone === 'success') return;
       const sc=this.configSc, challenge=this.configChallenge;
       if (!challenge || !this.configPick) return;
       const ok=this.cfgZ===sc.z && this.configPick===challenge.correct;
@@ -345,6 +346,7 @@ export function createSim() {
     get famValence() { return valenceElectrons(this.famZ); },
     familyState(name) { if (!this.famVerdict) return this.familyPick===name?'on':''; return name===this.familySc.correct?'correct':(name===this.familyPick?'wrong':''); },
     commitFamily() {
+      if (this.famVerdict && this.famVerdict.tone === 'success') return;
       const sc=this.familySc, ok=this.familyPick===sc.correct;
       this.famVerdict = this.verdict(sc, ok, ok ? `${this.famEl.name} is in ${sc.correct}; its valence-electron pattern is consistent with that group.` : `${this.famEl.name} has ${this.famValence} main-group valence electrons. Use that pattern to choose its group.`);
     },
@@ -378,7 +380,10 @@ export function createSim() {
     get coreSkills() { return SE.filter(se=>!se.honors); },
     get teksMasteredCount() { return this.coreSkills.filter(se=>this.gMastered(se.id)).length; },
     get activeBrief() { return this.activeScenario[this.mode] || ({models:this.modelsSc,build:this.buildSc,mass:this.massSc,spectra:this.spectraSc,config:this.configSc,capstone:SCENARIOS.find(s=>s.id==='cap-glowroom')})[this.mode] || null; },
-    get activeVerdict() { return this.modeVerdict[this.mode] || null; },
+    get activeVerdict() {
+      if (this.mode === 'config') return (this.electronTask === 'family' ? this.famVerdict : this.cfgVerdict) || null;
+      return this.modeVerdict[this.mode] || null;
+    },
     get activeTone() { const t=this.activeVerdict&&this.activeVerdict.tone; return t==='success'?'safe':(t?'danger':'standby'); },
     get activeArtId() { return (this.activeBrief&&this.activeBrief.id)||'a-crt'; },
     get activeStationName() { return (this.activeBrief&&this.activeBrief.system)||'Atomic structure'; },
