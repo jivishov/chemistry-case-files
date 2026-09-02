@@ -1,0 +1,52 @@
+name: Apply Unit 2 electron mission separation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/unit2-electron-subtask-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply electron mission separation
+        run: python3 tools/unit2_electron_subtask_fix.py
+
+      - name: Validate Unit 2
+        run: |
+          node --check units/02-atomic-structure/js/main.js
+          git diff --check
+          python3 - <<'PY'
+          from pathlib import Path
+          html = Path('units/02-atomic-structure/index.html').read_text(encoding='utf-8')
+          js = Path('units/02-atomic-structure/js/main.js').read_text(encoding='utf-8')
+          checks = [
+              "electronTask: 'config'",
+              'setElectronTask(task)',
+              "x-show=\"electronTask==='config'\"",
+              "x-show=\"electronTask==='family'\"",
+              'Electrons &amp; groups',
+              'u2-mission-fix-3'
+          ]
+          missing = [x for x in checks if x not in js + html]
+          if missing:
+              raise SystemExit(f'Missing electron mission separation markers: {missing}')
+          print('Electron mission separation validation passed.')
+          PY
+
+      - name: Commit refinement and remove temporary files
+        run: |
+          rm -f tools/unit2_electron_subtask_fix.py .github/workflows/unit2-electron-subtask-fix.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: separate Unit 2 electron core missions"
+          git push origin main
