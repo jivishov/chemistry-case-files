@@ -95,7 +95,7 @@
 
         <div class="panel" :class="{ 'is-active': mode==='build' }" x-show="mode==='build'">
           <p class="muted" style="margin-bottom: var(--s-4);">Protons determine the element. Neutrons determine the isotope; electrons determine net charge. The diagram uses a Bohr-style shell model.</p>
-          <section class="work-order"><span class="command-kicker">Current atom</span><p x-prose="buildSc.goal"></p><div class="row call-row"><button class="btn btn-accent" @click="commitBuild()">Check atom</button><button class="btn" @click="nextBuild()">Next atom</button></div></section>
+          <section class="work-order"><span class="command-kicker">Atom to assemble</span><p x-prose="buildSc.goal"></p><p class="muted" style="font-size:var(--fs-xs); margin:var(--s-2) 0 0;">Set all three particle counts yourself. The assembled element identity stays hidden until you check.</p><div class="row call-row"><button class="btn btn-accent" @click="commitBuild()" :disabled="buildSolved">Check atom</button><button class="btn" @click="nextBuild()">Next atom</button></div></section>
 
           <div class="a-row">
             <div>
@@ -105,19 +105,15 @@
                 <text x="150" y="146" text-anchor="middle" font-size="12" font-family="JetBrains Mono" font-weight="700" fill="#bf4a30" x-text="elZ + ' p+'"></text>
                 <text x="150" y="162" text-anchor="middle" font-size="12" font-family="JetBrains Mono" fill="#687a82" x-text="nNeutrons + ' n'"></text>
               </svg>
-              <div class="iso-symbol"><span class="iso-stack"><sup x-text="massNumber"></sup><sub x-text="elZ"></sub></span><span class="iso-sym" x-text="el.sym"></span><sup class="iso-charge" x-show="charge!==0" x-text="ionNotation"></sup></div>
+              <div class="iso-symbol" aria-live="polite"><template x-if="buildChecked"><span style="display:inline-flex; align-items:center; gap:2px;"><span class="iso-stack"><sup x-text="massNumber"></sup><sub x-text="elZ"></sub></span><span class="iso-sym" x-text="el.sym"></span><sup class="iso-charge" x-show="charge!==0" x-text="ionNotation"></sup></span></template><span class="mono muted" x-show="!buildChecked" style="font-size:var(--fs-sm);">Element identity hidden until Check atom</span></div>
             </div>
 
             <div class="a-side">
-              <div class="field" style="max-width: 280px; margin-bottom: var(--s-4);">
-                <label for="el">Element</label>
-                <select id="el" x-model.number="elZ"><template x-for="e in buildElements" :key="e.z"><option :value="e.z" x-text="e.z + '  ' + e.sym + '  ' + e.name"></option></template></select>
-              </div>
-
+              <div class="ref-title" style="margin-bottom:var(--s-3);">Assembly controls</div>
               <div class="stepper-grid">
-                <div class="stepper"><span class="stp-label">Protons</span><div class="stp-fixed mono" x-text="elZ"></div><span class="stp-sub">determines the element</span></div>
-                <div class="stepper"><span class="stp-label">Neutrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepNeutrons(-1)" aria-label="Decrease neutrons">−</button><span class="mono stp-val" x-text="nNeutrons"></span><button class="btn btn-sm" @click="stepNeutrons(1)" aria-label="Increase neutrons">+</button></div><span class="stp-sub">determines the isotope</span></div>
-                <div class="stepper"><span class="stp-label">Electrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepElectrons(-1)" aria-label="Decrease electrons">−</button><span class="mono stp-val" x-text="nElectrons"></span><button class="btn btn-sm" @click="stepElectrons(1)" aria-label="Increase electrons">+</button></div><span class="stp-sub">determines net charge</span></div>
+                <div class="stepper"><span class="stp-label">Protons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepProtons(-1)" :disabled="buildSolved || elZ<=1" aria-label="Decrease protons">−</button><span class="mono stp-val" x-text="elZ"></span><button class="btn btn-sm" @click="stepProtons(1)" :disabled="buildSolved || elZ>=20" aria-label="Increase protons">+</button></div><span class="stp-sub">determines the element</span></div>
+                <div class="stepper"><span class="stp-label">Neutrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepNeutrons(-1)" :disabled="buildSolved || nNeutrons<=0" aria-label="Decrease neutrons">−</button><span class="mono stp-val" x-text="nNeutrons"></span><button class="btn btn-sm" @click="stepNeutrons(1)" :disabled="buildSolved || nNeutrons>=40" aria-label="Increase neutrons">+</button></div><span class="stp-sub">determines the isotope</span></div>
+                <div class="stepper"><span class="stp-label">Electrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepElectrons(-1)" :disabled="buildSolved || nElectrons<=0" aria-label="Decrease electrons">−</button><span class="mono stp-val" x-text="nElectrons"></span><button class="btn btn-sm" @click="stepElectrons(1)" :disabled="buildSolved || nElectrons>=20" aria-label="Increase electrons">+</button></div><span class="stp-sub">determines net charge</span></div>
               </div>
             </div>
           </div>
@@ -128,8 +124,8 @@
             <div class="stat"><div class="k">net charge</div><div class="v" x-text="charge>0 ? '+'+charge : charge"></div><div x-gauge="{ kind:'span', value: charge, min: -4, max: 4, ref: 0, digits: 2, refLabel:'neutral', label:'net charge', tone:'plum', bands: [{ upTo: -0.5, label:'anion · more electrons than protons' }, { upTo: 0.5, label:'neutral · electrons equal protons' }, { upTo: Infinity, label:'cation · fewer electrons than protons' }] }"></div></div>
           </div>
 
-          <div class="note note-info" style="margin-top: var(--s-4);" x-show="modeVerdict.build">
-            This is <strong x-text="isotopeName"></strong>, a <strong x-text="chargeStr"></strong>. Its nucleus contains <span class="mono" x-text="elZ"></span> protons and <span class="mono" x-text="nNeutrons"></span> neutrons, so A = <span class="mono" x-text="massNumber"></span>. The periodic-table average atomic mass of <span x-text="el.name"></span> is <span class="mono" x-text="fmt(massRef,5)"></span> u.
+          <div class="note note-info" style="margin-top: var(--s-4);" x-show="buildChecked">
+            Your assembly represents <strong x-text="isotopeName"></strong>, a <strong x-text="chargeStr"></strong>. Its nucleus contains <span class="mono" x-text="elZ"></span> protons and <span class="mono" x-text="nNeutrons"></span> neutrons, so A = <span class="mono" x-text="massNumber"></span>. The periodic-table average atomic mass of <span x-text="el.name"></span> is <span class="mono" x-text="fmt(massRef,5)"></span> u.
           </div>
 
           <details class="lesson-reference mt-3"><summary>How atomic models developed · C.6(A)</summary><div class="lesson-reference-body"><div class="models"><template x-for="m in ATOMIC_MODELS" :key="m.who"><div class="model-card" :class="{ 'is-bohr': m.who==='Bohr' }"><div class="model-head"><strong x-text="m.who"></strong><span class="mono" x-text="m.year"></span></div><div class="model-name" x-prose="m.model"></div><div class="model-idea" x-prose="m.idea"></div></div></template></div></div></details>
@@ -269,7 +265,7 @@
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
   import { registerGauge } from '../../shared/js/gauge.js';
-  import { createSim } from './js/main.js?v=u2-mission-fix-4';
+  import { createSim } from './js/main.js?v=u2-build-assembler-1';
   import { mountCaseFile } from '../../shared/js/casefile.js';
   import { CASE } from './js/case.js';
   import { mountColumnResizers } from '../shared/columns.js?v=cockpit-3';

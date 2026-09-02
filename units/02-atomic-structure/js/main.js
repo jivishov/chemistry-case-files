@@ -202,7 +202,7 @@ export function createSim() {
     modeVerdict: {}, activeScenario: {}, rack: [], shiftDay: 1, worldLog: [], _wid: 0,
 
     // ---- C.6(A/B) build an atom ----
-    elZ: 6, nNeutrons: 6, nElectrons: 6,
+    elZ: 6, nNeutrons: 6, nElectrons: 6, buildChecked: false,
     // ---- C.6(D) average atomic mass ----
     isoKey: 'Cl', isoAbund: {},
     // ---- C.6(C) emission spectra ----
@@ -213,17 +213,15 @@ export function createSim() {
 
     init() {
       this.gLoad();
-      this.onElement();
       this.resetNatural();
       this.nextModels(); this.nextBuild(); this.nextMass(); this.nextSpectra(); this.nextFamily(); this.nextConfig();
-      this.$watch('elZ', () => this.onElement());
       this.$watch('isoKey', () => this.resetNatural());
       this.$watch('specKey', () => { this.selLine = null; this.specEnergyInput = ''; this.h1EnergyInput = ''; this.h1Verdict = null; });
       this.$watch('cfgZ', () => { this.vQuiz = null; this.vChecked = false; this.configPick = null; this.cfgVerdict = null; this.h2Pick = null; this.h2Verdict = null; });
       // A <select x-model> binds before its child x-for has rendered its <option>s,
       // so re-apply each selected value after those options exist.
       this.$nextTick(() => {
-        ['elZ', 'isoKey', 'specKey', 'cfgZ'].forEach(k => { const v = this[k]; this[k] = null; this[k] = v; });
+        ['isoKey', 'specKey', 'cfgZ'].forEach(k => { const v = this[k]; this[k] = null; this[k] = v; });
       });
     },
 
@@ -238,7 +236,7 @@ export function createSim() {
       this.focusScenario('config', task === 'family' ? this.familySc : this.configSc);
     },
     resetProgress() {
-      this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftDay = 1; this.worldLog = []; this.electronTask = 'config';
+      this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftDay = 1; this.worldLog = []; this.electronTask = 'config'; this.buildChecked = false;
       this.cfgVerdict = null; this.famVerdict = null; this.h1Verdict = null; this.h2Verdict = null; this.configPick = null; this.h2Pick = null; this.h1EnergyInput = '';
       this.scIdx = { a:-1, b:-1, d:-1, c:-1, e:-1, f:-1 };
       this.nextModels(); this.nextBuild(); this.nextMass(); this.nextSpectra(); this.nextFamily(); this.nextConfig();
@@ -252,8 +250,9 @@ export function createSim() {
     nextBuild() {
       const base = this.nextScenario('b');
       this.buildSc = SCENARIO_GOAL_OVERRIDES[base.id] ? { ...base, goal:SCENARIO_GOAL_OVERRIDES[base.id] } : base;
-      // Start from a neutral carbon atom instead of preloading the requested answer.
-      this.elZ = 6; this.onElement();
+      // Start from a neutral 6p/6n/6e assembly instead of preloading the requested answer.
+      // The particle counts are independent: changing protons must not rewrite neutrons or electrons.
+      this.elZ = 6; this.nNeutrons = 6; this.nElectrons = 6; this.buildChecked = false;
       this.focusScenario('build', this.buildSc);
     },
     nextMass() { this.massSc = this.nextScenario('d'); this.isoKey = this.massSc.iso; this.resetNatural(); this.massInput = ''; this.focusScenario('mass', this.massSc); },
@@ -312,8 +311,10 @@ export function createSim() {
       this.verdict(sc, ok, `${this.modelPick}: ${evidence.consequence[this.modelPick]}`);
     },
     commitBuild() {
+      if (this.buildSolved) return;
       const sc=this.buildSc, ok=this.elZ===sc.z && this.nNeutrons===sc.n && this.nElectrons===sc.e;
-      this.verdict(sc, ok, ok ? `${this.isotopeName} has the requested proton, neutron, and electron counts.` : 'Recheck the element, mass number, and charge in the mission. Use A = protons + neutrons and charge = protons − electrons.');
+      this.buildChecked = true;
+      this.verdict(sc, ok, ok ? `${this.isotopeName} has the requested proton, neutron, and electron counts.` : `Your current assembly is ${this.isotopeName}, a ${this.chargeStr}. Recheck the requested element, mass number, and charge.`);
     },
     get massDialValue() { const v = parseFloat(this.massInput); return isFinite(v) ? v : this.avgMass; },
     commitMass() {
@@ -420,14 +421,25 @@ export function createSim() {
     // ======================= C.6(A/B) BUILD =======================
     get buildElements() { return ELEMENTS.filter(e => BUILD_SET.includes(e.z)); },
     get el() { return ELEMENTS.find(e => e.z === this.elZ); },
-    onElement() {
-      if (!this.el) return;
-      const mass = ATOMIC_MASS[this.el.sym];
-      this.nNeutrons = Math.max(0, Math.round(mass) - this.elZ);
-      this.nElectrons = this.elZ;
+    get buildSolved() { return !!(this.modeVerdict.build && this.modeVerdict.build.tone === 'success'); },
+    clearBuildCheck() {
+      if (this.buildSolved) return false;
+      this.buildChecked = false;
+      delete this.modeVerdict.build;
+      return true;
     },
-    stepNeutrons(d) { this.nNeutrons = Math.max(0, Math.min(this.elZ + 12, this.nNeutrons + d)); },
-    stepElectrons(d) { this.nElectrons = Math.max(1, Math.min(this.elZ + 4, this.nElectrons + d)); },
+    stepProtons(d) {
+      if (!this.clearBuildCheck()) return;
+      this.elZ = Math.max(1, Math.min(20, this.elZ + d));
+    },
+    stepNeutrons(d) {
+      if (!this.clearBuildCheck()) return;
+      this.nNeutrons = Math.max(0, Math.min(40, this.nNeutrons + d));
+    },
+    stepElectrons(d) {
+      if (!this.clearBuildCheck()) return;
+      this.nElectrons = Math.max(0, Math.min(20, this.nElectrons + d));
+    },
     get massNumber() { return this.elZ + this.nNeutrons; },
     get charge() { return this.elZ - this.nElectrons; },
     get chargeStr() {
