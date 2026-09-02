@@ -1,23 +1,25 @@
-const ELEMENT_Z = Object.freeze({ H: 1, He: 2, Ne: 10, Na: 11, Hg: 80 });
+const ELEMENT_Z = Object.freeze({
+  H: 1, He: 2, B: 5, Ne: 10, Na: 11, Mg: 12, Cl: 17, Cu: 29, Br: 35, Hg: 80
+});
 
-const STYLE_ID = 'u2-spectra-controls-style';
+const STYLE_ID = 'u2-element-controls-style';
 
 function mountStyles() {
   if (document.getElementById(STYLE_ID)) return;
   const style = document.createElement('style');
   style.id = STYLE_ID;
   style.textContent = `
-    .spectrum-element-field {
+    .u2-element-field {
       position: relative;
       max-width: none !important;
       width: 100%;
       margin-bottom: var(--s-4);
     }
-    .spectrum-element-field > label {
+    .u2-element-field > label {
       display: block;
       margin-bottom: var(--s-2);
     }
-    .spectrum-native-select {
+    .u2-native-select {
       position: absolute !important;
       width: 1px !important;
       height: 1px !important;
@@ -30,7 +32,7 @@ function mountStyles() {
       overflow: hidden !important;
       white-space: nowrap !important;
     }
-    .spectrum-element-strip {
+    .u2-element-strip {
       display: grid;
       grid-template-columns: repeat(5, minmax(76px, 108px));
       gap: var(--s-2);
@@ -38,7 +40,7 @@ function mountStyles() {
       overflow-x: auto;
       padding: 2px 2px 4px;
     }
-    .spectrum-element-cell {
+    .u2-element-cell {
       position: relative;
       min-height: 72px;
       padding: 6px 8px 7px;
@@ -51,7 +53,7 @@ function mountStyles() {
       box-shadow: var(--shadow-sm);
       transition: border-color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
     }
-    .spectrum-element-cell::before {
+    .u2-element-cell::before {
       content: '';
       position: absolute;
       inset: 0 0 auto;
@@ -59,28 +61,28 @@ function mountStyles() {
       border-radius: var(--r-sm) var(--r-sm) 0 0;
       background: transparent;
     }
-    .spectrum-element-cell:hover {
+    .u2-element-cell:hover {
       border-color: var(--accent-300);
       transform: translateY(-1px);
     }
-    .spectrum-element-cell:focus-visible {
+    .u2-element-cell:focus-visible {
       outline: 3px solid var(--accent-300);
       outline-offset: 2px;
     }
-    .spectrum-element-cell.is-selected {
+    .u2-element-cell.is-selected {
       border-color: var(--accent);
       background: var(--accent-050);
       box-shadow: 0 0 0 1px var(--accent-100);
     }
-    .spectrum-element-cell.is-selected::before { background: var(--accent); }
-    .spectrum-element-cell .pt-z {
+    .u2-element-cell.is-selected::before { background: var(--accent); }
+    .u2-element-cell .pt-z {
       display: block;
       font-family: var(--font-mono);
       font-size: var(--fs-2xs);
       line-height: 1;
       color: var(--muted);
     }
-    .spectrum-element-cell .pt-symbol {
+    .u2-element-cell .pt-symbol {
       display: block;
       margin: 2px 0 1px;
       font-family: var(--font-display);
@@ -90,7 +92,7 @@ function mountStyles() {
       text-align: center;
       color: var(--accent-700);
     }
-    .spectrum-element-cell .pt-name {
+    .u2-element-cell .pt-name {
       display: block;
       overflow: hidden;
       font-size: var(--fs-2xs);
@@ -98,6 +100,24 @@ function mountStyles() {
       text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .mass-element-row {
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      align-items: end !important;
+    }
+    .mass-element-row .u2-element-field { margin-bottom: 0; }
+    .mass-element-row .u2-element-strip {
+      grid-template-columns: repeat(5, minmax(68px, 88px));
+    }
+    .mass-element-row .u2-element-cell {
+      min-height: 64px;
+      padding: 5px 7px 6px;
+    }
+    .mass-element-row .u2-element-cell .pt-symbol { font-size: var(--fs-lg); }
+    .mass-answer-field {
+      width: min(100%, 20rem) !important;
+      max-width: 20rem !important;
     }
 
     .spectra-gauges {
@@ -119,40 +139,46 @@ function mountStyles() {
     .spectra-gauges .dial-face { max-width: 118px; }
     .spectra-gauges .dial-foot { gap: 0; margin-top: -2px; }
     .spectra-gauges .dial-read { font-size: var(--fs-2xs); line-height: 1.2; }
+
+    @media (max-width: 980px) {
+      .mass-element-row { grid-template-columns: minmax(0, 1fr) !important; }
+      .mass-element-row > div:last-child { justify-self: start; }
+    }
   `;
   document.head.appendChild(style);
 }
 
-function mountSpectrumControls() {
-  const select = document.getElementById('spec');
-  if (!select || select.dataset.cellSelectorMounted === 'true') return;
+function mountElementSelector({ selectId, fieldClass = '', stripClass = '' }) {
+  const select = document.getElementById(selectId);
+  if (!select || select.dataset.cellSelectorMounted === 'true') return null;
 
   const field = select.closest('.field');
-  const panel = select.closest('.panel');
-  if (!field || !panel) return;
+  if (!field) return null;
 
   const options = Array.from(select.options).filter(option => option.value);
   if (!options.length) {
-    requestAnimationFrame(mountSpectrumControls);
-    return;
+    requestAnimationFrame(() => mountElementSelector({ selectId, fieldClass, stripClass }));
+    return null;
   }
 
   select.dataset.cellSelectorMounted = 'true';
-  field.classList.add('spectrum-element-field');
-  select.classList.add('spectrum-native-select');
+  field.classList.add('u2-element-field');
+  if (fieldClass) field.classList.add(fieldClass);
+  select.classList.add('u2-native-select');
   select.tabIndex = -1;
   select.setAttribute('aria-hidden', 'true');
 
   const strip = document.createElement('div');
-  strip.className = 'spectrum-element-strip';
+  strip.className = `u2-element-strip${stripClass ? ` ${stripClass}` : ''}`;
   strip.setAttribute('role', 'group');
-  const label = field.querySelector('label[for="spec"]');
+
+  const label = field.querySelector(`label[for="${selectId}"]`);
   if (label) {
-    label.id = label.id || 'spec-element-label';
+    label.id = label.id || `${selectId}-element-label`;
     label.removeAttribute('for');
     strip.setAttribute('aria-labelledby', label.id);
   } else {
-    strip.setAttribute('aria-label', 'Select element spectrum');
+    strip.setAttribute('aria-label', 'Select element');
   }
 
   for (const option of options) {
@@ -160,8 +186,8 @@ function mountSpectrumControls() {
     const z = ELEMENT_Z[key] ?? '';
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = 'spectrum-element-cell';
-    button.dataset.specKey = key;
+    button.className = 'u2-element-cell';
+    button.dataset.elementKey = key;
     button.setAttribute('aria-label', `${option.textContent}, atomic number ${z}`);
     button.setAttribute('aria-pressed', 'false');
 
@@ -187,22 +213,41 @@ function mountSpectrumControls() {
   }
 
   field.insertBefore(strip, select);
-  const gaugeRow = panel.querySelector('.stat-row.has-dials');
-  if (gaugeRow) gaugeRow.classList.add('spectra-gauges');
 
   function syncSelection() {
     const current = select.value;
-    strip.querySelectorAll('.spectrum-element-cell').forEach(button => {
-      const selected = button.dataset.specKey === current;
+    strip.querySelectorAll('.u2-element-cell').forEach(button => {
+      const selected = button.dataset.elementKey === current;
       button.classList.toggle('is-selected', selected);
       button.setAttribute('aria-pressed', String(selected));
     });
   }
 
   select.addEventListener('change', () => requestAnimationFrame(syncSelection));
-  panel.addEventListener('click', () => requestAnimationFrame(syncSelection));
+  const panel = select.closest('.panel');
+  if (panel) panel.addEventListener('click', () => requestAnimationFrame(syncSelection));
   syncSelection();
+  return { select, field, strip, panel, syncSelection };
+}
+
+function mountSpectrumControls() {
+  const mounted = mountElementSelector({ selectId: 'spec', fieldClass: 'spectrum-element-field' });
+  if (!mounted) return;
+  const gaugeRow = mounted.panel?.querySelector('.stat-row.has-dials');
+  if (gaugeRow) gaugeRow.classList.add('spectra-gauges');
+}
+
+function mountMassControls() {
+  const mounted = mountElementSelector({ selectId: 'iso', fieldClass: 'mass-element-field' });
+  if (!mounted) return;
+
+  const row = mounted.field.closest('.a-row');
+  if (row) row.classList.add('mass-element-row');
+
+  const answerField = mounted.panel?.querySelector('.work-order .field.field-260');
+  if (answerField) answerField.classList.add('mass-answer-field');
 }
 
 mountStyles();
 mountSpectrumControls();
+mountMassControls();
