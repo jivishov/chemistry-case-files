@@ -80,8 +80,8 @@
 
   const loadUnitEnhancement = () => {
     if (!/\/units\/02-atomic-structure(?:\/index\.html)?\/?$/i.test(location.pathname)) return;
-    const url = new URL('./js/spectra-controls.js?v=20260902-1', location.href);
-    import(url.href).catch(error => console.error('Unit 2 spectrum controls failed to load.', error));
+    const url = new URL('./js/spectra-controls.js?v=20260902-2', location.href);
+    import(url.href).catch(error => console.error('Unit 2 element controls failed to load.', error));
   };
 
   applyMode(readStoredMode());
