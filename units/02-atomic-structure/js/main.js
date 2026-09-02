@@ -194,6 +194,7 @@ export function createSim() {
     honors: false,
     teksOpen: false,
     mode: 'models',
+    electronTask: 'config',
 
     scIdx: { a:-1, b:-1, d:-1, c:-1, e:-1, f:-1 },
     modelsSc: null, buildSc: null, massSc: null, spectraSc: null, configSc: null, familySc: null,
@@ -228,10 +229,16 @@ export function createSim() {
 
     setMode(m) {
       this.mode = m;
+      if (m === 'config') this.focusScenario('config', this.electronTask === 'family' ? this.familySc : this.configSc);
       if (m === 'capstone' && this.capUnlocked && !this.capPick) this.capPick = null;
     },
+    setElectronTask(task) {
+      if (task !== 'config' && task !== 'family') return;
+      this.electronTask = task;
+      this.focusScenario('config', task === 'family' ? this.familySc : this.configSc);
+    },
     resetProgress() {
-      this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftDay = 1; this.worldLog = [];
+      this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftDay = 1; this.worldLog = []; this.electronTask = 'config';
       this.cfgVerdict = null; this.famVerdict = null; this.h1Verdict = null; this.h2Verdict = null; this.configPick = null; this.h2Pick = null; this.h1EnergyInput = '';
       this.scIdx = { a:-1, b:-1, d:-1, c:-1, e:-1, f:-1 };
       this.nextModels(); this.nextBuild(); this.nextMass(); this.nextSpectra(); this.nextFamily(); this.nextConfig();

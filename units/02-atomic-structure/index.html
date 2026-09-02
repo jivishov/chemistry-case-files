@@ -38,7 +38,7 @@
         <button class="tab" role="tab" :aria-selected="mode==='build'" @click="setMode('build')" aria-label="Build an atom"><span class="tab-full" aria-hidden="true">Build an atom</span><span class="tab-short" aria-hidden="true">Build</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='mass'" @click="setMode('mass')" aria-label="Average atomic mass"><span class="tab-full" aria-hidden="true">Average mass</span><span class="tab-short" aria-hidden="true">Mass</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='spectra'" @click="setMode('spectra')" aria-label="Emission spectra"><span class="tab-full" aria-hidden="true">Emission spectra</span><span class="tab-short" aria-hidden="true">Spectra</span></button>
-        <button class="tab" role="tab" :aria-selected="mode==='config'" @click="setMode('config')" aria-label="Electron configuration"><span class="tab-full" aria-hidden="true">Electron configuration</span><span class="tab-short" aria-hidden="true">Electrons</span></button>
+        <button class="tab" role="tab" :aria-selected="mode==='config'" @click="setMode('config')" aria-label="Electron configuration and group patterns"><span class="tab-full" aria-hidden="true">Electrons &amp; groups</span><span class="tab-short" aria-hidden="true">Electrons</span></button>
         <button class="tab" role="tab" :class="{ 'is-locked': !capUnlocked }" :aria-selected="mode==='capstone'" @click="setMode('capstone')" aria-label="Final evidence"><span class="tab-full" aria-hidden="true">Final evidence</span><span class="tab-short" aria-hidden="true">Final</span></button>
         <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')" aria-label="Case file"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
       </nav>
@@ -63,7 +63,7 @@
           <div id="teks-progress" class="teks-popover" x-show="teksOpen" x-cloak role="group"
                aria-label="TEKS C.6 and C.5(B) standards progress">
             <template x-for="se in coreSkills" :key="se.id">
-              <div class="teks-row" :class="{ active: se.mode === mode, mastered: gMastered(se.id) }">
+              <div class="teks-row" :class="{ active: se.mode === mode && (mode !== 'config' || (se.id === 'e' && electronTask === 'config') || (se.id === 'f' && electronTask === 'family')), mastered: gMastered(se.id) }">
                 <span class="teks-row-head">
                   <span class="teks-row-code" x-text="se.code"></span>
                   <span class="teks-row-cap" x-text="seCaption(se)"></span>
@@ -199,7 +199,12 @@
         </div>
 
         <div class="panel" :class="{ 'is-active': mode==='config' }" x-show="mode==='config'">
-          <p class="muted" style="margin-bottom: var(--s-4);">Electron configurations describe how electrons occupy subshells. The simple Aufbau order is a useful starting model, but some atoms have observed ground-state exceptions.</p>
+          <p class="muted" style="margin-bottom: var(--s-3);">Electron arrangements connect atomic structure to ground-state configurations, valence electrons, and periodic-table group patterns.</p>
+          <div class="row call-row" role="tablist" aria-label="Electron activities" style="margin-bottom: var(--s-4);">
+            <button class="btn btn-sm" :class="{ 'btn-accent': electronTask==='config' }" role="tab" :aria-selected="electronTask==='config'" @click="setElectronTask('config')">Configuration · C.6(E)</button>
+            <button class="btn btn-sm" :class="{ 'btn-accent': electronTask==='family' }" role="tab" :aria-selected="electronTask==='family'" @click="setElectronTask('family')">Group pattern · C.5(B)</button>
+          </div>
+          <div x-show="electronTask==='config'">
           <section class="work-order" @focusin="focusScenario('config', configSc)" @click="focusScenario('config', configSc)"><span class="command-kicker">Configuration mission</span><p x-prose="configSc.goal"></p><div class="choice-grid choice-grid-wide config-choice-grid"><template x-for="opt in configChoices" :key="opt"><button class="choice" :data-state="configState(opt)" @click="configPick=opt"><span class="mono" x-config="opt"></span></button></template></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="commitConfig()" :disabled="!configPick || (cfgVerdict && cfgVerdict.tone==='success')">Check configuration</button><button class="btn" @click="nextConfig()">Next element</button><span class="call-hint" x-show="!configPick">Choose a configuration first.</span></div></section>
 
           <div class="a-row" style="margin-bottom: var(--s-4);">
@@ -236,7 +241,9 @@
             <div x-show="h2Verdict" class="note" :class="h2Verdict && h2Verdict.tone==='success' ? 'note-ok' : 'note-bad'" style="margin-top: var(--s-3);"><strong x-text="h2Verdict ? h2Verdict.state : ''"></strong> <span x-prose="h2Verdict ? h2Verdict.detail : ''"></span></div>
           </div>
 
-          <section class="work-order mt-4" @focusin="focusScenario('config', familySc)" @click="focusScenario('config', familySc)"><span class="command-kicker">Group pattern</span><p x-prose="familySc.goal"></p><p class="muted" style="font-size: var(--fs-sm);">Element: <strong x-text="famEl.name"></strong> (<span class="mono">Z = <span x-text="famZ"></span></span>, <span class="mono" x-text="famEl.sym"></span>). Main-group valence electrons: <strong x-text="famValence"></strong>.</p><div class="choice-grid choice-grid-wide"><template x-for="m in ['Noble gas (Group 18)','Boron group (Group 13)','Halogen (Group 17)','Transition metal']" :key="m"><button class="choice" :data-state="familyState(m)" @click="familyPick=m" x-text="m"></button></template></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="commitFamily()" :disabled="!familyPick">Check group</button><button class="btn" @click="nextFamily()">Next element</button><span class="call-hint" x-show="!familyPick">Choose the group first.</span></div></section>
+          </div>
+
+          <section class="work-order mt-3" x-show="electronTask==='family'" @focusin="focusScenario('config', familySc)" @click="focusScenario('config', familySc)"><span class="command-kicker">Group pattern</span><p x-prose="familySc.goal"></p><p class="muted" style="font-size: var(--fs-sm);">Element: <strong x-text="famEl.name"></strong> (<span class="mono">Z = <span x-text="famZ"></span></span>, <span class="mono" x-text="famEl.sym"></span>). Main-group valence electrons: <strong x-text="famValence"></strong>.</p><div class="choice-grid choice-grid-wide"><template x-for="m in ['Noble gas (Group 18)','Boron group (Group 13)','Halogen (Group 17)','Transition metal']" :key="m"><button class="choice" :data-state="familyState(m)" @click="familyPick=m" x-text="m"></button></template></div><div class="row call-row mt-3"><button class="btn btn-accent" @click="commitFamily()" :disabled="!familyPick">Check group</button><button class="btn" @click="nextFamily()">Next element</button><span class="call-hint" x-show="!familyPick">Choose the group first.</span></div></section>
         </div>
 
         <div class="panel" :class="{ 'is-active': mode==='capstone' }" x-show="mode==='capstone'">
@@ -262,7 +269,7 @@
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
   import { registerGauge } from '../../shared/js/gauge.js';
-  import { createSim } from './js/main.js?v=u2-mission-fix-2';
+  import { createSim } from './js/main.js?v=u2-mission-fix-3';
   import { mountCaseFile } from '../../shared/js/casefile.js';
   import { CASE } from './js/case.js';
   import { mountColumnResizers } from '../shared/columns.js?v=cockpit-3';
