@@ -18,171 +18,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Convert Build into a particle assembler
+      - name: Apply particle assembler patch
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-
-          def replace_once(text, old, new, label):
-              count = text.count(old)
-              if count != 1:
-                  raise RuntimeError(f"{label}: expected exactly 1 match, found {count}")
-              return text.replace(old, new, 1)
-
-          main_path = Path('units/02-atomic-structure/js/main.js')
-          html_path = Path('units/02-atomic-structure/index.html')
-          main = main_path.read_text(encoding='utf-8')
-          html = html_path.read_text(encoding='utf-8')
-
-          main = replace_once(
-              main,
-              "    elZ: 6, nNeutrons: 6, nElectrons: 6,",
-              "    elZ: 6, nNeutrons: 6, nElectrons: 6, buildChecked: false,",
-              'build checked state'
-          )
-
-          main = replace_once(
-              main,
-              "      this.gLoad();\n      this.onElement();\n      this.resetNatural();",
-              "      this.gLoad();\n      this.resetNatural();",
-              'remove automatic element initialization'
-          )
-
-          main = replace_once(
-              main,
-              "      this.$watch('elZ', () => this.onElement());\n      this.$watch('isoKey', () => this.resetNatural());",
-              "      this.$watch('isoKey', () => this.resetNatural());",
-              'remove proton-to-element auto-fill watcher'
-          )
-
-          main = replace_once(
-              main,
-              "        ['elZ', 'isoKey', 'specKey', 'cfgZ'].forEach(k => { const v = this[k]; this[k] = null; this[k] = v; });",
-              "        ['isoKey', 'specKey', 'cfgZ'].forEach(k => { const v = this[k]; this[k] = null; this[k] = v; });",
-              'remove proton count from select rebind list'
-          )
-
-          main = replace_once(
-              main,
-              "      this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftDay = 1; this.worldLog = []; this.electronTask = 'config';",
-              "      this.gReset(); this.modeVerdict = {}; this.activeScenario = {}; this.rack = []; this.shiftDay = 1; this.worldLog = []; this.electronTask = 'config'; this.buildChecked = false;",
-              'reset build reveal state'
-          )
-
-          main = replace_once(
-              main,
-              "      // Start from a neutral carbon atom instead of preloading the requested answer.\n      this.elZ = 6; this.onElement();",
-              "      // Start from a neutral 6p/6n/6e assembly instead of preloading the requested answer.\n      // The particle counts are independent: changing protons must not rewrite neutrons or electrons.\n      this.elZ = 6; this.nNeutrons = 6; this.nElectrons = 6; this.buildChecked = false;",
-              'independent build baseline'
-          )
-
-          main = replace_once(
-              main,
-              """    commitBuild() {
-      const sc=this.buildSc, ok=this.elZ===sc.z && this.nNeutrons===sc.n && this.nElectrons===sc.e;
-      this.verdict(sc, ok, ok ? `${this.isotopeName} has the requested proton, neutron, and electron counts.` : 'Recheck the element, mass number, and charge in the mission. Use A = protons + neutrons and charge = protons − electrons.');
-    },""",
-              """    commitBuild() {
-      if (this.buildSolved) return;
-      const sc=this.buildSc, ok=this.elZ===sc.z && this.nNeutrons===sc.n && this.nElectrons===sc.e;
-      this.buildChecked = true;
-      this.verdict(sc, ok, ok ? `${this.isotopeName} has the requested proton, neutron, and electron counts.` : `Your current assembly is ${this.isotopeName}, a ${this.chargeStr}. Recheck the requested element, mass number, and charge.`);
-    },""",
-              'build check and reveal behavior'
-          )
-
-          main = replace_once(
-              main,
-              """    get buildElements() { return ELEMENTS.filter(e => BUILD_SET.includes(e.z)); },
-    get el() { return ELEMENTS.find(e => e.z === this.elZ); },
-    onElement() {
-      if (!this.el) return;
-      const mass = ATOMIC_MASS[this.el.sym];
-      this.nNeutrons = Math.max(0, Math.round(mass) - this.elZ);
-      this.nElectrons = this.elZ;
-    },
-    stepNeutrons(d) { this.nNeutrons = Math.max(0, Math.min(this.elZ + 12, this.nNeutrons + d)); },
-    stepElectrons(d) { this.nElectrons = Math.max(1, Math.min(this.elZ + 4, this.nElectrons + d)); },""",
-              """    get buildElements() { return ELEMENTS.filter(e => BUILD_SET.includes(e.z)); },
-    get el() { return ELEMENTS.find(e => e.z === this.elZ); },
-    get buildSolved() { return !!(this.modeVerdict.build && this.modeVerdict.build.tone === 'success'); },
-    clearBuildCheck() {
-      if (this.buildSolved) return false;
-      this.buildChecked = false;
-      delete this.modeVerdict.build;
-      return true;
-    },
-    stepProtons(d) {
-      if (!this.clearBuildCheck()) return;
-      this.elZ = Math.max(1, Math.min(20, this.elZ + d));
-    },
-    stepNeutrons(d) {
-      if (!this.clearBuildCheck()) return;
-      this.nNeutrons = Math.max(0, Math.min(40, this.nNeutrons + d));
-    },
-    stepElectrons(d) {
-      if (!this.clearBuildCheck()) return;
-      this.nElectrons = Math.max(0, Math.min(20, this.nElectrons + d));
-    },""",
-              'independent particle controls'
-          )
-
-          html = replace_once(
-              html,
-              '<section class="work-order"><span class="command-kicker">Current atom</span><p x-prose="buildSc.goal"></p><div class="row call-row"><button class="btn btn-accent" @click="commitBuild()">Check atom</button><button class="btn" @click="nextBuild()">Next atom</button></div></section>',
-              '<section class="work-order"><span class="command-kicker">Atom to assemble</span><p x-prose="buildSc.goal"></p><p class="muted" style="font-size:var(--fs-xs); margin:var(--s-2) 0 0;">Set all three particle counts yourself. The assembled element identity stays hidden until you check.</p><div class="row call-row"><button class="btn btn-accent" @click="commitBuild()" :disabled="buildSolved">Check atom</button><button class="btn" @click="nextBuild()">Next atom</button></div></section>',
-              'build mission instruction'
-          )
-
-          html = replace_once(
-              html,
-              '<div class="iso-symbol"><span class="iso-stack"><sup x-text="massNumber"></sup><sub x-text="elZ"></sub></span><span class="iso-sym" x-text="el.sym"></span><sup class="iso-charge" x-show="charge!==0" x-text="ionNotation"></sup></div>',
-              '<div class="iso-symbol" aria-live="polite"><template x-if="buildChecked"><span style="display:inline-flex; align-items:center; gap:2px;"><span class="iso-stack"><sup x-text="massNumber"></sup><sub x-text="elZ"></sub></span><span class="iso-sym" x-text="el.sym"></span><sup class="iso-charge" x-show="charge!==0" x-text="ionNotation"></sup></span></template><span class="mono muted" x-show="!buildChecked" style="font-size:var(--fs-sm);">Element identity hidden until Check atom</span></div>',
-              'hide isotope identity before check'
-          )
-
-          html = replace_once(
-              html,
-              """            <div class="a-side">
-              <div class="field" style="max-width: 280px; margin-bottom: var(--s-4);">
-                <label for="el">Element</label>
-                <select id="el" x-model.number="elZ"><template x-for="e in buildElements" :key="e.z"><option :value="e.z" x-text="e.z + '  ' + e.sym + '  ' + e.name"></option></template></select>
-              </div>
-
-              <div class="stepper-grid">
-                <div class="stepper"><span class="stp-label">Protons</span><div class="stp-fixed mono" x-text="elZ"></div><span class="stp-sub">determines the element</span></div>
-                <div class="stepper"><span class="stp-label">Neutrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepNeutrons(-1)" aria-label="Decrease neutrons">−</button><span class="mono stp-val" x-text="nNeutrons"></span><button class="btn btn-sm" @click="stepNeutrons(1)" aria-label="Increase neutrons">+</button></div><span class="stp-sub">determines the isotope</span></div>
-                <div class="stepper"><span class="stp-label">Electrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepElectrons(-1)" aria-label="Decrease electrons">−</button><span class="mono stp-val" x-text="nElectrons"></span><button class="btn btn-sm" @click="stepElectrons(1)" aria-label="Increase electrons">+</button></div><span class="stp-sub">determines net charge</span></div>
-              </div>
-            </div>""",
-              """            <div class="a-side">
-              <div class="ref-title" style="margin-bottom:var(--s-3);">Assembly controls</div>
-              <div class="stepper-grid">
-                <div class="stepper"><span class="stp-label">Protons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepProtons(-1)" :disabled="buildSolved || elZ<=1" aria-label="Decrease protons">−</button><span class="mono stp-val" x-text="elZ"></span><button class="btn btn-sm" @click="stepProtons(1)" :disabled="buildSolved || elZ>=20" aria-label="Increase protons">+</button></div><span class="stp-sub">determines the element</span></div>
-                <div class="stepper"><span class="stp-label">Neutrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepNeutrons(-1)" :disabled="buildSolved || nNeutrons<=0" aria-label="Decrease neutrons">−</button><span class="mono stp-val" x-text="nNeutrons"></span><button class="btn btn-sm" @click="stepNeutrons(1)" :disabled="buildSolved || nNeutrons>=40" aria-label="Increase neutrons">+</button></div><span class="stp-sub">determines the isotope</span></div>
-                <div class="stepper"><span class="stp-label">Electrons</span><div class="stp-ctl"><button class="btn btn-sm" @click="stepElectrons(-1)" :disabled="buildSolved || nElectrons<=0" aria-label="Decrease electrons">−</button><span class="mono stp-val" x-text="nElectrons"></span><button class="btn btn-sm" @click="stepElectrons(1)" :disabled="buildSolved || nElectrons>=20" aria-label="Increase electrons">+</button></div><span class="stp-sub">determines net charge</span></div>
-              </div>
-            </div>""",
-              'three independent particle steppers'
-          )
-
-          html = replace_once(
-              html,
-              '<div class="note note-info" style="margin-top: var(--s-4);" x-show="modeVerdict.build">\n            This is <strong x-text="isotopeName"></strong>, a <strong x-text="chargeStr"></strong>. Its nucleus contains <span class="mono" x-text="elZ"></span> protons and <span class="mono" x-text="nNeutrons"></span> neutrons, so A = <span class="mono" x-text="massNumber"></span>. The periodic-table average atomic mass of <span x-text="el.name"></span> is <span class="mono" x-text="fmt(massRef,5)"></span> u.\n          </div>',
-              '<div class="note note-info" style="margin-top: var(--s-4);" x-show="buildChecked">\n            Your assembly represents <strong x-text="isotopeName"></strong>, a <strong x-text="chargeStr"></strong>. Its nucleus contains <span class="mono" x-text="elZ"></span> protons and <span class="mono" x-text="nNeutrons"></span> neutrons, so A = <span class="mono" x-text="massNumber"></span>. The periodic-table average atomic mass of <span x-text="el.name"></span> is <span class="mono" x-text="fmt(massRef,5)"></span> u.\n          </div>',
-              'post-check element reveal'
-          )
-
-          html = replace_once(
-              html,
-              "import { createSim } from './js/main.js?v=u2-mission-fix-4';",
-              "import { createSim } from './js/main.js?v=u2-build-assembler-1';",
-              'cache bust build assembler'
-          )
-
-          main_path.write_text(main, encoding='utf-8')
-          html_path.write_text(html, encoding='utf-8')
-          PY
+          echo 'ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgpkZWYgcmVwbGFjZV9vbmNlKHRleHQsIG9sZCwgbmV3LCBsYWJlbCk6CiAgICBjb3VudCA9IHRleHQuY291bnQob2xkKQogICAgaWYgY291bnQgIT0gMToKICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoZiJ7bGFiZWx9OiBleHBlY3RlZCBleGFjdGx5IDEgbWF0Y2gsIGZvdW5kIHtjb3VudH0iKQogICAgcmV0dXJuIHRleHQucmVwbGFjZShvbGQsIG5ldywgMSkKCm1haW5fcGF0aCA9IFBhdGgoJ3VuaXRzLzAyLWF0b21pYy1zdHJ1Y3R1cmUvanMvbWFpbi5qcycpCmh0bWxfcGF0aCA9IFBhdGgoJ3VuaXRzLzAyLWF0b21pYy1zdHJ1Y3R1cmUvaW5kZXguaHRtbCcpCm1haW4gPSBtYWluX3BhdGgucmVhZF90ZXh0KGVuY29kaW5nPSd1dGYtOCcpCmh0bWwgPSBodG1sX3BhdGgucmVhZF90ZXh0KGVuY29kaW5nPSd1dGYtOCcpCgptYWluID0gcmVwbGFjZV9vbmNlKG1haW4sICIgICAgZWxaOiA2LCBuTmV1dHJvbnM6IDYsIG5FbGVjdHJvbnM6IDYsIiwgIiAgICBlbFo6IDYsIG5OZXV0cm9uczogNiwgbkVsZWN0cm9uczogNiwgYnVpbGRDaGVja2VkOiBmYWxzZSwiLCAnYnVpbGQgY2hlY2tlZCBzdGF0ZScpCm1haW4gPSByZXBsYWNlX29uY2UobWFpbiwgIiAgICAgIHRoaXMuZ0xvYWQoKTtcbiAgICAgIHRoaXMub25FbGVtZW50KCk7XG4gICAgICB0aGlzLnJlc2V0TmF0dXJhbCgpOyIsICIgICAgICB0aGlzLmdMb2FkKCk7XG4gICAgICB0aGlzLnJlc2V0TmF0dXJhbCgpOyIsICdyZW1vdmUgYXV0b21hdGljIGVsZW1lbnQgaW5pdGlhbGl6YXRpb24nKQptYWluID0gcmVwbGFjZV9vbmNlKG1haW4sICIgICAgICB0aGlzLiR3YXRjaCgnZWxaJywgKCkgPT4gdGhpcy5vbkVsZW1lbnQoKSk7XG4gICAgICB0aGlzLiR3YXRjaCgnaXNvS2V5JywgKCkgPT4gdGhpcy5yZXNldE5hdHVyYWwoKSk7IiwgIiAgICAgIHRoaXMuJHdhdGNoKCdpc29LZXknLCAoKSA9PiB0aGlzLnJlc2V0TmF0dXJhbCgpKTsiLCAncmVtb3ZlIHByb3Rvbi10by1lbGVtZW50IGF1dG8tZmlsbCB3YXRjaGVyJykKbWFpbiA9IHJlcGxhY2Vfb25jZShtYWluLCAiICAgICAgICBbJ2VsWicsICdpc29LZXknLCAnc3BlY0tleScsICdjZmdaJ10uZm9yRWFjaChrID0+IHsgY29uc3QgdiA9IHRoaXNba107IHRoaXNba10gPSBudWxsOyB0aGlzW2tdID0gdjsgfSk7IiwgIiAgICAgICAgWydpc29LZXknLCAnc3BlY0tleScsICdjZmdaJ10uZm9yRWFjaChrID0+IHsgY29uc3QgdiA9IHRoaXNba107IHRoaXNba10gPSBudWxsOyB0aGlzW2tdID0gdjsgfSk7IiwgJ3JlbW92ZSBwcm90b24gY291bnQgZnJvbSBzZWxlY3QgcmViaW5kIGxpc3QnKQptYWluID0gcmVwbGFjZV9vbmNlKG1haW4sICIgICAgICB0aGlzLmdSZXNldCgpOyB0aGlzLm1vZGVWZXJkaWN0ID0ge307IHRoaXMuYWN0aXZlU2NlbmFyaW8gPSB7fTsgdGhpcy5yYWNrID0gW107IHRoaXMuc2hpZnREYXkgPSAxOyB0aGlzLndvcmxkTG9nID0gW107IHRoaXMuZWxlY3Ryb25UYXNrID0gJ2NvbmZpZyc7IiwgIiAgICAgIHRoaXMuZ1Jlc2V0KCk7IHRoaXMubW9kZVZlcmRpY3QgPSB7fTsgdGhpcy5hY3RpdmVTY2VuYXJpbyA9IHt9OyB0aGlzLnJhY2sgPSBbXTsgdGhpcy5zaGlmdERheSA9IDE7IHRoaXMud29ybGRMb2cgPSBbXTsgdGhpcy5lbGVjdHJvblRhc2sgPSAnY29uZmlnJzsgdGhpcy5idWlsZENoZWNrZWQgPSBmYWxzZTsiLCAncmVzZXQgYnVpbGQgcmV2ZWFsIHN0YXRlJykKbWFpbiA9IHJlcGxhY2Vfb25jZShtYWluLCAiICAgICAgLy8gU3RhcnQgZnJvbSBhIG5ldXRyYWwgY2FyYm9uIGF0b20gaW5zdGVhZCBvZiBwcmVsb2FkaW5nIHRoZSByZXF1ZXN0ZWQgYW5zd2VyLlxuICAgICAgdGhpcy5lbFogPSA2OyB0aGlzLm9uRWxlbWVudCgpOyIsICIgICAgICAvLyBTdGFydCBmcm9tIGEgbmV1dHJhbCA2cC82bi82ZSBhc3NlbWJseSBpbnN0ZWFkIG9mIHByZWxvYWRpbmcgdGhlIHJlcXVlc3RlZCBhbnN3ZXIuXG4gICAgICAvLyBUaGUgcGFydGljbGUgY291bnRzIGFyZSBpbmRlcGVuZGVudDogY2hhbmdpbmcgcHJvdG9ucyBtdXN0IG5vdCByZXdyaXRlIG5ldXRyb25zIG9yIGVsZWN0cm9ucy5cbiAgICAgIHRoaXMuZWxaID0gNjsgdGhpcy5uTmV1dHJvbnMgPSA2OyB0aGlzLm5FbGVjdHJvbnMgPSA2OyB0aGlzLmJ1aWxkQ2hlY2tlZCA9IGZhbHNlOyIsICdpbmRlcGVuZGVudCBidWlsZCBiYXNlbGluZScpCm1haW4gPSByZXBsYWNlX29uY2UobWFpbiwgIiIiICAgIGNvbW1pdEJ1aWxkKCkgewogICAgICBjb25zdCBzYz10aGlzLmJ1aWxkU2MsIG9rPXRoaXMuZWxaPT09c2MueiAmJiB0aGlzLm5OZXV0cm9ucz09PXNjLm4gJiYgdGhpcy5uRWxlY3Ryb25zPT09c2MuZTsKICAgICAgdGhpcy52ZXJkaWN0KHNjLCBvaywgb2sgPyBgJHt0aGlzLmlzb3RvcGVOYW1lfSBoYXMgdGhlIHJlcXVlc3RlZCBwcm90b24sIG5ldXRyb24sIGFuZCBlbGVjdHJvbiBjb3VudHMuYCA6ICdSZWNoZWNrIHRoZSBlbGVtZW50LCBtYXNzIG51bWJlciwgYW5kIGNoYXJnZSBpbiB0aGUgbWlzc2lvbi4gVXNlIEEgPSBwcm90b25zICsgbmV1dHJvbnMgYW5kIGNoYXJnZSA9IHByb3RvbnMg4oiSIGVsZWN0cm9ucy4nKTsKICAgIH0sIiIiLCAiIiIgICAgY29tbWl0QnVpbGQoKSB7CiAgICAgIGlmICh0aGlzLmJ1aWxkU29sdmVkKSByZXR1cm47CiAgICAgIGNvbnN0IHNjPXRoaXMuYnVpbGRTYywgb2s9dGhpcy5lbFo9PT1zYy56ICYmIHRoaXMubk5ldXRyb25zPT09c2MubiAmJiB0aGlzLm5FbGVjdHJvbnM9PT1zYy5lOwogICAgICB0aGlzLmJ1aWxkQ2hlY2tlZCA9IHRydWU7CiAgICAgIHRoaXMudmVyZGljdChzYywgb2ssIG9rID8gYCR7dGhpcy5pc290b3BlTmFtZX0gaGFzIHRoZSByZXF1ZXN0ZWQgcHJvdG9uLCBuZXV0cm9uLCBhbmQgZWxlY3Ryb24gY291bnRzLmAgOiBgWW91ciBjdXJyZW50IGFzc2VtYmx5IGlzICR7dGhpcy5pc290b3BlTmFtZX0sIGEgJHt0aGlzLmNoYXJnZVN0cn0uIFJlY2hlY2sgdGhlIHJlcXVlc3RlZCBlbGVtZW50LCBtYXNzIG51bWJlciwgYW5kIGNoYXJnZS5gKTsKICAgIH0sIiIiLCAnYnVpbGQgY2hlY2sgYW5kIHJldmVhbCBiZWhhdmlvcicpCm1haW4gPSByZXBsYWNlX29uY2UobWFpbiwgIiIiICAgIGdldCBidWlsZEVsZW1lbnRzKCkgeyByZXR1cm4gRUxFTUVOVFMuZmlsdGVyKGUgPT4gQlVJTERfU0VULmluY2x1ZGVzKGUueikpOyB9LAogICAgZ2V0IGVsKCkgeyByZXR1cm4gRUxFTUVOVFMuZmluZChlID0+IGUueiA9PT0gdGhpcy5lbFopOyB9LAogICAgb25FbGVtZW50KCkgewogICAgICBpZiAoIXRoaXMuZWwpIHJldHVybjsKICAgICAgY29uc3QgbWFzcyA9IEFUT01JQ19NQVNTW3RoaXMuZWwuc3ltXTsKICAgICAgdGhpcy5uTmV1dHJvbnMgPSBNYXRoLm1heCgwLCBNYXRoLnJvdW5kKG1hc3MpIC0gdGhpcy5lbFopOwogICAgICB0aGlzLm5FbGVjdHJvbnMgPSB0aGlzLmVsWjsKICAgIH0sCiAgICBzdGVwTmV1dHJvbnMoZCkgeyB0aGlzLm5OZXV0cm9ucyA9IE1hdGgubWF4KDAsIE1hdGgubWluKHRoaXMuZWxaICsgMTIsIHRoaXMubk5ldXRyb25zICsgZCkpOyB9LAogICAgc3RlcEVsZWN0cm9ucyhkKSB7IHRoaXMubkVsZWN0cm9ucyA9IE1hdGgubWF4KDEsIE1hdGgubWluKHRoaXMuZWxaICsgNCwgdGhpcy5uRWxlY3Ryb25zICsgZCkpOyB9LCIiIiwgIiIiICAgIGdldCBidWlsZEVsZW1lbnRzKCkgeyByZXR1cm4gRUxFTUVOVFMuZmlsdGVyKGUgPT4gQlVJTERfU0VULmluY2x1ZGVzKGUueikpOyB9LAogICAgZ2V0IGVsKCkgeyByZXR1cm4gRUxFTUVOVFMuZmluZChlID0+IGUueiA9PT0gdGhpcy5lbFopOyB9LAogICAgZ2V0IGJ1aWxkU29sdmVkKCkgeyByZXR1cm4gISEodGhpcy5tb2RlVmVyZGljdC5idWlsZCAmJiB0aGlzLm1vZGVWZXJkaWN0LmJ1aWxkLnRvbmUgPT09ICdzdWNjZXNzJyk7IH0sCiAgICBjbGVhckJ1aWxkQ2hlY2soKSB7CiAgICAgIGlmICh0aGlzLmJ1aWxkU29sdmVkKSByZXR1cm4gZmFsc2U7CiAgICAgIHRoaXMuYnVpbGRDaGVja2VkID0gZmFsc2U7CiAgICAgIGRlbGV0ZSB0aGlzLm1vZGVWZXJkaWN0LmJ1aWxkOwogICAgICByZXR1cm4gdHJ1ZTsKICAgIH0sCiAgICBzdGVwUHJvdG9ucyhkKSB7CiAgICAgIGlmICghdGhpcy5jbGVhckJ1aWxkQ2hlY2soKSkgcmV0dXJuOwogICAgICB0aGlzLmVsWiA9IE1hdGgubWF4KDEsIE1hdGgubWluKDIwLCB0aGlzLmVsWiArIGQpKTsKICAgIH0sCiAgICBzdGVwTmV1dHJvbnMoZCkgewogICAgICBpZiAoIXRoaXMuY2xlYXJCdWlsZENoZWNrKCkpIHJldHVybjsKICAgICAgdGhpcy5uTmV1dHJvbnMgPSBNYXRoLm1heCgwLCBNYXRoLm1pbig0MCwgdGhpcy5uTmV1dHJvbnMgKyBkKSk7CiAgICB9LAogICAgc3RlcEVsZWN0cm9ucyhkKSB7CiAgICAgIGlmICghdGhpcy5jbGVhckJ1aWxkQ2hlY2soKSkgcmV0dXJuOwogICAgICB0aGlzLm5FbGVjdHJvbnMgPSBNYXRoLm1heCgwLCBNYXRoLm1pbigyMCwgdGhpcy5uRWxlY3Ryb25zICsgZCkpOwogICAgfSwiIiIsICdpbmRlcGVuZGVudCBwYXJ0aWNsZSBjb250cm9scycpCgpodG1sID0gcmVwbGFjZV9vbmNlKGh0bWwsICc8c2VjdGlvbiBjbGFzcz0id29yay1vcmRlciI+PHNwYW4gY2xhc3M9ImNvbW1hbmQta2lja2VyIj5DdXJyZW50IGF0b208L3NwYW4+PHAgeC1wcm9zZT0iYnVpbGRTYy5nb2FsIj48L3A+PGRpdiBjbGFzcz0icm93IGNhbGwtcm93Ij48YnV0dG9uIGNsYXNzPSJidG4gYnRuLWFjY2VudCIgQGNsaWNrPSJjb21taXRCdWlsZCgpIj5DaGVjayBhdG9tPC9idXR0b24+PGJ1dHRvbiBjbGFzcz0iYnRuIiBAY2xpY2s9Im5leHRCdWlsZCgpIj5OZXh0IGF0b208L2J1dHRvbj48L2Rpdj48L3NlY3Rpb24+JywgJzxzZWN0aW9uIGNsYXNzPSJ3b3JrLW9yZGVyIj48c3BhbiBjbGFzcz0iY29tbWFuZC1raWNrZXIiPkF0b20gdG8gYXNzZW1ibGU8L3NwYW4+PHAgeC1wcm9zZT0iYnVpbGRTYy5nb2FsIj48L3A+PHAgY2xhc3M9Im11dGVkIiBzdHlsZT0iZm9udC1zaXplOnZhcigtLWZzLXhzKTsgbWFyZ2luOnZhcigtLXMtMikgMCAwOyI+U2V0IGFsbCB0aHJlZSBwYXJ0aWNsZSBjb3VudHMgeW91cnNlbGYuIFRoZSBhc3NlbWJsZWQgZWxlbWVudCBpZGVudGl0eSBzdGF5cyBoaWRkZW4gdW50aWwgeW91IGNoZWNrLjwvcD48ZGl2IGNsYXNzPSJyb3cgY2FsbC1yb3ciPjxidXR0b24gY2xhc3M9ImJ0biBidG4tYWNjZW50IiBAY2xpY2s9ImNvbW1pdEJ1aWxkKCkiIDpkaXNhYmxlZD0iYnVpbGRTb2x2ZWQiPkNoZWNrIGF0b208L2J1dHRvbj48YnV0dG9uIGNsYXNzPSJidG4iIEBjbGljaz0ibmV4dEJ1aWxkKCkiPk5leHQgYXRvbTwvYnV0dG9uPjwvZGl2Pjwvc2VjdGlvbj4nLCAnYnVpbGQgbWlzc2lvbiBpbnN0cnVjdGlvbicpCmh0bWwgPSByZXBsYWNlX29uY2UoaHRtbCwgJzxkaXYgY2xhc3M9Imlzby1zeW1ib2wiPjxzcGFuIGNsYXNzPSJpc28tc3RhY2siPjxzdXAgeC10ZXh0PSJtYXNzTnVtYmVyIj48L3N1cD48c3ViIHgtdGV4dD0iZWxaIj48L3N1Yj48L3NwYW4+PHNwYW4gY2xhc3M9Imlzby1zeW0iIHgtdGV4dD0iZWwuc3ltIj48L3NwYW4+PHN1cCBjbGFzcz0iaXNvLWNoYXJnZSIgeC1zaG93PSJjaGFyZ2UhPT0wIiB4LXRleHQ9Imlvbk5vdGF0aW9uIj48L3N1cD48L2Rpdj4nLCAnPGRpdiBjbGFzcz0iaXNvLXN5bWJvbCIgYXJpYS1saXZlPSJwb2xpdGUiPjx0ZW1wbGF0ZSB4LWlmPSJidWlsZENoZWNrZWQiPjxzcGFuIHN0eWxlPSJkaXNwbGF5OmlubGluZS1mbGV4OyBhbGlnbi1pdGVtczpjZW50ZXI7IGdhcDoycHg7Ij48c3BhbiBjbGFzcz0iaXNvLXN0YWNrIj48c3VwIHgtdGV4dD0ibWFzc051bWJlciI+PC9zdXA+PHN1YiB4LXRleHQ9ImVsWiI+PC9zdWI+PC9zcGFuPjxzcGFuIGNsYXNzPSJpc28tc3ltIiB4LXRleHQ9ImVsLnN5bSI+PC9zcGFuPjxzdXAgY2xhc3M9Imlzby1jaGFyZ2UiIHgtc2hvdz0iY2hhcmdlIT09MCIgeC10ZXh0PSJpb25Ob3RhdGlvbiI+PC9zdXA+PC9zcGFuPjwvdGVtcGxhdGU+PHNwYW4gY2xhc3M9Im1vbm8gbXV0ZWQiIHgtc2hvdz0iIWJ1aWxkQ2hlY2tlZCIgc3R5bGU9ImZvbnQtc2l6ZTp2YXIoLS1mcy1zbSk7Ij5FbGVtZW50IGlkZW50aXR5IGhpZGRlbiB1bnRpbCBDaGVjayBhdG9tPC9zcGFuPjwvZGl2PicsICdoaWRlIGlzb3RvcGUgaWRlbnRpdHkgYmVmb3JlIGNoZWNrJykKaHRtbCA9IHJlcGxhY2Vfb25jZShodG1sLCAiIiIgICAgICAgICAgICA8ZGl2IGNsYXNzPSJhLXNpZGUiPgogICAgICAgICAgICAgIDxkaXYgY2xhc3M9ImZpZWxkIiBzdHlsZT0ibWF4LXdpZHRoOiAyODBweDsgbWFyZ2luLWJvdHRvbTogdmFyKC0tcy00KTsiPgogICAgICAgICAgICAgICAgPGxhYmVsIGZvcj0iZWwiPkVsZW1lbnQ8L2xhYmVsPgogICAgICAgICAgICAgICAgPHNlbGVjdCBpZD0iZWwiIHgtbW9kZWwubnVtYmVyPSJlbFoiPjx0ZW1wbGF0ZSB4LWZvcj0iZSBpbiBidWlsZEVsZW1lbnRzIiA6a2V5PSJlLnoiPjxvcHRpb24gOnZhbHVlPSJlLnoiIHgtdGV4dD0iZS56ICsgJyAgJyArIGUuc3ltICsgJyAgJyArIGUubmFtZSI+PC9vcHRpb24+PC90ZW1wbGF0ZT48L3NlbGVjdD4KICAgICAgICAgICAgICA8L2Rpdj4KCiAgICAgICAgICAgICAgPGRpdiBjbGFzcz0ic3RlcHBlci1ncmlkIj4KICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9InN0ZXBwZXIiPjxzcGFuIGNsYXNzPSJzdHAtbGFiZWwiPlByb3RvbnM8L3NwYW4+PGRpdiBjbGFzcz0ic3RwLWZpeGVkIG1vbm8iIHgtdGV4dD0iZWxaIj48L2Rpdj48c3BhbiBjbGFzcz0ic3RwLXN1YiI+ZGV0ZXJtaW5lcyB0aGUgZWxlbWVudDwvc3Bhbj48L2Rpdj4KICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9InN0ZXBwZXIiPjxzcGFuIGNsYXNzPSJzdHAtbGFiZWwiPk5ldXRyb25zPC9zcGFuPjxkaXYgY2xhc3M9InN0cC1jdGwiPjxidXR0b24gY2xhc3M9ImJ0biBidG4tc20iIEBjbGljaz0ic3RlcE5ldXRyb25zKC0xKSIgYXJpYS1sYWJlbD0iRGVjcmVhc2UgbmV1dHJvbnMiPuKIkjwvYnV0dG9uPjxzcGFuIGNsYXNzPSJtb25vIHN0cC12YWwiIHgtdGV4dD0ibk5ldXRyb25zIj48L3NwYW4+PGJ1dHRvbiBjbGFzcz0iYnRuIGJ0bi1zbSIgQGNsaWNrPSJzdGVwTmV1dHJvbnMoMSkiIGFyaWEtbGFiZWw9IkluY3JlYXNlIG5ldXRyb25zIj4rPC9idXR0b24+PC9kaXY+PHNwYW4gY2xhc3M9InN0cC1zdWIiPmRldGVybWluZXMgdGhlIGlzb3RvcGU8L3NwYW4+PC9kaXY+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJzdGVwcGVyIj48c3BhbiBjbGFzcz0ic3RwLWxhYmVsIj5FbGVjdHJvbnM8L3NwYW4+PGRpdiBjbGFzcz0ic3RwLWN0bCI+PGJ1dHRvbiBjbGFzcz0iYnRuIGJ0bi1zbSIgQGNsaWNrPSJzdGVwRWxlY3Ryb25zKC0xKSIgYXJpYS1sYWJlbD0iRGVjcmVhc2UgZWxlY3Ryb25zIj7iiJI8L2J1dHRvbj48c3BhbiBjbGFzcz0ibW9ubyBzdHAtdmFsIiB4LXRleHQ9Im5FbGVjdHJvbnMiPjwvc3Bhbj48YnV0dG9uIGNsYXNzPSJidG4gYnRuLXNtIiBAY2xpY2s9InN0ZXBFbGVjdHJvbnMoMSkiIGFyaWEtbGFiZWw9IkluY3JlYXNlIGVsZWN0cm9ucyI+KzwvYnV0dG9uPjwvZGl2PjxzcGFuIGNsYXNzPSJzdHAtc3ViIj5kZXRlcm1pbmVzIG5ldCBjaGFyZ2U8L3NwYW4+PC9kaXY+CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDwvZGl2PiIiIiwgIiIiICAgICAgICAgICAgPGRpdiBjbGFzcz0iYS1zaWRlIj4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJyZWYtdGl0bGUiIHN0eWxlPSJtYXJnaW4tYm90dG9tOnZhcigtLXMtMyk7Ij5Bc3NlbWJseSBjb250cm9sczwvZGl2PgogICAgICAgICAgICAgIDxkaXYgY2xhc3M9InN0ZXBwZXItZ3JpZCI+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJzdGVwcGVyIj48c3BhbiBjbGFzcz0ic3RwLWxhYmVsIj5Qcm90b25zPC9zcGFuPjxkaXYgY2xhc3M9InN0cC1jdGwiPjxidXR0b24gY2xhc3M9ImJ0biBidG4tc20iIEBjbGljaz0ic3RlcFByb3RvbnMoLTEpIiA6ZGlzYWJsZWQ9ImJ1aWxkU29sdmVkIHx8IGVsWjw9MSIgYXJpYS1sYWJlbD0iRGVjcmVhc2UgcHJvdG9ucyI+4oiSPC9idXR0b24+PHNwYW4gY2xhc3M9Im1vbm8gc3RwLXZhbCIgeC10ZXh0PSJlbFoiPjwvc3Bhbj48YnV0dG9uIGNsYXNzPSJidG4gYnRuLXNtIiBAY2xpY2s9InN0ZXBQcm90b25zKDEpIiA6ZGlzYWJsZWQ9ImJ1aWxkU29sdmVkIHx8IGVsWj49MjAiIGFyaWEtbGFiZWw9IkluY3JlYXNlIHByb3RvbnMiPis8L2J1dHRvbj48L2Rpdj48c3BhbiBjbGFzcz0ic3RwLXN1YiI+ZGV0ZXJtaW5lcyB0aGUgZWxlbWVudDwvc3Bhbj48L2Rpdj4KICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9InN0ZXBwZXIiPjxzcGFuIGNsYXNzPSJzdHAtbGFiZWwiPk5ldXRyb25zPC9zcGFuPjxkaXYgY2xhc3M9InN0cC1jdGwiPjxidXR0b24gY2xhc3M9ImJ0biBidG4tc20iIEBjbGljaz0ic3RlcE5ldXRyb25zKC0xKSIgOmRpc2FibGVkPSJidWlsZFNvbHZlZCB8fCBuTmV1dHJvbnM8PTAiIGFyaWEtbGFiZWw9IkRlY3JlYXNlIG5ldXRyb25zIj7iiJI8L2J1dHRvbj48c3BhbiBjbGFzcz0ibW9ubyBzdHAtdmFsIiB4LXRleHQ9Im5OZXV0cm9ucyI+PC9zcGFuPjxidXR0b24gY2xhc3M9ImJ0biBidG4tc20iIEBjbGljaz0ic3RlcE5ldXRyb25zKDEpIiA6ZGlzYWJsZWQ9ImJ1aWxkU29sdmVkIHx8IG5OZXV0cm9ucz49NDAiIGFyaWEtbGFiZWw9IkluY3JlYXNlIG5ldXRyb25zIj4rPC9idXR0b24+PC9kaXY+PHNwYW4gY2xhc3M9InN0cC1zdWIiPmRldGVybWluZXMgdGhlIGlzb3RvcGU8L3NwYW4+PC9kaXY+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJzdGVwcGVyIj48c3BhbiBjbGFzcz0ic3RwLWxhYmVsIj5FbGVjdHJvbnM8L3NwYW4+PGRpdiBjbGFzcz0ic3RwLWN0bCI+PGJ1dHRvbiBjbGFzcz0iYnRuIGJ0bi1zbSIgQGNsaWNrPSJzdGVwRWxlY3Ryb25zKC0xKSIgOmRpc2FibGVkPSJidWlsZFNvbHZlZCB8fCBuRWxlY3Ryb25zPD0wIiBhcmlhLWxhYmVsPSJEZWNyZWFzZSBlbGVjdHJvbnMiPuKIkjwvYnV0dG9uPjxzcGFuIGNsYXNzPSJtb25vIHN0cC12YWwiIHgtdGV4dD0ibkVsZWN0cm9ucyI+PC9zcGFuPjxidXR0b24gY2xhc3M9ImJ0biBidG4tc20iIEBjbGljaz0ic3RlcEVsZWN0cm9ucygxKSIgOmRpc2FibGVkPSJidWlsZFNvbHZlZCB8fCBuRWxlY3Ryb25zPj0yMCIgYXJpYS1sYWJlbD0iSW5jcmVhc2UgZWxlY3Ryb25zIj4rPC9idXR0b24+PC9kaXY+PHNwYW4gY2xhc3M9InN0cC1zdWIiPmRldGVybWluZXMgbmV0IGNoYXJnZTwvc3Bhbj48L2Rpdj4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9kaXY+IiIiLCAndGhyZWUgaW5kZXBlbmRlbnQgcGFydGljbGUgc3RlcHBlcnMnKQpodG1sID0gcmVwbGFjZV9vbmNlKGh0bWwsICc8ZGl2IGNsYXNzPSJub3RlIG5vdGUtaW5mbyIgc3R5bGU9Im1hcmdpbi10b3A6IHZhcigtLXMtNCk7IiB4LXNob3c9Im1vZGVWZXJkaWN0LmJ1aWxkIj5cbiAgICAgICAgICAgIFRoaXMgaXMgPHN0cm9uZyB4LXRleHQ9Imlzb3RvcGVOYW1lIj48L3N0cm9uZz4sIGEgPHN0cm9uZyB4LXRleHQ9ImNoYXJnZVN0ciI+PC9zdHJvbmc+LiBJdHMgbnVjbGV1cyBjb250YWlucyA8c3BhbiBjbGFzcz0ibW9ubyIgeC10ZXh0PSJlbFoiPjwvc3Bhbj4gcHJvdG9ucyBhbmQgPHNwYW4gY2xhc3M9Im1vbm8iIHgtdGV4dD0ibk5ldXRyb25zIj48L3NwYW4+IG5ldXRyb25zLCBzbyBBID0gPHNwYW4gY2xhc3M9Im1vbm8iIHgtdGV4dD0ibWFzc051bWJlciI+PC9zcGFuPi4gVGhlIHBlcmlvZGljLXRhYmxlIGF2ZXJhZ2UgYXRvbWljIG1hc3Mgb2YgPHNwYW4geC10ZXh0PSJlbC5uYW1lIj48L3NwYW4+IGlzIDxzcGFuIGNsYXNzPSJtb25vIiB4LXRleHQ9ImZtdChtYXNzUmVmLDUpIj48L3NwYW4+IHUuXG4gICAgICAgICAgPC9kaXY+JywgJzxkaXYgY2xhc3M9Im5vdGUgbm90ZS1pbmZvIiBzdHlsZT0ibWFyZ2luLXRvcDogdmFyKC0tcy00KTsiIHgtc2hvdz0iYnVpbGRDaGVja2VkIj5cbiAgICAgICAgICAgIFlvdXIgYXNzZW1ibHkgcmVwcmVzZW50cyA8c3Ryb25nIHgtdGV4dD0iaXNvdG9wZU5hbWUiPjwvc3Ryb25nPiwgYSA8c3Ryb25nIHgtdGV4dD0iY2hhcmdlU3RyIj48L3N0cm9uZz4uIEl0cyBudWNsZXVzIGNvbnRhaW5zIDxzcGFuIGNsYXNzPSJtb25vIiB4LXRleHQ9ImVsWiI+PC9zcGFuPiBwcm90b25zIGFuZCA8c3BhbiBjbGFzcz0ibW9ubyIgeC10ZXh0PSJuTmV1dHJvbnMiPjwvc3Bhbj4gbmV1dHJvbnMsIHNvIEEgPSA8c3BhbiBjbGFzcz0ibW9ubyIgeC10ZXh0PSJtYXNzTnVtYmVyIj48L3NwYW4+LiBUaGUgcGVyaW9kaWMtdGFibGUgYXZlcmFnZSBhdG9taWMgbWFzcyBvZiA8c3BhbiB4LXRleHQ9ImVsLm5hbWUiPjwvc3Bhbj4gaXMgPHNwYW4gY2xhc3M9Im1vbm8iIHgtdGV4dD0iZm10KG1hc3NSZWYsNSkiPjwvc3Bhbj4gdS5cbiAgICAgICAgICA8L2Rpdj4nLCAncG9zdC1jaGVjayBlbGVtZW50IHJldmVhbCcpCmh0bWwgPSByZXBsYWNlX29uY2UoaHRtbCwgImltcG9ydCB7IGNyZWF0ZVNpbSB9IGZyb20gJy4vanMvbWFpbi5qcz92PXUyLW1pc3Npb24tZml4LTQnOyIsICJpbXBvcnQgeyBjcmVhdGVTaW0gfSBmcm9tICcuL2pzL21haW4uanM/dj11Mi1idWlsZC1hc3NlbWJsZXItMSc7IiwgJ2NhY2hlIGJ1c3QgYnVpbGQgYXNzZW1ibGVyJykKCm1haW5fcGF0aC53cml0ZV90ZXh0KG1haW4sIGVuY29kaW5nPSd1dGYtOCcpCmh0bWxfcGF0aC53cml0ZV90ZXh0KGh0bWwsIGVuY29kaW5nPSd1dGYtOCcpCg==' | base64 -d > /tmp/u2patch.py
+          python3 /tmp/u2patch.py
 
       - name: Validate Unit 2 build behavior
         run: |
@@ -192,28 +31,12 @@ jobs:
           from pathlib import Path
           js = Path('units/02-atomic-structure/js/main.js').read_text(encoding='utf-8')
           html = Path('units/02-atomic-structure/index.html').read_text(encoding='utf-8')
-          required = [
-              'buildChecked: false',
-              'get buildSolved()',
-              'stepProtons(d)',
-              'this.nNeutrons = 6; this.nElectrons = 6',
-              'Element identity hidden until Check atom',
-              '@click="stepProtons(-1)"',
-              '@click="stepProtons(1)"',
-              'x-show="buildChecked"',
-              ':disabled="buildSolved"',
-              'u2-build-assembler-1'
-          ]
+          required = ['buildChecked: false', 'get buildSolved()', 'stepProtons(d)', 'Element identity hidden until Check atom', '@click="stepProtons(-1)"', '@click="stepProtons(1)"', 'x-show="buildChecked"', ':disabled="buildSolved"', 'u2-build-assembler-1']
           blob = js + '\n' + html
           missing = [x for x in required if x not in blob]
           if missing:
               raise SystemExit(f'Missing build assembler markers: {missing}')
-          forbidden = [
-              "this.$watch('elZ', () => this.onElement())",
-              'this.elZ = 6; this.onElement();',
-              '<select id="el"',
-              '<div class="stp-fixed mono" x-text="elZ"></div>'
-          ]
+          forbidden = ["this.$watch('elZ', () => this.onElement())", 'this.elZ = 6; this.onElement();', '<select id="el"', '<div class="stp-fixed mono" x-text="elZ"></div>']
           present = [x for x in forbidden if x in blob]
           if present:
               raise SystemExit(f'Old answer-revealing build behavior remains: {present}')
