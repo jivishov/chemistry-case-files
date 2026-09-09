@@ -2,7 +2,7 @@
 // Keeps scientific geometry/data dynamic while allowing scenario art to use a
 // photorealistic context layer with the original inline SVG retained underneath.
 
-import { SCENE_SPRITE_URL, SCENE_SPRITE_POSITION } from '../assets/scenes/scene-photo-data.js?v=u1-photo-scenes-2';
+import { SCENE_SPRITE_URL, SCENE_SPRITE_POSITION } from '../assets/scenes/scene-photo-data.js?v=u1-photo-scenes-3';
 
 export const CYLINDER_GEOM = Object.freeze({
   maxVolume: 50,
@@ -82,7 +82,6 @@ export function graduatedCylinderSvg(volume, { labels = false, block = false, sa
     s += `<path d="${liquidPath}" fill="#79b0ba" opacity="0.5"></path>`;
     if (block) {
       s += displacementSampleSvg(sampleVolume);
-      // A light water veil restores the optical cue that the sample is submerged.
       s += `<path d="${liquidPath}" fill="#79b0ba" opacity="0.12" pointer-events="none"></path>`;
     }
     s += `<path d="${curve}" fill="none" stroke="#3f7f8c" stroke-width="2.4" stroke-linecap="round"></path>`;
@@ -115,9 +114,19 @@ function scenarioPhotoMarkup(id, fallbackSvg) {
   const pos = SCENE_SPRITE_POSITION[id];
   if (!pos || !SCENE_SPRITE_URL) return fallback;
   const [x, y] = pos;
-  return `<span class="scenario-photo-stack" data-visual-role="scenario-photo" data-scene-id="${id}">`
-    + `<span class="scenario-svg-fallback">${fallback}</span>`
-    + `<span class="scenario-photo-image" aria-hidden="true" style="--scene-x:${x};--scene-y:${y};background-image:url('${SCENE_SPRITE_URL}')"></span>`
+
+  // Critical presentation rules are duplicated inline intentionally. Unit 1's HTML used
+  // long-lived cache-busting query strings before the photo migration; a browser that has
+  // the older stylesheet cached must still show the new image layer. The stylesheet keeps
+  // the same rules for maintainability, but these inline declarations make the image layer
+  // authoritative as soon as this module loads.
+  const stackStyle = 'position:relative;display:block;width:100%;aspect-ratio:8/3;overflow:hidden;line-height:0;background:transparent;';
+  const fallbackStyle = 'position:absolute;inset:0;display:block;z-index:0;width:100%;height:100%;';
+  const photoStyle = `position:absolute;inset:0;display:block;z-index:1;width:100%;height:100%;background-repeat:no-repeat;background-size:500% 300%;background-position:${x} ${y};background-image:url('${SCENE_SPRITE_URL}');`;
+
+  return `<span class="scenario-photo-stack" data-visual-role="scenario-photo" data-scene-id="${id}" style="${stackStyle}">`
+    + `<span class="scenario-svg-fallback" style="${fallbackStyle}">${fallback}</span>`
+    + `<span class="scenario-photo-image" aria-hidden="true" style="${photoStyle}"></span>`
     + `</span>`;
 }
 
