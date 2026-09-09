@@ -55,22 +55,31 @@
   --dial-slate:       #5f7480;
   --dial-slate-deep:  #45575f;
 
-  /* Typography */
-  --font-display: 'Bitter', Georgia, 'Times New Roman', serif;
-  --font-body:    'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+  /* Typography — canonical catalog scale.
+     Source Serif 4 carries editorial hierarchy; Atkinson Hyperlegible Next carries
+     instructions and controls; JetBrains Mono is reserved for chemistry/data. */
+  --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-body:    'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
 
-  --fs-2xs: 0.68rem;   /* axis tick labels on a dial; not for prose */
-  --fs-xs:  0.78rem;
-  --fs-sm:  0.88rem;
-  --fs-md:  1rem;
-  --fs-lg:  1.18rem;
-  --fs-xl:  1.5rem;
-  --fs-2xl: 2.1rem;
-  --fs-3xl: 2.9rem;
+  --fs-micro: 0.6875rem; /* 11px: graphical / secondary metadata only */
+  --fs-2xs:   0.6875rem; /* compatibility alias for axis ticks / diagram labels */
+  --fs-xs:    0.75rem;   /* 12px metadata */
+  --fs-ui:    0.8125rem; /* 13px compact controls */
+  --fs-sm:    0.875rem;  /* 14px supporting text */
+  --fs-md:    1rem;      /* 16px primary reading text */
+  --fs-lg:    1.125rem;  /* 18px panel title / key value */
+  --fs-xl:    1.375rem;  /* 22px section heading */
+  --fs-2xl:   1.75rem;   /* 28px page title */
+  --fs-3xl:   2.25rem;   /* 36px landing hero */
 
-  --lh-tight: 1.15;
-  --lh-body:  1.55;
+  --lh-display: 1.1;
+  --lh-tight:   1.15; /* compatibility for existing shared components */
+  --lh-heading: 1.2;
+  --lh-ui:      1.3;
+  --lh-compact: 1.4;
+  --lh-body:    1.52;
+  --lh-reading: 1.6;
 
   /* Spacing (4px base) */
   --s-1: 0.25rem; --s-2: 0.5rem;  --s-3: 0.75rem; --s-4: 1rem;

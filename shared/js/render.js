@@ -10,11 +10,20 @@ import { escapeHTML, formulaHTML, registerNotation } from './notation.js';
 
 // Stable color per chemical species for token visualizations + charts.
 const PALETTE = ['#2a7d8a', '#c0772f', '#5a6b9c', '#6b9c5a', '#9c5a87', '#b8881f', '#3f8f9c', '#a85a3f'];
+const CHART_FONT = 'Atkinson Hyperlegible Next';
 const _assigned = {};
 let _next = 0;
 export function speciesColor(formula) {
   if (!(formula in _assigned)) { _assigned[formula] = PALETTE[_next % PALETTE.length]; _next++; }
   return _assigned[formula];
+}
+
+// Keep Chart.js-generated text on the same functional sans-serif as the surrounding UI.
+// This is set lazily because some units import this module without loading Chart.js.
+function applyChartTypography() {
+  if (typeof Chart !== 'undefined' && Chart.defaults?.font) {
+    Chart.defaults.font.family = CHART_FONT;
+  }
 }
 
 // Render an mhchem expression into an element via KaTeX. Safe if katex is missing.
@@ -136,12 +145,13 @@ export function registerRender(Alpine) {
 
 // Minimal grouped bar chart wrapper around Chart.js. Returns the Chart instance.
 export function barChart(canvas, { labels, datasets, yTitle = '' }) {
+  applyChartTypography();
   return new Chart(canvas, {
     type: 'bar',
     data: { labels, datasets },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { labels: { font: { family: 'Atkinson Hyperlegible' } } } },
+      plugins: { legend: { labels: { font: { family: CHART_FONT } } } },
       scales: {
         y: { beginAtZero: true, title: { display: !!yTitle, text: yTitle }, grid: { color: '#e2eaed' } },
         x: { grid: { display: false } }
@@ -153,12 +163,13 @@ export function barChart(canvas, { labels, datasets, yTitle = '' }) {
 // Line chart wrapper. Pass datasets of {x,y} points with xType:'linear' (default),
 // or pass labels with xType:'category' for evenly spaced ticks. Returns the Chart.
 export function lineChart(canvas, { datasets, labels = null, xTitle = '', yTitle = '', xType = 'linear', beginAtZero = true }) {
+  applyChartTypography();
   return new Chart(canvas, {
     type: 'line',
     data: labels ? { labels, datasets } : { datasets },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
-      plugins: { legend: { labels: { font: { family: 'Atkinson Hyperlegible' }, usePointStyle: true } } },
+      plugins: { legend: { labels: { font: { family: CHART_FONT }, usePointStyle: true } } },
       scales: {
         x: { type: xType, title: { display: !!xTitle, text: xTitle }, grid: { color: '#eef2f4' } },
         y: { beginAtZero, title: { display: !!yTitle, text: yTitle }, grid: { color: '#e2eaed' } }
