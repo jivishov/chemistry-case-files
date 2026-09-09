@@ -1,0 +1,438 @@
+/* typography.css — catalog-wide typography system v2.
+ *
+ * Loaded by design-mode.js so every course-hub and unit page receives the same
+ * type system without duplicating font links or editing eleven mission files.
+ * Selectors intentionally carry one extra [data-design] term: design-modes.css
+ * is parsed later on many pages, and this small specificity edge keeps these
+ * semantic typography decisions authoritative without !important.
+ *
+ * Desktop target: a 15-inch laptop. The scale increases required reading text
+ * while keeping controls, metadata, and the three-column cockpit compact.
+ */
+
+html:root {
+  --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-body: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Semantic type scale. 11px is reserved for graphical/secondary metadata. */
+  --fs-micro: 0.6875rem; /* 11px */
+  --fs-2xs: 0.6875rem;   /* compatibility: axis ticks / diagram labels */
+  --fs-xs: 0.75rem;      /* 12px metadata */
+  --fs-ui: 0.8125rem;    /* 13px compact controls */
+  --fs-sm: 0.875rem;     /* 14px supporting text */
+  --fs-md: 1rem;         /* 16px primary reading text */
+  --fs-lg: 1.125rem;     /* 18px panel title / key value */
+  --fs-xl: 1.375rem;     /* 22px section heading */
+  --fs-2xl: 1.75rem;     /* 28px page title */
+  --fs-3xl: 2.25rem;     /* 36px landing hero */
+
+  --lh-display: 1.1;
+  --lh-heading: 1.2;
+  --lh-ui: 1.3;
+  --lh-compact: 1.4;
+  --lh-body: 1.52;
+  --lh-reading: 1.6;
+}
+
+/* Base reading surface. The cockpit immediately establishes its own compact
+   14px UI floor; primary instructional copy is then promoted to 15–16px. */
+html[data-design][data-design="clear"] body,
+html[data-design][data-design="atlas"] body {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  line-height: var(--lh-body);
+}
+
+html[data-design][data-design="clear"] .cockpit-shell,
+html[data-design][data-design="atlas"] .cockpit-shell {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-compact);
+}
+
+/* Header hierarchy: the unit identity is editorial; switches, metrics, and
+   navigation remain functional sans-serif UI. */
+html[data-design][data-design="clear"] .command-brand .command-home,
+html[data-design][data-design="atlas"] .command-brand .command-home {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  line-height: var(--lh-display);
+  letter-spacing: -0.012em;
+  font-optical-sizing: auto;
+}
+
+html[data-design][data-design="clear"] .command-brand span:last-child,
+html[data-design][data-design="atlas"] .command-brand span:last-child {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  line-height: var(--lh-ui);
+}
+
+html[data-design][data-design="clear"] .command-kicker,
+html[data-design][data-design="clear"] .eyebrow,
+html[data-design][data-design="atlas"] .command-kicker,
+html[data-design][data-design="atlas"] .eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: var(--lh-ui);
+  letter-spacing: .08em;
+}
+
+html[data-design][data-design="clear"] .design-mode-toggle button,
+html[data-design][data-design="atlas"] .design-mode-toggle button,
+html[data-design][data-design="clear"] .command-actions .label-text,
+html[data-design][data-design="atlas"] .command-actions .label-text,
+html[data-design][data-design="clear"] .metric-chip,
+html[data-design][data-design="clear"] .teks-badge,
+html[data-design][data-design="clear"] .sol-chip,
+html[data-design][data-design="atlas"] .metric-chip,
+html[data-design][data-design="atlas"] .teks-badge,
+html[data-design][data-design="atlas"] .sol-chip {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: var(--lh-ui);
+}
+
+html[data-design][data-design="clear"] .station-nav .tab,
+html[data-design][data-design="atlas"] .station-nav .tab {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+html[data-design][data-design="atlas"] .station-nav .tab::before,
+html[data-design][data-design="atlas"] .command-brand::before,
+html[data-design][data-design="atlas"] .mission-log .worldstate-entry::before {
+  font-size: var(--fs-micro);
+}
+
+/* Mission brief. Required-to-solve information never uses the metadata sizes. */
+html[data-design][data-design="clear"] .screen-system,
+html[data-design][data-design="atlas"] .screen-system {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: var(--lh-ui);
+  letter-spacing: .04em;
+}
+
+html[data-design][data-design="clear"] .screen-state,
+html[data-design][data-design="atlas"] .screen-state {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: var(--lh-heading);
+}
+
+html[data-design][data-design="clear"] .screen-goal,
+html[data-design][data-design="atlas"] .screen-goal {
+  font-family: var(--font-body);
+  font-size: 0.9375rem; /* 15px: primary mission instruction */
+  font-weight: 500;
+  line-height: 1.42;
+}
+
+html[data-design][data-design="clear"] .screen-outcome,
+html[data-design][data-design="atlas"] .screen-outcome {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  line-height: 1.48;
+}
+
+html[data-design][data-design="clear"] .screen-reference,
+html[data-design][data-design="atlas"] .screen-reference,
+html[data-design][data-design="clear"] .mission-screen > .cockpit-instincts,
+html[data-design][data-design="atlas"] .mission-screen > .cockpit-instincts {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-compact);
+}
+
+/* Workbench hierarchy. H2 is a narrative/section boundary; H3/H4 identify
+   functional controls or subpanels and therefore stay in the UI face. */
+html[data-design][data-design="clear"] .chem-console h2,
+html[data-design][data-design="atlas"] .chem-console h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  line-height: var(--lh-heading);
+  letter-spacing: -0.01em;
+  font-optical-sizing: auto;
+}
+
+html[data-design][data-design="clear"] .chem-console h3,
+html[data-design][data-design="clear"] .chem-console h4,
+html[data-design][data-design="atlas"] .chem-console h3,
+html[data-design][data-design="atlas"] .chem-console h4,
+html[data-design][data-design="clear"] .life-support-board h2,
+html[data-design][data-design="clear"] .life-support-board h3,
+html[data-design][data-design="clear"] .life-support-board h4,
+html[data-design][data-design="atlas"] .life-support-board h2,
+html[data-design][data-design="atlas"] .life-support-board h3,
+html[data-design][data-design="atlas"] .life-support-board h4 {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: var(--lh-heading);
+}
+
+html[data-design][data-design="clear"] .chem-console p,
+html[data-design][data-design="atlas"] .chem-console p {
+  font-family: var(--font-body);
+  font-size: 0.9375rem; /* 15px */
+  line-height: var(--lh-body);
+}
+
+html[data-design][data-design="clear"] .chem-console .small,
+html[data-design][data-design="atlas"] .chem-console .small,
+html[data-design][data-design="clear"] .chem-console .muted,
+html[data-design][data-design="atlas"] .chem-console .muted {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-compact);
+}
+
+html[data-design][data-design="clear"] .chem-console .field > label,
+html[data-design][data-design="atlas"] .chem-console .field > label,
+html[data-design][data-design="clear"] .workbench-grid .k,
+html[data-design][data-design="atlas"] .workbench-grid .k {
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  line-height: var(--lh-ui);
+}
+
+html[data-design][data-design="clear"] .chem-console .btn,
+html[data-design][data-design="clear"] .chem-console .choice,
+html[data-design][data-design="clear"] .chem-console .opt,
+html[data-design][data-design="clear"] .chem-console .pair,
+html[data-design][data-design="clear"] .chem-console .miss-opt,
+html[data-design][data-design="clear"] .chem-console .est-chip,
+html[data-design][data-design="clear"] .chem-console .fam-btn,
+html[data-design][data-design="clear"] .chem-console .job-pill,
+html[data-design][data-design="atlas"] .chem-console .btn,
+html[data-design][data-design="atlas"] .chem-console .choice,
+html[data-design][data-design="atlas"] .chem-console .opt,
+html[data-design][data-design="atlas"] .chem-console .pair,
+html[data-design][data-design="atlas"] .chem-console .miss-opt,
+html[data-design][data-design="atlas"] .chem-console .est-chip,
+html[data-design][data-design="atlas"] .chem-console .fam-btn,
+html[data-design][data-design="atlas"] .chem-console .job-pill,
+html[data-design][data-design="clear"] .chem-console input:not([type="range"]),
+html[data-design][data-design="clear"] .chem-console select,
+html[data-design][data-design="clear"] .chem-console textarea,
+html[data-design][data-design="atlas"] .chem-console input:not([type="range"]),
+html[data-design][data-design="atlas"] .chem-console select,
+html[data-design][data-design="atlas"] .chem-console textarea {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-ui);
+}
+
+html[data-design][data-design="clear"] .chem-console .btn,
+html[data-design][data-design="clear"] .chem-console .choice,
+html[data-design][data-design="clear"] .chem-console .opt,
+html[data-design][data-design="clear"] .chem-console .pair,
+html[data-design][data-design="clear"] .chem-console .miss-opt,
+html[data-design][data-design="clear"] .chem-console .est-chip,
+html[data-design][data-design="clear"] .chem-console .fam-btn,
+html[data-design][data-design="clear"] .chem-console .job-pill,
+html[data-design][data-design="atlas"] .chem-console .btn,
+html[data-design][data-design="atlas"] .chem-console .choice,
+html[data-design][data-design="atlas"] .chem-console .opt,
+html[data-design][data-design="atlas"] .chem-console .pair,
+html[data-design][data-design="atlas"] .chem-console .miss-opt,
+html[data-design][data-design="atlas"] .chem-console .est-chip,
+html[data-design][data-design="atlas"] .chem-console .fam-btn,
+html[data-design][data-design="atlas"] .chem-console .job-pill {
+  font-weight: 600;
+}
+
+/* Chemistry/data continues to use a monospaced face with tabular figures. */
+html[data-design][data-design="clear"] .mono,
+html[data-design][data-design="atlas"] .mono,
+html[data-design][data-design="clear"] .eqn,
+html[data-design][data-design="atlas"] .eqn,
+html[data-design][data-design="clear"] .solved,
+html[data-design][data-design="atlas"] .solved,
+html[data-design][data-design="clear"] .chain-term,
+html[data-design][data-design="clear"] .chain-result,
+html[data-design][data-design="atlas"] .chain-term,
+html[data-design][data-design="atlas"] .chain-result {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The status rail is secondary to the active experiment, so it stays compact
+   without returning to 10–12px prose. */
+html[data-design][data-design="clear"] .life-support-board,
+html[data-design][data-design="atlas"] .life-support-board {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-compact);
+}
+
+html[data-design][data-design="clear"] .life-header strong,
+html[data-design][data-design="clear"] .latest-consequence strong,
+html[data-design][data-design="atlas"] .life-header strong,
+html[data-design][data-design="atlas"] .latest-consequence strong {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: var(--lh-heading);
+}
+
+html[data-design][data-design="clear"] .latest-consequence p,
+html[data-design][data-design="clear"] .mission-log p,
+html[data-design][data-design="atlas"] .latest-consequence p,
+html[data-design][data-design="atlas"] .mission-log p {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-compact);
+}
+
+/* Case File: questions and explanations are reading material; sequence numbers,
+   stat keys, and progress markers may use the metadata tier. */
+html[data-design][data-design="clear"] .cf-stat .k,
+html[data-design][data-design="atlas"] .cf-stat .k,
+html[data-design][data-design="clear"] .cf-step-n,
+html[data-design][data-design="atlas"] .cf-step-n,
+html[data-design][data-design="clear"] .cf-chem strong,
+html[data-design][data-design="atlas"] .cf-chem strong,
+html[data-design][data-design="clear"] .cf-career,
+html[data-design][data-design="atlas"] .cf-career {
+  font-size: var(--fs-micro);
+}
+
+html[data-design][data-design="clear"] .cf-cap,
+html[data-design][data-design="atlas"] .cf-cap,
+html[data-design][data-design="clear"] .cf-progress,
+html[data-design][data-design="atlas"] .cf-progress,
+html[data-design][data-design="clear"] .cf-quiz-label,
+html[data-design][data-design="atlas"] .cf-quiz-label {
+  font-size: var(--fs-xs);
+}
+
+html[data-design][data-design="atlas"] .cf-quiz-label::after {
+  font-size: var(--fs-xs);
+}
+
+html[data-design][data-design="clear"] .cf-step,
+html[data-design][data-design="atlas"] .cf-step,
+html[data-design][data-design="clear"] .cf-btn,
+html[data-design][data-design="clear"] .cf-cta,
+html[data-design][data-design="atlas"] .cf-btn,
+html[data-design][data-design="atlas"] .cf-cta {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+}
+
+html[data-design][data-design="clear"] .cf-narr p,
+html[data-design][data-design="atlas"] .cf-narr p,
+html[data-design][data-design="clear"] .cf-explain,
+html[data-design][data-design="atlas"] .cf-explain,
+html[data-design][data-design="clear"] .cf-punch-lead,
+html[data-design][data-design="atlas"] .cf-punch-lead {
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+
+html[data-design][data-design="clear"] .cf-quiz-q,
+html[data-design][data-design="atlas"] .cf-quiz-q {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.42;
+}
+
+html[data-design][data-design="clear"] .cf-choice,
+html[data-design][data-design="atlas"] .cf-choice {
+  font-family: var(--font-body);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-compact);
+}
+
+/* Course hub: one consistent editorial hierarchy in both visual modes. */
+html[data-design][data-design="clear"] .course-hub,
+html[data-design][data-design="atlas"] .course-hub {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  line-height: var(--lh-body);
+}
+
+html[data-design][data-design="clear"] .course-hub .hub-brand-name,
+html[data-design][data-design="atlas"] .course-hub .hub-brand-name {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+
+html[data-design][data-design="clear"] .course-hub .hub-brand-sub,
+html[data-design][data-design="atlas"] .course-hub .hub-brand-sub {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+}
+
+html[data-design][data-design="clear"] .course-hub h1,
+html[data-design][data-design="atlas"] .course-hub h1,
+html[data-design][data-design="clear"] .course-hub h2,
+html[data-design][data-design="atlas"] .course-hub h2,
+html[data-design][data-design="clear"] .course-hub .hub-unit-title,
+html[data-design][data-design="atlas"] .course-hub .hub-unit-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-optical-sizing: auto;
+}
+
+html[data-design][data-design="clear"] .course-hub #hub-title,
+html[data-design][data-design="atlas"] .course-hub #hub-title {
+  max-width: none;
+  font-size: clamp(var(--fs-2xl), 2.6vw, var(--fs-3xl));
+  line-height: var(--lh-display);
+  letter-spacing: -0.025em;
+}
+
+html[data-design][data-design="clear"] .course-hub h2,
+html[data-design][data-design="atlas"] .course-hub h2 {
+  font-size: clamp(var(--fs-xl), 2vw, var(--fs-2xl));
+  line-height: var(--lh-heading);
+  letter-spacing: -0.015em;
+}
+
+html[data-design][data-design="clear"] .course-hub .hub-lead,
+html[data-design][data-design="atlas"] .course-hub .hub-lead {
+  font-size: var(--fs-md);
+  line-height: var(--lh-reading);
+}
+
+html[data-design][data-design="clear"] .course-hub .hub-support,
+html[data-design][data-design="atlas"] .course-hub .hub-support {
+  font-size: 0.9375rem;
+  line-height: var(--lh-reading);
+}
+
+html[data-design][data-design="clear"] .course-hub .hub-unit-title,
+html[data-design][data-design="atlas"] .course-hub .hub-unit-title {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-heading);
+}
+
+html[data-design][data-design="clear"] .course-hub .hub-legend,
+html[data-design][data-design="atlas"] .course-hub .hub-legend {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-compact);
+}
+
+/* The narrow desktop/tablet band needs one additional compact step so seven-
+   and eight-station units remain single-row. The default 15-inch laptop stays
+   on the 12px navigation/control tier above. */
+@media (min-width: 981px) and (max-width: 1120px) {
+  html[data-design][data-design="clear"] .station-nav .tab,
+  html[data-design][data-design="atlas"] .station-nav .tab,
+  html[data-design][data-design="clear"] .metric-chip,
+  html[data-design][data-design="atlas"] .metric-chip,
+  html[data-design][data-design="clear"] .teks-badge,
+  html[data-design][data-design="atlas"] .teks-badge,
+  html[data-design][data-design="clear"] .sol-chip,
+  html[data-design][data-design="atlas"] .sol-chip {
+    font-size: var(--fs-micro);
+  }
+}
