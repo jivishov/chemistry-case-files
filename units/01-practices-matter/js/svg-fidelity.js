@@ -2,7 +2,7 @@
 // Keeps scientific geometry/data dynamic while allowing scenario art to use a
 // photorealistic context layer with the original inline SVG retained underneath.
 
-import { SCENE_SPRITE, SCENE_SPRITE_POSITION } from '../assets/scenes/scene-photo-data.js?v=u1-photo-scenes-1';
+import { SCENE_SPRITE_URL, SCENE_SPRITE_POSITION } from '../assets/scenes/scene-photo-data.js?v=u1-photo-scenes-2';
 
 export const CYLINDER_GEOM = Object.freeze({
   maxVolume: 50,
@@ -113,11 +113,11 @@ function markScenarioContext(svg) {
 function scenarioPhotoMarkup(id, fallbackSvg) {
   const fallback = markScenarioContext(fallbackSvg);
   const pos = SCENE_SPRITE_POSITION[id];
-  if (!pos || !SCENE_SPRITE) return fallback;
+  if (!pos || !SCENE_SPRITE_URL) return fallback;
   const [x, y] = pos;
   return `<span class="scenario-photo-stack" data-visual-role="scenario-photo" data-scene-id="${id}">`
     + `<span class="scenario-svg-fallback">${fallback}</span>`
-    + `<span class="scenario-photo-image" aria-hidden="true" style="--scene-x:${x};--scene-y:${y};background-image:url('${SCENE_SPRITE}')"></span>`
+    + `<span class="scenario-photo-image" aria-hidden="true" style="--scene-x:${x};--scene-y:${y};background-image:url('${SCENE_SPRITE_URL}')"></span>`
     + `</span>`;
 }
 
@@ -138,7 +138,7 @@ export function installSvgFidelity(sim) {
   };
 
   // Scenario banners are illustrative context. The photorealistic layer is preferred,
-  // while the complete original SVG remains directly underneath as a zero-network fallback.
+  // while the complete original SVG remains directly underneath as the fallback.
   // Data-bearing live SVGs (cylinders, target dots, gauges, Mars trajectories) remain separate.
   if (originalScenarioArt) sim.scArt = id => scenarioPhotoMarkup(id, originalScenarioArt(id));
 
