@@ -3,7 +3,7 @@
 // in svg-fidelity.js so photorealistic scenario art cannot overwrite data-bearing geometry.
 
 import { createSim as createCoreSim, SE } from './sim-core.js?v=u1-svg-fidelity-1';
-import { installSvgFidelity } from './svg-fidelity.js?v=u1-photo-scenes-2';
+import { installSvgFidelity } from './svg-fidelity.js?v=u1-photo-scenes-3';
 
 export { SE };
 
