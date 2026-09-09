@@ -1,9 +1,4 @@
-import p0 from './scene-photo-part-0.js';
-import p1 from './scene-photo-part-1.js';
-import p2 from './scene-photo-part-2.js';
-import p3 from './scene-photo-part-3.js';
-
-export const SCENE_SPRITE = `data:image/webp;base64,${p0}${p1}${p2}${p3}`;
+export const SCENE_SPRITE_URL = 'assets/scenes/unit1-scenes.webp?v=1';
 
 export const SCENE_SPRITE_POSITION = Object.freeze({
   'a-dechlor': ['0%', '0%'],
