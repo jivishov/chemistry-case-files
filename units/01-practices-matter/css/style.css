@@ -313,3 +313,48 @@ table.data.mini td:last-child {
 .density-fields { gap: var(--s-3); }
 .density-fields .field { flex: 1; }
 .stat-value-compact { font-size: var(--fs-lg); }
+
+/* ============================ photorealistic mission art ============================ */
+
+/* The generated scene is the preferred context layer. The complete original inline SVG
+   stays directly underneath it so Unit 1 still renders correctly if the photo layer ever
+   fails. Data-bearing live SVGs are not part of this stack. */
+.scenario-photo-stack {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  background: transparent;
+  border-radius: inherit;
+}
+
+.scenario-svg-fallback,
+.scenario-photo-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.scenario-svg-fallback { z-index: 0; }
+.scenario-svg-fallback svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.scenario-photo-image {
+  z-index: 1;
+  background-repeat: no-repeat;
+  background-size: 500% 300%;
+  background-position: var(--scene-x) var(--scene-y);
+}
+
+.mission-screen-art .scenario-photo-stack {
+  width: 100%;
+  height: 100%;
+}
+
+.brief-art .scenario-photo-stack {
+  aspect-ratio: 8 / 3;
+}
