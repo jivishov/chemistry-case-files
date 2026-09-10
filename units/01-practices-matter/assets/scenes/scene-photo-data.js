@@ -1,4 +1,4 @@
-export const SCENE_SPRITE_URL = 'assets/scenes/unit1-scenes.webp?v=2';
+export const SCENE_SPRITE_URL = 'assets/scenes/unit1-scenes.webp?v=3';
 
 export const SCENE_SPRITE_POSITION = Object.freeze({
   'a-dechlor': ['0%', '0%'],
