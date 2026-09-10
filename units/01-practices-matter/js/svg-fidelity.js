@@ -2,7 +2,7 @@
 // Keeps scientific geometry/data dynamic while allowing scenario art to use a
 // photorealistic context layer with the original inline SVG retained underneath.
 
-import { SCENE_SPRITE_URL, SCENE_SPRITE_POSITION } from '../assets/scenes/scene-photo-data.js?v=u1-photo-scenes-3';
+import { SCENE_SPRITE_URL, SCENE_SPRITE_POSITION } from '../assets/scenes/scene-photo-data.js?v=u1-photo-scenes-4';
 
 export const CYLINDER_GEOM = Object.freeze({
   maxVolume: 50,
@@ -43,10 +43,6 @@ export function cylinderTicksSvg(labels = false) {
   return s;
 }
 
-// A displacement sample is a 3-D object. Its projected linear size therefore scales
-// with the cube root of its volume, not with the final liquid-height coordinate.
-// The previous drawing made the object's height depend on dAfter, which visually
-// implied that identical samples changed size when the starting water level changed.
 export function displacementSampleSvg(sampleVolume) {
   const g = CYLINDER_GEOM;
   const volume = Number(sampleVolume);
@@ -115,19 +111,14 @@ function scenarioPhotoMarkup(id, fallbackSvg) {
   if (!pos || !SCENE_SPRITE_URL) return fallback;
   const [x, y] = pos;
 
-  // Critical presentation rules are duplicated inline intentionally. Unit 1's HTML used
-  // long-lived cache-busting query strings before the photo migration; a browser that has
-  // the older stylesheet cached must still show the new image layer. The stylesheet keeps
-  // the same rules for maintainability, but these inline declarations make the image layer
-  // authoritative as soon as this module loads.
-  const stackStyle = 'position:relative;display:block;width:100%;aspect-ratio:8/3;overflow:hidden;line-height:0;background:transparent;';
+  const stackStyle = 'position:relative;display:block;width:100%;height:100%;min-height:0;overflow:hidden;line-height:0;background:transparent;';
   const fallbackStyle = 'position:absolute;inset:0;display:block;z-index:0;width:100%;height:100%;';
-  const photoStyle = `position:absolute;inset:0;display:block;z-index:1;width:100%;height:100%;background-repeat:no-repeat;background-size:500% 300%;background-position:${x} ${y};background-image:url('${SCENE_SPRITE_URL}');`;
+  const photoStyle = `position:absolute;inset:0;display:block;z-index:2;width:100%;height:100%;background-repeat:no-repeat;background-size:500% 300%;background-position:${x} ${y};background-image:url('${SCENE_SPRITE_URL}');`;
 
-  return `<span class="scenario-photo-stack" data-visual-role="scenario-photo" data-scene-id="${id}" style="${stackStyle}">`
-    + `<span class="scenario-svg-fallback" style="${fallbackStyle}">${fallback}</span>`
-    + `<span class="scenario-photo-image" aria-hidden="true" style="${photoStyle}"></span>`
-    + `</span>`;
+  return `<div class="scenario-photo-stack" data-visual-role="scenario-photo" data-scene-id="${id}" style="${stackStyle}">`
+    + `<div class="scenario-svg-fallback" style="${fallbackStyle}">${fallback}</div>`
+    + `<div class="scenario-photo-image" aria-hidden="true" style="${photoStyle}"></div>`
+    + `</div>`;
 }
 
 export function installSvgFidelity(sim) {
@@ -146,9 +137,6 @@ export function installSvgFidelity(sim) {
     return targetDotsSvg(this.evDots, { tuple: false, radius: 4, fill: '#2a7d8a' });
   };
 
-  // Scenario banners are illustrative context. The photorealistic layer is preferred,
-  // while the complete original SVG remains directly underneath as the fallback.
-  // Data-bearing live SVGs (cylinders, target dots, gauges, Mars trajectories) remain separate.
   if (originalScenarioArt) sim.scArt = id => scenarioPhotoMarkup(id, originalScenarioArt(id));
 
   return sim;
