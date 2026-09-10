@@ -1,10 +1,7 @@
-import sceneSpriteBase64 from './scene-photo-part-0.js?v=u1-photo-scenes-5';
-
-// The previous binary unit1-scenes.webp was malformed, so browsers correctly fell back
-// to the original SVG. Keep the approved 5×3 photorealistic sprite in its already-valid
-// base64 module and turn it into an image URL here. This removes the binary-decoding
-// failure while preserving the SVG fallback path.
-export const SCENE_SPRITE_URL = `data:image/webp;base64,${sceneSpriteBase64}`;
+// Scene sprite metadata only. Do not import scene-photo-part-0.js as JavaScript:
+// that historical payload contains a newline before its closing quote and therefore
+// cannot be parsed as an ES module. svg-fidelity.js fetches it as plain text instead.
+export const SCENE_SPRITE_SOURCE_URL = new URL('./scene-photo-part-0.js?v=u1-photo-scenes-6', import.meta.url).href;
 
 export const SCENE_SPRITE_POSITION = Object.freeze({
   'a-dechlor': ['0%', '0%'],
