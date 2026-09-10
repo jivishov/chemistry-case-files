@@ -1,8 +1,8 @@
 // svg-fidelity.js — calibrated Unit 1 SVG rendering helpers.
-// Keeps scientific geometry/data dynamic while allowing scenario art to use a
-// photorealistic context layer with the original inline SVG retained underneath.
+// Scientific/data-bearing SVGs stay dynamic. Mission banners prefer photorealistic
+// imagery and retain the complete original inline SVG directly underneath as fallback.
 
-import { SCENE_SPRITE_URL, SCENE_SPRITE_POSITION } from '../assets/scenes/scene-photo-data.js?v=u1-photo-scenes-4';
+import { SCENE_SPRITE_URL, SCENE_SPRITE_POSITION } from '../assets/scenes/scene-photo-data.js?v=u1-photo-scenes-5';
 
 export const CYLINDER_GEOM = Object.freeze({
   maxVolume: 50,
@@ -109,15 +109,21 @@ function scenarioPhotoMarkup(id, fallbackSvg) {
   const fallback = markScenarioContext(fallbackSvg);
   const pos = SCENE_SPRITE_POSITION[id];
   if (!pos || !SCENE_SPRITE_URL) return fallback;
-  const [x, y] = pos;
 
+  const col = Number.parseFloat(pos[0]) / 25;
+  const row = Number.parseFloat(pos[1]) / 50;
+  if (!Number.isFinite(col) || !Number.isFinite(row)) return fallback;
+
+  // Use a real <img>, not a CSS background. The sprite is five columns by three rows;
+  // enlarging the image to 500% × 300% makes each tile exactly fill this 8:3 frame.
+  // If loading fails, onerror removes the image and exposes the untouched SVG fallback.
   const stackStyle = 'position:relative;display:block;width:100%;height:100%;min-height:0;overflow:hidden;line-height:0;background:transparent;';
   const fallbackStyle = 'position:absolute;inset:0;display:block;z-index:0;width:100%;height:100%;';
-  const photoStyle = `position:absolute;inset:0;display:block;z-index:2;width:100%;height:100%;background-repeat:no-repeat;background-size:500% 300%;background-position:${x} ${y};background-image:url('${SCENE_SPRITE_URL}');`;
+  const photoStyle = `position:absolute;z-index:2;display:block;pointer-events:none;max-width:none;max-height:none;width:500%;height:300%;left:${-col * 100}%;top:${-row * 100}%;`;
 
   return `<div class="scenario-photo-stack" data-visual-role="scenario-photo" data-scene-id="${id}" style="${stackStyle}">`
     + `<div class="scenario-svg-fallback" style="${fallbackStyle}">${fallback}</div>`
-    + `<div class="scenario-photo-image" aria-hidden="true" style="${photoStyle}"></div>`
+    + `<img class="scenario-photo-image" src="${SCENE_SPRITE_URL}" alt="" aria-hidden="true" draggable="false" style="${photoStyle}" onerror="this.style.display='none'">`
     + `</div>`;
 }
 
