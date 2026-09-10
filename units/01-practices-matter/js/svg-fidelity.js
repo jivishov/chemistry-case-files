@@ -2,7 +2,7 @@
 // Scientific/data-bearing SVGs stay dynamic. Mission banners prefer photorealistic
 // imagery and retain the complete original inline SVG directly underneath as fallback.
 
-import { SCENE_SPRITE_URL, SCENE_SPRITE_POSITION } from '../assets/scenes/scene-photo-data.js?v=u1-photo-scenes-5';
+import { SCENE_SPRITE_SOURCE_URL, SCENE_SPRITE_POSITION } from '../assets/scenes/scene-photo-data.js?v=u1-photo-scenes-6';
 
 export const CYLINDER_GEOM = Object.freeze({
   maxVolume: 50,
@@ -18,6 +18,49 @@ export const CYLINDER_GEOM = Object.freeze({
 export const TARGET_GEOM = Object.freeze({ cx: 60, cy: 60, radius: 46 });
 
 const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+
+let sceneSpriteUrl = '';
+let sceneSpritePromise = null;
+
+function extractSceneSpriteBase64(sourceText) {
+  if (typeof sourceText !== 'string') return '';
+  const prefix = "export default '";
+  const start = sourceText.indexOf(prefix);
+  if (start < 0) return '';
+  const bodyStart = start + prefix.length;
+  const end = sourceText.indexOf("';", bodyStart);
+  if (end < 0) return '';
+  return sourceText.slice(bodyStart, end).replace(/\s+/g, '');
+}
+
+function hydrateScenarioPhotos(root = document) {
+  if (!sceneSpriteUrl || typeof document === 'undefined' || !root?.querySelectorAll) return;
+  root.querySelectorAll('.scenario-photo-image[data-scene-id]').forEach(img => {
+    if (!img.getAttribute('src')) img.setAttribute('src', sceneSpriteUrl);
+    img.style.display = 'block';
+  });
+}
+
+function ensureSceneSpriteLoaded() {
+  if (sceneSpritePromise) return sceneSpritePromise;
+  if (typeof fetch !== 'function') return Promise.resolve('');
+
+  sceneSpritePromise = fetch(SCENE_SPRITE_SOURCE_URL, { cache: 'force-cache' })
+    .then(response => {
+      if (!response.ok) throw new Error(`Scene sprite source failed: ${response.status}`);
+      return response.text();
+    })
+    .then(sourceText => {
+      const base64 = extractSceneSpriteBase64(sourceText);
+      if (!base64 || !base64.startsWith('UklG')) throw new Error('Scene sprite payload is invalid');
+      sceneSpriteUrl = `data:image/webp;base64,${base64}`;
+      if (typeof document !== 'undefined') queueMicrotask(() => hydrateScenarioPhotos(document));
+      return sceneSpriteUrl;
+    })
+    .catch(() => '');
+
+  return sceneSpritePromise;
+}
 
 export function cylinderLevelY(volume) {
   const g = CYLINDER_GEOM;
@@ -108,22 +151,21 @@ function markScenarioContext(svg) {
 function scenarioPhotoMarkup(id, fallbackSvg) {
   const fallback = markScenarioContext(fallbackSvg);
   const pos = SCENE_SPRITE_POSITION[id];
-  if (!pos || !SCENE_SPRITE_URL) return fallback;
+  if (!pos) return fallback;
 
   const col = Number.parseFloat(pos[0]) / 25;
   const row = Number.parseFloat(pos[1]) / 50;
   if (!Number.isFinite(col) || !Number.isFinite(row)) return fallback;
 
-  // Use a real <img>, not a CSS background. The sprite is five columns by three rows;
-  // enlarging the image to 500% × 300% makes each tile exactly fill this 8:3 frame.
-  // If loading fails, onerror removes the image and exposes the untouched SVG fallback.
   const stackStyle = 'position:relative;display:block;width:100%;height:100%;min-height:0;overflow:hidden;line-height:0;background:transparent;';
   const fallbackStyle = 'position:absolute;inset:0;display:block;z-index:0;width:100%;height:100%;';
-  const photoStyle = `position:absolute;z-index:2;display:block;pointer-events:none;max-width:none;max-height:none;width:500%;height:300%;left:${-col * 100}%;top:${-row * 100}%;`;
+  const photoVisibility = sceneSpriteUrl ? 'display:block;' : 'display:none;';
+  const photoStyle = `position:absolute;z-index:2;${photoVisibility}pointer-events:none;max-width:none;max-height:none;width:500%;height:300%;left:${-col * 100}%;top:${-row * 100}%;`;
+  const src = sceneSpriteUrl ? ` src="${sceneSpriteUrl}"` : '';
 
   return `<div class="scenario-photo-stack" data-visual-role="scenario-photo" data-scene-id="${id}" style="${stackStyle}">`
     + `<div class="scenario-svg-fallback" style="${fallbackStyle}">${fallback}</div>`
-    + `<img class="scenario-photo-image" src="${SCENE_SPRITE_URL}" alt="" aria-hidden="true" draggable="false" style="${photoStyle}" onerror="this.style.display='none'">`
+    + `<img class="scenario-photo-image" data-scene-id="${id}"${src} alt="" aria-hidden="true" draggable="false" style="${photoStyle}" onerror="this.style.display='none'">`
     + `</div>`;
 }
 
@@ -145,5 +187,6 @@ export function installSvgFidelity(sim) {
 
   if (originalScenarioArt) sim.scArt = id => scenarioPhotoMarkup(id, originalScenarioArt(id));
 
+  ensureSceneSpriteLoaded();
   return sim;
 }
