@@ -640,14 +640,14 @@
   window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
   const [{ createSim: baseCreateSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
          { mountColumnResizers }, refinements, outputRefinements] = await Promise.all([
-    import('./js/main.js?v=field-20260922-1'),
+    import('./js/main.js?v=mission-photos-20260922-1'),
     import('../../shared/js/render.js'),
     import('../../shared/js/gauge.js'),
     import('../../shared/js/casefile.js?v=field-20260922-1'),
     import('./js/case.js?v=u11-3'),
     import('../shared/columns.js?v=cockpit-3'),
     import('./js/refinements.js?v=u11-3'),
-    import('./js/output-refinements.js?v=u11-3')
+    import('./js/output-refinements.js?v=mission-photos-20260922-1')
   ]);
   refinements.applyContentRefinements();
   refinements.applyStaticCopy(document);

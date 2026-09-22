@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js: Unit 7 view-model (Gas Laws & Kinetic Molecular Theory, C.10).
 import {
   KMT_POSTULATES, KMT_QUIZ, GAS_LAWS, RELATIONSHIPS, DALTON_GASES,
@@ -51,6 +51,7 @@ export { SE };
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     ...createGame({ unitId: 'units_new/07-gas-laws', skills }),
     KMT_POSTULATES, GAS_LAWS, RELATIONSHIPS, REAL_GASES, WATER_VP, SE, fmt,
     R: GAS_CONSTANT_R,
@@ -165,6 +166,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = (this.scIdx[skill] = (this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
     // Advance the dive-day clock and draw gas off the bank. A wrong call costs roughly
@@ -201,7 +203,7 @@ export function createSim() {
     },
 
     // ================= cockpit readouts =================
-    scArt(id) { return photoScene(7, id, sceneArt(id)); },
+    scArt(id) { return photoScene(7, id, sceneArt(id), this.scenePhotoVariant(id)); },
     get coreSkills() { return SE.filter(se => !se.honors); },
     get teksMasteredCount() { return this.coreSkills.filter(se => this.gMastered(se.id)).length; },
     get activeBrief() {
@@ -306,6 +308,7 @@ export function createSim() {
     // Honors h1: speed against energy on the Maxwell-Boltzmann curve.
     get h1Unlocked() { return this.gMastered('a'); },
     genHonors1() {
+      this.advanceScenePhoto('h1-speeds');
       const sc = scOf('h1-speeds');
       const gA = pick(REAL_GASES);
       let gB = pick(REAL_GASES);
@@ -498,6 +501,7 @@ export function createSim() {
     get h2Unlocked() { return this.gMastered('b'); },
     get rg() { return REAL_GASES.find(g => g.key === this.rgKey) || REAL_GASES[0]; },
     genHonors2() {
+      this.advanceScenePhoto('h2-real');
       const sc = scOf('h2-real');
       const gas = pick(REAL_GASES);
       // Keep V comfortably clear of n*b, or the van der Waals denominator collapses and
@@ -678,6 +682,7 @@ export function createSim() {
       return { torr: row.torr, pw, pDry: (+this.wTotal || 0) - pw };
     },
     genHonors3() {
+      this.advanceScenePhoto('h3-water');
       const sc = scOf('h3-water');
       // Keep the dry-gas pressure well clear of zero: at 100 degrees the vapor pressure
       // IS one atmosphere, and a target of zero makes the relative band unusable.
@@ -726,6 +731,7 @@ export function createSim() {
     // ========== Capstone: the last fill of the day ==========
     get capUnlocked() { return this.gOverall() === 1; },
     genCapstone() {
+      this.advanceScenePhoto('cap-lastfill');
       const sc = scOf('cap-lastfill');
       const depth = pick([20, 30, 40]);
       const fO2 = pick([0.28, 0.32, 0.36, 0.40]);

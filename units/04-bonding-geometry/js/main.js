@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js - Unit 4 view-model (Bonding, Nomenclature & Geometry, C.7).
 import {
   ELEMENTS, COMPOUNDS, MOLECULES, GEOMETRIES, SUBSTANCE_TYPES,
@@ -57,6 +57,7 @@ export { SE };
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     ...createGame({ unitId: 'units_new/04-bonding-geometry', skills }),
     ELEMENTS, COMPOUNDS, MOLECULES, GEOMETRIES, SUBSTANCE_TYPES, IMF_TYPES,
     BOND_OPTIONS, PCT_OPTIONS, POLAR_OPTIONS, SE, fmt,
@@ -127,6 +128,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = (this.scIdx[skill] = (this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
     scenarioById(id) { return SCENARIOS.find(s => s.id === id) || null; },
@@ -198,7 +200,7 @@ export function createSim() {
       }).join('');
     },
 
-    scArt(id) { return photoScene(4, id, sceneArt(id)); },
+    scArt(id) { return photoScene(4, id, sceneArt(id), this.scenePhotoVariant(id)); },
 
     get coreBrief() {
       if (this.mode === 'bond') return (this.bd && this.bd.sc) || null;
@@ -505,6 +507,7 @@ export function createSim() {
     fxNext() { this.genForces(); },
 
     genPercent() {
+      this.advanceScenePhoto('h1-percent-ionic');
       const sc = SCENARIOS.find(s => s.id === 'h1-percent-ionic');
       const last = this.pi ? this.pi.pair.a + this.pi.pair.b : '';
       const pair = pick(BOND_PAIRS.filter(p => p.a + p.b !== last));
@@ -546,6 +549,7 @@ export function createSim() {
     piNext() { this.genPercent(); },
 
     genPolarity() {
+      this.advanceScenePhoto('h2-polarity');
       const sc = SCENARIOS.find(s => s.id === 'h2-polarity');
       const mol = MOLECULES.find(m => m.key === (this.gm ? this.gm.sc.constraints.molKey : this.molKey));
       this.pol = { sc, mol, answer: mol.polar ? 'polar' : 'nonpolar' };
@@ -584,6 +588,7 @@ export function createSim() {
     },
 
     genImf() {
+      this.advanceScenePhoto('h3-imf');
       const sc = SCENARIOS.find(s => s.id === 'h3-imf');
       this.im = { sc };
       const lastF = this.imfEx ? this.imfEx.formula : '';
@@ -623,6 +628,7 @@ export function createSim() {
 
     get capUnlocked() { return this.gOverall() === 1; },
     genCapstone() {
+      this.advanceScenePhoto('cap-underthesink');
       const sc = SCENARIOS.find(s => s.id === 'cap-underthesink');
       const c = pick(COMPOUNDS.filter(x => x.sink));
       const syms = Object.keys(parseFormula(c.formula));

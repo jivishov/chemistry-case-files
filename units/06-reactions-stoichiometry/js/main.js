@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js - Unit 6 view-model (Reactions & Stoichiometry, C.9). Alpine data factory.
 //
 // The units_new build: units/06-reactions-stoichiometry rendered in the mission-cockpit
@@ -105,6 +105,7 @@ const scOf = id => SCENARIOS.find(s => s.id === id);
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     ...createGame({ unitId: 'units_new/06-reactions-stoichiometry', skills }),
     REACTIONS, STRUCTURAL_TYPES, SUBTYPES, SE, fmt,
     honors: false,
@@ -202,6 +203,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = (this.scIdx[skill] = (this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
     // A commit takes the bench's mission screen: its scenario, its banner, its verdict.
@@ -259,7 +261,7 @@ export function createSim() {
     // ===================== cockpit readouts =====================
     // Everything the mission screen and the status rail bind to. Nothing here decides
     // anything: it reads the bench state the commit handlers above already produced.
-    scArt(id) { return photoScene(6, id, sceneArt(id)); },
+    scArt(id) { return photoScene(6, id, sceneArt(id), this.scenePhotoVariant(id)); },
 
     // The bench's own scenario, before any commit has claimed the screen.
     get coreBrief() {
@@ -692,6 +694,7 @@ export function createSim() {
     // ===================== Honors h1 (parent c): particle counts =====================
     get h1Unlocked() { return this.gMastered('c'); },
     genHonors1() {
+      this.advanceScenePhoto('h1-particles');
       const sc = scOf('h1-particles');
       // The brief files "the product of the call you just sized" and `safe` says the count
       // matches the mass logged at the scene, so this bench has to BE that call. An
@@ -747,6 +750,7 @@ export function createSim() {
     // ===================== Honors h2 (parent d): excess recovered =====================
     get h2Unlocked() { return this.gMastered('d'); },
     genHonors2() {
+      this.advanceScenePhoto('h2-recovery');
       const sc = scOf('h2-recovery');
       // "It is already sitting in the numbers you just ran" is only true if it IS those
       // numbers. Drawing a fresh reaction and fresh amounts here made the brief's central
@@ -795,6 +799,7 @@ export function createSim() {
     // ===================== Capstone: the tanker call =====================
     get capUnlocked() { return this.gOverall() === 1; },
     genCapstone() {
+      this.advanceScenePhoto('cap-tanker');
       const sc = scOf('cap-tanker');
       const rxn = rxnOf('neutralize');
       const acid = rxn.reactants[0], base = rxn.reactants[1];

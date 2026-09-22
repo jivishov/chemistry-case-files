@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js — Unit 2 view-model (Atomic Structure & Theory, C.6 + C.5B).
 import {
   ATOMIC_MODELS, BUILD_SET, ISOTOPE_ELEMENTS, SPECTRA,
@@ -190,6 +190,7 @@ export { SE };
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     ...createGame({ unitId:'units_new/02-atomic-structure', skills }),
     ATOMIC_MODELS, ISOTOPE_ELEMENTS, SPECTRA, CONFIG_EXCEPTIONS, SE, SHOP, EVIDENCE, SCENARIOS, fmt,
     honors: false,
@@ -245,6 +246,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = this.scIdx[skill] = ((this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
     nextModels() { this.modelsSc = this.nextScenario('a'); this.modelPick = null; this.focusScenario('models', this.modelsSc); },
@@ -258,11 +260,13 @@ export function createSim() {
     },
     nextMass() { this.massSc = this.nextScenario('d'); this.isoKey = this.massSc.iso; this.resetNatural(); this.massInput = ''; this.focusScenario('mass', this.massSc); },
     nextSpectra() {
+      this.advanceScenePhoto('h1-photon');
       this.spectraSc = this.nextScenario('c'); this.specKey = this.spectraSc.spec; this.specEnergyInput = ''; this.h1EnergyInput = ''; this.h1Verdict = null;
       this.$nextTick(() => { this.selLine = 0; });
       this.focusScenario('spectra', this.spectraSc);
     },
     nextConfig() {
+      this.advanceScenePhoto('h2-orbital');
       const base = this.nextScenario('e'), challenge = CONFIG_CHALLENGES[base.id];
       this.configSc = challenge ? { ...base, goal:challenge.goal } : base;
       this.cfgZ = this.configSc.z; this.configPick = null; this.vQuiz = null; this.vChecked = false; this.cfgVerdict = null; this.h2Pick = null; this.h2Verdict = null;
@@ -413,8 +417,8 @@ export function createSim() {
       return [{k:'Progress',v:'correct responses add one practice marker'},{k:'Round',v:'six markers complete one practice round'}];
     },
     scArt(id) {
-      if (id && id.startsWith('e-') && !(this.cfgVerdict && this.cfgVerdict.tone === 'success')) return photoScene(2, id, configurationChallengeArt(id));
-      return photoScene(2, id, refineSceneArt(sceneArt(id), id));
+      if (id && id.startsWith('e-') && !(this.cfgVerdict && this.cfgVerdict.tone === 'success')) return photoScene(2, id, configurationChallengeArt(id), this.scenePhotoVariant(id));
+      return photoScene(2, id, refineSceneArt(sceneArt(id), id), this.scenePhotoVariant(id));
     },
     get rackReadings() { return [{key:'jobs',label:'Tasks',raw:`${this.rack.length}/6`,pct:this.rack.length/6*100,color:'var(--accent)'},{key:'core',label:'Core',raw:`${this.teksMasteredCount}/6`,pct:this.gOverall()*100,color:'var(--accent-700)'},{key:'day',label:'Round',raw:`${this.shiftDay}`,pct:Math.min(100,this.shiftDay/3*100),color:'var(--success)'},{key:'log',label:'Log',raw:`${this.worldLog.length}`,pct:Math.min(100,this.worldLog.length/6*100),color:'var(--warn)'}]; },
     rackSvg() { return this.rack.map((r,i)=>`<g transform="translate(${8+i*36},4)"><title>${r.label}</title><rect x="7" y="8" width="18" height="48" rx="8" fill="${r.color}" opacity=".85"/><rect x="12" y="2" width="8" height="8" rx="2" fill="#dcebee"/></g>`).join(''); },

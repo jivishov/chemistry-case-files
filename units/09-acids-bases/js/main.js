@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js: Unit 9 view-model (Acids & Bases, TEKS C.12).
 //
 // The units_new build: units/09-acids-bases rendered in the mission-cockpit shell. This
@@ -110,6 +110,7 @@ export { SE };
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     ...createGame({ unitId: 'units_new/09-acids-bases', skills }),
     SE, fmt,
     honors: false,
@@ -224,6 +225,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = (this.scIdx[skill] = (this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
     // Advance the night clock, drift the patient down by exactly that much elapsed time,
@@ -317,7 +319,7 @@ export function createSim() {
     // ===================== cockpit readouts =====================
     // Everything the mission screen and the status rail bind to. Nothing here decides
     // anything: it reads the bench state the commit handlers above already produced.
-    scArt(id) { return photoScene(9, id, sceneArt(id)); },
+    scArt(id) { return photoScene(9, id, sceneArt(id), this.scenePhotoVariant(id)); },
 
     // The bench's own scenario, before any commit has claimed the screen.
     get coreBrief() {
@@ -773,6 +775,7 @@ export function createSim() {
     // ===================== Honors h1: titration curve =====================
     get h1Unlocked() { return this.gMastered('d'); },
     genTitration() {
+      this.advanceScenePhoto('h1-titrate');
       const sc = scOf('h1-titrate');
       const Ca = pick([0.05, 0.10, 0.20]), Va = pick([20, 25, 50]), Cb = pick([0.05, 0.10, 0.20]);
       const Veq = equivalenceVolume({ Ca, Va, Cb });
@@ -925,6 +928,7 @@ export function createSim() {
     // ===================== Honors h2: weak-acid Ka -> pH =====================
     get h2Unlocked() { return this.gMastered('e'); },
     genWeak() {
+      this.advanceScenePhoto('h2-weak');
       const sc = scOf('h2-weak');
       const acid = pick(WEAK_ACIDS);
       // The polyprotic pair does not draw 0.010 M: that is the one case where the
@@ -970,6 +974,7 @@ export function createSim() {
     // world-state, so there is no staleness re-draw to do here (trap 34 is dormant).
     get capUnlocked() { return this.gOverall() === 1; },
     genCapstone() {
+      this.advanceScenePhoto('cap-last');
       const f = pick(['HCl', 'HBr', 'HNO3', 'HClO4']);
       const acid = ACID_NAMES.find(a => a.f === f);
       const neut = NEUT_ACIDS.find(a => a.f === f);

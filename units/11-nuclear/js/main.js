@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js - Unit 11 view-model (Nuclear Chemistry, TEKS C.14). Scenario layer.
 //
 // The units_new build: units/11-nuclear rendered in the mission-cockpit shell. Unit 11 was
@@ -88,6 +88,7 @@ export { SE };
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     ...createGame({ unitId: 'units_new/11-nuclear', skills }),
     SE, fmt, EMISSIONS, REASONS, MEV_PER_U, HYDROGEN_ATOM_MASS_U, NEUTRON_MASS_U,
     honors: false,
@@ -166,6 +167,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = (this.scIdx[skill] = (this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
     scenarioById(id) { return SCENARIOS.find(s => s.id === id) || null; },
@@ -291,7 +293,7 @@ export function createSim() {
     // ===================== cockpit readouts =====================
     // Everything the mission screen and the status rail bind to. Nothing here decides
     // anything: it reads the bench state the commit handlers already produced.
-    scArt(id) { return photoScene(11, id, sceneArt(id)); },
+    scArt(id) { return photoScene(11, id, sceneArt(id), this.scenePhotoVariant(id)); },
 
     // The bench's own scenario, before any commit has claimed the screen.
     get coreBrief() {
@@ -689,6 +691,7 @@ export function createSim() {
     // is fixed the moment you look at A. The betas are then whatever it takes to land on
     // the right Z. The check is the engine's own conservation test.
     genSeries() {
+      this.advanceScenePhoto('h1-series');
       const sc = SCENARIOS.find(s => s.id === 'h1-series');
       const s = pick(SERIES);
       this.sr = { sc, s };
@@ -747,6 +750,7 @@ export function createSim() {
     // A = 50 a nuclide gains by joining; above about A = 100 it gains by splitting;
     // in between it sits near the top and neither route buys much.
     genBinding() {
+      this.advanceScenePhoto('h2-binding');
       const sc = SCENARIOS.find(s => s.id === 'h2-binding');
       const c = pick(BINDING_CASES);
       const sum = nucleonMassSum(c.A, c.Z);
@@ -806,6 +810,7 @@ export function createSim() {
     // Decay and excretion are two independent routes out, so the RATES add. That is why
     // the combined half-life is always shorter than either one alone.
     genEffective() {
+      this.advanceScenePhoto('h3-effective');
       const sc = SCENARIOS.find(s => s.id === 'h3-effective');
       const c = pick(DOSAGE_CASES);
       const te = effectiveHalfLife(c.physical, c.biological);
@@ -855,6 +860,7 @@ export function createSim() {
     // ===================== Capstone: the last patient of the morning =====================
     get capUnlocked() { return this.gOverall() === 1; },
     genCapstone() {
+      this.advanceScenePhoto('cap-lastcase');
       const sc = SCENARIOS.find(s => s.id === 'cap-lastcase');
       // Two conditions decide the one defensible call, and the first of them is the
       // world-state the learner spent all morning creating.

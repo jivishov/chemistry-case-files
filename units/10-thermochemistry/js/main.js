@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js — Unit 10 view-model (Thermochemistry, TEKS C.13). Scenario layer.
 //
 // The units_new build: units/10-thermochemistry rendered in the mission-cockpit shell.
@@ -69,6 +69,7 @@ export { SE };
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     // The units_new slug, not the old one: a shared localStorage key would let the two
     // builds overwrite each other's mastery (porting trap 10).
     ...createGame({ unitId: 'units_new/10-thermochemistry', skills }),
@@ -139,6 +140,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = (this.scIdx[skill] = (this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
     scenarioById(id) { return SCENARIOS.find(s => s.id === id) || null; },
@@ -217,7 +219,7 @@ export function createSim() {
     // ===================== cockpit readouts =====================
     // Everything the mission screen and the status rail bind to. Nothing here decides
     // anything: it reads the bench state the commit handlers below already produced.
-    scArt(id) { return photoScene(10, id, sceneArt(id)); },
+    scArt(id) { return photoScene(10, id, sceneArt(id), this.scenePhotoVariant(id)); },
 
     // The bench's own scenario, before any commit has claimed the screen.
     get coreBrief() {
@@ -604,6 +606,7 @@ out.push({ k: 'Activity tolerance', v: 'predictions within 1.2 °C of the model 
     // The route's steps carry the correct flip/scale as the answer key; the learner starts
     // with every step un-flipped at scale 1 and has to assemble the target themselves.
     genHess() {
+      this.advanceScenePhoto('h1-route');
       const sc = SCENARIOS.find(s => s.id === 'h1-route');
       const route = pick(HESS_ROUTES);
       this.hs = { sc, route, target: route.target };
@@ -648,6 +651,7 @@ out.push({ k: 'Activity tolerance', v: 'predictions within 1.2 °C of the model 
 
     // ===================== Honors h2: enthalpy from formation data =====================
     genFormation() {
+      this.advanceScenePhoto('h2-formation');
       const sc = SCENARIOS.find(s => s.id === 'h2-formation');
       const fc = pick(FORMATION_CASES);
       const trueDH = rN(enthalpyFromFormation(fc.products, fc.reactants), 1);
@@ -699,6 +703,7 @@ out.push({ k: 'Activity tolerance', v: 'predictions within 1.2 °C of the model 
     // ===================== Capstone: the evacuation call =====================
     get capUnlocked() { return this.gOverall() === 1; },
     genCapstone() {
+      this.advanceScenePhoto('cap-evac');
       const sc = SCENARIOS.find(s => s.id === 'cap-evac');
       // Two generated conditions decide the one defensible call: can an aircraft get in,
       // and is she warm enough to move. Nothing here is a fake trade-off.

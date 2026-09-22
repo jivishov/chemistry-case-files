@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js — Unit 5 view-model (The Mole & Chemical Quantities, TEKS C.8).
 // The units_new build of Unit 5: Unit 5's world, chemistry, illustrations, case file and
 // grading spine, rendered in the mission-cockpit shell. Its two
@@ -56,6 +56,7 @@ export { SE };
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     ...createGame({ unitId: 'units_new/05-the-mole', skills }),
     ...createMoleZoom(),          // the ungraded "Feel a mole" tab (shared with U5)
     SE, fmt, ARI_INTRO,
@@ -202,6 +203,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = (this.scIdx[skill] = (this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
     // advance a sol, drift + couple the four stocks, apply the result to this task's stock,
@@ -262,7 +264,7 @@ export function createSim() {
       this.lastVerdict = null;
     },
     // mission illustration for the active scenario (rendered atop each brief card)
-    scArt(id) { return photoScene(5, id, sceneArt(id)); },
+    scArt(id) { return photoScene(5, id, sceneArt(id), this.scenePhotoVariant(id)); },
     // stage-specific brief helpers (the scenario behind the active task)
     get cvBrief() { return this.cv && this.cv.sc; },
     get pcBrief() { return this.pc && this.pc.sc; },
@@ -361,6 +363,7 @@ export function createSim() {
       // An audit re-runs the SAME scenario the learner just botched (found by id, so the
       // rotation index is not disturbed); a normal call rotates to the next context.
       const sc = (audit && SCENARIOS.find(s => s.id === audit.scId)) || this.nextScenario(skill);
+      if (audit && sc.id === audit.scId) this.advanceScenePhoto(sc.id);
       const { formula, from, to } = sc.constraints;
       const sub = SUBSTANCES.find(s => s.f === formula) || { f: formula, name: formula };
       const M = molarMass(formula);
@@ -880,6 +883,7 @@ export function createSim() {
 
     // ===================== Honors: hydrate recovery (h1) =====================
     genHydrate() {
+      this.advanceScenePhoto('h1-desiccant');
       const sc = SCENARIOS.find(s => s.id === 'h1-desiccant');
       const h = pick(HYDRATES);
       const Manh = molarMass(h.anhydrous), Mw = molarMass('H2O');
@@ -914,6 +918,7 @@ export function createSim() {
 
     // ===================== Honors: combustion analysis (h2) =====================
     genCombustion() {
+      this.advanceScenePhoto('h2-arson');
       const sc = SCENARIOS.find(s => s.id === 'h2-arson');
       const c = pick(COMBUSTION);
       const molMap = parseFormula(c.molecular);
@@ -952,6 +957,7 @@ export function createSim() {
     // ===================== Capstone: connected food-grade audit =====================
     get capUnlocked() { return this.gOverall() === 1; },
     genCapstone() {
+      this.advanceScenePhoto('cap-pod');
       const sc = SCENARIOS.find(s => s.id === 'cap-pod');
       const foodNames = ['glucose', 'acetic acid', 'hydrogen peroxide', 'water'];
       const foodPool = FORMULA_POOL.filter(p => foodNames.includes(p.name));

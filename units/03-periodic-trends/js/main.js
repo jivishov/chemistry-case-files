@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js: Unit 3 view-model (Periodic Table & Trends, TEKS C.5 A-C).
 // Keeps the existing mechanics while presenting scientific data, activity-only
 // simulation scores, and generated feedback with explicit instructional wording.
@@ -133,6 +133,7 @@ export { SE };
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     ...createGame({ unitId: 'units_new/03-periodic-trends', skills }),
     SE, TABLE_HISTORY, MENDELEEV_GAP, MASS_ORDER_INVERSIONS, FAMILIES,
     TREND_PROPS, TREND_RUNS, IE_ANOMALIES, FAMILY_LABELS, BOARD_CELLS, fmt,
@@ -243,6 +244,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = (this.scIdx[skill] = (this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
     scenarioById(id) { return SCENARIOS.find(s => s.id === id) || null; },
@@ -341,7 +343,7 @@ export function createSim() {
       return out;
     },
 
-    scArt(id) { return photoScene(3, id, sceneArt(id)); },
+    scArt(id) { return photoScene(3, id, sceneArt(id), this.scenePhotoVariant(id)); },
     get aBrief() { return this.aSc; },
     get bBrief() { return this.bSc; },
     get cBrief() { return this.cSc; },
@@ -770,6 +772,7 @@ export function createSim() {
       this.lastVerdict = v;
     },
     nextH1() {
+      this.advanceScenePhoto('h1-shielding');
       this.h1Pick = null;
       this.h1Action = null;
       this.h1Checked = false;
@@ -779,6 +782,7 @@ export function createSim() {
     },
 
     newH2() {
+      this.advanceScenePhoto('h2-dip');
       this.h2Anom = pick(IE_ANOMALIES);
       this.h2Pick = null;
       this.h2Action = null;
@@ -843,6 +847,7 @@ export function createSim() {
 
     get capUnlocked() { return this.gOverall() === 1; },
     genCapstone() {
+      this.advanceScenePhoto('cap-substitute');
       const sc = this.scenarioById('cap-substitute');
       const req = BY_SYM.Ni, sub = pick(CAP_SUBSTITUTES);
       const subEl = BY_SYM[sub.sym];

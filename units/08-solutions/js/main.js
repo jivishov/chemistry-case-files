@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js: Unit 8 view-model (Solutions & Solubility, TEKS C.11).
 // The core interactions are the chemistry: classify by polarity, read solubility
 // curves, apply solubility rules, prepare a target molarity, and calculate a dilution.
@@ -71,6 +71,7 @@ export { SE };
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     ...createGame({ unitId: 'units_new/08-solutions', skills }),
     SE, fmt, SOLUBILITY_RULES,
     honors: false,
@@ -129,6 +130,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = (this.scIdx[skill] = (this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
 
@@ -182,7 +184,7 @@ export function createSim() {
       return `${sk ? sk.run : 0} of ${def.target || 3} correct in a row`;
     },
 
-    scArt(id) { return photoScene(8, id, sceneArt(id)); },
+    scArt(id) { return photoScene(8, id, sceneArt(id), this.scenePhotoVariant(id)); },
     get coreSkills() { return SE.filter(se => !se.honors); },
     get teksMasteredCount() { return this.coreSkills.filter(se => this.gMastered(se.id)).length; },
     get activeBrief() {
@@ -517,6 +519,7 @@ export function createSim() {
     // ===================== Honors: Ksp / common ion =====================
     get kspUnlocked() { return this.gMastered('d'); },
     genKsp() {
+      this.advanceScenePhoto('h1-ksp');
       const salt = pick(KSP_SALTS);
       const want = Math.random() < 0.5;
       let a, b, Q;
@@ -561,6 +564,7 @@ export function createSim() {
     // ===================== Honors: crystallization =====================
     get crysUnlocked() { return this.gMastered('c'); },
     genCrys() {
+      this.advanceScenePhoto('h2-crys');
       const c = pick(SOLUBILITY_CURVES.filter(x => x.key !== 'NaCl'));
       let i1, i2;
       do { i1 = 3 + ((Math.random() * 8) | 0); i2 = 1 + ((Math.random() * (i1)) | 0); } while (i1 - i2 < 3);
@@ -589,6 +593,7 @@ export function createSim() {
     // ===================== Capstone =====================
     get capUnlocked() { return this.gOverall() === 1; },
     genCapstone() {
+      this.advanceScenePhoto('cap-batch');
       const p = this.genPrecipPair(true);
       const saltFormula = ionicFormula(p.c1, p.a1);
       const reagentFormula = ionicFormula(p.c2, p.a2);

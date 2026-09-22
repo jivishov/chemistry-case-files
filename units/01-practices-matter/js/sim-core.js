@@ -1,3 +1,4 @@
+import { createSceneMedia } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
 // main.js — Unit 1 view-model (Practices, Measurement & Matter, SEP C.1-C.4).
 // The simulation mechanics are unchanged; student-facing wording emphasizes direct
 // chemistry instruction and clearly distinguishes simulation scores/thresholds from
@@ -53,6 +54,7 @@ export { SE };
 
 export function createSim() {
   return {
+    ...createSceneMedia(),
     ...createGame({ unitId: 'units_new/01-practices-matter', skills }),
     SE, SI_UNITS, PREFIXES, SUBSTANCES, AP_BOARDS, TANK, fmt,
     honors: false,
@@ -127,6 +129,7 @@ export function createSim() {
     nextScenario(skill) {
       const list = SCENARIOS.filter(s => s.skill === skill);
       const i = (this.scIdx[skill] = (this.scIdx[skill] ?? -1) + 1) % list.length;
+      this.advanceScenePhoto(list[i].id);
       return list[i];
     },
     scenarioById(id) { return SCENARIOS.find(s => s.id === id) || null; },
@@ -411,6 +414,7 @@ export function createSim() {
 
     // ================= C.3: density by displacement =================
     newSample() {
+      this.advanceScenePhoto('h1-sizecall');
       const sc = this.nextScenario('c');
       const allow = (sc.constraints || {}).substances;
       const pool = allow ? SUBSTANCES.filter(s => allow.includes(s.name)) : SUBSTANCES;
@@ -556,6 +560,7 @@ export function createSim() {
       });
     },
     newDataset() {
+      this.advanceScenePhoto('h2-kitcall');
       const sc = this.nextScenario('d');
       const want = (sc.constraints || {}).quantity;
       const pool = want ? EV_SCENARIOS.filter(e => e.key === want) : EV_SCENARIOS;
@@ -651,6 +656,7 @@ export function createSim() {
     // ================= Capstone =================
     get capUnlocked() { return this.gOverall() === 1; },
     genCapstone() {
+      this.advanceScenePhoto('cap-waterchange');
       const sc = this.scenarioById('cap-waterchange');
       const change = pick([40, 50, 60]);
       const before = this.tank.chlorine;
