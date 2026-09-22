@@ -2,7 +2,7 @@
    This file loads last and deliberately leaves the workbench tracks, Alpine state,
    illustration markup, and renderer-owned visual state alone. */
 
-html[data-design="clear"] {
+html:is([data-design="clear"], [data-design="field"]) {
   color-scheme: light;
   --bg: #edf2f1;
   --bg-2: #e4ebea;
@@ -56,27 +56,27 @@ html[data-design="atlas"] {
   --t-med: 170ms;
 }
 
-html[data-design="clear"] body,
+html:is([data-design="clear"], [data-design="field"]) body,
 html[data-design="atlas"] body {
   background: var(--bg);
   color: var(--ink);
   font-size: 13px;
 }
 
-html[data-design="clear"] .cockpit-shell,
+html:is([data-design="clear"], [data-design="field"]) .cockpit-shell,
 html[data-design="atlas"] .cockpit-shell {
   gap: 9px;
   padding: 9px;
 }
 
-html[data-design="clear"] :focus-visible,
+html:is([data-design="clear"], [data-design="field"]) :focus-visible,
 html[data-design="atlas"] :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* The shared, guarded mode control is deliberately compact enough for seven-station units. */
-html[data-design="clear"] .design-mode-toggle,
+html:is([data-design="clear"], [data-design="field"]) .design-mode-toggle,
 html[data-design="atlas"] .design-mode-toggle {
   width: 102px;
   height: 28px;
@@ -89,7 +89,7 @@ html[data-design="atlas"] .design-mode-toggle {
   background: var(--surface-3);
 }
 
-html[data-design="clear"] .design-mode-toggle button,
+html:is([data-design="clear"], [data-design="field"]) .design-mode-toggle button,
 html[data-design="atlas"] .design-mode-toggle button {
   min-width: 0;
   min-height: 22px;
@@ -106,13 +106,13 @@ html[data-design="atlas"] .design-mode-toggle button {
   transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
 
-html[data-design="clear"] .design-mode-toggle button:hover,
+html:is([data-design="clear"], [data-design="field"]) .design-mode-toggle button:hover,
 html[data-design="atlas"] .design-mode-toggle button:hover {
   color: var(--accent-700);
   background: var(--surface);
 }
 
-html[data-design="clear"] .design-mode-toggle button[aria-pressed="true"],
+html:is([data-design="clear"], [data-design="field"]) .design-mode-toggle button[aria-pressed="true"],
 html[data-design="atlas"] .design-mode-toggle button[aria-pressed="true"] {
   color: #ffffff;
   background: var(--accent-700);
@@ -120,7 +120,7 @@ html[data-design="atlas"] .design-mode-toggle button[aria-pressed="true"] {
 }
 
 /* Shared cockpit calibration: compact controls, readable instruction text, restrained paper. */
-html[data-design="clear"] .cockpit-command,
+html:is([data-design="clear"], [data-design="field"]) .cockpit-command,
 html[data-design="atlas"] .cockpit-command {
   padding: 7px 9px;
   border-color: var(--border);
@@ -128,44 +128,44 @@ html[data-design="atlas"] .cockpit-command {
   box-shadow: var(--shadow-sm);
 }
 
-html[data-design="clear"] .command-brand .command-home,
+html:is([data-design="clear"], [data-design="field"]) .command-brand .command-home,
 html[data-design="atlas"] .command-brand .command-home {
   color: var(--ink);
   font-size: clamp(1rem, 1.25vw, 1.18rem);
   line-height: 1.08;
 }
 
-html[data-design="clear"] .command-brand span:last-child,
+html:is([data-design="clear"], [data-design="field"]) .command-brand span:last-child,
 html[data-design="atlas"] .command-brand span:last-child {
   color: var(--muted);
   font-size: 11px;
 }
 
-html[data-design="clear"] .command-kicker,
-html[data-design="clear"] .eyebrow,
+html:is([data-design="clear"], [data-design="field"]) .command-kicker,
+html:is([data-design="clear"], [data-design="field"]) .eyebrow,
 html[data-design="atlas"] .command-kicker,
 html[data-design="atlas"] .eyebrow {
   font-size: 10.5px;
   line-height: 1.15;
 }
 
-html[data-design="clear"] .command-actions,
+html:is([data-design="clear"], [data-design="field"]) .command-actions,
 html[data-design="atlas"] .command-actions {
   gap: 6px;
   flex-wrap: nowrap;
 }
 
-html[data-design="clear"] .command-actions .switch,
+html:is([data-design="clear"], [data-design="field"]) .command-actions .switch,
 html[data-design="atlas"] .command-actions .switch {
   gap: 4px;
 }
 
-html[data-design="clear"] .command-actions .label-text,
+html:is([data-design="clear"], [data-design="field"]) .command-actions .label-text,
 html[data-design="atlas"] .command-actions .label-text {
   font-size: 10.5px;
 }
 
-html[data-design="clear"] .command-reset,
+html:is([data-design="clear"], [data-design="field"]) .command-reset,
 html[data-design="atlas"] .command-reset {
   min-height: 30px;
   padding-inline: 9px;
@@ -176,14 +176,14 @@ html[data-design="atlas"] .command-reset {
   box-shadow: none;
 }
 
-html[data-design="clear"] .command-metrics,
+html:is([data-design="clear"], [data-design="field"]) .command-metrics,
 html[data-design="atlas"] .command-metrics {
   gap: 4px;
 }
 
-html[data-design="clear"] .metric-chip,
-html[data-design="clear"] .teks-badge,
-html[data-design="clear"] .sol-chip,
+html:is([data-design="clear"], [data-design="field"]) .metric-chip,
+html:is([data-design="clear"], [data-design="field"]) .teks-badge,
+html:is([data-design="clear"], [data-design="field"]) .sol-chip,
 html[data-design="atlas"] .metric-chip,
 html[data-design="atlas"] .teks-badge,
 html[data-design="atlas"] .sol-chip {
@@ -196,27 +196,27 @@ html[data-design="atlas"] .sol-chip {
   font-size: 10.5px;
 }
 
-html[data-design="clear"] .teks-popover,
+html:is([data-design="clear"], [data-design="field"]) .teks-popover,
 html[data-design="atlas"] .teks-popover {
   border-color: var(--border-strong);
   background: var(--surface);
   box-shadow: var(--shadow-lg);
 }
 
-html[data-design="clear"] .workbench-grid,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid,
 html[data-design="atlas"] .workbench-grid {
   background: var(--bg);
 }
 
-html[data-design="clear"] .wb-handle,
+html:is([data-design="clear"], [data-design="field"]) .wb-handle,
 html[data-design="atlas"] .wb-handle {
   border-inline: 1px solid var(--border);
   background: var(--bg);
 }
 
-html[data-design="clear"] .mission-screen,
-html[data-design="clear"] .chem-console > .panel,
-html[data-design="clear"] .life-support-board,
+html:is([data-design="clear"], [data-design="field"]) .mission-screen,
+html:is([data-design="clear"], [data-design="field"]) .chem-console > .panel,
+html:is([data-design="clear"], [data-design="field"]) .life-support-board,
 html[data-design="atlas"] .mission-screen,
 html[data-design="atlas"] .chem-console > .panel,
 html[data-design="atlas"] .life-support-board {
@@ -226,9 +226,9 @@ html[data-design="atlas"] .life-support-board {
   box-shadow: var(--shadow-sm);
 }
 
-html[data-design="clear"] .mission-screen,
-html[data-design="clear"] .chem-console > .panel,
-html[data-design="clear"] .life-support-board {
+html:is([data-design="clear"], [data-design="field"]) .mission-screen,
+html:is([data-design="clear"], [data-design="field"]) .chem-console > .panel,
+html:is([data-design="clear"], [data-design="field"]) .life-support-board {
   border-radius: 7px;
 }
 
@@ -244,13 +244,13 @@ html[data-design="atlas"] .life-support-board {
   border-radius: 1px 4px 4px 1px;
 }
 
-html[data-design="clear"] .mission-screen,
+html:is([data-design="clear"], [data-design="field"]) .mission-screen,
 html[data-design="atlas"] .mission-screen {
   padding: 9px;
   gap: 8px;
 }
 
-html[data-design="clear"] .mission-frame,
+html:is([data-design="clear"], [data-design="field"]) .mission-frame,
 html[data-design="atlas"] .mission-frame {
   border-color: var(--border-strong);
   border-radius: 5px;
@@ -263,12 +263,12 @@ html[data-design="atlas"] .mission-frame {
   background: #26302f;
 }
 
-html[data-design="clear"] .screen-scanline,
+html:is([data-design="clear"], [data-design="field"]) .screen-scanline,
 html[data-design="atlas"] .screen-scanline {
   display: none;
 }
 
-html[data-design="clear"] .screen-status,
+html:is([data-design="clear"], [data-design="field"]) .screen-status,
 html[data-design="atlas"] .screen-status {
   padding: 6px 8px;
   border-left-color: var(--accent);
@@ -276,41 +276,41 @@ html[data-design="atlas"] .screen-status {
   background: var(--surface-3);
 }
 
-html[data-design="clear"] .screen-system,
-html[data-design="clear"] .screen-state,
+html:is([data-design="clear"], [data-design="field"]) .screen-system,
+html:is([data-design="clear"], [data-design="field"]) .screen-state,
 html[data-design="atlas"] .screen-system,
 html[data-design="atlas"] .screen-state {
   color: var(--ink);
 }
 
-html[data-design="clear"] .screen-system,
+html:is([data-design="clear"], [data-design="field"]) .screen-system,
 html[data-design="atlas"] .screen-system {
   font-size: 10.5px;
   color: var(--accent-700);
 }
 
-html[data-design="clear"] .screen-state,
+html:is([data-design="clear"], [data-design="field"]) .screen-state,
 html[data-design="atlas"] .screen-state {
   font-size: 15px;
   line-height: 1.18;
 }
 
-html[data-design="clear"] .screen-goal,
+html:is([data-design="clear"], [data-design="field"]) .screen-goal,
 html[data-design="atlas"] .screen-goal {
   color: var(--ink);
   font-size: 13.5px;
   line-height: 1.35;
 }
 
-html[data-design="clear"] .screen-outcome,
+html:is([data-design="clear"], [data-design="field"]) .screen-outcome,
 html[data-design="atlas"] .screen-outcome {
   color: var(--ink-2);
   font-size: 12.5px;
   line-height: 1.4;
 }
 
-html[data-design="clear"] .screen-reference,
-html[data-design="clear"] .mission-screen > .cockpit-instincts,
+html:is([data-design="clear"], [data-design="field"]) .screen-reference,
+html:is([data-design="clear"], [data-design="field"]) .mission-screen > .cockpit-instincts,
 html[data-design="atlas"] .screen-reference,
 html[data-design="atlas"] .mission-screen > .cockpit-instincts {
   border-color: var(--border);
@@ -318,17 +318,17 @@ html[data-design="atlas"] .mission-screen > .cockpit-instincts {
   background: var(--surface-2);
 }
 
-html[data-design="clear"] .screen-reference .command-kicker,
-html[data-design="clear"] .mission-screen > .cockpit-instincts .command-kicker,
+html:is([data-design="clear"], [data-design="field"]) .screen-reference .command-kicker,
+html:is([data-design="clear"], [data-design="field"]) .mission-screen > .cockpit-instincts .command-kicker,
 html[data-design="atlas"] .screen-reference .command-kicker,
 html[data-design="atlas"] .mission-screen > .cockpit-instincts .command-kicker {
   color: var(--accent-700);
 }
 
-html[data-design="clear"] .ref-k,
-html[data-design="clear"] .ref-v,
-html[data-design="clear"] .mission-screen > .cockpit-instincts p,
-html[data-design="clear"] .mission-screen > .cockpit-instincts strong,
+html:is([data-design="clear"], [data-design="field"]) .ref-k,
+html:is([data-design="clear"], [data-design="field"]) .ref-v,
+html:is([data-design="clear"], [data-design="field"]) .mission-screen > .cockpit-instincts p,
+html:is([data-design="clear"], [data-design="field"]) .mission-screen > .cockpit-instincts strong,
 html[data-design="atlas"] .ref-k,
 html[data-design="atlas"] .ref-v,
 html[data-design="atlas"] .mission-screen > .cockpit-instincts p,
@@ -336,7 +336,7 @@ html[data-design="atlas"] .mission-screen > .cockpit-instincts strong {
   color: var(--ink-2);
 }
 
-html[data-design="clear"] .chem-console > .panel,
+html:is([data-design="clear"], [data-design="field"]) .chem-console > .panel,
 html[data-design="atlas"] .chem-console > .panel {
   padding: clamp(10px, 1.05vw, 14px);
 }
@@ -346,12 +346,12 @@ html[data-design="atlas"] .chem-console > .panel {
   background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(168 63 34 / 5%) 32px);
 }
 
-html[data-design="clear"] .chem-console h2,
-html[data-design="clear"] .chem-console h3,
-html[data-design="clear"] .chem-console h4,
-html[data-design="clear"] .life-support-board h2,
-html[data-design="clear"] .life-support-board h3,
-html[data-design="clear"] .life-support-board h4 {
+html:is([data-design="clear"], [data-design="field"]) .chem-console h2,
+html:is([data-design="clear"], [data-design="field"]) .chem-console h3,
+html:is([data-design="clear"], [data-design="field"]) .chem-console h4,
+html:is([data-design="clear"], [data-design="field"]) .life-support-board h2,
+html:is([data-design="clear"], [data-design="field"]) .life-support-board h3,
+html:is([data-design="clear"], [data-design="field"]) .life-support-board h4 {
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.2;
@@ -369,18 +369,18 @@ html[data-design="atlas"] .life-support-board h4 {
   line-height: 1.18;
 }
 
-html[data-design="clear"] .chem-console .small,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .small,
 html[data-design="atlas"] .chem-console .small,
-html[data-design="clear"] .chem-console p,
+html:is([data-design="clear"], [data-design="field"]) .chem-console p,
 html[data-design="atlas"] .chem-console p {
   font-size: 13px;
 }
 
-html[data-design="clear"] .chem-console .btn,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .btn,
 html[data-design="atlas"] .chem-console .btn,
-html[data-design="clear"] .workbench-grid input,
-html[data-design="clear"] .workbench-grid select,
-html[data-design="clear"] .workbench-grid textarea,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid input,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid select,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid textarea,
 html[data-design="atlas"] .workbench-grid input,
 html[data-design="atlas"] .workbench-grid select,
 html[data-design="atlas"] .workbench-grid textarea {
@@ -388,9 +388,9 @@ html[data-design="atlas"] .workbench-grid textarea {
   border-radius: 4px;
 }
 
-html[data-design="clear"] .workbench-grid input,
-html[data-design="clear"] .workbench-grid select,
-html[data-design="clear"] .workbench-grid textarea,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid input,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid select,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid textarea,
 html[data-design="atlas"] .workbench-grid input,
 html[data-design="atlas"] .workbench-grid select,
 html[data-design="atlas"] .workbench-grid textarea {
@@ -399,15 +399,15 @@ html[data-design="atlas"] .workbench-grid textarea {
   color: var(--ink);
 }
 
-html[data-design="clear"] .workbench-grid .btn,
-html[data-design="clear"] .workbench-grid .opt,
-html[data-design="clear"] .workbench-grid .pair,
-html[data-design="clear"] .workbench-grid .choice,
-html[data-design="clear"] .workbench-grid .tile,
-html[data-design="clear"] .workbench-grid .est-chip,
-html[data-design="clear"] .workbench-grid .miss-opt,
-html[data-design="clear"] .workbench-grid .fam-btn,
-html[data-design="clear"] .workbench-grid .job-pill,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .btn,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .opt,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .pair,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .choice,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .tile,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .est-chip,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .miss-opt,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .fam-btn,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .job-pill,
 html[data-design="atlas"] .workbench-grid .btn,
 html[data-design="atlas"] .workbench-grid .opt,
 html[data-design="atlas"] .workbench-grid .pair,
@@ -426,11 +426,11 @@ html[data-design="atlas"] .workbench-grid .job-pill {
   transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
 
-html[data-design="clear"] .workbench-grid .btn:hover:not(:disabled),
-html[data-design="clear"] .workbench-grid .opt:hover:not(:disabled),
-html[data-design="clear"] .workbench-grid .pair:hover:not(:disabled),
-html[data-design="clear"] .workbench-grid .choice:hover:not(:disabled),
-html[data-design="clear"] .workbench-grid .tile:hover:not(:disabled),
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .btn:hover:not(:disabled),
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .opt:hover:not(:disabled),
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .pair:hover:not(:disabled),
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .choice:hover:not(:disabled),
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .tile:hover:not(:disabled),
 html[data-design="atlas"] .workbench-grid .btn:hover:not(:disabled),
 html[data-design="atlas"] .workbench-grid .opt:hover:not(:disabled),
 html[data-design="atlas"] .workbench-grid .pair:hover:not(:disabled),
@@ -441,7 +441,7 @@ html[data-design="atlas"] .workbench-grid .tile:hover:not(:disabled) {
   box-shadow: 0 1px 3px rgb(40 51 49 / 10%);
 }
 
-html[data-design="clear"] .workbench-grid .btn-accent,
+html:is([data-design="clear"], [data-design="field"]) .workbench-grid .btn-accent,
 html[data-design="atlas"] .workbench-grid .btn-accent {
   border-color: var(--accent-700);
   background: var(--accent-700);
@@ -449,14 +449,14 @@ html[data-design="atlas"] .workbench-grid .btn-accent {
   box-shadow: none;
 }
 
-html[data-design="clear"] .life-support-board,
+html:is([data-design="clear"], [data-design="field"]) .life-support-board,
 html[data-design="atlas"] .life-support-board {
   padding: clamp(9px, 1vw, 12px);
   gap: 8px;
 }
 
-html[data-design="clear"] .life-header strong,
-html[data-design="clear"] .latest-consequence strong,
+html:is([data-design="clear"], [data-design="field"]) .life-header strong,
+html:is([data-design="clear"], [data-design="field"]) .latest-consequence strong,
 html[data-design="atlas"] .life-header strong,
 html[data-design="atlas"] .latest-consequence strong {
   color: var(--ink);
@@ -464,10 +464,10 @@ html[data-design="atlas"] .latest-consequence strong {
   line-height: 1.18;
 }
 
-html[data-design="clear"] .cockpit-crew,
-html[data-design="clear"] .system-grid .ship-stock,
-html[data-design="clear"] .latest-consequence,
-html[data-design="clear"] .mission-log,
+html:is([data-design="clear"], [data-design="field"]) .cockpit-crew,
+html:is([data-design="clear"], [data-design="field"]) .system-grid .ship-stock,
+html:is([data-design="clear"], [data-design="field"]) .latest-consequence,
+html:is([data-design="clear"], [data-design="field"]) .mission-log,
 html[data-design="atlas"] .cockpit-crew,
 html[data-design="atlas"] .system-grid .ship-stock,
 html[data-design="atlas"] .latest-consequence,
@@ -477,31 +477,31 @@ html[data-design="atlas"] .mission-log {
   background: var(--surface-2);
 }
 
-html[data-design="clear"] .latest-consequence p,
-html[data-design="clear"] .mission-log p,
+html:is([data-design="clear"], [data-design="field"]) .latest-consequence p,
+html:is([data-design="clear"], [data-design="field"]) .mission-log p,
 html[data-design="atlas"] .latest-consequence p,
 html[data-design="atlas"] .mission-log p {
   color: var(--ink-2);
   font-size: 12.5px;
 }
 
-html[data-design="clear"] .mission-log .worldstate-list {
+html:is([data-design="clear"], [data-design="field"]) .mission-log .worldstate-list {
   gap: 4px;
 }
 
-html[data-design="clear"] .mission-log .worldstate-entry {
+html:is([data-design="clear"], [data-design="field"]) .mission-log .worldstate-entry {
   border-left: 2px solid var(--accent-300);
   border-radius: 2px;
   background: var(--surface);
 }
 
 /* Clear Lab: compact segmented stations and a visibly separate Case File destination. */
-html[data-design="clear"] .cockpit-command {
+html:is([data-design="clear"], [data-design="field"]) .cockpit-command {
   min-height: 58px;
   border-radius: 7px;
 }
 
-html[data-design="clear"] .station-nav {
+html:is([data-design="clear"], [data-design="field"]) .station-nav {
   gap: 0;
   padding: 2px;
   border: 1px solid var(--border);
@@ -509,7 +509,7 @@ html[data-design="clear"] .station-nav {
   background: var(--surface-3);
 }
 
-html[data-design="clear"] .station-nav .tab {
+html:is([data-design="clear"], [data-design="field"]) .station-nav .tab {
   height: 32px;
   padding: 0 8px;
   border: 0;
@@ -521,14 +521,14 @@ html[data-design="clear"] .station-nav .tab {
   box-shadow: none;
 }
 
-html[data-design="clear"] .station-nav .tab:last-child {
+html:is([data-design="clear"], [data-design="field"]) .station-nav .tab:last-child {
   margin-left: 6px;
   border: 1px solid var(--accent-300);
   background: var(--accent-100);
   color: var(--accent-700);
 }
 
-html[data-design="clear"] .station-nav .tab[aria-selected="true"] {
+html:is([data-design="clear"], [data-design="field"]) .station-nav .tab[aria-selected="true"] {
   border-color: var(--accent-700);
   background: var(--accent);
   color: #ffffff;
@@ -641,9 +641,9 @@ html[data-design="atlas"] .station-nav .tab.is-locked::after {
    without crowding it, and selections remain comfortably tappable at laptop
    density. The rules intentionally target the shared vocabulary used by all
    eleven units rather than cloning fixes into individual missions. */
-html[data-design="clear"] .chem-console .btn,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .btn,
 html[data-design="atlas"] .chem-console .btn,
-html[data-design="clear"] .command-reset,
+html:is([data-design="clear"], [data-design="field"]) .command-reset,
 html[data-design="atlas"] .command-reset {
   min-height: 40px;
   display: inline-flex;
@@ -652,13 +652,13 @@ html[data-design="atlas"] .command-reset {
   line-height: 1.2;
 }
 
-html[data-design="clear"] .chem-console .choice,
-html[data-design="clear"] .chem-console .opt,
-html[data-design="clear"] .chem-console .pair,
-html[data-design="clear"] .chem-console .miss-opt,
-html[data-design="clear"] .chem-console .est-chip,
-html[data-design="clear"] .chem-console .fam-btn,
-html[data-design="clear"] .chem-console .job-pill,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .choice,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .opt,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .pair,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .miss-opt,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .est-chip,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .fam-btn,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .job-pill,
 html[data-design="atlas"] .chem-console .choice,
 html[data-design="atlas"] .chem-console .opt,
 html[data-design="atlas"] .chem-console .pair,
@@ -671,12 +671,12 @@ html[data-design="atlas"] .chem-console .job-pill {
   overflow-wrap: anywhere;
 }
 
-html[data-design="clear"] .chem-console .field,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .field,
 html[data-design="atlas"] .chem-console .field {
   gap: 5px;
 }
 
-html[data-design="clear"] .chem-console .field > label,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .field > label,
 html[data-design="atlas"] .chem-console .field > label {
   display: flex;
   align-items: baseline;
@@ -684,9 +684,9 @@ html[data-design="atlas"] .chem-console .field > label {
   line-height: 1.25;
 }
 
-html[data-design="clear"] .chem-console input:not([type="range"]),
-html[data-design="clear"] .chem-console select,
-html[data-design="clear"] .chem-console textarea,
+html:is([data-design="clear"], [data-design="field"]) .chem-console input:not([type="range"]),
+html:is([data-design="clear"], [data-design="field"]) .chem-console select,
+html:is([data-design="clear"], [data-design="field"]) .chem-console textarea,
 html[data-design="atlas"] .chem-console input:not([type="range"]),
 html[data-design="atlas"] .chem-console select,
 html[data-design="atlas"] .chem-console textarea {
@@ -695,12 +695,12 @@ html[data-design="atlas"] .chem-console textarea {
   line-height: 1.2;
 }
 
-html[data-design="clear"] .chem-console .call-row,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .call-row,
 html[data-design="atlas"] .chem-console .call-row {
   align-items: center;
 }
 
-html[data-design="clear"] .chem-console .call-hint,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .call-hint,
 html[data-design="atlas"] .chem-console .call-hint {
   max-width: 38rem;
 }
@@ -708,7 +708,7 @@ html[data-design="atlas"] .chem-console .call-hint {
 /* Unit 2's wavelength chips are answer controls, not decorative legend dots.
    Match their target size and baseline to the rest of the catalog while keeping
    the compact spectrum color cue. */
-html[data-design="clear"] .chem-console .line-chip,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .line-chip,
 html[data-design="atlas"] .chem-console .line-chip {
   min-height: 40px;
   padding: 6px 12px;
@@ -718,23 +718,23 @@ html[data-design="atlas"] .chem-console .line-chip {
 /* Unit 2's five historical-model cards are a fixed teaching set. Giving the
    final (longest) card two tracks prevents the unbalanced, cramped 3 + 2 wrap
    without changing the grid for the rest of the catalog. */
-html[data-design="clear"] .chem-console .models,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .models,
 html[data-design="atlas"] .chem-console .models {
   gap: 8px;
 }
 
-html[data-design="clear"] .chem-console .model-card,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .model-card,
 html[data-design="atlas"] .chem-console .model-card {
   padding: 10px;
 }
 
-html[data-design="clear"] .chem-console .model-card .model-idea,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .model-card .model-idea,
 html[data-design="atlas"] .chem-console .model-card .model-idea {
   line-height: 1.4;
 }
 
 @media (min-width: 600px) {
-  html[data-design="clear"] .chem-console .models > .model-card:last-child,
+  html:is([data-design="clear"], [data-design="field"]) .chem-console .models > .model-card:last-child,
   html[data-design="atlas"] .chem-console .models > .model-card:last-child {
     grid-column: span 2;
   }
@@ -743,20 +743,20 @@ html[data-design="atlas"] .chem-console .model-card .model-idea {
 /* Formula cards carry their chemical identity first, then the explanatory
    label. It lets the eye find the species immediately without making the
    surrounding scenario copy larger or heavier. */
-html[data-design="clear"] .chem-console .prompt-card,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .prompt-card,
 html[data-design="atlas"] .chem-console .prompt-card {
   align-items: center;
   gap: 6px 12px;
   min-height: 64px;
 }
 
-html[data-design="clear"] .chem-console .prompt-card .prompt-formula,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .prompt-card .prompt-formula,
 html[data-design="atlas"] .chem-console .prompt-card .prompt-formula {
   color: var(--accent-700);
   line-height: 1;
 }
 
-html[data-design="clear"] .chem-console .prompt-card .prompt-name,
+html:is([data-design="clear"], [data-design="field"]) .chem-console .prompt-card .prompt-name,
 html[data-design="atlas"] .chem-console .prompt-card .prompt-name {
   font-weight: 700;
 }
@@ -805,7 +805,7 @@ html[data-design="atlas"] .mission-log .worldstate-entry::before {
 }
 
 /* Shared Case File grid. Its two wrapper elements disappear only from layout; source order and JS stay intact. */
-html[data-design="clear"] .casefile,
+html:is([data-design="clear"], [data-design="field"]) .casefile,
 html[data-design="atlas"] .casefile {
   --cf-good: #267a51;
   --cf-warn: #8d6415;
@@ -826,14 +826,14 @@ html[data-design="atlas"] .casefile {
   overflow: hidden;
 }
 
-html[data-design="clear"] .cf-grid,
-html[data-design="clear"] .cf-grid > div,
+html:is([data-design="clear"], [data-design="field"]) .cf-grid,
+html:is([data-design="clear"], [data-design="field"]) .cf-grid > div,
 html[data-design="atlas"] .cf-grid,
 html[data-design="atlas"] .cf-grid > div {
   display: contents;
 }
 
-html[data-design="clear"] .cf-top,
+html:is([data-design="clear"], [data-design="field"]) .cf-top,
 html[data-design="atlas"] .cf-top {
   min-width: 0;
   min-height: 0;
@@ -844,19 +844,19 @@ html[data-design="atlas"] .cf-top {
   overflow-y: auto;
 }
 
-html[data-design="clear"] .cf-kicker,
+html:is([data-design="clear"], [data-design="field"]) .cf-kicker,
 html[data-design="atlas"] .cf-kicker {
   color: var(--accent-700);
   font-size: 10.5px;
   letter-spacing: .11em;
 }
 
-html[data-design="clear"] .cf-dot,
+html:is([data-design="clear"], [data-design="field"]) .cf-dot,
 html[data-design="atlas"] .cf-dot {
   display: none;
 }
 
-html[data-design="clear"] .cf-title,
+html:is([data-design="clear"], [data-design="field"]) .cf-title,
 html[data-design="atlas"] .cf-title {
   margin: 5px 0 7px;
   color: var(--ink);
@@ -865,7 +865,7 @@ html[data-design="atlas"] .cf-title {
   letter-spacing: 0;
 }
 
-html[data-design="clear"] .cf-title {
+html:is([data-design="clear"], [data-design="field"]) .cf-title {
   font-family: var(--font-body);
 }
 
@@ -874,30 +874,30 @@ html[data-design="atlas"] .cf-title {
   font-size: 18px;
 }
 
-html[data-design="clear"] .cf-hook,
+html:is([data-design="clear"], [data-design="field"]) .cf-hook,
 html[data-design="atlas"] .cf-hook {
   color: var(--ink-2);
   font-size: 12.5px;
   line-height: 1.45;
 }
 
-html[data-design="clear"] .cf-hook {
+html:is([data-design="clear"], [data-design="field"]) .cf-hook {
   font-size: 12px;
   line-height: 1.35;
 }
 
-html[data-design="clear"] .cf-stats,
+html:is([data-design="clear"], [data-design="field"]) .cf-stats,
 html[data-design="atlas"] .cf-stats {
   margin-top: 12px;
   gap: 6px;
 }
 
-html[data-design="clear"] .cf-stats {
+html:is([data-design="clear"], [data-design="field"]) .cf-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-html[data-design="clear"] .cf-stat,
+html:is([data-design="clear"], [data-design="field"]) .cf-stat,
 html[data-design="atlas"] .cf-stat {
   min-width: 0;
   padding: 7px;
@@ -906,20 +906,20 @@ html[data-design="atlas"] .cf-stat {
   background: var(--surface-2);
 }
 
-html[data-design="clear"] .cf-stat .v,
+html:is([data-design="clear"], [data-design="field"]) .cf-stat .v,
 html[data-design="atlas"] .cf-stat .v {
   color: var(--ink);
   font-size: 14px;
 }
 
-html[data-design="clear"] .cf-stat .k,
+html:is([data-design="clear"], [data-design="field"]) .cf-stat .k,
 html[data-design="atlas"] .cf-stat .k {
   color: var(--muted);
   font-size: 9.5px;
   letter-spacing: .04em;
 }
 
-html[data-design="clear"] .cf-stage,
+html:is([data-design="clear"], [data-design="field"]) .cf-stage,
 html[data-design="atlas"] .cf-stage {
   min-width: 0;
   min-height: 0;
@@ -931,7 +931,7 @@ html[data-design="atlas"] .cf-stage {
   overflow-y: auto;
 }
 
-html[data-design="clear"] .cf-cap,
+html:is([data-design="clear"], [data-design="field"]) .cf-cap,
 html[data-design="atlas"] .cf-cap {
   min-height: 32px;
   padding: 7px 9px;
@@ -941,7 +941,7 @@ html[data-design="atlas"] .cf-cap {
   font-size: 10.5px;
 }
 
-html[data-design="clear"] .cf-steps,
+html:is([data-design="clear"], [data-design="field"]) .cf-steps,
 html[data-design="atlas"] .cf-steps {
   min-width: 0;
   min-height: 0;
@@ -949,7 +949,7 @@ html[data-design="atlas"] .cf-steps {
   overflow-y: auto;
 }
 
-html[data-design="clear"] .cf-step,
+html:is([data-design="clear"], [data-design="field"]) .cf-step,
 html[data-design="atlas"] .cf-step {
   min-height: 36px;
   padding: 7px 8px;
@@ -963,14 +963,14 @@ html[data-design="atlas"] .cf-step {
   transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
 
-html[data-design="clear"] .cf-step:hover,
+html:is([data-design="clear"], [data-design="field"]) .cf-step:hover,
 html[data-design="atlas"] .cf-step:hover {
   border-color: var(--accent);
   background: var(--accent-050);
   box-shadow: none;
 }
 
-html[data-design="clear"] .cf-step.on,
+html:is([data-design="clear"], [data-design="field"]) .cf-step.on,
 html[data-design="atlas"] .cf-step.on {
   border-color: var(--accent);
   background: var(--accent-100);
@@ -978,7 +978,7 @@ html[data-design="atlas"] .cf-step.on {
   box-shadow: inset 3px 0 0 var(--accent);
 }
 
-html[data-design="clear"] .cf-step-n,
+html:is([data-design="clear"], [data-design="field"]) .cf-step-n,
 html[data-design="atlas"] .cf-step-n {
   width: 20px;
   height: 20px;
@@ -988,13 +988,13 @@ html[data-design="atlas"] .cf-step-n {
   font-size: 9.5px;
 }
 
-html[data-design="clear"] .cf-step.on .cf-step-n,
+html:is([data-design="clear"], [data-design="field"]) .cf-step.on .cf-step-n,
 html[data-design="atlas"] .cf-step.on .cf-step-n {
   background: var(--accent);
   color: #ffffff;
 }
 
-html[data-design="clear"] .cf-narr,
+html:is([data-design="clear"], [data-design="field"]) .cf-narr,
 html[data-design="atlas"] .cf-narr {
   min-width: 0;
   min-height: 88px;
@@ -1008,14 +1008,14 @@ html[data-design="atlas"] .cf-narr {
   overflow-y: auto;
 }
 
-html[data-design="clear"] .cf-narr p,
+html:is([data-design="clear"], [data-design="field"]) .cf-narr p,
 html[data-design="atlas"] .cf-narr p {
   color: var(--ink-2);
   font-size: 12.5px;
   line-height: 1.45;
 }
 
-html[data-design="clear"] .cf-chem,
+html:is([data-design="clear"], [data-design="field"]) .cf-chem,
 html[data-design="atlas"] .cf-chem {
   margin-top: 8px !important;
   padding: 7px 9px;
@@ -1024,13 +1024,13 @@ html[data-design="atlas"] .cf-chem {
   background: var(--accent-050);
 }
 
-html[data-design="clear"] .cf-chem strong,
+html:is([data-design="clear"], [data-design="field"]) .cf-chem strong,
 html[data-design="atlas"] .cf-chem strong {
   color: var(--accent-700);
   font-size: 9.5px;
 }
 
-html[data-design="clear"] .cf-controls,
+html:is([data-design="clear"], [data-design="field"]) .cf-controls,
 html[data-design="atlas"] .cf-controls {
   min-width: 0;
   min-height: 36px;
@@ -1040,8 +1040,8 @@ html[data-design="atlas"] .cf-controls {
   gap: 8px;
 }
 
-html[data-design="clear"] .cf-btn,
-html[data-design="clear"] .cf-cta,
+html:is([data-design="clear"], [data-design="field"]) .cf-btn,
+html:is([data-design="clear"], [data-design="field"]) .cf-cta,
 html[data-design="atlas"] .cf-btn,
 html[data-design="atlas"] .cf-cta {
   min-height: 34px;
@@ -1057,8 +1057,8 @@ html[data-design="atlas"] .cf-cta {
   transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
 
-html[data-design="clear"] .cf-btn:hover:not(:disabled),
-html[data-design="clear"] .cf-cta:hover,
+html:is([data-design="clear"], [data-design="field"]) .cf-btn:hover:not(:disabled),
+html:is([data-design="clear"], [data-design="field"]) .cf-cta:hover,
 html[data-design="atlas"] .cf-btn:hover:not(:disabled),
 html[data-design="atlas"] .cf-cta:hover {
   border-color: var(--accent);
@@ -1067,8 +1067,8 @@ html[data-design="atlas"] .cf-cta:hover {
   box-shadow: none;
 }
 
-html[data-design="clear"] .cf-btn-accent,
-html[data-design="clear"] .cf-cta,
+html:is([data-design="clear"], [data-design="field"]) .cf-btn-accent,
+html:is([data-design="clear"], [data-design="field"]) .cf-cta,
 html[data-design="atlas"] .cf-btn-accent,
 html[data-design="atlas"] .cf-cta {
   border-color: var(--accent-700);
@@ -1076,13 +1076,13 @@ html[data-design="atlas"] .cf-cta {
   color: #ffffff;
 }
 
-html[data-design="clear"] .cf-progress,
+html:is([data-design="clear"], [data-design="field"]) .cf-progress,
 html[data-design="atlas"] .cf-progress {
   color: var(--muted);
   font-size: 10.5px;
 }
 
-html[data-design="clear"] .cf-quiz,
+html:is([data-design="clear"], [data-design="field"]) .cf-quiz,
 html[data-design="atlas"] .cf-quiz {
   min-width: 0;
   min-height: 0;
@@ -1093,7 +1093,7 @@ html[data-design="atlas"] .cf-quiz {
   overflow-y: auto;
 }
 
-html[data-design="clear"] .cf-quiz-label,
+html:is([data-design="clear"], [data-design="field"]) .cf-quiz-label,
 html[data-design="atlas"] .cf-quiz-label {
   color: var(--accent-700);
   font-size: 10.5px;
@@ -1109,7 +1109,7 @@ html[data-design="atlas"] .cf-quiz-label::after {
   font-size: 10.5px;
 }
 
-html[data-design="clear"] .cf-quiz-q,
+html:is([data-design="clear"], [data-design="field"]) .cf-quiz-q,
 html[data-design="atlas"] .cf-quiz-q {
   margin: 6px 0 9px;
   color: var(--ink);
@@ -1117,13 +1117,13 @@ html[data-design="atlas"] .cf-quiz-q {
   line-height: 1.35;
 }
 
-html[data-design="clear"] .cf-choices,
+html:is([data-design="clear"], [data-design="field"]) .cf-choices,
 html[data-design="atlas"] .cf-choices {
   grid-template-columns: minmax(0, 1fr);
   gap: 7px;
 }
 
-html[data-design="clear"] .cf-choice,
+html:is([data-design="clear"], [data-design="field"]) .cf-choice,
 html[data-design="atlas"] .cf-choice {
   min-height: 42px;
   padding: 8px 9px;
@@ -1139,9 +1139,9 @@ html[data-design="atlas"] .cf-choice {
   transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
 
-html[data-design="clear"] .cf-choice:hover,
+html:is([data-design="clear"], [data-design="field"]) .cf-choice:hover,
 html[data-design="atlas"] .cf-choice:hover,
-html[data-design="clear"] .cf-choice[data-state="on"],
+html:is([data-design="clear"], [data-design="field"]) .cf-choice[data-state="on"],
 html[data-design="atlas"] .cf-choice[data-state="on"] {
   border-color: var(--accent);
   background: var(--accent-050);
@@ -1149,18 +1149,18 @@ html[data-design="atlas"] .cf-choice[data-state="on"] {
   box-shadow: none;
 }
 
-html[data-design="clear"] .cf-quiz-actions,
+html:is([data-design="clear"], [data-design="field"]) .cf-quiz-actions,
 html[data-design="atlas"] .cf-quiz-actions {
   gap: 7px;
   margin-top: 9px;
 }
 
-html[data-design="clear"] .cf-quiz-actions > .btn,
+html:is([data-design="clear"], [data-design="field"]) .cf-quiz-actions > .btn,
 html[data-design="atlas"] .cf-quiz-actions > .btn {
   min-width: 112px;
 }
 
-html[data-design="clear"] .cf-explain,
+html:is([data-design="clear"], [data-design="field"]) .cf-explain,
 html[data-design="atlas"] .cf-explain {
   margin-top: 9px;
   padding: 8px 9px;
@@ -1172,7 +1172,7 @@ html[data-design="atlas"] .cf-explain {
   line-height: 1.4;
 }
 
-html[data-design="clear"] .cf-punch,
+html:is([data-design="clear"], [data-design="field"]) .cf-punch,
 html[data-design="atlas"] .cf-punch {
   min-width: 0;
   min-height: 0;
@@ -1188,20 +1188,20 @@ html[data-design="atlas"] .cf-punch {
   overflow-y: auto;
 }
 
-html[data-design="clear"] .cf-punch-lead,
+html:is([data-design="clear"], [data-design="field"]) .cf-punch-lead,
 html[data-design="atlas"] .cf-punch-lead {
   color: var(--ink);
   font-size: 12px;
   line-height: 1.4;
 }
 
-html[data-design="clear"] .cf-careers,
+html:is([data-design="clear"], [data-design="field"]) .cf-careers,
 html[data-design="atlas"] .cf-careers {
   gap: 5px;
   margin-top: 7px;
 }
 
-html[data-design="clear"] .cf-career,
+html:is([data-design="clear"], [data-design="field"]) .cf-career,
 html[data-design="atlas"] .cf-career {
   padding: 2px 6px;
   border-color: var(--border);
@@ -1212,16 +1212,16 @@ html[data-design="atlas"] .cf-career {
 }
 
 /* Clear Case File: summary and chapters left, story center, inference and conclusion right. */
-html[data-design="clear"] .casefile {
+html:is([data-design="clear"], [data-design="field"]) .casefile {
   grid-template-rows: auto auto minmax(0, 1fr) auto;
 }
 
-html[data-design="clear"] .cf-top {
+html:is([data-design="clear"], [data-design="field"]) .cf-top {
   grid-column: 1;
   grid-row: 1;
 }
 
-html[data-design="clear"] .cf-steps {
+html:is([data-design="clear"], [data-design="field"]) .cf-steps {
   grid-column: 1;
   grid-row: 2 / 5;
   padding: 8px;
@@ -1232,27 +1232,27 @@ html[data-design="clear"] .cf-steps {
   background: var(--surface);
 }
 
-html[data-design="clear"] .cf-stage {
+html:is([data-design="clear"], [data-design="field"]) .cf-stage {
   grid-column: 2;
   grid-row: 1 / 3;
 }
 
-html[data-design="clear"] .cf-narr {
+html:is([data-design="clear"], [data-design="field"]) .cf-narr {
   grid-column: 2;
   grid-row: 3;
 }
 
-html[data-design="clear"] .cf-controls {
+html:is([data-design="clear"], [data-design="field"]) .cf-controls {
   grid-column: 2;
   grid-row: 4;
 }
 
-html[data-design="clear"] .cf-quiz {
+html:is([data-design="clear"], [data-design="field"]) .cf-quiz {
   grid-column: 3;
   grid-row: 1 / 3;
 }
 
-html[data-design="clear"] .cf-punch {
+html:is([data-design="clear"], [data-design="field"]) .cf-punch {
   grid-column: 3;
   grid-row: 3 / 5;
 }
@@ -1352,18 +1352,18 @@ html[data-design="atlas"] .cf-punch {
 /* Preserve the authored <=980 layout while giving eight-station Unit 8 enough route width
    in the narrow desktop band immediately above it. */
 @media (min-width: 981px) and (max-width: 1120px) {
-  html[data-design="clear"] .cockpit-command,
+  html:is([data-design="clear"], [data-design="field"]) .cockpit-command,
   html[data-design="atlas"] .cockpit-command {
     grid-template-columns: minmax(150px, 160px) minmax(360px, 1fr) minmax(210px, auto) minmax(150px, 170px);
     gap: 6px;
   }
 
-  html[data-design="clear"] .station-nav,
+  html:is([data-design="clear"], [data-design="field"]) .station-nav,
   html[data-design="atlas"] .station-nav {
     grid-auto-columns: minmax(0, 1fr);
   }
 
-  html[data-design="clear"] .station-nav .tab {
+  html:is([data-design="clear"], [data-design="field"]) .station-nav .tab {
     padding-inline: 2px;
     font-size: 10px;
   }
@@ -1373,12 +1373,12 @@ html[data-design="atlas"] .cf-punch {
     font-size: 10px;
   }
 
-  html[data-design="clear"] .command-actions,
+  html:is([data-design="clear"], [data-design="field"]) .command-actions,
   html[data-design="atlas"] .command-actions {
     gap: 4px;
   }
 
-  html[data-design="clear"] .metric-chip,
+  html:is([data-design="clear"], [data-design="field"]) .metric-chip,
   html[data-design="atlas"] .metric-chip {
     min-width: 48px;
     padding-inline: 5px;
@@ -1387,7 +1387,7 @@ html[data-design="atlas"] .cf-punch {
 
 /* Below the cockpit's three-column breakpoint, retain the component's true source order. */
 @media (max-width: 980px) {
-  html[data-design="clear"] .casefile,
+  html:is([data-design="clear"], [data-design="field"]) .casefile,
   html[data-design="atlas"] .casefile {
     height: 100%;
     display: block;
@@ -1395,13 +1395,13 @@ html[data-design="atlas"] .cf-punch {
     overflow-y: auto;
   }
 
-  html[data-design="clear"] .cf-top,
-  html[data-design="clear"] .cf-stage,
-  html[data-design="clear"] .cf-steps,
-  html[data-design="clear"] .cf-narr,
-  html[data-design="clear"] .cf-controls,
-  html[data-design="clear"] .cf-quiz,
-  html[data-design="clear"] .cf-punch,
+  html:is([data-design="clear"], [data-design="field"]) .cf-top,
+  html:is([data-design="clear"], [data-design="field"]) .cf-stage,
+  html:is([data-design="clear"], [data-design="field"]) .cf-steps,
+  html:is([data-design="clear"], [data-design="field"]) .cf-narr,
+  html:is([data-design="clear"], [data-design="field"]) .cf-controls,
+  html:is([data-design="clear"], [data-design="field"]) .cf-quiz,
+  html:is([data-design="clear"], [data-design="field"]) .cf-punch,
   html[data-design="atlas"] .cf-top,
   html[data-design="atlas"] .cf-stage,
   html[data-design="atlas"] .cf-steps,
@@ -1415,41 +1415,41 @@ html[data-design="atlas"] .cf-punch {
     overflow: visible;
   }
 
-  html[data-design="clear"] .cf-steps,
+  html:is([data-design="clear"], [data-design="field"]) .cf-steps,
   html[data-design="atlas"] .cf-steps {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 6px;
   }
 
-  html[data-design="clear"] .cf-narr,
+  html:is([data-design="clear"], [data-design="field"]) .cf-narr,
   html[data-design="atlas"] .cf-narr {
     min-height: 0;
   }
 
-  html[data-design="clear"] .cf-controls,
+  html:is([data-design="clear"], [data-design="field"]) .cf-controls,
   html[data-design="atlas"] .cf-controls {
     display: flex;
     padding: 4px 0;
   }
 
-  html[data-design="clear"] .cf-punch,
+  html:is([data-design="clear"], [data-design="field"]) .cf-punch,
   html[data-design="atlas"] .cf-punch {
     overflow: hidden;
   }
 }
 
 @media (max-width: 640px) {
-  html[data-design="clear"] .cf-steps,
+  html:is([data-design="clear"], [data-design="field"]) .cf-steps,
   html[data-design="atlas"] .cf-steps {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html[data-design="clear"] .design-mode-toggle button,
-  html[data-design="clear"] .workbench-grid button,
-  html[data-design="clear"] .casefile button,
+  html:is([data-design="clear"], [data-design="field"]) .design-mode-toggle button,
+  html:is([data-design="clear"], [data-design="field"]) .workbench-grid button,
+  html:is([data-design="clear"], [data-design="field"]) .casefile button,
   html[data-design="atlas"] .design-mode-toggle button,
   html[data-design="atlas"] .workbench-grid button,
   html[data-design="atlas"] .casefile button {
@@ -1461,7 +1461,7 @@ html[data-design="atlas"] .cf-punch {
    The landing page uses the same two visual systems as the unit workbenches,
    while keeping its course-map content readable at a Grade 10 reading pace. */
 
-html[data-design="clear"] .course-hub,
+html:is([data-design="clear"], [data-design="field"]) .course-hub,
 html[data-design="atlas"] .course-hub {
   min-height: 100dvh;
   color: var(--ink);
@@ -1470,19 +1470,19 @@ html[data-design="atlas"] .course-hub {
   line-height: 1.5;
 }
 
-html[data-design="clear"] .course-hub [x-cloak],
+html:is([data-design="clear"], [data-design="field"]) .course-hub [x-cloak],
 html[data-design="atlas"] .course-hub [x-cloak] {
   display: none !important;
 }
 
-html[data-design="clear"] .course-hub .wrap,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .wrap,
 html[data-design="atlas"] .course-hub .wrap {
   width: min(100% - 40px, 1360px);
   max-width: 1360px;
   margin-inline: auto;
 }
 
-html[data-design="clear"] .course-hub .hub-header,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-header,
 html[data-design="atlas"] .course-hub .hub-header {
   position: sticky;
   top: 0;
@@ -1493,7 +1493,7 @@ html[data-design="atlas"] .course-hub .hub-header {
   box-shadow: var(--shadow-sm);
 }
 
-html[data-design="clear"] .course-hub .hub-header-inner,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-header-inner,
 html[data-design="atlas"] .course-hub .hub-header-inner {
   min-height: 72px;
   display: flex;
@@ -1503,7 +1503,7 @@ html[data-design="atlas"] .course-hub .hub-header-inner {
   padding-block: 10px;
 }
 
-html[data-design="clear"] .course-hub .hub-brand,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-brand,
 html[data-design="atlas"] .course-hub .hub-brand {
   min-width: 0;
   display: flex;
@@ -1512,7 +1512,7 @@ html[data-design="atlas"] .course-hub .hub-brand {
   color: var(--ink);
 }
 
-html[data-design="clear"] .course-hub .hub-mark,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-mark,
 html[data-design="atlas"] .course-hub .hub-mark {
   width: 38px;
   height: 38px;
@@ -1528,7 +1528,7 @@ html[data-design="atlas"] .course-hub .hub-mark {
   letter-spacing: 0.04em;
 }
 
-html[data-design="clear"] .course-hub .hub-mark {
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-mark {
   border-radius: var(--r-md);
 }
 
@@ -1537,7 +1537,7 @@ html[data-design="atlas"] .course-hub .hub-mark {
   background: transparent;
 }
 
-html[data-design="clear"] .course-hub .hub-brand-name,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-brand-name,
 html[data-design="atlas"] .course-hub .hub-brand-name {
   display: block;
   font-size: 1.05rem;
@@ -1545,7 +1545,7 @@ html[data-design="atlas"] .course-hub .hub-brand-name {
   line-height: 1.1;
 }
 
-html[data-design="clear"] .course-hub .hub-brand-sub,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-brand-sub,
 html[data-design="atlas"] .course-hub .hub-brand-sub {
   display: block;
   margin-top: 3px;
@@ -1555,26 +1555,26 @@ html[data-design="atlas"] .course-hub .hub-brand-sub {
   letter-spacing: 0.02em;
 }
 
-html[data-design="clear"] .course-hub .hub-actions,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-actions,
 html[data-design="atlas"] .course-hub .hub-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-html[data-design="clear"] .course-hub .hub-actions .design-mode-toggle,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-actions .design-mode-toggle,
 html[data-design="atlas"] .course-hub .hub-actions .design-mode-toggle {
   width: 120px;
   height: 36px;
   padding: 2px;
 }
 
-html[data-design="clear"] .course-hub .hub-actions .design-mode-toggle button,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-actions .design-mode-toggle button,
 html[data-design="atlas"] .course-hub .hub-actions .design-mode-toggle button {
   min-height: 30px;
 }
 
-html[data-design="clear"] .course-hub .hub-course-code,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-course-code,
 html[data-design="atlas"] .course-hub .hub-course-code {
   min-height: 30px;
   display: inline-flex;
@@ -1588,12 +1588,12 @@ html[data-design="atlas"] .course-hub .hub-course-code {
   letter-spacing: 0.04em;
 }
 
-html[data-design="clear"] .course-hub .hub-main,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-main,
 html[data-design="atlas"] .course-hub .hub-main {
   padding-block: clamp(0.525rem, 1.2vw, 1.05rem) clamp(64px, 8vw, 104px);
 }
 
-html[data-design="clear"] .course-hub .hub-intro,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-intro,
 html[data-design="atlas"] .course-hub .hub-intro {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
@@ -1604,7 +1604,7 @@ html[data-design="atlas"] .course-hub .hub-intro {
   background: var(--surface);
 }
 
-html[data-design="clear"] .course-hub .hub-intro {
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-intro {
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-md);
 }
@@ -1615,13 +1615,13 @@ html[data-design="atlas"] .course-hub .hub-intro {
   box-shadow: none;
 }
 
-html[data-design="clear"] .course-hub .hub-intro-copy,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-intro-copy,
 html[data-design="atlas"] .course-hub .hub-intro-copy {
   align-self: center;
   max-width: 760px;
 }
 
-html[data-design="clear"] .course-hub .hub-kicker,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-kicker,
 html[data-design="atlas"] .course-hub .hub-kicker {
   margin: 0 0 12px;
   color: var(--accent-700);
@@ -1633,16 +1633,16 @@ html[data-design="atlas"] .course-hub .hub-kicker {
   font-variant-caps: all-small-caps;
 }
 
-html[data-design="clear"] .course-hub h1,
+html:is([data-design="clear"], [data-design="field"]) .course-hub h1,
 html[data-design="atlas"] .course-hub h1,
-html[data-design="clear"] .course-hub h2,
+html:is([data-design="clear"], [data-design="field"]) .course-hub h2,
 html[data-design="atlas"] .course-hub h2 {
   margin: 0;
   color: var(--ink);
   text-wrap: balance;
 }
 
-html[data-design="clear"] .course-hub h1,
+html:is([data-design="clear"], [data-design="field"]) .course-hub h1,
 html[data-design="atlas"] .course-hub h1 {
   max-width: 15ch;
   font-size: clamp(2.35rem, 4.8vw, 4.2rem);
@@ -1651,24 +1651,24 @@ html[data-design="atlas"] .course-hub h1 {
 }
 
 /* Keep the landing-page title subordinate to the investigation content. */
-html[data-design="clear"] .course-hub #hub-title,
+html:is([data-design="clear"], [data-design="field"]) .course-hub #hub-title,
 html[data-design="atlas"] .course-hub #hub-title {
   max-width: none;
   font-size: clamp(1.41rem, 2.88vw, 2.52rem);
   text-wrap: wrap;
 }
 
-html[data-design="clear"] .course-hub h2,
+html:is([data-design="clear"], [data-design="field"]) .course-hub h2,
 html[data-design="atlas"] .course-hub h2 {
   font-size: clamp(1.65rem, 2.5vw, 2.35rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
-html[data-design="clear"] .course-hub h1,
-html[data-design="clear"] .course-hub h2,
-html[data-design="clear"] .course-hub .hub-brand-name,
-html[data-design="clear"] .course-hub .hub-unit-title {
+html:is([data-design="clear"], [data-design="field"]) .course-hub h1,
+html:is([data-design="clear"], [data-design="field"]) .course-hub h2,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-brand-name,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-title {
   font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif;
 }
 
@@ -1679,7 +1679,7 @@ html[data-design="atlas"] .course-hub .hub-unit-title {
   font-family: "Bitter", Georgia, serif;
 }
 
-html[data-design="clear"] .course-hub .hub-lead,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-lead,
 html[data-design="atlas"] .course-hub .hub-lead {
   max-width: 64ch;
   margin: 24px 0 0;
@@ -1688,7 +1688,7 @@ html[data-design="atlas"] .course-hub .hub-lead {
   line-height: 1.6;
 }
 
-html[data-design="clear"] .course-hub .hub-support,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-support,
 html[data-design="atlas"] .course-hub .hub-support {
   max-width: 66ch;
   margin: 18px 0 0;
@@ -1697,12 +1697,12 @@ html[data-design="atlas"] .course-hub .hub-support {
   line-height: 1.6;
 }
 
-html[data-design="clear"] .course-hub .hub-support strong,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-support strong,
 html[data-design="atlas"] .course-hub .hub-support strong {
   color: var(--ink);
 }
 
-html[data-design="clear"] .course-hub .hub-legend,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-legend,
 html[data-design="atlas"] .course-hub .hub-legend {
   display: flex;
   flex-wrap: wrap;
@@ -1714,14 +1714,14 @@ html[data-design="atlas"] .course-hub .hub-legend {
   font-size: 0.84rem;
 }
 
-html[data-design="clear"] .course-hub .hub-legend > span,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-legend > span,
 html[data-design="atlas"] .course-hub .hub-legend > span {
   display: inline-flex;
   align-items: baseline;
   gap: 7px;
 }
 
-html[data-design="clear"] .course-hub .hub-legend-key,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-legend-key,
 html[data-design="atlas"] .course-hub .hub-legend-key {
   color: var(--accent-700);
   font-family: "JetBrains Mono", monospace;
@@ -1731,7 +1731,7 @@ html[data-design="atlas"] .course-hub .hub-legend-key {
   font-variant-caps: all-small-caps;
 }
 
-html[data-design="clear"] .course-hub .hub-scroll-cue,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-scroll-cue,
 html[data-design="atlas"] .course-hub .hub-scroll-cue {
   min-height: 44px;
   display: inline-flex;
@@ -1750,21 +1750,21 @@ html[data-design="atlas"] .course-hub .hub-scroll-cue {
   font-variant-caps: all-small-caps;
 }
 
-html[data-design="clear"] .course-hub .hub-scroll-cue:hover,
-html[data-design="clear"] .course-hub .hub-scroll-cue:focus-visible,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-scroll-cue:hover,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-scroll-cue:focus-visible,
 html[data-design="atlas"] .course-hub .hub-scroll-cue:hover,
 html[data-design="atlas"] .course-hub .hub-scroll-cue:focus-visible {
   color: var(--accent);
 }
 
-html[data-design="clear"] .course-hub .hub-scroll-cue:focus-visible,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-scroll-cue:focus-visible,
 html[data-design="atlas"] .course-hub .hub-scroll-cue:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: var(--r-sm);
 }
 
-html[data-design="clear"] .course-hub .hub-scroll-cue-arrow,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-scroll-cue-arrow,
 html[data-design="atlas"] .course-hub .hub-scroll-cue-arrow {
   width: 1.75rem;
   height: 1.75rem;
@@ -1788,7 +1788,7 @@ html[data-design="atlas"] .course-hub .hub-scroll-cue-arrow {
   }
 }
 
-html[data-design="clear"] .course-hub .hub-learning-path,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path,
 html[data-design="atlas"] .course-hub .hub-learning-path {
   align-self: stretch;
   padding: clamp(24px, 3vw, 36px);
@@ -1796,7 +1796,7 @@ html[data-design="atlas"] .course-hub .hub-learning-path {
   background: var(--surface-2);
 }
 
-html[data-design="clear"] .course-hub .hub-learning-path {
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path {
   border-radius: var(--r-md);
 }
 
@@ -1806,12 +1806,12 @@ html[data-design="atlas"] .course-hub .hub-learning-path {
   background: var(--surface-3);
 }
 
-html[data-design="clear"] .course-hub .hub-learning-path h2,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path h2,
 html[data-design="atlas"] .course-hub .hub-learning-path h2 {
   font-size: 1.45rem;
 }
 
-html[data-design="clear"] .course-hub .hub-learning-path ol,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path ol,
 html[data-design="atlas"] .course-hub .hub-learning-path ol {
   list-style: none;
   display: grid;
@@ -1820,7 +1820,7 @@ html[data-design="atlas"] .course-hub .hub-learning-path ol {
   padding: 0;
 }
 
-html[data-design="clear"] .course-hub .hub-learning-path li,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path li,
 html[data-design="atlas"] .course-hub .hub-learning-path li {
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr);
@@ -1829,13 +1829,13 @@ html[data-design="atlas"] .course-hub .hub-learning-path li {
   border-top: 1px solid var(--border);
 }
 
-html[data-design="clear"] .course-hub .hub-learning-path li:first-child,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path li:first-child,
 html[data-design="atlas"] .course-hub .hub-learning-path li:first-child {
   border-top: 0;
   padding-top: 0;
 }
 
-html[data-design="clear"] .course-hub .hub-learning-path li > span,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path li > span,
 html[data-design="atlas"] .course-hub .hub-learning-path li > span {
   width: 30px;
   height: 30px;
@@ -1849,7 +1849,7 @@ html[data-design="atlas"] .course-hub .hub-learning-path li > span {
   font-weight: 700;
 }
 
-html[data-design="clear"] .course-hub .hub-learning-path p,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path p,
 html[data-design="atlas"] .course-hub .hub-learning-path p {
   margin: 0;
   color: var(--muted);
@@ -1857,25 +1857,25 @@ html[data-design="atlas"] .course-hub .hub-learning-path p {
   line-height: 1.45;
 }
 
-html[data-design="clear"] .course-hub .hub-learning-path strong,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path strong,
 html[data-design="atlas"] .course-hub .hub-learning-path strong {
   display: block;
   margin-bottom: 2px;
   color: var(--ink);
 }
 
-html[data-design="clear"] .course-hub .hub-course-map,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-course-map,
 html[data-design="atlas"] .course-hub .hub-course-map {
   margin-top: clamp(1.2rem, 2.4vw, 1.95rem);
   scroll-margin-top: 112px;
 }
 
-html[data-design="clear"] .course-hub .hub-practices,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices,
 html[data-design="atlas"] .course-hub .hub-practices {
   margin-top: clamp(19px, 2.4vw, 31px);
 }
 
-html[data-design="clear"] .course-hub .hub-section-head,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-section-head,
 html[data-design="atlas"] .course-hub .hub-section-head {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(340px, 0.7fr);
@@ -1886,7 +1886,7 @@ html[data-design="atlas"] .course-hub .hub-section-head {
   border-bottom: 1px solid var(--border-strong);
 }
 
-html[data-design="clear"] .course-hub .hub-section-head > p,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-section-head > p,
 html[data-design="atlas"] .course-hub .hub-section-head > p {
   max-width: 62ch;
   margin: 0;
@@ -1895,7 +1895,7 @@ html[data-design="atlas"] .course-hub .hub-section-head > p {
   line-height: 1.55;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-list,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-list,
 html[data-design="atlas"] .course-hub .hub-unit-list {
   list-style: none;
   display: grid;
@@ -1905,12 +1905,12 @@ html[data-design="atlas"] .course-hub .hub-unit-list {
   padding: 0;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-item,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-item,
 html[data-design="atlas"] .course-hub .hub-unit-item {
   min-width: 0;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-link,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-link,
 html[data-design="atlas"] .course-hub .hub-unit-link {
   min-height: 390px;
   height: 100%;
@@ -1927,7 +1927,7 @@ html[data-design="atlas"] .course-hub .hub-unit-link {
   transition: background-color var(--t-fast) ease, border-color var(--t-fast) ease, color var(--t-fast) ease;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-link {
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-link {
   border-top: 3px solid var(--accent-300);
   border-radius: var(--r-md);
   box-shadow: var(--shadow-sm);
@@ -1939,20 +1939,20 @@ html[data-design="atlas"] .course-hub .hub-unit-link {
   background: var(--surface-2);
 }
 
-html[data-design="clear"] .course-hub .hub-unit-link:hover,
-html[data-design="clear"] .course-hub .hub-unit-link:focus-visible,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-link:hover,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-link:focus-visible,
 html[data-design="atlas"] .course-hub .hub-unit-link:hover,
 html[data-design="atlas"] .course-hub .hub-unit-link:focus-visible {
   border-color: var(--accent);
   background: var(--accent-050);
 }
 
-html[data-design="clear"] .course-hub .hub-unit-link:active,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-link:active,
 html[data-design="atlas"] .course-hub .hub-unit-link:active {
   background: var(--accent-100);
 }
 
-html[data-design="clear"] .course-hub .hub-unit-index,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-index,
 html[data-design="atlas"] .course-hub .hub-unit-index {
   width: 64px;
   min-height: 76px;
@@ -1965,13 +1965,13 @@ html[data-design="atlas"] .course-hub .hub-unit-index {
   color: var(--accent-700);
 }
 
-html[data-design="clear"] .course-hub .hub-unit-index,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-index,
 html[data-design="atlas"] .course-hub .hub-unit-index {
   grid-column: 1;
   grid-row: 1;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-index {
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-index {
   border-radius: var(--r-md);
 }
 
@@ -1983,7 +1983,7 @@ html[data-design="atlas"] .course-hub .hub-unit-index {
   background: transparent;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-number,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-number,
 html[data-design="atlas"] .course-hub .hub-unit-number {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.68rem;
@@ -1991,14 +1991,14 @@ html[data-design="atlas"] .course-hub .hub-unit-number {
   letter-spacing: 0.1em;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-symbol,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-symbol,
 html[data-design="atlas"] .course-hub .hub-unit-symbol {
   font-size: 1.55rem;
   font-weight: 700;
   line-height: 1;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-body,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-body,
 html[data-design="atlas"] .course-hub .hub-unit-body {
   min-width: 0;
   display: block;
@@ -2007,7 +2007,7 @@ html[data-design="atlas"] .course-hub .hub-unit-body {
   margin-top: 17px;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-overline,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-overline,
 html[data-design="atlas"] .course-hub .hub-unit-overline {
   display: flex;
   flex-wrap: wrap;
@@ -2022,14 +2022,14 @@ html[data-design="atlas"] .course-hub .hub-unit-overline {
   font-variant-caps: all-small-caps;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-title,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-title,
 html[data-design="atlas"] .course-hub .hub-unit-title {
   display: block;
   font-size: 1.08rem;
   line-height: 1.25;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-question,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-question,
 html[data-design="atlas"] .course-hub .hub-unit-question {
   display: block;
   margin-top: 9px;
@@ -2039,7 +2039,7 @@ html[data-design="atlas"] .course-hub .hub-unit-question {
   line-height: 1.42;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-focus,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-focus,
 html[data-design="atlas"] .course-hub .hub-unit-focus {
   display: block;
   margin-top: 10px;
@@ -2048,9 +2048,9 @@ html[data-design="atlas"] .course-hub .hub-unit-focus {
   line-height: 1.42;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-focus > span:first-child,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-focus > span:first-child,
 html[data-design="atlas"] .course-hub .hub-unit-focus > span:first-child,
-html[data-design="clear"] .course-hub .hub-unit-case > span:first-child,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-case > span:first-child,
 html[data-design="atlas"] .course-hub .hub-unit-case > span:first-child {
   margin-right: 5px;
   color: var(--accent-700);
@@ -2061,7 +2061,7 @@ html[data-design="atlas"] .course-hub .hub-unit-case > span:first-child {
   font-variant-caps: all-small-caps;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-case,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-case,
 html[data-design="atlas"] .course-hub .hub-unit-case {
   display: block;
   margin-top: 13px;
@@ -2072,12 +2072,12 @@ html[data-design="atlas"] .course-hub .hub-unit-case {
   line-height: 1.35;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-case strong,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-case strong,
 html[data-design="atlas"] .course-hub .hub-unit-case strong {
   font-weight: 700;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-action,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-action,
 html[data-design="atlas"] .course-hub .hub-unit-action {
   grid-column: 1 / -1;
   grid-row: 3;
@@ -2095,14 +2095,14 @@ html[data-design="atlas"] .course-hub .hub-unit-action {
   font-variant-caps: all-small-caps;
 }
 
-html[data-design="clear"] .course-hub .hub-unit-link.is-planned,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-link.is-planned,
 html[data-design="atlas"] .course-hub .hub-unit-link.is-planned {
   cursor: default;
   background: var(--bg-2);
   color: var(--muted);
 }
 
-html[data-design="clear"] .course-hub .hub-alignment-note,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-alignment-note,
 html[data-design="atlas"] .course-hub .hub-alignment-note {
   max-width: none;
   margin: 24px 0 0;
@@ -2111,14 +2111,14 @@ html[data-design="atlas"] .course-hub .hub-alignment-note {
   line-height: 1.5;
 }
 
-html[data-design="clear"] .course-hub .hub-practices,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices,
 html[data-design="atlas"] .course-hub .hub-practices {
   padding: clamp(28px, 4vw, 48px);
   border: 1px solid var(--border);
   background: var(--surface);
 }
 
-html[data-design="clear"] .course-hub .hub-practices {
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices {
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-sm);
 }
@@ -2129,25 +2129,25 @@ html[data-design="atlas"] .course-hub .hub-practices {
   box-shadow: none;
 }
 
-html[data-design="clear"] .course-hub .hub-practices-head,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-head,
 html[data-design="atlas"] .course-hub .hub-practices-head {
   margin-bottom: 18px;
 }
 
-html[data-design="clear"] .course-hub .hub-practices-table-wrap,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table-wrap,
 html[data-design="atlas"] .course-hub .hub-practices-table-wrap {
   width: 100%;
   overflow-x: auto;
 }
 
-html[data-design="clear"] .course-hub .hub-practices-table,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table,
 html[data-design="atlas"] .course-hub .hub-practices-table {
   min-width: 640px;
   margin: 0;
   font-size: 0.95rem;
 }
 
-html[data-design="clear"] .course-hub .hub-practices-table th,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table th,
 html[data-design="atlas"] .course-hub .hub-practices-table th {
   color: var(--muted);
   font-family: "JetBrains Mono", monospace;
@@ -2156,22 +2156,22 @@ html[data-design="atlas"] .course-hub .hub-practices-table th {
   font-variant-caps: all-small-caps;
 }
 
-html[data-design="clear"] .course-hub .hub-practices-table td,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table td,
 html[data-design="atlas"] .course-hub .hub-practices-table td,
-html[data-design="clear"] .course-hub .hub-practices-table th,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table th,
 html[data-design="atlas"] .course-hub .hub-practices-table th {
   padding-block: 14px;
   border-color: var(--border);
 }
 
-html[data-design="clear"] .course-hub .hub-practices-table .badge,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table .badge,
 html[data-design="atlas"] .course-hub .hub-practices-table .badge {
   border-color: var(--accent-300);
   background: var(--accent-050);
   color: var(--accent-700);
 }
 
-html[data-design="clear"] .course-hub .sr-only,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .sr-only,
 html[data-design="atlas"] .course-hub .sr-only {
   position: absolute;
   width: 1px;
@@ -2184,7 +2184,7 @@ html[data-design="atlas"] .course-hub .sr-only {
   border: 0;
 }
 
-html[data-design="clear"] .course-hub .hub-footer,
+html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-footer,
 html[data-design="atlas"] .course-hub .hub-footer {
   display: flex;
   flex-wrap: wrap;
@@ -2197,48 +2197,48 @@ html[data-design="atlas"] .course-hub .hub-footer {
 }
 
 @media (max-width: 1250px) {
-  html[data-design="clear"] .course-hub .hub-unit-list,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-list,
   html[data-design="atlas"] .course-hub .hub-unit-list {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 980px) {
-  html[data-design="clear"] .course-hub .hub-intro,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-intro,
   html[data-design="atlas"] .course-hub .hub-intro {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-design="clear"] .course-hub .hub-learning-path,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path,
   html[data-design="atlas"] .course-hub .hub-learning-path {
     display: grid;
     grid-template-columns: minmax(220px, 0.5fr) minmax(0, 1fr);
     gap: 28px;
   }
 
-  html[data-design="clear"] .course-hub .hub-learning-path ol,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path ol,
   html[data-design="atlas"] .course-hub .hub-learning-path ol {
     margin-top: 0;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-list,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-list,
   html[data-design="atlas"] .course-hub .hub-unit-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 760px) {
-  html[data-design="clear"] .course-hub .wrap,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .wrap,
   html[data-design="atlas"] .course-hub .wrap {
     width: min(100% - 28px, 1360px);
   }
 
-  html[data-design="clear"] .course-hub .hub-header,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-header,
   html[data-design="atlas"] .course-hub .hub-header {
     position: static;
   }
 
-  html[data-design="clear"] .course-hub .hub-header-inner,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-header-inner,
   html[data-design="atlas"] .course-hub .hub-header-inner {
     align-items: flex-start;
     flex-direction: column;
@@ -2246,73 +2246,73 @@ html[data-design="atlas"] .course-hub .hub-footer {
     padding-block: 14px;
   }
 
-  html[data-design="clear"] .course-hub .hub-actions,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-actions,
   html[data-design="atlas"] .course-hub .hub-actions {
     width: 100%;
     justify-content: space-between;
   }
 
-  html[data-design="clear"] .course-hub .hub-intro,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-intro,
   html[data-design="atlas"] .course-hub .hub-intro {
     padding: 0.45rem 24px;
   }
 
-  html[data-design="clear"] .course-hub .hub-practices,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices,
   html[data-design="atlas"] .course-hub .hub-practices {
     padding: 24px;
   }
 
-  html[data-design="clear"] .course-hub h1,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub h1,
   html[data-design="atlas"] .course-hub h1 {
     font-size: clamp(2.2rem, 11vw, 3.25rem);
   }
 
-  html[data-design="clear"] .course-hub .hub-learning-path,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-learning-path,
   html[data-design="atlas"] .course-hub .hub-learning-path,
-  html[data-design="clear"] .course-hub .hub-section-head,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-section-head,
   html[data-design="atlas"] .course-hub .hub-section-head {
     grid-template-columns: minmax(0, 1fr);
     gap: 20px;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-link,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-link,
   html[data-design="atlas"] .course-hub .hub-unit-link {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 0 12px;
     padding: 20px;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-list,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-list,
   html[data-design="atlas"] .course-hub .hub-unit-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-index,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-index,
   html[data-design="atlas"] .course-hub .hub-unit-index {
     width: 56px;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-action,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-action,
   html[data-design="atlas"] .course-hub .hub-unit-action {
     grid-column: 1 / -1;
     justify-self: start;
     margin-top: 16px;
   }
 
-  html[data-design="clear"] .course-hub .hub-practices-table,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table,
   html[data-design="atlas"] .course-hub .hub-practices-table,
-  html[data-design="clear"] .course-hub .hub-practices-table tbody,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table tbody,
   html[data-design="atlas"] .course-hub .hub-practices-table tbody,
-  html[data-design="clear"] .course-hub .hub-practices-table tr,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table tr,
   html[data-design="atlas"] .course-hub .hub-practices-table tr,
-  html[data-design="clear"] .course-hub .hub-practices-table td,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table td,
   html[data-design="atlas"] .course-hub .hub-practices-table td {
     width: 100%;
     min-width: 0;
     display: block;
   }
 
-  html[data-design="clear"] .course-hub .hub-practices-table thead,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table thead,
   html[data-design="atlas"] .course-hub .hub-practices-table thead {
     position: absolute;
     width: 1px;
@@ -2322,109 +2322,109 @@ html[data-design="atlas"] .course-hub .hub-footer {
     white-space: nowrap;
   }
 
-  html[data-design="clear"] .course-hub .hub-practices-table tr,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table tr,
   html[data-design="atlas"] .course-hub .hub-practices-table tr {
     padding-block: 14px;
     border-top: 1px solid var(--border);
   }
 
-  html[data-design="clear"] .course-hub .hub-practices-table tr:first-child,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table tr:first-child,
   html[data-design="atlas"] .course-hub .hub-practices-table tr:first-child {
     border-top: 0;
   }
 
-  html[data-design="clear"] .course-hub .hub-practices-table td,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table td,
   html[data-design="atlas"] .course-hub .hub-practices-table td {
     padding: 0;
     border: 0;
   }
 
-  html[data-design="clear"] .course-hub .hub-practices-table td:first-child,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table td:first-child,
   html[data-design="atlas"] .course-hub .hub-practices-table td:first-child {
     margin-bottom: 8px;
   }
 }
 
 @media (max-width: 460px) {
-  html[data-design="clear"] .course-hub .hub-brand-sub,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-brand-sub,
   html[data-design="atlas"] .course-hub .hub-brand-sub {
     display: none;
   }
 
-  html[data-design="clear"] .course-hub .hub-course-code,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-course-code,
   html[data-design="atlas"] .course-hub .hub-course-code {
     font-size: 0.65rem;
   }
 
-  html[data-design="clear"] .course-hub .hub-intro,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-intro,
   html[data-design="atlas"] .course-hub .hub-intro {
     padding: 0.375rem 20px;
   }
 
-  html[data-design="clear"] .course-hub .hub-practices,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices,
   html[data-design="atlas"] .course-hub .hub-practices {
     padding: 20px;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-link,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-link,
   html[data-design="atlas"] .course-hub .hub-unit-link {
     min-height: 360px;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-list,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-list,
   html[data-design="atlas"] .course-hub .hub-unit-list {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-index,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-index,
   html[data-design="atlas"] .course-hub .hub-unit-index {
     width: 56px;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-title,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-title,
   html[data-design="atlas"] .course-hub .hub-unit-title {
     font-size: 1.18rem;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-question,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-question,
   html[data-design="atlas"] .course-hub .hub-unit-question {
     font-size: 1rem;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-focus,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-focus,
   html[data-design="atlas"] .course-hub .hub-unit-focus,
-  html[data-design="clear"] .course-hub .hub-unit-case,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-case,
   html[data-design="atlas"] .course-hub .hub-unit-case {
     font-size: 0.9rem;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-action,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-action,
   html[data-design="atlas"] .course-hub .hub-unit-action {
     grid-column: 1 / -1;
   }
 }
 
 @media (pointer: coarse) {
-  html[data-design="clear"] .course-hub .hub-actions .design-mode-toggle,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-actions .design-mode-toggle,
   html[data-design="atlas"] .course-hub .hub-actions .design-mode-toggle {
     height: 50px;
   }
 
-  html[data-design="clear"] .course-hub .hub-actions .design-mode-toggle button,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-actions .design-mode-toggle button,
   html[data-design="atlas"] .course-hub .hub-actions .design-mode-toggle button {
     min-height: 44px;
   }
 
-  html[data-design="clear"] .course-hub .hub-unit-link,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-link,
   html[data-design="atlas"] .course-hub .hub-unit-link {
     min-height: 390px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html[data-design="clear"] .course-hub .hub-unit-link,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-link,
   html[data-design="atlas"] .course-hub .hub-unit-link,
-  html[data-design="clear"] .course-hub .hub-scroll-cue-arrow,
+  html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-scroll-cue-arrow,
   html[data-design="atlas"] .course-hub .hub-scroll-cue-arrow {
     transition: none !important;
     animation: none;

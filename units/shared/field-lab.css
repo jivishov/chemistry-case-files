@@ -1,0 +1,148 @@
+/* Field Lab: a reversible presentation layer. Existing grid tracks, panel heights,
+   breakpoints, scientific color legends and simulation state are unchanged. */
+html[data-design="field"] {
+  --bg: #edece5; --bg-2: #e2e6dc;
+  --surface: #fffef9; --surface-2: #f6f6ee; --surface-3: #edf1e7;
+  --ink: #172f2b; --ink-2: #384e46; --muted: #596c62;
+  --border: #d3dccf; --border-strong: #aabbac;
+  --accent: #19725b; --accent-700: #135643; --accent-300: #81b69d;
+  --accent-100: #d9eddf; --accent-050: #eef7ed;
+  --r-sm: 5px; --r-md: 10px; --r-lg: 14px;
+  --shadow-sm: 0 2px 3px rgb(25 47 33 / 5%);
+  --shadow-md: 0 5px 16px rgb(25 47 33 / 7%);
+  --field-yellow: #e5ef96;
+}
+html[data-design="field"] body { background: var(--bg); }
+html[data-design="field"] .cockpit-command {
+  background: #173e34;
+  border-color: #173e34;
+  box-shadow: 0 3px 0 #cad6b5;
+}
+html[data-design="field"] .command-brand .command-home { color: #fffef3; }
+html[data-design="field"] .command-brand .command-kicker { color: #d6e995; }
+html[data-design="field"] .command-brand span:last-child { color: #c4d8cd; }
+html[data-design="field"] .station-nav { background: #10342b; border-color: #527064; }
+html[data-design="field"] .station-nav .tab { color: #e0eae2; border-color: #446055; }
+html[data-design="field"] .station-nav .tab:hover { background: #2a5544; color: white; }
+html[data-design="field"] .station-nav .tab[aria-selected="true"] {
+  background: var(--field-yellow); border-color: var(--field-yellow); color: #193d2e;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 15%);
+}
+html[data-design="field"] .command-actions .label-text { color: #e0eae2 !important; }
+html[data-design="field"] .command-actions .btn { background: #244b3e; color: #ecf5e9; border-color: #648270; }
+html[data-design="field"] .metric-chip,
+html[data-design="field"] .teks-badge { background: #244b3e; border-color: #648270; color: #ecf5e9; }
+html[data-design="field"] .metric-chip strong,
+html[data-design="field"] .teks-badge strong { color: var(--field-yellow); }
+html[data-design="field"] .mission-screen,
+html[data-design="field"] .chem-console > .panel,
+html[data-design="field"] .life-support-board { border-radius: 10px; box-shadow: var(--shadow-sm); }
+html[data-design="field"] .mission-frame { border: 0; border-radius: 7px; background: #173e34; }
+html[data-design="field"] .mission-screen-art { padding: 0; }
+html[data-design="field"] .screen-status {
+  background: #eaf0d7; border-color: #86a76c; border-radius: 0 6px 6px 0;
+}
+html[data-design="field"] .screen-system { color: #365a2e; }
+html[data-design="field"] .screen-goal { color: #193e30; }
+html[data-design="field"] .screen-reference,
+html[data-design="field"] .cockpit-instincts,
+html[data-design="field"] .ref-card { background: #f2f4e9; border-color: #d5dfc9; }
+html[data-design="field"] .life-support-board { background: #f5f7ef; }
+html[data-design="field"] .ship-stock,
+html[data-design="field"] .latest-consequence,
+html[data-design="field"] .mission-log { background: #fffef9; }
+html[data-design="field"] .chem-console .btn-accent {
+  border-color: #14583f; background: #19725b; box-shadow: 0 3px 0 #d2dfc2;
+}
+html[data-design="field"] .chem-console .btn-accent:hover:not(:disabled) { background: #135643; }
+html[data-design="field"] .chem-console input:not([type="range"]),
+html[data-design="field"] .chem-console select { background: #fff; border-color: #aabbac; }
+html[data-design="field"] .chem-console input:focus,
+html[data-design="field"] .chem-console select:focus { box-shadow: 0 0 0 3px #dfedc8; border-color: #19725b; }
+html[data-design="field"] .chem-console .choice:hover:not(:disabled),
+html[data-design="field"] .chem-console .opt:hover:not(:disabled),
+html[data-design="field"] .chem-console .tile:hover:not(:disabled) { background: #edf5dd; border-color: #71965f; }
+html[data-design="field"] .cf-stage { border-radius: 10px; box-shadow: 0 6px 20px rgb(8 25 21 / 18%); }
+html[data-design="field"] .cf-stat { border-color: #bed0a2; background: #edf3dd; }
+html[data-design="field"] .cf-step.on { border-color: #19725b; box-shadow: inset 3px 0 #19725b; }
+
+/* A small appearance menu replaces the old two-button switch in the same slot. */
+.appearance { position: relative; flex: 0 0 auto; font-family: var(--font-body); line-height: 1.3; z-index: 90; }
+.appearance > summary { list-style: none; cursor: pointer; min-height: 30px; min-width: 100px; display: flex; align-items: center; justify-content: space-between; gap: 7px; border: 1px solid var(--border-strong); border-radius: 6px; padding: 5px 9px; background: var(--surface-2); color: var(--ink); font-size: 12px; font-weight: 700; }
+.appearance > summary::-webkit-details-marker { display: none; }
+.appearance > summary::after { content: '⌄'; font-size: 14px; }
+.appearance[open] > summary { outline: 2px solid var(--accent-300); outline-offset: 1px; }
+.appearance-panel { position: absolute; right: 0; top: calc(100% + 8px); width: 240px; padding: 14px; border: 1px solid #acbeb0; border-radius: 10px; background: #fffef9; box-shadow: 0 10px 30px rgb(0 25 16 / 20%); color: #172f2b; }
+.appearance-panel fieldset { border: 0; margin: 0 0 12px; padding: 0; min-width: 0; }
+.appearance-panel fieldset:last-child { margin-bottom: 0; }
+.appearance-panel legend { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; font-weight: 700; color: #596c62; margin-bottom: 6px; }
+.appearance-choices { display: flex; gap: 4px; }
+.appearance .appearance-panel button { flex: 1; min-height: 34px; padding: 5px 7px; border: 1px solid #c6d2c0; border-radius: 5px; background: #f4f6ee; color: #284237; font: 600 12px/1.25 var(--font-body); cursor: pointer; }
+.appearance .appearance-panel button[aria-pressed="true"] { background: #173e34; border-color: #173e34; color: #f1f5cb; }
+html[data-design="field"] .cockpit-command .appearance > summary { background: #e5ef96; border-color: #e5ef96; color: #173e34; }
+
+/* The SVG occupies the original banner slot immediately. A failed image never
+   hides it, shifts the panel, or leaves a broken-image badge. */
+.scene-media { position: relative; width: 100%; height: 100%; aspect-ratio: 8/3; overflow: hidden; line-height: 0; isolation: isolate; }
+.scene-original { position: absolute; inset: 0; }
+.scene-original svg { display: block; width: 100%; height: 100%; }
+.scene-photo { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; opacity: 0; pointer-events: none; }
+.scene-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 62px 7px 10px; background: linear-gradient(transparent, rgb(6 22 16 / 90%)); color: #fff; font: 700 clamp(8px, .72vw, 10px)/1.35 var(--font-body); letter-spacing: .035em; opacity: 0; pointer-events: none; }
+.scene-compare { display: none; position: absolute; right: 6px; bottom: 5px; padding: 4px 6px; min-height: 24px; border: 1px solid #c5d5cc; border-radius: 4px; color: white; background: #173e34; font: 600 10px/1.2 var(--font-body); cursor: pointer; }
+.scene-media.is-photo-ready:not(.show-original) .scene-photo,
+.scene-media.is-photo-ready:not(.show-original) .scene-caption { opacity: 1; }
+.scene-media.is-photo-ready .scene-compare { display: block; }
+html[data-art="original"] .scene-photo,
+html[data-art="original"] .scene-caption,
+html[data-art="original"] .scene-compare { display: none; }
+.cylinder-classic { display: none; }
+html[data-art="enhanced"] .cf-material { fill: var(--cf-material); }
+.cf-stage-art .cf-original-stage { display: none; }
+.cf-stage-art.raster-failed .cf-original-stage,
+html[data-art="original"] .cf-stage-art .cf-original-stage { display: block; }
+.cf-stage-art.raster-failed .cf-enhanced-stage,
+html[data-art="original"] .cf-stage-art .cf-enhanced-stage { display: none; }
+.hub-unit-photo[hidden] { display: none !important; }
+html[data-art="original"] .cylinder-classic { display: inline; }
+html[data-art="original"] .cylinder-enhanced { display: none; }
+
+/* The catalog remains the same intro + path + five-column course map. */
+html[data-design="field"] .course-hub .hub-header { background: #173e34; border-color: #173e34; }
+html[data-design="field"] .course-hub .hub-brand-name { color: #fffef3; }
+html[data-design="field"] .course-hub .hub-brand-sub { color: #c5dbc8; }
+html[data-design="field"] .course-hub .hub-mark { background: #e5ef96; color: #173e34; border-color: #e5ef96; box-shadow: none; }
+html[data-design="field"] .course-hub .hub-intro { position: relative; overflow: hidden; background: #fffef9; border-radius: 14px; gap: clamp(24px, 4vw, 56px); }
+html[data-design="field"] .course-hub .hub-intro-copy { position: relative; z-index: 1; }
+html[data-design="field"] .course-hub h1 { color: #173e34; }
+html[data-design="field"] .course-hub .hub-kicker { color: #4c6f31; }
+html[data-design="field"] .course-hub .hub-learning-path {
+  position: relative; color: #e9efdf; background: #173e34; border-color: #173e34; overflow: hidden;
+}
+html[data-design="field"][data-art="enhanced"] .course-hub .hub-learning-path {
+  background: linear-gradient(rgb(10 37 27 / 86%), rgb(10 37 27 / 90%)), url('../../shared/assets/photos/labhero.webp') center / cover;
+}
+html[data-design="field"] .course-hub .hub-learning-path h2 { color: #f5f3d8; }
+html[data-design="field"] .course-hub .hub-learning-path .hub-kicker { color: #d5e995; }
+html[data-design="field"] .course-hub .hub-learning-path li { border-color: #5c7863; }
+html[data-design="field"] .course-hub .hub-learning-path li > span { background: #e5ef96; color: #173e34; border-color: #e5ef96; }
+html[data-design="field"] .course-hub .hub-learning-path p { color: #d4e2d3; }
+html[data-design="field"] .course-hub .hub-learning-path strong { color: #fffef3; }
+html[data-design="field"] .course-hub .hub-scroll-cue { color: #173e34; }
+html[data-design="field"] .course-hub .hub-scroll-cue-arrow { background: #e5ef96; border-color: #a0b67b; }
+html[data-design="field"] .course-hub .hub-unit-link { position: relative; overflow: hidden; border-top: 3px solid #7aab7e; box-shadow: var(--shadow-sm); }
+html[data-design="field"] .course-hub .hub-unit-link:hover { border-color: #59865a; box-shadow: 0 7px 18px rgb(25 47 33 / 11%); }
+html[data-design="field"] .course-hub .hub-unit-index { color: #173e34; background: #e5ef96; border-color: #b9c97d; }
+html[data-design="field"] .course-hub .hub-unit-action { color: #135643; }
+.hub-unit-photo { display: none; }
+html[data-design="field"][data-art="enhanced"] .hub-unit-photo { display: block; grid-row: 1; grid-column: 1 / -1; height: 76px; width: calc(100% + 40px); max-width: none; margin: -20px -20px 0; object-fit: cover; }
+html[data-design="field"][data-art="enhanced"] .course-hub .hub-unit-index { position: relative; z-index: 1; width: 48px; min-height: 58px; background: #e5ef96; margin-top: 6px; }
+html[data-design="field"][data-art="enhanced"] .course-hub .hub-unit-number { font-size: 11px; }
+html[data-design="field"][data-art="enhanced"] .course-hub .hub-unit-symbol { font-size: 23px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-design="field"] .chem-console .btn,
+  html[data-design="field"] .course-hub .hub-unit-link { transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease; }
+}
+html[data-motion="reduced"] [class*="a-"] { animation-play-state: paused !important; }
+html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-motion="reduced"] *::after { scroll-behavior: auto !important; transition-duration: 0s !important; }
+@media (prefers-reduced-motion: reduce) { .scene-photo { transition: none; } }

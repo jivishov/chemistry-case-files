@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // main.js — Unit 10 view-model (Thermochemistry, TEKS C.13). Scenario layer.
 //
 // The units_new build: units/10-thermochemistry rendered in the mission-cockpit shell.
@@ -216,7 +217,7 @@ export function createSim() {
     // ===================== cockpit readouts =====================
     // Everything the mission screen and the status rail bind to. Nothing here decides
     // anything: it reads the bench state the commit handlers below already produced.
-    scArt(id) { return sceneArt(id); },
+    scArt(id) { return photoScene(10, id, sceneArt(id)); },
 
     // The bench's own scenario, before any commit has claimed the screen.
     get coreBrief() {

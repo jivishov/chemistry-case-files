@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // main.js - Unit 6 view-model (Reactions & Stoichiometry, C.9). Alpine data factory.
 //
 // The units_new build: units/06-reactions-stoichiometry rendered in the mission-cockpit
@@ -258,7 +259,7 @@ export function createSim() {
     // ===================== cockpit readouts =====================
     // Everything the mission screen and the status rail bind to. Nothing here decides
     // anything: it reads the bench state the commit handlers above already produced.
-    scArt(id) { return sceneArt(id); },
+    scArt(id) { return photoScene(6, id, sceneArt(id)); },
 
     // The bench's own scenario, before any commit has claimed the screen.
     get coreBrief() {

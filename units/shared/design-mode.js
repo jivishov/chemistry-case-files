@@ -2,8 +2,8 @@
   'use strict';
 
   const STORAGE_KEY = 'chemistry-case-files.design';
-  const DEFAULT_MODE = 'clear';
-  const MODES = new Set(['clear', 'atlas']);
+  const DEFAULT_MODE = 'field';
+  const MODES = new Set(['field', 'clear', 'atlas']);
   const root = document.documentElement;
 
   /* Typography is shared across the landing page and all unit workbenches.
@@ -13,7 +13,7 @@
     ? new URL(document.currentScript.src, document.baseURI)
     : null;
   const typographyUrl = scriptUrl
-    ? new URL('./typography.css?v=type-20260908-1', scriptUrl).href
+    ? new URL('./typography.css?v=field-20260922-1', scriptUrl).href
     : null;
 
   const ensureStylesheet = (id, href) => {
@@ -42,7 +42,7 @@
   };
 
   const syncPressedState = mode => {
-    document.querySelectorAll('.design-mode-toggle [data-design-choice]').forEach(button => {
+    document.querySelectorAll('[data-design-choice]').forEach(button => {
       button.setAttribute('aria-pressed', String(button.dataset.designChoice === mode));
     });
   };
@@ -61,6 +61,23 @@
     }
   };
 
+  const allowedSettings = { art: ['enhanced', 'original'], motion: ['system', 'reduced'] };
+  const normalizeSetting = (key, value) => allowedSettings[key].includes(value) ? value : allowedSettings[key][0];
+  const readSetting = key => {
+    try { return normalizeSetting(key, localStorage.getItem(`chemistry-case-files.${key}`)); }
+    catch { return allowedSettings[key][0]; }
+  };
+  const applySetting = (key, value, persist = false) => {
+    const next = normalizeSetting(key, value);
+    root.dataset[key] = next;
+    document.querySelectorAll(`[data-${key}-choice]`).forEach(button => {
+      button.setAttribute('aria-pressed', String(button.getAttribute(`data-${key}-choice`) === next));
+    });
+    if (persist) {
+      try { localStorage.setItem(`chemistry-case-files.${key}`, next); } catch { /* Page-local setting still works. */ }
+    }
+  };
+
   const unitMarker = () => {
     const match = location.pathname.match(/\/units\/(\d{2})-/i);
     return match ? `C${match[1]}` : '';
@@ -74,32 +91,52 @@
     const marker = unitMarker();
     if (brand && marker) brand.dataset.designUnit = marker;
 
-    let group = actions.querySelector('.design-mode-toggle');
+    let group = actions.querySelector('.appearance');
     if (!group) {
-      group = document.createElement('div');
-      group.className = 'design-mode-toggle';
-      group.setAttribute('role', 'group');
-      group.setAttribute('aria-label', 'Design');
-
-      const choices = [
+      group = document.createElement('details');
+      group.className = 'appearance';
+      const summary = document.createElement('summary');
+      summary.textContent = 'Appearance';
+      summary.setAttribute('aria-label', 'Appearance settings');
+      group.appendChild(summary);
+      const panel = document.createElement('div');
+      panel.className = 'appearance-panel';
+      const addChoices = (title, choices, attribute, onSelect) => {
+        const field = document.createElement('fieldset');
+        const legend = document.createElement('legend'); legend.textContent = title;
+        const row = document.createElement('div'); row.className = 'appearance-choices';
+        for (const [value, label, name] of choices) {
+          const button = document.createElement('button'); button.type = 'button';
+          button.setAttribute(attribute, value); button.setAttribute('aria-label', name || label);
+          button.textContent = label;
+          button.addEventListener('click', () => onSelect(value));
+          row.appendChild(button);
+        }
+        field.append(legend, row); panel.appendChild(field);
+      };
+      addChoices('Theme', [
+        ['field', 'Field Lab', 'Field Lab design'],
         ['clear', 'Clear', 'Clear Lab design'],
-        ['atlas', 'Atlas', 'Evidence Atlas design'],
-      ];
-
-      for (const [value, label, accessibleName] of choices) {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.dataset.designChoice = value;
-        button.setAttribute('aria-label', accessibleName);
-        button.textContent = label;
-        button.addEventListener('click', () => applyMode(value, true));
-        group.appendChild(button);
-      }
-
+        ['atlas', 'Atlas', 'Evidence Atlas design']
+      ], 'data-design-choice', value => applyMode(value, true));
+      addChoices('Artwork', [
+        ['enhanced', 'Realistic', 'Realistic artwork'],
+        ['original', 'Original', 'Original illustrations']
+      ], 'data-art-choice', value => applySetting('art', value, true));
+      addChoices('Decorative motion', [
+        ['system', 'System', 'Follow system motion preference'],
+        ['reduced', 'Pause', 'Pause decorative animation']
+      ], 'data-motion-choice', value => applySetting('motion', value, true));
+      group.appendChild(panel);
       const honors = actions.querySelector('.switch');
       actions.insertBefore(group, honors || actions.firstElementChild);
+      document.addEventListener('click', event => { if (!group.contains(event.target)) group.open = false; });
+      group.addEventListener('keydown', event => {
+        if (event.key === 'Escape') { group.open = false; summary.focus(); }
+      });
     }
-
+    applySetting('art', readSetting('art'));
+    applySetting('motion', readSetting('motion'));
     syncPressedState(normalize(root.dataset.design));
   };
 
@@ -110,6 +147,8 @@
   };
 
   applyMode(readStoredMode());
+  applySetting('art', readSetting('art'));
+  applySetting('motion', readSetting('motion'));
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', mountControl, { once: true });
@@ -121,5 +160,8 @@
 
   window.addEventListener('storage', event => {
     if (event.key === STORAGE_KEY) applyMode(event.newValue);
+    for (const key of Object.keys(allowedSettings)) {
+      if (event.key === `chemistry-case-files.${key}`) applySetting(key, event.newValue);
+    }
   });
 })();

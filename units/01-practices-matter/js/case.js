@@ -1,3 +1,4 @@
+import { ORIGINAL_MARS_STAGE } from './mars-original.js';
 // case.js — Unit 1 case file: the Mars Climate Orbiter unit error (1999).
 // Carries the story AND the stage art; rendered by the shared casefile component.
 // The stage uses high-fidelity raster assets inside SVG while preserving the original
@@ -5,6 +6,7 @@
 
 export const CASE = {
   id: 'mars-orbiter-units',
+  originalStage: ORIGINAL_MARS_STAGE,
   number: '001',
   kicker: 'a real engineering case',
   title: 'The Unit-Conversion Error That Cost a Mars Mission',

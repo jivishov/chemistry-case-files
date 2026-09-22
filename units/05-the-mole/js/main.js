@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // main.js — Unit 5 view-model (The Mole & Chemical Quantities, TEKS C.8).
 // The units_new build of Unit 5: Unit 5's world, chemistry, illustrations, case file and
 // grading spine, rendered in the mission-cockpit shell. Its two
@@ -261,7 +262,7 @@ export function createSim() {
       this.lastVerdict = null;
     },
     // mission illustration for the active scenario (rendered atop each brief card)
-    scArt(id) { return sceneArt(id); },
+    scArt(id) { return photoScene(5, id, sceneArt(id)); },
     // stage-specific brief helpers (the scenario behind the active task)
     get cvBrief() { return this.cv && this.cv.sc; },
     get pcBrief() { return this.pc && this.pc.sc; },

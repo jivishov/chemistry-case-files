@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // main.js — Unit 2 view-model (Atomic Structure & Theory, C.6 + C.5B).
 import {
   ATOMIC_MODELS, BUILD_SET, ISOTOPE_ELEMENTS, SPECTRA,
@@ -412,8 +413,8 @@ export function createSim() {
       return [{k:'Progress',v:'correct responses add one practice marker'},{k:'Round',v:'six markers complete one practice round'}];
     },
     scArt(id) {
-      if (id && id.startsWith('e-') && !(this.cfgVerdict && this.cfgVerdict.tone === 'success')) return configurationChallengeArt(id);
-      return refineSceneArt(sceneArt(id), id);
+      if (id && id.startsWith('e-') && !(this.cfgVerdict && this.cfgVerdict.tone === 'success')) return photoScene(2, id, configurationChallengeArt(id));
+      return photoScene(2, id, refineSceneArt(sceneArt(id), id));
     },
     get rackReadings() { return [{key:'jobs',label:'Tasks',raw:`${this.rack.length}/6`,pct:this.rack.length/6*100,color:'var(--accent)'},{key:'core',label:'Core',raw:`${this.teksMasteredCount}/6`,pct:this.gOverall()*100,color:'var(--accent-700)'},{key:'day',label:'Round',raw:`${this.shiftDay}`,pct:Math.min(100,this.shiftDay/3*100),color:'var(--success)'},{key:'log',label:'Log',raw:`${this.worldLog.length}`,pct:Math.min(100,this.worldLog.length/6*100),color:'var(--warn)'}]; },
     rackSvg() { return this.rack.map((r,i)=>`<g transform="translate(${8+i*36},4)"><title>${r.label}</title><rect x="7" y="8" width="18" height="48" rx="8" fill="${r.color}" opacity=".85"/><rect x="12" y="2" width="8" height="8" rx="2" fill="#dcebee"/></g>`).join(''); },

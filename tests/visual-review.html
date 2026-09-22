@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chemistry Case Files · Visual regression review</title>
+<style>
+body{margin:0;background:#e9ede6;font:14px system-ui;color:#173e34}header{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px;background:#fff}select,button{font:inherit;padding:7px;border:1px solid #9aab9d;border-radius:4px}#stage{padding:12px;overflow:auto}iframe{border:1px solid #9aab9d;background:#fff;display:block}#report{margin:0;padding:12px;white-space:pre-wrap;font:12px monospace}#fallbacks{display:none;max-width:1000px;padding:16px}#fallbacks.visible{display:block}.examples{display:grid;grid-template-columns:1fr 1fr;gap:16px}.example{height:180px;background:#153832;position:relative}.cylinder{background:#fff;height:450px}h2{font-size:18px}
+</style><link rel="stylesheet" href="../units/shared/field-lab.css?v=field-20260922-1"></head>
+<body><header><strong>Visual regression review</strong>
+<label>Page <select id="route"></select></label>
+<label>Viewport <select id="size"><option value="1366,768">Laptop 1366 × 768</option><option value="1440,900">Laptop 1440 × 900</option><option value="1024,768">Tablet landscape 1024 × 768</option><option value="820,1180">Tablet portrait 820 × 1180</option><option value="1920,1080">Desktop 1920 × 1080</option></select></label>
+<button id="measure">Check layout</button><button id="failures">Check missing images</button>
+</header><pre id="report" role="status">Choose a page and viewport.</pre>
+<div id="stage"><iframe id="preview" title="Selected course page" width="1366" height="768"></iframe></div>
+<section id="fallbacks"><h2>Missing-photo and SVG calibration review</h2><div class="examples"><div><p>Missing mission photograph → original scene</p><div id="failed-scene" class="example"></div></div><div><p>Missing Mars photographs → original animated stage</p><div id="failed-mars" class="example" style="height:auto"></div></div></div><div id="cylinders" class="examples cylinder"></div></section>
+<script type="module">
+import { UNITS } from '../shared/js/teks.js';
+import { SCENE_ART } from '../units/01-practices-matter/js/art.js';
+import { photoScene } from '../shared/js/scene-media.js';
+import { caseStage } from '../shared/js/stage-materials.js';
+import { CASE } from '../units/01-practices-matter/js/case.js';
+import { graduatedCylinderSvg } from '../units/01-practices-matter/js/svg-fidelity.js';
+const route=document.querySelector('#route'),size=document.querySelector('#size'),frame=document.querySelector('#preview'),report=document.querySelector('#report');
+for(const [path,label] of [['../index.html','Course home'],...UNITS.map(u=>[`../units/${u.slug}/index.html`,`Unit ${u.n} · ${u.title}`])]){const o=document.createElement('option');o.value=path;o.textContent=label;route.appendChild(o);}
+const resize=()=>{const [w,h]=size.value.split(',');frame.width=w;frame.height=h;};
+const navigate=()=>{document.querySelector('#stage').hidden=false;document.querySelector('#fallbacks').classList.remove('visible');frame.src=route.value;};
+size.addEventListener('change',resize);route.addEventListener('change',navigate);
+document.querySelector('#measure').addEventListener('click',()=>{
+ const doc=frame.contentDocument;
+ const visible=el=>el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden';
+ const rect=el=>{const r=el.getBoundingClientRect();return {x:Math.round(r.x),y:Math.round(r.y),width:Math.round(r.width),height:Math.round(r.height)};};
+ const panels=[...doc.querySelectorAll('.mission-screen,.chem-console,.life-support-board,.cockpit-command')].filter(visible);
+ const images=[...doc.querySelectorAll('img')].filter(visible);
+ report.textContent=JSON.stringify({viewport:[frame.clientWidth,frame.clientHeight],pageWidth:doc.documentElement.scrollWidth,horizontalOverflow:doc.documentElement.scrollWidth>frame.clientWidth+1,theme:doc.documentElement.dataset.design,panels:panels.map(el=>({class:el.className,...rect(el),scrollsVertically:el.scrollHeight>el.clientHeight+1})),loadedPhotographs:images.filter(x=>x.complete&&x.naturalWidth).length,brokenImages:images.filter(x=>x.complete&&!x.naturalWidth).length},null,2);
+});
+document.querySelector('#failures').addEventListener('click',()=>{
+ document.querySelector('#stage').hidden=true;document.querySelector('#fallbacks').classList.add('visible');document.documentElement.dataset.art='enhanced';
+ document.querySelector('#failed-scene').innerHTML=photoScene(1,'a-dechlor',SCENE_ART['a-dechlor']).replace(/src="[^"]+"/,'src="missing-photo-for-review.webp"');
+ document.querySelector('#failed-mars').innerHTML=caseStage(CASE).replace(/href="assets\/case\/[^\"]+"/g,'href="missing-mars-for-review.webp"');
+ document.querySelector('#cylinders').innerHTML=[27.4,34.8].map((v,i)=>`<svg viewBox="0 0 200 620" height="440" role="img" aria-label="${v} milliliters">${graduatedCylinderSvg(v,{labels:true,block:!!i,sampleVolume:7.4})}</svg>`).join('');
+ // This diagnostic intentionally has no Alpine app. Show chapter zero only.
+ document.querySelectorAll('#failed-mars [x-show]').forEach(el=>{const expr=el.getAttribute('x-show');if(!['step<3','step&lt;3','step===0'].includes(expr))el.style.display='none';});
+ report.textContent='The mission and Mars stage below should show complete SVG fallbacks despite failed requests. Cylinder menisci should read 27.4 and 34.8 mL.';
+});
+resize();navigate();
+</script></body></html>

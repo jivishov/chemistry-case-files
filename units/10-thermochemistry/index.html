@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Unit 10 · Thermochemistry</title>
 <meta name="description" content="Thermochemistry practice with the laws of thermodynamics, exothermic and endothermic processes, q = mcΔT, and idealized calorimetry. TEKS C.13.">
-<script src="../shared/design-mode.js?v=design-1"></script>
+<script src="../shared/design-mode.js?v=field-20260922-1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bitter:wght@600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
@@ -16,7 +16,8 @@
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-4">
 <link rel="stylesheet" href="css/style.css?v=u10-2">
-<link rel="stylesheet" href="../shared/design-modes.css?v=design-3">
+<link rel="stylesheet" href="../shared/design-modes.css?v=field-20260922-1">
+<link rel="stylesheet" href="../shared/field-lab.css?v=field-20260922-1">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0VLDQGB37N"></script>
 <script>
@@ -248,10 +249,10 @@
   window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
   const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
          { mountColumnResizers }] = await Promise.all([
-    import('./js/main.js?v=u10-3'),
+    import('./js/main.js?v=field-20260922-1'),
     import('../../shared/js/render.js'),
     import('../../shared/js/gauge.js'),
-    import('../../shared/js/casefile.js'),
+    import('../../shared/js/casefile.js?v=field-20260922-1'),
     import('./js/case.js?v=u10-3'),
     import('../shared/columns.js?v=cockpit-3')
   ]);

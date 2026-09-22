@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // main.js: Unit 9 view-model (Acids & Bases, TEKS C.12).
 //
 // The units_new build: units/09-acids-bases rendered in the mission-cockpit shell. This
@@ -316,7 +317,7 @@ export function createSim() {
     // ===================== cockpit readouts =====================
     // Everything the mission screen and the status rail bind to. Nothing here decides
     // anything: it reads the bench state the commit handlers above already produced.
-    scArt(id) { return sceneArt(id); },
+    scArt(id) { return photoScene(9, id, sceneArt(id)); },
 
     // The bench's own scenario, before any commit has claimed the screen.
     get coreBrief() {

@@ -1,0 +1,55 @@
+{
+  "generator": "OpenAI built-in image generation",
+  "created": "2026-09-22",
+  "purpose": "Illustrative mission context only. No quantitative data are sourced from these images.",
+  "images": [
+    {
+      "file": "aquarium.webp",
+      "prompt": "Create ONE photorealistic editorial photograph for a high school chemistry investigation website, asset name aquarium-bench. Panoramic landscape composition about 8:3 aspect ratio. A real freshwater planted aquarium with two small orange fish, natural green aquatic plants and gravel, on a student's neat dark workbench. On the bench beside it: a clear unmarked empty glass cylinder, an unlabeled white aquarium-treatment bottle and a closed notebook. Tangible glass reflections, tiny realistic bubbles, warm late afternoon side lighting contrasted with cool water. Documentary science magazine quality, visually inviting, sophisticated, no people. Main objects comfortably inside center 80% of image so banner cropping works. No text, no lettering, no numbers, no scale markings, no invented measurement data, no logos, no diagrams, no collage. This is contextual artwork, not a data-bearing measuring instrument. Save as a project image asset."
+    },
+    {
+      "file": "spectroscopy.webp",
+      "prompt": "Create ONE photorealistic editorial photograph for a high school chemistry website. Panoramic 8:3 landscape banner, center all main objects within central 80%. Tangible real materials, cinematic but believable side lighting, refined science-magazine photography, crisp focal subject and gently blurred depth, no people. No text, numbers, labels, scales, diagrams, icons, logos, or collage. Contextual artwork only, no measurement data. On a dark vintage electronics laboratory bench, elegant sealed glowing gas-discharge glass tubes in coral red, pale lavender and golden yellow mounted in dark holders. A prism and old analog electronic instrument out of focus behind. Reflective copper wire in foreground. Evoke the mystery of atomic spectra; show physical apparatus, not a spectrum diagram."
+    },
+    {
+      "file": "materials.webp",
+      "prompt": "Create ONE photorealistic editorial photograph for a high school chemistry website. Panoramic 8:3 landscape banner, center all main objects within central 80%. Tangible real materials, cinematic but believable side lighting, refined science-magazine photography, crisp focal subject and gently blurred depth, no people. No text, numbers, labels, scales, diagrams, icons, logos, or collage. Contextual artwork only, no measurement data. A beautifully organized materials-science repair workbench, macro photograph of a bright copper coil, polished silvery metal sample, rough charcoal graphite and faceted translucent quartz crystal lying on a deep green felt pad, with a blurred component drawer in the background. Grazing warm daylight reveals realistic copper grain, crystal facets and brushed metal. No lithium exposed."
+    },
+    {
+      "file": "kitchen.webp",
+      "prompt": "Create ONE photorealistic editorial photograph for a high school chemistry website. Panoramic 8:3 landscape banner, center all main objects within central 80%. Tangible real materials, cinematic but believable side lighting, refined science-magazine photography, crisp focal subject and gently blurred depth, no people. No text, numbers, labels, scales, diagrams, icons, logos, or collage. Contextual artwork only, no measurement data. Sunlit kitchen-science counter, a small clear glass jar of white crystals, a neatly coiled length of bare copper wire, a glass of water with floating ice, and a dark metal saucepan in soft background. Clean sophisticated still life about everyday material properties and bonding. No person, no active heating or mixing."
+    },
+    {
+      "file": "spacehab.webp",
+      "prompt": "Create ONE photorealistic science-magazine photograph for a high school chemistry site. Panoramic 8:3 landscape banner. Main subjects inside center 80%. Realistic tactile textures and optical depth, striking natural lighting, carefully composed. No people, no text, no numbers, no markings, no lettering, no diagrams, no logos, no collage. Context illustration only, no readable measurement instruments. Inside a credible near-future Mars research habitat: a metal bench with sealed silver gas canisters, a compact air filtration cartridge and a small rust-red rock sample. Warm ochre Martian terrain visible through a round window, cool sea-green interior light. Make it look like a physically built cinematic film set photographed with a real camera, not a computer rendering. No spacesuit needed."
+    },
+    {
+      "file": "rescue.webp",
+      "prompt": "Create ONE photorealistic science-magazine photograph for a high school chemistry site. Panoramic 8:3 landscape banner. Main subjects inside center 80%. Realistic tactile textures and optical depth, striking natural lighting, carefully composed. No people, no text, no numbers, no markings, no lettering, no diagrams, no logos, no collage. Context illustration only, no readable measurement instruments. Fire-and-rescue equipment at a rural roadside in blue hour: foreground close-up of a red fire engine's brushed metal pump panel with silver hose connectors, rolled hose, and an unmarked sealed equipment case. Warm red emergency-light reflections, dark pine trees and road in blurred background. No flames, injuries, casualties, dangerous demonstrations or active chemical mixing."
+    },
+    {
+      "file": "scuba.webp",
+      "prompt": "Create ONE photorealistic science-magazine photograph for a high school chemistry site. Panoramic 8:3 landscape banner. Main subjects inside center 80%. Realistic tactile textures and optical depth, striking natural lighting, carefully composed. No people, no text, no numbers, no markings, no lettering, no diagrams, no logos, no collage. Context illustration only, no readable measurement instruments. A scuba dive shop bench on a sunlit dock. Two realistic secured aluminum diving tanks, black regulator hoses coiled neatly and a pressure gauge turned away so its numbers cannot be read. Turquoise ocean in soft focus behind, weathered teak and detailed brushed steel. Documentary photograph of diving equipment; no people underwater."
+    },
+    {
+      "file": "solutions.webp",
+      "prompt": "Create ONE photorealistic science-magazine photograph for a high school chemistry site. Panoramic 8:3 landscape banner. Main subjects inside center 80%. Realistic tactile textures and optical depth, striking natural lighting, carefully composed. No people, no text, no numbers, no markings, no lettering, no diagrams, no logos, no collage. Context illustration only, no readable measurement instruments. Water chemistry laboratory bench, three beautiful clear glass vessels holding transparent water and one dilute purple solution in a conical flask, a tiny capped sample vial and a steel spatula with white crystals resting on a watch glass. In background blur, water-treatment pipework and green trees seen through a window. Rich realistic glass refraction, clean soft daylight. No numerical graduations, no scientific graphs, no active mixing."
+    },
+    {
+      "file": "acidbase.webp",
+      "prompt": "Create ONE photorealistic science-magazine photograph for high school chemistry. Panoramic 8:3 landscape banner, centered main subjects within 80%. Beautiful real textures, carefully controlled real-world lighting, vivid but natural colors. No people, no text, no labels, no numbers, no measurement scales, no diagrams, no logos, no collage. Contextual scene, not quantitative data. A laboratory titration setup: a slender glass burette clamped vertically over a clear conical flask with a very faint pink liquid on a white tile, a capped reagent bottle and dark green lab bench, gentle golden side light. Glass stopcock and fittings physically credible. Burette is intentionally without readable scale. No pouring hands or active dosing."
+    },
+    {
+      "file": "thermal.webp",
+      "prompt": "Create ONE photorealistic science-magazine photograph for high school chemistry. Panoramic 8:3 landscape banner, centered main subjects within 80%. Beautiful real textures, carefully controlled real-world lighting, vivid but natural colors. No people, no text, no labels, no numbers, no measurement scales, no diagrams, no logos, no collage. Contextual scene, not quantitative data. Mountain rescue base-camp still life, a brushed steel insulated flask, folded orange rescue blanket, two sealed unmarked heat-pack pouches and a small metal kettle with soft wisps of steam on a wooden table, cool snowy peaks outside a cabin window. Warm interior lighting vs icy blue background, strong realistic detail, no injuries."
+    },
+    {
+      "file": "nuclear.webp",
+      "prompt": "Create ONE photorealistic science-magazine photograph for high school chemistry. Panoramic 8:3 landscape banner, centered main subjects within 80%. Beautiful real textures, carefully controlled real-world lighting, vivid but natural colors. No people, no text, no labels, no numbers, no measurement scales, no diagrams, no logos, no collage. Contextual scene, not quantitative data. A modern hospital nuclear medicine preparation laboratory: a small capped glass vial sitting in a thick tungsten shielding pot on a spotless work surface, robotic handling fixture behind protective lead glass, a PET scanner ring visible far in the softly blurred adjacent room. Calm cool blue-white light, no patients, no glowing radioactive liquids, no radiation beams or invented scientific effects."
+    },
+    {
+      "file": "labhero.webp",
+      "prompt": "Create ONE photorealistic science-magazine photograph for high school chemistry. Panoramic 8:3 landscape banner, centered main subjects within 80%. Beautiful real textures, carefully controlled real-world lighting, vivid but natural colors. No people, no text, no labels, no numbers, no measurement scales, no diagrams, no logos, no collage. Contextual scene, not quantitative data. Close-up real chemistry laboratory still life on a deep forest-green bench: a rounded glass flask holding transparent golden amber solution, a clear empty beaker, a small blue glass reagent bottle, quartz and copper samples, with beautiful sharp side reflections and soft out-of-focus laboratory depth. Objects concentrated toward the right half, left half dark deep green negative space suitable for white text overlay. Luxurious yet approachable documentary photograph, no neon, no futuristic holograms."
+    }
+  ]
+}

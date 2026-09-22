@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // main.js - Unit 11 view-model (Nuclear Chemistry, TEKS C.14). Scenario layer.
 //
 // The units_new build: units/11-nuclear rendered in the mission-cockpit shell. Unit 11 was
@@ -290,7 +291,7 @@ export function createSim() {
     // ===================== cockpit readouts =====================
     // Everything the mission screen and the status rail bind to. Nothing here decides
     // anything: it reads the bench state the commit handlers already produced.
-    scArt(id) { return sceneArt(id); },
+    scArt(id) { return photoScene(11, id, sceneArt(id)); },
 
     // The bench's own scenario, before any commit has claimed the screen.
     get coreBrief() {

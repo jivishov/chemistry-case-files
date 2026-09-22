@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // main.js: Unit 7 view-model (Gas Laws & Kinetic Molecular Theory, C.10).
 import {
   KMT_POSTULATES, KMT_QUIZ, GAS_LAWS, RELATIONSHIPS, DALTON_GASES,
@@ -200,7 +201,7 @@ export function createSim() {
     },
 
     // ================= cockpit readouts =================
-    scArt(id) { return sceneArt(id); },
+    scArt(id) { return photoScene(7, id, sceneArt(id)); },
     get coreSkills() { return SE.filter(se => !se.honors); },
     get teksMasteredCount() { return this.coreSkills.filter(se => this.gMastered(se.id)).length; },
     get activeBrief() {

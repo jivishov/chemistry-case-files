@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // main.js - Unit 4 view-model (Bonding, Nomenclature & Geometry, C.7).
 import {
   ELEMENTS, COMPOUNDS, MOLECULES, GEOMETRIES, SUBSTANCE_TYPES,
@@ -197,7 +198,7 @@ export function createSim() {
       }).join('');
     },
 
-    scArt(id) { return sceneArt(id); },
+    scArt(id) { return photoScene(4, id, sceneArt(id)); },
 
     get coreBrief() {
       if (this.mode === 'bond') return (this.bd && this.bd.sc) || null;

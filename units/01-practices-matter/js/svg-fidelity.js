@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // svg-fidelity.js — calibrated Unit 1 SVG rendering helpers.
 // Scientific/data-bearing SVGs stay dynamic. Mission banners prefer photorealistic
 // imagery and retain the complete original inline SVG directly underneath as fallback.
@@ -104,7 +105,7 @@ export function displacementSampleSvg(sampleVolume) {
     + `</g>`;
 }
 
-export function graduatedCylinderSvg(volume, { labels = false, block = false, sampleVolume = null } = {}) {
+export function originalGraduatedCylinderSvg(volume, { labels = false, block = false, sampleVolume = null } = {}) {
   const g = CYLINDER_GEOM;
   const v = clamp(Number(volume) || 0, 0, g.maxVolume);
   const y = cylinderLevelY(v);
@@ -130,6 +131,55 @@ export function graduatedCylinderSvg(volume, { labels = false, block = false, sa
     + cylinderTicksSvg(labels)
     + `</g>`;
   return s;
+}
+
+let cylinderSerial = 0;
+
+// Same 0–50 mL calibration and exact quadratic meniscus as the original.
+// At t=.5 the meniscus is at cylinderLevelY(volume), not at its raised edges.
+// A separate namespace per instance keeps the three density cylinders independent.
+export function graduatedCylinderSvg(volume, options = {}) {
+  const g = CYLINDER_GEOM;
+  const v = clamp(Number(volume) || 0, 0, g.maxVolume);
+  const y = cylinderLevelY(v);
+  const mid = (g.liquidLeft + g.liquidRight) / 2;
+  const id = `cylinder-material-${++cylinderSerial}`;
+  const curve = `M${g.liquidLeft} ${y - g.meniscusDepth} Q${mid} ${y + g.meniscusDepth} ${g.liquidRight} ${y - g.meniscusDepth}`;
+  const liquid = `${curve} L${g.liquidRight} ${g.bottomY} L${g.liquidLeft} ${g.bottomY} Z`;
+  const classic = originalGraduatedCylinderSvg(volume, options);
+  return `<g class="cylinder-classic">${classic}</g><g class="cylinder-enhanced" data-visual-role="live-graduated-cylinder" data-volume="${v}">
+    <defs>
+      <linearGradient id="${id}-glass" x1="0" x2="1" y1="0" y2="0">
+        <stop stop-color="#adc9cf" stop-opacity=".65"/><stop offset=".09" stop-color="#f9ffff"/>
+        <stop offset=".22" stop-color="#edf7f8" stop-opacity=".25"/><stop offset=".68" stop-color="#dcebef" stop-opacity=".12"/>
+        <stop offset=".86" stop-color="#acc5ce" stop-opacity=".48"/><stop offset=".95" stop-color="#faffff"/><stop offset="1" stop-color="#9db8c1"/>
+      </linearGradient>
+      <linearGradient id="${id}-water" x1="0" x2="1" y1="0" y2="0">
+        <stop stop-color="#258aa3" stop-opacity=".62"/><stop offset=".15" stop-color="#a1e0e8" stop-opacity=".56"/>
+        <stop offset=".45" stop-color="#82c8d6" stop-opacity=".44"/><stop offset=".82" stop-color="#3c9fb6" stop-opacity=".62"/><stop offset="1" stop-color="#2b829d" stop-opacity=".73"/>
+      </linearGradient>
+      <linearGradient id="${id}-base" x1="0" x2="0" y1="0" y2="1">
+        <stop stop-color="#effafb"/><stop offset=".4" stop-color="#d9e9e9"/><stop offset=".65" stop-color="#a4bfc5"/><stop offset="1" stop-color="#e8f4f3"/>
+      </linearGradient>
+      <radialGradient id="${id}-shadow"><stop stop-color="#254b51" stop-opacity=".23"/><stop offset="1" stop-color="#254b51" stop-opacity="0"/></radialGradient>
+    </defs>
+    <ellipse cx="94" cy="605" rx="69" ry="10" fill="url(#${id}-shadow)"/>
+    <path d="M48 34 Q48 28 55 28 H131 Q138 28 138 34 V580 Q138 594 126 594 H60 Q48 594 48 580Z" fill="url(#${id}-glass)" stroke="#829fa9" stroke-width="1.8"/>
+    <path d="M51 43 V574 Q51 585 60 586 H126 Q135 585 135 574 V43" fill="none" stroke="#afc6ce" stroke-width="1"/>
+    ${v > 0 ? `<path data-visual-role="liquid-fill" d="${liquid}" fill="url(#${id}-water)"/>
+      ${options.block ? displacementSampleSvg(options.sampleVolume) + `<path d="${liquid}" fill="#6abac8" opacity=".12"/>` : ''}
+      <path data-visual-role="meniscus" d="${curve}" fill="none" stroke="#236780" stroke-width="2.4" stroke-linecap="round"/>` : ''}
+    <path d="M57 49 V563" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".72"/>
+    <path d="M63 50 V562" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".5"/>
+    <path d="M131 49 V574" stroke="#fff" stroke-width="1.8" opacity=".58"/>
+    <ellipse cx="93" cy="33" rx="45" ry="6" fill="url(#${id}-base)" stroke="#8eabb5" stroke-width="1.5"/>
+    <ellipse cx="93" cy="32" rx="40" ry="3.4" fill="#f6fcfc" stroke="#bfd5d9" stroke-width="1"/>
+    <path d="M49 31 Q48 22 43 25" fill="none" stroke="#9bb5bf" stroke-width="2"/>
+    <rect x="34" y="588" width="118" height="16" rx="6" fill="url(#${id}-base)" stroke="#8eabb5" stroke-width="1.5"/>
+    <path d="M42 591 H144" stroke="#fff" stroke-width="2" opacity=".9"/>
+    ${cylinderTicksSvg(options.labels).replaceAll('#7d929b', '#45616c').replaceAll('#687a82', '#344f5b')}
+    ${options.labels ? '<text x="149" y="39" font-size="13" fill="#45616c" font-family="JetBrains Mono">mL</text>' : ''}
+  </g>`;
 }
 
 export function targetDotsSvg(dots, { tuple = false, radius = 3.5, fill = '#1d5b66' } = {}) {
@@ -185,8 +235,7 @@ export function installSvgFidelity(sim) {
     return targetDotsSvg(this.evDots, { tuple: false, radius: 4, fill: '#2a7d8a' });
   };
 
-  if (originalScenarioArt) sim.scArt = id => scenarioPhotoMarkup(id, originalScenarioArt(id));
+  if (originalScenarioArt) sim.scArt = id => photoScene(1, id, originalScenarioArt(id));
 
-  ensureSceneSpriteLoaded();
   return sim;
 }

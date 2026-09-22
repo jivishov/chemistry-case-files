@@ -39,6 +39,7 @@
 // they come from this repo, never from user input.
 
 import { notationHTML } from './notation.js';
+import { caseStage } from './stage-materials.js';
 
 // ---------------------------------------------------------------------------
 // SCHEMA (validated by validateCase, gated by tests/casefile.test.js)
@@ -208,7 +209,7 @@ export function caseFileMarkup(CASE) {
 
   <div class="cf-grid">
     <figure class="cf-stage">
-      ${CASE.stage}
+      ${caseStage(CASE)}
       ${CASE.controls || ''}
       <figcaption class="cf-cap" x-prose="s.cap"></figcaption>
     </figure>

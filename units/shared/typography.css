@@ -12,14 +12,14 @@
  */
 
 /* Base reading surface. */
-html[data-design][data-design="clear"] body,
+html[data-design]:is([data-design="clear"], [data-design="field"]) body,
 html[data-design][data-design="atlas"] body {
   font-family: var(--font-body);
   font-size: var(--fs-md);
   line-height: var(--lh-body);
 }
 
-html[data-design][data-design="clear"] .cockpit-shell,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cockpit-shell,
 html[data-design][data-design="atlas"] .cockpit-shell {
   font-family: var(--font-body);
   font-size: var(--fs-sm);
@@ -27,7 +27,7 @@ html[data-design][data-design="atlas"] .cockpit-shell {
 }
 
 /* Header hierarchy: unit identity is editorial; controls and metrics remain UI sans. */
-html[data-design][data-design="clear"] .command-brand .command-home,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .command-brand .command-home,
 html[data-design][data-design="atlas"] .command-brand .command-home {
   font-family: var(--font-display);
   font-size: var(--fs-lg);
@@ -37,7 +37,7 @@ html[data-design][data-design="atlas"] .command-brand .command-home {
   font-optical-sizing: auto;
 }
 
-html[data-design][data-design="clear"] .command-brand span:last-child,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .command-brand span:last-child,
 html[data-design][data-design="atlas"] .command-brand span:last-child {
   font-family: var(--font-body);
   font-size: var(--fs-xs);
@@ -45,8 +45,8 @@ html[data-design][data-design="atlas"] .command-brand span:last-child {
   line-height: var(--lh-ui);
 }
 
-html[data-design][data-design="clear"] .command-kicker,
-html[data-design][data-design="clear"] .eyebrow,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .command-kicker,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .eyebrow,
 html[data-design][data-design="atlas"] .command-kicker,
 html[data-design][data-design="atlas"] .eyebrow {
   font-family: var(--font-body);
@@ -56,13 +56,13 @@ html[data-design][data-design="atlas"] .eyebrow {
   letter-spacing: .08em;
 }
 
-html[data-design][data-design="clear"] .design-mode-toggle button,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .design-mode-toggle button,
 html[data-design][data-design="atlas"] .design-mode-toggle button,
-html[data-design][data-design="clear"] .command-actions .label-text,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .command-actions .label-text,
 html[data-design][data-design="atlas"] .command-actions .label-text,
-html[data-design][data-design="clear"] .metric-chip,
-html[data-design][data-design="clear"] .teks-badge,
-html[data-design][data-design="clear"] .sol-chip,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .metric-chip,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .teks-badge,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .sol-chip,
 html[data-design][data-design="atlas"] .metric-chip,
 html[data-design][data-design="atlas"] .teks-badge,
 html[data-design][data-design="atlas"] .sol-chip {
@@ -72,7 +72,7 @@ html[data-design][data-design="atlas"] .sol-chip {
   line-height: var(--lh-ui);
 }
 
-html[data-design][data-design="clear"] .station-nav .tab,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .station-nav .tab,
 html[data-design][data-design="atlas"] .station-nav .tab {
   font-family: var(--font-body);
   font-size: var(--fs-xs);
@@ -86,7 +86,7 @@ html[data-design][data-design="atlas"] .mission-log .worldstate-entry::before {
 }
 
 /* Mission brief. Required-to-solve information never uses metadata sizing. */
-html[data-design][data-design="clear"] .screen-system,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .screen-system,
 html[data-design][data-design="atlas"] .screen-system {
   font-family: var(--font-body);
   font-size: var(--fs-xs);
@@ -95,7 +95,7 @@ html[data-design][data-design="atlas"] .screen-system {
   letter-spacing: .04em;
 }
 
-html[data-design][data-design="clear"] .screen-state,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .screen-state,
 html[data-design][data-design="atlas"] .screen-state {
   font-family: var(--font-body);
   font-size: var(--fs-md);
@@ -106,7 +106,7 @@ html[data-design][data-design="atlas"] .screen-state {
 /* The shared cockpit had already measured this narrow-column prompt at roughly 15.5–17px.
    Keep the 15-inch target in that proven range while using weight 600 in the richer Next
    family; 500 was too quiet for the primary instruction and 700 spent unnecessary width. */
-html[data-design][data-design="clear"] .screen-goal,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .screen-goal,
 html[data-design][data-design="atlas"] .screen-goal {
   font-family: var(--font-body);
   font-size: clamp(0.96875rem, 1.02vw, 1rem);
@@ -114,23 +114,23 @@ html[data-design][data-design="atlas"] .screen-goal {
   line-height: 1.34;
 }
 
-html[data-design][data-design="clear"] .screen-outcome,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .screen-outcome,
 html[data-design][data-design="atlas"] .screen-outcome {
   font-family: var(--font-body);
   font-size: clamp(var(--fs-sm), .96vw, 0.9375rem);
   line-height: 1.42;
 }
 
-html[data-design][data-design="clear"] .screen-reference,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .screen-reference,
 html[data-design][data-design="atlas"] .screen-reference,
-html[data-design][data-design="clear"] .mission-screen > .cockpit-instincts,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .mission-screen > .cockpit-instincts,
 html[data-design][data-design="atlas"] .mission-screen > .cockpit-instincts {
   font-size: var(--fs-ui);
   line-height: var(--lh-compact);
 }
 
 /* Workbench hierarchy. H2 is a section boundary; H3/H4 identify functional subpanels. */
-html[data-design][data-design="clear"] .chem-console h2,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console h2,
 html[data-design][data-design="atlas"] .chem-console h2 {
   font-family: var(--font-display);
   font-size: var(--fs-lg);
@@ -140,13 +140,13 @@ html[data-design][data-design="atlas"] .chem-console h2 {
   font-optical-sizing: auto;
 }
 
-html[data-design][data-design="clear"] .chem-console h3,
-html[data-design][data-design="clear"] .chem-console h4,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console h3,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console h4,
 html[data-design][data-design="atlas"] .chem-console h3,
 html[data-design][data-design="atlas"] .chem-console h4,
-html[data-design][data-design="clear"] .life-support-board h2,
-html[data-design][data-design="clear"] .life-support-board h3,
-html[data-design][data-design="clear"] .life-support-board h4,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .life-support-board h2,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .life-support-board h3,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .life-support-board h4,
 html[data-design][data-design="atlas"] .life-support-board h2,
 html[data-design][data-design="atlas"] .life-support-board h3,
 html[data-design][data-design="atlas"] .life-support-board h4 {
@@ -159,38 +159,38 @@ html[data-design][data-design="atlas"] .life-support-board h4 {
 /* 15px is the primary laptop instruction size. The line height is deliberately compact:
    1.52 belongs to unconstrained reading surfaces; in a fixed-height cockpit it added about
    31% vertical growth over the authored shell and could reintroduce clipping in Unit 5. */
-html[data-design][data-design="clear"] .chem-console p,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console p,
 html[data-design][data-design="atlas"] .chem-console p {
   font-family: var(--font-body);
   font-size: 0.9375rem;
   line-height: 1.42;
 }
 
-html[data-design][data-design="clear"] .chem-console .small,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .small,
 html[data-design][data-design="atlas"] .chem-console .small,
-html[data-design][data-design="clear"] .chem-console .muted,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .muted,
 html[data-design][data-design="atlas"] .chem-console .muted {
   font-size: var(--fs-sm);
   line-height: 1.38;
 }
 
-html[data-design][data-design="clear"] .chem-console .field > label,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .field > label,
 html[data-design][data-design="atlas"] .chem-console .field > label,
-html[data-design][data-design="clear"] .workbench-grid .k,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .workbench-grid .k,
 html[data-design][data-design="atlas"] .workbench-grid .k {
   font-size: var(--fs-ui);
   font-weight: 600;
   line-height: var(--lh-ui);
 }
 
-html[data-design][data-design="clear"] .chem-console .btn,
-html[data-design][data-design="clear"] .chem-console .choice,
-html[data-design][data-design="clear"] .chem-console .opt,
-html[data-design][data-design="clear"] .chem-console .pair,
-html[data-design][data-design="clear"] .chem-console .miss-opt,
-html[data-design][data-design="clear"] .chem-console .est-chip,
-html[data-design][data-design="clear"] .chem-console .fam-btn,
-html[data-design][data-design="clear"] .chem-console .job-pill,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .btn,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .choice,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .opt,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .pair,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .miss-opt,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .est-chip,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .fam-btn,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .job-pill,
 html[data-design][data-design="atlas"] .chem-console .btn,
 html[data-design][data-design="atlas"] .chem-console .choice,
 html[data-design][data-design="atlas"] .chem-console .opt,
@@ -199,9 +199,9 @@ html[data-design][data-design="atlas"] .chem-console .miss-opt,
 html[data-design][data-design="atlas"] .chem-console .est-chip,
 html[data-design][data-design="atlas"] .chem-console .fam-btn,
 html[data-design][data-design="atlas"] .chem-console .job-pill,
-html[data-design][data-design="clear"] .chem-console input:not([type="range"]),
-html[data-design][data-design="clear"] .chem-console select,
-html[data-design][data-design="clear"] .chem-console textarea,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console input:not([type="range"]),
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console select,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console textarea,
 html[data-design][data-design="atlas"] .chem-console input:not([type="range"]),
 html[data-design][data-design="atlas"] .chem-console select,
 html[data-design][data-design="atlas"] .chem-console textarea {
@@ -210,14 +210,14 @@ html[data-design][data-design="atlas"] .chem-console textarea {
   line-height: var(--lh-ui);
 }
 
-html[data-design][data-design="clear"] .chem-console .btn,
-html[data-design][data-design="clear"] .chem-console .choice,
-html[data-design][data-design="clear"] .chem-console .opt,
-html[data-design][data-design="clear"] .chem-console .pair,
-html[data-design][data-design="clear"] .chem-console .miss-opt,
-html[data-design][data-design="clear"] .chem-console .est-chip,
-html[data-design][data-design="clear"] .chem-console .fam-btn,
-html[data-design][data-design="clear"] .chem-console .job-pill,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .btn,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .choice,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .opt,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .pair,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .miss-opt,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .est-chip,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .fam-btn,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .job-pill,
 html[data-design][data-design="atlas"] .chem-console .btn,
 html[data-design][data-design="atlas"] .chem-console .choice,
 html[data-design][data-design="atlas"] .chem-console .opt,
@@ -231,20 +231,20 @@ html[data-design][data-design="atlas"] .chem-console .job-pill {
 
 /* Unit 3 reuses .screen-goal inside an Honors workbench card. There it is a console prompt,
    not narrow mission-column prose, so preserve the unit's authored 16px treatment. */
-html[data-design][data-design="clear"] .chem-console .honors-content .screen-goal,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .honors-content .screen-goal,
 html[data-design][data-design="atlas"] .chem-console .honors-content .screen-goal {
   font-size: var(--fs-md);
 }
 
 /* Chemistry/data keeps the monospaced face and tabular figures. */
-html[data-design][data-design="clear"] .mono,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .mono,
 html[data-design][data-design="atlas"] .mono,
-html[data-design][data-design="clear"] .eqn,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .eqn,
 html[data-design][data-design="atlas"] .eqn,
-html[data-design][data-design="clear"] .solved,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .solved,
 html[data-design][data-design="atlas"] .solved,
-html[data-design][data-design="clear"] .chain-term,
-html[data-design][data-design="clear"] .chain-result,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chain-term,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .chain-result,
 html[data-design][data-design="atlas"] .chain-term,
 html[data-design][data-design="atlas"] .chain-result {
   font-family: var(--font-mono);
@@ -252,14 +252,14 @@ html[data-design][data-design="atlas"] .chain-result {
 }
 
 /* Status rail: secondary to the experiment, compact without dropping prose below 13px. */
-html[data-design][data-design="clear"] .life-support-board,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .life-support-board,
 html[data-design][data-design="atlas"] .life-support-board {
   font-size: var(--fs-ui);
   line-height: 1.38;
 }
 
-html[data-design][data-design="clear"] .life-header strong,
-html[data-design][data-design="clear"] .latest-consequence strong,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .life-header strong,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .latest-consequence strong,
 html[data-design][data-design="atlas"] .life-header strong,
 html[data-design][data-design="atlas"] .latest-consequence strong {
   font-size: 0.9375rem;
@@ -267,8 +267,8 @@ html[data-design][data-design="atlas"] .latest-consequence strong {
   line-height: var(--lh-heading);
 }
 
-html[data-design][data-design="clear"] .latest-consequence p,
-html[data-design][data-design="clear"] .mission-log p,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .latest-consequence p,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .mission-log p,
 html[data-design][data-design="atlas"] .latest-consequence p,
 html[data-design][data-design="atlas"] .mission-log p {
   font-size: var(--fs-ui);
@@ -276,55 +276,55 @@ html[data-design][data-design="atlas"] .mission-log p {
 }
 
 /* Case File: questions and explanations are reading material; sequence keys may be micro. */
-html[data-design][data-design="clear"] .cf-stat .k,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-stat .k,
 html[data-design][data-design="atlas"] .cf-stat .k,
-html[data-design][data-design="clear"] .cf-step-n,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-step-n,
 html[data-design][data-design="atlas"] .cf-step-n,
-html[data-design][data-design="clear"] .cf-chem strong,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-chem strong,
 html[data-design][data-design="atlas"] .cf-chem strong,
-html[data-design][data-design="clear"] .cf-career,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-career,
 html[data-design][data-design="atlas"] .cf-career {
   font-size: var(--fs-micro);
 }
 
-html[data-design][data-design="clear"] .cf-cap,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-cap,
 html[data-design][data-design="atlas"] .cf-cap,
-html[data-design][data-design="clear"] .cf-progress,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-progress,
 html[data-design][data-design="atlas"] .cf-progress,
-html[data-design][data-design="clear"] .cf-quiz-label,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-quiz-label,
 html[data-design][data-design="atlas"] .cf-quiz-label,
 html[data-design][data-design="atlas"] .cf-quiz-label::after {
   font-size: var(--fs-xs);
 }
 
-html[data-design][data-design="clear"] .cf-step,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-step,
 html[data-design][data-design="atlas"] .cf-step,
-html[data-design][data-design="clear"] .cf-btn,
-html[data-design][data-design="clear"] .cf-cta,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-btn,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-cta,
 html[data-design][data-design="atlas"] .cf-btn,
 html[data-design][data-design="atlas"] .cf-cta {
   font-size: var(--fs-ui);
   line-height: var(--lh-ui);
 }
 
-html[data-design][data-design="clear"] .cf-narr p,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-narr p,
 html[data-design][data-design="atlas"] .cf-narr p,
-html[data-design][data-design="clear"] .cf-explain,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-explain,
 html[data-design][data-design="atlas"] .cf-explain,
-html[data-design][data-design="clear"] .cf-punch-lead,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-punch-lead,
 html[data-design][data-design="atlas"] .cf-punch-lead {
   font-size: var(--fs-sm);
   line-height: 1.45;
 }
 
-html[data-design][data-design="clear"] .cf-quiz-q,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-quiz-q,
 html[data-design][data-design="atlas"] .cf-quiz-q {
   font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.42;
 }
 
-html[data-design][data-design="clear"] .cf-choice,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .cf-choice,
 html[data-design][data-design="atlas"] .cf-choice {
   font-family: var(--font-body);
   font-size: var(--fs-ui);
@@ -332,38 +332,38 @@ html[data-design][data-design="atlas"] .cf-choice {
 }
 
 /* Course hub: consistent editorial hierarchy in both visual modes. */
-html[data-design][data-design="clear"] .course-hub,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub,
 html[data-design][data-design="atlas"] .course-hub {
   font-family: var(--font-body);
   font-size: var(--fs-md);
   line-height: var(--lh-body);
 }
 
-html[data-design][data-design="clear"] .course-hub .hub-brand-name,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub .hub-brand-name,
 html[data-design][data-design="atlas"] .course-hub .hub-brand-name {
   font-family: var(--font-body);
   font-size: var(--fs-md);
   font-weight: 700;
 }
 
-html[data-design][data-design="clear"] .course-hub .hub-brand-sub,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub .hub-brand-sub,
 html[data-design][data-design="atlas"] .course-hub .hub-brand-sub {
   font-size: var(--fs-xs);
   font-weight: 500;
 }
 
-html[data-design][data-design="clear"] .course-hub h1,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub h1,
 html[data-design][data-design="atlas"] .course-hub h1,
-html[data-design][data-design="clear"] .course-hub h2,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub h2,
 html[data-design][data-design="atlas"] .course-hub h2,
-html[data-design][data-design="clear"] .course-hub .hub-unit-title,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-title,
 html[data-design][data-design="atlas"] .course-hub .hub-unit-title {
   font-family: var(--font-display);
   font-weight: 700;
   font-optical-sizing: auto;
 }
 
-html[data-design][data-design="clear"] .course-hub #hub-title,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub #hub-title,
 html[data-design][data-design="atlas"] .course-hub #hub-title {
   max-width: none;
   font-size: clamp(var(--fs-2xl), 2.6vw, var(--fs-3xl));
@@ -371,32 +371,32 @@ html[data-design][data-design="atlas"] .course-hub #hub-title {
   letter-spacing: -0.025em;
 }
 
-html[data-design][data-design="clear"] .course-hub h2,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub h2,
 html[data-design][data-design="atlas"] .course-hub h2 {
   font-size: clamp(var(--fs-xl), 2vw, var(--fs-2xl));
   line-height: var(--lh-heading);
   letter-spacing: -0.015em;
 }
 
-html[data-design][data-design="clear"] .course-hub .hub-lead,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub .hub-lead,
 html[data-design][data-design="atlas"] .course-hub .hub-lead {
   font-size: var(--fs-md);
   line-height: var(--lh-reading);
 }
 
-html[data-design][data-design="clear"] .course-hub .hub-support,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub .hub-support,
 html[data-design][data-design="atlas"] .course-hub .hub-support {
   font-size: 0.9375rem;
   line-height: var(--lh-reading);
 }
 
-html[data-design][data-design="clear"] .course-hub .hub-unit-title,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-title,
 html[data-design][data-design="atlas"] .course-hub .hub-unit-title {
   font-size: var(--fs-lg);
   line-height: var(--lh-heading);
 }
 
-html[data-design][data-design="clear"] .course-hub .hub-legend,
+html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub .hub-legend,
 html[data-design][data-design="atlas"] .course-hub .hub-legend {
   font-size: var(--fs-ui);
   line-height: var(--lh-compact);
@@ -405,16 +405,16 @@ html[data-design][data-design="atlas"] .course-hub .hub-legend {
 /* Narrow desktop/tablet band. Keep station labels slightly larger than the old 10px rule;
    metrics may use the 11px metadata tier so seven/eight-station headers remain single-row. */
 @media (min-width: 981px) and (max-width: 1120px) {
-  html[data-design][data-design="clear"] .station-nav .tab,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .station-nav .tab,
   html[data-design][data-design="atlas"] .station-nav .tab {
     font-size: 0.71875rem; /* 11.5px */
   }
 
-  html[data-design][data-design="clear"] .metric-chip,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .metric-chip,
   html[data-design][data-design="atlas"] .metric-chip,
-  html[data-design][data-design="clear"] .teks-badge,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .teks-badge,
   html[data-design][data-design="atlas"] .teks-badge,
-  html[data-design][data-design="clear"] .sol-chip,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .sol-chip,
   html[data-design][data-design="atlas"] .sol-chip {
     font-size: var(--fs-micro);
   }
@@ -423,54 +423,54 @@ html[data-design][data-design="atlas"] .course-hub .hub-legend {
 /* Preserve the cockpit's authored tall-display generosity. The first typography pass used
    more-specific base selectors and accidentally disabled these existing responsive steps. */
 @media (min-height: 820px) {
-  html[data-design][data-design="clear"] .chem-console .small,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .small,
   html[data-design][data-design="atlas"] .chem-console .small {
     font-size: var(--fs-md);
     line-height: var(--lh-compact);
   }
 
-  html[data-design][data-design="clear"] .chem-console p,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console p,
   html[data-design][data-design="atlas"] .chem-console p {
     font-size: var(--fs-lg);
     line-height: 1.45;
   }
 
-  html[data-design][data-design="clear"] .chem-console .btn,
-  html[data-design][data-design="clear"] .chem-console .choice,
-  html[data-design][data-design="clear"] .chem-console .opt,
-  html[data-design][data-design="clear"] .chem-console .pair,
-  html[data-design][data-design="clear"] .chem-console .miss-opt,
-  html[data-design][data-design="clear"] .chem-console .est-chip,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .btn,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .choice,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .opt,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .pair,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .miss-opt,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .est-chip,
   html[data-design][data-design="atlas"] .chem-console .btn,
   html[data-design][data-design="atlas"] .chem-console .choice,
   html[data-design][data-design="atlas"] .chem-console .opt,
   html[data-design][data-design="atlas"] .chem-console .pair,
   html[data-design][data-design="atlas"] .chem-console .miss-opt,
   html[data-design][data-design="atlas"] .chem-console .est-chip,
-  html[data-design][data-design="clear"] .chem-console input:not([type="range"]),
-  html[data-design][data-design="clear"] .chem-console select,
-  html[data-design][data-design="clear"] .chem-console textarea,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console input:not([type="range"]),
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console select,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console textarea,
   html[data-design][data-design="atlas"] .chem-console input:not([type="range"]),
   html[data-design][data-design="atlas"] .chem-console select,
   html[data-design][data-design="atlas"] .chem-console textarea {
     font-size: var(--fs-md);
   }
 
-  html[data-design][data-design="clear"] .chem-console .stat .k,
-  html[data-design][data-design="clear"] .chem-console table.data th,
-  html[data-design][data-design="clear"] .chem-console table.data td,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console .stat .k,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console table.data th,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console table.data td,
   html[data-design][data-design="atlas"] .chem-console .stat .k,
   html[data-design][data-design="atlas"] .chem-console table.data th,
   html[data-design][data-design="atlas"] .chem-console table.data td {
     font-size: var(--fs-md);
   }
 
-  html[data-design][data-design="clear"] .screen-goal,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .screen-goal,
   html[data-design][data-design="atlas"] .screen-goal {
     font-size: clamp(1.04rem, 1.12vw, 1.15rem);
   }
 
-  html[data-design][data-design="clear"] .screen-outcome,
+  html[data-design]:is([data-design="clear"], [data-design="field"]) .screen-outcome,
   html[data-design][data-design="atlas"] .screen-outcome {
     font-size: clamp(.95rem, 1.02vw, 1.05rem);
   }

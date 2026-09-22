@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // main.js: Unit 3 view-model (Periodic Table & Trends, TEKS C.5 A-C).
 // Keeps the existing mechanics while presenting scientific data, activity-only
 // simulation scores, and generated feedback with explicit instructional wording.
@@ -340,7 +341,7 @@ export function createSim() {
       return out;
     },
 
-    scArt(id) { return sceneArt(id); },
+    scArt(id) { return photoScene(3, id, sceneArt(id)); },
     get aBrief() { return this.aSc; },
     get bBrief() { return this.bSc; },
     get cBrief() { return this.cSc; },

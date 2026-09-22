@@ -1,3 +1,4 @@
+import { photoScene } from '../../../shared/js/scene-media.js';
 // main.js: Unit 8 view-model (Solutions & Solubility, TEKS C.11).
 // The core interactions are the chemistry: classify by polarity, read solubility
 // curves, apply solubility rules, prepare a target molarity, and calculate a dilution.
@@ -181,7 +182,7 @@ export function createSim() {
       return `${sk ? sk.run : 0} of ${def.target || 3} correct in a row`;
     },
 
-    scArt(id) { return sceneArt(id); },
+    scArt(id) { return photoScene(8, id, sceneArt(id)); },
     get coreSkills() { return SE.filter(se => !se.honors); },
     get teksMasteredCount() { return this.coreSkills.filter(se => this.gMastered(se.id)).length; },
     get activeBrief() {
