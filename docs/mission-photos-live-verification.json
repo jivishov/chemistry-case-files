@@ -1,0 +1,838 @@
+{
+  "verifiedAt": "2026-09-22T13:52:40.262Z",
+  "deploymentCommit": "213edda52b5ace0fd72a3c69335590e03eed697f",
+  "testedTree": "41d17f25aacf00a7d241446f876808132779a19a",
+  "automatedTestsPassed": 61,
+  "liveUrl": "https://jivishov.github.io/chemistry-case-files/units/01-practices-matter/index.html",
+  "photoTransitions": [
+    {
+      "unit": 1,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "d-dropkit",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/1/d-dropkit-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 1,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "d-penmeter",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/1/d-penmeter-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 1,
+      "step": 2,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "d-strips",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/1/d-strips-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 1,
+      "step": 3,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "d-dropkit",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/1/d-dropkit-1.webp"
+        }
+      ]
+    },
+    {
+      "unit": 2,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-crt",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/2/a-crt-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 2,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-tube",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/2/a-tube-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 3,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-datasheet",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/3/a-datasheet-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 3,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-warehouse",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/3/a-warehouse-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 5,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-oxygen",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/5/a-oxygen-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 5,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-fuel",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/5/a-fuel-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 6,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-ladder",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/6/a-ladder-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 6,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-grill",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/6/a-grill-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 7,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-whip",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/7/a-whip-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 7,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-steel",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/7/a-steel-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 8,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-tea",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/8/a-tea-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 8,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-shed",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/8/a-shed-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 9,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-caller",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/9/a-caller-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 9,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-antacid",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/9/a-antacid-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 10,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-two-packs",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/10/a-two-packs-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 10,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-thermometer",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/10/a-thermometer-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 11,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-generator",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/11/a-generator-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 11,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-eluate",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/11/a-eluate-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 4,
+      "step": 0,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-white-jar",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/4/a-white-jar-0.webp"
+        }
+      ]
+    },
+    {
+      "unit": 4,
+      "step": 1,
+      "photos": [
+        {
+          "classes": "scene-media is-photo-ready",
+          "loaded": true,
+          "scene": "a-lamp-cord",
+          "src": "https://jivishov.github.io/chemistry-case-files/shared/assets/photos/missions/4/a-lamp-cord-0.webp"
+        }
+      ]
+    }
+  ],
+  "layoutChecks": [
+    {
+      "unit": 2,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 69,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen panel tone-standby",
+            "x": 9,
+            "y": 87,
+            "width": 423,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 87,
+            "width": 641,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board panel",
+            "x": 1097,
+            "y": 87,
+            "width": 260,
+            "height": 672,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    },
+    {
+      "unit": 3,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 69,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen panel tone-standby",
+            "x": 9,
+            "y": 87,
+            "width": 423,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 87,
+            "width": 641,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board board-rail panel",
+            "x": 1097,
+            "y": 87,
+            "width": 260,
+            "height": 672,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    },
+    {
+      "unit": 5,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 89,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen panel tone-standby",
+            "x": 9,
+            "y": 107,
+            "width": 423,
+            "height": 652,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 107,
+            "width": 641,
+            "height": 652,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board panel",
+            "x": 1097,
+            "y": 107,
+            "width": 260,
+            "height": 652,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    },
+    {
+      "unit": 6,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 69,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen tone-standby",
+            "x": 9,
+            "y": 87,
+            "width": 423,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 87,
+            "width": 641,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board truck-board panel",
+            "x": 1097,
+            "y": 87,
+            "width": 260,
+            "height": 672,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    },
+    {
+      "unit": 7,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 69,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen panel tone-standby",
+            "x": 9,
+            "y": 87,
+            "width": 423,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 87,
+            "width": 641,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board panel",
+            "x": 1097,
+            "y": 87,
+            "width": 260,
+            "height": 672,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    },
+    {
+      "unit": 8,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 69,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen panel tone-standby",
+            "x": 9,
+            "y": 87,
+            "width": 423,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 87,
+            "width": 641,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board panel",
+            "x": 1097,
+            "y": 87,
+            "width": 260,
+            "height": 672,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    },
+    {
+      "unit": 9,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 69,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen panel tone-standby",
+            "x": 9,
+            "y": 87,
+            "width": 423,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 87,
+            "width": 641,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board patient-board panel",
+            "x": 1097,
+            "y": 87,
+            "width": 260,
+            "height": 672,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    },
+    {
+      "unit": 10,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 69,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen panel tone-standby",
+            "x": 9,
+            "y": 87,
+            "width": 423,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 87,
+            "width": 641,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board panel",
+            "x": 1097,
+            "y": 87,
+            "width": 260,
+            "height": 672,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    },
+    {
+      "unit": 11,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 69,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen panel tone-standby",
+            "x": 9,
+            "y": 87,
+            "width": 423,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 87,
+            "width": 641,
+            "height": 672,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board vial-board panel",
+            "x": 1097,
+            "y": 87,
+            "width": 260,
+            "height": 672,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    },
+    {
+      "unit": 4,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 89,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen panel tone-standby",
+            "x": 9,
+            "y": 107,
+            "width": 423,
+            "height": 652,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 107,
+            "width": 641,
+            "height": 652,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board shelf-board panel",
+            "x": 1097,
+            "y": 107,
+            "width": 260,
+            "height": 652,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    },
+    {
+      "unit": 1,
+      "report": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "pageWidth": 1366,
+        "horizontalOverflow": false,
+        "theme": "field",
+        "panels": [
+          {
+            "class": "cockpit-command",
+            "x": 9,
+            "y": 9,
+            "width": 1348,
+            "height": 89,
+            "scrollsVertically": false
+          },
+          {
+            "class": "mission-screen panel tone-standby",
+            "x": 9,
+            "y": 107,
+            "width": 423,
+            "height": 652,
+            "scrollsVertically": false
+          },
+          {
+            "class": "task-stack chem-console",
+            "x": 444,
+            "y": 107,
+            "width": 641,
+            "height": 652,
+            "scrollsVertically": false
+          },
+          {
+            "class": "life-support-board tank-board panel",
+            "x": 1097,
+            "y": 107,
+            "width": 260,
+            "height": 652,
+            "scrollsVertically": false
+          }
+        ],
+        "loadedPhotographs": 1,
+        "brokenImages": 0,
+        "failedPhotographs": 0
+      }
+    }
+  ]
+}
