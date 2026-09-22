@@ -28,8 +28,8 @@ document.querySelector('#measure').addEventListener('click',()=>{
  const visible=el=>el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden';
  const rect=el=>{const r=el.getBoundingClientRect();return {x:Math.round(r.x),y:Math.round(r.y),width:Math.round(r.width),height:Math.round(r.height)};};
  const panels=[...doc.querySelectorAll('.mission-screen,.chem-console,.life-support-board,.cockpit-command')].filter(visible);
- const images=[...doc.querySelectorAll('img')].filter(visible);
- report.textContent=JSON.stringify({viewport:[frame.clientWidth,frame.clientHeight],pageWidth:doc.documentElement.scrollWidth,horizontalOverflow:doc.documentElement.scrollWidth>frame.clientWidth+1,theme:doc.documentElement.dataset.design,panels:panels.map(el=>({class:el.className,...rect(el),scrollsVertically:el.scrollHeight>el.clientHeight+1})),loadedPhotographs:images.filter(x=>x.complete&&x.naturalWidth).length,brokenImages:images.filter(x=>x.complete&&!x.naturalWidth).length},null,2);
+ const allImages=[...doc.querySelectorAll('img')],images=allImages.filter(visible);
+ report.textContent=JSON.stringify({viewport:[frame.clientWidth,frame.clientHeight],pageWidth:doc.documentElement.scrollWidth,horizontalOverflow:doc.documentElement.scrollWidth>frame.clientWidth+1,theme:doc.documentElement.dataset.design,panels:panels.map(el=>({class:el.className,...rect(el),scrollsVertically:el.scrollHeight>el.clientHeight+1})),loadedPhotographs:images.filter(x=>x.complete&&x.naturalWidth).length,brokenImages:images.filter(x=>x.complete&&!x.naturalWidth).length,failedPhotographs:allImages.filter(x=>x.matches('.scene-photo,.hub-unit-photo')&&x.complete&&!x.naturalWidth&&x.hasAttribute('src')).length},null,2);
 });
 document.querySelector('#failures').addEventListener('click',()=>{
  document.querySelector('#stage').hidden=true;document.querySelector('#fallbacks').classList.add('visible');document.documentElement.dataset.art='enhanced';

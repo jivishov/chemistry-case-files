@@ -45,7 +45,8 @@ for (const unit of units) {
     assert.ok(Object.keys(SCENE_ART).length > 0);
     const file = new URL(photoUrl(n));
     await access(file);
-    assert.ok((await stat(file)).size < 150000, 'banner stays small for classroom networks');
+    const bytes = (await stat(file)).size;
+    assert.ok(bytes > 1000 && bytes < 150000, 'banner must be nonempty and small enough for classroom networks');
     for (const [id, svg] of Object.entries(SCENE_ART)) {
       const output = photoScene(n, id, svg);
       assert.ok(output.includes(svg), id);
