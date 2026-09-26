@@ -116,10 +116,17 @@ html[data-design="field"] .course-hub .hub-intro-copy { position: relative; z-in
 html[data-design="field"] .course-hub h1 { color: #173e34; }
 html[data-design="field"] .course-hub .hub-kicker { color: #4c6f31; }
 html[data-design="field"] .course-hub .hub-learning-path {
+  --hub-photo-tint: rgb(10 37 27 / 88%);
   position: relative; color: #e9efdf; background: #173e34; border-color: #173e34; overflow: hidden;
 }
-html[data-design="field"][data-art="enhanced"] .course-hub .hub-learning-path {
-  background: linear-gradient(rgb(10 37 27 / 86%), rgb(10 37 27 / 90%)), url('../../shared/assets/photos/labhero.webp') center / cover;
+html[data-design="atlas"] .course-hub .hub-learning-path {
+  --hub-photo-tint: rgb(246 241 232 / 92%);
+}
+/* Artwork follows the artwork choice independently of the selected theme. */
+html[data-art="enhanced"] .course-hub .hub-learning-path {
+  background-image: linear-gradient(var(--hub-photo-tint, rgb(247 251 253 / 92%)), var(--hub-photo-tint, rgb(247 251 253 / 92%))), url('../../shared/assets/photos/labhero.webp');
+  background-position: center;
+  background-size: cover;
 }
 html[data-design="field"] .course-hub .hub-learning-path h2 { color: #f5f3d8; }
 html[data-design="field"] .course-hub .hub-learning-path .hub-kicker { color: #d5e995; }
@@ -134,10 +141,13 @@ html[data-design="field"] .course-hub .hub-unit-link:hover { border-color: #5986
 html[data-design="field"] .course-hub .hub-unit-index { color: #173e34; background: #e5ef96; border-color: #b9c97d; }
 html[data-design="field"] .course-hub .hub-unit-action { color: #135643; }
 .hub-unit-photo { display: none; }
-html[data-design="field"][data-art="enhanced"] .hub-unit-photo { display: block; grid-row: 1; grid-column: 1 / -1; height: 76px; width: calc(100% + 40px); max-width: none; margin: -20px -20px 0; object-fit: cover; }
-html[data-design="field"][data-art="enhanced"] .course-hub .hub-unit-index { position: relative; z-index: 1; width: 48px; min-height: 58px; background: #e5ef96; margin-top: 6px; }
-html[data-design="field"][data-art="enhanced"] .course-hub .hub-unit-number { font-size: 11px; }
-html[data-design="field"][data-art="enhanced"] .course-hub .hub-unit-symbol { font-size: 23px; }
+html[data-art="enhanced"] .course-hub .hub-unit-link { position: relative; overflow: hidden; }
+html[data-art="enhanced"] .hub-unit-photo { display: block; grid-row: 1; grid-column: 1 / -1; height: 76px; width: calc(100% + 40px); max-width: none; margin: -20px -20px 0; object-fit: cover; }
+html[data-art="enhanced"] .course-hub .hub-unit-index { position: relative; z-index: 1; width: 48px; min-height: 58px; background: var(--surface-2); margin-top: 6px; }
+html[data-design="field"][data-art="enhanced"] .course-hub .hub-unit-index { background: #e5ef96; }
+html[data-design="atlas"][data-art="enhanced"] .course-hub .hub-unit-index { width: 58px; }
+html[data-art="enhanced"] .course-hub .hub-unit-number { font-size: 11px; }
+html[data-art="enhanced"] .course-hub .hub-unit-symbol { font-size: 23px; }
 
 @media (prefers-reduced-motion: no-preference) {
   html[data-design="field"] .chem-console .btn,
