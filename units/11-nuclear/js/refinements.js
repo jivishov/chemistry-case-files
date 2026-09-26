@@ -7,8 +7,7 @@
 
 import {
   SE, EMISSIONS, REASONS, SERIES, BINDING_CASES, DOSAGE_CASES, SCENARIOS
-} from './model.js';
-import { CASE } from './case.js';
+} from './model.js?v=lessons-20260926-1';
 
 let contentApplied = false;
 
@@ -414,57 +413,8 @@ export function applyContentRefinements() {
     ];
   }
 
-  // ------------------------------- Case File -------------------------------
-  assign(CASE, {
-    kicker: 'a real archaeological dating case',
-    title: 'Radiocarbon dating placed Ötzi in the Copper Age',
-    teaser: 'How carbon-14 helped date a 5,300-year-old glacier mummy',
-    hook: 'Hikers discovered Ötzi in the Alps on 19 September 1991. Archaeological evidence and radiocarbon measurements showed that he lived more than 5,000 years ago. Radiocarbon dating is not just one fraction plugged into one equation: laboratories measure carbon-14 and calibrate the radiocarbon age against reference records to estimate calendar age.',
-    stats: [
-      { v: '1991', k: 'year Ötzi was discovered in the Alps' },
-      { v: '>5,300 y', k: 'time since he lived in the Copper Age' },
-      { v: '5,730 y', k: 'carbon-14 half-life used in radiocarbon dating' },
-      { v: 'C-14', k: 'radioactive isotope measured in once-living material' }
-    ],
-    steps: [
-      {
-        t: 'A body emerged from the ice',
-        body: 'On 19 September 1991, hikers found a naturally preserved body near the Tisenjoch in the Alps. At first it was treated as a recent death. The clothing, tools, and later laboratory measurements showed that the find was prehistoric.',
-        chem: 'Preservation alone cannot give a numerical age. Dating requires a measurable process that changes with time, such as radioactive decay.',
-        cap: '1991: a glacier mummy is found, but its age is not yet known.'
-      },
-      {
-        t: 'Carbon-14 provides a clock',
-        body: 'Cosmic-ray reactions in the atmosphere continually produce carbon-14. Carbon enters living organisms through the carbon cycle. After an organism dies, it no longer exchanges carbon in the same way, and its carbon-14 continues to decay.',
-        chem: 'Carbon-14 beta-minus decays with a half-life of about 5,730 years. The fraction remaining decreases exponentially, so thousands of years can produce a measurable change.',
-        cap: 'Living material exchanges carbon; after death, carbon-14 decay becomes the clock.'
-      },
-      {
-        t: 'Measurement becomes a calendar date',
-        body: 'Laboratories can measure the carbon-14 content of organic samples and calculate a radiocarbon age. Because atmospheric carbon-14 has varied over time, that radiocarbon age must be calibrated with independently dated records such as tree rings. Ötzi’s dating places him in the Copper Age, more than 5,300 years ago.',
-        chem: 'The simple decay equation explains how fraction remaining relates to elapsed time. Real radiocarbon dating adds calibration, uncertainty, sample preparation, and contamination control before reporting a calendar-age range.',
-        cap: 'Measure carbon-14, calculate a radiocarbon age, then calibrate it to calendar time.'
-      },
-      {
-        t: 'The date gave the finds context',
-        body: 'Once researchers knew Ötzi belonged to the Copper Age, objects found with him—including a copper axe, bow equipment, clothing, and containers—could be interpreted in the correct archaeological period. Later imaging also identified a flint arrowhead in his left shoulder, adding evidence about the circumstances of his death.',
-        chem: 'Radiometric dating supplies a time scale. The same exponential-decay mathematics can be used for very different isotopes, but the useful time range depends on the isotope’s half-life.',
-        cap: 'A reliable time range made the body and equipment interpretable as one Copper Age find.'
-      }
-    ],
-    quiz: {
-      q: 'A once-living sample has 25% of the carbon-14 it started with in the simplified decay model. How many carbon-14 half-lives have passed?',
-      options: [
-        { label: 'Two half-lives, because 100% → 50% → 25%', correct: true },
-        { label: 'One quarter of a half-life, because 25% remains', correct: false },
-        { label: 'Four half-lives, because 25% is one quarter', correct: false }
-      ],
-      explain: 'Each half-life halves the amount remaining. Two halvings take 100% to 50% to 25%, so the simplified model gives two half-lives. For carbon-14 that is 11,460 radiocarbon years before calibration; real archaeological dates are then calibrated to calendar time.'
-    },
-    punch: 'The half-life equation gives the decay clock; careful measurement, calibration, and uncertainty turn that clock into a defensible radiocarbon date.',
-    careers: ['Archaeologist', 'Radiocarbon laboratory scientist', 'Nuclear medicine technologist', 'Forensic anthropologist'],
-    cta: { label: 'Practice a half-life calculation', call: "setMode('dose')" }
-  });
+  // Case File narrative, quiz and diagram are maintained together in case.js.
+
 }
 
 function replaceExactText(root, from, to) {

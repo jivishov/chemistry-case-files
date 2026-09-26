@@ -27,6 +27,8 @@
   gtag('js', new Date());
   gtag('config', 'G-0VLDQGB37N');
 </script>
+<script defer src="../../shared/lessons/mission-bridge.js?v=1"></script>
+<link rel="stylesheet" href="../../shared/lessons/mission-links.css?v=1">
 </head>
 <body>
 <div x-data="sim()" x-cloak>
@@ -58,6 +60,7 @@
       </nav>
 
       <div class="command-actions">
+        <a class="btn btn-sm lesson-return" href="learn.html" title="Read the lesson before the missions">Lesson</a>
         <label class="switch" title="Reveal advanced content for Honors sections">
           <input type="checkbox" x-model="honors">
           <span class="track"></span>
@@ -821,11 +824,11 @@
   window.deferLoadingAlpine = (start) => { window.__startAlpine = start; };
   const [{ createSim }, { registerRender }, { registerGauge }, { mountCaseFile }, { CASE },
          { mountColumnResizers }] = await Promise.all([
-    import('./js/main.js?v=mission-photos-20260922-1'),
+    import('./js/main.js?v=lessons-20260926-1'),
     import('../../shared/js/render.js'),
     import('../../shared/js/gauge.js'),
     import('../../shared/js/casefile.js?v=field-20260922-1'),
-    import('./js/case.js?v=u5-2'),
+    import('./js/case.js?v=lessons-20260926-1'),
     import('../shared/columns.js?v=cockpit-3')
   ]);
   window.sim = createSim;

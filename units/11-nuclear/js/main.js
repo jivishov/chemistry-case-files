@@ -30,7 +30,7 @@ import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?
 import {
   SE, EMISSIONS, REASONS, UNIT_HOURS, UNIT_LABEL,
   SERIES, BINDING_CASES, DOSAGE_CASES, SCENARIOS
-} from './model.js';
+} from './model.js?v=lessons-20260926-1';
 import {
   NUCLIDES, DECAY_PARTICLES, decayProduct, isBalancedNuclear, symbolForZ, nameForZ,
   halfLifeRemaining, nucleonMassSum, massDefect, bindingEnergyMeV, MEV_PER_U,
@@ -784,11 +784,11 @@ export function createSim() {
       const routeWord = this.be.route === 'fusion' ? 'joining with other light nuclei, which is fusion'
         : this.be.route === 'fission' ? 'splitting into mid-sized pieces, which is fission'
         : 'neither, because it already sits near the top of the curve';
-      const truth = `The loose nucleons would weigh ${fmt(this.be.sum, 7)} u, the nuclide weighs ${fmt(c.mass, 7)} u, so the defect is ${fmt(this.be.defect, 4)} u. At ${MEV_PER_U} MeV per u that is ${fmt(this.be.total, 5)} MeV in total, or ${fmt(this.be.per, 3)} MeV per nucleon across ${c.A} nucleons. Iron-56 tops the curve at about 8.79.`;
+      const truth = `The loose nucleons would weigh ${fmt(this.be.sum, 7)} u, the nuclide weighs ${fmt(c.mass, 7)} u, so the defect is ${fmt(this.be.defect, 4)} u. At ${MEV_PER_U} MeV per u that is ${fmt(this.be.total, 5)} MeV in total, or ${fmt(this.be.per, 3)} MeV per nucleon across ${c.A} nucleons. Iron-56 is near the iron-nickel binding-energy peak at about 8.79 MeV per nucleon.`;
       let v, minutes;
       if (good) {
         v = { tone: 'success', icon: sc.icon, state: 'ON THE CURVE', headline: 'Placed correctly',
-          detail: `${truth} ${c.name} therefore releases energy by ${routeWord}. ${sc.success}`, gauge: null };
+          detail: `${truth} The broad curve comparison suggests ${routeWord}; a particular reaction requires full mass-energy accounting. ${sc.success}`, gauge: null };
         this.beDone = true; minutes = 7;
       } else if (!valueOk) {
         v = { tone: 'fail', icon: '\u{1F6A8}', state: 'FIGURE OFF', headline: 'Binding energy is off',
@@ -838,7 +838,7 @@ export function createSim() {
       const truth = `1/te = 1/${fmt(c.physical)} + 1/${fmt(c.biological)} gives an effective half-life of ${fmt(this.ef.te)} ${this.ef.unit}, and falling to ${Math.round(c.threshold * 100)} percent takes log2(1/${c.threshold}) of them, which is ${fmt(this.ef.time)} ${this.ef.unit}.`;
       let v, minutes;
       if (good) {
-        v = { tone: 'success', icon: sc.icon, state: 'RELEASE TIME SET', headline: 'Both figures check out',
+        v = { tone: 'success', icon: sc.icon, state: 'MODEL THRESHOLD REACHED', headline: 'Both figures check out',
           detail: `${truth} ${sc.success}`, gauge: null };
         this.efDone = true; minutes = 7;
       } else if (!teOk) {

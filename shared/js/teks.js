@@ -29,7 +29,7 @@ export const UNITS = [
     n: 2, abbr: 'At', slug: '02-atomic-structure',
     title: 'Atomic Structure & Theory',
     hook: 'Why can a firework only ever burn the colors its elements allow?',
-    case: 'Fireworks are falling electrons',
+    case: 'Energy levels behind firework colors',
     blurb: 'Build atoms and isotopes, average atomic mass, emission spectra, electron configurations.',
     teks: ['C.6', 'C.5'], status: 'ready'
   },
@@ -44,7 +44,7 @@ export const UNITS = [
   {
     n: 4, abbr: 'Bd', slug: '04-bonding-geometry',
     title: 'Bonding, Nomenclature & Geometry',
-    hook: 'How does one 104.5° bond angle keep every frozen lake alive?',
+    hook: 'How do water’s shape and hydrogen bonds help ice float?',
     case: 'The bend that floats ice',
     blurb: 'Ionic/covalent/metallic bonds, IUPAC naming, 3D VSEPR shapes, intermolecular forces.',
     teks: ['C.7'], status: 'ready'
@@ -60,7 +60,7 @@ export const UNITS = [
   {
     n: 6, abbr: 'Rx', slug: '06-reactions-stoichiometry',
     title: 'Reactions & Stoichiometry',
-    hook: 'What mole ratio inflates your airbag in 30 milliseconds?',
+    hook: 'How does a reaction ratio predict the gas in an airbag example?',
     case: 'Airbag stoichiometry',
     blurb: 'Balance and classify reactions, then run particle-level stoichiometry with limiting reactants.',
     teks: ['C.9'], status: 'ready'
@@ -93,7 +93,7 @@ export const UNITS = [
     n: 10, abbr: 'Th', slug: '10-thermochemistry',
     title: 'Thermochemistry',
     hook: 'Can you put enough heat into a hypothermic climber to keep her alive?',
-    case: 'Calories measured by fire',
+    case: 'Calorimetry and food Calories',
     blurb: 'Calorimetry (q = mcΔT), exothermic vs endothermic, energy diagrams.',
     teks: ['C.13'], status: 'ready'
   },

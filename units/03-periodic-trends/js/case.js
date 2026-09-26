@@ -1,56 +1,80 @@
-// case.js: Unit 3 case file: how periodic trends connect to lithium-ion batteries.
-// The shared Case File renderer owns the chrome; this file owns Unit 3 story text and stage art.
-
+// Case narrative and assessment aligned with the unit reading.
 export const CASE = {
-  id: 'lithium-battery-map',
-  number: '003',
-  kicker: 'lithium-ion batteries',
-  title: 'Why lithium is useful in rechargeable batteries',
-  teaser: 'How periodic trends connect to lithium-ion battery chemistry',
-  hook: 'Most phones, laptops, and electric vehicles use lithium-ion batteries. Periodic properties help explain why lithium is useful, but battery performance also depends on electrode materials, electrolyte, cell design, and electrochemical potential.',
-  stats: [
-    { v: '3', k: 'atomic number' },
-    { v: '6.94 u', k: 'atomic mass' },
-    { v: '+1', k: 'common ion charge' }
-  ],
-  steps: [
+  "id": "lithium-battery-map",
+  "number": "003",
+  "kicker": "lithium-ion batteries",
+  "title": "Lithium batteries and the periodic table",
+  "teaser": "What periodic trends explain about battery materials",
+  "hook": "Lithium-ion batteries power many portable devices. Lithium’s small mass and chemistry are useful clues, but selecting a battery also requires information about electrode materials, ion motion, capacity, and voltage.",
+  "stats": [
     {
-      t: 'Inside a lithium-ion cell',
-      body: 'During discharge, electrons move through the external circuit while lithium ions move through the electrolyte. Keeping those paths separate allows the cell reactions to deliver electrical energy to a device.',
-      chem: 'Battery voltage is an electrochemical property of the complete cell. Gas-phase first ionization energy alone does not determine battery voltage.',
-      cap: 'Discharge: electrons use the external circuit; Li+ moves through the electrolyte.'
+      "v": "3",
+      "k": "atomic number"
     },
     {
-      t: 'What the periodic table tells us',
-      body: 'Lithium is in Group 1 and Period 2. It has one valence electron, a relatively small atomic radius, and the lowest atomic mass of any metal. These properties help compare lithium with other elements, but they do not by themselves predict a complete battery\'s performance.',
-      chem: 'Down Group 1, atomic radius increases and first ionization energy generally decreases. Sodium is therefore larger than lithium and has a lower first ionization energy.',
-      cap: 'Li and Na share a family but differ in atomic radius and atomic mass.'
+      "v": "6.94 u",
+      "k": "atomic mass"
     },
     {
-      t: 'Lithium moves between electrodes',
-      body: 'In a typical lithium-ion cell, Li+ moves between electrode materials through the electrolyte while electrons travel through the external circuit. In graphite-based cells, lithium is stored between carbon layers when the cell is charged and leaves the graphite during discharge.',
-      chem: 'Oxidation at the negative electrode during discharge releases electrons to the circuit. Electrode chemistry and electrochemical potential—not one periodic trend—determine the cell voltage.',
-      cap: 'Graphite stores lithium between carbon layers; the electrolyte carries Li+.'
-    },
-    {
-      t: 'Why sodium is also studied',
-      body: 'Sodium-ion batteries use Na+ and related ion-storage chemistry. Sodium is larger and heavier than lithium, and sodium-ion cells require different electrode materials and design choices. Which chemistry is better depends on the application.',
-      chem: 'Elements in the same family share important valence-electron patterns, but differences in size, mass, and electrochemical behavior still matter. Periodic trends provide a starting point; engineering data complete the comparison.',
-      cap: 'Periodic trends compare candidates; engineering data determine the cell.'
+      "v": "2 paths",
+      "k": "ions inside; electrons through the circuit"
     }
   ],
-  quiz: {
-    q: 'Sodium sits directly below lithium in Group 1. Compared with lithium, a sodium atom is...',
-    options: [
-      { label: 'Larger, with a lower first ionization energy', correct: true },
-      { label: 'Smaller, with a higher first ionization energy', correct: false },
-      { label: 'The same size, since they share a group', correct: false }
+  "steps": [
+    {
+      "t": "Two paths through a working cell",
+      "body": "A lithium-ion cell contains two electrodes, an electrolyte, and a separator. During discharge, lithium ions travel inside the cell while electrons flow through the external device. The separator helps prevent direct electrical contact between the electrodes.",
+      "chem": "Ion motion and electron motion complete different parts of the circuit. Both are needed for sustained current.",
+      "cap": "A schematic lithium-ion cell during discharge."
+    },
+    {
+      "t": "Read the periodic clues",
+      "body": "Lithium is in Group 1, Period 2 and is the lightest metal. It has one valence electron and commonly forms Li+. Sodium is below it: its neutral atom is larger and its first ionization energy is lower.",
+      "chem": "Compare like quantities: atomic radius describes a neutral atom; Li+ has a different electron count and radius. Small mass helps gravimetric capacity, but size alone does not determine how easily an ion enters an electrode.",
+      "cap": "Same group, different occupied shells and masses."
+    },
+    {
+      "t": "Host materials matter",
+      "body": "In a common graphite-based cell, discharge removes lithium from the graphite host and releases electrons to the circuit. Lithium ions are incorporated into the other electrode. Charging reverses the overall transfer.",
+      "chem": "Cell voltage depends on the complete electrode reactions. Gas-phase first ionization energy alone does not predict it; aqueous standard potentials are not the operating voltage of a nonaqueous lithium-ion cell.",
+      "cap": "Discharge: ions through electrolyte, electrons through the device."
+    },
+    {
+      "t": "Use trends, then test materials",
+      "body": "Sodium-ion batteries use a related chemistry, but their electrode choices and performance must be tested. A periodic family predicts useful similarities without making lithium and sodium interchangeable.",
+      "chem": "The quiz isolates two periodic properties: neutral-atom radius and first ionization energy. It does not ask you to infer a cell voltage from those two properties.",
+      "cap": "A periodic trend starts a materials investigation; measurements complete it."
+    }
+  ],
+  "quiz": {
+    "q": "Sodium sits directly below lithium in Group 1. Compared with lithium, a sodium atom is...",
+    "options": [
+      {
+        "label": "Larger, with a lower first ionization energy",
+        "correct": true
+      },
+      {
+        "label": "Smaller, with a higher first ionization energy",
+        "correct": false
+      },
+      {
+        "label": "The same size, since they share a group",
+        "correct": false
+      }
     ],
-    explain: 'Moving down Group 1 adds an occupied electron shell. Sodium therefore has a larger radius, and its outer electron is farther from the nucleus and more shielded, so its first ionization energy is lower. This trend alone does not predict battery voltage or battery-pack mass.'
+    "explain": "Sodium has an additional occupied electron shell. Its outer electron is farther from the nucleus and more shielded, giving a larger neutral atom and a lower first ionization energy than lithium. A battery’s voltage requires additional chemical information."
   },
-  punch: 'Periodic trends are a starting point for materials selection. Engineers combine them with electrochemical data, structure, safety, cost, and performance testing.',
-  careers: ['Battery engineer', 'Electrochemist', 'Materials scientist', 'Battery safety engineer'],
-  cta: { label: 'Explore periodic trends', call: "setMode('trends')" },
+  "punch": "Use the periodic table to make a justified prediction, then identify which material measurements are still needed.",
+  "careers": [
+    "Battery engineer",
+    "Electrochemist",
+    "Materials scientist",
+    "Battery safety engineer"
+  ],
+  "cta": {
+    "label": "Explore periodic trends",
+    "call": "setMode('trends')"
+  },
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated lithium-ion cell during discharge: lithium ions cross the electrolyte while electrons travel through an external circuit to power a device">
             <!-- phone / load -->
             <g>
@@ -116,7 +140,7 @@ export const CASE = {
             <!-- chapter 2 overlay: periodic comparison -->
             <g x-show="step===1">
               <rect x="300" y="140" width="216" height="126" rx="8" fill="#132630" stroke="#48697a"/>
-              <text x="408" y="160" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#bad0d8">PERIODIC COMPARISON</text>
+              <text x="408" y="160" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#bad0d8">LI COMPARED WITH NA</text>
               <g font-family="JetBrains Mono" font-size="11">
                 <rect x="318" y="172" width="30" height="30" rx="4" fill="#1a3241" stroke="#48697a"/><text x="333" y="191" text-anchor="middle" fill="#c3d6dc">H</text>
                 <rect class="a-pulse" style="--dur:1.8s" x="318" y="208" width="30" height="30" rx="4" fill="#2a7d8a" stroke="#7fc4d0"/><text x="333" y="227" text-anchor="middle" fill="#fff">Li</text>
@@ -125,9 +149,9 @@ export const CASE = {
                 <rect x="352" y="242" width="30" height="30" rx="4" fill="#1a3241" stroke="#48697a"/><text x="367" y="261" text-anchor="middle" fill="#c3d6dc">Mg</text>
               </g>
               <g font-family="JetBrains Mono" font-size="10" fill="#8fd9ae">
-                <text x="398" y="216">Group 1 · 1 valence e-</text>
-                <text x="398" y="232">Period 2 · small atom</text>
-                <text x="398" y="248">6.94 u · lightest metal</text>
+                <text x="398" y="216">Li: smaller atom</text>
+                <text x="398" y="232">Li: higher first IE</text>
+                <text x="398" y="248">Li: lighter atom</text>
               </g>
             </g>
 
@@ -135,20 +159,20 @@ export const CASE = {
             <g x-show="step===2">
               <g class="a-float" style="--dur:3.4s">
                 <rect x="292" y="146" width="232" height="34" rx="8" fill="#132630" stroke="#7fc4d0"/>
-                <text x="408" y="168" text-anchor="middle" font-family="JetBrains Mono" font-size="12" fill="#7fc4d0">Li in graphite → Li+ + e-</text>
+                <text x="408" y="168" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#7fc4d0">Li+ leaves the graphite host</text>
               </g>
             </g>
 
             <!-- chapter 4 overlay: related battery research -->
             <g x-show="step===3" font-family="JetBrains Mono" font-size="10">
               <g class="a-float" style="--dur:3.2s">
-                <rect x="300" y="140" width="70" height="26" rx="13" fill="#132630" stroke="#8fd9ae"/><text x="335" y="157" text-anchor="middle" fill="#8fd9ae">Na-ion</text>
+                <rect x="300" y="140" width="70" height="26" rx="13" fill="#132630" stroke="#8fd9ae"/><text x="335" y="157" text-anchor="middle" fill="#8fd9ae">mass</text>
               </g>
               <g class="a-float" style="--dur:3.2s; --delay:.6s">
-                <rect x="378" y="140" width="76" height="26" rx="13" fill="#132630" stroke="#ffd27e"/><text x="416" y="157" text-anchor="middle" fill="#ffd27e">Mg research</text>
+                <rect x="378" y="140" width="76" height="26" rx="13" fill="#132630" stroke="#ffd27e"/><text x="416" y="157" text-anchor="middle" fill="#ffd27e">capacity</text>
               </g>
               <g class="a-float" style="--dur:3.2s; --delay:1.2s">
-                <rect x="462" y="140" width="96" height="26" rx="13" fill="#132630" stroke="#7fc4d0"/><text x="510" y="157" text-anchor="middle" fill="#7fc4d0">solid-state Li</text>
+                <rect x="462" y="140" width="96" height="26" rx="13" fill="#132630" stroke="#7fc4d0"/><text x="510" y="157" text-anchor="middle" fill="#7fc4d0">voltage</text>
               </g>
             </g>
           </svg>`

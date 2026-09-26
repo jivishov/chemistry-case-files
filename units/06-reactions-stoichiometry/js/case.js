@@ -1,63 +1,80 @@
-// case.js - Unit 6 case file. Airbag inflation is stoichiometry on a 50 ms deadline.
-// Carries the story AND the stage art; the shared casefile component renders both.
-//
-// The units_new build. Copied whole from units/06-reactions-stoichiometry/js/case.js,
-// animated stage SVG included, with exactly one change: cta.call goes through setMode()
-// rather than assigning `mode` directly. The cockpit's setMode is the only supported way
-// to move the station strip -- a bare assignment leaves the strip's aria-selected state
-// correct but skips the per-station work setMode does, and the tests/casefile.test.js
-// cta.call gate accepts either form, so nothing else would have caught it.
-
+// Case narrative and assessment aligned with the unit reading.
 export const CASE = {
-  id: 'airbag-stoichiometry',
-  number: '006',
-  kicker: 'historical airbag chemistry',
-  title: 'How Early Airbag Inflators Used Stoichiometry',
-  teaser: 'A solid propellant generated inflation gas in milliseconds',
-  hook: 'Airbags must inflate extremely quickly after a crash. Many older inflators used sodium azide to generate nitrogen gas; modern inflators use several other propellant chemistries.',
-  stats: [
-    { v: '< 50 ms', k: 'rapid inflation timescale' },
-    { v: '2 : 3', k: 'NaN3 to N2 mole ratio' },
-    { v: 'historical', k: 'sodium-azide inflator model' }
-  ],
-  steps: [
+  "id": "airbag-stoichiometry",
+  "number": "006",
+  "kicker": "chemistry inside an engineered system",
+  "title": "Airbags: a reaction ratio under a deadline",
+  "teaser": "Use a historical inflator reaction to practice stoichiometry",
+  "hook": "Airbags must inflate rapidly during a collision. Historical sodium-azide inflators illustrate how a balanced equation predicts gas amount. Actual inflator designs, timing, and chemistry vary; this is a calculation model.",
+  "stats": [
     {
-      t: 'Milliseconds matter',
-      body: 'A crash sensor sends a signal to the inflator, which must generate gas rapidly enough to fill the bag before the occupant moves far forward.',
-      chem: 'Reaction rate controls how quickly gas is produced; stoichiometry determines the theoretical amount of gas a reaction can produce.',
-      cap: 'Crash detected -> inflator activated -> bag inflates.'
+      "v": "milliseconds",
+      "k": "rapid deployment; timing varies"
     },
     {
-      t: 'A historical gas generator',
-      body: 'Many early airbag inflators used sodium azide, NaN3, as part of the gas-generating system. A simplified reaction model is 2 NaN3 -> 2 Na + 3 N2.',
-      chem: 'This is a decomposition reaction. The coefficients give a fixed mole ratio: 2 mol NaN3 can produce 3 mol N2.',
-      cap: '2 mol NaN3 -> 3 mol N2.'
+      "v": "2 : 3",
+      "k": "NaN3 to N2 mole ratio"
     },
     {
-      t: 'Stoichiometry predicts product',
-      body: 'Once an amount of sodium azide is specified, the balanced equation can be used to calculate the theoretical amount of nitrogen gas. For example, 0.10 mol NaN3 corresponds to 0.15 mol N2.',
-      chem: 'Start with the known amount and multiply by the mole ratio from the balanced equation.',
-      cap: 'Known amount -> mole ratio -> theoretical N2.'
-    },
-    {
-      t: 'Real inflators are more complex',
-      body: 'An actual inflator must control reaction rate, gas production, temperature, pressure, solid byproducts, and the strength of the housing. Propellant formulations have also changed since early sodium-azide designs.',
-      chem: 'A balanced equation provides stoichiometric relationships, but safe engineering also requires kinetics, materials science, testing, and controlled reaction conditions.',
-      cap: 'Stoichiometry is one part of the engineering design.'
+      "v": "67.2 L",
+      "k": "3 mol ideal gas at 0 °C and 1 atm"
     }
   ],
-  quiz: {
-    q: 'For the historical model 2 NaN3 -> 2 Na + 3 N2, how many moles of N2 can form from 0.10 mol NaN3?',
-    options: [
-      { label: '0.15 mol of N2', correct: true },
-      { label: '0.10 mol of N2', correct: false },
-      { label: '0.067 mol of N2', correct: false }
+  "steps": [
+    {
+      "t": "Rapid gas delivery",
+      "body": "A crash sensor can trigger an inflator within a fraction of a second. Airbag performance depends on gas delivery, venting, timing, and the rest of the restraint system. A balanced equation does not predict deployment speed.",
+      "chem": "The following equation models a historical gas-generating reaction. It is not a claim that every current airbag uses sodium azide.",
+      "cap": "Schematic sequence; the diagram is not a crash timing prediction."
+    },
+    {
+      "t": "A historical decomposition",
+      "body": "Sodium azide decomposes to sodium and nitrogen under appropriate initiation conditions. The reaction gives a useful example of one reactant producing simpler substances.",
+      "chem": "2 NaN3 -> 2 Na + 3 N2. Two moles of sodium azide produce three moles of nitrogen in this complete-reaction model.",
+      "cap": "Use the 2:3 mole ratio; coefficients do not compare grams."
+    },
+    {
+      "t": "Attach conditions to a gas volume",
+      "body": "For a classroom example, 2.00 mol NaN3 is about 130 g and yields 3.00 mol N2. At 0 °C and 1 atm, that amount of ideal gas occupies about 67.2 L. Hot gas inside a deploying airbag has different conditions.",
+      "chem": "Use PV = nRT when temperature and pressure differ. The 22.4 L/mol shortcut cannot be applied silently to a hot inflator.",
+      "cap": "67.2 L is an STP-equivalent example, not a measured deployed-bag volume."
+    },
+    {
+      "t": "Account for the whole system",
+      "body": "The primary reaction also produces reactive sodium. Historical designs included additional chemistry and filtration to manage byproducts. Such secondary reactions can contribute additional gas, so the primary equation alone is not the complete inflator model.",
+      "chem": "A real design must account for all reactions, heat, rates, byproducts, and material behavior. A predicted mole amount does not certify safe performance.",
+      "cap": "The full engineering problem includes more than the primary reaction."
+    }
+  ],
+  "quiz": {
+    "q": "Assume complete decomposition by 2 NaN3 -> 2 Na + 3 N2. How much N2 does 0.10 mol NaN3 produce in this primary reaction?",
+    "options": [
+      {
+        "label": "0.15 mol of N2",
+        "correct": true
+      },
+      {
+        "label": "0.10 mol of N2",
+        "correct": false
+      },
+      {
+        "label": "0.067 mol of N2",
+        "correct": false
+      }
     ],
-    explain: 'Use the 3 mol N2 / 2 mol NaN3 mole ratio: 0.10 mol NaN3 x 3/2 = 0.15 mol N2.'
+    "explain": "0.10 mol NaN3 × (3 mol N2 / 2 mol NaN3) = 0.15 mol N2. This is the primary reaction’s theoretical amount; it does not determine the performance of a complete inflator."
   },
-  punch: 'A balanced equation does not design an airbag by itself, but it gives engineers the mole relationships needed to predict how much gas a reaction can produce.',
-  careers: ['Automotive safety engineer', 'Propellant chemist', 'Crash-test engineer', 'Chemical process engineer'],
-  cta: { label: 'Practice the stoichiometry', call: "setMode('stoich')" },
+  "punch": "A balanced equation predicts reaction quantities. Temperature, rates, and the rest of the system determine how those quantities behave in an airbag.",
+  "careers": [
+    "Automotive safety engineer",
+    "Propellant chemist",
+    "Crash-test engineer",
+    "Chemical process engineer"
+  ],
+  "cta": {
+    "label": "Practice the stoichiometry",
+    "call": "setMode('stoich')"
+  },
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene illustrating a historical sodium-azide airbag inflator and stoichiometric gas generation">
             <!-- millisecond timeline -->
             <g>
@@ -133,7 +150,7 @@ export const CASE = {
             <!-- step 2: the mole chain -->
             <g x-show="step===2" font-family="JetBrains Mono" font-size="10">
               <g class="a-float" style="--dur:3.4s">
-                <rect x="76" y="92" width="74" height="24" rx="12" fill="#132630" stroke="#7fc4d0"/><text x="113" y="108" text-anchor="middle" fill="#7fc4d0">0.10 mol</text>
+                <rect x="76" y="92" width="74" height="24" rx="12" fill="#132630" stroke="#7fc4d0"/><text x="113" y="108" text-anchor="middle" fill="#7fc4d0">2.00 mol</text>
               </g>
               <text x="158" y="108" fill="#8fa9b2">&#8594;</text>
               <g class="a-float" style="--dur:3.4s; --delay:.4s">
@@ -145,7 +162,7 @@ export const CASE = {
               </g>
               <text x="340" y="108" fill="#8fa9b2">&#8594;</text>
               <g class="a-float" style="--dur:3.4s; --delay:1.2s">
-                <rect x="352" y="92" width="70" height="24" rx="12" fill="#132630" stroke="#8fd9ae"/><text x="387" y="108" text-anchor="middle" fill="#8fd9ae">0.15 mol N2</text>
+                <rect x="352" y="92" width="70" height="24" rx="12" fill="#132630" stroke="#8fd9ae"/><text x="387" y="108" text-anchor="middle" fill="#8fd9ae">67 L @ STP</text>
               </g>
             </g>
 

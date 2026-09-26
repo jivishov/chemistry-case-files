@@ -69,7 +69,7 @@
           In each unit, you will use models, measurements, calculations, and data to build a scientific explanation.
         </p>
         <p class="hub-support">
-          Each investigation includes an applied <strong>Case File</strong> based on a real event, technology,
+          Each unit begins with an illustrated <strong>Lesson</strong> and practice model, followed by missions and an applied <strong>Case File</strong> based on a real event, technology,
           or scientific problem. Optional <strong>Honors</strong> work adds more quantitative reasoning and modeling
           without changing the core learning path.
         </p>
@@ -88,9 +88,9 @@
         <p class="hub-kicker">How to work through a unit</p>
         <h2 id="path-title">Follow the evidence path</h2>
         <ol>
-          <li><span>01</span><p><strong>Start with the guiding question.</strong> Identify the chemical idea you need to explain.</p></li>
-          <li><span>02</span><p><strong>Run the investigation.</strong> Use observations, models, and calculations to test your thinking.</p></li>
-          <li><span>03</span><p><strong>Support a conclusion.</strong> Connect your claim to the evidence you collected.</p></li>
+          <li><span>01</span><p><strong>Read the illustrated lesson.</strong> Build the core ideas with clear explanations, analogies, and worked examples.</p></li>
+          <li><span>02</span><p><strong>Explore and check your understanding.</strong> Watch the animations, try a model, and revisit ideas as needed.</p></li>
+          <li><span>03</span><p><strong>Complete the missions.</strong> Apply the lesson through observations, calculations, and evidence-based decisions.</p></li>
           <li><span>04</span><p><strong>Open the Case File.</strong> Apply the same chemistry to an authentic situation.</p></li>
         </ol>
       </aside>
@@ -111,10 +111,10 @@
       <ol class="hub-unit-list">
         <template x-for="u in units" :key="u.n">
           <!-- Every available course route resolves from this root hub to
-               units/<slug>/index.html. -->
+               units/<slug>/learn.html. -->
           <li class="hub-unit-item">
             <a class="hub-unit-link" :class="{ 'is-planned': u.status!=='ready' }"
-               :href="u.status==='ready' ? ('units/'+u.slug+'/index.html') : null"
+               :href="u.status==='ready' ? ('units/'+u.slug+'/learn.html') : null"
                :aria-disabled="u.status!=='ready'"
                :tabindex="u.status==='ready' ? 0 : -1">
               <img class="hub-unit-photo" :src="unitPhoto(u.n)" alt="" width="1280" height="480" loading="lazy" decoding="async" onerror="this.hidden=true">
@@ -132,7 +132,7 @@
                 <span class="hub-unit-focus"><span>Study focus</span> <span x-text="u.focus"></span></span>
                 <span class="hub-unit-case"><span>Case File</span> <strong x-text="u.caseTitle"></strong></span>
               </span>
-              <span class="hub-unit-action" x-text="u.status==='ready' ? ('Open Unit ' + u.n) : 'Coming soon'"></span>
+              <span class="hub-unit-action" x-text="u.status==='ready' ? ('Read Unit ' + u.n) : 'Coming soon'"></span>
             </a>
           </li>
         </template>
@@ -185,7 +185,7 @@
 <script type="module">
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { photoUrl } from './shared/js/scene-media.js';
-  import { UNITS, COURSE, SEP } from './shared/js/teks.js';
+  import { UNITS, COURSE, SEP } from './shared/js/teks.js?v=lessons-20260926-1';
 
   // Which units actually exist in THIS tree.
   //

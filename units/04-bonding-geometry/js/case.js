@@ -1,56 +1,80 @@
-// case.js - Unit 4 case file: molecular geometry, hydrogen bonding, and floating ice.
-// Carries the story AND the stage art; rendered by the shared casefile component.
-
+// Case narrative and assessment aligned with the unit reading.
 export const CASE = {
-  id: 'water-bend-ice',
-  number: '004',
-  kicker: 'why ice floats',
-  title: 'Why ice floats: from molecular shape to hydrogen bonding',
-  teaser: 'Water’s bent shape helps create the hydrogen-bond network that makes ice less dense.',
-  hook: 'Water’s bent geometry makes the molecule polar. That polarity allows extensive hydrogen bonding, and the ordered hydrogen-bond network in ice holds water molecules farther apart than in liquid water.',
-  stats: [
-    { v: '104.5°', k: 'H–O–H bond angle' },
-    { v: '~9%', k: 'density decrease on freezing' },
-    { v: '2', k: 'lone pairs on oxygen' }
-  ],
-  steps: [
+  "id": "water-bend-ice",
+  "number": "004",
+  "kicker": "molecular shape and a winter lake",
+  "title": "How water’s shape helps ice float",
+  "teaser": "Bent molecules, hydrogen bonds, and floating ice",
+  "hook": "Many lakes freeze at the surface while liquid water remains underneath. Water’s bent molecular shape and hydrogen bonding help explain the density of ordinary ice. Lake depth and climate also matter.",
+  "stats": [
     {
-      t: 'Ice forms at the surface',
-      body: 'In many lakes and ponds, surface water cools and freezes first. Ice is less dense than liquid water, so it floats and can form an insulating layer while liquid water remains below.',
-      chem: 'Most solids are denser than their liquids. Water is an important exception because the solid has a more open molecular arrangement.',
-      cap: 'Floating ice can insulate liquid water below.'
+      "v": "104.5°",
+      "k": "H–O–H bond angle"
     },
     {
-      t: 'Why water is bent',
-      body: 'The oxygen atom in H2O has four electron domains: two O–H bonds and two lone pairs. VSEPR theory places the domains approximately tetrahedrally, but the molecular geometry is bent, with an H–O–H angle of about 104.5°. The O–H bond dipoles do not cancel, so water is polar.',
-      chem: 'Lone-pair electron domains repel bonding domains more strongly than bonding domains repel one another. This helps compress the H–O–H angle below the ideal tetrahedral angle of 109.5°.',
-      cap: 'Two bonds + two lone pairs → bent H2O at about 104.5°.'
+      "v": "~9%",
+      "k": "volume increase on freezing ordinary water"
     },
     {
-      t: 'Hydrogen bonds organize ice',
-      body: 'In liquid water, hydrogen bonds continually form and break. When water freezes, the molecules become organized in an open crystal lattice maintained by hydrogen bonding. The molecules are farther apart than in liquid water, so the density decreases by about 9%.',
-      chem: 'The chain of ideas is shape → molecular polarity → hydrogen bonding → crystal structure → lower density of ice.',
-      cap: 'The open hydrogen-bonded lattice makes ice less dense.'
-    },
-    {
-      t: 'Compare water with carbon dioxide',
-      body: 'CO2 provides a useful comparison. Each C=O bond is polar, but the molecule is linear, so the two equal bond dipoles point in opposite directions and cancel. H2O is bent, so its bond dipoles do not cancel.',
-      chem: 'Molecular shape affects whether bond dipoles cancel. Ice floats specifically because water molecules form an open hydrogen-bonded crystal structure, not simply because H2O has a 104.5° bond angle.',
-      cap: 'Bent H2O is polar; linear CO2 is nonpolar overall.'
+      "v": "2",
+      "k": "lone pairs on oxygen"
     }
   ],
-  quiz: {
-    q: 'Why is H2O polar while CO2 is nonpolar overall?',
-    options: [
-      { label: 'H2O is bent, so its O–H bond dipoles do not cancel; CO2 is linear, so its C=O bond dipoles cancel', correct: true },
-      { label: 'H2O is polar only because oxygen is heavier than hydrogen', correct: false },
-      { label: 'CO2 is nonpolar because double bonds cannot have bond dipoles', correct: false }
+  "steps": [
+    {
+      "t": "Ice forms at the surface",
+      "body": "As a sufficiently deep freshwater lake cools, denser water near 4 °C can settle below cooler surface water. Ordinary ice floats and can insulate the liquid beneath it. Shallow lakes can still freeze completely; molecular shape alone does not determine a lake’s winter temperature.",
+      "chem": "Ordinary ice is less dense than liquid water because its hydrogen-bonded structure is relatively open. This is unusual; many solids are denser than their liquids.",
+      "cap": "Floating ice can insulate liquid water; temperature varies with depth and conditions."
+    },
+    {
+      "t": "Why water is bent",
+      "body": "The oxygen atom in H2O has four electron domains: two O–H bonds and two lone pairs. VSEPR theory places the domains approximately tetrahedrally, but the molecular geometry is bent, with an H–O–H angle of about 104.5°. The O–H bond dipoles do not cancel, so water is polar.",
+      "chem": "Bent shape and polar O-H bonds produce an electric dipole: a partially negative oxygen end and partially positive hydrogen ends. This is electric charge separation, not a magnetic pole.",
+      "cap": "Two bonds + two lone pairs → bent H2O at about 104.5°."
+    },
+    {
+      "t": "Hydrogen bonds organize ice",
+      "body": "Liquid water’s hydrogen bonds continually rearrange. In ordinary ice they support a relatively open crystal structure. Near freezing, about 9% more volume for the same mass corresponds to about 8% lower density: density changes inversely with volume.",
+      "chem": "Polar O-H bonds and a bent geometry permit hydrogen bonding. The open organization of ordinary ice, rather than molecular shape alone, explains its lower density.",
+      "cap": "The open hydrogen-bonded lattice makes ice less dense."
+    },
+    {
+      "t": "Compare the geometry with carbon dioxide",
+      "body": "In CO2, two equivalent bond dipoles point in opposite directions and cancel. In bent H2O, they do not cancel. This comparison explains molecular polarity. It does not let us calculate the density or climate of an imaginary universe with linear water.",
+      "chem": "The carbon in CO2 has two electron domains and no lone pairs, producing a 180° linear molecule. Water has four electron domains around oxygen, including two lone pairs, and a bent molecular shape.",
+      "cap": "Compare dipole cancellation in linear CO2 with polar, bent H2O."
+    }
+  ],
+  "quiz": {
+    "q": "Why is H2O polar while CO2 is nonpolar overall?",
+    "options": [
+      {
+        "label": "H2O is bent, so its O–H bond dipoles do not cancel; CO2 is linear, so its C=O bond dipoles cancel",
+        "correct": true
+      },
+      {
+        "label": "H2O is polar only because oxygen is heavier than hydrogen",
+        "correct": false
+      },
+      {
+        "label": "CO2 is nonpolar because double bonds cannot have bond dipoles",
+        "correct": false
+      }
     ],
-    explain: 'Molecular polarity depends on both bond polarity and geometry. H2O is bent because oxygen has two bonding domains and two lone-pair domains, so its O–H bond dipoles give a net molecular dipole. CO2 is linear, so its two C=O bond dipoles cancel.'
+    "explain": "Molecular polarity depends on both bond polarity and geometry. H2O is bent because oxygen has two bonding domains and two lone-pair domains, so its O–H bond dipoles give a net molecular dipole. CO2 is linear, so its two C=O bond dipoles cancel."
   },
-  punch: 'The evidence chain is geometry → polarity → hydrogen bonding → crystal structure → density. Molecular shape helps explain why ice floats and why surface ice can insulate the water below.',
-  careers: ['Materials chemist', 'Climate scientist', 'Environmental chemist', 'Aquatic ecologist'],
-  cta: { label: 'Explore the 3D molecular shapes', call: "setMode('geometry')" },
+  "punch": "Electron domains help predict shape, and shape helps explain polarity. Combine these ideas with intermolecular forces to explain properties such as the open structure of ordinary ice.",
+  "careers": [
+    "Materials chemist",
+    "Climate scientist",
+    "Environmental chemist",
+    "Aquatic ecologist"
+  ],
+  "cta": {
+    "label": "Explore the 3D molecular shapes",
+    "call": "setMode('geometry')"
+  },
   stage: `          <svg viewBox="0 0 640 360" role="img" aria-label="Animated scene showing floating lake ice, bent polar water molecules, an open ice lattice, and a comparison with linear carbon dioxide">
             <!-- winter sky -->
             <rect x="0" y="0" width="640" height="110" fill="#152b38"/>

@@ -1,41 +1,84 @@
-// case.js: Unit 7 Case File — Boyle's law and scuba ascent safety.
-// The case uses a simplified isothermal gas sample to connect P and V. It does not
-// replace formal dive training or model the mechanical limits of human lungs.
-
+// Case narrative and assessment aligned with the unit reading.
 export const CASE = {
-  id: 'scuba-boyle-ascent',
-  number: '007',
-  kicker: "Boyle's law in diving",
-  title: 'Why scuba divers never hold their breath on ascent',
-  teaser: 'A pressure–volume relationship with a direct safety consequence',
-  hook: "Scuba divers are taught to keep breathing and never hold their breath while ascending. As surrounding pressure decreases, gas in the lungs tends to expand. Boyle's law explains the pressure–volume relationship.",
-  stats: [
-    { v: '≈4 atm', k: 'absolute pressure at 30 m seawater' },
-    { v: '4×', k: 'model expansion from 30 m to surface' },
-    { v: '≈+1 atm', k: 'pressure per 10 m seawater' }
+  "id": "scuba-boyle-ascent",
+  "number": "007",
+  "kicker": "Boyle's law in diving",
+  "title": "Why scuba divers never hold their breath on ascent",
+  "teaser": "A pressure–volume relationship with a direct safety consequence",
+  "hook": "Scuba divers are taught to keep breathing and never hold their breath while ascending. As surrounding pressure decreases, gas in the lungs tends to expand. Boyle's law explains the pressure–volume relationship.",
+  "stats": [
+    {
+      "v": "≈4 atm",
+      "k": "absolute pressure at 30 m seawater"
+    },
+    {
+      "v": "4×",
+      "k": "model expansion from 30 m to surface"
+    },
+    {
+      "v": "≈+1 atm",
+      "k": "pressure per 10 m seawater"
+    }
   ],
-  steps: [
-    { t: 'Pressure increases with depth', body: 'At the surface, atmospheric pressure is about 1 atm. In seawater, pressure increases by about 1 atm for every 10 m of depth. At 30 m, the surrounding pressure is therefore about 4 atm absolute. A scuba regulator supplies breathing gas at approximately the surrounding pressure.', chem: 'Gas pressure results from particle collisions with surfaces. A breath taken at depth contains more gas particles in the same lung volume than an equal-volume breath taken at the surface.', cap: 'At 30 m, the model begins with 1.0 L of gas at approximately 4 atm absolute.' },
-    { t: 'Gas expands as pressure decreases', body: 'Suppose 1.0 L of gas is sealed at 30 m and then brought toward the surface. If the amount of gas and temperature remain approximately constant, decreasing pressure causes its volume to increase.', chem: "Boyle's law gives P₁V₁ = P₂V₂. In the simplified model, (4 atm)(1.0 L) = (1 atm)(V₂), so the predicted volume is 4.0 L.", cap: "Boyle's law predicts increasing volume as external pressure decreases." },
-    { t: 'Why breathing during ascent matters', body: 'During a normal scuba ascent, divers keep their airway open and breathe normally. If expanding gas cannot escape because a diver holds their breath or gas becomes trapped in part of the lungs, the expanding gas can injure lung tissue. In severe cases, gas bubbles can enter the arterial circulation and cause an arterial gas embolism.', chem: "Boyle's law predicts the direction of the volume change: lower pressure allows a fixed amount of gas to occupy a larger volume. The equation explains the physical trend, but actual diving safety also depends on physiology, equipment, and proper training.", cap: 'Keep breathing normally during ascent; never hold your breath.' },
-    { t: "Boyle's law beyond diving", body: 'Similar pressure–volume effects occur in everyday systems. A flexible sealed bag can expand as outside pressure decreases and compress as outside pressure increases. Weather balloons also expand as atmospheric pressure decreases, although temperature changes and the balloon material make the real situation more complex.', chem: "Boyle's law applies most directly to a fixed amount of gas at approximately constant temperature. Real systems may involve changes in temperature, container shape, or other variables.", cap: "Boyle's law models the inverse relationship between pressure and volume." }
+  "steps": [
+    {
+      "t": "Pressure increases with depth",
+      "body": "At the surface, atmospheric pressure is about 1 atm. In seawater, pressure increases by about 1 atm for every 10 m of depth. At 30 m, the surrounding pressure is therefore about 4 atm absolute. A scuba regulator supplies breathing gas at approximately the surrounding pressure.",
+      "chem": "At the same temperature and volume, the ideal-gas model requires four times as many molecules at 4 atm as at 1 atm. The greater collision frequency produces greater pressure.",
+      "cap": "At 30 m, the model begins with 1.0 L of gas at approximately 4 atm absolute."
+    },
+    {
+      "t": "Gas expands as pressure decreases",
+      "body": "For a sealed, freely expanding model balloon at constant temperature, a pressure decrease from 4 atm to 1 atm predicts expansion from 1.0 L to 4.0 L. This is the unconstrained gas-volume prediction; lungs cannot be treated as freely stretching balloons.",
+      "chem": "Boyle's law gives P₁V₁ = P₂V₂. In the simplified model, (4 atm)(1.0 L) = (1 atm)(V₂), so the predicted volume is 4.0 L.",
+      "cap": "Boyle's law predicts increasing volume as external pressure decreases."
+    },
+    {
+      "t": "Why breathing during ascent matters",
+      "body": "Trapped expanding gas can injure lung tissue during ascent after breathing compressed gas. Injury can occur even in shallow water; there is no universal 10-meter threshold. This model explains the physical concern, while actual scuba procedures require qualified training.",
+      "chem": "Boyle’s law describes expansion at fixed amount and temperature. It does not include tissue limits, airway obstruction, dissolved-gas effects, or ascent procedures, and cannot establish that an ascent is safe.",
+      "cap": "Gas expansion is one physical risk; the equation is not a dive plan."
+    },
+    {
+      "t": "Boyle's law beyond diving",
+      "body": "Similar pressure–volume effects occur in everyday systems. A flexible sealed bag can expand as outside pressure decreases and compress as outside pressure increases. Weather balloons also expand as atmospheric pressure decreases, although temperature changes and the balloon material make the real situation more complex.",
+      "chem": "Boyle's law applies most directly to a fixed amount of gas at approximately constant temperature. Real systems may involve changes in temperature, container shape, or other variables.",
+      "cap": "Boyle's law models the inverse relationship between pressure and volume."
+    }
   ],
-  quiz: {
-    q: "In the simplified constant-temperature model, a sealed 1.0 L gas sample at 20 m is at approximately 3 atm absolute. If it is brought to the surface at 1 atm, what volume does Boyle's law predict?",
-    options: [{ label: '3.0 L', correct: true }, { label: '1.0 L', correct: false }, { label: '0.33 L', correct: false }],
-    explain: 'P₁V₁ = P₂V₂: (3 atm)(1.0 L) = (1 atm)(V₂), so V₂ = 3.0 L. This is the theoretical volume of a sealed gas sample under the model assumptions; it is not a target or safe volume for human lungs.'
+  "quiz": {
+    "q": "A model gas sample occupies 1.0 L at 3 atm, approximately the pressure at 20 m underwater. At constant temperature and amount, what volume would it occupy at 1 atm if free to expand?",
+    "options": [
+      {
+        "label": "3.0 L, triple the original volume",
+        "correct": true
+      },
+      {
+        "label": "1.0 L",
+        "correct": false
+      },
+      {
+        "label": "0.33 L",
+        "correct": false
+      }
+    ],
+    "explain": "V2 = P1V1/P2 = (3 atm)(1.0 L)/(1 atm) = 3.0 L. This predicts a freely expanding sample under the stated assumptions, not a safe lung volume."
   },
-  punch: "Boyle's law connects pressure and volume. The diving example shows how a simple gas relationship can help explain an important real-world safety rule.",
-  careers: ['Diving safety officer', 'Hyperbaric medicine physician', 'Aerospace engineer', 'Meteorologist'],
-  cta: { label: 'Explore pressure and volume', call: "setMode('ideal')" },
-  state: { depth: 30 },
-  controls: `
-          <div style="padding: var(--s-3) var(--s-4); border-top: 1px solid var(--cf-line); display: flex; gap: var(--s-4); align-items: center;">
-            <label style="color: var(--cf-ink-2); font-size: var(--fs-xs); font-family: var(--font-mono); white-space: nowrap;" for="cf-depth">MODEL DEPTH</label>
-            <input id="cf-depth" type="range" min="0" max="30" step="1" x-model.number="depth" style="flex: 1;">
-            <span class="mono" style="color: var(--cf-accent); font-size: var(--fs-sm); min-width: 46px; text-align: right;" x-text="depth + ' m'"></span>
-          </div>
-`,
+  "punch": "An inverse proportion explains how pressure changes can drive gas expansion. Use the calculation with its assumptions, and distinguish a physical model from a real-world safety decision.",
+  "careers": [
+    "Diving safety officer",
+    "Hyperbaric medicine physician",
+    "Aerospace engineer",
+    "Meteorologist"
+  ],
+  "cta": {
+    "label": "Explore pressure and volume",
+    "call": "setMode('ideal')"
+  },
+  "state": {
+    "depth": 30
+  },
+  "controls": "\n          <div style=\"padding: var(--s-3) var(--s-4); border-top: 1px solid var(--cf-line); display: flex; gap: var(--s-4); align-items: center;\">\n            <label style=\"color: var(--cf-ink-2); font-size: var(--fs-xs); font-family: var(--font-mono); white-space: nowrap;\" for=\"cf-depth\">MODEL DEPTH</label>\n            <input id=\"cf-depth\" type=\"range\" min=\"0\" max=\"30\" step=\"1\" x-model.number=\"depth\" style=\"flex: 1;\">\n            <span class=\"mono\" style=\"color: var(--cf-accent); font-size: var(--fs-sm); min-width: 46px; text-align: right;\" x-text=\"depth + ' m'\"></span>\n          </div>\n",
   stage: `
           <svg viewBox="0 0 640 360" role="img" aria-label="Interactive Boyle's law model: a sealed gas sample expands as pressure decreases from 30 meters depth toward the surface">
             <rect x="0" y="0" width="640" height="56" fill="#163b49"/><circle class="a-glow" style="--dur:4s" cx="560" cy="26" r="16" fill="#ffd27e" opacity=".8"/>

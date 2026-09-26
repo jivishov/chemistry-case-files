@@ -1,10 +1,7 @@
 // model.js - Unit 11 domain data (Nuclear Chemistry, TEKS C.14).
 //
-// The units_new build. Copied from units/11-nuclear/js/model.js unchanged: this unit was
-// retrofitted with its Scenario layer before this tree existed, so the pools, the decay
-// data, the thirty-one SCENARIOS and the standards map are already correct and the port
-// is a presentation port. What changed in this tree lives in main.js (unitId, the cockpit
-// readouts, screenOf), index.html (the cockpit shell) and js/art.js (new).
+// Domain data reused by the active units/ entry page. Lesson-fidelity review corrects
+// scientific claims and distinguishes classroom arithmetic from clinical decisions.
 //
 // Pure data plus the standards map. Every quantity that gets calculated lives in
 // shared/js/chem.js (DECAY_PARTICLES, decayProduct, isBalancedNuclear, symbolForZ,
@@ -36,7 +33,7 @@ export const SE = [
   { id: 'h2', code: 'Honors',  mode: 'power', honors: true,
     text: 'Honors: mass defect and binding energy per nucleon, the curve that explains why fission and fusion both release energy.' },
   { id: 'h3', code: 'Honors',  mode: 'dose',  honors: true,
-    text: 'Honors: combine physical and biological half-life into the effective half-life a patient release decision is made from.' }
+    text: 'Honors: combine physical and biological half-life in a stated first-order model and calculate when a specified activity fraction remains.' }
 ];
 
 // The four emissions, with the field evidence that tells them apart. The penetration
@@ -44,35 +41,33 @@ export const SE = [
 // C.14(A) means by "characteristics". `notation` feeds the mhchem equation.
 export const EMISSIONS = [
   { key: 'alpha', tag: 'Alpha', notation: '^{4}_{2}He',
-    label: 'A helium nucleus: two protons and two neutrons leave together. Heavy, doubly charged, and stopped by a sheet of paper or the dead layer of your skin.' },
+    label: 'A helium-4 nucleus, charge +2, with a short range. Paper can stop typical alpha particles; internal exposure is a different situation.' },
   { key: 'beta', tag: 'Beta minus', notation: '^{0}_{-1}e',
-    label: 'A neutron turns into a proton and throws out an electron. Light, singly negative, and stopped by a few millimetres of plastic.' },
+    label: 'An electron emitted with an antineutrino as a neutron changes to a proton. Its range and suitable shielding depend on energy.' },
   { key: 'gamma', tag: 'Gamma', notation: '^{0}_{0}\\gamma',
-    label: 'Pure energy shed by a nucleus dropping to a lower state. No mass, no charge, and it takes centimetres of lead to cut it down.' },
+    label: 'A photon emitted as a nucleus loses excitation energy. It has no rest mass or charge; shielding attenuates it rather than defining one universal stopping thickness.' },
   { key: 'positron', tag: 'Positron (beta plus)', notation: '^{0}_{+1}e',
-    label: 'A proton turns into a neutron and throws out an anti-electron, which meets an ordinary electron and annihilates into two 511 keV photons.' }
+    label: 'A positron emitted with a neutrino as a proton changes to a neutron. Annihilation with an electron commonly produces two approximately opposite 511 keV photons.' }
 ];
 
 // Why an isotope is right for a job. One of these is the decisive property in each
 // C.14(C) scenario, and the goal text always points at which kind of reason it is.
 export const REASONS = [
   { key: 'penetrating',
-    label: 'It emits gamma only, so the radiation gets out to where it is needed and leaves almost nothing behind in whatever it passes through.' },
+    label: 'Its useful gamma photons can reach an external detector; their interactions still deposit some energy in matter.' },
   { key: 'positron',
-    label: 'It emits positrons, and every annihilation sends two 511 keV photons flying apart back to back, which is exactly what the detector ring is built to catch.' },
+    label: 'Positron emission can produce a pair of approximately 511 keV annihilation photons detected in coincidence by PET.' },
   { key: 'beta-local',
-    // Serves both users of this key: iodine collected in a thyroid, and tritium sealed in an
-    // exit sign. Neither is about WHERE the isotope gathers; both are about the range being
-    // a millimetre or two, so the energy lands beside the source and none of it travels.
-    label: 'It emits beta particles, whose range is a millimetre or two, so all of their energy lands right beside the source and none of it travels any further.' },
+    // Used for beta-emitting sources in different settings; ranges depend on energy.
+    label: 'Its beta emission deposits energy over a relatively short, energy-dependent range, useful in the specified application.' },
   { key: 'alpha-contained',
-    label: 'It emits alpha particles, which cannot get out of the device at all, so the ionisation stays where it is wanted and the case is safe to hold.' },
+    label: 'Its short-range alpha particles ionize air within an intact, designed detector; containment and other emissions still matter.' },
   { key: 'short-half',
-    label: 'Its half-life is short, so the activity is essentially gone within a day and the patient does not carry it around.' },
+    label: 'Its relatively short half-life limits persistence on the timescale of the application; activity does not disappear at a fixed deadline.' },
   { key: 'long-half',
-    label: 'Its half-life is long, so the source keeps doing the job for years without being replaced.' },
+    label: 'Its long half-life permits useful activity over years, although output falls and suitability also depends on other properties.' },
   { key: 'matched-clock',
-    label: 'Its half-life sits on the same timescale as the thing being measured, so the fraction left is a number you can actually read.' }
+    label: 'Its decay timescale and the sample history allow a measurable remaining fraction appropriate for dating.' }
 ];
 
 // Half-life units the dose stage works in, expressed in hours so a scenario can
@@ -95,8 +90,8 @@ export const SERIES = [
     parent: { sym: 'Th-232', A: 232, Z: 90 }, end: { sym: 'Pb-208', A: 208, Z: 82 },
     story: 'Thorium is in the sand on half the beaches in the world and in the mantle of an old camping lantern. It is the reason a geiger counter never reads zero outdoors.' },
   { id: 'np237', name: 'the neptunium series',
-    parent: { sym: 'Np-237', A: 237, Z: 93 }, end: { sym: 'Bi-209', A: 209, Z: 83 },
-    story: 'This chain has no natural parent left. Every atom of it on Earth was made in a reactor, which is why it ends on bismuth instead of lead: the natural series that once ran it died out long before there was anybody to measure it.' }
+    parent: { sym: 'Np-237', A: 237, Z: 93 }, end: { sym: 'Tl-205', A: 205, Z: 81 },
+    story: 'The neptunium series ultimately reaches stable thallium-205. Bismuth-209 is an extremely long-lived alpha emitter, once regarded as stable. Count all alpha and beta-minus steps to the stated endpoint.' }
 ];
 
 // Honors h2: measured atomic masses (u), from the standard mass tables. Pair each with
@@ -105,12 +100,12 @@ export const SERIES = [
 export const BINDING_CASES = [
   { sym: 'H-2',   name: 'deuterium',    A: 2,   Z: 1,  mass: 2.014102,
     story: 'The fusion vendor keeps quoting deuterium. Work out how tightly its one proton and one neutron are actually held together before you believe anything else in the brochure.' },
-  { sym: 'He-4',  name: 'helium-4',     A: 4,   Z: 2,  mass: 4.002602,
-    story: 'Helium-4 is the alpha particle your vault sources throw out, and it is the ash of every fusion reaction in the sun. There is a reason it turns up at the end of so many nuclear processes.' },
+  { sym: 'He-4',  name: 'helium-4',     A: 4,   Z: 2,  mass: 4.002603,
+    story: 'A helium-4 nucleus is an alpha particle, and helium-4 is the net product of the main hydrogen-fusion chains in the Sun. The mass supplied here is for a neutral helium-4 atom.' },
   { sym: 'C-12',  name: 'carbon-12',    A: 12,  Z: 6,  mass: 12.000000,
     story: 'Carbon-12 defines the mass unit itself, so its atomic mass is exactly 12 by definition. Its nucleons still weigh more apart than together, and that difference is the whole story.' },
   { sym: 'Fe-56', name: 'iron-56',      A: 56,  Z: 26, mass: 55.934936,
-    story: 'Iron-56 sits at the top of the curve. Nothing you can do to it releases energy, which is why stars stall when their cores turn to iron.' },
+    story: 'Iron-56 lies near the broad binding-energy maximum in the iron-nickel region. The graph explains broad energy trends, but the energy of a particular reaction requires its complete reactants and products.' },
   { sym: 'Kr-92', name: 'krypton-92',   A: 92,  Z: 36, mass: 91.926156,
     story: 'Krypton-92 is one of the fragments the reactor leaves when a uranium-235 nucleus splits. Work out where it lands on the curve, then compare that against the uranium it came out of.' },
   { sym: 'U-235', name: 'uranium-235',  A: 235, Z: 92, mass: 235.043930,
@@ -123,16 +118,16 @@ export const BINDING_CASES = [
 export const DOSAGE_CASES = [
   { id: 'i131-ward', agent: 'iodine-131 sodium iodide', isotope: 'I-131',
     physical: 8.02, biological: 7.0, unit: 'd', threshold: 0.30,
-    story: 'The thyroid ward will not discharge a therapy patient until the activity still in her is below 30 percent of what she swallowed. She wants a number, not a shrug.',
-    why: 'Iodine leaves her two ways at once. It decays, and her body excretes it. Use only the physical half-life and you will keep her in an isolation room for days longer than the law requires.' },
+    story: 'Classroom retention model for iodine-131 sodium iodide: use the supplied physical and biological half-lives to find when the retained fraction reaches 30%. The biological value and threshold are example inputs, not a patient-release rule.',
+    why: 'Assume independent first-order physical decay and biological removal. Their rates add. Real clearance can involve several compartments, and activity alone does not determine a clinical decision.' },
   { id: 'tc99m-room', agent: 'technetium-99m MDP bone agent', isotope: 'Tc-99m',
     physical: 6.0, biological: 24.0, unit: 'h', threshold: 0.25,
-    story: 'A bone-scan patient shares a room with a pregnant colleague on the evening shift. The ward wants to know when the retained activity is under a quarter of the injected dose.',
-    why: 'MDP goes to bone and the rest is passed in urine. The clearance is fast enough that ignoring it would badly overstate how long she is a source.' },
+    story: 'Classroom retention model for technetium-99m MDP bone agent: use the supplied physical and biological half-lives to find when the retained fraction reaches 25%. The biological value and threshold are example inputs, not a patient-release rule.',
+    why: 'Assume independent first-order physical decay and biological removal. Their rates add. Real clearance can involve several compartments, and activity alone does not determine a clinical decision.' },
   { id: 'f18-bay', agent: 'fluorine-18 FDG', isotope: 'F-18',
     physical: 1.8333, biological: 4.0, unit: 'h', threshold: 0.20,
-    story: 'The PET recovery bay has four chairs and a waiting list. You need to know when a patient is down to a fifth of the injected activity so the next one can sit down.',
-    why: 'FDG is sugar, so the kidneys clear what the cells do not take up. Both clocks run at once and the combined one is what the bay is scheduled on.' }
+    story: 'Classroom retention model for fluorine-18 FDG: use the supplied physical and biological half-lives to find when the retained fraction reaches 20%. The biological value and threshold are example inputs, not a patient-release rule.',
+    why: 'Assume independent first-order physical decay and biological removal. Their rates add. Real clearance can involve several compartments, and activity alone does not determine a clinical decision.' }
 ];
 
 // Dose tolerance. Activity readings genuinely vary with how carefully the learner
@@ -159,18 +154,18 @@ export const SCENARIOS = [
     nuclide: 'Mo-99', system: 'Generator column', icon: '\u{1F9EA}',
     goal: 'The week\'s technetium generator arrives in its lead pig. The paperwork says the column is loaded with molybdenum-99. Confirm what it is doing before you elute it into a patient dose.',
     why: 'Everything on today\'s list comes off this column. If the parent is not what the label says, every dose you draw from it is wrong in a way no camera will show you.',
-    evidence: 'With the column out of its shielding, the survey meter reads straight through a sheet of paper. Six millimetres of clear acrylic drops it to background, and the acrylic is deliberately plastic rather than lead.',
+    evidence: 'The supplied nuclear record shows Mo-99 changing to Tc-99m with A unchanged and Z increasing by one. Charged beta particles are accompanied by photon emissions from the source and daughter system. Identify the parent transformation, not a complete shielding design.',
     consequences: {
-      beta: 'Right. Molybdenum-99 beta decays, and the plastic shield is chosen precisely because a low-density material stops the electrons without generating the bremsstrahlung X-rays that lead would. The column goes in the hot cell and the morning starts on time.',
+      beta: 'Mo-99 undergoes beta-minus decay to technetium. The emitted electron is accompanied by an antineutrino; the generator also has photon radiation. A plastic sheet alone does not establish complete shielding.',
       alpha: 'You log it as an alpha emitter and handle it as a contamination-only hazard behind paper. A source that reads clean through paper is not alpha, and the shielding you just signed off does nothing.',
-      gamma: 'You call it gamma and wrap the column in lead. Lead does stop the betas, but it turns them into penetrating X-rays on the way, so the dose rate at the bench goes UP and it takes the physicist an hour to work out why.',
+      gamma: 'Photon emissions are present, but pure gamma emission cannot change Z from 42 to 43. The parent transformation is beta-minus decay.',
       positron: 'You log a positron emitter and go looking for the paired 511 keV photons that a coincidence detector would see. They are not there, because there is no annihilation happening, and you have described the wrong nucleus.'
     } },
   { id: 'a-eluate', stage: 'ident', skill: 'a', type: 'identity',
     nuclide: 'Tc-99m', system: 'Morning elution', icon: '\u{1F489}',
     goal: 'You rinse the column with saline and draw off the eluate. This is the technetium-99m that goes into eight people today. Write what it does when it settles.',
     why: 'The whole reason this isotope owns nuclear medicine is what it does NOT do. Getting that equation right is the difference between an imaging agent and a dose of radiation with no picture attached.',
-    evidence: 'The vial reads through paper and through the acrylic without changing. Three millimetres of lead cuts the reading roughly in half. Nothing on the mass spectrometer changes: whatever comes out is the same element it went in as.',
+    evidence: 'Tc-99m has an excited nucleus. Its principal useful imaging emission is a photon near 140 keV; A and Z stay unchanged as it reaches Tc-99. Other transition channels, including conversion electrons, can also occur.',
     consequences: {
       gamma: 'Right. The m stands for metastable: the nucleus is holding excess energy and sheds it as a single 140 keV gamma photon, with no change to A or Z at all. That is why it images so cleanly, because nothing particulate is left in the patient.',
       alpha: 'You log an alpha emitter and inject it. If that were true you would be putting a heavily ionising particle emitter into eight people and getting no picture, because alphas never reach the camera.',
@@ -203,7 +198,7 @@ export const SCENARIOS = [
     nuclide: 'Co-60', system: 'Teletherapy head', icon: '\u{2600}\u{FE0F}',
     goal: 'The old cobalt-60 teletherapy unit is being decommissioned and the physicist wants the source decay written on the transfer form.',
     why: 'That form travels with the source to the disposal facility. Whoever opens the crate at the other end plans their shielding from what you wrote.',
-    evidence: 'Nothing stops it. Paper, acrylic, a hand, all unchanged. The dose rate only starts to move behind five centimetres of lead, and the head it sits in is a cast block of the stuff.',
+    evidence: 'The supplied record identifies Co-60 changing to excited Ni-60 by beta-minus decay, followed by penetrating gamma emissions. The photons dominate radiation outside the source capsule; identify the initial change in the parent nucleus.',
     consequences: {
       beta: 'Right. Cobalt-60 beta decays to nickel-60, and the point of the machine is the pair of high-energy gamma photons the excited nickel sheds immediately afterwards. The beta itself never leaves the source capsule, which is why the form has to say what the nucleus does, not just what escapes.',
       alpha: 'You write alpha on a form that travels with a source needing five centimetres of lead. The receiving crew plans for a contamination hazard and opens a crate they should have handled at arm\'s length behind shielding.',
@@ -214,7 +209,7 @@ export const SCENARIOS = [
     nuclide: 'Sr-90', system: 'Eye applicator', icon: '\u{1F441}\u{FE0F}',
     goal: 'Ophthalmology has a strontium-90 applicator they press against the eye to treat a surface lesion. Write its decay for the annual source inventory.',
     why: 'This one touches a human eye. The inventory has to say exactly what is coming out of it and how deep that goes.',
-    evidence: 'It reads clean through paper and stops dead behind four millimetres of acrylic. There is no penetrating component at all: the meter behind the plastic reads background, with or without lead.',
+    evidence: 'Sr-90 undergoes beta-minus decay to Y-90, which is also radioactive. The charged-particle range depends on energy, and shielding can generate bremsstrahlung. This question identifies the parent decay rather than prescribing shielding.',
     consequences: {
       beta: 'Right. Strontium-90 is a pure beta emitter, and that is exactly why it can sit against an eye: the electrons deposit their energy within a couple of millimetres of surface tissue and nothing carries on into the lens or the brain behind it.',
       alpha: 'You log alpha. An alpha would not make it through the applicator window at all, so the device would do nothing, and you have just certified a treatment source that on your own description cannot treat anything.',
@@ -225,7 +220,7 @@ export const SCENARIOS = [
     nuclide: 'Ra-226', system: 'Legacy find', icon: '\u{1F5DD}\u{FE0F}',
     goal: 'A contractor pulls a small lead box out of a wall cavity during the basement refit. Inside are 1940s radium needles from when this hospital ran its own brachytherapy. Write what radium-226 does.',
     why: 'The daughter of this decay is a gas, and the box has been leaking into a sealed basement for eighty years. What you write decides whether anybody goes back down there today.',
-    evidence: 'The needles read hot at contact and nothing at all at twenty centimetres of air. A paper towel laid over them takes the contact reading away completely. The air in the room, though, reads elevated on its own.',
+    evidence: 'The supplied record shows Ra-226 producing Rn-222 and a helium-4 nucleus. The source and its daughters can also emit penetrating radiation, and radon is a gas. Short alpha range does not make an uncharacterized source harmless.',
     consequences: {
       alpha: 'Right. Radium-226 alpha decays, and the reason the room air reads is that the daughter is radon-222, an alpha-emitting noble gas that will not stay put. The basement gets ventilated before anybody works down there and the needles go into a sealed transfer pot.',
       beta: 'You log beta. Betas are not stopped by a paper towel, and calling it beta means missing the daughter entirely: nobody looks for the gas, and the refit crew works a shift in an unventilated basement.',
@@ -319,21 +314,21 @@ export const SCENARIOS = [
     } },
   { id: 'b-waste', stage: 'power', skill: 'b', type: 'decision',
     system: 'The waste question', icon: '\u{1F5D1}\u{FE0F}',
-    goal: 'A student on placement asks why the reactor that supplies your molybdenum leaves a waste problem when the sun does not. Classify the reaction, then answer her.',
-    why: 'It is a fair question and it has a real answer, which is about where the fragments land on the stability curve, not about the energy released.',
+    goal: 'A student asks why fission produces radioactive fragments. Classify the reaction, then distinguish its products from the helium made by hydrogen fusion.',
+    why: 'Waste depends on the nuclides produced, their decay chains, and the materials exposed to radiation. Fusion systems can also create radioactive material through neutron activation.',
     ce: '^{235}_{92}U + ^{1}_{0}n -> ^{141}_{56}Ba + ^{92}_{36}Kr + 3^{1}_{0}n',
     kind: 'fission',
-    kindNote: 'One heavy nucleus becomes two mid-sized ones plus free neutrons.',
-    question: { prompt: 'Why does this leave long-lived waste when fusion does not?',
+    kindNote: 'One heavy nucleus becomes two smaller nuclei plus free neutrons.',
+    question: { prompt: 'Why are many fission products radioactive?',
       options: [
-        { key: 'fragments', label: 'The fragments are far too neutron-rich to be stable, so they keep beta decaying for anything from seconds to thousands of years' },
-        { key: 'more',      label: 'Fission releases more total energy, so there is simply more of everything left over' },
-        { key: 'neutrons',  label: 'The free neutrons themselves stay radioactive and have to be stored' }
+        { key: 'fragments', label: 'Many fragments have excess neutrons relative to stable nuclei of their size and undergo further decay' },
+        { key: 'more', label: 'A large energy release automatically makes every product radioactive' },
+        { key: 'neutrons', label: 'The free neutrons themselves remain stored as the long-lived waste' }
       ], correct: 'fragments' },
     consequences: {
-      fragments: 'Right. A heavy nucleus needs far more neutrons per proton than a mid-sized one does, so when it splits, both fragments come out carrying too many. They shed the excess by beta decay, one step at a time, for a very long time. That is the waste. Fusion ends on helium, which is stable.',
-      more:      'You put it down to sheer quantity. Per unit of energy, fusion releases more, not less, so the argument runs backwards and the student is left thinking waste is about scale rather than stability.',
-      neutrons:  'You tell her the loose neutrons are the waste. A free neutron decays in about fifteen minutes and none of them are stored. The real answer, the neutron-rich fragments, never comes up.'
+      fragments: 'Correct. Many fission fragments undergo beta decay and other emissions along chains with differing half-lives. Some fission products and other nuclides in spent fuel remain radioactive for long periods. Hydrogen fusion can produce stable helium, but fusion neutrons can activate surrounding materials; fusion is not universally waste-free.',
+      more: 'Radioactivity is determined by nuclear stability, not simply by the energy a reaction releases. Compare the actual product nuclides.',
+      neutrons: 'Free neutrons are not stored as the long-lived waste. They can be captured and activate materials, or decay. Radioactive product nuclei account for the continuing activity.'
     } },
   { id: 'b-activation', stage: 'power', skill: 'b', type: 'decision',
     system: 'The alternative supplier', icon: '\u{1F4E6}',
@@ -376,10 +371,10 @@ export const SCENARIOS = [
   { id: 'c-bone', stage: 'apply', skill: 'c', type: 'decision',
     system: 'Bone scan, 9 years old', icon: '\u{1F9B4}',
     goal: 'A nine-year-old with unexplained leg pain needs a whole-body bone scan. The camera sits outside her. Pick the isotope, then name the property that decided it.',
-    why: 'She is nine. Anything that deposits particles inside her is dose she carries for nothing, because a particle emitter never reaches the camera anyway.',
+    why: 'The stated camera requires detectable photons and an appropriate radiopharmaceutical. A useful photon emission does not imply zero absorbed energy or guarantee an image.',
     offered: ['Tc-99m', 'Sr-90', 'Am-241'], correct: 'Tc-99m', reason: 'penetrating',
     consequences: {
-      'Tc-99m': 'The gamma photons walk straight out of her and into the camera, the study takes twenty minutes, and by tomorrow morning almost none of it is left. A clean image for about the dose of a few chest X-rays.',
+      'Tc-99m': 'Tc-99m provides photons useful for external gamma imaging. Appropriate chemical targeting and instrumentation are also required; activity calculations alone do not determine dose or image quality.',
       'Sr-90': 'You inject a pure beta emitter. Every electron stops inside her within two millimetres, so the camera sees nothing at all, and a nine-year-old has absorbed a therapeutic dose of radiation for a blank image.',
       'Am-241': 'You inject an alpha emitter with a 432 year half-life. The alphas cannot leave the tissue they land in, the camera sees nothing, and she now carries a long-lived internal emitter. This is one of the worst things you can do with an isotope.'
     } },
@@ -395,12 +390,12 @@ export const SCENARIOS = [
     } },
   { id: 'c-thyroid', stage: 'apply', skill: 'c', type: 'decision',
     system: 'Overactive thyroid', icon: '\u{1F9B7}',
-    goal: 'A patient with Graves disease needs the overactive tissue in her thyroid destroyed, and nothing around it touched. The thyroid concentrates iodine from the blood by itself. Pick the isotope, then name the property that decided it.',
-    why: 'The gland is a centimetre from her voice box and her parathyroids. Whatever you use has to stop inside the tissue that took it up.',
+    goal: 'In the supplied thyroid-treatment example, iodine uptake helps localize a beta-emitting isotope. Choose the isotope and the relevant emission property from the reference choices.',
+    why: 'Uptake and radiation range influence where energy is deposited, but neither guarantees that other tissues receive zero dose.',
     offered: ['I-131', 'Tc-99m', 'Co-60'], correct: 'I-131', reason: 'beta-local',
     consequences: {
-      'I-131': 'Her thyroid pulls the iodine in as if it were dietary, and the beta particles deposit their energy within a millimetre or two of where they were emitted. The overactive tissue is destroyed and her parathyroids, a few millimetres away, are untouched.',
-      'Tc-99m': 'Technetium is taken up by the thyroid, so it images beautifully, but it emits gamma only. Gamma photons walk out of her without depositing much of anything, so the gland is photographed and nothing is treated.',
+      'I-131': 'I-131 has beta emission useful for localized energy deposition and also emits gamma radiation. Iodine uptake supports the thyroid application; the model does not predict a patient outcome or zero exposure elsewhere.',
+      'Tc-99m': 'Tc-99m is primarily useful here as an imaging isotope. Detectable photons are not a guarantee of zero energy deposition, and this choice does not fit the stated therapeutic reference.',
       'Co-60': 'You reach for the teletherapy isotope. Cobalt-60 is not taken up by anything, it is a sealed external source, and its gamma beam would irradiate her whole neck rather than the tissue that concentrated the tracer.'
     } },
   { id: 'c-sterile', stage: 'apply', skill: 'c', type: 'decision',
@@ -416,7 +411,7 @@ export const SCENARIOS = [
   { id: 'c-smoke', stage: 'apply', skill: 'c', type: 'decision',
     system: 'Smoke detector over the vault', icon: '\u{1F6A8}',
     goal: 'The ionisation smoke detector above the source vault holds a tiny sealed isotope button. Its job is to ionise the air in a small chamber so smoke particles interrupt the current. Pick the isotope, then name the property that decided it.',
-    why: 'This thing screws to a ceiling in a public building and gets thrown in a skip at end of life. Whatever is in it must not be able to get out of the housing.',
+    why: 'The activity depends on alpha ionization within an intact, designed detector. Other emissions, source containment, and approved end-of-life handling still matter.',
     offered: ['Am-241', 'Co-60', 'I-131'], correct: 'Am-241', reason: 'alpha-contained',
     consequences: {
       'Am-241': 'The alpha particles ionise the chamber air heavily and travel a couple of centimetres at most, so nothing leaves the plastic housing. A 432 year half-life means the detector outlives the building. This is the most common radioactive source in ordinary life.',
@@ -458,54 +453,54 @@ export const SCENARIOS = [
   { id: 'hl-bone', stage: 'dose', skill: 'hl', type: 'dose',
     system: 'Bone scan draw', icon: '\u{1F4C9}',
     goal: 'The eluate was assayed the moment it came off the column. The bone scan patient is on the table now. Work out how much activity is still in the vial, so the dose you draw is the dose that was prescribed.',
-    why: 'You draw a VOLUME, and how much activity that volume holds depends on the concentration right now. Guess low and you draw too much liquid and overdose her. Guess high and you draw too little and the images come out too noisy to report.',
+    why: 'Use the reference activity, elapsed time, and the correct isotope half-life. This calculation predicts parent activity; it does not by itself establish dose, treatment outcome, or an operating schedule.',
     isotope: 'Tc-99m', unit: 'h',
     candidates: ['Tc-99m', 'Mo-99', 'I-131'],
     constraints: { a0Min: 240, a0Max: 420, elapsedMin: 1.2, elapsedMax: 5.0 },
     bands: A_BANDS, actionLabel: 'Draw the dose',
-    safeState: 'DOSE ON PRESCRIPTION', lowState: 'PATIENT OVERDOSED', highState: 'NONDIAGNOSTIC SCAN',
-    safe: 'The dose calibrator agrees with you to within a couple of percent, the injection matches the prescription, and the images are clean.',
-    low: 'You thought the vial was weaker than it is, so you drew extra volume to compensate. She receives well over her prescribed activity, and it goes on the incident log.',
-    high: 'You thought the vial was hotter than it is, so you drew less. The counts are too low, the images are grainy, and she has to come back and be injected a second time.',
+    safeState: 'MODEL VALUE MATCHED', lowState: 'ACTIVITY READ LOW', highState: 'ACTIVITY READ HIGH',
+    safe: 'The entered activity agrees with the decay model and supplied reference inputs.',
+    low: 'The entered activity is below the model prediction. Recheck elapsed time, half-life units, and the exponential factor.',
+    high: 'The entered activity is above the model prediction. Recheck elapsed time, half-life units, and the exponential factor.',
     fail: 'No activity was ever committed, so nothing gets drawn and the patient waits on the table.' },
   { id: 'hl-pet', stage: 'dose', skill: 'hl', type: 'dose',
     system: 'FDG delivery', icon: '\u{1F69A}',
     goal: 'The FDG came off the cyclotron with an assayed activity and a calibration time stamped on the vial. The courier hit traffic. Work out what is left now, before the PET slot opens.',
-    why: 'Fluorine-18 loses half its activity every 110 minutes, so a delivery that is an hour late is a genuinely different vial. Under-read it and the patient is overdosed; over-read it and the scan is too quiet to reconstruct.',
+    why: 'Use the reference activity, elapsed time, and the correct isotope half-life. This calculation predicts parent activity; it does not by itself establish dose, treatment outcome, or an operating schedule.',
     isotope: 'F-18', unit: 'min',
     candidates: ['F-18', 'Tc-99m', 'Mo-99'],
     constraints: { a0Min: 300, a0Max: 550, elapsedMin: 45, elapsedMax: 210 },
     bands: A_BANDS, actionLabel: 'Release for injection',
-    safeState: 'SLOT SAVED', lowState: 'PATIENT OVERDOSED', highState: 'SCAN TOO QUIET',
-    safe: 'Your figure matches the calibrator, the dose is drawn correctly, and the PET slot runs on time. Nothing about the traffic reaches the patient.',
-    low: 'You under-read the vial and drew extra to make up the difference. A staging patient receives more activity than the protocol allows, for no extra information.',
-    high: 'You over-read the vial and drew too little. The reconstruction is noisy, the report is equivocal, and with a 110 minute half-life there is not enough left in the delivery to repeat it today.',
+    safeState: 'MODEL VALUE MATCHED', lowState: 'ACTIVITY READ LOW', highState: 'ACTIVITY READ HIGH',
+    safe: 'The entered activity agrees with the decay model and supplied reference inputs.',
+    low: 'The entered activity is below the model prediction. Recheck elapsed time, half-life units, and the exponential factor.',
+    high: 'The entered activity is above the model prediction. Recheck elapsed time, half-life units, and the exponential factor.',
     fail: 'No activity was committed, the slot passes, and the delivery is worth a fraction of what it was by the next one.' },
   { id: 'hl-capsule', stage: 'dose', skill: 'hl', type: 'dose',
     system: 'Therapy capsule', icon: '\u{1F48A}',
     goal: 'An iodine-131 therapy capsule was assayed at the supplier and has been in transit and in the safe since. The patient is here. Work out the activity in that capsule today.',
-    why: 'This is a treatment, not a picture. The prescribed activity is what kills the right amount of thyroid tissue. Too little and she needs a whole second treatment months from now. Too much and she loses gland function she was meant to keep.',
+    why: 'Use the reference activity, elapsed time, and the correct isotope half-life. This calculation predicts parent activity; it does not by itself establish dose, treatment outcome, or an operating schedule.',
     isotope: 'I-131', unit: 'd',
     candidates: ['I-131', 'Mo-99', 'Rn-222'],
     constraints: { a0Min: 400, a0Max: 900, elapsedMin: 1.0, elapsedMax: 9.0 },
     bands: A_BANDS, actionLabel: 'Dispense the capsule',
-    safeState: 'TREATMENT ON PRESCRIPTION', lowState: 'OVER-TREATED', highState: 'UNDER-TREATED',
-    safe: 'Your figure matches the assay, the prescribed activity is what she actually swallows, and the follow-up at six weeks shows exactly the response that was planned.',
-    low: 'You under-read the capsule and dispensed a second one to top it up. She receives far more than prescribed and is left permanently dependent on replacement hormone.',
-    high: 'You over-read the capsule and dispensed less activity than the prescription. The gland is not adequately treated, and she goes through the whole isolation protocol again in six months.',
+    safeState: 'MODEL VALUE MATCHED', lowState: 'ACTIVITY READ LOW', highState: 'ACTIVITY READ HIGH',
+    safe: 'The entered activity agrees with the decay model and supplied reference inputs.',
+    low: 'The entered activity is below the model prediction. Recheck elapsed time, half-life units, and the exponential factor.',
+    high: 'The entered activity is above the model prediction. Recheck elapsed time, half-life units, and the exponential factor.',
     fail: 'Nothing was committed, so nothing is dispensed and she goes home having taken the day off for nothing.' },
   { id: 'hl-shipment', stage: 'dose', skill: 'hl', type: 'dose',
     system: 'Generator shipment', icon: '\u{1F4E6}',
     goal: 'The replacement generator was assayed at the reactor site and shipped. Work out the molybdenum-99 activity that will actually be on the column when it lands here.',
-    why: 'That number decides whether one generator carries the whole week\'s list. Under-read it and you order an emergency second column nobody needed. Over-read it and you run out of technetium on Thursday with patients booked.',
+    why: 'Use the reference activity, elapsed time, and the correct isotope half-life. This calculation predicts parent activity; it does not by itself establish dose, treatment outcome, or an operating schedule.',
     isotope: 'Mo-99', unit: 'h',
     candidates: ['Mo-99', 'Tc-99m', 'I-131'],
     constraints: { a0Min: 1200, a0Max: 2400, elapsedMin: 14, elapsedMax: 80 },
     bands: A_BANDS, actionLabel: 'Confirm the order',
-    safeState: 'WEEK COVERED', lowState: 'MONEY BURNED', highState: 'THURSDAY GAP',
-    safe: 'Your figure matches the delivery assay, one column covers the week, and nothing has to be rescheduled.',
-    low: 'You under-read the shipment and ordered an emergency second generator on next-day courier. It arrives, it is not needed, and it decays in the vault at several thousand pounds a column.',
-    high: 'You over-read the shipment and ordered nothing extra. By Thursday afternoon the elution is too weak to dose from, and six patients are rebooked into next week.',
+    safeState: 'MODEL VALUE MATCHED', lowState: 'ACTIVITY READ LOW', highState: 'ACTIVITY READ HIGH',
+    safe: 'The entered activity agrees with the decay model and supplied reference inputs.',
+    low: 'The entered activity is below the model prediction. Recheck elapsed time, half-life units, and the exponential factor.',
+    high: 'The entered activity is above the model prediction. Recheck elapsed time, half-life units, and the exponential factor.',
     fail: 'Nothing was committed, so no order was placed either way.' },
 
   // ---------- Honors h1: the full decay series ----------
@@ -527,9 +522,9 @@ export const SCENARIOS = [
   // ---------- Honors h3: effective half-life ----------
   { id: 'h3-effective', stage: 'dose', skill: 'h3', type: 'identity',
     system: 'Patient release', icon: '\u{1F6CF}\u{FE0F}',
-    goal: 'The activity in a patient falls faster than the isotope decays, because her body is clearing the compound at the same time. Combine the two half-lives, then work out when she drops below the release threshold.',
+    goal: 'Combine the supplied physical and biological half-lives, then calculate the time to the example retained-activity threshold. Treat the threshold as a classroom model input.',
     why: 'Decay and excretion are two independent first-order routes out, so their RATES add, not their half-lives. That is why the combined half-life is always shorter than either one on its own.',
-    success: 'The ward gets a defensible time, the isolation room is freed on schedule, and the patient goes home when she is genuinely below the limit.',
+    success: 'The effective half-life and time to the supplied model threshold agree. These two values do not establish a real patient-release decision.',
     fail: 'The time is wrong, so she is either held in isolation for no reason or released while still above the threshold.' },
 
   // ---------- Capstone: the last patient of the morning ----------

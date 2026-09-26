@@ -1,0 +1,15 @@
+{
+  "name": "chemistry-case-files",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:lessons": "node scripts/build-lessons.mjs",
+    "test:lessons": "node tests/lessons.test.mjs",
+    "test:photos": "node --test tests/visual-fidelity.test.mjs tests/mission-photos.test.mjs",
+    "test": "node tests/chem.test.js && node tests/game.test.js && node tests/casefile.test.js && node tests/gauge.test.js && node tests/molezoom.test.js && node tests/art.test.js && node tests/periodic-trends.test.js && node tests/scenario-coherence.test.mjs && node tests/notation.test.mjs && node tests/lessons.test.mjs && node --test tests/visual-fidelity.test.mjs tests/mission-photos.test.mjs && node --test tests/reading-integration.test.mjs",
+    "test:site": "node scripts/check-site.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

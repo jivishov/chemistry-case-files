@@ -1,58 +1,80 @@
-// case.js — Unit 5 case file: Apollo 13, the mole math that brought them home.
-// Carries the story AND the stage art; the shared casefile component renders the
-// chrome around it. The same story units/05-the-mole tells, carried here in full so the
-// units_new tree stands on its own.
-
+// Case narrative and assessment aligned with the unit reading.
 export const CASE = {
-  id: 'apollo-13-scrubber',
-  number: '005',
-  kicker: 'scientific case study',
-  title: 'Apollo 13: Carbon Dioxide Control in a Lifeboat',
-  teaser: 'Apollo 13 · April 1970',
-  hook: 'After an oxygen-tank explosion forced Apollo 13 to abandon its Moon landing, the lunar module Aquarius became a lifeboat for three astronauts. Carbon dioxide removal became one of the mission’s critical life-support problems.',
-  stats: [
-    { v: '~320,000 km', k: 'from Earth when the crisis began' },
-    { v: '3 crew', k: 'living in the lunar module during the return' },
-    { v: '2 : 1', k: 'LiOH : CO2 stoichiometric mole ratio' }
-  ],
-  steps: [
+  "id": "apollo-13-scrubber",
+  "number": "005",
+  "kicker": "a real mission, with classroom calculations",
+  "title": "Apollo 13: Carbon Dioxide Control in a Lifeboat",
+  "teaser": "Apollo 13 · April 1970",
+  "hook": "After an oxygen-tank failure in April 1970, Apollo 13’s crew used the lunar module as a lifeboat. Adapting carbon-dioxide scrubbers became one of several engineering challenges. The amounts used here are rounded teaching values.",
+  "stats": [
     {
-      t: 'An oxygen tank explodes',
-      body: 'On April 13, 1970, an oxygen tank in Apollo 13’s service module exploded. The Moon landing was abandoned, and the crew moved into the lunar module Aquarius as a lifeboat for the return to Earth.',
-      chem: 'The crisis turned consumables into quantitative problems. Oxygen, water, electrical power, and carbon dioxide removal all had limited supplies and operating constraints.',
-      cap: 'April 13, 1970 · Apollo 13 changes from a lunar mission to a survival mission.'
+      "v": "~320,000 km",
+      "k": "from Earth when the crisis began"
     },
     {
-      t: 'Carbon dioxide becomes a life-support concern',
-      body: 'Aquarius had been designed for two astronauts on the lunar surface, not three people living in it for several days. As the crew exhaled, carbon dioxide accumulated, and the available lunar-module scrubber cartridges became a critical constraint.',
-      chem: 'The amount of CO2 can be expressed in moles. With a molar mass of about 44.01 g/mol, a measured mass of CO2 can be converted to moles for stoichiometric calculations.',
-      cap: 'Three crew members in Aquarius · carbon dioxide removal becomes critical.'
+      "v": "3 crew",
+      "k": "classroom CO2 amount per person per day"
     },
     {
-      t: 'Lithium hydroxide removes carbon dioxide',
-      body: 'Apollo spacecraft used lithium hydroxide canisters to remove carbon dioxide from cabin air. A simplified stoichiometric model for the sorbent reaction is 2 LiOH + CO2 → Li2CO3 + H2O.',
-      chem: 'The equation gives a 2:1 mole ratio. Removing 20 mol of CO2 would require 40 mol of LiOH, about 960 g theoretically. Actual cartridge capacity also depends on design, airflow, operating conditions, and test data.',
-      cap: '2 LiOH + CO2 → Li2CO3 + H2O · stoichiometry gives the theoretical ratio.'
-    },
-    {
-      t: 'Engineers adapt the canisters',
-      body: 'The command module had additional square lithium hydroxide canisters, but the lunar module used a different canister arrangement. Engineers on the ground developed and tested an adapter made from materials already on the spacecraft, then sent the assembly procedure to the crew.',
-      chem: 'The chemistry supplied the sorbent reaction; the engineering solution made cabin air flow through the available sorbent. Both were necessary for effective CO2 removal.',
-      cap: 'Square command-module canisters adapted for the lunar-module system.'
+      "v": "2 : 1",
+      "k": "LiOH : CO2 stoichiometric mole ratio"
     }
   ],
-  quiz: {
-    q: 'If 20 mol of CO2 reacts completely according to 2 LiOH + CO2 → Li2CO3 + H2O, what theoretical mass of LiOH is required? Use 24.0 g/mol for LiOH.',
-    options: [
-      { label: 'About 480 g (20 mol LiOH)', correct: false },
-      { label: 'About 960 g (40 mol LiOH)', correct: true },
-      { label: 'About 240 g (10 mol LiOH)', correct: false }
+  "steps": [
+    {
+      "t": "An oxygen tank explodes",
+      "body": "On April 13, 1970, an oxygen tank in Apollo 13’s service module exploded. The Moon landing was abandoned, and the crew moved into the lunar module Aquarius as a lifeboat for the return to Earth.",
+      "chem": "Removing CO2 was essential alongside managing oxygen, water, electrical power, and temperature.",
+      "cap": "April 13, 1970 · Apollo 13 changes from a lunar mission to a survival mission."
+    },
+    {
+      "t": "Carbon dioxide becomes a life-support concern",
+      "body": "Exhaled carbon dioxide accumulates in a closed cabin unless a system removes it. Its effects depend on concentration and exposure. For this calculation, assume a crew member produces 20 mol CO2 in a day.",
+      "chem": "At 44 g/mol, 20 mol CO2 corresponds to about 880 g. This assumed rate supports the classroom calculation; it is not a measured Apollo 13 log.",
+      "cap": "Three crew members in Aquarius · carbon dioxide removal becomes critical."
+    },
+    {
+      "t": "Lithium hydroxide removes carbon dioxide",
+      "body": "Lithium hydroxide reacts with carbon dioxide. The balanced equation gives an ideal chemical capacity. Actual canister performance also depends on airflow, moisture, usable sorbent, and engineering design.",
+      "chem": "2 LiOH + CO2 -> Li2CO3 + H2O. An ideal 20 mol CO2 requirement consumes 40 mol LiOH, or about 960 g using 24 g/mol. The equation alone does not specify a safe canister schedule.",
+      "cap": "2 LiOH + CO2 → Li2CO3 + H2O · stoichiometry gives the theoretical ratio."
+    },
+    {
+      "t": "Engineers adapt the canisters",
+      "body": "The lunar module and command module used incompatible canister shapes. Ground teams devised an adapter using materials available aboard, and the crew assembled it so command-module canisters could help scrub the lunar-module air.",
+      "chem": "Stoichiometry establishes a required chemical amount. Connecting that capacity to a working life-support system also requires testing the flow path and equipment.",
+      "cap": "Square command-module canisters adapted for the lunar-module system."
+    }
+  ],
+  "quiz": {
+    "q": "For a classroom model, assume 20 mol CO2 must be removed. Using 2 LiOH + CO2 -> Li2CO3 + H2O and a LiOH molar mass of 24 g/mol, what is the ideal LiOH requirement?",
+    "options": [
+      {
+        "label": "About 480 g (20 mol LiOH)",
+        "correct": false
+      },
+      {
+        "label": "About 960 g (40 mol LiOH)",
+        "correct": true
+      },
+      {
+        "label": "About 240 g (10 mol LiOH)",
+        "correct": false
+      }
     ],
-    explain: 'The balanced equation requires 2 mol LiOH for every 1 mol CO2. Therefore, 20 mol CO2 requires 40 mol LiOH. At 24.0 g/mol, the theoretical mass is 960 g. Real cartridge performance also depends on engineering design and operating conditions.'
+    "explain": "20 mol CO2 × (2 mol LiOH / 1 mol CO2) × 24 g/mol = 960 g LiOH. This is the ideal reaction requirement for the assumed amount, not a complete life-support specification."
   },
-  punch: 'Apollo 13 shows how mole ratios translate a chemical equation into material requirements. Real life-support performance also depends on system design, airflow, testing, and operating limits.',
-  careers: ['Environmental control and life-support engineer', 'Chemical engineer', 'Flight controller', 'Aerospace systems engineer'],
-  cta: { label: 'Return to mole conversions', call: "setMode('molg')" },
+  "punch": "The mole ratio connects chemical quantities. Real equipment must also deliver that chemical capacity under its operating conditions.",
+  "careers": [
+    "Environmental control and life-support engineer",
+    "Chemical engineer",
+    "Flight controller",
+    "Aerospace systems engineer"
+  ],
+  "cta": {
+    "label": "Return to mole conversions",
+    "call": "setMode('molg')"
+  },
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: inside the Apollo 13 lunar module, exhaled CO2 climbs a gauge until the improvised lithium hydroxide scrubber pulls it back down">
             <!-- space + stars -->
             <g fill="#cfe4ea">
@@ -165,16 +187,16 @@ export const CASE = {
             <!-- CO2 gauge -->
             <g>
               <rect x="446" y="70" width="168" height="250" rx="10" fill="#132630" stroke="#2c414d"/>
-              <text x="530" y="94" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">CABIN CO2 (mmHg)</text>
+              <text x="530" y="94" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">CO2: SCHEMATIC TREND</text>
               <rect x="510" y="110" width="40" height="180" rx="6" fill="#0c1e27" stroke="#2c414d"/>
               <rect x="510" style="transition: y .9s var(--ease), height .9s var(--ease), fill .9s;" width="40" rx="6"
                     :y="290 - [70,150,120,36][step]" :height="[70,150,120,36][step]"
                     :fill="step===3 ? '#8fd9ae' : (step>=1 ? '#ff9a82' : '#ffd27e')"/>
-              <line x1="500" y1="176" x2="560" y2="176" stroke="#ff9a82" stroke-width="1.6" stroke-dasharray="4 4"/>
-              <text x="496" y="180" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="#ff9a82">8: danger</text>
+
+
               <text x="530" y="312" text-anchor="middle" font-family="JetBrains Mono" font-size="10"
                     :fill="step===3 ? '#8fd9ae' : (step>=1 ? '#ff9a82' : '#ffd27e')"
-                    x-text="['climbing&#8230;','13 and rising','scrubbing&#8230;','2.4 and safe'][step]"></text>
+                    x-text="['climbing&#8230;','higher level','scrubbing&#8230;','lower level'][step]"></text>
             </g>
           </svg>`
 };

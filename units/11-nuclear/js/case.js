@@ -1,75 +1,84 @@
-// case.js - Unit 11 case file: a body in an Alpine glacier, dated by counting how much
-// carbon-14 was left in it. Carries the story AND the stage art; the shared casefile
-// component renders the chrome.
-//
-// The units_new build. Copied whole from units/11-nuclear/js/case.js, including the
-// animated stage SVG, with no changes at all: cta.call already goes through setMode(),
-// which is what the cockpit's station strip needs, so this is the one case file in the
-// tree that ported without an edit.
-//
-
+// Case narrative and assessment aligned with the unit reading.
 export const CASE = {
-  id: 'otzi-the-iceman',
-  number: '011',
-  kicker: 'a true story from a melting glacier',
-  title: 'Two hikers found a body in the ice. Carbon-14 said it had been there 5,300 years',
-  teaser: 'A body in an Alpine glacier, dated by counting the carbon-14 left in it',
-  hook: 'In September 1991 two German hikers came off a ridge in the Otztal Alps and found a human head and shoulders sticking out of the ice. Everyone assumed a climbing accident from the last few decades. It was not. The body had been lying in that gully since before the pyramids were built, and the only way anybody could know that was to count what was left of one radioactive isotope inside him.',
-  stats: [
-    { v: '1991', k: 'found at 3,210 m in the Otztal Alps' },
-    { v: '53%', k: 'of his carbon-14 still undecayed' },
-    { v: '5,730 y', k: 'half-life of carbon-14' },
-    { v: '5,300 y', k: 'the age that fraction works out to' }
-  ],
-  steps: [
+  "id": "otzi-the-iceman",
+  "number": "011",
+  "kicker": "a true story from a melting glacier",
+  "title": "Two hikers found a body in the ice. Carbon-14 said it had been there 5,300 years",
+  "teaser": "A body in an Alpine glacier, dated by counting the carbon-14 left in it",
+  "hook": "In September 1991, hikers found a preserved body in the Ötztal Alps. Radiocarbon dating helped establish that Ötzi lived more than 5,000 years ago. The case connects that discovery to a simplified decay model; the example fraction below is not a reported laboratory measurement of his remains.",
+  "stats": [
     {
-      t: 'Everyone guessed wrong',
-      body: 'Helmut and Erika Simon thought they had found a modern climbing casualty, so the recovery was rough: a jackhammer, ski poles, and a body bag. The equipment beside him looked handmade but nobody at the scene could put a number on it. Guesses ran from a few decades to a few hundred years.',
-      chem: 'Nothing about a body tells you its age directly. Preservation depends on the ice, not on the calendar. The age has to come from something inside him that has been counting on its own since the day he died.',
-      cap: 'September 1991. A body in a melting gully, and nobody knows what year it is from.'
+      "v": "1991",
+      "k": "found at 3,210 m in the Otztal Alps"
     },
     {
-      t: 'The clock started when he stopped eating',
-      body: 'High in the atmosphere, cosmic rays knock neutrons loose, and those neutrons hit nitrogen-14 and turn it into carbon-14. It mixes into the air as carbon dioxide, plants take it up, animals eat the plants, and every living thing carries the same small, steady fraction of it. The moment an organism dies it stops taking any more in.',
-      chem: 'Carbon-14 beta decays back to nitrogen-14 with a half-life of 5,730 years. While you are alive, intake replaces what decays and the fraction holds steady. Once you die, nothing is replaced, and the fraction only falls.',
-      cap: 'Alive: carbon-14 in and out, fraction steady. Dead: only decay.'
+      "v": "53%",
+      "k": "illustrative fraction, not Ötzi’s measured value"
     },
     {
-      t: 'Fifty-three percent',
-      body: 'Four separate laboratories measured samples of his bone and tissue, and they agreed. A little over half of the carbon-14 he had been carrying when he died was still there. That single fraction is the whole measurement, because decay is first order: the fraction left depends only on how many half-lives have gone by.',
-      chem: 'Age equals the half-life multiplied by log base 2 of one over the fraction remaining. With 53 percent left, that is 5,730 times log2(1.887), which is 5,730 times 0.92, or about 5,300 years. The uncertainty is a couple of centuries, not a couple of millennia.',
-      cap: '53 percent left is 0.92 half-lives, and 0.92 half-lives is about 5,300 years.'
+      "v": "5,730 y",
+      "k": "half-life of carbon-14"
     },
     {
-      t: 'The number changed what he was',
-      body: 'A date of roughly 3300 BC put him in the Copper Age, and suddenly everything he was carrying made sense: the axe with a nearly pure copper blade, the unfinished bow, the birch bark containers. Ten years later a radiologist spotted a flint arrowhead lodged in his left shoulder on a scan that had been sitting in a file. He had not simply frozen. He had been shot, and the case became the oldest murder investigation ever opened.',
-      chem: 'This is what a radiometric date buys you. It is not a fact about the object on its own, it is the key that makes every other fact about it interpretable. The same first-order decay law dates a coffin lid, a glacier core, and the vial of technetium on a hospital bench.',
-      cap: 'A copper axe, a flint arrowhead, and a date that turned a body into a murder case.'
+      "v": "5,300 y",
+      "k": "approximate archaeological age"
     }
   ],
-  quiz: {
-    q: 'A wooden tool from another dig has 25 percent of its original carbon-14 left. Carbon-14 has a half-life of 5,730 years. How old is it?',
-    options: [
-      { label: 'About 11,500 years, because a quarter left means two half-lives have passed', correct: true },
-      { label: 'About 1,430 years, because a quarter of 5,730 years has passed', correct: false },
-      { label: 'About 22,900 years, because a quarter left means four half-lives have passed', correct: false }
+  "steps": [
+    {
+      "t": "Everyone guessed wrong",
+      "body": "Helmut and Erika Simon thought they had found a modern climbing casualty, so the recovery was rough: a jackhammer, ski poles, and a body bag. The equipment beside him looked handmade but nobody at the scene could put a number on it. Guesses ran from a few decades to a few hundred years.",
+      "chem": "Nothing about a body tells you its age directly. Preservation depends on the ice, not on the calendar. The age has to come from something inside him that has been counting on its own since the day he died.",
+      "cap": "September 1991. A body in a melting gully, and nobody knows what year it is from."
+    },
+    {
+      "t": "The clock started when he stopped eating",
+      "body": "Cosmic-ray interactions help produce carbon-14 from atmospheric nitrogen. Carbon moves through air, plants, and food webs. Living organisms exchange carbon with their surroundings; after death, that exchange largely stops and existing carbon-14 continues to decay.",
+      "chem": "Carbon-14 undergoes beta-minus decay to nitrogen-14, with a half-life of about 5,730 years. Environmental carbon-14 ratios vary over time and among reservoirs. Dating therefore requires calibration, contamination controls, and appropriate sampling.",
+      "cap": "Living systems exchange carbon; after death, carbon-14 continues to decay."
+    },
+    {
+      "t": "A classroom model of the clock",
+      "body": "Imagine a sample retaining 53% of its original carbon-14. This is a teaching example, not Ötzi’s measured fraction. Exponential decay lets us infer how many half-lives have elapsed in the simplified model. Actual archaeological ages require calibrated measurements.",
+      "chem": "Using f = 0.53 and t = 5730 × log2(1/f) gives about 5,250 years, or 5,300 years to two significant figures. This uncalibrated model calculation does not reproduce the complete laboratory analysis of Ötzi.",
+      "cap": "Illustrative only: 53% remaining gives about 5,250 years in this decay model."
+    },
+    {
+      "t": "The number changed what he was",
+      "body": "Radiocarbon evidence places Ötzi in the late fourth millennium BCE. Dating helps archaeologists interpret his copper axe and other equipment. Researchers combine laboratory evidence with context and calibration; one percentage by itself is not a complete archaeological conclusion.",
+      "chem": "The same exponential relationship can describe many radioactive parent populations. Choose an isotope and sampling method appropriate to the material and timescale, and distinguish physical decay from other changes in the sample.",
+      "cap": "Calibrated dating and archaeological evidence place Ötzi in the Copper Age."
+    }
+  ],
+  "quiz": {
+    "q": "In the simple, uncalibrated decay model, a wooden tool retains 25% of its original carbon-14. With a half-life of 5,730 years, what elapsed time does the model predict?",
+    "options": [
+      {
+        "label": "About 11,500 years, because a quarter left means two half-lives have passed",
+        "correct": true
+      },
+      {
+        "label": "About 1,430 years, because a quarter of 5,730 years has passed",
+        "correct": false
+      },
+      {
+        "label": "About 22,900 years, because a quarter left means four half-lives have passed",
+        "correct": false
+      }
     ],
-    explain: 'Each half-life halves what is left, so 100 percent goes to 50 percent to 25 percent in two steps. Two half-lives at 5,730 years each is 11,460 years. Decay is not linear: you never take a fixed amount away, you always take half of whatever is still there, which is why the answer comes from counting halvings rather than dividing.'
+    "explain": "Each half-life halves what is left, so 100 percent goes to 50 percent to 25 percent in two steps. Two half-lives at 5,730 years each is 11,460 years. Decay is not linear: you never take a fixed amount away, you always take half of whatever is still there, which is why the answer comes from counting halvings rather than dividing."
   },
-  punch: 'You now hold the same tool that dated the Iceman. Fraction remaining goes in, number of half-lives comes out, and the age falls out of that. A hospital technologist runs the identical calculation every morning on a vial of technetium, over hours instead of millennia.',
-  careers: ['Archaeologist', 'Radiocarbon laboratory technician', 'Nuclear medicine technologist', 'Forensic anthropologist'],
-  cta: { label: 'Run a half-life calculation yourself', call: "setMode('dose')" },
-
-  // Stage art. Every motion here is one of the classes casefile.css already defines, so
-  // the global prefers-reduced-motion kill switch freezes all of it for free.
-  // Two traps this scene hit during the build, worth knowing before editing it:
-  //   1. `--deg` MUST carry a unit. `--deg:3` produces rotate(3), which is invalid, so
-  //      the whole transform is dropped and the element silently never moves.
-  //   2. casefile.css puts `transform-box: fill-box` on every .a-* element, so a px
-  //      transform-origin is measured from that element's OWN bounding box, not from the
-  //      viewBox. Orbiting a distant point is therefore not expressible that way (it
-  //      flings the element off the canvas). Use translate-based flows instead, or
-  //      keyword origins such as `center bottom`, which fill-box resolves correctly.
+  "punch": "A remaining fraction gives an elapsed time only within stated assumptions. For archaeology, calibrated radiocarbon evidence connects the decay calculation to a calendar age.",
+  "careers": [
+    "Archaeologist",
+    "Radiocarbon laboratory technician",
+    "Nuclear medicine technologist",
+    "Forensic anthropologist"
+  ],
+  "cta": {
+    "label": "Run a half-life calculation yourself",
+    "call": "setMode('dose')"
+  },
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: two hikers finding a body face down in an Alpine glacier with the head, shoulders and one arm clear of the meltwater, carbon-14 forming in the atmosphere and cycling through a living tree but only leaving a dead one, the decay curve read at 53 percent remaining, and the copper axe and flint arrowhead that the date explained">
             <defs>
               <linearGradient id="cf11-sky" x1="0" y1="0" x2="0" y2="1">
@@ -291,7 +300,7 @@ export const CASE = {
             <g x-show="step===2">
               <rect x="0" y="0" width="640" height="360" rx="10" fill="#132630" opacity=".74"/>
               <rect x="40" y="46" width="560" height="284" rx="12" fill="#0c1c27" stroke="#33525f"/>
-              <text x="320" y="72" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">FOUR LABORATORIES, ONE FRACTION</text>
+              <text x="320" y="72" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">ILLUSTRATIVE DECAY MODEL</text>
               <line x1="80" y1="92" x2="80" y2="292" stroke="#6e8794" stroke-width="2"/>
               <line x1="80" y1="292" x2="580" y2="292" stroke="#6e8794" stroke-width="2"/>
               <text x="62" y="96" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">100%</text>
@@ -320,9 +329,9 @@ export const CASE = {
               <line x1="228" y1="181" x2="228" y2="292" stroke="#ffd27e" stroke-dasharray="4 4"/>
               <circle class="a-pulse" style="--dur:2s" cx="228" cy="181" r="7" fill="#ffd27e"/>
               <!-- the annotation sits well clear of the curve, which passes under it -->
-              <text x="330" y="112" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#ffd27e">53% left</text>
+              <text x="330" y="112" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#ffd27e">53% model</text>
               <text x="330" y="132" font-family="JetBrains Mono" font-size="10" fill="#cfe4ea">= 0.92 half-lives</text>
-              <text x="330" y="154" font-family="JetBrains Mono" font-size="14" font-weight="700" fill="#8fd9ae">= 5,300 years</text>
+              <text x="330" y="154" font-family="JetBrains Mono" font-size="14" font-weight="700" fill="#8fd9ae">≈ 5,300 years</text>
               <path d="M 236,176 C 268,158 300,136 322,120" fill="none" stroke="#ffd27e" stroke-width="1" opacity=".5" stroke-dasharray="3 3"/>
             </g>
 
@@ -401,7 +410,7 @@ export const CASE = {
               <text x="460" y="100" text-anchor="middle" font-family="Bitter" font-size="15" font-weight="700" fill="#24363f">Radiocarbon report</text>
               <line x1="354" y1="112" x2="566" y2="112" stroke="#24363f" stroke-width="3"/>
               <g font-family="JetBrains Mono" font-size="10" fill="#38484f">
-                <text x="354" y="140">fraction remaining</text>
+                <text x="354" y="140">example fraction</text>
                 <text x="566" y="140" text-anchor="end" font-weight="700">0.53</text>
                 <text x="354" y="166">half-life</text>
                 <text x="566" y="166" text-anchor="end" font-weight="700">5,730 y</text>

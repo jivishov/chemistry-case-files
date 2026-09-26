@@ -1,0 +1,1012 @@
+{
+  "iceman-dating": {
+    "title": "Research on Ötzi: radiocarbon dating and calibration",
+    "publisher": "South Tyrol Museum of Archaeology",
+    "url": "https://www.iceman.it/en/the-research/current-research-projects"
+  },
+  "2.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/02%3A_Matter_and_Change/2.02%3A_Pure_Substances",
+    "title": "2.2: Pure Substances",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "2.7": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/02%3A_Matter_and_Change/2.07%3A_Mixture",
+    "title": "2.7: Mixture",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "2.10": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/02%3A_Matter_and_Change/2.10%3A_Separating_Mixtures",
+    "title": "2.10: Separating Mixtures",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "2.14": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/02%3A_Matter_and_Change/2.14%3A_Chemical_Change",
+    "title": "2.14: Chemical Change",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "3.1": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.01%3A_SI_Base_Units",
+    "title": "3.1: SI Base Units",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "3.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.02%3A_Metric_Prefixes",
+    "title": "3.2: Metric Prefixes",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "3.8": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.08%3A_Dimensional_Analysis",
+    "title": "3.8: Dimensional Analysis",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "3.14": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.14%3A_Measurement_Uncertainty",
+    "title": "3.14: Measurement Uncertainty",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "nasa-mars": {
+    "title": "Mars Climate Orbiter",
+    "publisher": "NASA Jet Propulsion Laboratory",
+    "url": "https://science.nasa.gov/mission/mars-climate-orbiter/"
+  },
+  "3.16": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.16%3A_Significant_Figures",
+    "title": "3.16: Significant Figures",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "3.17": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.17%3A_Significant_Figures_in_Addition_and_Subtraction",
+    "title": "3.17: Significant Figures in Addition and Subtraction",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "3.18": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.18%3A_Significant_Figures_in_Multiplication_and_Division",
+    "title": "3.18: Significant Figures in Multiplication and Division",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "3.11": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.11%3A_Density",
+    "title": "3.11: Density",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "2.4": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/02%3A_Matter_and_Change/2.04%3A_Extensive_and_Intensive_Properties",
+    "title": "2.4: Extensive and Intensive Properties",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "3.12": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.12%3A_Accuracy_and_Precision",
+    "title": "3.12: Accuracy and Precision",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "3.13": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.13%3A_Percent_Error",
+    "title": "3.13: Percent Error",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.06%3A_Dalton's_Atomic_Theory",
+    "title": "4.6: Dalton's Atomic Theory",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.11": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.11%3A_Cathode_Ray_Tube",
+    "title": "4.11: Cathode Ray Tube",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.14": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.14%3A_Gold_Foil_Experiment",
+    "title": "4.14: Gold Foil Experiment",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.06%3A_Bohr's_Atomic_Model",
+    "title": "5.6: Bohr's Atomic Model",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.10": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.10%3A_Heisenberg_Uncertainty_Principle",
+    "title": "5.10: Heisenberg Uncertainty Principle",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.11": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.11%3A_Quantum_Mechanical_Atomic_Model",
+    "title": "5.11: Quantum Mechanical Atomic Model",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.8": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.08%3A_Electrons",
+    "title": "4.8: Electrons",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.9": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.09%3A_Protons",
+    "title": "4.9: Protons",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.10": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.10%3A_Neutrons",
+    "title": "4.10: Neutrons",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.16": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.16%3A_Atomic_Number",
+    "title": "4.16: Atomic Number",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.17": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.17%3A_Mass_Number",
+    "title": "4.17: Mass Number",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.18": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.18%3A_Isotopes",
+    "title": "4.18: Isotopes",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.16": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.16%3A_Ion",
+    "title": "6.16: Ion",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.19": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.19%3A_Atomic_Mass_Unit",
+    "title": "4.19: Atomic Mass Unit",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.20": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.20%3A_Calculating_Average_Atomic_Mass",
+    "title": "4.20: Calculating Average Atomic Mass",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.1": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.01%3A_Electromagnetic_Spectrum",
+    "title": "5.1: Electromagnetic Spectrum",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.02%3A_Wavelength_and_Frequency_Calculations",
+    "title": "5.2: Wavelength and Frequency Calculations",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.3": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.03%3A_Quantization_of_Energy",
+    "title": "5.3: Quantization of Energy",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.5": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.05%3A_Atomic_Emission_Spectra",
+    "title": "5.5: Atomic Emission Spectra",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "acs-fireworks": {
+    "title": "What produces firework colors?",
+    "publisher": "American Chemical Society · Chemical & Engineering News",
+    "url": "https://cen.acs.org/articles/95/i27/s-fireworks-produces-those-colorful.html"
+  },
+  "5.13": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.13%3A_Orbitals",
+    "title": "5.13: Orbitals",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.15": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.15%3A_Aufbau_Principle",
+    "title": "5.15: Aufbau Principle",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.18": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.18%3A_Electron_Configurations",
+    "title": "5.18: Electron Configurations",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.19": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.19%3A_Valence_Electrons",
+    "title": "5.19: Valence Electrons",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.20": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.20%3A_Noble_Gas_Configuration",
+    "title": "5.20: Noble Gas Configuration",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "8.1": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/08%3A_Ionic_and_Metallic_Bonding/8.01%3A_Electron_Dot_Diagrams",
+    "title": "8.1: Electron Dot Diagrams",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.16": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.16%3A_Pauli_Exclusion_Principle",
+    "title": "5.16: Pauli Exclusion Principle",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "5.17": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/05%3A_Electrons_in_Atoms/5.17%3A_Hund's_Rule_and_Orbital_Filling_Diagrams",
+    "title": "5.17: Hund's Rule and Orbital Filling Diagrams",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.1": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.01%3A_Early_History_of_the_Periodic_Table",
+    "title": "6.1: Early History of the Periodic Table",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.02%3A_Mendeleev's_Periodic_Table",
+    "title": "6.2: Mendeleev's Periodic Table",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.3": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.03%3A_Periodic_Law",
+    "title": "6.3: Periodic Law",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.4": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.04%3A_Modern_Periodic_Table-_Periods_and_Groups",
+    "title": "6.4: Modern Periodic Table- Periods and Groups",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.5": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.05%3A_Metals",
+    "title": "6.5: Metals",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.06%3A_Nonmetals",
+    "title": "6.6: Nonmetals",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.7": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.07%3A_Metalloids",
+    "title": "6.7: Metalloids",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.9": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.09%3A_Hydrogen_and_Alkali_Metals",
+    "title": "6.9: Hydrogen and Alkali Metals",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.10": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.10%3A_Alkaline_Earth_Metals",
+    "title": "6.10: Alkaline Earth Metals",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.11": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.11%3A_Noble_Gases",
+    "title": "6.11: Noble Gases",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.12": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.12%3A_Halogens",
+    "title": "6.12: Halogens",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.13": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.13%3A_Transition_Elements",
+    "title": "6.13: Transition Elements",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.15": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.15%3A_Periodic_Trends-_Atomic_Radius",
+    "title": "6.15: Periodic Trends- Atomic Radius",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.17": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.17%3A_Periodic_Trends_-_Ionization_Energy",
+    "title": "6.17: Periodic Trends - Ionization Energy",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.18": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.18%3A_Electron_Shielding",
+    "title": "6.18: Electron Shielding",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.21": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.21%3A_Periodic_Trends-_Electronegativity",
+    "title": "6.21: Periodic Trends- Electronegativity",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "6.22": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/06%3A_The_Periodic_Table/6.22%3A_Periodic_Trends_-_Metallic_and_Nonmetallic_Character",
+    "title": "6.22: Periodic Trends - Metallic and Nonmetallic Character",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "nobel-battery": {
+    "title": "The development of lithium-ion batteries",
+    "publisher": "Nobel Prize · 2019 Chemistry scientific background",
+    "url": "https://www.nobelprize.org/uploads/2019/10/advanced-chemistryprize2019-2.pdf"
+  },
+  "8.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/08%3A_Ionic_and_Metallic_Bonding/8.06%3A_Ionic_Bonding",
+    "title": "8.6: Ionic Bonding",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "8.10": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/08%3A_Ionic_and_Metallic_Bonding/8.10%3A_Metallic_Bonding",
+    "title": "8.10: Metallic Bonding",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.02%3A_Covalent_Bond",
+    "title": "9.2: Covalent Bond",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.4": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.04%3A_Energy_and_Covalent_Bond_Formation",
+    "title": "9.4: Energy and Covalent Bond Formation",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.16": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.16%3A_Bond_Polarity",
+    "title": "9.16: Bond Polarity",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "7.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/07%3A_Chemical_Nomenclature/7.06%3A_The_Stock_System_of_Nomenclature",
+    "title": "7.6: The Stock System of Nomenclature",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "7.7": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/07%3A_Chemical_Nomenclature/7.07%3A_Naming_Binary_Ionic_Compounds",
+    "title": "7.7: Naming Binary Ionic Compounds",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "7.8": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/07%3A_Chemical_Nomenclature/7.08%3A_Formulas_for_Binary_Ionic_Compounds",
+    "title": "7.8: Formulas for Binary Ionic Compounds",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "7.9": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/07%3A_Chemical_Nomenclature/7.09%3A_Polyatomic_Ions",
+    "title": "7.9: Polyatomic Ions",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "7.10": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/07%3A_Chemical_Nomenclature/7.10%3A_Ternary_Ionic_Compounds%3A_Naming_and_Formulas",
+    "title": "7.10: Ternary Ionic Compounds: Naming and Formulas",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "7.11": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/07%3A_Chemical_Nomenclature/7.11%3A_Binary_Molecular_Compounds%3A_Naming_and_Formulas",
+    "title": "7.11: Binary Molecular Compounds: Naming and Formulas",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.5": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.05%3A_Lewis_Electron-Dot_Structures",
+    "title": "9.5: Lewis Electron-Dot Structures",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.11": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.11%3A_Exceptions_to_the_Octet_Rule",
+    "title": "9.11: Exceptions to the Octet Rule",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.13": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.13%3A_VSEPR_Theory",
+    "title": "9.13: VSEPR Theory",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.14": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.14%3A_Molecular_Shapes-_No_Lone_Pairs_on_Central_Atoms",
+    "title": "9.14: Molecular Shapes- No Lone Pairs on Central Atoms",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.15": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.15%3A_Molecular_Shapes_-_Lone_Pair(s)_on_Central_Atom",
+    "title": "9.15: Molecular Shapes - Lone Pair(s) on Central Atom",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "8.9": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/08%3A_Ionic_and_Metallic_Bonding/8.09%3A_Physical_Properties_of_Ionic_Compounds",
+    "title": "8.9: Physical Properties of Ionic Compounds",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.18": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.18%3A_Van_der_Waals_Forces",
+    "title": "9.18: Van der Waals Forces",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.19": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.19%3A_Hydrogen_Bonding",
+    "title": "9.19: Hydrogen Bonding",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.20": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.20%3A_Physical_Properties_and_Intermolecular_Forces",
+    "title": "9.20: Physical Properties and Intermolecular Forces",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "9.17": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/09%3A_Covalent_Bonding/9.17%3A_Polar_Molecules",
+    "title": "9.17: Polar Molecules",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "10.1": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.01%3A_Avogadro's_Number",
+    "title": "10.1: Avogadro's Number",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "10.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.02%3A_Conversions_Between_Moles_and_Atoms",
+    "title": "10.2: Conversions Between Moles and Atoms",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "10.3": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.03%3A_Molar_Mass",
+    "title": "10.3: Molar Mass",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "10.4": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.04%3A_Conversions_Between_Moles_and_Mass",
+    "title": "10.4: Conversions Between Moles and Mass",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "10.5": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.05%3A_Conversions_Between_Mass_and_Number_of_Particles",
+    "title": "10.5: Conversions Between Mass and Number of Particles",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "10.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.06%3A_Avogadro's_Hypothesis_and_Molar_Volume",
+    "title": "10.6: Avogadro's Hypothesis and Molar Volume",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "10.7": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.07%3A_Conversions_Between_Moles_and_Gas_Volume",
+    "title": "10.7: Conversions Between Moles and Gas Volume",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "10.10": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.10%3A_Percent_Composition",
+    "title": "10.10: Percent Composition",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "10.12": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.12%3A_Determining_Empirical_Formulas",
+    "title": "10.12: Determining Empirical Formulas",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "10.13": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.13%3A_Determining_Molecular_Formulas",
+    "title": "10.13: Determining Molecular Formulas",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "12.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/12%3A_Stoichiometry/12.02%3A_Mole_Ratios",
+    "title": "12.2: Mole Ratios",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "12.3": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/12%3A_Stoichiometry/12.03%3A_Mass-Mole_Stoichiometry",
+    "title": "12.3: Mass-Mole Stoichiometry",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "nasa-apollo": {
+    "title": "Apollo 13: Mission Details",
+    "publisher": "NASA",
+    "url": "https://www.nasa.gov/missions/apollo/apollo-13-mission-details/"
+  },
+  "10.11": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/10%3A_The_Mole/10.11%3A_Percent_of_Water_in_a_Hydrate",
+    "title": "10.11: Percent of Water in a Hydrate",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "11.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/11%3A_Chemical_Reactions/11.06%3A_Combustion_Reactions",
+    "title": "11.6: Combustion Reactions",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "11.1": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/11%3A_Chemical_Reactions/11.01%3A_Word_Equations",
+    "title": "11.1: Word Equations",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "11.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/11%3A_Chemical_Reactions/11.02%3A_Chemical_Equations",
+    "title": "11.2: Chemical Equations",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "11.3": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/11%3A_Chemical_Reactions/11.03%3A_Balancing_Equations",
+    "title": "11.3: Balancing Equations",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "4.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/04%3A_Atomic_Structure/4.02%3A_Law_of_Conservation_of_Mass",
+    "title": "4.2: Law of Conservation of Mass",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "11.4": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/11%3A_Chemical_Reactions/11.04%3A_Combination_Reactions",
+    "title": "11.4: Combination Reactions",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "11.5": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/11%3A_Chemical_Reactions/11.05%3A_Decomposition_Reactions",
+    "title": "11.5: Decomposition Reactions",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "11.7": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/11%3A_Chemical_Reactions/11.07%3A_Single_Replacement_Reactions",
+    "title": "11.7: Single Replacement Reactions",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "11.9": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/11%3A_Chemical_Reactions/11.09%3A_Double_Replacement_Reactions",
+    "title": "11.9: Double Replacement Reactions",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.16": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.16%3A_Neutralization_Reaction_and_Net_Ionic_Equations_for_Neutralization_Reactions",
+    "title": "21.16: Neutralization Reaction and Net Ionic Equations for Neutralization Reactions",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "12.4": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/12%3A_Stoichiometry/12.04%3A_Mass-Mass_Stoichiometry",
+    "title": "12.4: Mass-Mass Stoichiometry",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "12.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/12%3A_Stoichiometry/12.06%3A_Mass-Volume_Stoichiometry",
+    "title": "12.6: Mass-Volume Stoichiometry",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "12.7": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/12%3A_Stoichiometry/12.07%3A_Limiting_Reactant",
+    "title": "12.7: Limiting Reactant",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "12.8": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/12%3A_Stoichiometry/12.08%3A_Determining_the_Limiting_Reactant",
+    "title": "12.8: Determining the Limiting Reactant",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "12.9": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/12%3A_Stoichiometry/12.09%3A_Theoretical_Yield_and_Percent_Yield",
+    "title": "12.9: Theoretical Yield and Percent Yield",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.1": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.01%3A_Compressibility",
+    "title": "14.1: Compressibility",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.02%3A_Factors_Affecting_Gas_Pressure",
+    "title": "14.2: Factors Affecting Gas Pressure",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.11": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.11%3A_Real_and_Ideal_Gases",
+    "title": "14.11: Real and Ideal Gases",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.3": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.03%3A_Boyle's_Law",
+    "title": "14.3: Boyle's Law",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.4": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.04%3A_Charles's_Law",
+    "title": "14.4: Charles's Law",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.5": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.05%3A_Gay-Lussac's_Law",
+    "title": "14.5: Gay-Lussac's Law",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.06%3A_Combined_Gas_Law",
+    "title": "14.6: Combined Gas Law",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.7": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.07%3A_Avogadro's_Law",
+    "title": "14.7: Avogadro's Law",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "3.7": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/03%3A_Measurements/3.07%3A_Temperature_and_Temperature_Scales",
+    "title": "3.7: Temperature and Temperature Scales",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.8": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.08%3A_Ideal_Gas_Law",
+    "title": "14.8: Ideal Gas Law",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.12": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.12%3A_Mole_Fraction",
+    "title": "14.12: Mole Fraction",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.14": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.14%3A_Dalton's_Law_of_Partial_Pressures",
+    "title": "14.14: Dalton's Law of Partial Pressures",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "14.15": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.15%3A_Diffusion_and_Effusion_and_Graham's_Law",
+    "title": "14.15: Diffusion and Effusion and Graham's Law",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "os-real": {
+    "title": "9.6 Non-Ideal Gas Behavior",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/9-6-non-ideal-gas-behavior"
+  },
+  "14.13": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/14%3A_The_Behavior_of_Gases/14.13%3A_Gas_Collection_by_Water_Displacement",
+    "title": "14.13: Gas Collection by Water Displacement",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "os-dissolution": {
+    "title": "11.1 The Dissolution Process",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/11-1-the-dissolution-process"
+  },
+  "os-solubility": {
+    "title": "11.3 Solubility",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/11-3-solubility"
+  },
+  "os-electrolytes": {
+    "title": "11.2 Electrolytes",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/11-2-electrolytes"
+  },
+  "usgs-nyos": {
+    "title": "Gas buildup in Lake Nyos: recharge and consequences",
+    "publisher": "U.S. Geological Survey",
+    "url": "https://pubs.usgs.gov/publication/70018399"
+  },
+  "os-classify": {
+    "title": "4.2 Classifying Chemical Reactions",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/4-2-classifying-chemical-reactions"
+  },
+  "os-ksp": {
+    "title": "15.1 Precipitation and Dissolution",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/15-1-precipitation-and-dissolution"
+  },
+  "os-molarity": {
+    "title": "3.3 Molarity",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/3-3-molarity"
+  },
+  "7.12": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/07%3A_Chemical_Nomenclature/7.12%3A_Acids_-_Naming_and_Formulas",
+    "title": "7.12: Acids - Naming and Formulas",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "7.13": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/07%3A_Chemical_Nomenclature/7.13%3A_Bases%3A_Naming_and_Formulas",
+    "title": "7.13: Bases: Naming and Formulas",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.3": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.03%3A_Arrhenius_Acids",
+    "title": "21.3: Arrhenius Acids",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.4": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.04%3A_Arrhenius_Bases",
+    "title": "21.4: Arrhenius Bases",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.5": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.05%3A_Brnsted-Lowry_Acids_and_Bases",
+    "title": "21.5: Brønsted-Lowry Acids and Bases",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.06%3A_Brnsted-Lowry_Acid-Base_Reactions",
+    "title": "21.6: Brønsted-Lowry Acid-Base Reactions",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.12": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.12%3A_Strong_and_Weak_Acids_and_Acid_Ionization_Constant_(K_texta)",
+    "title": "21.12: Strong and Weak Acids and Acid Ionization Constant \\(\\left( K_\\text{a} \\right)\\)",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.13": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.13%3A_Strong_and_Weak_Bases_and_Base_Ionization_Constant_(left(_K_textb_right))",
+    "title": "21.13: Strong and Weak Bases and Base Ionization Constant",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.18": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.18%3A_Titration_Calculations",
+    "title": "21.18: Titration Calculations",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.8": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.08%3A_Ion-Product_of_Water",
+    "title": "21.8: Ion-Product of Water",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.9": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.09%3A_The_pH_Scale",
+    "title": "21.9: The pH Scale",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.10": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.10%3A_Calculating_pH_of_Acids_and_Bases",
+    "title": "21.10: Calculating pH of Acids and Bases",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.11": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.11%3A_The_pOH_Concept",
+    "title": "21.11: The pOH Concept",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.23": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.23%3A_Buffers",
+    "title": "21.23: Buffers",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "ada-erosion": {
+    "title": "Dental Erosion",
+    "publisher": "American Dental Association",
+    "url": "https://www.ada.org/resources/ada-library/oral-health-topics/dental-erosion"
+  },
+  "21.17": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.17%3A_Titration_Experiment",
+    "title": "21.17: Titration Experiment",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.19": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.19%3A_Titration_Curves",
+    "title": "21.19: Titration Curves",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.20": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.20%3A_Indicators",
+    "title": "21.20: Indicators",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "21.15": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/21%3A_Acids_and_Bases/21.15%3A_Calculating_pH_of_Weak_Acid_and_Base_Solutions",
+    "title": "21.15: Calculating pH of Weak Acid and Base Solutions",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.02%3A_Heat",
+    "title": "17.2: Heat",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "os-zeroth": {
+    "title": "13.1 Temperature and the Zeroth Law",
+    "publisher": "OpenStax · College Physics 2e",
+    "url": "https://openstax.org/books/college-physics-2e/pages/13-1-temperature"
+  },
+  "os-first": {
+    "title": "5.1 Energy Basics",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/5-1-energy-basics"
+  },
+  "os-entropy": {
+    "title": "16.2 Entropy",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/16-2-entropy"
+  },
+  "os-thermolaws": {
+    "title": "16.3 The Second and Third Laws of Thermodynamics",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/16-3-the-second-and-third-laws-of-thermodynamics"
+  },
+  "17.1": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.01%3A_Chemical_Potential_Energy",
+    "title": "17.1: Chemical Potential Energy",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.3": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.03%3A_Exothermic_and_Endothermic_Processes",
+    "title": "17.3: Exothermic and Endothermic Processes",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.06%3A_Enthalpy",
+    "title": "17.6: Enthalpy",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.8": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.08%3A_Thermochemical_Equations",
+    "title": "17.8: Thermochemical Equations",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.13": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.13%3A_Heat_of_Solution",
+    "title": "17.13: Heat of Solution",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.4": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.04%3A_Heat_Capacity_and_Specific_Heat",
+    "title": "17.4: Heat Capacity and Specific Heat",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.5": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.05%3A_Specific_Heat_Calculations",
+    "title": "17.5: Specific Heat Calculations",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.10": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.10%3A_Heats_of_Fusion_and_Solidification",
+    "title": "17.10: Heats of Fusion and Solidification",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.7": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.07%3A_Calorimetry",
+    "title": "17.7: Calorimetry",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.14": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.14%3A_Heat_of_Combustion",
+    "title": "17.14: Heat of Combustion",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "fda-labels": {
+    "title": "Nutrition Labeling Summary Sheets: calorie calculation",
+    "publisher": "U.S. Food and Drug Administration",
+    "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/inspection-guides/nutrition-labeling-summary-sheets"
+  },
+  "17.15": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.15%3A_Hess's_Law_of_Heat_Summation",
+    "title": "17.15: Hess's Law of Heat Summation",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.16": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.16%3A_Standard_Heat_of_Formation",
+    "title": "17.16: Standard Heat of Formation",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "17.17": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/17%3A_Thermochemistry/17.17%3A_Calculating_Heat_of_Reaction_from_Heat_of_Formation",
+    "title": "17.17: Calculating Heat of Reaction from Heat of Formation",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "24.2": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/24%3A_Nuclear_Chemistry/24.02%3A_Nuclear_Decay_Processes",
+    "title": "24.2: Nuclear Decay Processes",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "os-nuclear-stability": {
+    "title": "21.1 Nuclear Structure and Stability",
+    "publisher": "OpenStax · Chemistry 2e (Rice University)",
+    "url": "https://openstax.org/books/chemistry-2e/pages/21-1-nuclear-structure-and-stability"
+  },
+  "24.3": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/24%3A_Nuclear_Chemistry/24.03%3A_Detection_of_Radioactivity",
+    "title": "24.3: Detection of Radioactivity",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "24.4": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/24%3A_Nuclear_Chemistry/24.04%3A_Half-Life",
+    "title": "24.4: Half-Life",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "24.9": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/24%3A_Nuclear_Chemistry/24.09%3A_Penetrating_Ability_of_Emissions",
+    "title": "24.9: Penetrating Ability of Emissions",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "24.10": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/24%3A_Nuclear_Chemistry/24.10%3A_Effects_of_Radiation",
+    "title": "24.10: Effects of Radiation",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "24.11": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/24%3A_Nuclear_Chemistry/24.11%3A_Radioisotopes_in_Medical_Diagnosis_and_Treatment",
+    "title": "24.11: Radioisotopes in Medical Diagnosis and Treatment",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "24.12": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/24%3A_Nuclear_Chemistry/24.12%3A_PET_Scans",
+    "title": "24.12: PET Scans",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "os-solar": {
+    "title": "Solar Photovoltaic Cell Basics",
+    "publisher": "U.S. Department of Energy",
+    "url": "https://www.energy.gov/cmei/systems/solar-photovoltaic-cell-basics"
+  },
+  "24.6": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/24%3A_Nuclear_Chemistry/24.06%3A_Nuclear_Fission_Processes",
+    "title": "24.6: Nuclear Fission Processes",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "24.7": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/24%3A_Nuclear_Chemistry/24.07%3A_Nuclear_Power_Generation",
+    "title": "24.7: Nuclear Power Generation",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "24.8": {
+    "url": "https://chem.libretexts.org/Bookshelves/Introductory_Chemistry/Introductory_Chemistry_(CK-12)/24%3A_Nuclear_Chemistry/24.08%3A_Nuclear_Fusion",
+    "title": "24.8: Nuclear Fusion",
+    "publisher": "CK-12 Foundation / Chemistry LibreTexts"
+  },
+  "os-radiometric": {
+    "title": "22.3 Half Life and Radiometric Dating",
+    "publisher": "OpenStax · Physics",
+    "url": "https://openstax.org/books/physics/pages/22-3-half-life-and-radiometric-dating"
+  },
+  "nrc-effective": {
+    "title": "Half-life, effective",
+    "publisher": "U.S. Nuclear Regulatory Commission",
+    "url": "https://www.nrc.gov/education-regulatory-research/glossary/half-life-effective"
+  },
+  "dan-expansion": {
+    "title": "Lung Expansion Injuries: physical model and its limits",
+    "publisher": "Divers Alert Network",
+    "url": "https://dan.org/alert-diver/article/lung-expansion-injuries/"
+  },
+  "lib-uncertainty": {
+    "title": "Propagation of Uncertainty",
+    "publisher": "Chemistry LibreTexts · Analytical Chemistry",
+    "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Supplemental_Modules_(Analytical_Chemistry)/Data_Analysis/Propagation_of_Uncertainty"
+  },
+  "nist-spread": {
+    "title": "Measures of Scale: sample standard deviation",
+    "publisher": "NIST/SEMATECH e-Handbook",
+    "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda356.htm"
+  },
+  "os-bohr": {
+    "title": "6.2 The Bohr Model",
+    "publisher": "OpenStax · Chemistry 2e",
+    "url": "https://openstax.org/books/chemistry-2e/pages/6-2-the-bohr-model"
+  },
+  "os-shape": {
+    "title": "7.6 Molecular Structure and Polarity",
+    "publisher": "OpenStax · Chemistry 2e",
+    "url": "https://openstax.org/books/chemistry-2e/pages/7-6-molecular-structure-and-polarity"
+  },
+  "lib-polarizability": {
+    "title": "Polarizability: empirical ionic character",
+    "publisher": "Chemistry LibreTexts · Physical Chemistry",
+    "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Physical_Properties_of_Matter/Atomic_and_Molecular_Properties/Polarizability"
+  },
+  "nhtsa-airbags": {
+    "title": "Vehicle Air Bags and Injury Prevention",
+    "publisher": "National Highway Traffic Safety Administration",
+    "url": "https://www.nhtsa.gov/vehicle-safety/air-bags"
+  },
+  "os-acid-base": {
+    "title": "14.1 Brønsted–Lowry Acids and Bases",
+    "publisher": "OpenStax · Chemistry 2e",
+    "url": "https://openstax.org/books/chemistry-2e/pages/14-1-bronsted-lowry-acids-and-bases"
+  },
+  "nrc-smoke": {
+    "title": "Backgrounder on Smoke Detectors",
+    "publisher": "U.S. Nuclear Regulatory Commission",
+    "url": "https://www.nrc.gov/regulations-legislation/fact-sheets-brochures/backgrounder-on-smoke-detectors"
+  },
+  "nrc-tritium": {
+    "title": "Backgrounder on Tritium EXIT Signs",
+    "publisher": "U.S. Nuclear Regulatory Commission",
+    "url": "https://www.nrc.gov/reading-rm/doc-collections/fact-sheets/fs-tritium.html"
+  },
+  "doe-sr90": {
+    "title": "Strontium-90 radioisotope thermoelectric generators",
+    "publisher": "U.S. Department of Energy · EIS-0243-SA-01",
+    "url": "https://www.energy.gov/nepa/articles/eis-0243-sa-01-supplement-analysis"
+  },
+  "os-nuclear-reactions": {
+    "title": "10.4 Nuclear Reactions: decay series",
+    "publisher": "OpenStax · University Physics Volume 3",
+    "url": "https://openstax.org/books/university-physics-volume-3/pages/10-4-nuclear-reactions"
+  },
+  "nasa-battery": {
+    "title": "How Does a Lithium-Ion Cell Work?",
+    "publisher": "NASA Technical Reports Server · battery training slides",
+    "url": "https://ntrs.nasa.gov/api/citations/20220004129/downloads/AiChE%20Presentation%20v2.pdf"
+  },
+  "doe-fusion": {
+    "title": "Fusion Energy: materials and activated waste",
+    "publisher": "U.S. Department of Energy",
+    "url": "https://www.energy.gov/topics/fusion-energy"
+  },
+  "os-oxoacids": {
+    "title": "18.9: Oxygen compounds — phosphorus oxyacids",
+    "publisher": "OpenStax Chemistry 2e",
+    "url": "https://openstax.org/books/chemistry-2e/pages/18-9-occurrence-preparation-and-compounds-of-oxygen"
+  }
+}

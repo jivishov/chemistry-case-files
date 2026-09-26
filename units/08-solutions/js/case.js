@@ -1,56 +1,80 @@
-// case.js: Unit 8 case file: Lake Nyos and gas solubility.
-// Carries this unit's story AND its stage art; rendered by the shared casefile component.
-
+// Case narrative and assessment aligned with the unit reading.
 export const CASE = {
-  id: 'lake-nyos-co2',
-  number: '008',
-  kicker: 'Cameroon, 1986',
-  title: 'Lake Nyos: when dissolved CO2 escaped',
-  teaser: 'How pressure, temperature, and dissolved CO2 shaped a deadly lake event',
-  hook: 'On August 21, 1986, Lake Nyos in Cameroon suddenly released a large cloud of carbon dioxide. At least 1,700 people died in nearby valleys. Investigations found that CO2 had accumulated in the lake\'s deep water; there was no significant direct volcanic eruption during the disaster.',
-  stats: [
-    { v: '~1,700', k: 'people killed' },
-    { v: '~200 m', k: 'lake depth' },
-    { v: '2001', k: 'controlled degassing began' }
-  ],
-  steps: [
+  "id": "lake-nyos-co2",
+  "number": "008",
+  "kicker": "Cameroon, 1986",
+  "title": "Lake Nyos: when dissolved CO2 escaped",
+  "teaser": "How pressure, temperature, and dissolved CO2 shaped a deadly lake event",
+  "hook": "On August 21, 1986, Lake Nyos in Cameroon suddenly released a large cloud of carbon dioxide. At least 1,700 people died in nearby valleys. Investigations found that CO2 had accumulated in the lake's deep water; there was no significant direct volcanic eruption during the disaster.",
+  "stats": [
     {
-      t: 'CO2 accumulated in deep water',
-      body: 'Lake Nyos occupies a volcanic crater. Carbon dioxide from a deep magmatic source entered the lake and accumulated in its dense, poorly mixed bottom water. The deep water was cold and under high pressure, allowing a large amount of CO2 to remain dissolved.',
-      chem: 'For a gas in equilibrium with a solution, greater gas pressure increases the dissolved concentration. Lower temperature also generally increases the solubility of CO2 in water. These conditions helped deep Lake Nyos store a large dissolved-gas load.',
-      cap: 'Deep, cold water under pressure accumulated dissolved CO2.'
+      "v": "~1,700",
+      "k": "people killed"
     },
     {
-      t: 'Rising water released gas',
-      body: 'The exact trigger of the 1986 event is not certain. A large landslide has been proposed as one likely trigger. Once gas-rich deep water began rising, the pressure decreased and CO2 came out of solution as bubbles. The gas-water mixture became less dense, which could drive more water upward and accelerate the release.',
-      chem: 'When pressure decreases, the equilibrium amount of dissolved gas decreases. Water containing more CO2 than the new equilibrium allows can release the excess gas. This pressure-solubility relationship helped turn upward motion into rapid degassing.',
-      cap: 'As gas-rich water rose, lower pressure allowed CO2 to leave solution.'
+      "v": "~200 m",
+      "k": "lake depth"
     },
     {
-      t: 'CO2 moved into nearby valleys',
-      body: 'A large amount of CO2 entered the air around the lake. Carbon dioxide is denser than air under similar conditions, so the gas-rich cloud flowed into low-lying areas. People and animals exposed to very high CO2 concentrations were overcome by an asphyxiating atmosphere.',
-      chem: 'Solubility explains how the lake stored and then released CO2. After release, gas density, terrain, and air movement affected where the cloud traveled. These are separate physical processes that together explain the hazard.',
-      cap: 'Released CO2 collected in low-lying areas and created an asphyxiation hazard.'
-    },
-    {
-      t: 'Engineers began controlled degassing',
-      body: 'Controlled degassing at Lake Nyos began in 2001. A pipe carries gas-rich deep water upward. As pressure falls in the pipe, CO2 forms bubbles and helps drive the water upward without a conventional pump. The gas is then released at the surface at a controlled rate.',
-      chem: 'The degassing system deliberately uses the same pressure-solubility relationship involved in the natural release. Monitoring and controlled removal reduce the amount of dissolved CO2 stored in the deep lake.',
-      cap: 'Degassing pipes remove CO2 from deep water in a controlled process.'
+      "v": "2001",
+      "k": "controlled degassing began"
     }
   ],
-  quiz: {
-    q: 'Which conditions helped deep Lake Nyos water store a large amount of dissolved CO2?',
-    options: [
-      { label: 'High pressure and low temperature', correct: true },
-      { label: 'Low pressure and high temperature', correct: false },
-      { label: 'The greater density of CO2 than water', correct: false }
+  "steps": [
+    {
+      "t": "CO2 accumulated in deep water",
+      "body": "Lake Nyos fills a volcanic crater. Carbon dioxide entered its deep water from below, while stable layering limited mixing with the surface. High pressure at depth allowed a large dissolved gas inventory to accumulate. The pressure comparison resembles an unopened soda bottle.",
+      "chem": "At fixed temperature, Henry’s law relates dissolved-gas concentration to that gas’s equilibrium partial pressure. Many gases also become less soluble as water warms. These are separate dependencies; the lake also requires a model of layering and gas supply.",
+      "cap": "Gas supply, deep-water pressure, and limited mixing allowed CO2 to accumulate."
+    },
+    {
+      "t": "Rising water released gas",
+      "body": "The exact initiating disturbance remains uncertain. Once gas-rich deep water rose, the pressure decreased and bubbles could form. Bubbles lowered the bulk density of the rising mixture, encouraging further rise and gas release. This feedback explains the runaway process.",
+      "chem": "When pressure decreases, the equilibrium amount of dissolved gas decreases. Water containing more CO2 than the new equilibrium allows can release the excess gas. This pressure-solubility relationship helped turn upward motion into rapid degassing.",
+      "cap": "As gas-rich water rose, lower pressure allowed CO2 to leave solution."
+    },
+    {
+      "t": "CO2 moved into nearby valleys",
+      "body": "A large amount of CO2 entered the air around the lake. Carbon dioxide is denser than air under similar conditions, so the gas-rich cloud flowed into low-lying areas. People and animals exposed to very high CO2 concentrations were overcome by an asphyxiating atmosphere.",
+      "chem": "Solubility explains how the lake stored and then released CO2. After release, gas density, terrain, and air movement affected where the cloud traveled. These are separate physical processes that together explain the hazard.",
+      "cap": "Released CO2 collected in low-lying areas and created an asphyxiation hazard."
+    },
+    {
+      "t": "Engineers began controlled degassing",
+      "body": "Engineered degassing pipes lift gas-rich deep water. As pressure drops, bubbles form and help drive the flow, allowing a controlled release of dissolved CO2. Gas recharge and water conditions still require monitoring; the pipes do not imply permanent elimination of every hazard.",
+      "chem": "The degassing system deliberately uses the same pressure-solubility relationship involved in the natural release. Monitoring and controlled removal reduce the amount of dissolved CO2 stored in the deep lake.",
+      "cap": "Degassing pipes remove CO2 from deep water in a controlled process."
+    }
+  ],
+  "quiz": {
+    "q": "Why can high-pressure deep water retain a large dissolved CO2 inventory when gas is continually supplied and mixing is limited?",
+    "options": [
+      {
+        "label": "Higher equilibrium gas pressure allows a greater dissolved concentration at fixed temperature",
+        "correct": true
+      },
+      {
+        "label": "Low pressure and high temperature",
+        "correct": false
+      },
+      {
+        "label": "The greater density of CO2 than water",
+        "correct": false
+      }
     ],
-    explain: 'Deep water was under high pressure and remained relatively cold. Higher gas pressure favors a greater dissolved-gas concentration, and CO2 is generally more soluble in colder water. When gas-rich water rose and pressure fell, CO2 could come out of solution.'
+    "explain": "At fixed temperature, dissolved-gas concentration increases with its equilibrium partial pressure. At depth, surrounding pressure helps prevent bubble expansion and outgassing. Gas supply and stable layering also matter; temperature dependence alone is not a complete explanation of Lake Nyos."
   },
-  punch: 'Lake Nyos shows why gas solubility is more than a graph. Pressure, temperature, and dissolved-gas concentration can help explain a real natural hazard and the engineering used to reduce it.',
-  careers: ['Limnologist', 'Volcanic-hazards scientist', 'Environmental engineer', 'Water chemist'],
-  cta: { label: 'Practice solubility curves', call: "setMode('curve')" },
+  "punch": "Use solubility and pressure to explain outgassing, then add the site-specific evidence needed to understand a real lake. A classroom curve represents one part of the system.",
+  "careers": [
+    "Limnologist",
+    "Volcanic-hazards scientist",
+    "Environmental engineer",
+    "Water chemist"
+  ],
+  "cta": {
+    "label": "Practice solubility curves",
+    "call": "setMode('curve')"
+  },
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: dissolved CO2 accumulates in deep Lake Nyos, rapidly leaves solution during the 1986 event, and is later removed by controlled degassing pipes">
             <!-- night sky -->
             <rect x="0" y="0" width="640" height="360" fill="#112837"/>

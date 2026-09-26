@@ -1,56 +1,80 @@
-// case.js — Unit 2 case file: fireworks, excited states, and emission spectra.
-// Carries the story AND the stage art; rendered by the shared casefile component.
-
+// Case narrative and assessment aligned with the unit reading.
 export const CASE = {
-  id: 'firework-electrons',
-  number: '002',
-  kicker: 'chemistry in the night sky',
-  title: 'How chemistry produces firework colors',
-  teaser: 'Metal compounds emit characteristic colors when heated',
-  hook: 'Inside an aerial firework, burning stars heat color-producing compounds. Excited atoms, ions, and molecules then emit light at characteristic wavelengths.',
-  stats: [
-    { v: 'Sr · Ba · Cu', k: 'common red · green · blue colorants' },
-    { v: 'E = hν', k: 'photon energy' },
-    { v: 'λ', k: 'wavelength helps determine color' }
-  ],
-  steps: [
+  "id": "firework-electrons",
+  "number": "002",
+  "kicker": "chemistry in the night sky",
+  "title": "Energy levels behind firework colors",
+  "teaser": "Atomic and molecular energy changes explain firework colors",
+  "hook": "Fireworks connect light color with energy changes in atoms and molecules. The atomic model in this unit explains discrete emission lines; actual fireworks also involve molecular emission bands and glowing hot particles.",
+  "stats": [
     {
-      t: 'Stars carry the colorants',
-      body: 'An aerial firework contains small pyrotechnic pellets called stars. A lift charge launches the shell. After a delay, a burst charge ignites and scatters the stars, producing the visible pattern.',
-      chem: 'Strontium compounds commonly produce red colors, barium compounds green, copper compounds blue, and sodium compounds yellow.',
-      cap: 'Launch → delay → burst → burning stars.'
+      "v": "Sr · Ba · Cu",
+      "k": "illustrative flame temperature; recipes vary"
     },
     {
-      t: 'Heat creates excited states',
-      body: 'As a star burns, heat excites some of its color-producing material. Electrons in the emitting atoms, ions, or molecules can move to higher-energy states.',
-      chem: 'Excited states contain more energy than lower-energy states. The allowed energy states depend on the chemical species.',
-      cap: 'Energy in → excited state.'
+      "v": "E = hν",
+      "k": "example red-light wavelength"
     },
     {
-      t: 'Transitions can emit photons',
-      body: 'When an excited species moves to a lower-energy state, it can emit a photon. The photon carries energy equal to the difference between the two states.',
-      chem: 'ΔE = hν = hc/λ. Higher-frequency, shorter-wavelength photons carry more energy.',
-      cap: 'Energy difference → photon energy → wavelength.'
-    },
-    {
-      t: 'Spectra help identify elements',
-      body: 'An excited element can produce a characteristic pattern of emission lines. Scientists compare measured spectra with reference spectra to help identify elements in laboratory samples and astronomical objects.',
-      chem: 'A line pattern provides stronger identification evidence than one color alone. Real pyrotechnic flames can contain atoms, ions, and molecules, so a firework color is not always one single spectral line.',
-      cap: 'Observe the pattern → compare → identify.'
+      "v": "λ",
+      "k": "wavelength helps determine color"
     }
   ],
-  quiz: {
-    q: 'Two emitted photons have wavelengths of 500 nm and 650 nm. Which photon has more energy?',
-    options: [
-      { label: 'The 500 nm photon', correct: true },
-      { label: 'The 650 nm photon', correct: false },
-      { label: 'Both photons have the same energy', correct: false }
+  "steps": [
+    {
+      "t": "Stars carry the colorants",
+      "body": "An aerial firework contains small pyrotechnic pellets called stars. A lift charge launches the shell. After a delay, a burst charge ignites and scatters the stars, producing the visible pattern.",
+      "chem": "Metal-containing compounds help produce characteristic colors. The emitting species can be atoms or molecules formed in the flame.",
+      "cap": "Launch → delay → burst → burning stars."
+    },
+    {
+      "t": "Heat creates excited states",
+      "body": "Heat excites atoms and molecules in the star pellets. Flame temperatures vary with the mixture, and some desired emitting molecules break down if the flame is too hot. In the simplified atomic model, excitation transfers energy to an electron.",
+      "chem": "Excited states contain more energy than lower-energy states. The allowed energy states depend on the chemical species.",
+      "cap": "Excitation raises internal energy; lifetimes depend on the emitting state."
+    },
+    {
+      "t": "Transitions can emit photons",
+      "body": "When an excited species moves to a lower-energy state, it can emit a photon. The photon carries energy equal to the difference between the two states.",
+      "chem": "ΔE = hν = hc/λ. Higher-frequency, shorter-wavelength photons carry more energy.",
+      "cap": "Energy difference → photon energy → wavelength."
+    },
+    {
+      "t": "Spectra help identify elements",
+      "body": "Atomic line patterns help identify elements, including in astronomical spectra. Firework colors are more complex: molecular emitters such as metal chlorides can produce bands of wavelengths, while hot particles can give continuous light. One element is not limited to one possible color.",
+      "chem": "A line pattern provides stronger identification evidence than one color alone. Real pyrotechnic flames can contain atoms, ions, and molecules, so a firework color is not always one single spectral line.",
+      "cap": "Observe the pattern → compare → identify."
+    }
+  ],
+  "quiz": {
+    "q": "Compare an example blue-green photon of wavelength 500 nm with a red photon of wavelength 650 nm. Which corresponds to a larger energy gap?",
+    "options": [
+      {
+        "label": "The blue-green photon (500 nm)",
+        "correct": true
+      },
+      {
+        "label": "The red photon (650 nm)",
+        "correct": false
+      },
+      {
+        "label": "Both photons have the same energy",
+        "correct": false
+      }
     ],
-    explain: 'Photon energy is inversely proportional to wavelength: E = hc/λ. The 500 nm photon therefore has more energy than the 650 nm photon.'
+    "explain": "For a photon, E = hc/λ. With h and c fixed, shorter wavelength means greater energy. The 500 nm photon therefore corresponds to a larger gap than the 650 nm photon."
   },
-  punch: 'Firework colors connect the same ideas used in spectroscopy: energy states, photon energy, wavelength, and characteristic emission.',
-  careers: ['Pyrotechnic chemist', 'Astronomer', 'Analytical chemist', 'Laser engineer'],
-  cta: { label: 'Explore emission spectra', call: "setMode('spectra')" },
+  "punch": "Firework colors connect the same ideas used in spectroscopy: energy states, photon energy, wavelength, and characteristic emission.",
+  "careers": [
+    "Pyrotechnic chemist",
+    "Astronomer",
+    "Analytical chemist",
+    "Laser engineer"
+  ],
+  "cta": {
+    "label": "Explore emission spectra",
+    "call": "setMode('spectra')"
+  },
   stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene: fireworks in characteristic element colors with an inset showing excitation, photon emission, and an emission-line pattern">
             <g fill="#cfe4ea">
               <circle class="a-twinkle" style="--dur:3s" cx="80" cy="40" r="1.2"/>

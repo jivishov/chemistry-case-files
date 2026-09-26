@@ -32,7 +32,7 @@ import {
   BASE_METALS, BASE_ROMANS, BASE_SUFFIXES, DEFINE_POOL, STRENGTH, STRENGTH_REASON,
   NEUT_ACIDS, NEUT_BASES, WEAK_ACIDS, WEAK_CONCS, INDICATORS,
   SCENARIOS, NEUT_BANDS, METER_BANDS, METER_MANTISSAS, WEAK_BANDS, titrBands
-} from './model.js?v=u9-fidelity-20260826';
+} from './model.js?v=lessons-20260926-1';
 import {
   pH, pOH, pHfromPOH, equivalenceVolume, titrationPH, phWeakAcid,
   moleRatio, gcd, fmt

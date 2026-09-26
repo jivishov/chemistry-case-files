@@ -159,9 +159,9 @@ export const DEFINE_POOL = [
     qB: { q: 'It is describing a(n):', type: 'text', options: ['acid', 'base'], answer: 'base' },
     explain: 'Brønsted-Lowry defines a base as a proton acceptor.' },
   { kind: 'framework', text: 'NH3 has no OH- in its formula, yet it makes water basic by accepting a proton from H2O and producing OH-.',
-    qA: { q: 'Which definition explains NH3 as a base?', type: 'text', options: ['Arrhenius', 'Brønsted-Lowry'], answer: 'Brønsted-Lowry' },
+    qA: { q: 'Which framework directly describes NH3 accepting a proton?', type: 'text', options: ['Arrhenius', 'Brønsted-Lowry'], answer: 'Brønsted-Lowry' },
     qB: { q: 'NH3 is acting as a(n):', type: 'text', options: ['acid', 'base'], answer: 'base' },
-    explain: 'Arrhenius cannot call NH3 a base (it has no OH-). Brønsted-Lowry can: NH3 accepts a proton.' }
+    explain: 'Brønsted-Lowry describes NH3 accepting H+ to form NH4+. This reaction also increases OH- in water, satisfying the broader aqueous-concentration definition of an Arrhenius base. The question asks specifically about proton transfer.' }
 ];
 
 // ===================== C.12(C) strong vs weak =====================

@@ -1,0 +1,21 @@
+/* The reading link and design choices must not squeeze the Honors control. */
+html[data-design] .cockpit-command .command-actions{min-width:max-content}
+html[data-design] .cockpit-command .command-actions>*{flex-shrink:0}
+@media(max-width:1280px){
+  html[data-design] .cockpit-command{
+    grid-template-columns:minmax(0,1fr) max-content;
+    grid-template-areas:"brand actions" "stations metrics";
+    gap:8px;
+  }
+  html[data-design] .cockpit-command .command-brand{grid-area:brand}
+  html[data-design] .cockpit-command .command-actions{grid-area:actions}
+  html[data-design] .cockpit-command .station-nav{grid-area:stations}
+  html[data-design] .cockpit-command .command-metrics{grid-area:metrics}
+}
+@media(max-width:680px){
+  html[data-design] .cockpit-command{
+    grid-template-columns:minmax(0,1fr);
+    grid-template-areas:"brand" "actions" "stations" "metrics";
+  }
+  html[data-design] .cockpit-command .command-actions{justify-content:flex-start;gap:5px}
+}

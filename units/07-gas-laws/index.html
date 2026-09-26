@@ -35,6 +35,8 @@
   gtag('js', new Date());
   gtag('config', 'G-0VLDQGB37N');
 </script>
+<script defer src="../../shared/lessons/mission-bridge.js?v=1"></script>
+<link rel="stylesheet" href="../../shared/lessons/mission-links.css?v=1">
 </head>
 <body>
 <div x-data="sim()" x-cloak>
@@ -50,6 +52,7 @@
         <button class="tab" role="tab" :aria-selected="mode==='casefile'" @click="setMode('casefile')" aria-label="Case file"><span class="tab-full" aria-hidden="true">Case file</span><span class="tab-short" aria-hidden="true">Case</span></button>
       </nav>
       <div class="command-actions">
+        <a class="btn btn-sm lesson-return" href="learn.html" title="Read the lesson before the missions">Lesson</a>
       <label class="switch" title="Reveal advanced content">
         <input type="checkbox" x-model="honors">
         <span class="track"></span>
@@ -774,9 +777,9 @@
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
   import { registerGauge } from '../../shared/js/gauge.js';
-  import { createSim } from './js/main.js?v=mission-photos-20260922-1';
+  import { createSim } from './js/main.js?v=lessons-20260926-1';
   import { mountCaseFile } from '../../shared/js/casefile.js?v=field-20260922-1';
-  import { CASE } from './js/case.js?v=u7-fidelity-20260825';
+  import { CASE } from './js/case.js?v=lessons-20260926-1';
   import { mountColumnResizers } from '../shared/columns.js?v=cockpit-3';
   registerRender(Alpine);
   registerGauge(Alpine);

@@ -1,64 +1,85 @@
-// case.js: Unit 9 case file, what a can of soda does to your teeth (pH in action).
-// Carries the story AND the stage art; the shared casefile component renders the chrome.
-//
-// The units_new build. Copied whole from units/09-acids-bases/js/case.js: the story, the
-// stats, the quiz and the animated stage SVG all come across unchanged, and cta.call was
-// already 'setMode(...)' rather than a bare mode assignment, so this unit needed no
-// rewrite there (HANDOFF-PORTING.md 2.1). Validated by tests/casefile.test.js through its
-// NEW_TREE list.
-
+// Case narrative and assessment aligned with the unit reading.
 export const CASE = {
-  id: 'soda-enamel-ph',
-  number: '009',
-  kicker: 'acid-base chemistry in everyday life',
-  title: 'Why acidic drinks can demineralize tooth enamel',
-  teaser: 'A four-unit pH change means 10,000× greater [H+]',
-  hook: 'Tooth enamel is the hardest tissue in the human body. Repeated exposure to acidic drinks can shift its mineral balance toward demineralization.',
-  stats: [
-    { v: '2.5', k: 'example cola pH' },
-    { v: '~5.5', k: 'common enamel reference' },
-    { v: '10,000×', k: 'greater [H+] at pH 2.5 than pH 6.5' }
-  ],
-  steps: [
+  "id": "soda-enamel-ph",
+  "number": "009",
+  "kicker": "acid-base chemistry in everyday life",
+  "title": "Why acidic drinks can demineralize tooth enamel",
+  "teaser": "A four-unit pH change means 10,000× greater [H+]",
+  "hook": "Acidic drinks can promote enamel mineral loss. pH helps compare hydrogen-ion activity, but buffering, mineral composition, and exposure also affect the outcome.",
+  "stats": [
     {
-      t: 'Enamel is mineral',
-      body: 'Tooth enamel is made mostly of hydroxyapatite, a calcium-phosphate mineral. It is extremely hard, but its surface can dissolve when the surrounding chemical environment becomes sufficiently acidic.',
-      chem: 'Higher hydrogen-ion concentration can shift the mineral equilibrium toward dissolution, releasing calcium and phosphate from the enamel surface.',
-      cap: 'ENAMEL · HYDROXYAPATITE MINERAL'
+      "v": "2.5",
+      "k": "illustrative cola pH"
     },
     {
-      t: 'Read the pH scale',
-      body: 'Suppose saliva is at pH 6.5 and an acidic drink is at pH 2.5. The difference is 4.0 pH units. Because pH is logarithmic, the drink has 10^4, or 10,000 times, the hydrogen-ion concentration.',
-      chem: 'Each decrease of one pH unit represents a tenfold increase in [H+].',
-      cap: 'pH 6.5 → 2.5 · [H+] ×10,000'
+      "v": "~5.5",
+      "k": "illustrative reference; no universal erosion cutoff"
     },
     {
-      t: 'Demineralization',
-      body: 'For tooth enamel, pH 5.5 is often used as a reference point for increased demineralization. It is not a universal cutoff; the exact balance depends on factors such as calcium and phosphate concentrations and saliva composition.',
-      chem: 'When acidic conditions favor mineral dissolution, enamel loses calcium and phosphate ions. This process is called demineralization.',
-      cap: '~pH 5.5 · A USEFUL REFERENCE, NOT A FIXED LIMIT'
-    },
-    {
-      t: 'Saliva shifts the balance back',
-      body: 'Saliva buffers acids and supplies calcium and phosphate ions. As the mouth becomes less acidic, conditions can again favor remineralization. Fluoride can help make remineralized enamel more resistant to later acid exposure.',
-      chem: 'Demineralization and remineralization are competing processes influenced by the chemical environment around the enamel.',
-      cap: 'BUFFERING SUPPORTS REMINERALIZATION'
+      "v": "10,000×",
+      "k": "H+ concentration ratio for the example"
     }
   ],
-  quiz: {
-    q: 'Saliva is at pH 6.5 and a drink is at pH 2.5. How many times greater is the hydrogen-ion concentration in the drink?',
-    options: [
-      { label: 'About 10,000 times greater', correct: true },
-      { label: 'About 4 times greater', correct: false },
-      { label: 'About 40 times greater', correct: false },
-      { label: 'About 1,000 times greater', correct: false }
+  "steps": [
+    {
+      "t": "Enamel is mineral",
+      "body": "Tooth enamel contains calcium-phosphate minerals, mainly hydroxyapatite. Acidic conditions can favor mineral dissolution. Saliva helps buffer the surrounding solution and supplies minerals, but oral conditions vary between people and over time.",
+      "chem": "For this dilute-solution model, pH = −log10[H3O+]. Neutral water is pH 7 at 25 °C. Each decrease of one pH unit represents a tenfold increase in hydronium concentration.",
+      "cap": "ENAMEL · HYDROXYAPATITE MINERAL"
+    },
+    {
+      "t": "Read the pH scale",
+      "body": "Use pH 2.5 for an example cola and pH 6.5 for an example saliva sample. Their four-unit difference corresponds to a 10,000-fold hydronium concentration ratio. The pH of a drink is not automatically the pH everywhere in the mouth after a sip.",
+      "chem": "10^(6.5 − 2.5) = 10,000 compares hydronium concentrations. It does not measure total acid content, exposure time, buffering capacity, or the amount of enamel lost.",
+      "cap": "Example samples: cola pH 2.5; saliva pH 6.5."
+    },
+    {
+      "t": "Acid shifts the mineral balance",
+      "body": "Acid can favor dissolution of enamel mineral by changing the solution’s equilibrium. A value near pH 5.5 is often used as an introductory reference for enamel demineralization, but it is not a universal cutoff for dental erosion. Calcium, phosphate, buffering, and exposure all matter.",
+      "chem": "Hydronium reacts with mineral components, favoring dissolved forms. The acid-base chemistry is connected to a solubility equilibrium; pH alone does not determine the amount of erosion.",
+      "cap": "The reference line illustrates a concept, not a universal erosion threshold."
+    },
+    {
+      "t": "Buffers change the response",
+      "body": "Saliva contains buffers that consume added acid and can support remineralization under suitable conditions. Buffer capacity, mineral concentrations, and exposure patterns influence the response. This diagram uses a simplified sequence rather than a fixed recovery time.",
+      "chem": "Demineralization and remineralization are competing processes influenced by the chemical environment around the enamel.",
+      "cap": "Buffering can raise pH; recovery and mineral balance depend on conditions."
+    }
+  ],
+  "quiz": {
+    "q": "For equal-volume example samples, use pH 6.5 for saliva and pH 2.5 for cola. Under the concentration approximation, what is the hydronium concentration ratio?",
+    "options": [
+      {
+        "label": "About 10,000 times greater",
+        "correct": true
+      },
+      {
+        "label": "About 4 times greater",
+        "correct": false
+      },
+      {
+        "label": "About 40 times greater",
+        "correct": false
+      },
+      {
+        "label": "About 1,000 times greater",
+        "correct": false
+      }
     ],
-    explain: 'The difference is 4.0 pH units. Each pH unit represents a factor of 10 in [H+], so 10^4 = 10,000.'
+    "explain": "For the stated example values, the hydronium concentration ratio is 10^(6.5 − 2.5) = 10,000. This is a concentration comparison, not a prediction of total acidity or tissue damage."
   },
-  punch: 'A small-looking change in pH can represent a very large change in hydrogen-ion concentration. That helps explain why repeated acid exposure can shift enamel toward demineralization.',
-  careers: ['Dentist', 'Dental hygienist', 'Dental researcher', 'Food scientist'],
-  cta: { label: 'Use the pH meter', call: "setMode('meter')" },
-  stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Animated scene showing an acidic drink lowering mouth pH, enamel demineralization, and recovery as saliva buffers acids">
+  "punch": "A small numerical change in pH can represent a large change in hydronium concentration. Interpreting its effects also requires information about buffering, composition, and exposure.",
+  "careers": [
+    "Dentist",
+    "Dental hygienist",
+    "Dental researcher",
+    "Food scientist"
+  ],
+  "cta": {
+    "label": "Use the pH meter",
+    "call": "setMode('meter')"
+  },
+  stage: `<svg viewBox="0 0 640 360" role="img" aria-label="Schematic comparison of example pH values, acid-favored mineral dissolution, and buffering; no universal threshold or recovery time">
             <defs>
               <linearGradient id="cf9-scale" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stop-color="#ff6f5e"/><stop offset="40%" stop-color="#ffd27e"/>
@@ -71,11 +92,11 @@ export const CASE = {
               <text x="40" y="52" font-family="JetBrains Mono" font-size="10" fill="#8fa9b2">pH</text>
               <rect x="40" y="60" width="420" height="18" rx="4" fill="url(#cf9-scale)"/>
               <g font-family="JetBrains Mono" font-size="9" fill="#8fa9b2">
-                <text x="40" y="94">0</text><text x="180" y="94">3.5</text><text x="320" y="94">7</text><text x="452" y="94" text-anchor="end">14</text>
+                <text x="40" y="94">0</text><text x="145" y="94">3.5</text><text x="250" y="94">7</text><text x="452" y="94" text-anchor="end">14</text>
               </g>
               <!-- critical 5.5 line -->
               <line x1="205" y1="54" x2="205" y2="84" stroke="#ff9a82" stroke-width="1.6" stroke-dasharray="3 3"/>
-              <text x="205" y="112" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#ff9a82">~5.5: demineralization can increase</text>
+              <text x="205" y="112" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#ff9a82">5.5: example reference</text>
               <!-- moving marker: pH per step -->
               <g style="transition: transform .9s var(--ease);" :style="\`transform: translateX(\${[(6.5/14)*420,(2.5/14)*420,(2.5/14)*420,(6.0/14)*420][step]}px)\`">
                 <polygon points="40,44 34,32 46,32" fill="#eef6f8"/>
@@ -157,7 +178,7 @@ export const CASE = {
                 <circle class="a-float" style="--dur:3s" cx="220" cy="220" r="4"/>
                 <circle class="a-float" style="--dur:3.4s; --delay:.6s" cx="384" cy="236" r="4"/>
               </g>
-              <text x="300" y="330" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fd9ae">saliva buffers acids</text>
+              <text x="300" y="330" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8fd9ae">saliva provides buffering</text>
             </g>
 
             <!-- step 3: saliva buffer + remineralization -->
@@ -178,7 +199,7 @@ export const CASE = {
                 <circle class="a-spark" style="--dur:2.5s; --delay:1.6s" cx="314" cy="208" r="2.2"/>
               </g>
               <text x="150" y="200" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="#8fd9ae">buffering + mineral recovery</text>
-              <text class="a-blink" style="--dur:1.8s" x="300" y="330" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#8fd9ae" font-weight="700">REMINERALIZATION</text>
+              <text class="a-blink" style="--dur:1.8s" x="300" y="330" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#8fd9ae" font-weight="700">BUFFERING AND MINERAL BALANCE</text>
             </g>
 
             <!-- clock strip -->
@@ -192,7 +213,7 @@ export const CASE = {
                       :stroke-dashoffset="[239,60,20,150][step]" transform="rotate(-90)"/>
               <text x="0" y="4" text-anchor="middle" font-family="JetBrains Mono" font-size="11"
                     :fill="step===3 ? '#8fd9ae' : '#ff9a82'"
-                    x-text="['baseline','acidic','low pH','recovery'][step]"></text>
+                    x-text="['buffered','acidic','dissolving','buffering'][step]"></text>
             </g>
           </svg>`
 };
