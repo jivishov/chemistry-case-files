@@ -1,6 +1,6 @@
 // Optional, local-only pagination. Move original content, never duplicate model or form state.
 // Each topic starts a sheet; overflow continues at paragraph/list-item/table-row boundaries.
-export function initBookMode() {
+export function initBookMode({closeContents = () => {}} = {}) {
   const main = document.getElementById('lesson-main');
   const toggle = document.getElementById('lesson-book');
   const sections = [...main.querySelectorAll(':scope > [data-book-section]')];
@@ -10,7 +10,7 @@ export function initBookMode() {
   reader.id = 'book-reader'; reader.hidden = true;
   reader.innerHTML = `<div id="book-stage" aria-label="Book pages"></div>
     <nav class="book-controls" aria-label="Book navigation">
-      <button type="button" id="book-contents" aria-controls="lesson-contents" aria-expanded="false">Contents</button>
+      <button type="button" id="book-contents" data-lesson-contents-toggle aria-controls="lesson-contents" aria-expanded="false">Contents</button>
       <button type="button" id="book-prev" aria-label="Previous page">← Previous</button>
       <label class="book-jump-label"><span class="sr-only">Go to section</span><select id="book-jump" aria-label="Go to section"></select></label>
       <span id="book-status" role="status" aria-live="polite"></span>
@@ -20,19 +20,6 @@ export function initBookMode() {
   const stage = reader.querySelector('#book-stage');
   const previous = reader.querySelector('#book-prev'), next = reader.querySelector('#book-next');
   const status = reader.querySelector('#book-status'), jump = reader.querySelector('#book-jump');
-  const contents = reader.querySelector('#book-contents');
-  const sidebar = document.querySelector('.lesson-sidebar'); sidebar.id = 'lesson-contents';
-  const closeContents = () => {document.body.classList.remove('book-contents-open');contents.setAttribute('aria-expanded','false');};
-  contents.addEventListener('click', () => {
-    const open = document.body.classList.toggle('book-contents-open');
-    contents.setAttribute('aria-expanded', String(open));
-  });
-  sidebar.addEventListener('click', event => {if(event.target.closest('a')) closeContents();});
-  document.addEventListener('keydown', event => {
-    if(event.key === 'Escape' && document.body.classList.contains('book-contents-open')) {
-      closeContents(); contents.focus();
-    }
-  });
   for (const section of sections) jump.add(new Option(section.dataset.bookTitle, section.id));
   let enabled = false, rebuilding = false, index = 0, pages = [], moved = [];
   let animations = [], turn = 0, resizeTimer, printResume = false;
@@ -205,10 +192,12 @@ export function initBookMode() {
       originalDetails = new Map([...main.querySelectorAll('details')].map(d=>[d,d.open]));
       main.querySelectorAll('.lesson-honors-box').forEach(d=>{d.open=true;});
       enabled = true; reader.hidden = false; document.body.classList.add('book-mode');
+      window.dispatchEvent(new Event('lessonmodechange'));
       window.scrollTo({top:0,behavior:'instant'});
       rebuild(anchor);
     } else {
       enabled = false; restoreNodes(); reader.hidden = true; document.body.classList.remove('book-mode');
+      window.dispatchEvent(new Event('lessonmodechange'));
       main.style.removeProperty('--book-height');
       originalDetails.forEach((open, d)=>{d.open=open;}); originalDetails.clear();
       document.querySelectorAll('.lesson-sidebar a[aria-current]').forEach(a=>a.removeAttribute('aria-current'));
@@ -231,7 +220,7 @@ export function initBookMode() {
     else if (link.hash === '#lesson-main') {event.preventDefault(); pages[index]?.head.focus({preventScroll:true});}
   });
   document.addEventListener('keydown', event=>{
-    if (!enabled || event.altKey || event.ctrlKey || event.metaKey || event.target.closest('input,select,textarea,button,[contenteditable="true"]')) return;
+    if (!enabled || event.altKey || event.ctrlKey || event.metaKey || event.target.closest('input,select,textarea,button,.lesson-sidebar,[contenteditable="true"]')) return;
     if (['ArrowRight','PageDown','ArrowLeft','PageUp'].includes(event.key)) {
       event.preventDefault(); flipTo(index + (['ArrowRight','PageDown'].includes(event.key) ? 1 : -1), {focus:true});
     }
