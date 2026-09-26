@@ -1,5 +1,6 @@
-import { MODEL_CONFIG, renderModel, escapeHTML as e } from './models.js?v=2';
+import { MODEL_CONFIG, renderModel, escapeHTML as e } from './models.js?v=3';
 import { initBookMode } from './book.js?v=9';
+import { initBookHint } from './book-hint.js?v=1';
 
 const {number,checks}=JSON.parse(document.getElementById('lesson-data').textContent);
 const config=MODEL_CONFIG[number];
@@ -61,6 +62,7 @@ document.querySelectorAll('[data-check]').forEach(form=>{
 });
 const print=document.getElementById('lesson-print');print.hidden=false;print.addEventListener('click',()=>window.print());
 const book=initBookMode();
+initBookHint();
 // Print expanded instructional content and restore the student's choices afterward.
 let closed=[];
 window.addEventListener('beforeprint',()=>{stop();book.suspend();closed=[...document.querySelectorAll('details:not([open])')];closed.forEach(el=>{el.open=true;});});

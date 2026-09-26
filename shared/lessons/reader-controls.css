@@ -1,0 +1,110 @@
+/* Reading controls share one compact shape across all eleven lessons. */
+.book-mode-control { display: flex; align-items: center; }
+.lesson-page .lesson-view-actions .lesson-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 600 13px/1.2 var(--font-body);
+  white-space: nowrap;
+}
+.lesson-action svg, .book-hint-dismiss svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lesson-page .lesson-view-actions .lesson-action:hover {
+  background: var(--accent-050);
+  border-color: var(--accent-700);
+}
+.lesson-page .lesson-view-actions .lesson-action[aria-pressed=true] {
+  background: var(--accent-700);
+  border-color: var(--accent-700);
+  color: white;
+}
+html[data-design=field] .lesson-view-actions .lesson-action {
+  background: rgb(255 255 255 / 7%);
+  border-color: rgb(213 235 218 / 32%);
+  color: #f4f5e9;
+}
+html[data-design=field] .lesson-view-actions .lesson-action:hover {
+  background: rgb(255 255 255 / 14%);
+  border-color: #9cb7a3;
+}
+html[data-design=field] .lesson-view-actions .lesson-action[aria-pressed=true] {
+  background: var(--reader-highlight);
+  border-color: var(--reader-highlight);
+  color: #193d2e;
+}
+.lesson-topbar .book-mode-hint {
+  position: fixed;
+  z-index: 40;
+  width: min(282px, calc(100vw - 24px));
+  padding: 16px;
+  border: 1px solid #aebfae;
+  border-radius: 12px;
+  background: #fffef7;
+  color: #193d2e;
+  box-shadow: 0 6px 24px rgb(13 39 27 / 18%);
+  font: 400 13px/1.45 var(--font-body);
+  text-align: left;
+}
+.book-mode-hint::before {
+  content: "";
+  position: absolute;
+  left: var(--hint-arrow-left, 50%);
+  top: -6px;
+  width: 10px;
+  height: 10px;
+  background: #fffef7;
+  border-left: 1px solid #aebfae;
+  border-top: 1px solid #aebfae;
+  transform: rotate(45deg);
+}
+.book-mode-hint strong { display: block; padding-right: 20px; font-size: 14px; }
+.book-mode-hint p { margin: 6px 0 12px; color: #526658; }
+.lesson-page .lesson-view-actions .book-hint-dismiss {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  padding: 6px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #526658;
+}
+.lesson-page .lesson-view-actions .book-hint-dismiss:hover { background: #edf2e6; }
+.lesson-page .lesson-view-actions .book-hint-try {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 1px solid #b5c57c;
+  border-radius: 6px;
+  background: #e5ef96;
+  color: #193d2e;
+  font: 600 12px/1.3 var(--font-body);
+}
+.lesson-page .lesson-view-actions .book-hint-try:hover { background: #d9e880; }
+html[data-design] .lesson-topbar .book-mode-hint :focus-visible { outline-color: #19725b; outline-offset: 2px; }
+@media (max-width: 520px) {
+  .lesson-page .lesson-view-actions .lesson-action { gap: 5px; padding: 7px; font-size: 11px; min-height: 34px; }
+  .lesson-action svg { width: 15px; height: 15px; }
+}

@@ -185,7 +185,7 @@
 
           <div class="honors-block" x-show="honors && modeVerdict.spectra && modeVerdict.spectra.tone==='success'">
             <span class="honors-tag">Honors · convert photon energy to electronvolts</span>
-            <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0;">The core calculation gives energy in joules. Convert that verified value to electronvolts using 1 eV = 1.602 × 10^-19 J.</p>
+            <p class="muted" style="font-size: var(--fs-sm); margin: var(--s-2) 0;">The core calculation gives energy in joules. Convert that verified value to electronvolts using 1 eV = 1.602 × 10<sup>−19</sup> J.</p>
             <div class="eqn" style="margin: var(--s-2) 0;"><span x-tex.display="'E_{eV} = \\dfrac{E_J}{1.602\\times10^{-19}}'"></span></div>
             <div x-show="selectedLine" style="margin-top: var(--s-2);"><div class="step-line mono">Verified core result: <span class="calc" x-prose="selectedLine ? fmt(selectedLine.energy,3)+' J' : ''"></span></div><div class="step-line mono muted">Now convert J → eV; the eV result stays hidden until you submit.</div></div>
             <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-2);" x-show="!selectedLine">Select a line above to see its photon energy calculated.</p>

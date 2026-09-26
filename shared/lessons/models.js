@@ -44,7 +44,12 @@ const rect=(x,y,w,h,fill=pale,stroke='none')=>`<rect x="${x}" y="${y}" width="${
 const atom=(x,y,r,label,color)=>circle(x,y,r,color)+txt(x,y+5,label,15,'#fff','middle');
 const arrow=(x1,y1,x2,y2,color=teal)=>line(x1,y1,x2,y2,color,3)+`<path d="M ${x2-9},${y2-6} L ${x2},${y2} L ${x2-9},${y2+6}" fill="none" stroke="${color}" stroke-width="3"/>`;
 const fmt=(n,d=2)=>Number(n).toFixed(d);
-const sci=n=>n.toExponential(2).replace('e+',' × 10^').replace('e-',' × 10^−');
+// Text superscripts work in SVG labels, captions, accessible text, and readouts.
+const superscript = {'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+const sci = n => {
+  const [mantissa, exponent] = n.toExponential(2).split('e');
+  return `${mantissa} × 10${String(Number(exponent)).replace(/[-\d]/g, character => superscript[character])}`;
+};
 
 /** Returns an accessible SVG image, a textual equivalent, and numerical evidence. */
 export function renderModel(unit, value, progress=0) {
