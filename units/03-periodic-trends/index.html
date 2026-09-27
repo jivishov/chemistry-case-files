@@ -124,14 +124,14 @@
           <p class="ask-line" x-prose="aTask ? aTask.ask : ''"></p>
           <div class="opt-grid" role="group" aria-label="Answer options">
             <template x-for="o in aOptions" :key="o.k">
-              <button class="opt" :class="aState(o.k)" @click="pickA(o.k)" :disabled="aChecked" x-prose="o.label"></button>
+              <button class="opt" :class="aState(o.k)" @click="pickA(o.k)" :disabled="aChecked"><span class="opt-label" x-prose="o.label"></span></button>
             </template>
           </div>
 
           <div class="act-row mt-3" role="group" aria-label="Next step">
             <span class="command-kicker">Next step</span>
             <template x-for="a in (aTask ? aTask.actions : [])" :key="a.k">
-              <button class="opt opt-act" :class="aActionState(a.k)" @click="pickAAction(a.k)" :disabled="aChecked" x-prose="a.label"></button>
+              <button class="opt opt-act" :class="aActionState(a.k)" @click="pickAAction(a.k)" :disabled="aChecked"><span class="opt-label" x-prose="a.label"></span></button>
             </template>
           </div>
 
@@ -292,14 +292,14 @@
           <p class="ask-line" x-prose="bTask ? bTask.ask : ''"></p>
           <div class="opt-grid" role="group" aria-label="Answer options">
             <template x-for="o in (bTask ? bTask.options : [])" :key="o.k">
-              <button class="opt" :class="bState(o.k)" @click="pickB(o.k)" :disabled="bChecked" x-prose="o.label"></button>
+              <button class="opt" :class="bState(o.k)" @click="pickB(o.k)" :disabled="bChecked"><span class="opt-label" x-prose="o.label"></span></button>
             </template>
           </div>
 
           <div class="act-row mt-3" role="group" aria-label="Next step">
             <span class="command-kicker">Next step</span>
             <template x-for="a in (bTask ? bTask.actions : [])" :key="a.k">
-              <button class="opt opt-act" :class="bActionState(a.k)" @click="pickBAction(a.k)" :disabled="bChecked" x-prose="a.label"></button>
+              <button class="opt opt-act" :class="bActionState(a.k)" @click="pickBAction(a.k)" :disabled="bChecked"><span class="opt-label" x-prose="a.label"></span></button>
             </template>
           </div>
 
@@ -400,7 +400,7 @@
           <div class="act-row mt-3" role="group" aria-label="Repair option">
             <span class="command-kicker">Next step</span>
             <template x-for="a in (cTask ? cTask.actions : [])" :key="a.k">
-              <button class="opt opt-act" :class="cActionState(a.k)" @click="pickCAction(a.k)" :disabled="cChecked" x-prose="a.label"></button>
+              <button class="opt opt-act" :class="cActionState(a.k)" @click="pickCAction(a.k)" :disabled="cChecked"><span class="opt-label" x-prose="a.label"></span></button>
             </template>
           </div>
 
@@ -488,13 +488,13 @@
 
                 <div class="opt-grid mt-2" role="group" aria-label="Honors answer options">
                   <template x-for="o in h1Task.options" :key="o.k">
-                    <button class="opt" :class="h1State(o.k)" @click="pickH1(o.k)" :disabled="h1Checked" x-prose="o.label"></button>
+                    <button class="opt" :class="h1State(o.k)" @click="pickH1(o.k)" :disabled="h1Checked"><span class="opt-label" x-prose="o.label"></span></button>
                   </template>
                 </div>
                 <div class="act-row mt-2" role="group" aria-label="Which side holds valence electrons more strongly">
                   <span class="command-kicker">Next step</span>
                   <template x-for="a in h1Task.actions" :key="a.k">
-                    <button class="opt opt-act" :class="h1ActionState(a.k)" @click="pickH1Action(a.k)" :disabled="h1Checked" x-prose="a.label"></button>
+                    <button class="opt opt-act" :class="h1ActionState(a.k)" @click="pickH1Action(a.k)" :disabled="h1Checked"><span class="opt-label" x-prose="a.label"></span></button>
                   </template>
                 </div>
                 <div class="row call-row mt-2">
@@ -526,13 +526,13 @@
 
                 <div class="opt-grid mt-2" role="group" aria-label="Honors answer options">
                   <template x-for="o in h2Task.options" :key="o.k">
-                    <button class="opt" :class="h2State(o.k)" @click="pickH2(o.k)" :disabled="h2Checked" x-prose="o.label"></button>
+                    <button class="opt" :class="h2State(o.k)" @click="pickH2(o.k)" :disabled="h2Checked"><span class="opt-label" x-prose="o.label"></span></button>
                   </template>
                 </div>
                 <div class="act-row mt-2" role="group" aria-label="How to record the result">
                   <span class="command-kicker">Next step</span>
                   <template x-for="a in h2Task.actions" :key="a.k">
-                    <button class="opt opt-act" :class="h2ActionState(a.k)" @click="pickH2Action(a.k)" :disabled="h2Checked" x-prose="a.label"></button>
+                    <button class="opt opt-act" :class="h2ActionState(a.k)" @click="pickH2Action(a.k)" :disabled="h2Checked"><span class="opt-label" x-prose="a.label"></span></button>
                   </template>
                 </div>
                 <div class="row call-row mt-2">
@@ -585,7 +585,7 @@
               <div class="act-row mt-3" role="group" aria-label="Activity decision">
                 <span class="command-kicker">Decision</span>
                 <template x-for="a in capActions" :key="a.k">
-                  <button class="opt opt-act" :class="capActionState(a.k)" @click="capPickAction(a.k)" :disabled="capWin" x-prose="a.label"></button>
+                  <button class="opt opt-act" :class="capActionState(a.k)" @click="capPickAction(a.k)" :disabled="capWin"><span class="opt-label" x-prose="a.label"></span></button>
                 </template>
               </div>
 
