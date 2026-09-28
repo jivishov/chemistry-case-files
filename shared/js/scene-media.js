@@ -11,6 +11,9 @@ export const UNIT_PHOTOS = Object.freeze({
 const escapeText = value => String(value).replace(/[&<>"']/g, c =>
   ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+// Replaced artwork gets a fresh URL without invalidating the other mission photos.
+const PHOTO_REVISIONS = Object.freeze({ '7/a-whip/0': '20260927-1' });
+
 export function photoUrl(unit) {
   const name = UNIT_PHOTOS[unit];
   return name ? new URL(`../assets/photos/${name}.webp`, import.meta.url).href : '';
@@ -33,7 +36,10 @@ export function createSceneMedia() {
 export function scenePhotoUrl(unit, id, variant = 0) {
   if (!Object.hasOwn(SCENE_PHOTOS, unit) || !SCENE_PHOTOS[unit].includes(id)) return '';
   const view = Number.isInteger(variant) ? ((variant % 2) + 2) % 2 : 0;
-  return new URL(`../assets/photos/missions/${unit}/${id}-${view}.webp`, import.meta.url).href;
+  const url = new URL(`../assets/photos/missions/${unit}/${id}-${view}.webp`, import.meta.url);
+  const revision = PHOTO_REVISIONS[`${unit}/${id}/${view}`];
+  if (revision) url.searchParams.set('v', revision);
+  return url.href;
 }
 
 export function photoScene(unit, id, svg, variant = 0) {

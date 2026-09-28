@@ -55,12 +55,11 @@
   --dial-slate:       #5f7480;
   --dial-slate-deep:  #45575f;
 
-  /* Typography — canonical catalog scale.
-     Source Serif 4 carries editorial hierarchy; Atkinson Hyperlegible Next carries
-     instructions and controls; JetBrains Mono is reserved for chemistry/data. */
-  --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-  --font-body:    'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono:    'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+  /* One family across readings, missions, and cases. The legacy data-font role
+     shares Nunito Sans; numeric components keep their tabular-number settings. */
+  --font-body:    'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: var(--font-body);
+  --font-mono:    var(--font-body);
 
   --fs-micro: 0.6875rem; /* 11px: graphical / secondary metadata only */
   --fs-2xs:   0.6875rem; /* compatibility alias for axis ticks / diagram labels */

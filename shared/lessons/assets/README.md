@@ -25,6 +25,8 @@ This matches the published course-map mapping. The images are labeled as illustr
 
 ## Fonts
 
+On September 27, 2026, the user selected **Nunito Sans throughout** the course. The active reading, mission, and course-home styles now load `fonts/nunito-sans.css`, with locally bundled normal and italic variable WOFF2 files (weights 400–700, Latin and Latin Extended). Binaries were obtained unchanged from the Google Fonts CSS API. The upstream record is https://github.com/google/fonts/tree/main/ofl/nunitosans and its SIL Open Font License is included as `fonts/NunitoSans-OFL.txt`. The earlier assets below are retained for provenance; active pages no longer load them.
+
 The published site uses Atkinson Hyperlegible Next for UI/body text and Source Serif 4 for headings. Their Latin and Latin Extended WOFF2 subsets were obtained from the Google Fonts CSS API and are included locally, with unchanged font binaries. `fonts/fonts.css` retains the delivered weight ranges and Unicode ranges with local URLs.
 
 Upstream font and license records:

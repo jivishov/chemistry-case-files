@@ -38,9 +38,69 @@
 
 /* Slider controls */
 .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--s-4); margin-top: var(--s-4); }
+
+/* Keep the four gas quantities together at the actual, resizable bench width. */
+.ideal-workspace { container: ideal-workspace / inline-size; }
+.ideal-workspace .given-row,
+.ideal-workspace .controls-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.ideal-workspace .given-cell,
+.ideal-workspace .controls-grid .field { min-width: 0; }
+.ideal-workspace .controls-grid { margin-top: 12px; }
+.ideal-workspace .controls-grid .field { margin-bottom: 0; }
+.ideal-workspace .controls-grid input { min-width: 0; }
+.ideal-workspace .given-cell .v,
+.ideal-workspace .solved { overflow-wrap: anywhere; }
+.ideal-workspace .ideal-solve-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  border: 0;
+  margin: 12px 0 0;
+}
+.ideal-workspace .ideal-solve-tabs .tab { min-width: 0; padding-inline: 8px; }
+.ideal-workspace .ideal-equation { margin-top: 12px; padding-block: 10px; }
+@container ideal-workspace (min-width: 560px) {
+  .ideal-workspace .given-row,
+  .ideal-workspace .controls-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@container ideal-workspace (max-width: 279px) {
+  .ideal-workspace .given-row,
+  .ideal-workspace .controls-grid { grid-template-columns: minmax(0, 1fr); }
+  .ideal-workspace .ideal-solve-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .ctrl { display: flex; flex-direction: column; gap: var(--s-1); }
 .ctrl > label { display: flex; justify-content: space-between; align-items: center; }
 .ctrl .val { color: var(--accent-700); font-family: var(--font-mono); }
+
+/* Give the particle box vertical room, with a compact bank of sliders beside it. */
+.kinetic-workspace { container: kinetic-workspace / inline-size; }
+.kinetic-experiment {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+}
+.kinetic-experiment .stage { min-width: 0; height: clamp(260px, 36vh, 360px); }
+/* The renderer sizes its drawing buffer for device pixel ratio separately. */
+.kinetic-experiment .stage canvas { width: 100%; height: 100%; }
+.kinetic-experiment .kinetic-controls {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  margin: 0;
+  min-width: 0;
+}
+.kinetic-controls .ctrl { min-width: 0; }
+.kinetic-controls .ctrl > label { flex-wrap: wrap; gap: 4px 8px; }
+.kinetic-controls .val { white-space: nowrap; }
+@container kinetic-workspace (min-width: 520px) {
+  .kinetic-experiment { grid-template-columns: minmax(0, 1fr) clamp(160px, 26%, 220px); }
+}
+@container kinetic-workspace (max-width: 519px) {
+  .kinetic-experiment .stage { height: auto; aspect-ratio: 4 / 3; }
+}
 
 /* Solved-variable readout in the PV=nRT solver */
 .solved { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-md); background: var(--accent-050); border: 1px solid var(--accent-100); color: var(--accent-700); border-radius: var(--r-md); padding: var(--s-2) var(--s-3); }
@@ -57,6 +117,30 @@
 .pp-seg { display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--fs-xs); font-weight: 700; font-family: var(--font-mono); min-width: 2px; white-space: nowrap; overflow: hidden; transition: width var(--t-med) var(--ease); }
 
 /* Dalton gas mixer rows */
+.dalton-workspace { container: dalton-workspace / inline-size; }
+.dalton-inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
+.dalton-inputs .field { min-width: 0; }
+.dalton-inputs input { width: 100%; min-width: 0; }
+@container dalton-workspace (min-width: 560px) {
+  .dalton-inputs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@container dalton-workspace (max-width: 279px) {
+  .dalton-inputs { grid-template-columns: minmax(0, 1fr); }
+}
+.chem-console .kinetic-gauges { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.chem-console .kinetic-gauges .stat {
+  display: grid; grid-template-columns: minmax(70px, 1fr) minmax(150px, 1.5fr);
+  grid-template-rows: 1fr 1fr; column-gap: 8px; padding: 10px 12px; min-width: 0;
+}
+.kinetic-gauges .k { grid-column: 1; align-self: end; }
+.kinetic-gauges .v { grid-column: 1; align-self: start; }
+.kinetic-gauges .dial { grid-column: 2; grid-row: 1 / 3; min-width: 0; }
+.chem-console .kinetic-gauges .dial-face { max-width: 200px; }
+.chem-console .kinetic-gauges .dial-read,
+.chem-console .kinetic-gauges .dial-trend { font-size: 12px; line-height: 1.3; }
+@container kinetic-workspace (min-width: 580px) {
+  .chem-console .kinetic-gauges { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .gasmix { display: flex; flex-direction: column; gap: var(--s-2); }
 .gas-row { display: flex; align-items: center; gap: var(--s-3); }
 .gas-row .gas-name { width: 52px; font-weight: 700; }

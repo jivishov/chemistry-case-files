@@ -10,7 +10,7 @@ import { escapeHTML, formulaHTML, registerNotation } from './notation.js';
 
 // Stable color per chemical species for token visualizations + charts.
 const PALETTE = ['#2a7d8a', '#c0772f', '#5a6b9c', '#6b9c5a', '#9c5a87', '#b8881f', '#3f8f9c', '#a85a3f'];
-const CHART_FONT = 'Atkinson Hyperlegible Next';
+const CHART_FONT = "'Nunito Sans', system-ui, sans-serif";
 const _assigned = {};
 let _next = 0;
 export function speciesColor(formula) {

@@ -1465,7 +1465,7 @@ html:is([data-design="clear"], [data-design="field"]) .course-hub,
 html[data-design="atlas"] .course-hub {
   min-height: 100dvh;
   color: var(--ink);
-  font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif;
+  font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -1522,7 +1522,7 @@ html[data-design="atlas"] .course-hub .hub-mark {
   border: 1px solid var(--accent);
   background: var(--accent-050);
   color: var(--accent-700);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -1583,7 +1583,7 @@ html[data-design="atlas"] .course-hub .hub-course-code {
   border-radius: var(--r-sm);
   background: var(--surface-2);
   color: var(--ink-2);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.04em;
 }
@@ -1625,7 +1625,7 @@ html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-kicker,
 html[data-design="atlas"] .course-hub .hub-kicker {
   margin: 0 0 12px;
   color: var(--accent-700);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -1669,14 +1669,14 @@ html:is([data-design="clear"], [data-design="field"]) .course-hub h1,
 html:is([data-design="clear"], [data-design="field"]) .course-hub h2,
 html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-brand-name,
 html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-title {
-  font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif;
+  font-family: var(--font-body);
 }
 
 html[data-design="atlas"] .course-hub h1,
 html[data-design="atlas"] .course-hub h2,
 html[data-design="atlas"] .course-hub .hub-brand-name,
 html[data-design="atlas"] .course-hub .hub-unit-title {
-  font-family: "Bitter", Georgia, serif;
+  font-family: var(--font-display);
 }
 
 html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-lead,
@@ -1724,7 +1724,7 @@ html[data-design="atlas"] .course-hub .hub-legend > span {
 html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-legend-key,
 html[data-design="atlas"] .course-hub .hub-legend-key {
   color: var(--accent-700);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -1741,7 +1741,7 @@ html[data-design="atlas"] .course-hub .hub-scroll-cue {
   padding: 6px 4px;
   margin-left: -4px;
   color: var(--accent-700);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -1844,7 +1844,7 @@ html[data-design="atlas"] .course-hub .hub-learning-path li > span {
   border: 1px solid var(--accent-300);
   border-radius: 50%;
   color: var(--accent-700);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.66rem;
   font-weight: 700;
 }
@@ -1985,7 +1985,7 @@ html[data-design="atlas"] .course-hub .hub-unit-index {
 
 html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-number,
 html[data-design="atlas"] .course-hub .hub-unit-number {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -2015,7 +2015,7 @@ html[data-design="atlas"] .course-hub .hub-unit-overline {
   gap: 6px 18px;
   margin-bottom: 7px;
   color: var(--accent-700);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.67rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -2054,7 +2054,7 @@ html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-case
 html[data-design="atlas"] .course-hub .hub-unit-case > span:first-child {
   margin-right: 5px;
   color: var(--accent-700);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -2088,7 +2088,7 @@ html[data-design="atlas"] .course-hub .hub-unit-action {
   padding-bottom: 3px;
   border-bottom: 1px solid var(--accent);
   color: var(--accent-700);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -2150,7 +2150,7 @@ html[data-design="atlas"] .course-hub .hub-practices-table {
 html:is([data-design="clear"], [data-design="field"]) .course-hub .hub-practices-table th,
 html[data-design="atlas"] .course-hub .hub-practices-table th {
   color: var(--muted);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.69rem;
   letter-spacing: 0.09em;
   font-variant-caps: all-small-caps;

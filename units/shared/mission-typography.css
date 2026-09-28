@@ -1,0 +1,249 @@
+/* Carry the reading's typography into all eleven mission and Case File screens.
+   Presentation only: the existing tracks, placement, dimensions, spacing, scrolling,
+   breakpoints, scientific artwork, and interaction states belong to their own sheets. */
+@import url('../../shared/lessons/assets/fonts/nunito-sans.css');
+
+html[data-design] .cockpit-shell {
+  --font-body: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: var(--font-body);
+  --font-mono: var(--font-body);
+  --mission-text: 1rem;
+  --mission-support: .9375rem;
+  --mission-label: .75rem;
+  --mission-control: .875rem;
+  font-family: var(--font-body);
+  font-kerning: normal;
+}
+
+/* Native form controls do not consistently inherit the surrounding family. */
+html[data-design] .cockpit-shell button,
+html[data-design] .cockpit-shell input,
+html[data-design] .cockpit-shell select,
+html[data-design] .cockpit-shell textarea {
+  font-family: var(--font-body);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* Titles and instructions share one family, with a restrained weight hierarchy. */
+html[data-design] .cockpit-shell .command-home,
+html[data-design] .cockpit-shell .chem-console h2,
+html[data-design] .cockpit-shell .cf-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-optical-sizing: auto;
+  letter-spacing: -.015em;
+}
+
+html[data-design] .cockpit-shell .cf-title {
+  font-size: 1.375rem;
+  line-height: 1.22;
+  text-wrap: pretty;
+}
+
+html[data-design] .cockpit-shell .command-brand span:last-child,
+html[data-design] .cockpit-shell .station-nav .tab,
+html[data-design] .cockpit-shell .command-actions .label-text,
+html[data-design] .cockpit-shell .metric-chip,
+html[data-design] .cockpit-shell .teks-badge,
+html[data-design] .cockpit-shell .sol-chip {
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+html[data-design] .cockpit-shell .station-nav .tab[aria-selected="true"] {
+  font-weight: 600;
+  box-shadow: none;
+}
+
+/* Short labels are quiet signposts; long facts and captions are reading text. */
+html[data-design] .cockpit-shell .command-kicker,
+html[data-design] .cockpit-shell .screen-system,
+html[data-design] .cockpit-shell .cf-kicker,
+html[data-design] .cockpit-shell .cf-quiz-label,
+html[data-design] .cockpit-shell .cf-chem strong,
+html[data-design] .cockpit-shell .chem-console .stat .k,
+html[data-design] .cockpit-shell .chem-console table.data th {
+  font-family: var(--font-body);
+  font-size: var(--mission-label);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: .02em;
+  text-transform: none;
+}
+
+html[data-design] .cockpit-shell .screen-goal {
+  font-size: var(--mission-text);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+html[data-design] .cockpit-shell .screen-outcome,
+html[data-design] .cockpit-shell .screen-reference,
+html[data-design] .cockpit-shell .chem-console p,
+html[data-design] .cockpit-shell .chem-console .small,
+html[data-design] .cockpit-shell .chem-console .muted,
+html[data-design] .cockpit-shell .cf-hook,
+html[data-design] .cockpit-shell .cf-narr p,
+html[data-design] .cockpit-shell .cf-explain {
+  font-family: var(--font-body);
+  font-size: var(--mission-support);
+  line-height: 1.5;
+}
+
+html[data-design] .cockpit-shell .chem-console h3,
+html[data-design] .cockpit-shell .chem-console h4,
+html[data-design] .cockpit-shell .life-support-board h2,
+html[data-design] .cockpit-shell .life-support-board h3,
+html[data-design] .cockpit-shell .life-header strong,
+html[data-design] .cockpit-shell .screen-state {
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+html[data-design] .cockpit-shell .chem-console p strong,
+html[data-design] .cockpit-shell .chem-console .field > label,
+html[data-design] .cockpit-shell .workbench-grid .k,
+html[data-design] .cockpit-shell .latest-consequence strong {
+  font-weight: 600;
+}
+
+html[data-design] .cockpit-shell .latest-consequence p,
+html[data-design] .cockpit-shell .mission-log p {
+  font-family: var(--font-body);
+  font-size: var(--mission-control);
+  line-height: 1.45;
+}
+
+/* Data keeps aligned digits within the same family as the surrounding prose. */
+html[data-design] .cockpit-shell .chem-console table.data td,
+html[data-design] .cockpit-shell .chem-console .stat .v,
+html[data-design] .cockpit-shell .cf-stat .v,
+html[data-design] .cockpit-shell .cf-step-n,
+html[data-design] .cockpit-shell .cf-progress,
+html[data-design] .cockpit-shell .metric-chip strong,
+html[data-design] .cockpit-shell .teks-badge strong,
+html[data-design] .cockpit-shell .life-support-board .mono {
+  font-family: var(--font-body);
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0;
+}
+
+/* SVG presentation attributes used an older monospace face. Change only the type;
+   preserve scientific symbols, positions, sizes, colors, and diagram geometry.
+   KaTeX keeps its own mathematical glyph and spacing system. */
+html[data-design] .cockpit-shell svg text,
+html[data-design] .cockpit-shell svg tspan {
+  font-family: var(--font-body);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+html[data-design] .cockpit-shell .chem-console table.data td {
+  font-size: var(--mission-support);
+}
+
+html[data-design] .cockpit-shell .cf-stat .v {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+html[data-design] .cockpit-shell .cf-stat .k {
+  font-family: var(--font-body);
+  font-size: var(--mission-label);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+html[data-design] .cockpit-shell .cf-cap {
+  font-family: var(--font-body);
+  font-size: var(--mission-control);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+html[data-design] .cockpit-shell .cf-quiz-q {
+  font-family: var(--font-body);
+  font-size: var(--mission-text);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+html[data-design] .cockpit-shell .cf-punch-lead {
+  font-size: var(--mission-support);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+html[data-design] .cockpit-shell .cf-career {
+  font-family: var(--font-body);
+  font-size: var(--mission-label);
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Refine the existing controls without changing their hit areas or placement. */
+html[data-design] .cockpit-shell .btn,
+html[data-design] .cockpit-shell .chem-console .choice,
+html[data-design] .cockpit-shell .chem-console .opt,
+html[data-design] .cockpit-shell .chem-console .pair,
+html[data-design] .cockpit-shell .chem-console .miss-opt,
+html[data-design] .cockpit-shell .chem-console .est-chip,
+html[data-design] .cockpit-shell .chem-console .fam-btn,
+html[data-design] .cockpit-shell .chem-console .job-pill,
+html[data-design] .cockpit-shell .cf-step,
+html[data-design] .cockpit-shell .cf-choice,
+html[data-design] .cockpit-shell .cf-cta,
+html[data-design] .cockpit-shell .appearance > summary {
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+html[data-design] .cockpit-shell .cf-step,
+html[data-design] .cockpit-shell .cf-choice {
+  font-size: var(--mission-control);
+  line-height: 1.4;
+}
+
+html[data-design] .cockpit-shell .btn-accent,
+html[data-design] .cockpit-shell .cf-btn-accent,
+html[data-design] .cockpit-shell .cf-cta,
+html[data-design] .cockpit-shell .cf-step.on {
+  font-weight: 600;
+}
+
+/* Restrained paper surfaces. Semantic answer colors and keyboard outlines stay intact. */
+html[data-design] .cockpit-shell .cf-stat {
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+
+html[data-design] .cockpit-shell .cf-stage {
+  box-shadow: 0 2px 8px rgb(8 25 21 / 8%);
+}
+
+html[data-design] .cockpit-shell .chem-console .btn-accent {
+  box-shadow: 0 1px 2px rgb(8 25 21 / 10%);
+}
+
+/* The shell's established short-screen breakpoint keeps dense missions comfortable. */
+@media (max-height: 819px) {
+  html[data-design] .cockpit-shell {
+    --mission-text: .9375rem;
+    --mission-support: .9375rem;
+    --mission-label: .6875rem;
+    --mission-control: .8125rem;
+  }
+
+  html[data-design] .cockpit-shell .cf-title {
+    font-size: 1.25rem;
+  }
+}

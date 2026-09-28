@@ -13,7 +13,7 @@
     ? new URL(document.currentScript.src, document.baseURI)
     : null;
   const typographyUrl = scriptUrl
-    ? new URL('./typography.css?v=field-20260922-1', scriptUrl).href
+    ? new URL('./typography.css?v=nunito-20260927-1', scriptUrl).href
     : null;
 
   const ensureStylesheet = (id, href) => {
@@ -26,8 +26,8 @@
   };
 
   ensureStylesheet(
-    'chemistry-fonts-v2',
-    'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Source+Serif+4:wght@600;700&display=swap'
+    'chemistry-fonts-v3',
+    scriptUrl ? new URL('../../shared/lessons/assets/fonts/nunito-sans.css', scriptUrl).href : null
   );
   ensureStylesheet('chemistry-typography-v2', typographyUrl);
 

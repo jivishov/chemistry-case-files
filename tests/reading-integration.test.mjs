@@ -16,7 +16,9 @@ test('all reading and mission entry points use the same deployed course tree', a
     const mission = await read(prefix + 'index.html');
     assert.ok(mission.includes('href="learn.html"'));
     assert.ok(lesson.includes('index.html?mission=casefile'));
-    assert.ok(mission.includes('./js/main.js?v=lessons-20260926-1'));
+    // Asset revisions change independently; keep checking the actual course module.
+    assert.match(mission, /(?:from\s+|import\(\s*)['"]\.\/js\/main\.js\?v=[A-Za-z0-9._-]+['"]/);
+    await fs.access(new URL(prefix + 'js/main.js', root));
     assert.ok(!mission.includes('units_new/'));
   }
 });

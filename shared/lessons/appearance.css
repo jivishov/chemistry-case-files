@@ -1,10 +1,11 @@
 /* Field Lab reading adaptation of the published chemistry-case-files design.
    Local fonts and imagery; this sheet does not change scientific SVG colors. */
-@import url('./assets/fonts/fonts.css');
+@import url('./assets/fonts/nunito-sans.css');
 
 :root {
-  --font-body:'Atkinson Hyperlegible Next',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --font-display:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --font-body:'Nunito Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-display:var(--font-body);
+  --font-mono:var(--font-body);
   --reader-header:#173e34;
   --reader-highlight:#e5ef96;
 }
@@ -25,7 +26,10 @@ html[data-design=atlas] {
 }
 .lesson-page{background:var(--bg);color:var(--ink)}
 .lesson-page a{color:var(--accent-700)}
-.lesson-page h1,.lesson-page h2,.lesson-page h3{color:var(--ink)}
+.lesson-page h1,.lesson-page h2,.lesson-page h3{color:var(--ink);font-weight:600;letter-spacing:-.015em}
+.lesson-page .lesson-sidebar-title,.lesson-page strong,.lesson-page b{font-weight:600}
+.lesson-page svg text,.lesson-page svg tspan{font-family:var(--font-body);font-variant-numeric:lining-nums tabular-nums}
+.lesson-page .lesson-eyebrow,.lesson-page .book-continuation{font-weight:600;letter-spacing:.02em;text-transform:none}
 .lesson-page button,.lesson-page select{border-color:var(--border-strong);background:var(--surface)}
 .lesson-page button:hover{background:var(--accent-050)}
 .lesson-page :focus-visible{outline-color:var(--accent)}

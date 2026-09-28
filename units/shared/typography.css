@@ -1,4 +1,4 @@
-/* typography.css — catalog-wide typography system v2, fidelity-reviewed.
+/* typography.css — shared Nunito Sans typography system.
  *
  * Canonical families, type sizes, and line-height tokens live in shared/css/tokens.css.
  * This layer maps those tokens onto the course hub and cockpit semantics. It is loaded by
@@ -26,12 +26,12 @@ html[data-design][data-design="atlas"] .cockpit-shell {
   line-height: var(--lh-compact);
 }
 
-/* Header hierarchy: unit identity is editorial; controls and metrics remain UI sans. */
+/* Header hierarchy: one family, distinguished by size and weight. */
 html[data-design]:is([data-design="clear"], [data-design="field"]) .command-brand .command-home,
 html[data-design][data-design="atlas"] .command-brand .command-home {
   font-family: var(--font-display);
   font-size: var(--fs-lg);
-  font-weight: 700;
+  font-weight: 600;
   line-height: var(--lh-display);
   letter-spacing: -0.012em;
   font-optical-sizing: auto;
@@ -53,7 +53,7 @@ html[data-design][data-design="atlas"] .eyebrow {
   font-size: var(--fs-xs);
   font-weight: 600;
   line-height: var(--lh-ui);
-  letter-spacing: .08em;
+  letter-spacing: .02em;
 }
 
 html[data-design]:is([data-design="clear"], [data-design="field"]) .design-mode-toggle button,
@@ -92,7 +92,7 @@ html[data-design][data-design="atlas"] .screen-system {
   font-size: var(--fs-xs);
   font-weight: 600;
   line-height: var(--lh-ui);
-  letter-spacing: .04em;
+  letter-spacing: .02em;
 }
 
 html[data-design]:is([data-design="clear"], [data-design="field"]) .screen-state,
@@ -134,7 +134,7 @@ html[data-design]:is([data-design="clear"], [data-design="field"]) .chem-console
 html[data-design][data-design="atlas"] .chem-console h2 {
   font-family: var(--font-display);
   font-size: var(--fs-lg);
-  font-weight: 700;
+  font-weight: 600;
   line-height: var(--lh-heading);
   letter-spacing: -0.01em;
   font-optical-sizing: auto;
@@ -343,7 +343,7 @@ html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub .
 html[data-design][data-design="atlas"] .course-hub .hub-brand-name {
   font-family: var(--font-body);
   font-size: var(--fs-md);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub .hub-brand-sub,
@@ -359,7 +359,7 @@ html[data-design][data-design="atlas"] .course-hub h2,
 html[data-design]:is([data-design="clear"], [data-design="field"]) .course-hub .hub-unit-title,
 html[data-design][data-design="atlas"] .course-hub .hub-unit-title {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-optical-sizing: auto;
 }
 

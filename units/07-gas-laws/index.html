@@ -5,18 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Unit 7 · Gas Laws &amp; Kinetic Theory</title>
 <meta name="description" content="Explore kinetic molecular theory, ideal-gas relationships, PV = nRT, and Dalton's law of partial pressure. TEKS C.10.">
-<script src="../shared/design-mode.js?v=appearance-20260926-1"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="../shared/design-mode.js?v=nunito-20260927-1"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-<link rel="stylesheet" href="../../shared/css/tokens.css">
+<link rel="stylesheet" href="../../shared/css/tokens.css?v=nunito-20260927-1">
 <link rel="stylesheet" href="../../shared/css/base.css">
 <link rel="stylesheet" href="../../shared/css/components.css">
 <link rel="stylesheet" href="../../shared/css/casefile.css">
 <link rel="stylesheet" href="../shared/cockpit.css?v=cockpit-4">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="../shared/design-modes.css?v=field-20260922-1">
+<link rel="stylesheet" href="css/style.css?v=gas-refinement-20260927-2">
+<link rel="stylesheet" href="../shared/design-modes.css?v=nunito-20260927-1">
 <link rel="stylesheet" href="../shared/field-lab.css?v=art-20260926-1">
 <link rel="stylesheet" href="../../shared/css/appearance-controls.css?v=1">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -38,6 +35,7 @@
 </script>
 <script defer src="../../shared/lessons/mission-bridge.js?v=1"></script>
 <link rel="stylesheet" href="../../shared/lessons/mission-links.css?v=1">
+<link rel="stylesheet" href="../shared/mission-typography.css?v=nunito-20260927-3">
 </head>
 <body>
 <div x-data="sim()" x-cloak>
@@ -108,7 +106,7 @@
         <!-- ---------- C.10(A) KINETIC MOLECULAR THEORY ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='kmt' }" x-show="mode==='kmt'">
           <template x-if="kq">
-            <div>
+            <div class="kinetic-workspace">
               <div class="brief">
                 <span class="brief-role"><span x-text="kq.sc.icon"></span> <span x-text="kq.sc.system"></span></span>
                 <div class="brief-goal" x-prose="kq.sc.goal"></div>
@@ -117,20 +115,22 @@
 
               <p class="small muted" style="margin-bottom: var(--s-3);">This ideal-gas particle model shows continuous random motion. Change temperature, particle count, and volume, then observe the relative kinetic-energy and pressure readouts. Drag to rotate.</p>
 
-              <div class="stage" x-ref="stage"></div>
+              <div class="kinetic-experiment">
+                <div class="stage" x-ref="stage"></div>
 
-              <div class="controls-grid">
-                <div class="ctrl">
-                  <label>Temperature <span class="val" x-text="boxT+' K'"></span></label>
-                  <input type="range" min="100" max="900" step="10" x-model.number="boxT" @input="onTemp()">
-                </div>
-                <div class="ctrl">
-                  <label>Particles <span class="val" x-text="boxN"></span></label>
-                  <input type="range" min="5" max="100" step="5" x-model.number="boxN" @input="onCount()">
-                </div>
-                <div class="ctrl">
-                  <label>Volume <span class="val" x-text="'×'+fmt(boxV,2)"></span></label>
-                  <input type="range" min="0.4" max="2" step="0.1" x-model.number="boxV" @input="onVol()">
+                <div class="controls-grid kinetic-controls">
+                  <div class="ctrl">
+                    <label for="box-temperature">Temperature <span class="val" x-text="boxT+' K'"></span></label>
+                    <input id="box-temperature" type="range" min="100" max="900" step="10" x-model.number="boxT" @input="onTemp()">
+                  </div>
+                  <div class="ctrl">
+                    <label for="box-particles">Particles <span class="val" x-text="boxN"></span></label>
+                    <input id="box-particles" type="range" min="5" max="100" step="5" x-model.number="boxN" @input="onCount()">
+                  </div>
+                  <div class="ctrl">
+                    <label for="box-volume">Volume <span class="val" x-text="'×'+fmt(boxV,2)"></span></label>
+                    <input id="box-volume" type="range" min="0.4" max="2" step="0.1" x-model.number="boxV" @input="onVol()">
+                  </div>
                 </div>
               </div>
 
@@ -139,7 +139,7 @@
                    logarithmic and centred on ×1, so halving and doubling read as equal
                    moves in opposite directions. The particle count is an absolute
                    quantity, so it gets a plain SPAN dial over the slider's own range. -->
-              <div class="stat-row has-dials" style="margin-top: var(--s-4);">
+              <div class="stat-row has-dials kinetic-gauges" style="margin-top: var(--s-4);">
                 <div class="stat">
                   <div class="k">avg kinetic energy</div>
                   <div class="v" x-text="'×'+fmt(relKE,3)"></div>
@@ -286,7 +286,7 @@
         <!-- ---------- C.10(B) IDEAL GAS LAW (dose) ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='ideal' }" x-show="mode==='ideal'">
           <template x-if="ig">
-            <div>
+            <div class="ideal-workspace">
               <div class="brief">
                 <span class="brief-role"><span x-text="ig.sc.icon"></span> <span x-text="ig.sc.system"></span></span>
                 <div class="brief-goal" x-prose="ig.sc.goal"></div>
@@ -309,7 +309,7 @@
               <!-- The solver stays exactly as it was. It is frozen while the call is open,
                    so the state on screen is the state the brief describes, and it unlocks
                    the moment the call is made so the relationship is explorable. -->
-              <div class="tabs" style="border:none; margin: var(--s-4) 0 var(--s-3);">
+              <div class="tabs ideal-solve-tabs">
                 <button class="tab btn-sm" :aria-selected="solveFor==='P'" @click="solveFor='P'; onIdeal()" :disabled="!igDone">Solve for P</button>
                 <button class="tab btn-sm" :aria-selected="solveFor==='V'" @click="solveFor='V'; onIdeal()" :disabled="!igDone">Solve for V</button>
                 <button class="tab btn-sm" :aria-selected="solveFor==='n'" @click="solveFor='n'; onIdeal()" :disabled="!igDone">Solve for n</button>
@@ -343,7 +343,7 @@
                 </div>
               </div>
 
-              <div class="eqn" style="margin-top: var(--s-4);"><span x-tex="idealFormula"></span></div>
+              <div class="eqn ideal-equation"><span x-tex="idealFormula"></span></div>
               <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--s-2);">R = <span class="mono" x-text="R"></span> L&#183;atm&#183;mol&#8315;&#185;&#183;K&#8315;&#185;. Keep units in atm, L, mol, and K.</p>
               <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-1);"><strong>Activity tolerance:</strong> answers within 3% of the calculated value are accepted.</p>
 
@@ -498,7 +498,7 @@
         <!-- ---------- C.10(C) DALTON'S PARTIAL PRESSURES (dose) ---------- -->
         <div class="panel" :class="{ 'is-active': mode==='dalton' }" x-show="mode==='dalton'">
           <template x-if="dl">
-            <div>
+            <div class="dalton-workspace">
               <div class="brief">
                 <span class="brief-role"><span x-text="dl.sc.icon"></span> <span x-text="dl.sc.system"></span></span>
                 <div class="brief-goal" x-prose="dl.sc.goal"></div>
@@ -509,22 +509,16 @@
 
               <!-- The mixer is frozen while the call is open, so the numbers on screen are
                    the numbers the brief states, then unlocks for exploring after the call. -->
-              <div class="row" style="gap: var(--s-6); align-items: flex-start;">
-                <div>
-                  <label style="display:block; margin-bottom: var(--s-2);">Moles of each gas</label>
-                  <div class="gasmix">
-                    <template x-for="g in dGases" :key="g.formula">
-                      <div class="gas-row" x-show="g.mol > 0 || dlChecked">
-                        <span class="gas-name" x-text="g.name"></span>
-                        <input type="number" min="0" step="0.1" x-model.number="g.mol" :disabled="!dlDone">
-                        <span class="muted mono">mol</span>
-                      </div>
-                    </template>
+              <div class="dalton-inputs">
+                <template x-for="g in dGases" :key="g.formula">
+                  <div class="field" x-show="g.mol > 0 || dlChecked">
+                    <label :for="'dl-gas-' + g.formula"><span x-text="g.name"></span> (mol)</label>
+                    <input :id="'dl-gas-' + g.formula" type="number" min="0" step="0.1" x-model.number="g.mol" :disabled="!dlDone">
                   </div>
-                </div>
-                <div class="field" style="width: 200px;">
-                  <label x-text="dl.depth ? 'Absolute pressure at depth (atm)' : 'Total pressure (atm)'"></label>
-                  <input type="number" min="0" step="0.1" x-model.number="dTotalP" :disabled="!dlDone">
+                </template>
+                <div class="field">
+                  <label for="dl-total-pressure" x-text="dl.depth ? 'Absolute pressure (atm)' : 'Total pressure (atm)'"></label>
+                  <input id="dl-total-pressure" type="number" min="0" step="0.1" x-model.number="dTotalP" :disabled="!dlDone">
                   <!-- 4 sig figs, not 3: this is the only derived figure shown BEFORE the
                        commit, and the moles it sums are exact, so a learner who reads the
                        sum off the screen instead of adding it up lands 0.21 percent out at
@@ -778,9 +772,9 @@
   import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/module.esm.js';
   import { registerRender } from '../../shared/js/render.js';
   import { registerGauge } from '../../shared/js/gauge.js';
-  import { createSim } from './js/main.js?v=lessons-20260926-1';
+  import { createSim } from './js/main.js?v=diffusion-photo-20260927-1';
   import { mountCaseFile } from '../../shared/js/casefile.js?v=field-20260922-1';
-  import { CASE } from './js/case.js?v=lessons-20260926-1';
+  import { CASE } from './js/case.js?v=diving-scene-20260927-2';
   import { mountColumnResizers } from '../shared/columns.js?v=cockpit-3';
   registerRender(Alpine);
   registerGauge(Alpine);
