@@ -1,0 +1,147 @@
+{
+  "id": "unit11-batch61",
+  "ids": [
+    "11/c-sterile",
+    "11/c-smoke",
+    "11/c-exit"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 11, c-sterile. System/context: Sterilising surgical kits. Authored task: The sterilisation plant irradiates sealed surgical kits, a pallet at a time, through the packaging, and the machine has to run for years without the source being changed. Pick the isotope, then name the property that decided it.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Packaged kits match broadly, but equipment resembles a generic sterilizer and omits Co-60 gamma penetration through packaging.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Co-60\",\"sealed kits\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 11, c-smoke. System/context: Smoke detector over the vault. Authored task: The ionisation smoke detector above the source vault holds a tiny sealed isotope button. Its job is to ionise the air in a small chamber so smoke particles interrupt the current. Pick the isotope, then name the property that decided it.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Smoke detector matches externally but internal sealed button, smoke and interrupted ionization current are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Am-241 button\",\"smoke interrupts current\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 11, c-exit. System/context: Exit sign, no power run. Authored task: A back corridor needs an illuminated exit sign and there is no electrical run to it. The self-powered signs work by an isotope exciting a phosphor coating inside a sealed glass tube. Pick the isotope, then name the property that decided it.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Blank glowing light does not read EXIT and omits H-3 sealed phosphor tube; it can be confused with electrical illumination.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"EXIT\",\"H-3\",\"sealed phosphor tube\"].\nFOLLOW-UP EDIT:\nEdit this exact two-column three-row photographic atlas, preserving all complete photos, apparatus, isotope labels, white gutters and readable evidence. TOP ROW BOTH: remove the fictitious blue glowing portal from the Co-60 source housing; use a dark, closed, shielded source face. Put the existing three cyan gamma-path arrows on a real transparent acrylic teaching display panel held by visible small stands, printed flat ink, indicating penetration through the sealed surgical kits; keep Co-60 and sealed kits labels. MIDDLE ROW BOTH: keep the opened training smoke-detector model, sealed Am-241 button and visible smoke. Put the orange ionization path and its current-interruption evidence on a physical clear acrylic annotation panel, with printed ink rather than an actual glowing radiation beam. Keep smoke interrupts current legible. BOTTOM ROW BOTH unchanged: EXIT sign, H-3 label and separate sealed phosphor tube can legitimately glow from phosphor. Do not add facts, doses, numerical answers, or new text.",
+  "source": "/workspace/generated_images/exec-901d0625-98f2-407c-bb46-ce25fd96f97f.png",
+  "initialSource": "/workspace/generated_images/exec-95f0c215-c262-404a-b0c0-1d4bbfaadd8e.png",
+  "editReferences": [
+    "/workspace/generated_images/exec-95f0c215-c262-404a-b0c0-1d4bbfaadd8e.png"
+  ],
+  "initialPromptNote": "Initial generation used this preserved base template plus row-specific constraints; the supplemental wording was not retained. The exact final edit and its input image are recorded.",
+  "sourceSha256": "a82f213da1b34823a731655fa9336f0103d3bddb56d056169464abf0bd9cfd04",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      311,
+      315
+    ],
+    [
+      620,
+      628
+    ]
+  ],
+  "verticalGutters": [
+    [
+      831,
+      841
+    ]
+  ],
+  "review": "Both encoded photos preserve shielded Co-60 source and gamma paths penetrating sealed kits as printed physical acrylic annotations; fictitious source glow removed. Both encoded photos preserve opened training smoke-detector model, sealed Am-241 button, smoke and current-interruption teaching display. Both encoded photos preserve legible self-powered EXIT sign, H-3 label and separate sealed phosphor tube; only legitimate phosphor light is depicted.",
+  "files": [
+    {
+      "id": "c-sterile",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/c-sterile-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 827,
+        "height": 307
+      },
+      "resizeFit": "cover",
+      "sha256": "75c4c07abe37268452130cea4ff186a84010942b2fe067d6cb00461a8f2d1d00",
+      "bytes": 62316,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-sterile",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/c-sterile-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 307
+      },
+      "resizeFit": "cover",
+      "sha256": "b36248d53269e6c88ccca537026a11cb1e236f1923d7f5ec1c703858f066620e",
+      "bytes": 56742,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-smoke",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/c-smoke-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 317,
+        "width": 827,
+        "height": 301
+      },
+      "resizeFit": "cover",
+      "sha256": "b249a837c473e7780edce4b1623e71e242fef8bb2baa5b1af65fb43e8ffeecf3",
+      "bytes": 41680,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-smoke",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/c-smoke-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 317,
+        "width": 827,
+        "height": 301
+      },
+      "resizeFit": "cover",
+      "sha256": "c74ea335d4f0ef17d3fef9d10f3b3faad5243e414d03e192e4105a8c83f92a59",
+      "bytes": 39798,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-exit",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/c-exit-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 630,
+        "width": 827,
+        "height": 309
+      },
+      "resizeFit": "cover",
+      "sha256": "1a7312f2916a25d1ae37d391d660d1f1af62669aeb58aee45e8d5ba04c771334",
+      "bytes": 29012,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-exit",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/c-exit-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 630,
+        "width": 827,
+        "height": 309
+      },
+      "resizeFit": "cover",
+      "sha256": "c5b64612c1a88747309e318eb0e68ea9a732aaf76dbc4f74989f04ccb9479cd8",
+      "bytes": 33994,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-25-post-crop.png",
+  "status": "replaced-verified"
+}

@@ -1,0 +1,143 @@
+{
+  "id": "unit10-batch53",
+  "ids": [
+    "10/b-stone-pot",
+    "10/b-hot-water",
+    "10/b-skillet"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 10, b-stone-pot. System/context: Stone and water. Authored task: In the activity model, a hot granite sample is placed in cooler water in a perfectly insulated container. Ignore the container heat capacity and predict the equilibrium temperature.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Neighboring atlas tile leaks into variant 0; both omit hot-stone-to-water transfer and equilibrium thermometer.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"q LOST = q GAINED\",\"Tf ?\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 10, b-hot-water. System/context: Mixing water. Authored task: Mix the stated masses of hot and cold water in the idealized insulated-container model and predict the equilibrium temperature.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Neighboring atlas tile leaks into variant 0; both omit hot/cold water labels, mixing action and final-temperature question.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Tf ?\",\"HOT\",\"COLD\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 10, b-skillet. System/context: Iron and water. Authored task: A very hot iron plate is placed in cooler water in the idealized insulated-container model. Predict the equilibrium temperature.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Neighboring atlas tile leaks into variant 0; metal plate/container omit the hot-iron-to-water transfer and equilibrium evidence.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Tf ?\",\"IRON\",\"WATER\"].\nCRITICAL: Use OPEN insulated calorimeter vessels with visible water. Row1 hot granite sample transfers heat INTO cooler water, teaching arrow granite->water, q LOST=q GAINED, Tf? unresolved; visible stone/water interaction. Row2 hot kettle pours/mixes into cold water in open insulated pot, HOT/COLD/Tf? labels. Row3 real handled IRON skillet or iron plate transfers heat INTO water, IRON/WATER/Tf? labels. Do not substitute a closed travel mug or nearby rock for the visible thermal comparison. No numerical temperatures invented.\nFOLLOW-UP EDIT:\nCorrect the photographic realism of BOTH TOP-ROW granite samples and BOTH BOTTOM-ROW iron skillets. Remove ALL flames emerging from granite, and remove unnatural orange/red glowing pigment from granite and iron surfaces. Granite must retain natural gray/black speckled rock texture; skillet must be realistic dark iron, with heat indicated by subtle heat haze or steam near water and existing teaching arrows. A flame/heater underneath an apparatus can stay; the stone itself must not burn. Add a compact physical label 'HOT' near each top-row granite sample so warm state is clear without fictitious flames. Preserve q LOST=q GAINED,Tf?,IRON,WATER,all transfer arrows,all middle-row hot/cold water mixing and composition.",
+  "source": "/workspace/generated_images/exec-98663e50-3f68-4088-af01-1d76038565b6.png",
+  "initialSource": "/workspace/generated_images/exec-52d715cc-b560-450e-a4a4-1a4daaf35a20.png",
+  "sourceSha256": "12c06b2d4802fcdaa721cfd83820cc114e014c42c2967057c09c56fdca3c5fdf",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      309,
+      315
+    ],
+    [
+      623,
+      629
+    ]
+  ],
+  "verticalGutters": [
+    [
+      833,
+      840
+    ]
+  ],
+  "review": "Both encoded photos preserve hot granite transferring heat to an open water pot, q LOST = q GAINED and Tf?; granite no longer glows or burns. Both encoded photos preserve HOT kettle water mixing into COLD pot and Tf? remaining unanswered. Both encoded photos preserve IRON skillet transferring heat toward WATER in an open pot and Tf?; no fictitious glowing iron.",
+  "files": [
+    {
+      "id": "b-stone-pot",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/b-stone-pot-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 829,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "578f96cf8ef15a322586e58ef4a7fb57b4b71b21f417521173187ff40c05ecf7",
+      "bytes": 51128,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-stone-pot",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/b-stone-pot-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 2,
+        "width": 828,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "7cae108967216e9a5deb44f7b3a57278c85d5512cb42b1c33e68fdd7c261054c",
+      "bytes": 46768,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-hot-water",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/b-hot-water-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 317,
+        "width": 829,
+        "height": 304
+      },
+      "resizeFit": "cover",
+      "sha256": "87088e1c5f688c53474c2bc79f1be4f1e6730415ac6e4b6d6a06290e64c41387",
+      "bytes": 51240,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-hot-water",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/b-hot-water-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 317,
+        "width": 828,
+        "height": 304
+      },
+      "resizeFit": "cover",
+      "sha256": "0781ffb0af5ca439eca09100cf9bd75e4152ef1987da85c711753aaddeb44f71",
+      "bytes": 48686,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-skillet",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/b-skillet-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 631,
+        "width": 829,
+        "height": 308
+      },
+      "resizeFit": "cover",
+      "sha256": "2dd33bf189d8cd99fdba18f59fde72e48af1d619ed026589de9b221f339a8ae2",
+      "bytes": 47672,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-skillet",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/b-skillet-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 631,
+        "width": 828,
+        "height": 308
+      },
+      "resizeFit": "cover",
+      "sha256": "8a41f9179691e01ff2165d90ea7f49ba43d1fe19fdfc0d826087231d313a43cc",
+      "bytes": 44776,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-17-post-crop.png",
+  "status": "replaced-verified"
+}

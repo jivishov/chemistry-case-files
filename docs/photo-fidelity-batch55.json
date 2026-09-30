@@ -1,0 +1,143 @@
+{
+  "id": "unit11-batch55",
+  "ids": [
+    "11/a-generator",
+    "11/a-eluate",
+    "11/a-therapy"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 11, a-generator. System/context: Generator column. Authored task: The week's technetium generator arrives in its lead pig. The paperwork says the column is loaded with molybdenum-99. Confirm what it is doing before you elute it into a patient dose.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Generator vessel matches context but Mo-99 identity and card/acrylic/lead beta-attenuation comparison are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Mo-99\",\"CARD\",\"ACRYLIC\",\"LEAD\",\"beta reduced here\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 11, a-eluate. System/context: Morning elution. Authored task: You rinse the column with saline and draw off the eluate. This is the technetium-99m that goes into eight people today. Write what it does when it settles.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Shielded vial matches but Tc-99m identity and gamma penetration/lead attenuation are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Tc-99m\",\"CARD\",\"ACRYLIC\",\"LEAD\",\"lead reduces gamma\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 11, a-therapy. System/context: Therapy capsule. Authored task: A single iodine-131 capsule for a thyroid patient sits in its own shielded pot. Write the decay so you can brief her family about what she will be giving off.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Closed shielded pot hides capsule and I-131 identity; separate beta/gamma paths and shielding comparison absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"I-131\",\"CARD\",\"ACRYLIC\",\"LEAD\",\"beta\",\"gamma\"].\nCRITICAL: Each scene has isotope source atLEFT and a large PHYSICAL printed shielding guide atRIGHT: sequential vertical barriers CARD(paper),ACRYLIC(clearplastic),LEAD(graymetal),then survey-meter model with NO numeric reading. These rays are PRINTED educational marks, never visible real radiation. Row1 Mo-99 generator column; green dashed beta ray passes CARD and ENDS AT ACRYLIC, label beta reduced here. Row2 Tc-99m shielded eluate vial; cyan wavy gamma ray passes CARD/ACRYLIC and reaches LEAD, label lead reduces gamma (attenuation, not magical absolute zero). Row3 shielded I-131 capsule; TWO rays: green beta stops atACRYLIC, cyan gamma reachesLEAD, labels beta/gamma. ALL three barriers and isotope retained in BOTH photographs.\nFOLLOW-UP EDIT:\nMake ONE precise correction in BOTH TOP-ROW and BOTH BOTTOM-ROW panels. The GREEN dashed BETA path must END WITHIN the clear ACRYLIC shielding strip, directly under its ACRYLIC heading. Shorten each green arrow so its arrowhead and terminal point are INSIDE that clear strip, not floating beyond its far/right edge. No green path continues beyond acrylic. Preserve CARD/ACRYLIC/LEAD material order, isotope names Mo-99/Tc-99m/I-131, gamma paths, meters, every label, middle row and composition. Rays remain printed teaching graphics.",
+  "source": "/workspace/generated_images/exec-1b4cd80a-c95f-4a12-9db2-a4f882f0e363.png",
+  "initialSource": "/workspace/generated_images/exec-e7a781e6-4bf3-402e-8e88-8c86964e4dcf.png",
+  "sourceSha256": "f7297bedf91f8857da691c3b29e660792208f5c2703b44a0d923f1cef17ba9ce",
+  "sourceWidth": 1672,
+  "sourceHeight": 940,
+  "horizontalGutters": [
+    [
+      307,
+      314
+    ],
+    [
+      619,
+      627
+    ]
+  ],
+  "verticalGutters": [
+    [
+      832,
+      841
+    ]
+  ],
+  "review": "Both encoded photos preserve Mo-99 generator, card/acrylic/lead barriers and beta path ending within acrylic with beta reduced here label. Both encoded photos preserve Tc-99m eluate, gamma passing light barriers toward lead, detector and lead reduces gamma label; penetration is qualitative. Both encoded photos preserve I-131 capsule, short-range beta stopping within acrylic versus penetrating gamma toward lead and detector.",
+  "files": [
+    {
+      "id": "a-generator",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/a-generator-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 828,
+        "height": 303
+      },
+      "resizeFit": "cover",
+      "sha256": "c5e516c077b7cc7a35794ac7136ea0907bbe58c4ec334f922258c5551e6769f4",
+      "bytes": 44988,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-generator",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/a-generator-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 303
+      },
+      "resizeFit": "cover",
+      "sha256": "9746defc42aa31118e3b0f5b9ecbbd55c93269e08ed58877327793b527b96f00",
+      "bytes": 45732,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-eluate",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/a-eluate-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 316,
+        "width": 828,
+        "height": 301
+      },
+      "resizeFit": "cover",
+      "sha256": "39e2f86b36d4d20f768fe7275b11a45d3589a921f5cc8f88b54b36cffba11244",
+      "bytes": 49200,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-eluate",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/a-eluate-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 316,
+        "width": 827,
+        "height": 301
+      },
+      "resizeFit": "cover",
+      "sha256": "68768c852179c3928a0a93aee71188e742d817abe1070e278bb4402d1518db5d",
+      "bytes": 48494,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-therapy",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/a-therapy-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 629,
+        "width": 828,
+        "height": 309
+      },
+      "resizeFit": "cover",
+      "sha256": "8e14797904e47a84b84dd8ddc69d96af38cf23feb49907859c603c630445bf0a",
+      "bytes": 48334,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-therapy",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/a-therapy-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 629,
+        "width": 827,
+        "height": 309
+      },
+      "resizeFit": "cover",
+      "sha256": "3c084c689af40646470d15327b14bf645122333610bdc267ac3b0dcf7baa4913",
+      "bytes": 47048,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-19-post-crop.png",
+  "status": "replaced-verified"
+}

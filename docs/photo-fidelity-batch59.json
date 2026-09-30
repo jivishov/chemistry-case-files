@@ -1,0 +1,143 @@
+{
+  "id": "unit11-batch59",
+  "ids": [
+    "11/b-waste",
+    "11/b-activation",
+    "11/b-decay"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 11, b-waste. System/context: The waste question. Authored task: A student asks why fission produces radioactive fragments. Classify the reaction, then distinguish its products from the helium made by hydrogen fusion.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Drums match waste context but heavy nucleus splitting into radioactive fragments is absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"FRAGMENTS\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 11, b-activation. System/context: The alternative supplier. Authored task: A supplier offers molybdenum-99 made without a fission reactor: they put natural molybdenum in a neutron beam and let it absorb one. Classify their reaction, then work out the catch.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Beam port matches context but molybdenum target and single captured neutron are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Mo + n\",\"one neutron captured\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 11, b-decay. System/context: Splitting the atom. Authored task: The geology department's uranium standard is decaying in the vault next to your sources. Someone describes it as \"splitting the atom in there\". Classify the reaction, then settle it.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Closed container replaces the U-238 parent, emitted alpha and daughter distinction from fission.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"U-238\",\"standard vial\"].\nCRITICAL: Row1 physicalheavy-nucleusfission model dividesintotwo fragments beside two sealed wastecanisters labeledFRAGMENTS; don't substituteheliumfusion. Row2 Mo+n targetapparatus andphysicalneutron-captureteachingmodel showing ONE neutron enteringONE nucleus;label one neutroncaptured, no nucleus splitting. Row3 sealed standardvialU-238 andphysicalalphadecaymodel: parentlarge nucleus -> small alphaparticle plus daughterremaininglarge; distinguish fromtwofragmentfission. No computed isotope daughter/decayequation answer printed. Physical models must notlook likeactual atomicphotos.\nFOLLOW-UP EDIT:\nMake TWO corrections, preserving all labels and other scenes. BOTH MIDDLE-ROW neutron-capture models: the cyan dashed incoming neutron-beam path must TERMINATE INSIDE the single molybdenum nucleus. Remove its continuation to the RIGHT of the nucleus; the neutron is captured, not shown exiting. Keep Mo+n, one neutron captured and incoming beam particles. BOTH BOTTOM-ROW U-238 alpha-decay models: replace only the tiny central emitted alpha cluster with exactly FOUR distinct touching beads arranged as a clear 2x2 cluster, TWO orange proton beads and TWO gray neutron beads. Add a small physical tag 'alpha: 2p + 2n' near it. Do not change large illustrative parent/daughter models, U-238 label, standard vial, dashed pathway, or top-row fission scene. No daughter isotope answer or numeric activity.",
+  "source": "/workspace/generated_images/exec-3bdff37b-3aa6-4981-8216-c7428fdd47fa.png",
+  "initialSource": "/workspace/generated_images/exec-92f1b7ee-c16d-436b-bc5f-51cf6e511a08.png",
+  "sourceSha256": "65f2a79f023abedfbc033926e1fe8f35072a2c917be71422a100232480713f28",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      309,
+      316
+    ],
+    [
+      604,
+      609
+    ]
+  ],
+  "verticalGutters": [
+    [
+      832,
+      840
+    ]
+  ],
+  "review": "Both encoded photos preserve a large fission nucleus splitting into two fragments and radioactive waste containers labeled FRAGMENTS. Both encoded photos preserve Mo + n neutron-capture apparatus: incoming neutron path terminates at the intact target nucleus, one neutron captured; no outgoing transmitted beam. Both encoded photos preserve U-238 alpha emission, daughter nucleus and standard vial; alpha model has exactly four beads (2p + 2n), labeled correctly.",
+  "files": [
+    {
+      "id": "b-waste",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/b-waste-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 828,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "8aca845f7bb06534c6f6a094834c9b838bb03164b959f4c60ea88da49999c6d4",
+      "bytes": 57372,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-waste",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/b-waste-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 2,
+        "width": 828,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "c123ea90b66dd9cbf434e890b8cc25efcd85d3befa89ba0344864a58dfe37454",
+      "bytes": 54480,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-activation",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/b-activation-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 318,
+        "width": 828,
+        "height": 284
+      },
+      "resizeFit": "cover",
+      "sha256": "f950176afd0f88d697861bfaa11789f6e491d524a6ccd4e98d5275d89ceaf5f4",
+      "bytes": 43008,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-activation",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/b-activation-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 318,
+        "width": 828,
+        "height": 284
+      },
+      "resizeFit": "cover",
+      "sha256": "3514bb0d9b0f01c6f199236a476a55011c2e20cd012a0288a880b0eeae993277",
+      "bytes": 44740,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-decay",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/b-decay-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 611,
+        "width": 828,
+        "height": 328
+      },
+      "resizeFit": "cover",
+      "sha256": "c451453642e9f44d71f45d6f1f160a675f2763d2b7e441765f1b5355b8a0d5ba",
+      "bytes": 56508,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-decay",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/b-decay-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 611,
+        "width": 828,
+        "height": 328
+      },
+      "resizeFit": "cover",
+      "sha256": "cec8d457855b87e17bf95f8b78b874d4a80705151d0285bd521f11ad554d4af8",
+      "bytes": 54050,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-23-post-crop.png",
+  "status": "replaced-verified"
+}

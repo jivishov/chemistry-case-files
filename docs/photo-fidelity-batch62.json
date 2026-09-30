@@ -1,0 +1,147 @@
+{
+  "id": "unit11-batch62",
+  "ids": [
+    "11/c-coffin",
+    "11/c-arctic",
+    "11/hl-bone"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 11, c-coffin. System/context: Dating a coffin lid. Authored task: The university sends over a fragment of a wooden coffin lid from a dig, thought to be about three thousand years old, and asks the hospital lab which isotope dates it. Pick the isotope, then name the property that decided it.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Ancient wood matches but C-14 decay clock and 5730-year relationship are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"wood sample\",\"C-14 clock\",\"5,730 y\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 11, c-arctic. System/context: Arctic weather station. Authored task: A remote automatic weather station sits above the Arctic circle with no sun for four months of the year and no crew visit for a decade. It needs a few watts, continuously, from the heat of a decaying isotope. Pick the isotope, then name the property that decided it.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Snowy weather station matches but Sr-90 decay-heat power source is absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Sr-90\",\"weather station\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 11, hl-bone. System/context: Bone scan draw. Authored task: The eluate was assayed the moment it came off the column. The bone scan patient is on the table now. Work out how much activity is still in the vial, so the dose you draw is the dose that was prescribed.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Dose-calibrator context matches but Tc-99m vial, withdrawal and elapsed-time activity decline are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Tc-99m\",\"activity falls while you work\"].\nFOLLOW-UP EDIT:\nEdit this exact two-column three-row photographic atlas. ONLY in the BOTTOM ROW BOTH photographs, remove ALL black markings, graduations, scale ticks, letters, numbers and gibberish from the transparent syringe barrels. Leave each syringe completely unmarked, clean transparent plastic, retaining plunger, turquoise hub, needle, Tc-99m vial, shield, decreasing activity display and exact activity falls while you work caption. All top and middle photos remain unchanged, as do the white gutters and panoramic framing. Add no text, numbers or answers.",
+  "source": "/workspace/generated_images/exec-c84a13ff-524e-43ac-bb7f-ac31b5b9b84e.png",
+  "initialSource": "/workspace/generated_images/exec-d1041763-175f-489c-9458-3658636bc7fd.png",
+  "editReferences": [
+    "/workspace/generated_images/exec-d1041763-175f-489c-9458-3658636bc7fd.png"
+  ],
+  "initialPromptNote": "Initial generation used this preserved base template plus row-specific constraints; the supplemental wording was not retained. The exact final edit and its input image are recorded.",
+  "sourceSha256": "961ba0c01bc015cf1327dccb1b7081bd3bd67c76bb6403105f008c3f4bbbf36d",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      311,
+      316
+    ],
+    [
+      623,
+      628
+    ]
+  ],
+  "verticalGutters": [
+    [
+      833,
+      839
+    ]
+  ],
+  "review": "Both encoded photos preserve old wood sample, C-14 clock and 5,730 y half-life reference, with a qualitatively decreasing curve rather than a calculated sample age. Both encoded photos preserve snowy weather station connected to a distinct Sr-90 source enclosure. Both encoded photos preserve Tc-99m vial in shield, syringe draw and decreasing activity curve with activity falls while you work; invented syringe graduations removed.",
+  "files": [
+    {
+      "id": "c-coffin",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/c-coffin-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 829,
+        "height": 307
+      },
+      "resizeFit": "cover",
+      "sha256": "a755719a69a3e538d59685782bab3491fafa855d22bb705f744c2fd10e6a6278",
+      "bytes": 56126,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-coffin",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/c-coffin-1.webp",
+      "sourceRect": {
+        "left": 841,
+        "top": 2,
+        "width": 829,
+        "height": 307
+      },
+      "resizeFit": "cover",
+      "sha256": "74dd764c234a6caccc2c0fb5f27d3279fcc1310ce1694b42b6b2ed7ab3e0ab6c",
+      "bytes": 54802,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-arctic",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/c-arctic-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 318,
+        "width": 829,
+        "height": 303
+      },
+      "resizeFit": "cover",
+      "sha256": "fef97badfe02001dff9c6d4322a4549f228dd52c9bd03e29f8b32541b386023e",
+      "bytes": 61512,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-arctic",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/c-arctic-1.webp",
+      "sourceRect": {
+        "left": 841,
+        "top": 318,
+        "width": 829,
+        "height": 303
+      },
+      "resizeFit": "cover",
+      "sha256": "0447bd3a4fe6db2d7ca9ea85c0bf2cfbbc9c35ef66369ac4e509b72ddf51d935",
+      "bytes": 59866,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "hl-bone",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/hl-bone-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 630,
+        "width": 829,
+        "height": 309
+      },
+      "resizeFit": "cover",
+      "sha256": "a9d8486dcc4e3db807beac78291451db4955225b5db5ebe9ae046b69dd780482",
+      "bytes": 46116,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "hl-bone",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/hl-bone-1.webp",
+      "sourceRect": {
+        "left": 841,
+        "top": 630,
+        "width": 829,
+        "height": 309
+      },
+      "resizeFit": "cover",
+      "sha256": "0da1f87bd125f39917b73b89785f04e21d6a8258a3afe6827c1f52f2634fc657",
+      "bytes": 45244,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-26-post-crop.png",
+  "status": "replaced-verified"
+}

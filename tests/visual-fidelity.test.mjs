@@ -9,6 +9,31 @@ import { cylinderLevelY, graduatedCylinderSvg, CYLINDER_GEOM } from '../units/01
 const units = (await readdir(new URL('../units/', import.meta.url))).filter(x => /^\d\d-/.test(x)).sort();
 const extract = (str, re) => [...str.matchAll(re)].map(x => x[0]);
 
+test('dilution conserves the same amount of solute before and after adding solvent', async () => {
+  const { SCENE_ART } = await import('../units/08-solutions/js/art.js');
+  const svg = SCENE_ART['f-cleaner'];
+  const bars = svg.match(/<g data-visual-role="conserved-moles">([\s\S]*?)<\/g>/)?.[1];
+  assert.ok(bars, 'dilution must show the conserved-moles comparison');
+  assert.match(bars, />C1V1<\/text>/);
+  assert.match(bars, />C2V2<\/text>/);
+  const dimensions = [...bars.matchAll(/<rect\b([^>]*)\/>/g)].map(([, attributes]) =>
+    Object.fromEntries([...attributes.matchAll(/(y|width|height|opacity)="([^"]+)"/g)].map(([, name, value]) => [name, Number(value)])));
+  assert.equal(dimensions.length, 2);
+  assert.deepEqual(dimensions[0], dimensions[1], 'equal moles need equal bar size, baseline and visual weight');
+});
+
+test('a spent 6 C pack absorbs passive heat from the warmer 33 C chest', async () => {
+  const { SCENE_ART } = await import('../units/10-thermochemistry/js/art.js');
+  const svg = SCENE_ART['a-spent-pack'];
+  const heat = svg.match(/<g data-visual-role="passive-heat-flow">([\s\S]*?)<\/g>/)?.[1];
+  assert.ok(heat, 'the passive heat-flow arrow must be present');
+  const startAndEnd = heat.match(/d="M([\d.]+) [\d.]+ H([\d.]+)"/);
+  assert.ok(startAndEnd);
+  const textX = label => Number(svg.match(new RegExp(`<text x="([\\d.]+)"[^>]*>${label}<\\/text>`))?.[1]);
+  assert.ok(textX('33 C') > textX('6 C'), 'the warm chest is to the right of the cold pack');
+  assert.ok(Number(startAndEnd[1]) > Number(startAndEnd[2]), 'heat must point left, toward the colder pack');
+});
+
 test('all 501 readable cylinder levels align with the original 1 mL graduations', () => {
   for (let tenth = 0; tenth <= 500; tenth++) {
     const volume = tenth / 10;

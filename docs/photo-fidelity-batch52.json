@@ -1,0 +1,143 @@
+{
+  "id": "unit10-batch52",
+  "ids": [
+    "10/d-bottle",
+    "10/d-saline",
+    "10/d-stone"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 10, d-bottle. System/context: Water bottle. Authored task: Heat the stated mass of water from the starting temperature to the target temperature. Calculate the required heat with q = mcΔT.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Bottle and cup omit hot-water source, target thermometer and q=mc delta-T relationship.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"TARGET\",\"q = mc dT\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 10, d-saline. System/context: Water-based fluid. Authored task: Treat the training fluid as water. Calculate the heat required to raise the stated mass from its starting temperature to the target temperature.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Single fluid bag omits cold-to-warm states and heater/heat calculation.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"COLD\",\"WARM\",\"q = mc dT\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 10, d-stone. System/context: Granite slab. Authored task: Calculate the heat required to raise a granite slab from its starting temperature to the target temperature.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Granite matches but heat source, warm slab and wrapping/heat-transfer relation are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"q?\",\"WRAP FIRST\"].\nCRITICAL: Row1 visibly HOT water pot -> chest bottle, printed q=mcΔT and TARGET thermometer with no numeric target invented. Row2 TWO training-fluid bags: COLD first -> physical heater -> WARM second; q=mcΔT printed. Row3 real GRANITE slab warmed by burner, heat transfer arrow, separate cloth wrapping sample labeled WRAP FIRST and q? left unresolved. Both whole scenes in EACH photo; no values added.\nFOLLOW-UP EDIT:\nEdit ONLY the TWO TOP-ROW amber chest-water bottles. Remove EVERY invented number, graduated scale and tick mark printed on those two bottles, leaving plain clean transparent bottle walls, liquid, cap and realistic reflections. Do not alter q=mc dT, heat-flow arrow, TARGET thermometer, hot-water pot, or ANY middle/bottom-row objects or text. No new measurements.",
+  "source": "/workspace/generated_images/exec-f2fbbc85-7a6a-486f-bbf4-b7317940a9b6.png",
+  "initialSource": "/workspace/generated_images/exec-c7edc149-e343-4806-9872-44bfee6a8229.png",
+  "sourceSha256": "251011b302f9595f3fbb1ba1fc787c573eea466024dc7cea1cbc3865323d5170",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      309,
+      317
+    ],
+    [
+      609,
+      617
+    ]
+  ],
+  "verticalGutters": [
+    [
+      832,
+      840
+    ]
+  ],
+  "review": "Both encoded photos preserve the heated bottle, source pot, q = mc dT transfer arrow and unresolved protocol TARGET thermometer; invented bottle graduations removed. Both encoded photos preserve COLD fluid entering the warming coil, WARM output, heat input and q = mc dT. Both encoded photos preserve burner heating granite, outgoing stored-heat concept, q? unknown and WRAP FIRST evidence; no invented thermal result.",
+  "files": [
+    {
+      "id": "d-bottle",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/d-bottle-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 828,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "ed13ea5b4e90b4ae4d4a9cf4e0ce366844764870d1a592a0dda2b245421e4741",
+      "bytes": 49026,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "d-bottle",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/d-bottle-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 2,
+        "width": 828,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "19659f13a1310ae5572f3eba55c04487a9a2b4129a121052944e7738d22ed250",
+      "bytes": 51858,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "d-saline",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/d-saline-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 319,
+        "width": 828,
+        "height": 288
+      },
+      "resizeFit": "cover",
+      "sha256": "2e1c252cec52d3f51bdf317da82ec59cf6e20ccb2132d259d222d984212b4bef",
+      "bytes": 58108,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "d-saline",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/d-saline-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 319,
+        "width": 828,
+        "height": 288
+      },
+      "resizeFit": "cover",
+      "sha256": "e871c9dbbeede33c9bb6ef34c58dcc4d9e8cbd90cc90f46478b4a8c208c7b950",
+      "bytes": 58592,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "d-stone",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/d-stone-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 619,
+        "width": 828,
+        "height": 320
+      },
+      "resizeFit": "cover",
+      "sha256": "d35f9d160ddb9aed3cebbba2f153f01166d9bc35c2e01f08e6ea25d0dd7ae4bc",
+      "bytes": 58210,
+      "width": 1280,
+      "height": 480,
+      "quality": 76
+    },
+    {
+      "id": "d-stone",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/d-stone-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 619,
+        "width": 828,
+        "height": 320
+      },
+      "resizeFit": "cover",
+      "sha256": "8ebd0b7527f110e71e8aaec44bf65a929b3909449e53956bf188391b64174ab0",
+      "bytes": 60890,
+      "width": 1280,
+      "height": 480,
+      "quality": 71
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-16-post-crop.png",
+  "status": "replaced-verified"
+}

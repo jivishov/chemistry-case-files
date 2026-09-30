@@ -1,0 +1,137 @@
+{
+  "id": "unit8-batch38",
+  "ids": [
+    "8/b-honey",
+    "8/b-salt",
+    "8/b-tank"
+  ],
+  "prompt": "Use case: photorealistic-natural. Generate ONE asset atlas, TWO COLUMNS and THREE ROWS of six independent photorealistic panoramic teaching-apparatus scenes. Desired overall aspect16:9, 2560x1440; each individual photograph8:3. Thin white gutters between tiles, no shared objects across tiles. Each row has two distinct photographic variants of the SAME evidence, with small camera/material differences. Each supplied reference corresponds to row1,2,3. Preserve apparatus states and scientific evidence. Fit ALL evidence inside central88%width and75%height so banner crops retain everything. Cream printed teaching cards, photographed real glass/metal, soft neutral natural light, actual classroom equipment. No SVG/cartoon look, no invented digital instrument readings, no measurement numbers or scales on glass, no people or watermark. Particle symbols only as printed overlays or physical teaching models. Keep explicit labels large and correctly spelled. Omit the bottom footer sentence because the website provides it.\n\nROW1 both tiles: b-honey. A transparent wide sample jar with amber solution and a few visible small pale crystals beginning to nucleate near the bottom, one small seed crystal near the jar. A physically printed bar chart beside the jar has one red-orange vertical \"amount\" bar extending ABOVE a clearly drawn dashed horizontal line labeled \"SOL LIMIT\", with small label \"at this T\". No quantities or numerical scale. An upright cream card title \"CLASSIFY\" contains \"unsaturated — below\", \"saturated — at limit\", \"SUPERSATURATED — above\", and \"electrolyte? — check solute\". A small foreground strip reads \"crystallization can begin\". The chart bar really exceeds the limit, not below it.\n\nROW2 both tiles: b-salt. A clear brine-tank teaching beaker with substantial undissolved white crystalline solid resting at the bottom and clear solution above, a small conductivity detector with GREEN illuminated lamp labeled \"ON\" and two wire-connected immersed metal probes, not a disconnected decorative light. Printed cards \"SATURATED\", \"solid at equilibrium\", \"conducts current\", \"mobile ions\". A real mounted comparison chart shows a vertical amount bar ending EXACTLY AT a dashed horizontal \"LIMIT\" line and \"at it\". Include a small transparent tray containing extra white salt crystals at right labeled \"excess solid remains\". Never display a red/off lamp or imply all added solid has dissolved.\n\nROW3 both tiles: b-tank. A realistic transparent conical-bottom SAMPLE SOLUTION teaching vessel with blue-tinted solution and a printed transparent particle overlay. Next to it a photographed printed bar chart with one orange \"amount\" bar extending ABOVE the dashed \"SOL LIMIT\" line, and a separate small physical arrow labeled \"nucleation\". A cream upright card headed \"SOLUTION STATE\" reads four clean rows: \"amount — above limit\", \"state — supersaturated\", \"behavior — metastable\", \"nucleation — may crystallize\". Keep the solution clear and do not falsely claim instantaneous guaranteed crystallization. Lab bay background softly blurred.\n\nNo additional titles or captions outside the six tiles. Distinct variants maintain exactly the same indicated scientific comparisons and states.",
+  "source": "/workspace/generated_images/exec-e3de175d-cd53-47eb-a741-d72d35c5d96b.png",
+  "initialSource": null,
+  "sourceSha256": "b4138fbc8d6857864543daca895c9eea4bb0ee74ecf6bcda476baea6057db422",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      313,
+      318
+    ],
+    [
+      603,
+      609
+    ]
+  ],
+  "verticalGutters": [
+    [
+      834,
+      839
+    ]
+  ],
+  "review": "Both final crops show emerging crystals in an amber sample, amount above the solubility limit, and the unsaturated/saturated/supersaturated comparison with electrolyte identification left dependent on solute. Both final crops show excess undissolved solid, immersed conductivity electrodes and illuminated ON indicator, saturated equilibrium explanation and amount at the solubility limit. Both final crops show a transparent teaching tank with printed particle overlay, nucleation cue, amount above the limit, supersaturated/metastable state and possible crystallization.",
+  "files": [
+    {
+      "id": "b-honey",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/b-honey-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 830,
+        "height": 309
+      },
+      "sha256": "b7e42876341532054fe3f5540b28c869c5735c76b8a6b62356ac546e6347fa6d",
+      "bytes": 58216,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-honey",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/b-honey-1.webp",
+      "sourceRect": {
+        "left": 841,
+        "top": 2,
+        "width": 829,
+        "height": 309
+      },
+      "sha256": "627f1c6568903def97b3e3b6905dd324bef9499eeb431eb53ef1e3641d827a1e",
+      "bytes": 62060,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-salt",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/b-salt-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 320,
+        "width": 830,
+        "height": 281
+      },
+      "sha256": "b118eed67488d497fc8dce35d9e72263bfee413e3922ff112cf04075080d3647",
+      "bytes": 59838,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-salt",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/b-salt-1.webp",
+      "sourceRect": {
+        "left": 841,
+        "top": 320,
+        "width": 829,
+        "height": 281
+      },
+      "sha256": "7a07c128f33090dee6d4ba97bff7c305991dd00ec696ef98797c10bb0ee7e737",
+      "bytes": 55776,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-tank",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/b-tank-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 611,
+        "width": 830,
+        "height": 328
+      },
+      "sha256": "006d9438de5baa0a2aa75245c00cb0b1c7a1e4102556624c2ec9721e6a17f416",
+      "bytes": 62318,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-tank",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/b-tank-1.webp",
+      "sourceRect": {
+        "left": 841,
+        "top": 611,
+        "width": 829,
+        "height": 328
+      },
+      "sha256": "b6f11db83ff464d9257db0cc8829d3ed5ca8db01da9400e1733f8d00f940575f",
+      "bytes": 60752,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-2-post-crop.png",
+  "status": "replaced-verified"
+}

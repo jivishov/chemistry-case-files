@@ -1,0 +1,143 @@
+{
+  "id": "unit10-batch54",
+  "ids": [
+    "10/h1-route",
+    "10/h2-formation",
+    "10/cap-evac"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 10, h1-route. System/context: Hess's law. Authored task: Reverse and scale the given thermochemical equations until they sum to the target reaction, then add their ΔH values.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Calorimeters and closed notebook replace the Hess-law reversed/scaled steps and target sum.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"STEP 1\",\"STEP 2\",\"TARGET\",\"dH  +\",\"dH  -\",\"SUM\",\"STATE FUNCTION\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 10, h2-formation. System/context: Formation enthalpy. Authored task: Use the standard enthalpies of formation to calculate ΔH°rxn, then classify the reaction as exothermic or endothermic.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Vials replace the products-minus-reactants enthalpy-of-formation comparison.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"REACTANTS\",\"PRODUCTS\",\"sum dHf\",\"sum dHf\",\"minus\",\"COEFFICIENTS TRAVEL WITH dHf\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 10, cap-evac. System/context: Evidence check. Authored task: Use the displayed cloud base and core temperature to choose the option supported by the two activity criteria.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Map/radio/blanket omit the person, helicopter/cloud-base relation and core-temperature criterion.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"CORE >= 33 C\",\"CLOUD BASE?\"].\nCRITICAL: Row1 physical printed Hess route board STEP1 ΔH+ -> STEP2 ΔH− -> TARGET SUM, STATE FUNCTION, with flip/scale/add relationships, no numbers invented. Row2 printed formation-data board PRODUCTS ΣΔHf MINUS REACTANTS ΣΔHf, note COEFFICIENTS TRAVEL WITH ΔHf; exact products-minus-reactants order, no fabricated enthalpies. Row3 physical outdoor rescue-training mannequin in orange bag with CORE≥33°C criterion, radio/map and a physical mountain/cloud-base evidence graphic labeled CLOUD BASE? unresolved. Both criteria in EACH photo, no invented cloud height or decision.\nFOLLOW-UP EDIT:\nMake ONE correction in BOTH MIDDLE-ROW physical formation-energy boards. This is PRODUCTS MINUS REACTANTS. Change the LEFT box heading to PRODUCTS and RIGHT box heading to REACTANTS; retain 'sum dHf' under each. Replace the center right-pointing arrow with a LARGE clear mathematical MINUS SIGN, so the evidence reads [PRODUCTS sum dHf] − [REACTANTS sum dHf]. Preserve COEFFICIENTS TRAVEL WITH dHf, board materials, all top-row Hess-route and bottom-row rescue criteria photos unchanged. No numerical enthalpy added.",
+  "source": "/workspace/generated_images/exec-7cf3a365-44ea-4561-909c-a75005a3e548.png",
+  "initialSource": "/workspace/generated_images/exec-e76d040c-349c-494d-9195-1df412a04714.png",
+  "sourceSha256": "e60d74e902f361de6d716cb4f1cb304d7545f55682c1f6457f1ddf97525b1aec",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      301,
+      309
+    ],
+    [
+      595,
+      602
+    ]
+  ],
+  "verticalGutters": [
+    [
+      833,
+      841
+    ]
+  ],
+  "review": "Both encoded photos preserve STEP 1 dH+, STEP 2 dH-, TARGET SUM and STATE FUNCTION route. Both encoded photos explicitly show PRODUCTS sum dHf minus REACTANTS sum dHf, with coefficients travel with dHf; printed formula disambiguates the original caption. Both encoded photos preserve field evacuation context, CORE >= 33 C and unresolved CLOUD BASE? criteria with aircraft transfer diagram.",
+  "files": [
+    {
+      "id": "h1-route",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/h1-route-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 829,
+        "height": 297
+      },
+      "resizeFit": "cover",
+      "sha256": "819c7aa2d1965522272460129af04f36adb792529c41c0b6f67330efc721fe91",
+      "bytes": 50718,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h1-route",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/h1-route-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 297
+      },
+      "resizeFit": "cover",
+      "sha256": "11325a62ea347404beaa2dab0e37ef04f6d802ee28c8e0d4387739a45f396486",
+      "bytes": 41112,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h2-formation",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/h2-formation-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 311,
+        "width": 829,
+        "height": 282
+      },
+      "resizeFit": "cover",
+      "sha256": "95240e703a0d23bc20b24d50bf80a31e176f61d1b030ef29655d87e4a894c020",
+      "bytes": 44008,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h2-formation",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/h2-formation-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 311,
+        "width": 827,
+        "height": 282
+      },
+      "resizeFit": "cover",
+      "sha256": "b4e6335a16ef7658d074d71b2e3b0181bec3850edec00706ba90b9c9ff761064",
+      "bytes": 39006,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "cap-evac",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/cap-evac-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 604,
+        "width": 829,
+        "height": 335
+      },
+      "resizeFit": "cover",
+      "sha256": "5e197a3587d439e5c302235ddc43ee80f6f274242beac4d04324283e0a96a0fc",
+      "bytes": 63200,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    },
+    {
+      "id": "cap-evac",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/cap-evac-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 604,
+        "width": 827,
+        "height": 335
+      },
+      "resizeFit": "cover",
+      "sha256": "9e2d367668dbc2601720a6672659b058546308eb6b2e9ae66afd42ff33eef9c0",
+      "bytes": 63224,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-18-post-crop.png",
+  "status": "replaced-verified"
+}

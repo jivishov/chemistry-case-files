@@ -1,0 +1,143 @@
+{
+  "id": "unit11-batch57",
+  "ids": [
+    "11/a-radium",
+    "11/a-checksource",
+    "11/b-supply"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 11, a-radium. System/context: Legacy find. Authored task: A contractor pulls a small lead box out of a wall cavity during the basement refit. Inside are 1940s radium needles from when this hospital ran its own brachytherapy. Write what radium-226 does.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Closed box hides the legacy needles, Ra-226 identity and paper-stopped alpha path.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Ra-226\",\"CARD\",\"ACRYLIC\",\"LEAD\",\"paper stops alpha\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 11, a-checksource. System/context: Daily check source. Authored task: Every survey meter in the department is checked each morning against a small sealed americium-241 button. Write its decay for the QA log.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Meter/source context matches; Am-241 identity and paper-stopped alpha path are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Am-241 · QA\",\"CARD\",\"ACRYLIC\",\"LEAD\",\"sealed button\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 11, b-supply. System/context: Where the molybdenum comes from. Authored task: Your generator column is loaded with molybdenum-99, and there are only a handful of reactors on Earth that make it. This is the reaction they run. Classify it, then answer supply.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Reactor exterior replaces the U-235 nucleus splitting into fragments and Mo-99 production evidence.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"U-235 target\",\"fission makes Mo-99\"].\nCRITICAL: Row1 OPEN small leadbox reveals legacy radium-needle teaching sources labeledRa-226; printed orange alpha path stops atFIRST CARD/paper, thenACRYLIC/LEAD andnonnumericmeter; paper stopsalpha. Row2 Am-241 QA SEALED BUTTON beside surveymeter, physicalboard alpha path stopsatCARD/paper, ACRYLIC/LEAD fartheron, labelsealedbutton; no dismantling or numericreading. Row3 physicalnucleus teaching model U-235 target struck by incomingneutron, splitsinto exactlyTWO smallerfragmentnuclei plus representativefreeneutrons, label fission makesMo-99. Models illustrative, notliteralparticles nor fullynumberedequation. Allcomponents inBOTHphotos.\nFOLLOW-UP EDIT:\nEdit ONLY the RIGHT BOTTOM-ROW U-235 fission model. It has TWO outgoing free white neutron balls, while the LEFT has THREE. Add exactly ONE separate white neutron ball on a thin support near the lower-right fission fragment, distinct from the colored nucleus beads, giving THREE outgoing free neutrons in the RIGHT model. Keep the single incoming white neutron at left, both fragment nuclei, all arrows, U-235 target/fission makes Mo-99 labels and EVERY other panel unchanged. LEFT bottom model's THREE outgoing neutrons stay unchanged.",
+  "source": "/workspace/generated_images/exec-c2712600-bde1-4d31-b4db-ab15efcf2f34.png",
+  "initialSource": "/workspace/generated_images/exec-893c74dd-10e4-43bd-9381-86d62cdd7a7b.png",
+  "sourceSha256": "0d979d29532c1d5344d65f6a6e3da30fd77f8100d8e5b5cc025c19deada439d6",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      308,
+      316
+    ],
+    [
+      612,
+      620
+    ]
+  ],
+  "verticalGutters": [
+    [
+      831,
+      840
+    ]
+  ],
+  "review": "Both encoded photos preserve Ra-226 legacy sealed sources, alpha path stopped at paper/card and paper stops alpha label. Both encoded photos preserve Am-241 QA sealed button, paper-stopped alpha path and detector. Both encoded photos preserve incoming neutron, U-235 target splitting into two daughter fragments and three released neutron beads; fission makes Mo-99 remains legible. Large nucleus bead counts are illustrative.",
+  "files": [
+    {
+      "id": "a-radium",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/a-radium-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 827,
+        "height": 304
+      },
+      "resizeFit": "cover",
+      "sha256": "85d6dd6e653883f97af405cff693ffb65bccecabb11cc7b018eb6215a37a8910",
+      "bytes": 58998,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-radium",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/a-radium-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 2,
+        "width": 828,
+        "height": 304
+      },
+      "resizeFit": "cover",
+      "sha256": "77dabb72704f9ddb3c3061f833dd4132b7a2c9ca304e48b9aa0e023e949257a8",
+      "bytes": 50992,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-checksource",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/a-checksource-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 318,
+        "width": 827,
+        "height": 292
+      },
+      "resizeFit": "cover",
+      "sha256": "9ee3174d4b3ee7ddf9c1a06166be6c5c574602df13ca6df456d2e8f018d97a4f",
+      "bytes": 47258,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-checksource",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/a-checksource-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 318,
+        "width": 828,
+        "height": 292
+      },
+      "resizeFit": "cover",
+      "sha256": "bad7504791e44c32a5cb9770af6163d3ee28867426c19fd1a44d8f2a9444a5c4",
+      "bytes": 41266,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-supply",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/b-supply-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 622,
+        "width": 827,
+        "height": 317
+      },
+      "resizeFit": "cover",
+      "sha256": "ff413a67030e2ae8afee41649a62a145178cc5c705640b53940724a0bd333460",
+      "bytes": 51630,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-supply",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/b-supply-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 622,
+        "width": 828,
+        "height": 317
+      },
+      "resizeFit": "cover",
+      "sha256": "f5641827f3571221238bed71a7b94abe34345a54f7d6ee72117cd13e2cb1f36d",
+      "bytes": 54314,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-21-post-crop.png",
+  "status": "replaced-verified"
+}

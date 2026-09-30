@@ -1,0 +1,143 @@
+{
+  "id": "unit11-batch63",
+  "ids": [
+    "11/hl-pet",
+    "11/hl-capsule",
+    "11/hl-shipment"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 11, hl-pet. System/context: FDG delivery. Authored task: The FDG came off the cyclotron with an assayed activity and a calibration time stamped on the vial. The courier hit traffic. Work out what is left now, before the PET slot opens.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Courier container matches broadly but assay time, clock and time-dependent activity decline are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"08:20\",\"courier delay changes the vial\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 11, hl-capsule. System/context: Therapy capsule. Authored task: An iodine-131 therapy capsule was assayed at the supplier and has been in transit and in the safe since. The patient is here. Work out the activity in that capsule today.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Shielded pot omits visible I-131 capsule, assay time and activity-decline curve.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"ASSAY\",\"08:00\",\"I-131\",\"longer does not mean constant\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 11, hl-shipment. System/context: Generator shipment. Authored task: The replacement generator was assayed at the reactor site and shipped. Work out the molybdenum-99 activity that will actually be on the column when it lands here.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Shipping case matches broadly but Mo-99 column identity and arrival-activity decay curve are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Mo-99 column\",\"arrival assay\"].\nCRITICAL: Row1 FDG courier package/vial beside a DIGITAL clock exactly08:20, printed smooth decreasing activity curve with authored marked point, note courier delay changes the vial and half-life110min (not a current activity answer). Row2 ONE I-131 capsule in shielded holder, assay card ASSAY08:00, decreasing activity curve and longer does not mean constant. Row3 Mo-99 column shipment package and decreasing activity curve with marked arrival-assay point. Keep isotope labels and calibration/arrival context in BOTH complete photos. Do not invent current activity, delivery decision or dosage.",
+  "source": "/workspace/generated_images/exec-3689f653-fc8b-457d-ba90-abf879ba84aa.png",
+  "initialSource": null,
+  "sourceSha256": "e44538c246007cfe64b6a68fce087509b556a48825dbb4f5a11330edfe52a30b",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      309,
+      316
+    ],
+    [
+      623,
+      630
+    ]
+  ],
+  "verticalGutters": [
+    [
+      832,
+      841
+    ]
+  ],
+  "review": "Both encoded photos preserve FDG courier package/vial, an 08:20 clock, decreasing activity curve with marked point and courier delay changes the vial; unknown activity retained. Both encoded photos preserve I-131 capsule and shield, ASSAY 08:00 calibration card, decreasing activity curve and longer does not mean constant evidence. Both encoded photos preserve Mo-99 column in shipment package and decreasing activity curve with arrival assay marker; no activity result invented.",
+  "files": [
+    {
+      "id": "hl-pet",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/hl-pet-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 828,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "c6a8d78755ab81cbe1d19567648436b330bd0143f8cbfc4b5e93fb249b0ef455",
+      "bytes": 36442,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "hl-pet",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/hl-pet-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "39f28b8410fe12acf240b0d1148098725565f84e9f0f59fef483aea1254e1ada",
+      "bytes": 50076,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "hl-capsule",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/hl-capsule-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 318,
+        "width": 828,
+        "height": 303
+      },
+      "resizeFit": "cover",
+      "sha256": "d7ea817241a18c21f7d8b4376266e3b0781dbe39d7ab903ebb06882e16cc6275",
+      "bytes": 42932,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "hl-capsule",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/hl-capsule-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 318,
+        "width": 827,
+        "height": 303
+      },
+      "resizeFit": "cover",
+      "sha256": "43fbf38f7b2d1d9922d3992d23b200a71e94047ffdc760adfee2148484dc7037",
+      "bytes": 46866,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "hl-shipment",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/hl-shipment-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 632,
+        "width": 828,
+        "height": 307
+      },
+      "resizeFit": "cover",
+      "sha256": "a07035078b086baff81c37bf616b4ce5934964b015ce71302fbbb493c576fccf",
+      "bytes": 36822,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "hl-shipment",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/hl-shipment-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 632,
+        "width": 827,
+        "height": 307
+      },
+      "resizeFit": "cover",
+      "sha256": "6d9c521fd5d52af74e9813723fef6139d14765addc12bcb65c894447aa8b2b2c",
+      "bytes": 48904,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-27-post-crop.png",
+  "status": "replaced-verified"
+}

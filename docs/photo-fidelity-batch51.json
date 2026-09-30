@@ -1,0 +1,143 @@
+{
+  "id": "unit10-batch51",
+  "ids": [
+    "10/c-ankle",
+    "10/c-heat-exhaust",
+    "10/c-fluid-bag"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 10, c-ankle. System/context: Cooling pack. Authored task: This scenario requires a cooling pack. Choose the pack whose process absorbs heat from its surroundings, then classify that process.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Cooling pack and brace match broadly but swollen ankle, rejected hot pack and endothermic sign are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"COLD\",\"HOT\",\"dH > 0\",\"dH < 0\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 10, c-heat-exhaust. System/context: Cooling scenario. Authored task: The scenario calls for cooling. Choose the pack whose process absorbs heat from its surroundings, then classify the process.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Cold pack and bottle omit the overheated person, 39.8 C and outward heat flow.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"COLD\",\"39.8 C\",\"HEAT LEAVES HIM\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 10, c-fluid-bag. System/context: Warming a fluid bag. Authored task: A water-based training fluid is colder than the target temperature. Choose the pack that can transfer heat to the bag, then classify the pack process.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Bag/pack match broadly but cold-versus-warmed fluid stages and target relation are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"2 C\",\"HOT\",\"BODY TEMP\"].\nCRITICAL: Row1 mannequin ankle model with COLD pack ΔH>0 and HOT pack ΔH<0 rejected/barred. Row2 orange training mannequin on warm/sunny ground, readout39.8°C, COLD pack and heat arrow FROM mannequin TO pack, HEAT LEAVES HIM. Row3 cold training IV fluid bag labeled2°C rejected/barred as-is, HOT pack provides heat to fluid, separate warmed bag/container labeledBODY TEMP, process arrow cold->warm. Do not depict a2°C coldpack warming fluid. All essential comparison evidence in BOTH photographs; avoid actual clinical instructions or doses.",
+  "source": "/workspace/generated_images/exec-a0eca286-9401-48ed-8267-099787288c97.png",
+  "initialSource": null,
+  "sourceSha256": "3527a5ad8bd777a1fc1b6c0a5744b8a14ca1fac2adfbfa23467e4d708722afa4",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      297,
+      305
+    ],
+    [
+      611,
+      617
+    ]
+  ],
+  "verticalGutters": [
+    [
+      832,
+      841
+    ]
+  ],
+  "review": "Both final crops retain anatomical ankle model, COLD dH>0 and rejected HOT dH<0 alternatives. Both final crops retain mannequin39.8 C,cold pack and heat transfer toward the pack, with heat-leaves-him note. Both final crops retain rejected2 C training fluid, HOT pack transferring heat and body-temperature output bag; no body temperature number or dose invented.",
+  "files": [
+    {
+      "id": "c-ankle",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/c-ankle-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 828,
+        "height": 293
+      },
+      "resizeFit": "cover",
+      "sha256": "ff3405ce13d32d00d5657def315b5917714920201e0c3c7100f5ae296153d62a",
+      "bytes": 51312,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-ankle",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/c-ankle-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 293
+      },
+      "resizeFit": "cover",
+      "sha256": "afae66e2965a5d03e381759c065a0b629250088b02830f853826f3f4f2600d1e",
+      "bytes": 54028,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-heat-exhaust",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/c-heat-exhaust-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 307,
+        "width": 828,
+        "height": 302
+      },
+      "resizeFit": "cover",
+      "sha256": "5aec08d67876085e79b4fb4789013c4979690f6c60fd474e4331e7cec2c85305",
+      "bytes": 62384,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    },
+    {
+      "id": "c-heat-exhaust",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/c-heat-exhaust-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 307,
+        "width": 827,
+        "height": 302
+      },
+      "resizeFit": "cover",
+      "sha256": "e45e19fb006e2b0887e48318d71a4862db2019673a01e4e82aa2cdc7c0f0e36f",
+      "bytes": 58108,
+      "width": 1280,
+      "height": 480,
+      "quality": 76
+    },
+    {
+      "id": "c-fluid-bag",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/c-fluid-bag-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 619,
+        "width": 828,
+        "height": 320
+      },
+      "resizeFit": "cover",
+      "sha256": "8c8bcb45b637aa43906124daf898c2f48fda78f9f5b72c213c1702bd9d7da15c",
+      "bytes": 46218,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-fluid-bag",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/c-fluid-bag-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 619,
+        "width": 827,
+        "height": 320
+      },
+      "resizeFit": "cover",
+      "sha256": "82eecf71d15bae409a7f487036ad65cbb13d3a0962f826121f05793f9ea01d35",
+      "bytes": 43662,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-15-post-crop.png",
+  "status": "replaced-verified"
+}

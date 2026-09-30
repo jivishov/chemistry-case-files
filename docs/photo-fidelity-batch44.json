@@ -1,0 +1,137 @@
+{
+  "id": "unit9-batch44",
+  "ids": [
+    "9/b-ammonia",
+    "9/b-buffer",
+    "9/c-sink"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 9, b-ammonia. System/context: Acid-base definitions. Authored task: Identify which acid-base definition matches the statement, then identify whether the species is acting as an acid or a base.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Unlabeled bottle omits NH3 identity and the water/proton-transfer model.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"UNDER THE SINK\",\"NH3\",\"CLEANER\",\"WATER\",\"WHICH RULE?\",\"NH3 + H2O\",\"PAIR:  ?  /  ?\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 9, b-buffer. System/context: Bicarbonate buffer pair. Authored task: Identify the conjugate partner of the species on the card and determine whether that species is acting as an acid or a base.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Vials and powder replace the arterial-gas context and H2CO3/HCO3- conjugate pair.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"ARTERIAL GAS\",\"pH  7.20\",\"BUFFER PAIR\",\"H2CO3  /  HCO3-\",\"PROTON\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 9, c-sink. System/context: Acid comparison. Authored task: Classify the acids as strong or weak, then explain how acid strength affects [H3O+] at equal formal concentration.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Unlabeled bottles omit vinegar-versus-pool-acid identification and equal-concentration strength comparison.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"VINEGAR\",\"ACID\",\"POOL\",\"ACID\",\"KITCHEN\",\"GARAGE\",\"SORT THE SHELF\",\"?  +  ?\",\"WHY THE GAP?\"].\nCRITICAL: Row1 NH3 CLEANER bottle visiblyUNDER SINK, waterbeaker, NH3+H2O andPAIR ? / ? onphysicalcard; retainunknowns. Row2 arterialgasredsample andmonitor pH7.20, printed BUFFERPAIR H2CO3 / HCO3− andPROTON arrow betweenconjugates. Correct negativecharge onlyonHCO3. Row3 pair vinegaracid(kitchen) andpoolacid(garage) withcontrast indicator strips andSORT THE SHELF ? + ? /WHY THE GAP?; sameconcentration,no guessed pHvalues.",
+  "source": "/workspace/generated_images/exec-71029453-0ff8-4ba1-ab4d-9825914c8c09.png",
+  "initialSource": null,
+  "sourceSha256": "299f7abeb09ac4666e38d39907730bcea67fd14611075e2ba34d40ccdce93f7a",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      317,
+      326
+    ],
+    [
+      609,
+      617
+    ]
+  ],
+  "verticalGutters": [
+    [
+      831,
+      842
+    ]
+  ],
+  "review": "Both final crops show under-sink NH3 cleaner, water sample, physical NH3+H2O card and unresolved pair ? / ?; no acid/base definition supplied. Both final crops show red arterial-gas sample, exact pH7.20, H2CO3/HCO3- conjugate-pair card and physical proton-arrow teaching model. Both final crops show kitchen vinegar acid versus garage pool acid, contrasting indicator strips, sorting question marks and unresolved explanation; no pH result added.",
+  "files": [
+    {
+      "id": "b-ammonia",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/b-ammonia-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 827,
+        "height": 313
+      },
+      "sha256": "cdffce0419ef1974c526fff33301acd5c32d9c18e9839ae3661a3771fea0de8e",
+      "bytes": 47012,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-ammonia",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/b-ammonia-1.webp",
+      "sourceRect": {
+        "left": 844,
+        "top": 2,
+        "width": 826,
+        "height": 313
+      },
+      "sha256": "00a347b6d419ce828ac08b93d540d355863ac9fb86e2b1339e32125b1046543d",
+      "bytes": 54178,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-buffer",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/b-buffer-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 328,
+        "width": 827,
+        "height": 279
+      },
+      "sha256": "93bcaf58670904e4edd560b86c60bc87631cc860896e0199f5741b51d8224e94",
+      "bytes": 41672,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-buffer",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/b-buffer-1.webp",
+      "sourceRect": {
+        "left": 844,
+        "top": 328,
+        "width": 826,
+        "height": 279
+      },
+      "sha256": "ddddccc310a1fe82512d85e4947b34a1ee19ad5a010df453592b81db254d0291",
+      "bytes": 43498,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-sink",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/c-sink-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 619,
+        "width": 827,
+        "height": 320
+      },
+      "sha256": "a843c086964f9c7c32366dbd2f563636dbcd0932e3dbee60bc8d27c8d787ab34",
+      "bytes": 42606,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-sink",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/c-sink-1.webp",
+      "sourceRect": {
+        "left": 844,
+        "top": 619,
+        "width": 826,
+        "height": 320
+      },
+      "sha256": "ee4b592bbbe1141ae2616e3576b6d1cd9314e4f60f28c0dc1cf763c74646ee42",
+      "bytes": 53006,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-8-post-crop.png",
+  "status": "replaced-verified"
+}

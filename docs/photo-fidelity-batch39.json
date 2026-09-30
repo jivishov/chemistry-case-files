@@ -1,0 +1,137 @@
+{
+  "id": "unit8-batch39",
+  "ids": [
+    "8/c-tea",
+    "8/c-rate",
+    "8/c-basin"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 8, c-tea. System/context: The cold glass. Authored task: Read the selected solid's solubility from the curve at the marked temperature. Then predict how the stated change affects its dissolving rate.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Iced water replaces iced-tea sample and omits the selected solubility curve and temperature.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"sample\",\"10 C\",\"KNO3\",\"NaNO3\",\"KClO3\",\"10\",\"22\",\"TEMPERATURE  C\",\"g / 100 g H2O\",\"read the\",\"highlighted\",\"curve\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 8, c-rate. System/context: The mixing bench. Authored task: Read the solubility from the curve, then predict whether the stated change makes the solid dissolve faster or slower.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: One empty beaker and rod omit stirred/unstirred comparison and solubility graph.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"stirred\",\"unstirred\",\"faster mixing\",\"slower mixing\",\"KNO3\",\"NH4Cl\",\"NaCl\",\"50\",\"50\",\"TEMPERATURE  C\",\"g / 100 g H2O\",\"temperature\",\"can change\",\"solubility\",\"stirring\",\"changes rate\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 8, c-basin. System/context: The contact basin. Authored task: Read the selected solid's solubility at the marked cool temperature, then predict how the stated change affects its dissolving rate.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Basin context matches but cooling, crystallization and solubility graph are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"crystals may form\",\"KNO3\",\"NaNO3\",\"NH4Cl\",\"T\",\"S\",\"TEMPERATURE  C\",\"g / 100 g H2O\",\"at / below:\",\"not over\",\"above:\",\"supersaturated\"].\nCRITICAL DETAILS: Row1 iced-tea sample with bottom solid and10°C thermometer. Printed solubility graph highlight KNO3 at10°C,22g/100gH2O; NaNO3 gentle curve,KClO3 lowest. Row2 stirred beaker has glass stirring rod and unstirred beaker has bottomsolid. Graph highlights NH4Cl at50°C,50g/100gH2O;KNO3 steepest,NH4Cl gentle,NaCl nearflat. Temperature canchange solubility,stirring changesrate. Row3 cooled basin withcrystals andthermometer;KNO3/NaNO3/NH4Cl curves with unspecified T andS; at/below notover,above supersaturated. No invented ticks/numbers. Preserve qualitativecurves.",
+  "source": "/workspace/generated_images/exec-efe923c9-3fb8-422c-9de6-8ea8569de015.png",
+  "initialSource": null,
+  "sourceSha256": "23210539254a6aff2c29807fac591f71c4e99f6af5f330ec9194c0ff6ea9e892",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      300,
+      307
+    ],
+    [
+      615,
+      622
+    ]
+  ],
+  "verticalGutters": [
+    [
+      832,
+      841
+    ]
+  ],
+  "review": "Both final crops show iced sample with undissolved solid,10 C thermometer and solubility graph KNO3 marked10 C/22 g per100 gH2O, with NaNO3 and KClO3 comparison curves. Values exact; plotted geometry qualitative. Both final crops show stirred/unstirred samples, bottom solid in unstirred sample, highlighted NH4Cl at50 C/50 g per100 gH2O, KNO3/NH4Cl/NaCl curves and distinction between solubility and stirring rate. Both final crops show cooled basin with crystals, thermometer, KNO3/NaNO3/NH4Cl curves, unknown T/S retained, and at/below versus above-curve supersaturation. No numerical result invented.",
+  "files": [
+    {
+      "id": "c-tea",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/c-tea-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 828,
+        "height": 296
+      },
+      "sha256": "c91a1013d986ad9fef5596b7ec1533f2984b928d3635ee5f3253397ac0e7fdd7",
+      "bytes": 50238,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-tea",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/c-tea-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 296
+      },
+      "sha256": "c563a612deeeb3ec3efdf2c0eb1e1684c57b4e4455ea669c75a168053ddd9283",
+      "bytes": 48680,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-rate",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/c-rate-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 309,
+        "width": 828,
+        "height": 304
+      },
+      "sha256": "30884e79d2725524ff2d8fffd71c90ca58cb7a36da5e03369508767e82d2e670",
+      "bytes": 63594,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-rate",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/c-rate-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 309,
+        "width": 827,
+        "height": 304
+      },
+      "sha256": "c235c5219649ecf82288b6f0a5135fca321fa18960a32ba3ea7be3db1fb8156f",
+      "bytes": 53334,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    },
+    {
+      "id": "c-basin",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/c-basin-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 624,
+        "width": 828,
+        "height": 315
+      },
+      "sha256": "113715310343a4102a930cf58a8c8abaeb272422f6c469637050b9c0fe1f1aff",
+      "bytes": 57458,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-basin",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/c-basin-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 624,
+        "width": 827,
+        "height": 315
+      },
+      "sha256": "ec41f927cc3c88af0f113c7cb1ac94a2283baa3fd2fbb38a04e6108291ba227f",
+      "bytes": 61590,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-3-post-crop.png",
+  "status": "replaced-verified"
+}

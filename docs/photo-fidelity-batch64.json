@@ -1,0 +1,187 @@
+{
+  "id": "unit11-batch64",
+  "ids": [
+    "11/h1-series",
+    "11/h2-binding",
+    "11/h3-effective",
+    "11/cap-lastcase"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 4 ROWS, 8 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 4:3; use generous high resolution. Thin white gutters separate every tile. The supplied 4 reference images correspond in order to the 4 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 11, h1-series. System/context: Decay series. Authored task: A parent nuclide does not reach stability in one step. Work out how many alpha and how many beta decays the whole chain takes, using nothing but conservation of mass number and atomic number.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Containers replace the parent-to-stable-daughter multi-step decay sequence.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"parent\",\"stable daughter\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 11, h2-binding. System/context: Binding energy. Authored task: A nucleus weighs less than the loose nucleons that make it up, and the missing mass is what holds it together. Work out the binding energy per nucleon, then say which way this nuclide releases energy.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Analytical instrument replaces the binding-energy curve, Fe-56 peak and opposite fusion/fission paths.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Fe-56 peak\",\"FUSION\",\"FISSION\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 11, h3-effective. System/context: Patient release. Authored task: Combine the supplied physical and biological half-lives, then calculate the time to the example retained-activity threshold. Treat the threshold as a classroom model input.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Empty consultation room and closed file replace physical/biological clearance paths and effective-half-life relation.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"physical\",\"biological\",\"effective half-life\"].\n\nROW 4 BOTH PHOTOGRAPHS: Unit 11, cap-lastcase. System/context: Last on the list. Authored task: Cardiac stress scan, last slot before lunch. The prescription needs a set activity at injection, and the only technetium in the building is what is left in the vial you have been spending all morning. Make the call.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Hot-cell equipment replaces remaining vial activity, prescription and timed-delivery comparison.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"RX: 25 mCi\",\"vial now\",\"14:00 delivery\"].\nCRITICAL: EXACT2columns4rows total4:3 atlas, each independent8:3 photograph. Row1 physical printed decay-series model: parent nucleus LEFT branches into TWO alternative paths, each with TWO intermediate circles, paths converge to ONE stable daughter RIGHT; six nodes total, parent/stable daughter labels. No isotope identities or alpha/beta counts guessed. Row2 printed binding-energy-per-nucleon curve with Fe-56 marker AT HIGHEST PEAK, FUSION arrow climbs RIGHT/UP from low/light left towardironpeak, FISSION arrow climbs LEFT/UP from heavy right towardironpeak. Both paths towardiron, not away; no energy numbers invented. Row3 anatomical teaching torso and TWO clearance routes physical/biological pointing toward an effective-half-life card, exact relation1/Teff=1/Tphysical+1/Tbiological; no numerical answer. Row4 shielded partially filled vial labeled vial now, physical prescription RX:25mCi and DIGITAL clock14:00 delivery; no remaining-activity answer invented. EVERY scene complete in BOTH variants.\nFOLLOW-UP EDIT:\nEdit this EXACT two-column FOUR-row photographic atlas, preserving all eight independent panoramic photos, white gutters, physical models and large readable evidence. TOP ROW BOTH: the parent-to-stable-daughter chain is incomplete. Keep SIX nodes: one parent on left, two nodes on upper branch, two on lower branch, one stable daughter on right. Add the missing printed dashed arrows from the SECOND upper intermediate to stable daughter and SECOND lower intermediate to the SAME stable daughter, so BOTH routes visibly converge. Preserve existing parent and stable daughter labels. THIRD ROW BOTH: replace ONLY the ambiguous wavy chart card with a large physical printed formula card, heading effective half-life and legible formula exactly '1/Teff = 1/Tphysical + 1/Tbiological'. Keep the physical and biological clearance routes from the anatomical torso, both connected toward the formula card. SECOND ROW binding-energy curve must remain unchanged: Fe-56 marker at peak, fusion up/right, fission up/left. FOURTH ROW retain vial now, RX: 25 mCi and 14:00 delivery; leave unknown activity unanswered. Keep all essential formula and labels safely within tile margins. No new numerical answers.",
+  "source": "/workspace/generated_images/exec-0a0855f4-0523-4294-963f-da229af4cc35.png",
+  "initialSource": "/workspace/generated_images/exec-ea51a467-6d3d-4ab8-918b-4c4cb649c5cf.png",
+  "editReferences": [
+    "/workspace/generated_images/exec-ea51a467-6d3d-4ab8-918b-4c4cb649c5cf.png"
+  ],
+  "sourceSha256": "5167158fbc52cbec5268055247af095f81ba861f347c15107a1c5620715eaed6",
+  "sourceWidth": 1448,
+  "sourceHeight": 1086,
+  "horizontalGutters": [
+    [
+      267,
+      272
+    ],
+    [
+      527,
+      532
+    ],
+    [
+      797,
+      802
+    ]
+  ],
+  "verticalGutters": [
+    [
+      721,
+      727
+    ]
+  ],
+  "review": "Both encoded photos preserve six-node decay-series teaching model: one parent, two branches with two intermediates each, and one stable daughter. Both branches visibly converge via corrected printed arrows. No isotope or decay-count answer added. Both encoded photos preserve binding-energy curve with Fe-56 peak at maximum, fusion path rising rightward and fission rising leftward toward iron; no quantitative energy answer added. Both encoded photos preserve anatomical model, separate physical/biological routes and printed relation 1/Teff = 1/Tphysical + 1/Tbiological, without calculating a release threshold. Both encoded photos preserve shielded partly used vial labeled vial now, RX: 25 mCi and 14:00 delivery clock, with current activity left unresolved.",
+  "files": [
+    {
+      "id": "h1-series",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/h1-series-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 717,
+        "height": 263
+      },
+      "resizeFit": "cover",
+      "sha256": "8c8e19a02e85c883016d2823a3a2f5147dd7b27b4eb4de1fad525584e357f2fa",
+      "bytes": 53324,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h1-series",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/h1-series-1.webp",
+      "sourceRect": {
+        "left": 729,
+        "top": 2,
+        "width": 717,
+        "height": 263
+      },
+      "resizeFit": "cover",
+      "sha256": "8dcab1a13a67a0d9d3286a71873c63008b8bf291a8dc5dcae844ad8f8d06d19c",
+      "bytes": 53354,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h2-binding",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/h2-binding-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 274,
+        "width": 717,
+        "height": 251
+      },
+      "resizeFit": "cover",
+      "sha256": "e5d16387b44179d745ee79673e7463f41478e9b51c9889acf3b07fe4e5e258af",
+      "bytes": 34416,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h2-binding",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/h2-binding-1.webp",
+      "sourceRect": {
+        "left": 729,
+        "top": 274,
+        "width": 717,
+        "height": 251
+      },
+      "resizeFit": "cover",
+      "sha256": "b5b5a03d00719f86aac66fa11fd4b369b1c1b6f099abfcb3c241236e66463f32",
+      "bytes": 47988,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h3-effective",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/h3-effective-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 534,
+        "width": 717,
+        "height": 261
+      },
+      "resizeFit": "cover",
+      "sha256": "47954d743d3b14c0bd4dfd4d32daec8746c92533b44b8c3d61903d25d7c417c6",
+      "bytes": 48186,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h3-effective",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/h3-effective-1.webp",
+      "sourceRect": {
+        "left": 729,
+        "top": 534,
+        "width": 717,
+        "height": 261
+      },
+      "resizeFit": "cover",
+      "sha256": "57ab8ff09d6bc51fd5a4192eb334228bbf5904fb9aa4011530face10d8fbf195",
+      "bytes": 51266,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "cap-lastcase",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/cap-lastcase-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 804,
+        "width": 717,
+        "height": 280
+      },
+      "resizeFit": "cover",
+      "sha256": "91bef6ff1718dca48f5e4ab910c2320ed0a7637c8b5e9829cb9fcb8b85168363",
+      "bytes": 46436,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "cap-lastcase",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/cap-lastcase-1.webp",
+      "sourceRect": {
+        "left": 729,
+        "top": 804,
+        "width": 717,
+        "height": 280
+      },
+      "resizeFit": "cover",
+      "sha256": "5215405b57add77e31bc18f6bead675e9489f1fe1ddf43ffe1bdf107d7e29cff",
+      "bytes": 39430,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-28-post-crop.png",
+  "status": "replaced-verified"
+}

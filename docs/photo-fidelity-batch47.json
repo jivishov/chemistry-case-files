@@ -1,0 +1,184 @@
+{
+  "id": "unit9-batch47",
+  "ids": [
+    "9/e-gas",
+    "9/h1-titrate",
+    "9/h2-weak",
+    "9/cap-last"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 4 ROWS, 8 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 4:3; use generous high resolution. Thin white gutters separate every tile. The supplied 4 reference images correspond in order to the 4 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 9, e-gas. System/context: Near-neutral calibration sample. Authored task: Convert the reported hydrogen-ion concentration to pH and classify the aqueous calibration sample.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Clear calibration sample matches current prompt broadly, but the source blood-gas record and concentration-to-pH relationship are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"BLOOD GAS\",\"H+ =  ?  M\",\"PRINTED NOW\",\"CALCULATE\",\"pH =  ?\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 9, h1-titrate. System/context: Strong acid-base titration. Authored task: Move the titration to the equivalence volume, then select the listed indicator whose transition range includes pH 7.00.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Burette hardware is cropped/ambiguous and the flask is colorless; source shows a titration endpoint cue and equivalence relation.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"STANDARD BASE\",\"n H+  =  n OH-\",\"EQUIVALENCE  ?\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 9, h2-weak. System/context: Weak-acid equilibrium. Authored task: Use Ka and the formal concentration of a weak monoprotic acid to calculate equilibrium [H+] and pH.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Flask/probe omit the weak-acid label, partial ionization and Ka/formal-concentration evidence.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"5%\",\"WEAK ACID\",\"WHAT IONIZES\",\"Ka  +  C\",\"[H+]  →  pH ?\"].\n\nROW 4 BOTH PHOTOGRAPHS: Unit 9, cap-last. System/context: Acid-base capstone. Authored task: For one unknown acid sample, name the acid, classify its strength, predict the salt formed with the given base, and calculate the neutralizing amount.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Bottle in tray replaces the unknown beaker and four-step identification/strength/salt/dose record.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"CAPSTONE\",\"06:00\",\"?\",\"ONE BEAKER\",\"NAME  →  STRENGTH\",\"SALT  →  DOSE\",\"CHECK FOUR STEPS\"].\nCRITICAL: EXACT TWO columns FOUR rows, each 8:3 photograph, total canvas4:3 (e.g.2048x1536), not16:9. Row1 red blood-gas training vial beside printed BLOOD GAS H+=?M / PRINTED NOW -> CALCULATE pH=? with simple ECG monitor cue. Row2 properly vertical burette with stopcock ABOVE an Erlenmeyer flask containing pale pink solution, STANDARD BASE nH+=nOH− / EQUIVALENCE? unresolved; no burette numbers invented. Row3 WEAK ACID bottle5% with physical partial-ionization teaching model and WHAT IONIZES Ka+C / [H+] -> pH?; no calculated equilibrium answer. Row4 one unknown sample beaker?, CAPSTONE timer06:00, OPEN clipboard ONE BEAKER / NAME -> STRENGTH / SALT -> DOSE / CHECK FOUR STEPS. Every whole scene in BOTH variants independently; no medical dose or answer fabricated.\nFOLLOW-UP EDIT:\nPreserve this EXACT2columns4rows atlas and all first/fourth-row content. In BOTH SECOND-ROW titration photos, reposition the Erlenmeyer flask so its OPEN narrow neck is DIRECTLY UNDER the burette outlet/dripping tip, with a visible small gap; drops must fall into the mouth, not onto the bench. Keep flask pale pink solution, burette/stopcock shape and STANDARD BASE nH+=nOH−/EQUIVALENCE? card. In BOTH THIRD-ROW weak-acid photos, replace the water-like red/white suspended ball model in the beaker with a clearly PHYSICAL PRINTED translucent-acrylic equilibrium teaching card behind a plain water sample, text 'HA ⇌ H+ + A−' and 'partial ionization'. Correct plus charge on H and minus on A. Do not imply5% is percent ionized: the bottle remains5% WEAK ACID exactly as authored, concentration label. Keep WHAT IONIZES Ka+C / [H+] ->pH? cards and all their unknowns unchanged. No invented pH, dose, degree of ionization or particle-count calculation. Preserve every other object, exact lettering and overall dimensions.",
+  "source": "/workspace/generated_images/exec-c0a62126-0047-43f6-817b-826dc6c07d9d.png",
+  "initialSource": "/workspace/generated_images/exec-1d514b2a-f818-4e20-b9c9-f8ad74345032.png",
+  "sourceSha256": "e46bfc465b74d19e7b67c2dc85bc399828d47cc96468c6edcaadc03555f96d68",
+  "sourceWidth": 1448,
+  "sourceHeight": 1086,
+  "horizontalGutters": [
+    [
+      267,
+      273
+    ],
+    [
+      539,
+      546
+    ],
+    [
+      803,
+      809
+    ]
+  ],
+  "verticalGutters": [
+    [
+      717,
+      731
+    ]
+  ],
+  "review": "Both final crops retain blood-gas sample, unknown H+=?M and pH=?, printed-now record and monitor cue; no result inserted. Both final crops show burette outlet directly over open flask neck,pink solution and nH+=nOH- with equivalence unresolved. Both final crops retain5% weak-acid concentration label,Ka/C and unresolved H+/pH. A physical HA equilibrium display represents partial ionization without treating5% as percent ionized. Both final crops retain06:00 timer,one unknown sample and name/strength/salt/dose four-step record, with no clinical dose or identity filled.",
+  "files": [
+    {
+      "id": "e-gas",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/e-gas-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 713,
+        "height": 263
+      },
+      "resizeFit": "cover",
+      "sha256": "cac978d30e809280f618c2acbea94438b222c7f769b8cc37dab77a29163d8146",
+      "bytes": 41128,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "e-gas",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/e-gas-1.webp",
+      "sourceRect": {
+        "left": 733,
+        "top": 2,
+        "width": 713,
+        "height": 263
+      },
+      "resizeFit": "cover",
+      "sha256": "d98cad82dacf868ae8aef7eb40e0804ae47dd7a642e0d5c94303a61e245b8401",
+      "bytes": 43622,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h1-titrate",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/h1-titrate-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 275,
+        "width": 713,
+        "height": 262
+      },
+      "resizeFit": "cover",
+      "sha256": "dd4f49e7ef6302048b9b6644434bfa89cc7401896e67663f383c3b7ceea2017a",
+      "bytes": 39936,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h1-titrate",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/h1-titrate-1.webp",
+      "sourceRect": {
+        "left": 733,
+        "top": 275,
+        "width": 713,
+        "height": 262
+      },
+      "resizeFit": "cover",
+      "sha256": "0e2f659963d84e7060850112534b42ecfcd357501acfdeb01d5a746ae2b6486b",
+      "bytes": 42068,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h2-weak",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/h2-weak-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 548,
+        "width": 713,
+        "height": 253
+      },
+      "resizeFit": "cover",
+      "sha256": "bb545a74ce33768578152b26770cf0fe6ace713427138ce71e3fe3c310b0682f",
+      "bytes": 47930,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h2-weak",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/h2-weak-1.webp",
+      "sourceRect": {
+        "left": 733,
+        "top": 548,
+        "width": 713,
+        "height": 253
+      },
+      "resizeFit": "cover",
+      "sha256": "4660d4aa5e0d56550e06566f466cc1fe2424f5267edf9333e690937b37135510",
+      "bytes": 52300,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "cap-last",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/cap-last-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 811,
+        "width": 713,
+        "height": 273
+      },
+      "resizeFit": "cover",
+      "sha256": "6f1b4b212e4fe1292fc1d093260efda291eb430e90b1b69d6407d8d57334028b",
+      "bytes": 47616,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "cap-last",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/cap-last-1.webp",
+      "sourceRect": {
+        "left": 733,
+        "top": 811,
+        "width": 713,
+        "height": 273
+      },
+      "resizeFit": "cover",
+      "sha256": "54a8f957c663734c691594b65e7ec4a72aac5ed4d08bd13af356d9c9a880c108",
+      "bytes": 46914,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-11-post-crop.png",
+  "status": "replaced-verified"
+}

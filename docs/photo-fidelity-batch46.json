@@ -1,0 +1,137 @@
+{
+  "id": "unit9-batch46",
+  "ids": [
+    "9/d-decon",
+    "9/e-soda",
+    "9/e-bleach"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 9, d-decon. System/context: Wastewater-model calculation. Authored task: For this activity model, predict the salt and calculate the moles of base required for stoichiometric neutralization.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Wash apparatus replaces labeled decon rinse, acid evidence and required-base question.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"DECON RINSE\",\"MEASURED ACID\",\"SALT  +  WATER\",\"BASE NEEDED  ?\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 9, e-soda. System/context: Soft-drink sample. Authored task: Use the measured hydrogen-ion concentration to calculate the pH of the sample, then classify it as acidic, neutral, or basic.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Soda matches broadly; test strip and hydrogen-ion concentration/pH meter evidence are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"COLA\",\"BENCH METER\",\"[H+] =  ?  M\",\"pH  =  ?\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 9, e-bleach. System/context: Hydroxide sample. Authored task: The sample is reported as [OH-]. Calculate pOH, convert to pH at 25 °C, then classify the aqueous sample.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Bottle and probe omit solution, strip and pH+pOH=14 relation.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"OH-\",\"WATER RELATIONSHIP\",\"pH  +  pOH  =  14\",\"OH-  →  pH  ?\"].\nCRITICAL: Row1 DECON RINSE bucket with indicator strip and measured-acid card SALT+WATER / BASE NEEDED? unresolved. Row2 COLA can and red-tipped indicator strip beside BENCH METER [H+]=?M,pH=?; retain all unknowns. Row3 OH− sample bottle/bucket and blue-tipped strip beside WATER RELATIONSHIP pH+pOH=14,OH− -> pH?; no numerical pH or amount guessed.",
+  "source": "/workspace/generated_images/exec-f8c37694-a7da-4eb9-8bc6-2f30c4c456a8.png",
+  "initialSource": null,
+  "sourceSha256": "9a360b78ab23a3c7a1f84899df8d3d3b7799c6497de0fc80ce85db30fbd46487",
+  "sourceWidth": 1672,
+  "sourceHeight": 940,
+  "horizontalGutters": [
+    [
+      311,
+      317
+    ],
+    [
+      621,
+      627
+    ]
+  ],
+  "verticalGutters": [
+    [
+      831,
+      841
+    ]
+  ],
+  "review": "Both final crops show decon-rinse bucket and indicator strip with measured-acid,salt+water and unresolved base-needed evidence. Both final crops show cola sample, indicator strip and bench-meter unknown [H+]=?M/pH=?, with no guessed result. Both final crops show OH- sample and blue-tipped strip beside pH+pOH=14 and unresolved conversion to pH.",
+  "files": [
+    {
+      "id": "d-decon",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/d-decon-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 827,
+        "height": 307
+      },
+      "sha256": "310424b8289b9ea893e778fda52c06f0a5fa596d485153773ac82f57e7bb90b1",
+      "bytes": 46500,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "d-decon",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/d-decon-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 307
+      },
+      "sha256": "8e0d4c82f96112f0df98d54116c40305a958c202cab155c9abba088b0fd5da0b",
+      "bytes": 52570,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "e-soda",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/e-soda-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 319,
+        "width": 827,
+        "height": 300
+      },
+      "sha256": "1093cab01cece3981712de6fd1973c4149e61d8e624ffe107d6b96a7f2939e41",
+      "bytes": 50326,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "e-soda",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/e-soda-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 319,
+        "width": 827,
+        "height": 300
+      },
+      "sha256": "eeebcef2fb5662f729ef473f3b02495463fe102819a7ce30572ed7927a6fd4d8",
+      "bytes": 49232,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "e-bleach",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/e-bleach-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 629,
+        "width": 827,
+        "height": 309
+      },
+      "sha256": "fb56969ad1a404d65052018011bca17ebec18a578281bfc8e414fd8aa79d04c1",
+      "bytes": 44652,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "e-bleach",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/e-bleach-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 629,
+        "width": 827,
+        "height": 309
+      },
+      "sha256": "95a2ca101284329cc18dc73b8e53c8603e65b4b41f9600e5395803502def8c61",
+      "bytes": 42182,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-10-post-crop.png",
+  "status": "replaced-verified"
+}

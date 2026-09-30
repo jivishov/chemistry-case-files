@@ -1,16 +1,17 @@
 {
   "missions": 196,
   "photos": 392,
-  "replaced": 215,
+  "replaced": 387,
   "acceptedOriginal": 5,
-  "remaining": 172,
-  "branch": "codex/case_files_chemistry_new",
+  "remaining": 0,
+  "branch": "work",
   "publishedBaseline": "73f9135ea0e4d75973ce5fb892bc6b3513cf425b",
-  "updated": "2026-09-29T20:54:44.795Z",
-  "scope": "All missions and both photo variants visually audited; replacement remains in progress.",
-  "runState": "stopped-at-user-request",
-  "completedThroughUnit": 7,
-  "completedMissions": 110,
-  "remainingMissions": 86,
-  "stopReason": "User asked to finish current chapter then stop"
+  "cloudSourceCommit": "0d29d57db092e78e77f94bef0733575803b3a67b",
+  "updated": "2026-09-30T15:49:45.180648Z",
+  "scope": "Every mission and both photo variants compared with the actual authored runtime SVG; replacement assets accepted only after final crop review.",
+  "runState": "completed",
+  "completedThroughUnit": 11,
+  "completedMissions": 196,
+  "remainingMissions": 0,
+  "destination": "jivishov/chemistry-case-files/main"
 }

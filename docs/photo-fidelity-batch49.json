@@ -1,0 +1,143 @@
+{
+  "id": "unit10-batch49",
+  "ids": [
+    "10/a-shivering",
+    "10/a-snow-windscreen",
+    "10/a-spent-pack"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 10, a-shivering. System/context: Energy conversion. Authored task: Muscle metabolism converts chemical energy from nutrients into mechanical work and thermal energy. Which law connects these energy forms?. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Clothes and food packet replace the person and chemical-energy-to-work/heat relationship.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"FUEL\",\"HEAT\",\"SHIVER = WORK\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 10, a-snow-windscreen. System/context: Heat-transfer direction. Authored task: A hot stove windscreen is in contact with colder snow. Which law predicts the spontaneous direction of heat transfer?. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Unlit bare stove omits hot pot, snow melting at contact and directed heat transfer.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"HEAT FLOWS TO COLDER SNOW\",\"MELTS\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 10, a-spent-pack. System/context: Cold pack contact. Authored task: A used pack is at 6 °C and the surface it touches is at 33 °C. Which law predicts the direction of spontaneous heat transfer?. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Cold pack on a mat omits 6 C versus 33 C contact comparison and heat-transfer direction.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"6 C\",\"33 C\",\"DO NOT STRAP IT ON\"].\nCRITICAL: Use physical rescue-training mannequins in orange sleeping bags, rather than real injured people. Row1 FUEL card arrow to mannequin and printed HEAT / SHIVER=WORK teaching evidence; chemical energy becomes work and heat. Row2 HOT cooking stove/pot/windscreen beside COLDER SNOW with meltwater, heat arrow FROM hot equipment TO snow, not reverse. Row3 mannequin chest label33°C and a used cooling pouch6°C displayed separately; physical teaching card heat direction33°C ->6°C, DO NOT STRAP IT ON with barred pack symbol. Never portray cold pack warming a33°C surface. Both variants show exact pairs/directions.\nFOLLOW-UP EDIT:\nMake TWO precise corrections in BOTH columns, preserving all other scene content and dimensions. TOP ROW: add a small physical printed card reading exactly 'SHIVER = WORK' near the mannequin/FUEL teaching display, so FUEL,HEAT and mechanical WORK are all explicit. BOTTOM ROW: the large orange heat-flow arrow is reversed. Change ONLY that orange arrow so it points LEFT, FROM the warm33 C label on the RIGHT TOWARD the6 C blue pack on the LEFT. Left-panel arrow head nearx375,y790 and tailnearx478,y790; right-panel arrow headnearx1210,y790 and tailnearx1325,y790. Remove existing right-pointing arrowheads. Print a small note '33 C → 6 C' adjacent to the arrow to remove ambiguity (actual drawn arrow points left because warm object is at right). Preserve6 C and33 C labels, mannequin and barred 'DO NOT STRAP IT ON' card. Do not swap temperatures or change middle-row heat-to-snow scene.",
+  "source": "/workspace/generated_images/exec-c5eea5da-5b3c-47e1-8b1c-15a4e9a9b0b6.png",
+  "initialSource": "/workspace/generated_images/exec-92fd7a5a-12c4-4c53-8513-0fbd2c2edb38.png",
+  "sourceSha256": "e2bb31628114ddce6c0f281b9ecab9f0f1988841146d7536c34d9b1e6d80ba59",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      304,
+      318
+    ],
+    [
+      621,
+      634
+    ]
+  ],
+  "verticalGutters": [
+    [
+      828,
+      843
+    ]
+  ],
+  "review": "Both encoded photos preserve a cold-field mannequin, fuel-to-body heat relation and SHIVER = WORK evidence. Both encoded photos preserve the hot burner, pot, windscreen and heat flowing toward colder snow, with melting evidence. Both encoded photos preserve the 6 C spent pack and 33 C chest; the heat arrow points from warmer chest to colder pack, consistent with the corrected source SVG and its original caption. Do not strap it on warning is retained.",
+  "files": [
+    {
+      "id": "a-shivering",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/a-shivering-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 824,
+        "height": 300
+      },
+      "resizeFit": "cover",
+      "sha256": "fbad4e46025fb70715d73dee744ba81d99716e8c6f3b9f7c978beb6eb406d7f8",
+      "bytes": 56162,
+      "width": 1280,
+      "height": 480,
+      "quality": 76
+    },
+    {
+      "id": "a-shivering",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/a-shivering-1.webp",
+      "sourceRect": {
+        "left": 845,
+        "top": 2,
+        "width": 825,
+        "height": 300
+      },
+      "resizeFit": "cover",
+      "sha256": "ff2e98069abfb6dbb91e2b03c6c37c4fec5abb54362d5e0dc266e29276b93ada",
+      "bytes": 57414,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    },
+    {
+      "id": "a-snow-windscreen",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/a-snow-windscreen-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 320,
+        "width": 824,
+        "height": 299
+      },
+      "resizeFit": "cover",
+      "sha256": "fce0171be112fa4b10036eb6aa9eac1deb45bce53880e67def20a06bac942252",
+      "bytes": 57270,
+      "width": 1280,
+      "height": 480,
+      "quality": 76
+    },
+    {
+      "id": "a-snow-windscreen",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/a-snow-windscreen-1.webp",
+      "sourceRect": {
+        "left": 845,
+        "top": 320,
+        "width": 825,
+        "height": 299
+      },
+      "resizeFit": "cover",
+      "sha256": "14f6824c90964126b49f3666136518a6250d2ede799b34be260ad61a5691304e",
+      "bytes": 61658,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    },
+    {
+      "id": "a-spent-pack",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/a-spent-pack-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 636,
+        "width": 824,
+        "height": 303
+      },
+      "resizeFit": "cover",
+      "sha256": "bd725bfe4256eb5122f98be2deb0aee2cd2afd0a0a325aaab15287f3b4b8924e",
+      "bytes": 60504,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    },
+    {
+      "id": "a-spent-pack",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/a-spent-pack-1.webp",
+      "sourceRect": {
+        "left": 845,
+        "top": 636,
+        "width": 825,
+        "height": 303
+      },
+      "resizeFit": "cover",
+      "sha256": "7b041e21b545f7e5ea7c5fea8b8979f4a24e65b9b4940da4e36f3d90b9cd9a4b",
+      "bytes": 63426,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-13-post-crop.png",
+  "status": "replaced-verified"
+}

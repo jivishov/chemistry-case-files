@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260930-1';
 // main.js: Unit 8 view-model (Solutions & Solubility, TEKS C.11).
 // The core interactions are the chemistry: classify by polarity, read solubility
 // curves, apply solubility rules, prepare a target molarity, and calculate a dilution.
@@ -13,7 +13,7 @@ import {
 } from '../../../shared/js/chem.js';
 import { lineChart } from '../../../shared/js/render.js';
 import { createGame, outcomeBand } from '../../../shared/js/game.js';
-import { sceneArt } from './art.js';
+import { sceneArt } from './art.js?v=photo-fidelity-20260930-1';
 
 let curveChart = null;
 

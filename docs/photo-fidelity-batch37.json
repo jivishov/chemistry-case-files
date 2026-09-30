@@ -1,0 +1,137 @@
+{
+  "id": "unit8-batch37",
+  "ids": [
+    "8/a-tea",
+    "8/a-shed",
+    "8/a-basin"
+  ],
+  "prompt": "Use case: photorealistic-natural. Produce ONE high-quality photographic asset atlas, exactly TWO COLUMNS and THREE ROWS, six separate wide 8:3 panoramic photographs. Total desired canvas 2560 x 1440 (16:9). A narrow neutral 4-pixel gutter separates every tile. Each row depicts one chemistry teaching scene in two distinctly photographed variants, the left and right frames differing in camera position and material details but preserving the SAME evidence. No tile crosses into another tile. These images will be sliced into individual 1280x480 website banners. Essential apparatus, printed labels and diagrams must all fit within each tile's central 88% width and central 75% height, with generous safe margins; keep the outer edges as quiet background. Real lenses, realistic glass, brushed metal, believable light. All particle/charge drawings must appear as physical printed teaching cards or acrylic models, never a purported photograph of molecules. Do NOT provide digital illustration, SVG style, cartoon, or collage inside a tile. No invented scientific quantities, instruments or answer labels.\n\nThe three supplied images are the exact authored SVG references for ROW 1, ROW 2 and ROW 3 respectively. Reinterpret the evidence and objects faithfully in a photographed physical teaching setup. Preserve the distinction between what is dissolved and undissolved, and the polarity of water. Omit the bottom all-caps footer; the app supplies that caption separately.\n\nROW 1 BOTH TILES — a-tea: A real break-room science counter with TWO beakers: the left amber iced-tea beaker includes two pale ice pieces and a clearly visible small pile of undissolved white granules at the bottom; the right water beaker holds a colorless solution. A tilted small shaker is near them. Labels immediately under the beakers read \"undissolved solid\" and \"dissolved particles\". A physical printed water model has one large oxygen symbol labeled δ− and TWO small hydrogen symbols labeled δ+, with the caption \"water is polar\". Next to it a real cream teaching card titled \"ACTIVITY GUIDE\" has three clean rows \"bonding — classify\", \"water solubility — high / low\", \"compare — polarity\". This is a static classroom comparison, not the answer to a randomized sample question.\n\nROW 2 BOTH TILES — a-shed: A maintenance-bench SOLVENT bottle, a transparent tall water sample beaker visibly holding TWO separate liquid phases (thin pale yellow solvent layer above clear water), and a few droplets on a tray. Labels \"separate liquid phases\" and \"low mutual solubility\". A physical teaching card displays a nonpolar chain with no charge marks, and a water model with oxygen δ− and TWO hydrogens δ+. The printed conclusion on the card reads \"nonpolar\", \"low solubility\", \"in polar water\". The bottle label \"SOLVENT\" must remain legible. Do not show a homogeneous one-phase liquid.\n\nROW 3 BOTH TILES — a-basin: Photographed water-treatment teaching bench. At left, THREE aligned sample beakers labeled \"dissolved\", \"separate\", \"partial\": first has no sediment, second has a clear substantial undissolved white solid heap at the bottom, third has a smaller undissolved white heap plus a printed particle overlay on the glass. Beside them a small real sample pump with label \"SAMPLE\". At right, a broad transparent treatment-basin model labeled \"AQUEOUS PHASE\", blue water and a pale sediment layer along the bottom, with a removable clear teaching overlay showing a few dissolved-particle dots. An upright teaching card reads \"low-solubility material stays separate\". Apparatus must fit fully within the panoramic tile. Do not replace these comparisons with a single generic water bottle.\n\nDeliver only the six-panel photographic atlas. Printed teaching diagrams and cards are real objects within the photographs. No extra title outside the six tiles, no watermark, no people, no additional labels or numbers.\nFOLLOW-UP EDIT:\nEdit ONLY the glass surface graduation printing in this six-panel photo atlas. Remove every etched measurement number, letter, tick mark and vertical graduated scale from ALL beakers in ALL six photographs. The beakers should be smooth uncalibrated clear glass. The stray scale printing is unsupported by the authored illustrations. Do not modify any scene, image gutter, crop, layout, lighting, liquid or sediment level, ice, white solute pile, solvent layers, printed particle-model overlay, water-polarity teaching model, or separate teaching placards. Keep every deliberate printed card and bottle label EXACTLY as currently written, including ACTIVITY GUIDE, water is polar, SOLVENT, dissolved, separate, partial, SAMPLE, AQUEOUS PHASE and the solubility cards. Keep exactly two columns and three rows, at the same image dimensions. A faithful targeted cleanup, no new graphics or numbers.",
+  "source": "/workspace/generated_images/exec-21291277-6fe0-4252-9fc4-f5f8b9730331.png",
+  "initialSource": "/workspace/generated_images/exec-d54d97d4-519d-4c80-ad73-f948258168a8.png",
+  "sourceSha256": "44d6612ed79d524409b7b858ed0b398d2ac68ba05d33ad1d94908c0517e00a96",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      310,
+      313
+    ],
+    [
+      623,
+      629
+    ]
+  ],
+  "verticalGutters": [
+    [
+      834,
+      840
+    ]
+  ],
+  "review": "Both final crops retain iced tea with ice and undissolved solid, comparison water/dissolved-particle teaching overlay, and a water molecule model with oxygen delta-minus and hydrogen delta-plus beside the unresolved classification guide. Invented glass graduations removed. Both final crops show a solvent bottle, separate liquid phases, nonpolar model contrasted with correctly charged polar-water model, and low-solubility evidence. Invented glass graduations removed. Both final crops retain three dissolved/separate/partial samples, sample pump, aqueous-phase basin with printed dissolved-particle overlay and bottom separate material. Particle overlays are teaching illustrations.",
+  "files": [
+    {
+      "id": "a-tea",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/a-tea-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 830,
+        "height": 306
+      },
+      "sha256": "093ddcbba0898848b2bf10a1d4129adfc19d64dbf086030ab812cd249dbdc12a",
+      "bytes": 55900,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-tea",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/a-tea-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 2,
+        "width": 828,
+        "height": 306
+      },
+      "sha256": "e30dc2f496fc4b4477439261d213950863ee2ccb41c67657dac431dca5394f1a",
+      "bytes": 57086,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-shed",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/a-shed-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 315,
+        "width": 830,
+        "height": 306
+      },
+      "sha256": "708f6999ee6b2ca9d86892136399d3dfd254a2a8e0e8039b1618dedfc8654958",
+      "bytes": 48782,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-shed",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/a-shed-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 315,
+        "width": 828,
+        "height": 306
+      },
+      "sha256": "24ee7f92b97157d19805dd8967e79ccd795e75351e560c716fd5a90f222690cd",
+      "bytes": 50540,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-basin",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/a-basin-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 631,
+        "width": 830,
+        "height": 308
+      },
+      "sha256": "c3745af43eee1ca57ef9651e85f5e8143929e80fed3489abd6a2dacd6a7266ae",
+      "bytes": 49302,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-basin",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/a-basin-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 631,
+        "width": 828,
+        "height": 308
+      },
+      "sha256": "f8bfd6a22b0d90d5275761279461f9508ea6fcda13387ffb25b63ea2eb4043b9",
+      "bytes": 51484,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-1-post-crop.png",
+  "status": "replaced-verified"
+}

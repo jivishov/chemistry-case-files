@@ -1,0 +1,137 @@
+{
+  "id": "unit9-batch45",
+  "ids": [
+    "9/c-cart",
+    "9/c-sheet",
+    "9/d-bucket"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 9, c-cart. System/context: Base comparison. Authored task: Classify the bases as strong or weak, then explain why the strong bases produce more OH- at equal formal concentration.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Two bottles replace four labeled base samples; NH3/NaOH/KOH identities absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"NH3\",\"NaOH\",\"KOH\",\"?\",\"CORRIDOR CART\",\"DISSOCIATE\",\"SORT\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 9, c-sheet. System/context: Strength and hazard. Authored task: Classify the four acids as strong or weak, then explain why acid strength is not the same as chemical hazard.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Two bottles and closed binder replace the readable four-acid list and four sample containers.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"TRANSFER ROOM LIST\",\"HCl     HF\",\"HNO3    HC2H3O2\",\"SORT: _________\",\"?\",\"?\",\"?\",\"?\",\"THE ROOM\",\"STRENGTH?\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 9, d-bucket. System/context: Spill-model calculation. Authored task: For this controlled simulation, predict the salt and calculate the moles of base required for stoichiometric neutralization.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Empty vessel and unlabeled bottles omit acid/base identity and stoichiometric mole equality.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"ACID\",\"BASE\",\"SHELF\",\"MOLE RATIO\",\"mol H+  =  mol OH-\",\"TARGET:  ?  mol\"].\nCRITICAL: Row1 exactlyFOUR bottles oncorridorcart, labels NH3,NaOH,KOH,?; DISSOCIATE/SORT card unresolved. Row2 OPEN transferroomlist with exactHCl,HF,HNO3,HC2H3O2 andblankSORT line, FOUR samplebottles eachquestionmark, STRENGTH? blank; no names or strongweakanswers. Row3 acidbucket andBASE SHELFbottle, printed MOLE RATIO molH+=molOH−,TARGET ? mol; no fabricated amount.",
+  "source": "/workspace/generated_images/exec-c31ccab1-39f0-4a89-ad8e-4febb58e0075.png",
+  "initialSource": null,
+  "sourceSha256": "972e9256ef6cbb774d62267d45d6691b458ab0e55b11f100d467c8805b4a5718",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      310,
+      315
+    ],
+    [
+      624,
+      630
+    ]
+  ],
+  "verticalGutters": [
+    [
+      836,
+      840
+    ]
+  ],
+  "review": "Both final crops show exactly four corridor-cart samples NH3,NaOH,KOH,? with dissociation/sorting left unanswered. Both final crops retain open transfer list HCl/HF/HNO3/HC2H3O2, blank sorting line and four unknown bottles with unresolved strength comparison. Both final crops retain acid bucket, base-shelf sample, mol H+=mol OH- and unknown target ? mol, without a calculated amount.",
+  "files": [
+    {
+      "id": "c-cart",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/c-cart-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 832,
+        "height": 306
+      },
+      "sha256": "660bf6f265fc0689b6a75425f436bc46f403ecc38a80b70f72d167e48d3a8774",
+      "bytes": 56236,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-cart",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/c-cart-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 2,
+        "width": 828,
+        "height": 306
+      },
+      "sha256": "9b21d43fd613b48a9e104b65c190313d72844f9513edb33b0bd6174c4f069242",
+      "bytes": 62454,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-sheet",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/c-sheet-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 317,
+        "width": 832,
+        "height": 305
+      },
+      "sha256": "cfc2425398c2512c41dcf0b4f43e48ddff83e4e3d281209d3f8d84e7835b2073",
+      "bytes": 49974,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-sheet",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/c-sheet-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 317,
+        "width": 828,
+        "height": 305
+      },
+      "sha256": "e79db294af49a02fafcca829f933d9240b698c475fef6c4ea105d71e4596ee70",
+      "bytes": 54460,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "d-bucket",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/d-bucket-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 632,
+        "width": 832,
+        "height": 307
+      },
+      "sha256": "09ddb5315c4210cf970a56ad4bf672e1b55ab2463eb1f6b414cbe8fb84eaf9de",
+      "bytes": 52796,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "d-bucket",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/d-bucket-1.webp",
+      "sourceRect": {
+        "left": 842,
+        "top": 632,
+        "width": 828,
+        "height": 307
+      },
+      "sha256": "578a062714eb15905878ce4b85b742bf65e6e5dd349df3b145f438bb21cf2dbf",
+      "bytes": 56788,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-9-post-crop.png",
+  "status": "replaced-verified"
+}

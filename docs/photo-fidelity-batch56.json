@@ -1,0 +1,143 @@
+{
+  "id": "unit11-batch56",
+  "ids": [
+    "11/a-pet",
+    "11/a-teletherapy",
+    "11/a-eye"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 11, a-pet. System/context: PET tracer delivery. Authored task: The FDG delivery from the cyclotron arrives at 08:20 with a smudged label. Confirm the fluorine-18 decay before it goes on the ring.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Shielded container replaces syringe/FDG source and paired 511 keV photon paths.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"F-18 FDG\",\"CARD\",\"ACRYLIC\",\"LEAD\",\"511 keV pair\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 11, a-teletherapy. System/context: Teletherapy head. Authored task: The old cobalt-60 teletherapy unit is being decommissioned and the physicist wants the source decay written on the transfer form.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Therapy head matches broadly but Co-60 identity and gamma/lead comparison are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Co-60\",\"CARD\",\"ACRYLIC\",\"LEAD\",\"shield the transfer\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 11, a-eye. System/context: Eye applicator. Authored task: Ophthalmology has a strontium-90 applicator they press against the eye to treat a surface lesion. Write its decay for the annual source inventory.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Applicator-like objects omit Sr-90 identity, eye contact and short-range beta evidence; variant geometries differ.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Sr-90\",\"CARD\",\"ACRYLIC\",\"LEAD\",\"surface range\"].\nCRITICAL: All shielding comparisons are large photographed PRINTED acrylic teaching boards beside equipment, not literal glowing radiation. Each board has CARD,ACRYLIC,LEAD in that order and a nonnumeric meter. Row1 F-18 FDG shielded syringe plus print showing positron-annihilation photon PAIR with exact511keV pair, two cyan wavy photon arrows reachLEAD throughCARD/ACRYLIC. Row2 Co-60 teletherapy head teaching mockup/source; gamma passesCARD/ACRYLIC toLEAD, shield thetransfer. Row3 Sr-90 eye-applicator beside anatomical eye teaching model; short-range green beta passesCARD and stopsatACRYLIC, surface range. Same full evidence in EACH variant; no nuclear decay equation answer added.\nFOLLOW-UP EDIT:\nMake TWO scientific corrections, leaving bottom Sr-90 row and all apparatus/material/isotope labels unchanged. BOTH TOP-ROW F-18 FDG boards: replace the two parallel rightward cyan photon paths with a BACK-TO-BACK 180-degree pair from one shared small annihilation-point marker just to the right of the syringe. ONE cyan wavy arrow points LEFT from that point; the OTHER points RIGHT through CARD/ACRYLIC toward LEAD. Keep exact '511 keV pair' label, all three material labels and the syringe. Two arrows must face opposite horizontal directions, never both right. BOTH MIDDLE-ROW Co-60 boards: replace the GREEN straight path with a CYAN WAVY GAMMA path through CARD/ACRYLIC to LEAD, and add small physical printed label 'gamma'. Preserve 'shield the transfer'. No numeric readings or decay answers.",
+  "source": "/workspace/generated_images/exec-a80a61d5-f14e-4b1d-8476-6d999930e560.png",
+  "initialSource": "/workspace/generated_images/exec-578679e1-ed2a-48a2-b3c8-7aaec117b3e3.png",
+  "sourceSha256": "e557e4d3cbe606de4b9a46d2a5fbfd9b819184002374f01ff7489c9ce3304d4b",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      298,
+      307
+    ],
+    [
+      600,
+      607
+    ]
+  ],
+  "verticalGutters": [
+    [
+      831,
+      841
+    ]
+  ],
+  "review": "Both encoded photos preserve F-18 FDG syringe shield and 511 keV pair with opposite photon paths on a physical barrier display. Both encoded photos preserve Co-60 teletherapy head, cyan gamma path through card/acrylic toward lead, and shield the transfer evidence. Both encoded photos preserve anatomical eye and Sr-90 applicator with short-range beta ending within acrylic, plus surface range label.",
+  "files": [
+    {
+      "id": "a-pet",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/a-pet-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 827,
+        "height": 294
+      },
+      "resizeFit": "cover",
+      "sha256": "6114433cb3f7114e8bf91e20d8d3bacaffd6906d2e7b9135b6b0d5aab6a25d43",
+      "bytes": 43932,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-pet",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/a-pet-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 294
+      },
+      "resizeFit": "cover",
+      "sha256": "691591554f2ee587d3e28a3c07d1f4fea2be5c9fd883696066570d965b910668",
+      "bytes": 46130,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-teletherapy",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/a-teletherapy-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 309,
+        "width": 827,
+        "height": 289
+      },
+      "resizeFit": "cover",
+      "sha256": "8d4a43ea1eee7e3edfbfe77bc461207cdd4c0aeaeedf928293b7a2dc80e34a30",
+      "bytes": 38502,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-teletherapy",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/a-teletherapy-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 309,
+        "width": 827,
+        "height": 289
+      },
+      "resizeFit": "cover",
+      "sha256": "08ada7a3223b598044d6548a66f1b94574ecb4705927ddba224d55be65d232d5",
+      "bytes": 39872,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-eye",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/a-eye-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 609,
+        "width": 827,
+        "height": 330
+      },
+      "resizeFit": "cover",
+      "sha256": "6d3a50a7886268636cf6da2d4ee7e8e9afb02a773002ed784e2bb264e91bee30",
+      "bytes": 48214,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-eye",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/a-eye-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 609,
+        "width": 827,
+        "height": 330
+      },
+      "resizeFit": "cover",
+      "sha256": "e1c2d33464e6110d3fbc5afedf16df0b2c5ed7dbbaac6c432425fb2fc1094890",
+      "bytes": 44508,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-20-post-crop.png",
+  "status": "replaced-verified"
+}

@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260930-1';
 // main.js - Unit 11 view-model (Nuclear Chemistry, TEKS C.14). Scenario layer.
 //
 // The units_new build: units/11-nuclear rendered in the mission-cockpit shell. Unit 11 was

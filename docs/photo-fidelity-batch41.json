@@ -1,0 +1,143 @@
+{
+  "id": "unit8-batch41",
+  "ids": [
+    "8/e-permang",
+    "8/f-cleaner",
+    "8/f-stock"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 8, e-permang. System/context: The dosing barrel. Authored task: Prepare the potassium permanganate solution at the stated molarity by selecting final volume and calculating the required mass.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Purple reagent bottle omits weighed crystals, volumetric flask and prepared-solution comparison.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"23.7 g\",\"KMnO4 crystals\",\"mark\",\"1.00 L\",\"prepared reagent solution\",\"correct reagent\",\"concentration matters\",\"excess permanganate\",\"can add color\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 8, f-cleaner. System/context: The working solution. Authored task: Use C1V1 = C2V2 to select the stock volume needed for the stated final concentration and final volume.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Bottle/pipette omit measured stock aliquot, final volume and equal solute-amount comparison.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"stock solution\",\"V1\",\"final V2\",\"dilute to the mark\",\"C1V1\",\"C2V2\",\"=\",\"same moles of solute\",\"DILUTION\",\"C1\",\"known\",\"C2, V2\",\"given\",\"solve\",\"V1\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 8, f-stock. System/context: The analytical bench. Authored task: Calculate the stock volume needed to prepare the stated working concentration at the stated final volume.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Dilution equipment matches broadly but stock identity, flask mark and concentration/volume data are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"analysis\",\"HCl\",\"stock\",\"V1\",\"mark\",\"V2 to mark\",\"C1V1 = C2V2\",\"C1 stock\",\"12.0 M\",\"C2 target\",\"0.500 M\",\"V2 final\",\"500 mL\",\"V1 stock\",\"20.8 mL\"].\nCRITICAL DETAILS: Row1 solid KMnO4crystals onbalance23.7g, purple solution involumetricflask FILLED to singlemark1.00L andpurple reagentbeaker; no inventedmolarity. Row2 stockbottle,measuredaliquotV1,largerfinalV2flaskfilledto singlemark; C1V1=C2V2 printed with equal-height bars SAME MOLES; DILUTION C1known,C2/V2given,solveV1. Row3 HClstock andaliquot20.8mL,finalflaskFILLEDtomark500mL; table C1stock12.0M,C2target0.500M,V2final500mL,V1stock20.8mL; C1V1=C2V2. No fabricated graduations.\nFOLLOW-UP EDIT:\nMake two precise scientific corrections, preserving every other object/text/row and atlas dimensions. BOTH MIDDLE-ROW 'same moles of solute' bars under C1V1 and C2V2: make their green filled tops EXACTLY EQUAL HEIGHT on a shared baseline, visually representing C1V1=C2V2, rather than left taller. BOTH BOTTOM-ROW final V2 volumetric flasks: raise the pale amber transparent liquid to the single calibration mark in the NARROW NECK where arrow 'mark' points (left abouty704,right y720). Liquid continuously fills bulb and lowerneck to that mark with clear meniscus; above ring empty. Do not move mark down to bulb. Preserve 12.0M,0.500M,500mL,20.8mL and every other printed value. Top row23.7g/1.00L and middle apparatus unchanged.",
+  "source": "/workspace/generated_images/exec-e0fba3ce-5b0b-4163-b0f8-03418ca5061e.png",
+  "initialSource": "/workspace/generated_images/exec-bb4b3026-f8de-4594-a445-11faa3284363.png",
+  "sourceSha256": "1fff009d98278dc98177eb670379382856c42a6151267c942ef0cd4204aa8bbb",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      307,
+      315
+    ],
+    [
+      619,
+      627
+    ]
+  ],
+  "verticalGutters": [
+    [
+      832,
+      841
+    ]
+  ],
+  "review": "Both final crops retain KMnO4 crystals,23.7g balance,1.00L volumetric flask at its calibration mark, prepared purple solution and concentration/color notes; no molarity invented. Both final crops retain stock solution, measured V1 and marked final V2, unresolved dilution variables, equal moles C1V1=C2V2 represented by equal-height physical bars. The SVG's decorative unequal bars are interpreted according to its printed equality. Source SVG equal-moles bars corrected to equal dimensions, baseline and visual weight; both final photos re-reviewed against the corrected diagram. Both final crops retain HCl stock12.0M,target0.500M,final500mL,aliquot20.8mL,C1V1=C2V2 and final flask filled to the neck calibration mark.",
+  "files": [
+    {
+      "id": "e-permang",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/e-permang-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 828,
+        "height": 303
+      },
+      "resizeFit": "cover",
+      "sha256": "7e343af31fac5fbc14996152ec1b28a7d9f1e3f2ede75af1dca1af07346c5e31",
+      "bytes": 53334,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "e-permang",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/e-permang-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 303
+      },
+      "resizeFit": "cover",
+      "sha256": "2692695c5edf4b2c5e6785893c8f79cd979571bb26555306ca98f2e3a0047bae",
+      "bytes": 56154,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "f-cleaner",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/f-cleaner-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 317,
+        "width": 828,
+        "height": 300
+      },
+      "resizeFit": "cover",
+      "sha256": "22b07ecda71b5830cd325dac7bcee3b2d916be74e8e0421c191eee61e7cd91c0",
+      "bytes": 51958,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "f-cleaner",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/f-cleaner-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 317,
+        "width": 827,
+        "height": 300
+      },
+      "resizeFit": "cover",
+      "sha256": "629c32d437442e74b9fe333151ab88bec74606decf2e055769d6953761e1574f",
+      "bytes": 54900,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "f-stock",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/f-stock-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 629,
+        "width": 828,
+        "height": 310
+      },
+      "resizeFit": "cover",
+      "sha256": "6f6752440800db2bc899a4d92ccf0d2df6d28d105d556bcc95180fdb0eb0c3bf",
+      "bytes": 49180,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "f-stock",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/f-stock-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 629,
+        "width": 827,
+        "height": 310
+      },
+      "resizeFit": "cover",
+      "sha256": "aa9af25531e14f2b3c55b2aa305a3ba396df392b834ffcdb419e5e7adf3a26c3",
+      "bytes": 52384,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-5-post-crop.png",
+  "status": "replaced-verified"
+}

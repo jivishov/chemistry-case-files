@@ -1,0 +1,147 @@
+{
+  "id": "unit11-batch60",
+  "ids": [
+    "11/c-bone",
+    "11/c-pet",
+    "11/c-thyroid"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 11, c-bone. System/context: Bone scan, 9 years old. Authored task: A nine-year-old with unexplained leg pain needs a whole-body bone scan. The camera sits outside her. Pick the isotope, then name the property that decided it.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Scanner matches broadly but Tc-99m identity and gamma leaving the patient toward the external camera are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Tc-99m\",\"camera outside the body\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 11, c-pet. System/context: PET metabolism study. Authored task: A staging PET scan is booked on the ring downstairs. That machine only records photons that arrive in pairs, at 511 keV, from opposite directions. Pick the isotope, then name the property that decided it.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Scanner ring matches broadly but coincident opposite 511 keV photons are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"F-18 FDG\",\"511 keV coincidence\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 11, c-thyroid. System/context: Overactive thyroid. Authored task: In the supplied thyroid-treatment example, iodine uptake helps localize a beta-emitting isotope. Choose the isotope and the relevant emission property from the reference choices.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Shielded container replaces targeted thyroid uptake and beta stopping in tissue.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"I-131\",\"targeted uptake\"].\nCRITICAL: Use physical anatomical/training mannequins and printed teaching displays. Row1 Tc-99m tracer model in torso with cyan gamma arrows LEAVING body toward an EXTERNAL gamma-camera detector, isotope vial and camera outside the body label. Row2 F-18 FDG mannequin insidePET detectorRING; printed photon arrows in OPPOSITE180° directions from one annihilation site, both labeled511keV with coincidence display. Row3 I-131 capsule/shield beside torso/thyroid anatomical model, targeted uptake localized atthyroid and short-range beta path stopswithin tissue. Radiation arrows are printed physical teaching marks, not real glowing beams; no doses or decay answers added.\nFOLLOW-UP EDIT:\nEdit this exact two-column three-row photographic atlas. Preserve every apparatus, isotope label, complete independent photo, white gutter and wide composition. In BOTH middle-row PET photographs, make the two cyan photon arrows a single straight horizontal line through the ONE annihilation point, with arrowheads pointing exactly LEFT and RIGHT, 180 degrees apart toward opposite ring detectors; retain F-18 FDG and 511 keV coincidence. Across ALL SIX photos, make every radiation path, marker and anatomy overlay clearly ink PRINTED on a real transparent acrylic teaching panel supported by small visible stands in front of the mannequins. No visible light beams or radiating/glowing organs. Top row: cyan printed gamma paths leave the Tc-99m body model toward the external gamma-camera. Bottom row: the printed green beta path ends within thyroid tissue, targeted I-131 uptake remains localized, optional printed cyan gamma path can leave tissue. Preserve captions, labels, equipment and the two variants. Do not add numbers or answers.\nSECOND FOLLOW-UP EDIT:\nEdit this exact two-column three-row photographic atlas. Change ONLY the green beta path in BOTH BOTTOM-ROW I-131 thyroid photographs. The current long green arrows travel outside the target tissue. Replace each with a very SHORT green printed dashed arrow, about one fifth of the cyan gamma arrow length, from the localized green thyroid marker toward its adjacent thyroid lobe. The green arrowhead must visibly STOP INSIDE THE ORANGE THYROID TISSUE, close to the green marker. No green path outside the thyroid, no path toward the vial or empty air. Keep the longer CYAN gamma arrow leaving the thyroid unchanged, as I-131 emits penetrating gamma as well as local beta. Keep targeted uptake, I-131, physical clear acrylic annotation panel and every apparatus. TOP and MIDDLE rows MUST remain unchanged: Tc-99m gamma exits toward external camera; F-18 FDG PET pair arrows remain exactly straight and 180 degrees opposite through ONE marked annihilation site. Preserve all six photos, white gutters, labels and framing. Add no text, quantities or answers.",
+  "source": "/workspace/generated_images/exec-0985ef01-4ff6-4a27-a2f4-9380f282f6f3.png",
+  "initialSource": "/workspace/generated_images/exec-b70b0ffe-98d4-4124-8f37-5e5244dd9cfc.png",
+  "editReferences": [
+    "/workspace/generated_images/exec-b70b0ffe-98d4-4124-8f37-5e5244dd9cfc.png",
+    "/workspace/generated_images/exec-489c88c7-2e0f-4f60-9c78-1a7236fc70ea.png"
+  ],
+  "sourceSha256": "9baf95cb51f391fcad0404cb46dd431e52261a2849c05c5bb582e132b4d2379d",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      311,
+      315
+    ],
+    [
+      624,
+      627
+    ]
+  ],
+  "verticalGutters": [
+    [
+      835,
+      838
+    ]
+  ],
+  "review": "Both encoded photos preserve Tc-99m identity, anatomical training model, gamma paths printed on acrylic leaving the body toward an external camera, and camera outside the body label. Both encoded photos preserve F-18 FDG identity, PET detector ring and one annihilation site with exactly collinear opposite 180-degree photon arrows, plus 511 keV coincidence evidence on a physical teaching display. Both encoded photos preserve localized I-131 thyroid uptake and a short green beta path ending within the thyroid tissue; longer cyan gamma path exits tissue. Printed acrylic annotations distinguish the physical model from visible radiation.",
+  "files": [
+    {
+      "id": "c-bone",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/c-bone-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 831,
+        "height": 307
+      },
+      "resizeFit": "cover",
+      "sha256": "fc909e4e6b800896b1439fed57fac9fe4710bbe82f8a0c5de02c9fb467cfe594",
+      "bytes": 51666,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-bone",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/c-bone-1.webp",
+      "sourceRect": {
+        "left": 840,
+        "top": 2,
+        "width": 830,
+        "height": 307
+      },
+      "resizeFit": "cover",
+      "sha256": "4de7aa07b122e823b28e6b3c4a611e159529f115317da7454eac68a89f8bf323",
+      "bytes": 45396,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-pet",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/c-pet-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 317,
+        "width": 831,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "6aa1de802ce0c7a3281e764faa2f8d93a897d0da41148cc4a87c74c0630fe058",
+      "bytes": 48322,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-pet",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/c-pet-1.webp",
+      "sourceRect": {
+        "left": 840,
+        "top": 317,
+        "width": 830,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "9aec59a99f64195ecde11492a737bfd7ca47e1173becc9f5114da1f3dfdb2b93",
+      "bytes": 42900,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-thyroid",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/c-thyroid-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 629,
+        "width": 831,
+        "height": 310
+      },
+      "resizeFit": "cover",
+      "sha256": "2e5a546d4cd715d76f3527027adb5d7e195a506484a346dbfad9565d521b50a2",
+      "bytes": 54074,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-thyroid",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/c-thyroid-1.webp",
+      "sourceRect": {
+        "left": 840,
+        "top": 629,
+        "width": 830,
+        "height": 310
+      },
+      "resizeFit": "cover",
+      "sha256": "c5bea5c234b21d756f5037a7dd0b06b6228f01c60903f5f8e4ff4fecaaabbc2a",
+      "bytes": 52232,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-24-post-crop.png",
+  "status": "replaced-verified"
+}

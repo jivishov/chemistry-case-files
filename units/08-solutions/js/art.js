@@ -458,7 +458,7 @@ export const SCENE_ART = {
       + beaker(132, 26, 54, 64, { k, n: 'batch', level: .84, tint: '#3d8f6a', ions: 10, seed: 6, label: 'final V2' })
       + `<path d="M130 36 h58" stroke="${C.white}" stroke-width="1.1" stroke-dasharray="3 3"/>`
       + mono(159, 100, 'dilute to the mark', { size: 7.5, fill: C.pale, w: 700 })
-      + `<g><rect x="212" y="46" width="18" height="40" fill="${C.success}" opacity=".85"/><rect x="248" y="66" width="46" height="20" fill="${C.success}" opacity=".5"/>${mono(221, 40, 'C1V1', { size: 7.5, fill: C.success, w: 700 })}${mono(271, 60, 'C2V2', { size: 7.5, fill: C.success, w: 700 })}${mono(239, 62, '=', { size: 9, fill: C.pale, w: 700 })}</g>`
+      + `<g data-visual-role="conserved-moles"><rect x="212" y="46" width="18" height="40" fill="${C.success}" opacity=".85"/><rect x="262" y="46" width="18" height="40" fill="${C.success}" opacity=".85"/>${mono(221, 40, 'C1V1', { size: 7.5, fill: C.success, w: 700 })}${mono(271, 40, 'C2V2', { size: 7.5, fill: C.success, w: 700 })}${mono(239, 62, '=', { size: 9, fill: C.pale, w: 700 })}</g>`
       + mono(253, 100, 'same moles of solute', { size: 7, fill: C.dim, w: 700 })
       + slip(304, 20, 80, 56, { title: 'DILUTION', lines: [['C1', 'known'], ['C2, V2', 'given'], ['solve', 'V1', true]] });
   } }),

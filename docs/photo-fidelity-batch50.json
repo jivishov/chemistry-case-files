@@ -1,0 +1,143 @@
+{
+  "id": "unit10-batch50",
+  "ids": [
+    "10/a-battery-cold",
+    "10/a-cryo-stage",
+    "10/c-hypothermia"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 10, a-battery-cold. System/context: Absolute-zero limit. Authored task: A student asks whether ordinary outdoor cooling could continue until a battery reaches absolute zero. Which law addresses this limit?. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Battery in snow matches context but omits the cooling curve approaching, not reaching, 0 K.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"0 K\",\"COLDER, SLOWER\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 10, a-cryo-stage. System/context: Cryogenic limit. Authored task: A laboratory cryostat reaches 0.5 K. Further cooling becomes increasingly difficult as the temperature approaches 0 K. Which law is illustrated?. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Cryostat context matches but successive diminishing cooling stages and 0.5 K reading are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"0.5 K\",\"STALLED\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 10, c-hypothermia. System/context: Warming pack. Authored task: This scenario requires a warming pack. Choose the pack whose process releases heat to its surroundings, then classify that process.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Pack/blanket omit the hot-versus-cold choice, exothermic sign and transfer to the person.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"HOT\",\"COLD\",\"dH < 0\",\"dH > 0\"].\nCRITICAL: Row1 battery in snow beside printed declining curve COLDER,SLOWER approaches but remains ABOVE dashed0K baseline; no zero-reaching intersection. Row2 FOUR sequential physical cryostat-stage teaching blocks connected left-to-right, circles get progressively smaller to illustrate less heat removed; readout0.5K / STALLED. Row3 orange rescue-training mannequin with HOT warming pack ΔH<0 and rejected COLD pack ΔH>0, crossed-out COLD choice; physical labels teaching process, no medical result. Keep both entire alternatives in EACH tile.",
+  "source": "/workspace/generated_images/exec-d14652bb-43b2-46af-9572-8614b5be31bf.png",
+  "initialSource": null,
+  "sourceSha256": "7f9f375bd6ac07118d28d70d7edf5b6e6ab8dbabef1e5b3a246b803419592cf4",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      309,
+      316
+    ],
+    [
+      622,
+      630
+    ]
+  ],
+  "verticalGutters": [
+    [
+      832,
+      841
+    ]
+  ],
+  "review": "Both final crops retain battery in snow, colder/slower curve approaching but remaining above0 K baseline; no absolute-zero crossing. Both final crops retain four connected teaching stages with decreasing circles,0.5 K and stalled endpoint. Both final crops retain mannequin, HOT process dH<0 and rejected COLD process dH>0, with correct enthalpy signs.",
+  "files": [
+    {
+      "id": "a-battery-cold",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/a-battery-cold-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 828,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "c78669dd70f69e131b188cf928fa4aa57443d0e160d3addd2f001f1d54b8f602",
+      "bytes": 55984,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-battery-cold",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/a-battery-cold-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 305
+      },
+      "resizeFit": "cover",
+      "sha256": "b377c3464b205f35efb62743d2378d9ec53724466e10272e6524efc8cf52d166",
+      "bytes": 54572,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-cryo-stage",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/a-cryo-stage-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 318,
+        "width": 828,
+        "height": 302
+      },
+      "resizeFit": "cover",
+      "sha256": "b705e170519af1398cc07b644f92c42fd75ce18a7a35d306659da0cd6e04202f",
+      "bytes": 51966,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-cryo-stage",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/a-cryo-stage-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 318,
+        "width": 827,
+        "height": 302
+      },
+      "resizeFit": "cover",
+      "sha256": "345b508a30b2fb2f9129fe7a2f3426e89db3bd289553f18420ab1cf20172bde7",
+      "bytes": 53202,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "c-hypothermia",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/c-hypothermia-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 632,
+        "width": 828,
+        "height": 307
+      },
+      "resizeFit": "cover",
+      "sha256": "0077e10e83b5bba3a556cccc53fa49ca9144ee248ae25f7331553816700ac6f4",
+      "bytes": 55928,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    },
+    {
+      "id": "c-hypothermia",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/c-hypothermia-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 632,
+        "width": 827,
+        "height": 307
+      },
+      "resizeFit": "cover",
+      "sha256": "e1e3bc29779062ce94c661a3d2bebc4e0e848c21924f96c28c573ce5bb791d6a",
+      "bytes": 60720,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-14-post-crop.png",
+  "status": "replaced-verified"
+}

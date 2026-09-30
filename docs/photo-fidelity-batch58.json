@@ -1,0 +1,143 @@
+{
+  "id": "unit11-batch58",
+  "ids": [
+    "11/b-sun",
+    "11/b-vendor",
+    "11/b-column"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 11, b-sun. System/context: The panels on the roof. Authored task: The vault chiller runs off the solar array on the roof. Somebody asks whether that makes the chiller nuclear powered. Classify the reaction that ultimately runs it, then answer.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Sun and rooftop panels match, but the hydrogen-fusion source model is absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"H + H\",\"sunlight, not a reactor\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 11, b-vendor. System/context: The vendor pitch. Authored task: A sales rep is offering a compact fusion generator that would supposedly make the department energy independent. This is the reaction on the brochure. Classify it, then answer the obvious question.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Blank equipment cabinet and closed notebook replace the D/T fusion model and vendor claim brochure.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"COMPACT\",\"FUSION\",\"POWER?\",\"D + T\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 11, b-column. System/context: What the generator is doing. Authored task: Between elutions, the generator column just sits in its shielding making more technetium. This is the reaction inside it. Classify it, then answer what the column is actually doing.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Generator vessel matches but parent/offspring isotope and emitted beta model are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"Mo-99\",\"beta decay\"].\nCRITICAL: Row1 roofsolararray andphotographedSun/fusion teachingcard H+H, sunlight notareactor; doNOT invent incorrect balanced nuclear equation. Row2 OPEN brochure COMPACT FUSION POWER? beside physicalD+T light-nuclei-joining teachingmodel;questionmark remains,no commercialclaim. Row3 shieldedMo-99 generatorcolumn beside printed betadecay pathway/model, labelbetadecay; depictdecay source ratherthan on-demandgeneratoroutput. No numbereddecayanswers fabricated. Allobjects/models inbothvariants.",
+  "source": "/workspace/generated_images/exec-2e2f6976-f145-43bd-99ad-029bb8de9e53.png",
+  "initialSource": null,
+  "sourceSha256": "1dae7be5afd86ae2a8a8c8d48b74d6fb13bcd709cf1ea4d733323971561ae09d",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      327,
+      334
+    ],
+    [
+      618,
+      625
+    ]
+  ],
+  "verticalGutters": [
+    [
+      831,
+      841
+    ]
+  ],
+  "review": "Both final crops retain solar array and physical Sun/H+H teaching display,sunlight-to-panel arrow and sunlight-not-reactor contrast; no balanced reaction invented. Both final crops retain D+T light-nuclei joining concept model and unresolved compact fusion power brochure. Sphere decorations are illustrative, not literal nucleon counts or a completed equation. Both final crops retain shielded Mo-99 column and beta-decay teaching model, distinguishing decay from on-demand production.",
+  "files": [
+    {
+      "id": "b-sun",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/b-sun-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 827,
+        "height": 323
+      },
+      "resizeFit": "cover",
+      "sha256": "1238c1afaccfd8a71f265dbfb511925b96e2b9cf5282a276163647cdc684cf34",
+      "bytes": 63760,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-sun",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/b-sun-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 323
+      },
+      "resizeFit": "cover",
+      "sha256": "679f3abc2976b4ade64a31de8cd1200c9e75b587cd0c24a265b4f966d62f04b5",
+      "bytes": 49276,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-vendor",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/b-vendor-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 336,
+        "width": 827,
+        "height": 280
+      },
+      "resizeFit": "cover",
+      "sha256": "005b72c1b8e1e0397a65d764ac5d388ac4755bda842a01d686e5a9c35d45ba90",
+      "bytes": 32286,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-vendor",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/b-vendor-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 336,
+        "width": 827,
+        "height": 280
+      },
+      "resizeFit": "cover",
+      "sha256": "3872584bb71c54979441674352f0ebcef4745e3e0cb37e4239bb82f8c6f46100",
+      "bytes": 39200,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-column",
+      "unit": 11,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/11/b-column-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 627,
+        "width": 827,
+        "height": 312
+      },
+      "resizeFit": "cover",
+      "sha256": "0fb9be4f8f505e749dab9bec6763a8f0402ccf25af3d5b8eb6140b43c9fec536",
+      "bytes": 59630,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "b-column",
+      "unit": 11,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/11/b-column-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 627,
+        "width": 827,
+        "height": 312
+      },
+      "resizeFit": "cover",
+      "sha256": "354056edaa8d0eae9d65bfee8dc7ea27a5becd7e748429440a2766ada0d8c6b9",
+      "bytes": 54674,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-22-post-crop.png",
+  "status": "replaced-verified"
+}

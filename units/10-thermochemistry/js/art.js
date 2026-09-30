@@ -501,7 +501,7 @@ export const SCENE_ART = {
     return ledge(98, { glow: [150, 52, C.danger] })
       + patient(155, 96, .98, { shiver: true })
       + pouch(176, 72, 42, 42, { k, kind: 'cold', id: 'spent', label: '6 C' })
-      + flow(178, 236, 58, { color: C.hot, w: 3.2 })
+      + `<g data-visual-role="passive-heat-flow">${flow(236, 178, 58, { color: C.hot, w: 3.2 })}</g>`
       + `<path d="M246 46 q10 10 0 20 q-10 10 0 20" fill="none" stroke="${C.hotLt}" stroke-width="2.2" stroke-linecap="round"/>`
       + `<path d="M258 46 q10 10 0 20 q-10 10 0 20" fill="none" stroke="${C.hotLt}" stroke-width="2.2" stroke-linecap="round" opacity=".72"/>`
       + chip(278, 39, '33 C', { color: C.hotLt })

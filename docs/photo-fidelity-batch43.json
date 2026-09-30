@@ -1,0 +1,145 @@
+{
+  "id": "unit9-batch43",
+  "ids": [
+    "9/a-caller",
+    "9/a-antacid",
+    "9/a-sheet"
+  ],
+  "prompt": "Create a photoreal chemistry teaching atlas, total16:9, EXACT TWO columns THREE rows, six independent panoramic8:3 photographs, thin white gutters. Every tile must contain the ENTIRE listed scene, all its apparatus and labels. The two columns are alternative full photographs of the SAME scene, never different scene details. Warm wood left, neutral gray counter right. Printed teaching boards are physical photographed objects, not app interfaces. Keep entire evidence comfortably inside each frame, bottom15% quiet tabletop. TOP ROW BOTH LEFT AND RIGHT independently: telephone handset, a small readable note CALLER02:14 / reads: H ? Cl / name:________, AND a small laptop or printed dark board POISON DATABASE / NAME: blank / no match without one, all three side by side in EACH tile. No chemical name guessed. MIDDLE ROW BOTH LEFT AND RIGHT: ANTACID chewable box, mostly empty torn antacid roll and exactlyTHREE loose white tablets, AND a physical cream card ACTIVE INGREDIENT / Mg(OH)2 / HOW MANY?, all present in EACH photo. BOTTOM ROW BOTH LEFT AND RIGHT: OPEN clipboard TRANSFER23:41 / found with: H2SO3 / name:________ / resident orders off / whatever you sign, a clear training IV bag, AND card WHAT THE BAG IS / ? ous or -ic, all present in EACH photo. No invented acid name, dose, patient result, extra numeric values, glass graduations, brands, watermark or footer caption. Refer to supplied three authored SVGs in row order. Real camera texture, convincing materials, large readable exact lettering.",
+  "source": "/workspace/generated_images/exec-871cdcd5-06e6-4377-874c-fff241b2c5c0.png",
+  "initialSource": "/workspace/generated_images/exec-b6f5537d-d5ca-4159-a222-484a2bd94e4b.png",
+  "rejectedPrompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 9, a-caller. System/context: Formula on the label. Authored task: A product label gives only a chemical formula. Build the correct acid or base name from its parts.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Blank bottle label replaces the caller record, partial formula and naming database.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"CALLER 02:14\",\"reads: H ? Cl\",\"name: ______\",\"POISON DATABASE\",\"NAME:\",\"no match without one\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 9, a-antacid. System/context: Antacid ingredient. Authored task: An antacid label lists its active ingredient as a formula. Name the compound using the hydroxide-base naming rule.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Tablets match broadly but Mg(OH)2 active-ingredient formula and depleted roll are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"ANTACID\",\"chewable\",\"ACTIVE INGREDIENT\",\"Mg ( OH ) 2\",\"HOW MANY?\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 9, a-sheet. System/context: Laboratory transfer sheet. Authored task: A transfer sheet lists an acid by formula. Build its correct name using the binary-acid or oxyacid naming pattern.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Closed notebook and box replace the readable H2SO3 transfer record.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"TRANSFER  23:41\",\"found with: H2SO3\",\"name: ____________\",\"resident orders off\",\"whatever you sign\",\"WHAT THE BAG IS\",\"?\",\"ous or -ic\"].\nCRITICAL: Row1 real telephone handset beside CALLER02:14 note 'reads: H ? Cl' and blank name, POISON DATABASE screen NAME field empty; do not name acid. Row2 antacidchewable box and mostlyEMPTY tornroll with exactlyTHREE loose white tablets as reference, ACTIVE INGREDIENT Mg(OH)2, HOW MANY? unresolved. Row3 OPEN clipboard transfer23:41 with exactH2SO3, nameblank, note residentordersoffwhateveryousign; beside IVbag(?) and label 'ous or -ic'. Do not fillnames or diagnoses.",
+  "rejectionReason": "The first atlas split a scene's evidence between left and right variants, rather than retaining every object in both.",
+  "sourceSha256": "1641f4b2098986fff77db99f6f07f9bc8efb8fc047bd1b5f7e7e61497e6b8e9d",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      278,
+      285
+    ],
+    [
+      572,
+      579
+    ]
+  ],
+  "verticalGutters": [
+    [
+      831,
+      841
+    ]
+  ],
+  "review": "Both normalized final crops contain handset, caller02:14 partial formula H?Cl with blank name and poison-database empty name field; the earlier split-evidence atlas was rejected. Neutral contain margins preserve full evidence. Both final crops show antacid chewable box, depleted roll, exactly three loose tablets and Mg(OH)2 active-ingredient card with unanswered count. Neutral contain margins preserve full evidence. Both final crops show open transfer23:41,H2SO3,blank name and transfer note beside training IV bag and unresolved ous/-ic naming card. Neutral contain margins preserve full evidence.",
+  "files": [
+    {
+      "id": "a-caller",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/a-caller-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 827,
+        "height": 274
+      },
+      "resizeFit": "contain",
+      "sha256": "8f7cd820c09b7e527cc2a70ca97bd20d4870bbf70b1b6d7dd78bab7fb041d0ef",
+      "bytes": 47958,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-caller",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/a-caller-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 274
+      },
+      "resizeFit": "contain",
+      "sha256": "8fdbbe4b1282676cf7f1fa0b76853e1980b023babba265db1bc342c99fb699e6",
+      "bytes": 43198,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-antacid",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/a-antacid-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 287,
+        "width": 827,
+        "height": 283
+      },
+      "resizeFit": "contain",
+      "sha256": "8256ab23a0ef8af81f2f9a7e440521d389327e6f8ddfad2cbbcff07ade093505",
+      "bytes": 51008,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-antacid",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/a-antacid-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 287,
+        "width": 827,
+        "height": 283
+      },
+      "resizeFit": "contain",
+      "sha256": "f41a8dd2d7c197ae6cff7bf7c24029ec2880fd4bb04957989c85ec12f9f4a65a",
+      "bytes": 41626,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-sheet",
+      "unit": 9,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/9/a-sheet-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 581,
+        "width": 827,
+        "height": 358
+      },
+      "resizeFit": "contain",
+      "sha256": "6bdbad317d05c5a6b573fd0642555d797d8ac9778bb7ce9ff41472a71e807e4d",
+      "bytes": 64860,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-sheet",
+      "unit": 9,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/9/a-sheet-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 581,
+        "width": 827,
+        "height": 358
+      },
+      "resizeFit": "contain",
+      "sha256": "2fefeea85c795a8ac1a5dd6e6ac4e005871e410452bda14d355fd726fcebf8e1",
+      "bytes": 53698,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-7-post-crop.png",
+  "status": "replaced-verified"
+}

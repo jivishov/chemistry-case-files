@@ -1,0 +1,137 @@
+{
+  "id": "unit8-batch42",
+  "ids": [
+    "8/h1-ksp",
+    "8/h2-crys",
+    "8/cap-batch"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 8, h1-ksp. System/context: The clearwell. Authored task: Calculate the ion product Q from the given ion concentrations and compare it with Ksp to predict whether a precipitate forms.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Sample bottles by basin omit mixed ion streams, precipitate and Q-versus-Ksp comparison.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"cation\",\"anion\",\"+\",\"−\",\"Ksp\",\"Q\",\"COMPARE\",\"Q > Ksp\",\"precipitate\",\"Q = Ksp\",\"equilibrium\",\"Q < Ksp\",\"unsaturated\",\"common ion\",\"can raise Q\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 8, h2-crys. System/context: The cooling tank. Authored task: Calculate how many grams crystallize when a saturated solution is cooled from the first temperature to the second.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Solid in jar matches broadly, but the second photo resembles ice; both omit the two-temperature solubility comparison.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"crystallized solid\",\"cooling\",\"KNO3\",\"cold\",\"S2\",\"g / 100 g H2O\",\"S1 − S2\",\"scale to\",\"water mass\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 8, cap-batch. System/context: Integrated batch. Authored task: Complete one integrated run: classify the stock, prepare the target molarity, then predict the products and any precipitate.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Glassware omits the classification/preparation/mixing sequence and integrated evidence checklist.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"classify\",\"molarity\",\"product states\",\"result\",\"CHECK\",\"classification\",\"correct\",\"molarity\",\"criterion\",\"products\",\"correct\"].\nCRITICAL DETAILS: Row1 cationandanioninlets entertransparent reactiontankwithprecipitate; Qbar ABOVE dashedKsp; Q>Ksp precipitate,Q=Ksp equilibrium,Q<Ksp unsaturated,commonion canraiseQ. Row2 cooled beakerwithcrystals,coldthermometer,printedconvex increasingKNO3curve: coldpointS2LOWER/LEFT,warmpointS1HIGHER/RIGHT;axes temperature andg/100gH2O. S1−S2 scale towatermass,no inventednumbers. Row3 sequence classifyjar -> markedmolarityflask -> mixingproductstateswithsolid -> resultsample. CHECK classificationcorrect,molaritycriterion,productscorrect,no numericalanswer.",
+  "source": "/workspace/generated_images/exec-c092a003-9d89-4170-a062-36d9016562b6.png",
+  "initialSource": null,
+  "sourceSha256": "7411225ee4107e63d82283d2d9ebdf72fbdc51cb324bfecb43b87c9cd5ac9158",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      308,
+      316
+    ],
+    [
+      622,
+      630
+    ]
+  ],
+  "verticalGutters": [
+    [
+      830,
+      842
+    ]
+  ],
+  "review": "Both final crops retain cation/anion feeds, precipitate in reaction tank, Q above Ksp dashed line and all three Q/Ksp relationships plus common-ion note. Physical particle markers are teaching models. Both final crops retain crystallized solid, cooling thermometer and KNO3 curve with cold S2 lower/left and S1 higher/right, S1-S2 scaled to water mass; no numerical values added. Both final crops retain classify/molarity/product-state/result sequence, mixing model with solid and all three checks; molarity flask is the authored process illustration, without a numerical final concentration.",
+  "files": [
+    {
+      "id": "h1-ksp",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/h1-ksp-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 826,
+        "height": 304
+      },
+      "sha256": "cdd8ae7ce5b35cb3d6eb5f8a84d8afa4189c21b2cb708456d3c45e384f9f617a",
+      "bytes": 59634,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h1-ksp",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/h1-ksp-1.webp",
+      "sourceRect": {
+        "left": 844,
+        "top": 2,
+        "width": 826,
+        "height": 304
+      },
+      "sha256": "fb24f457c8367e2d8e7a436776a33e5ac8602192ae936c90e3a55acd94a1f971",
+      "bytes": 64854,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h2-crys",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/h2-crys-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 318,
+        "width": 826,
+        "height": 302
+      },
+      "sha256": "832f60410b2fa2b7722eae3b6dab7b4881178ac3dffeee67d6cbe3f190874bcc",
+      "bytes": 43150,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "h2-crys",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/h2-crys-1.webp",
+      "sourceRect": {
+        "left": 844,
+        "top": 318,
+        "width": 826,
+        "height": 302
+      },
+      "sha256": "ff11272e2ed3e2eafc6dfb2ec0cfac3a782d94e78c1d0f93a88a7992c4596c55",
+      "bytes": 49768,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "cap-batch",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/cap-batch-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 632,
+        "width": 826,
+        "height": 307
+      },
+      "sha256": "41ae8e52adc65a9af7236b19ba4c54607da7b57ea23bf88eebb0410ddbcf6e79",
+      "bytes": 59620,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "cap-batch",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/cap-batch-1.webp",
+      "sourceRect": {
+        "left": 844,
+        "top": 632,
+        "width": 826,
+        "height": 307
+      },
+      "sha256": "b939d46baa3c93d6178e38de3e8e79f374f96de89383ca4cb5993c86befbcd41",
+      "bytes": 62944,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-6-post-crop.png",
+  "status": "replaced-verified"
+}

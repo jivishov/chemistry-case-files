@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260930-1';
 // main.js — Unit 10 view-model (Thermochemistry, TEKS C.13). Scenario layer.
 //
 // The units_new build: units/10-thermochemistry rendered in the mission-cockpit shell.
@@ -29,7 +29,7 @@ import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?
 // thermochemistry readout: the patient's core temperature, in degrees Celsius.
 // Outcomes are primary; XP/streak stay a quiet line; per-TEKS mastery meters persist.
 import { SE, LAWS, FIELD_MATERIALS, PACKS, HESS_ROUTES, FORMATION_CASES, SCENARIOS } from './model.js';
-import { sceneArt } from './art.js';
+import { sceneArt } from './art.js?v=photo-fidelity-20260930-1';
 import {
   SPECIFIC_HEAT, heatTransfer, finalTemperature, classifyThermal,
   hessCombine, enthalpyFromFormation, fmt

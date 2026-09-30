@@ -1,0 +1,143 @@
+{
+  "id": "unit10-batch48",
+  "ids": [
+    "10/a-two-packs",
+    "10/a-thermometer",
+    "10/a-stove-books"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 10, a-two-packs. System/context: Thermal equilibrium. Authored task: Two used heat packs have both reached 31.0 °C. They are placed in contact. Which thermodynamic law best explains what happens?. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Two pouches match but equal 31.0 C temperatures, no-net-flow comparison and separate fresh pack are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"31.0 C\",\"31.0 C\",\"NO NET FLOW\",\"FRESH\",\"UNOPENED\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 10, a-thermometer. System/context: Thermometer reading. Authored task: A thermometer is held in thermal contact with a sample. Its reading changes, then becomes steady at 33.4 °C. Which law explains why the final reading can represent the sample temperature?. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Thermometer in cup replaces the source thermal-contact scene and approach-to-33.4 C equilibrium graph.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"EQUILIBRIUM\",\"time\",\"33.4 C\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 10, a-stove-books. System/context: Energy accounting. Authored task: A stove releases chemical energy. The water warms, but the pot, windscreen, and surrounding air also warm. Which law explains why the energy measured in the water is less than the total energy released?. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Camp stove matches but heat paths into water, pot, windscreen and air are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"ONE CARTRIDGE\",\"into the water\",\"into the pot\",\"into the windscreen\",\"into the shelter air\",\"ENERGY IS CONSERVED\"].\nCRITICAL: Row1 exactly TWO gray used heat pouches touching, each labeled31.0°C, NO NET FLOW between them, with ONE separate sealed orange FRESH / UNOPENED pouch. Row2 outdoor rescue-training mannequin in orange sleeping bag, temperature probe in thermal contact with model, digital readout33.4°C and printed temperature-versus-time curve rises then flattens at EQUILIBRIUM33.4°C. Do not substitute a cup for the mannequin. Row3 camping stove supplied by ONE CARTRIDGE, water pot and windscreen; printed orange energy arrows point from fuel/stove toward water,pot,windscreen,shelterair respectively, ENERGY IS CONSERVED. No invented energy totals. Both variants retain EVERY scene component.",
+  "source": "/workspace/generated_images/exec-18b2e0a0-66d7-4391-8af4-bac7656364f7.png",
+  "initialSource": null,
+  "sourceSha256": "8dfc4af744c6dc5ecaf8221b8ae29d3490dd531dbdf2281e6dacdc6e9bc748c5",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      294,
+      301
+    ],
+    [
+      583,
+      590
+    ]
+  ],
+  "verticalGutters": [
+    [
+      833,
+      841
+    ]
+  ],
+  "review": "Both final crops retain two spent pouches at31.0 C, no-net-flow teaching symbol and separate fresh/unopened pouch. The source comparison is retained without adding an unknown fresh temperature. Both final crops retain rescue-training mannequin, thermometer33.4 C and temperature-versus-time rise to equilibrium33.4 C. Contain sizing preserves the complete plateau and endpoint. Both final crops retain one stove cartridge, pot/water/windscreen and four named energy destinations with energy conserved. Contain sizing preserves all labels.",
+  "files": [
+    {
+      "id": "a-two-packs",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/a-two-packs-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 829,
+        "height": 290
+      },
+      "resizeFit": "contain",
+      "sha256": "5c16fd88e45702df1e0f830e0bfe503243d9660368165e6adbaf09fbba3b4826",
+      "bytes": 55904,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-two-packs",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/a-two-packs-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 2,
+        "width": 827,
+        "height": 290
+      },
+      "resizeFit": "contain",
+      "sha256": "66b180d967a6fc99af99194a95e02dbab8caebd18b03282aaef5180d4beffd7d",
+      "bytes": 55848,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-thermometer",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/a-thermometer-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 303,
+        "width": 829,
+        "height": 278
+      },
+      "resizeFit": "contain",
+      "sha256": "7391256d910953fe08168f29445c4ecdc44b65536ce9ae8e123d13c834a82cf4",
+      "bytes": 57358,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-thermometer",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/a-thermometer-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 303,
+        "width": 827,
+        "height": 278
+      },
+      "resizeFit": "contain",
+      "sha256": "11fb9f0aab6823a5153d2eee18a60db8fd5df93f2f851a420264d64aaf464d32",
+      "bytes": 60700,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "a-stove-books",
+      "unit": 10,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/10/a-stove-books-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 592,
+        "width": 829,
+        "height": 347
+      },
+      "resizeFit": "contain",
+      "sha256": "50f5aa974f879914a2d95f1ffd13363e35a5f036cdbf4cc6e57c03139b0060e8",
+      "bytes": 57290,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    },
+    {
+      "id": "a-stove-books",
+      "unit": 10,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/10/a-stove-books-1.webp",
+      "sourceRect": {
+        "left": 843,
+        "top": 592,
+        "width": 827,
+        "height": 347
+      },
+      "resizeFit": "contain",
+      "sha256": "917d3af484c40cfff594c62379a2084dc0b7abc74cbfb08e6032e27ecbc6789b",
+      "bytes": 55160,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-12-post-crop.png",
+  "status": "replaced-verified"
+}

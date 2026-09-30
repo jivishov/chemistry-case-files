@@ -1,0 +1,147 @@
+{
+  "id": "unit8-batch40",
+  "ids": [
+    "8/d-kettle",
+    "8/d-basin",
+    "8/e-scoop"
+  ],
+  "prompt": "Use case: photorealistic-natural. Create ONE photographic asset atlas with EXACTLY TWO COLUMNS and 3 ROWS, 6 separate independent wide 8:3 laboratory/field teaching photographs. Overall desired aspect 16:9; use generous high resolution. Thin white gutters separate every tile. The supplied 3 reference images correspond in order to the 3 rows. Each row has TWO genuinely different photographic variants of exactly the SAME scene and evidence, without changing scientific state, counts or quantities. Reinterpret the authored SVG references faithfully as REAL photographed equipment, physical classroom models and PRINTED physical evidence displays on cream or clear acrylic boards. Real camera optics, convincing material texture, soft natural or appropriate laboratory light. No flat SVG/cartoon appearance. Diagrams that cannot literally be photographed (atoms, particles, energy charts, reaction equations, spectra) must be presented as a clearly physical teaching model or printed card/monitor display in the photograph. A printed display can faithfully preserve reference geometry and lettering. IMPORTANT: If the reference has a graph, numerical table, radioactive isotope equation, particle-count model, paired temperatures or labeled apparatus, preserve the actual numbers, charge signs, ordering, arrows, relationships and counts; never fabricate a result, fill a question mark, or replace scientific evidence with a generic backdrop. No invented scale marks or numbers on glass or instruments. Do not copy the final all-caps footer, because the app displays it separately. Keep ALL essential apparatus and readable evidence inside each tile's central 88% width and central 75% height, with generous quiet margins, so cropping to a panoramic 1280x480 banner loses nothing. Use large legible printed text with ample spacing. No people, logos, watermarks or title outside the atlas. Never leak an adjacent tile into a photograph.\n\nROW 1 BOTH PHOTOGRAPHS: Unit 8, d-kettle. System/context: The kettle. Authored task: Use the activity solubility rules to classify each product of the double-replacement reaction as aqueous or solid.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Separate rock beside kettle replaces internal scale deposit and insoluble-versus-aqueous product comparison.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"solid deposit\",\"Ca\",\"CO3\",\"insoluble\",\"solid forms\",\"Na\",\"Cl\",\"soluble: remains aqueous\",\"RULE SET\",\"carbonate\",\"usually no\",\"nitrate\",\"yes\",\"Group 1\",\"yes\"].\n\nROW 2 BOTH PHOTOGRAPHS: Unit 8, d-basin. System/context: The dosing point. Authored task: Predict the physical state of each product after two soluble ionic solutions are mixed.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Pump context matches but mixed ions and predicted solid/aqueous product states are absent.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"MIX\",\"M+\",\"X−\",\"insoluble product\",\"forms a solid\",\"A+\",\"Y−\",\"soluble product stays aqueous\",\"activity rule set predicts the phases\",\"PREDICT\",\"product 1\",\"aq or s?\",\"product 2\",\"aq or s?\",\"result\",\"use rules\"].\n\nROW 3 BOTH PHOTOGRAPHS: Unit 8, e-scoop. System/context: The bench standard. Authored task: Prepare the stated molarity by choosing the final volume and calculating the mass of solute needed.. Preserve the actual STATIC SVG reference, rather than generating an answer to the task. Original mismatch to fix: Powder and flask omit balance, graduation mark and NaCl preparation quantities.. Preserve all meaningful objects, quantities, arrows, apparatus states, relationships and visible evidence in the supplied row reference. Important exact authored labels (some are components of isotope/formula notation, so keep their spatial pairing from the image): [\"14.61 g\",\"measure solute mass\",\"mark\",\"250.0 mL\",\"PREPARE SOLUTION\",\"solute\",\"NaCl\",\"mass\",\"14.61 g\",\"final volume\",\"250.0 mL\",\"M = mol / L\",\"1.00 M\",\"mass + final volume determine M\"].\nCRITICAL DETAILS: Row1 OPEN kettle reveals INTERNAL soliddeposit; no separate rock. Printed reactionmodel Ca+CO3 -> insoluble solid(CaCO3),Na+Cl -> soluble aqueous. RULE SET carbonateusuallyno,nitrateyes,Group1yes. Row2 MIXpump andtransparent basin; printed M+ + X− -> solid square,A+ + Y− -> aqueous. PREDICT product1 aqors?,product2 aqors?,result userules. Retainquestionmarks. Row3 NaClpowder on balance14.61g, volumetricflask FILLED to singlecalibrationmark250.0mL; table NaCl,14.61g,250.0mL,1.00M,M=mol/L. No other graduations.\nFOLLOW-UP EDIT:\nEdit only BOTH BOTTOM-ROW volumetric flasks. Each currently has clear liquid ending low in the bulb. Raise the transparent, colorless solution surface and meniscus to the SINGLE white calibration ring in the narrow neck, exactly where arrow 'mark' points (left around y710,right y703). Liquid must continuously fill bulb and lower neck UP TO that ring; upper neck above ring stays empty. Preserve all exact14.61g/250.0mL/1.00M lettering, glass shape, balance, all top and middle photographs, grid dimensions and framing. No other changes.\nSECOND FOLLOW-UP EDIT:\nEdit ONLY BOTH BOTTOM-ROW250.0mL volumetric flasks. Make their contents visibly VERY PALE CYAN transparent solution, continuously filling the entire bulb and lower narrow neck all the way up to the existing SINGLE WHITE CALIBRATION MARK where arrow 'mark' points. The pale cyan meniscus must touch that mark (left aroundy711,right y705), and the upper neck above it stays colorless/empty. Do not leave a liquid surface in the bulb. This faint cyan teaching color matches the authored SVG and makes the filled-to-mark evidence visible. Preserve flask shape,14.61g/250.0mL/1.00M text, balance, labels and ALL TOP/MIDDLE photographs unchanged.\nTHIRD FOLLOW-UP EDIT:\nEdit ONLY the TWO BOTTOM-ROW volumetric flasks. Remove all cyan pigment and opaque glow from the liquid: this is actual COLORLESS transparent aqueous NaCl. Keep the liquid FILLED TO the existing white calibration ring in the narrow neck. Show a clearly visible small curved COLORLESS MENISCUS at that ring, using realistic refraction/glass reflections; the entire lower neck and bulb are full, above ring empty. Replace the nearby word 'mark' with a compact physical callout 'meniscus at mark' pointing to that neck meniscus. Do not place a second liquid surface in the bulb. Preserve all14.61g,250.0mL,1.00M values, flask dimensions, every other object and ALL TOP/MIDDLE content.",
+  "source": "/workspace/generated_images/exec-f5a99d37-3914-4805-b394-4101193d5afe.png",
+  "initialSource": "/workspace/generated_images/exec-b6e0690a-6689-4d1d-a899-f383ef24687a.png",
+  "editReferences": [
+    "/workspace/generated_images/exec-011a2ba6-587d-4524-94a5-024eeb4e10ec.png",
+    "/workspace/generated_images/exec-0380516e-c163-456b-9684-42b8d535242f.png"
+  ],
+  "sourceSha256": "8e1f0218b4ce539121b00982902fd9247f2c341e0931dd58205f167d34a099b6",
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "horizontalGutters": [
+    [
+      318,
+      324
+    ],
+    [
+      621,
+      626
+    ]
+  ],
+  "verticalGutters": [
+    [
+      832,
+      834
+    ]
+  ],
+  "review": "Both encoded photos preserve kettle solid deposit, calcium carbonate insolubility versus aqueous sodium chloride, and the carbonate/nitrate/Group 1 rule table. Both encoded photos preserve two double-replacement product branches, solid versus aqueous phase evidence, and unresolved aq or s questions. Both encoded photos preserve colorless NaCl solution with meniscus at the calibration mark, 14.61 g mass, 250.0 mL final volume and 1.00 M authored example.",
+  "files": [
+    {
+      "id": "d-kettle",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/d-kettle-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 828,
+        "height": 314
+      },
+      "resizeFit": "cover",
+      "sha256": "786edb3f6cabc9996c487d61ca31abbcb6783c36b10e9576f0cae776f3e9c408",
+      "bytes": 57824,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "d-kettle",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/d-kettle-1.webp",
+      "sourceRect": {
+        "left": 836,
+        "top": 2,
+        "width": 834,
+        "height": 314
+      },
+      "resizeFit": "cover",
+      "sha256": "6248c13aed75061d6ddd40f5435bcdebfee821aa16e693d85389183ae9d93d22",
+      "bytes": 56360,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "d-basin",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/d-basin-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 326,
+        "width": 828,
+        "height": 293
+      },
+      "resizeFit": "cover",
+      "sha256": "aaec9070b95438c95a1fc8f18db2e6d85db14cc576548e24bd50fa1ba4c12898",
+      "bytes": 53986,
+      "width": 1280,
+      "height": 480,
+      "quality": 81
+    },
+    {
+      "id": "d-basin",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/d-basin-1.webp",
+      "sourceRect": {
+        "left": 836,
+        "top": 326,
+        "width": 834,
+        "height": 293
+      },
+      "resizeFit": "cover",
+      "sha256": "3e6cc7d0300ee2bf43e0b6394ccc2f22891002b62ec5dc931a90077ab1264947",
+      "bytes": 63340,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "e-scoop",
+      "unit": 8,
+      "variant": 0,
+      "file": "shared/assets/photos/missions/8/e-scoop-0.webp",
+      "sourceRect": {
+        "left": 2,
+        "top": 628,
+        "width": 828,
+        "height": 311
+      },
+      "resizeFit": "cover",
+      "sha256": "d0331ac65b4e988cc5ef5c9f15279324227fb868e6f656fcda53715aae958ee6",
+      "bytes": 52358,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    },
+    {
+      "id": "e-scoop",
+      "unit": 8,
+      "variant": 1,
+      "file": "shared/assets/photos/missions/8/e-scoop-1.webp",
+      "sourceRect": {
+        "left": 836,
+        "top": 628,
+        "width": 834,
+        "height": 311
+      },
+      "resizeFit": "cover",
+      "sha256": "5674d282a81f9bb649146c4fe7b2150b78d8c8f34fb4738439443ac4bdecf2fc",
+      "bytes": 60190,
+      "width": 1280,
+      "height": 480,
+      "quality": 86
+    }
+  ],
+  "postCropReview": "/workspace/scratch/chemistry-photo-fidelity/batch-4-post-crop.png",
+  "status": "replaced-verified"
+}
