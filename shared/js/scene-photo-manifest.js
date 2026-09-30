@@ -1,4 +1,4 @@
-// Authored scenario IDs with two distinct contextual photographs each.
+// Authored scenario IDs with two distinct mission photographs each.
 // Keep this explicit: a missing mapping must fall back to that scenario's SVG.
 export const SCENE_PHOTOS = Object.freeze({
   1: Object.freeze(["a-dechlor", "a-plantfood", "a-meds", "b-log", "b-volume", "b-pergallon", "c-ornament", "c-pendant", "c-anchor", "d-dropkit", "d-penmeter", "d-strips", "h1-sizecall", "h2-kitcall", "cap-waterchange"]),

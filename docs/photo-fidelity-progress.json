@@ -1,0 +1,16 @@
+{
+  "missions": 196,
+  "photos": 392,
+  "replaced": 215,
+  "acceptedOriginal": 5,
+  "remaining": 172,
+  "branch": "codex/case_files_chemistry_new",
+  "publishedBaseline": "73f9135ea0e4d75973ce5fb892bc6b3513cf425b",
+  "updated": "2026-09-29T20:54:44.795Z",
+  "scope": "All missions and both photo variants visually audited; replacement remains in progress.",
+  "runState": "stopped-at-user-request",
+  "completedThroughUnit": 7,
+  "completedMissions": 110,
+  "remainingMissions": 86,
+  "stopReason": "User asked to finish current chapter then stop"
+}

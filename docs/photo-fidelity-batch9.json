@@ -1,0 +1,22 @@
+{
+  "id": "unit2-batch9",
+  "ids": [
+    "2/d-boron",
+    "2/d-copper",
+    "2/d-chlorine"
+  ],
+  "prompt": "Photoreal lab evidence atlas, total16:9 canvas ideally2560x1440. Exactly TWO columns THREE rows, six independent8:3 photos in attached reference order. Left warm wood, right gray bench; distinct natural photographs. No borders/gutters. Objects and OPEN printed cream evidence charts must fit upper75%, bottom25% quiet tabletop for app captions. No extra specimens or invented numeric answers. Omit bottom app captions.\nTOP ROW: a compact brown specimen storage box labeled \"B SAMPLE\", with note \"reference isotope data\". Printed two-bar abundance chart: short cyan bar \"B-10\" topped \"19.90%\", taller gold bar \"B-11\" topped \"80.10%\". Horizontal baseline endpoint numbers10 and12; a triangle labeled \"average ?\" lies nearer B-11 than B-10, WITHOUT numeric average. Printed heading \"WEIGHTED CONTRIBUTIONS\". Right \"REFERENCE DATA\" table rows \"B-10 19.90%\" and \"B-11 80.10%\". Note \"nearer the abundant one\".\nMIDDLE ROW: copper wire spool labeled \"copper sample\". Printed two-bar chart: taller copper-orange \"Cu-63\" with \"69.15%\", shorter cyan \"Cu-65\" with \"30.85%\". Baseline endpoint62 and66, \"average ?\" triangle nearer Cu-63. Caption \"TWO ISOTOPES, ONE PRICE\". Right \"REFERENCE DATA\" table with Cu-63 69.15%, Cu-65 30.85%, note \"not the midpoint of the two\".\nBOTTOM ROW: closed opaque dark-green metal sample can labeled \"Cl DATA\", note \"chlorine sample\", no visible liquid or gas. Printed abundance chart: taller green bar \"Cl-35\" topped \"75.77%\", shorter cyan \"Cl-37\" topped \"24.23%\". Baseline34 to38, \"average ?\" triangle nearer Cl-35. Caption \"THREE IN FOUR ARE Cl-35\". Right \"REFERENCE DATA\" table Cl-35 75.77%, Cl-37 24.23%, note \"so the average sits low\".\nPreserve EXACT isotope names, abundances, ordering, comparative heights and unresolved weighted averages. Same evidence in left/right variants. Realistic paper, metal and wire photography; no people, brands or watermarks.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-57e5e982-5bde-48d4-bae8-45b0a37925dc.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    314,
+    628,
+    941
+  ],
+  "review": "Both variants visually checked for all six exact isotope abundances and isotope names, matching taller/shorter bar relationships, correct baseline endpoints, mean markers nearer the more abundant isotope, unresolved average values, and source-specific box/wire spool/closed sample can. Reference table and chart labels agree."
+}

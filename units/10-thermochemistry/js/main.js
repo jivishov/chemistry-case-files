@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // main.js — Unit 10 view-model (Thermochemistry, TEKS C.13). Scenario layer.
 //
 // The units_new build: units/10-thermochemistry rendered in the mission-cockpit shell.

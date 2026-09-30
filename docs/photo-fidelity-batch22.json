@@ -1,0 +1,20 @@
+{
+  "id": "unit4-batch22",
+  "ids": [
+    "4/h3-imf",
+    "4/cap-underthesink"
+  ],
+  "prompt": "Create six photoreal educational mission photos in EXACT TWO columns THREE rows, overall16:9 ideally2560x1440, each tile8:3 source order. No gutters. Warm bench left/coolgray right distinct photos. Essentials central90%width upper80%height, bottom20% quietcounter. Print abstract evidence on real cream teaching cards, no floating UI or appfooters.\nTOP ROW: printed teaching board comparing bent H2O and linear CO2. H2O model ONE red oxygen TWO white hydrogens in bent shape, two lone-pair lobes above O. Along each O-H bond draw orange dipole arrows FROM H TOWARD O; their sum is one orange net arrow upward above oxygen. Caption \"THEY ADD\" and \"POLAR\". CO2 model ONE black carbon between TWO red oxygens in straight line; equal opposite outward bond dipole arrows cancel, caption \"THEY CANCEL\" and \"NONPOLAR\". At right physical clear shallow water bowl with printed card \"VECTOR SUM\". Clear correct arrows, no reversed H2O bond arrows. Labels associated with correct molecule.\nMIDDLE ROW: three small capped amber teaching sample bottles, no visible liquid, labeled \"CH4\", \"HCl\", \"H2O\". Printed paired-sphere force icons above them, respectively thin dottedlink \"LONDON\"/\"nonpolar\", solidmediumlink \"DIPOLE\"/\"polar\", thicklink \"H-BOND\"/\"H-bond\". To right printed card titled \"EXAMPLE NORMAL BOILING POINTS\", three corresponding rows \"CH4 −162°C\", \"HCl −85°C\", \"H2O +100°C\" with short,medium,long amber qualitative comparison bars and NO numerical axis. Below \"IMF IS ONE FACTOR IN BOILING POINT\". All numbers/signs/formulas correct; no claim IMF solefactor.\nBOTTOM ROW: under-sink cabinet with visible U-bend plumbing and otherwise cleared shelf, one closed green bottle in foreground label \"? + ?\". Small \"CLEARED\" card on empty shelf. Beside unknown bottle a printed decision worksheet headed \"FOLLOW LABEL + LOCAL WASTE GUIDANCE\". THREE separate UNSELECTED options, each empty circle: shelf icon \"SHELF\", drain icon \"APPROVED\", waste-bin icon \"HHW\". Dashed gray paths from bottle to all three, none highlighted or chosen. Bottle remainsclosed; do not show pouring/disposal or selected answer. No people, brands, watermark.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-f2c8266d-281d-4f65-9cf1-bb5114db8b1e.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    313,
+    619,
+    941
+  ],
+  "review": "Only middle and bottom atlas rows accepted here. Both variants preserveCH4/HCl/H2O forces and boiling points−162/−85/+100°C with one-factor caveat, and unknown?+? bottle with unselected shelf/approved/HHW destinations and label/local-guidance constraint. Polarity top row requires separate corrected replacement; do not use it."
+}

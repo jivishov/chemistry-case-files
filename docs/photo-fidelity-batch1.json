@@ -1,0 +1,22 @@
+{
+  "id": "unit3-batch1",
+  "ids": [
+    "3/a-warehouse",
+    "3/a-manual",
+    "3/h1-shielding"
+  ],
+  "prompt": "Create ONE 2560x1440 photographic atlas with EXACTLY 2 columns and 3 rows, six independent rectangular photographs. Each tile is 1280x480 (8:3). No gaps, borders, separator lines, numbers or headings outside the tiles. Cut positions must be precisely x=1280 and y=480,960. The attached image specifies all six scenes and their exact content. Replace each vector scene with a photoreal overhead photograph of an educational tabletop evidence display, printed cream paper, physical element cards, an open book or gold model spheres. All scientific comparisons must survive verbatim; no generic jars or metal specimens. In every tile leave bottom 15 percent quiet tabletop for an application caption, omit the reference's bottom caption and colored border. Left column uses warm wood and natural light; right column is a distinct gray lab bench photograph with slightly different angle, same evidence. Keep all text readable and correctly spelled. TOP ROW both variants: two shallow sorting trays, one labeled 'sorted by mass' containing K 39.10 u then Ar 39.95 u, the other 'sorted by Z' containing Ar Z 18 then K Z 19. A right-pointing arrow labeled 'Moseley 1913' leads to a note 'Co 58.93 before Ni 58.69' / 'mass runs opposite here' and a second note 'atomic number, not mass'. MIDDLE ROW both variants: a genuinely OPEN antique book, left page three vertical triads, column1 Li 6.9, Na 23.0, K 39.1; column2 Cl 35.5, Br 79.9, I 126.9; column3 Ca 40.1, Sr 87.6, Ba 137.3. Beside them 'middle ≈ mean of two'. Right page a row of question-mark boxes crossed out with a large orange X and the two exact notes 'pattern becomes unreliable' and 'atomic mass alone is not enough'. BOTTOM ROW both variants: eight physical gold teaching-model spheres strictly descending in diameter from left to right, printed labels on or beneath them Na, Mg, Al, Si, P, S, Cl, Ar. Their radius labels in same order 190,145,118,111,98,88,79,71; another row of model Zeff values 1,2,3,4,5,6,7,8. Label 'radius / pm' and 'model Zeff' so rows are distinct. Header 'PERIOD 3 · SAME CORE ELECTRONS, MORE PROTONS', a right-pointing dashed arrow and note 'radius generally falls; IE generally rises'. These are physical MODELS photographed, not real atoms. Exact content from reference; no invented scientific values. No people, brands or watermarks.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-79e52bfe-8f71-4c25-8be5-a7776a46b447.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    297,
+    621,
+    941
+  ],
+  "review": "All six panels visually compared with the authored SVG: exact Ar/K and Co/Ni orders and masses; all nine triad elements/masses; eight ordered Period 3 model spheres with correct radii and model Zeff values. Actual panel boundaries measured; two-pixel gutter trimmed before encoding."
+}

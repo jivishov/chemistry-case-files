@@ -1,0 +1,27 @@
+{
+  "id": "unit4-batch18",
+  "ids": [
+    "4/b-hallway-alarm",
+    "4/b-deicer",
+    "4/b-pantry"
+  ],
+  "prompt": "Create SIX photoreal educational mission photos, exact TWO columns THREE rows, overall16:9 ideally2560x1440, each tile8:3. No gutters/borders. Match reference order. Left warmer room/right cooler distinct variants. Essential evidence within central90%width/upper80%height, bottom20% quiet space. Photograph real objects, labels and physical printed cards. No app footer captions.\nTOP ROW: white oval hallway carbon-monoxide alarm mounted on wall, clear printed card beneath it \"WATCHES FOR\" and large \"CO\". At right small wall boiler with metal flue, attached reference card \"BOILER\" and large \"CO2\" (2subscript if possible). BETWEEN alarm and boiler a physical red-bordered card \"SAME THING\" with a strong red DIAGONAL STRIKE THROUGH the words, clearly rejecting equivalence. Must preserve distinction CO versus CO2. Alarm has no invented numeric reading.\nMIDDLE ROW: kitchen/utility shelf, left open gray de-icer sack, readable label \"DE-ICER\" and \"CaCl2\". A few white granules beside sack. Center glass jar with gold lid and white crystals, torn label shows ONLY \"?\" inside a dashed amber outline, no chemical identity assigned. Right adjacent similar jar with gray lid and white crystals, label \"SALT\". Above gap between unknown jar and salt jar a small card \"NEXT TO IT\", at far right card \"FOOD SHELF\". Clearly two separate jars, unknown is not relabeled as salt.\nBOTTOM ROW: pantry shelf background with FOUR food storage jars, one labeled \"RICE\", other three unlabeled. Foreground a separate glass jar white crystals gold lid with partially surviving label: visible \"NaCl\" on upper line, torn/blank lower name field with question mark \"?\" and dashed border. Beside it blank replacement label card headed \"LABEL\", two empty ruled lines, with dashed arrow from NaCl jar. Three loose blank paper label scraps on counter. Keep chemical name unanswered; no \"sodium chloride\" text. No people/brands/watermarks, crisp label fidelity and natural photographic light.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-c1c6a33b-41d9-499e-8b01-ba60a7dda2bc.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    309,
+    590,
+    941
+  ],
+  "review": "Both alarm variants distinguish CO from boiler CO2 and visibly strike out same-thing assertion. Deicer labels preserveCaCl2, unknown?jar adjacent to labeledSALT and food-shelf context. Pantry retains survivingNaCl and unknown missing name with blank replacement label, without giving classification/chemical-name answer. Final crop review caught clipped FOOD SHELF labels; deicer row uses aspect normalization to preserve both full labels.",
+  "rowFit": [
+    "cover",
+    "fill",
+    "cover"
+  ]
+}

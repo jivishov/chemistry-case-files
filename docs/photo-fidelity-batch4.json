@@ -1,0 +1,20 @@
+{
+  "id": "unit3-batch4",
+  "ids": [
+    "3/h2-dip",
+    "3/cap-substitute"
+  ],
+  "prompt": "Create ONE photorealistic educational contact sheet matching attached reference. Overall wide 8:3 canvas, ideally 2560x960. EXACTLY 2 columns and 2 rows, FOUR independent 1280x480 photographs. No borders or gaps. Left warm wood, right cool gray lab tabletop, subtly different realistic overhead views. Copy scientific content accurately as clear printed cream worksheets photographed with physical objects. Everything must fit in upper 80% of each tile; bottom 20% plain tabletop for captions. Omit original bottom captions, no people or brands.\nTOP ROW BOTH VARIANTS: a printed line chart on an OPEN visible worksheet or lab notebook. Eight x-axis categories exactly Li, Be, B, C, N, O, F, Ne. Exactly eight plotted points joined in that order. Vertical ionization energy scale kJ/mol, bottom 520 and top 2081. Values for plotting: 520,899,801,1086,1402,1314,1681,2081. So Li lowest, rise to Be, small DIP to B, rise to C, rise to N, small DIP to O, rise to F, rise to Ne highest. Highlight B and O with circles. Callout above B: \"Be → B\" / \"higher-energy 2p\". Callout above O: \"N → O\" / \"electron pairing\". Preserve those two dips; no third dip and no monotonic line. Include ruler or pencil off to side, but no blank screens or extra data. The chart is printed real paper, not a floating digital graphic.\nBOTTOM ROW BOTH VARIANTS: an open sheet headed \"PERIOD 4\" with one black missing row and glass magnifier at left. Center three element cards in a horizontal row: \"Co\" \"152 pm\", dashed empty card \"?\" \"~149\", \"Cu\" \"145 pm\". Arcing dashed arrow above with \"midpoint estimate\", below \"then check activity rule\". To right a real steel helical spring in a dashed outline on paper labeled \"the substitute\". Far right three separate option cards vertically arranged: green \"fit\", gold \"order\", rust \"do not fit\"; none selected or checked. Do not reveal nickel's symbol, preserve question mark. These are realistic photographed physical tabletop evidence displays, accurate text, realistic paper grain, daylight and no CGI look.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-e4a4c770-2cc3-4194-a6b2-384182f0afdf.png",
+  "xBoundaries": [
+    0,
+    1024,
+    2048
+  ],
+  "yBoundaries": [
+    0,
+    384,
+    768
+  ],
+  "review": "Both ionization charts show eight correctly ordered elements, exactly the Be-to-B and N-to-O dips, highlighted B/O, correct endpoints and callout explanations. Both substitute scenes preserve the missing row, Co 152 pm / ? ~149 / Cu 145 pm, midpoint note, steel spring and three unselected action cards. Framing and actual atlas boundaries visually checked."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "unit2-batch8",
+  "ids": [
+    "2/b-argon",
+    "2/b-neon",
+    "2/b-chlorine"
+  ],
+  "prompt": "Photorealistic lab evidence atlas, whole canvas16:9 ideally2560x1440, TWO columns THREE rows, six independent8:3 scenes matching the reference tile order. No borders/gutters. Left wood table, right gray table, two distinct photographs per scene. Realistic closed sample equipment beside OPEN cream paper worksheets. Atom diagrams are printed ink teaching diagrams; counts are exact. Keep all essential evidence in upper75%, bottom25% quiet tabletop. Omit app footer captions. Do not fill question marks with answers.\nTOP ROW: closed opaque gray-purple metal sample cylinder with label \"Ar-40\", note \"sample record\". Printed neutral atom nucleus labeled \"p ? n ?\" (do not reveal counts). Three separated rings with exactly2 inner,8 middle,8 outer cyan electron dots. Below \"a full outer shell\". Right printed \"PARTICLE COUNTS\": \"protons ?\", \"neutrons ?\", \"electrons ?\", \"mass number 40\". Footer on paper \"protons set the element\".\nMIDDLE ROW: glowing horizontal orange neon discharge tube labeled \"neon discharge\", \"Ne atom loses 1 e−\". Printed ion diagram nucleus \"p ? n ?\", exactly TWO rings, inner2 cyan dots, outer7 cyan dots and one visibly empty/dashed former site. A separate red electron dot with outward arrow represents ONE removed electron. Gold \"1+\" marker. Note \"the nucleus never changed\". Right paper \"MODEL Ne+\" / \"protons ?\" / \"electrons ?\" / \"charge 1+\". Do not add extra rings or electrons.\nBOTTOM ROW: CLOSED OPAQUE dark gray-green sample canister labeled \"Cl-37\", hanging tag \"TAG\", note \"isotope sample\". No visible liquid. Printed atom nucleus \"p ? n ?\", three rings exactly2,8,7 cyan dots. Note \"protons + neutrons = 37\". Right card heading \"MASS NUMBER ≠ TABLE AVERAGE\", rows \"periodic table 35.45\" and \"this bottle 37\", note \"average is a mix\" and \"one atom, one isotope\".\nCopy every label, unknown and relation accurately. Do not reveal proton/neutron answers in any scene. Photoreal paper, glass, metal and lighting, no people, brands or watermarks.\nFollow-up edit: Make one exact scientific correction to this atlas. In BOTH BOTTOM ROW chlorine-37 atom diagrams, the OUTERMOST ring currently has eight cyan electron dots, but chlorine requires SEVEN. Remove ONLY the outermost-ring electron at the far RIGHT, the 3-o'clock dot, from each bottom-row diagram. Leave the ring itself intact. After editing each chlorine diagram must have precisely TWO inner-ring dots, EIGHT middle-ring dots, SEVEN outer-ring dots. DO NOT remove the nearby middle-ring dot. The two dots to remove are approximately at x455 y742 and x1296 y742 in this1672x941 image. Preserve ALL other pixels/content, particularly the top Argon 2/8/8 diagrams, middle Ne+2/7 diagrams, every question mark, label, number, canister and panel boundary. No other changes.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-5c8133df-3505-446c-9a16-7970daa8281a.png",
+  "initialSource": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-821e76c6-cd66-455c-8f41-82105c966250.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    315,
+    607,
+    941
+  ],
+  "review": "Both variants counted: neutral Ar has 2/8/8; Ne+ has 2/7 plus exactly one departing electron and charge1+; Cl-37 has 2/8/7 after correcting an extra outer electron in the first render. All p/n count questions remain hidden; Ar mass number40 and Cl37 vs table35.45 preserved. Closed opaque sample cans and orange neon discharge match reference context."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "unit6-batch32",
+  "ids": [
+    "6/h1-particles",
+    "6/h2-recovery",
+    "6/cap-tanker"
+  ],
+  "prompt": "Create six photoreal educational chemistry evidence photos in exact two columns three rows atlas, overall16:9 no gutters, each panel8:3. Each row two warm/cool lighting variants. Source evidence exact; critical objects/labels central90%width upper80%height, bottom20%quiet tabletop. All graphic evidence on real physical boards/cards/models. TOP ROW: physical teaching display on laboratory bench: left glass container of tiny sample grains on balance labeled GRAMS, center a brass arched bridge toward right particle board. Over bridge plaque 'AVOGADRO’S NUMBER' and exact '6.022 × 10²³'. Right board titled STATE LAB FILE contains exactly24cream circular beads arranged THREE straight rows of EIGHT. Board footer PARTICLES; small bridge-base tag 'MASS → MOLES → PARTICLE COUNT'. No measured gram value. MIDDLE ROW: THREE clearly separated inventory trays with matching empty/filled package models. Left tray WENT OUT contains EXACTLY SEVEN white sealed bags arranged3back+4front. Middle tray REACTED contains EXACTLY FOUR darkgray empty bags in one row; label above them 'THE LIMITING ONE SETS THIS'. Righttray BACK IN contains EXACTLY THREE white sealed bags1back+2front. Small orange rightward arrows connecttray1→tray2→tray3. Label ontableedge 'EXCESS REACTANT: START − REACTED'. Counts7−4=3 essential. BOTTOM ROW: photo of miniature roadway tanker case reconstruction. Tilted red HCl tanker at left, yellowish spill trail curves toward visible storm drain nearcenter; two orangecones. Tag 'STORM DRAIN · RUNS TO THE CREEK'. Right evidence screen title 'REQUIRED vs SIMULATED AVAILABLE', THREE horizontal equal-length track bars: NEEDED orange82%full, ON TRUCK cyan34%full, AID gold74%full. No numbers printed and no route chosen; footer 'SELECT FROM THE SIMULATION OPTIONS'. Full board visible, no extra bars, no brands or floating UI.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-d2493fd9-680b-46fe-bcd3-0fbf7d21fc20.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    313,
+    594,
+    941
+  ],
+  "rowFit": [
+    "cover",
+    "fill",
+    "cover"
+  ],
+  "review": "Both variants retain mass-moles-particles bridge,6.022x10^23 and24 particle beads; exactly7starting/4reacted/3returned packages; HCl spill-to-drain relation and needed>aid>truck bars with combined inventory exceeding needed. Bar fills approximate original proportions rather than pixel-exact values. Middle row modest aspect normalization preserves all inventory bags/labels."
+}

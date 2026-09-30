@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // main.js - Unit 6 view-model (Reactions & Stoichiometry, C.9). Alpine data factory.
 //
 // The units_new build: units/06-reactions-stoichiometry rendered in the mission-cockpit

@@ -1,0 +1,23 @@
+{
+  "id": "unit5-batch23",
+  "ids": [
+    "5/a-oxygen",
+    "5/a-fuel",
+    "5/a-scrubber"
+  ],
+  "prompt": "SIX photoreal science-fiction educational mission scenes, TWO columns THREE rows, overall16:9 ideally2560x1440. Each tile8:3; no gutters. Match reference order, two distinct variants per row: warm cabinlighting left/cool cabinlighting right. Realistic spacecraft equipment, with scientific diagrams appearing ONLY on physical printed cards or instrument screens. Preserve all unknown readouts. Essentials central90%width upper80%height; bottom20%quiet desk. No app footer captions, no brands.\nTOP ROW cabin oxygen: secured metal oxygen cylinder clearly labeled \"O₂\", valve and small gauge; spacecraft porthole showing dark stars at right. Next to cylinder an actual cream teaching card showing THREE pairs of bonded RED oxygen spheres, dotted flow arrow leading toward a clear cyan two-lung anatomical diagram. The paired spheres illustrate diatomicoxygen, not literal floating atoms. Cylinder-to-lungs relationship clearly visible, no numeric dose or computedmass.\nMIDDLE ROW methane burn: a large cabin navigation monitor, entire screen readable, displays a PHOTOREAL silver small spacecraft at lowerleft FIRING an orange thruster, a curved dashed pale-cyan transfer/course-correction trajectory toward realistic red cratered Mars at upperright. A physical cream teaching card below screen displays methane model one graycarbon center bonded to FOUR whitehydrogens in tetrahedral layout, label \"CH₄\". No invented fuel mass, distance or flightreadout. Spacecraft/planet remain the main scene, not pipes.\nBOTTOM ROW scrubber: realistic sealed rectangular air-scrubber cartridge left, label \"CO₂ CARTRIDGE\", built-in dark data screen showing THREE red-black-red linear CO2 molecular icons, small massdisplay \"? g\". Connected by visible directional arrow printed on equipmentpanel to larger blue-gray device marked \"RECYCLER\" with prominent screen \"? mol\". Vent grille at right and two red-black-red molecular icons on a small explanatory display between recycler andvent. Keep molecule counts symbolic and measurements UNKNOWN; no filled-in numbers. No people, logos, watermark.\nFollow-up edit: Correct ONLY the two small explanatory screens between the RECYCLER boxes and vent grilles in the BOTTOM ROW. Each small screen must show exactly TWO complete CO2 icons: one horizontal RED-BLACK-RED three-sphere row at upper part and a second horizontal RED-BLACK-RED three-sphere row below it. Both rows contain exactly three spheres with black carbon CENTER. Remove the current isolated single red dot and red-only pair; replace them with the second complete red-black-red triplet. Keep gray wavy air-flow lines behind/below. There should be six spheres on each vent explanation screen total, fourred/twoblack. Leave larger CO2 CARTRIDGE screens, allreadouts, equipment and all upper/middlephotos unchanged. Same atlas size/seams.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-638ed410-fa70-4510-9c6d-b95b4cd12122.png",
+  "initialSource": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-935eb154-9d94-4ca5-bc1a-1ea6bc62fd38.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    294,
+    627,
+    941
+  ],
+  "review": "Both oxygen scenes preserveO2 cylinder, three diatomicoxygen pairs and lung relation. Fuel scenes show firing spacecraft, Mars trajectory andCH4 fourH model. Scrubber displays retain3CO2 icons,?g and recycler?mol, with vent icons corrected to2completeCO2 triplets. Measurements remain unknown."
+}

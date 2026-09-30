@@ -1,0 +1,29 @@
+{
+  "id": "7/cap-lastfill",
+  "entries": [
+    {
+      "variant": 0,
+      "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-7d28084f-763b-4003-a533-4bff3c6598a5.png",
+      "prompt": "Generate a photoreal diptych ONE COLUMN TWO ROWS, overall4:3, each tile8:3, no gutter. Top cool filling-room light, bottomwarm light. Both scenes faithfully same suppliedgas-law capstone evidence. A physical classroom dive-planning station: left THREE metal reservegas cylinders, small monitor RESERVE LOW with short red fillbar about28%full. Beside them one separate scubacylinder labeled EAN32, gaugeexact120 atm. To right a LARGE physical teachingconsole with depthcolumn/diver illustration: diver at30m mark midcolumn,40m marknearbottom. Next todepthcolumn vertical partial-pressure stackedbar titled'at depth': greenbottom32% labeledpO₂, blueupper68% labeledpN₂. Reddashedline labeled1.4 justABOVEthegreen/bluedivision. Far right checklist headedDECIDE, EXACTthree UNSELECTED empty radio circles beside 'criteria met', 'pO₂ high', 'reserve low'. Allreadings are source case evidence, no answerselected. Full boardandallcylinders fitcentral90%width/upper80%height; bottom20%quiet counter. Labels on actualequipment/printedcards only, no floating UI, no brandmarks, no added measurements, no bottomfootercaption. Photoreal materials/textures; no cartoon aesthetic outside physical teaching graphics.\nEDIT:\nIn BOTH photographs edit ONLY the circular gauge face. Remove ALL the small numerical dial-scale labels (50,100,150,200,250,300). Leave plain unnumbered tickmarks, needle, and large central exact reading '120' over 'atm'. No other numeric labels on gauge. Preserve120atm, allcylinders, chart, line1.4,30m/40m, all three empty choice circles, layout andlighting unchanged.",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 1444,
+        "height": 539
+      },
+      "review": "Both variants show three low-reserve bank cylinders, EAN32 cylinder at120atm,30m/40m depth marks, partial-pressure split with1.4 threshold above green segment and three unselected decisions. Extraneous gauge numerals removed."
+    },
+    {
+      "variant": 1,
+      "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-7d28084f-763b-4003-a533-4bff3c6598a5.png",
+      "prompt": "Generate a photoreal diptych ONE COLUMN TWO ROWS, overall4:3, each tile8:3, no gutter. Top cool filling-room light, bottomwarm light. Both scenes faithfully same suppliedgas-law capstone evidence. A physical classroom dive-planning station: left THREE metal reservegas cylinders, small monitor RESERVE LOW with short red fillbar about28%full. Beside them one separate scubacylinder labeled EAN32, gaugeexact120 atm. To right a LARGE physical teachingconsole with depthcolumn/diver illustration: diver at30m mark midcolumn,40m marknearbottom. Next todepthcolumn vertical partial-pressure stackedbar titled'at depth': greenbottom32% labeledpO₂, blueupper68% labeledpN₂. Reddashedline labeled1.4 justABOVEthegreen/bluedivision. Far right checklist headedDECIDE, EXACTthree UNSELECTED empty radio circles beside 'criteria met', 'pO₂ high', 'reserve low'. Allreadings are source case evidence, no answerselected. Full boardandallcylinders fitcentral90%width/upper80%height; bottom20%quiet counter. Labels on actualequipment/printedcards only, no floating UI, no brandmarks, no added measurements, no bottomfootercaption. Photoreal materials/textures; no cartoon aesthetic outside physical teaching graphics.\nEDIT:\nIn BOTH photographs edit ONLY the circular gauge face. Remove ALL the small numerical dial-scale labels (50,100,150,200,250,300). Leave plain unnumbered tickmarks, needle, and large central exact reading '120' over 'atm'. No other numeric labels on gauge. Preserve120atm, allcylinders, chart, line1.4,30m/40m, all three empty choice circles, layout andlighting unchanged.",
+      "sourceRect": {
+        "left": 2,
+        "top": 545,
+        "width": 1444,
+        "height": 539
+      },
+      "review": "Both variants show three low-reserve bank cylinders, EAN32 cylinder at120atm,30m/40m depth marks, partial-pressure split with1.4 threshold above green segment and three unselected decisions. Extraneous gauge numerals removed."
+    }
+  ]
+}

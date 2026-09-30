@@ -1,0 +1,23 @@
+{
+  "id": "unit1-batch12",
+  "ids": [
+    "1/a-dechlor",
+    "1/a-plantfood",
+    "1/a-meds"
+  ],
+  "prompt": "Create six photoreal educational mission photos as one atlas, exactly TWO columns THREE rows, overall16:9 ideally2560x1440. No gutters/borders. Each photo8:3, source reference order, independent photographs left warm wood and right gray aquarium-maintenance bench. Keep essential objects, labels and evidence within central90% width and upper80% height of each tile; bottom20% quiet tabletop. Real physical objects, natural light, no UI chrome or footer captions. Keep reference unknowns unknown.\nTOP ROW: aquarium context behind bench with a small blue fish and plants. Front clear narrow graduated cylinder partly filled with pale cyan liquid, shallow CONCAVE meniscus whose bottom is about halfway up cylinder. Graduation ticks but NO numeric readings. Beside it green capped bottle labeled \"DE-CHLOR\". A physical cream instruction card with \"? mL\" and a printed dashed horizontal eye-level arrow pointing to bottom of meniscus (arrow same height). No invented dose.\nMIDDLE ROW: small clear TAPERED medicine measuring cup filled with pale green nutrient liquid. Exact four equally spaced marks labeled ascending \"2.5\", \"5\", \"7.5\", \"10\" from bottom to top. The concave meniscus lies BETWEEN5 and7.5, bottom around6.2; do not put liquid above7.5. Magnifying glass at side enlarges a concave meniscus between two printed ticks. Aquarium green plants and small fish behind cup. Keep all four cup labels clearly visible.\nBOTTOM ROW: clear round quarantine bucket of water holding ONE small orange fish, air tubing with bubbles; on bench next to bucket a horizontal graduated ORAL dosing syringe with pink liquid partly filling its barrel, blunt oral tip, no needle. Graduation ticks without numeric dose. Beside syringe a physical card titled \"TARGET AMOUNT\" with teal horizontal bar and a central short green highlighted segment, no number. Fish remains inside bucket. The syringe is OUTSIDE bucket. Exactly this evidence, no extra chemicals, measurement values, annotations or answers. No people, brand logos, watermarks. Photographic realism, legible minimal real printed labels.\nFollow-up edit: Make ONLY these corrections to this six-photo atlas, all other objects, labels and framing unchanged:\nTOP ROW both photos: raise the entire \"? mL\" cream arrow card enough that its dashed horizontal arrow points EXACTLY at bottom of cylinder meniscus, around y150 in this1672x941 image. Current arrow y195 is too low. Keep \"? mL\" above arrow. The cylinder liquid level remains unchanged at y150, and lower card edge moves upward with card. Arrow must align at eye level, not point below liquid surface.\nMIDDLE ROW both photos: lower the nutrient liquid level INSIDE each measuring cup from current7.5mL down to approximately6.2mL. The liquid surface must sit halfway BETWEEN the5 and7.5 graduation marks, around y465 in this941-high image. Existing label locations stay exactly unchanged:10 at y401,7.5 at443,5 at485,2.5 at525. Show a shallow CONCAVE meniscus with lowest center around y466 and edges aroundy459. Erase old liquid surface at7.5. Magnifier remains showing concave meniscus between two ticks.\nBottom two photos are correct; do not change them. Same atlas dimensions and panel seams.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-5d963c1c-546c-4fbd-9d4c-06c7fe215394.png",
+  "initialSource": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-4c5adfde-29a2-4f68-8ba8-f9f1cebf672e.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    307,
+    593,
+    941
+  ],
+  "review": "Both variants show graduated cylinder with concave meniscus, unknown mL reading and DE-CHLOR bottle; eye-level arrows raised and nutrient levels lowered before approval. Tapered nutrient cups retain2.5/5/7.5/10 marks, liquid between5and7.5 and concave-meniscus magnification. Quarantine bucket contains one orange fish/aeration, with outside pink-liquid oral syringe and target band. Photographs illustrate static authored scenes; live measurement gauge remains authoritative for question values."
+}

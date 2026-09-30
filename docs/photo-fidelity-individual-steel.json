@@ -1,0 +1,31 @@
+{
+  "id": "7/a-steel",
+  "entries": [
+    {
+      "variant": 0,
+      "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-a50306a5-fe49-410c-a4a9-38035d373613.png",
+      "prompt": "Create SIX photoreal gas-law mission evidence scenes exact two columns three rows atlas16:9, eachtile8:3, no gutters. Two lighting variants per row, supplied SVG content. All essential labels inside central90%width upper80%height, bottom20%quiet. TOP ROW: scuba filling room, green O₂ supply connected by hose to steel cylinder labeled EAN32. A physical transparent teaching sleeve shows uniformly mixed blue/green gas dots throughout cylinder, not stratified. Two distinct electronic oxygen analyzers sampling TOP and BOTTOM of same cylinder BOTH read exactly32.0%. Labels 'top of the barrel', 'bottom of the barrel', plaque 'UNIFORM AFTER MIXING'. MIDDLE ROW: compressor bench connects a large gas model chamber left to much smaller vertical steel cylinder right; accurate gauge label200 atm. Same number of physical teaching beads shown in BOTH largebox and small cylinder-window: EXACTLY26 pale beads in each, organized as FIVE rows of FIVE plus ONE extra centered beneath (25+1). Largebox beads widely spaced; cylinder beads same size but tightly spaced. Label largebox 'large gas volume'; cylinder 'same particles · much smaller volume'. Number conservation essential, not photos of real molecules. BOTTOM ROW: steel scuba cylinder on sunny boatdeck beside ocean, thermometer clearly41°C, pressure gauge with large215 atm and small priorreading label '05:00 read200'. Cylinder transparent teaching sleeve has orange gasdots with motion streaks; nearby physical plaque 'faster molecules, harder hits, more pressure'. Sun rays warm cylinder. No numeric scales besides requested values, no invented actual measurements, no brands, no floating labels or general bottomcaptions.",
+      "sourceRect": {
+        "left": 2,
+        "top": 315,
+        "width": 832,
+        "height": 279
+      },
+      "fit": "fill",
+      "review": "Selected original atlas middle row after count audit: each large chamber has4rows of5+1=21 beads; each compressed cylinder has5rows of4+1=21 beads. Thus particle number is conserved and spacing/volume decrease, with200atm gauge. The source SVG uses26 decorative particles per container; this photo uses21 per container to reproduce the same KMT relationship, not a quantitative particle-count problem. Later26-particle attempts changed the two counts unequally and were rejected. Modest row-aspect normalization preserves all labels."
+    },
+    {
+      "variant": 1,
+      "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-a50306a5-fe49-410c-a4a9-38035d373613.png",
+      "prompt": "Create SIX photoreal gas-law mission evidence scenes exact two columns three rows atlas16:9, eachtile8:3, no gutters. Two lighting variants per row, supplied SVG content. All essential labels inside central90%width upper80%height, bottom20%quiet. TOP ROW: scuba filling room, green O₂ supply connected by hose to steel cylinder labeled EAN32. A physical transparent teaching sleeve shows uniformly mixed blue/green gas dots throughout cylinder, not stratified. Two distinct electronic oxygen analyzers sampling TOP and BOTTOM of same cylinder BOTH read exactly32.0%. Labels 'top of the barrel', 'bottom of the barrel', plaque 'UNIFORM AFTER MIXING'. MIDDLE ROW: compressor bench connects a large gas model chamber left to much smaller vertical steel cylinder right; accurate gauge label200 atm. Same number of physical teaching beads shown in BOTH largebox and small cylinder-window: EXACTLY26 pale beads in each, organized as FIVE rows of FIVE plus ONE extra centered beneath (25+1). Largebox beads widely spaced; cylinder beads same size but tightly spaced. Label largebox 'large gas volume'; cylinder 'same particles · much smaller volume'. Number conservation essential, not photos of real molecules. BOTTOM ROW: steel scuba cylinder on sunny boatdeck beside ocean, thermometer clearly41°C, pressure gauge with large215 atm and small priorreading label '05:00 read200'. Cylinder transparent teaching sleeve has orange gasdots with motion streaks; nearby physical plaque 'faster molecules, harder hits, more pressure'. Sun rays warm cylinder. No numeric scales besides requested values, no invented actual measurements, no brands, no floating labels or general bottomcaptions.",
+      "sourceRect": {
+        "left": 838,
+        "top": 315,
+        "width": 832,
+        "height": 279
+      },
+      "fit": "fill",
+      "review": "Selected original atlas middle row after count audit: each large chamber has4rows of5+1=21 beads; each compressed cylinder has5rows of4+1=21 beads. Thus particle number is conserved and spacing/volume decrease, with200atm gauge. The source SVG uses26 decorative particles per container; this photo uses21 per container to reproduce the same KMT relationship, not a quantitative particle-count problem. Later26-particle attempts changed the two counts unequally and were rejected. Modest row-aspect normalization preserves all labels."
+    }
+  ]
+}

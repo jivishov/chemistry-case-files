@@ -1,0 +1,22 @@
+{
+  "id": "unit4-batch19",
+  "ids": [
+    "4/c-ice-water",
+    "4/c-cleaning-shelf",
+    "4/c-gas-ring-shape"
+  ],
+  "prompt": "Six photoreal educational mission photos, exact TWO columns THREE rows, overall16:9 ideally2560x1440. Each tile8:3, source order, no gutters/borders. Left warm kitchen/right cool kitchen distinctvariants. Essential content central90%width upper80%height, bottom20%quiet countertop. Real objects next to professionally printed cream molecular teaching cards. Molecules must be printed educational models, not literal microscopic photographs or floating holograms. No appfootertext.\nTOP ROW: clear drinking glass of water with TWO ice cubes FLOATING at surface, card \"IT FLOATS\". Beside glass a large paper card with bent water ball-and-stick model: ONE red O center bonded to EXACT TWO white H spheres below left/right. Two blue lone-pair lobes ABOVE oxygen, each containing TWO electron dots. Angle arc between O-H bonds labeled \"104.5°\". Exact explanatory labels \"TWO LONE PAIRS\", \"TWO BONDS\", \"FOUR DOMAINS\". Molecular shape visibly bent.\nMIDDLE ROW: shelf with THREE separate CLOSED bottles: amber bottle label \"?\", blue bottle label \"NH3\", purple bottle label \"?\". Red outlined physical sign above bottles \"NEVER MIX\"; no mixing/pouring. To right cream teaching card: trigonal-pyramidal ammonia model ONE blue N sphere bonded to EXACT THREE white H spheres, arranged as three legs of pyramid; ONE blue translucent lone-pair lobe above nitrogen with TWO dots. Card says \"ONE LONE PAIR ON NITROGEN\", bond angle \"107°\". All three hydrogens visible separately.\nBOTTOM ROW: real gas hob ring actively LIT with small blue/orange flames at left. Right cream teaching card with tetrahedral methane model ONE black carbon center bonded to EXACT FOUR white hydrogen spheres using four sticks in a 3D tetrahedral layout, two bonds in plane, one projecting toward viewer, one away, NOT a flat square or cross. Angle label \"109.5°\"; labels \"FOUR THE SAME\" and \"NO LONE PAIRS\". No fifthhydrogen/no electron lobes. Faithful formulas/angles and counts. No people, brand names or watermarks.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-ad275a63-31a4-4f6a-b648-6e6b1c5be18d.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    293,
+    615,
+    941
+  ],
+  "review": "Both variants retain floating ice, bent water with two hydrogens/two lone pairs and104.5°; closed unknown/NH3/unknown bottles underNEVER MIX, ammonia three bonds/one lone pair and107°; lit burner and tetrahedral methane with exactly4H, no lone pairs,109.5°. Molecular evidence is explicitly a physical teaching model/card."
+}

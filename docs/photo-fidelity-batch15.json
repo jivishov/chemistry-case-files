@@ -1,0 +1,20 @@
+{
+  "id": "unit1-batch15",
+  "ids": [
+    "1/d-penmeter",
+    "1/d-strips"
+  ],
+  "prompt": "Six photoreal educational mission photos in exact TWO columns THREE rows, overall16:9 ideally2560x1440. No gutters/borders. Tiles8:3 source order, left warm wood and right gray work surface distinctvariants. Main evidence central90%width/upper80%height; bottom20% quietsurface. Photograph physical objects and printed worksheets under natural light, no app UI or footer captions. Exact minimal readable text.\nTOP ROW: FOUR capped clear test tubes containing yellow solution in small rack and a dropper alongside. Cream card \"YOUR KIT ×5\" denotes five trials. To right a flat printed teaching sheet with TWO circular concentric-ring targets. Left target FIVE green dots tightly clustered ON center bullseye, caption \"ACCURATE + PRECISE\". Right target red bullseye center and FIVE red sample dots tightly clustered AWAY FROM CENTER toward lower right, caption \"PRECISE, NOT ACCURATE\". \"OR\" printed between. Do not confuse centered cluster with off-center cluster.\nMIDDLE ROW: generic digital pen-type meter beside clear cup of pale blue water marked \"SAME SAMPLE\". Meter LCD exactly \"0.47\", no pH label or invented units. Right printed evidence sheet \"FIVE DIPS\", EXACT five readings in one row \"0.47  0.52  0.44  0.55  0.46\"; below \"REFERENCE 0.50\" and a red circled question mark. Small note \"DISPLAY RESOLUTION ≠ PRECISION\". No extra results.\nBOTTOM ROW: sunlit automobile dashboard photographed through windscreen, white strip container with orange lid lying on dash to show heat exposure. In foreground on dash a white specimen card holding exactly FIVE separate white narrow test strips in a neat row, each has exactly THREE square test pads. All pads yellow/ochre/olive with varying intensities as source: strips1gold/yellow/ochre,2ochre/gold/olive,3lightyellow/lightyellow/gold,4olive/ochre/darkolive,5gold/ochre/yellow. Card label \"FIVE STRIPS · SAME WATER\". Do not add colored blue/red pads, chemical names, numeric readings, or diagnosis. Natural sun glare/light suggests heat, no cartoon heat marks. No people/brands/watermarks.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-317ce8db-87e0-4336-8297-a53a449309d2.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    311,
+    605,
+    941
+  ],
+  "review": "Only middle/bottom atlas rows accepted here. Both meter variants display0.47 and the exact five readings0.47,0.52,0.44,0.55,0.46 against reference0.50. Both dashboard scenes retain heated orange-cap container and five strips with three yellow/ochre/olive pads. Top-row drop-kit images handled separately because point-count edits required an individual replacement."
+}

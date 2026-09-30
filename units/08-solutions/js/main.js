@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // main.js: Unit 8 view-model (Solutions & Solubility, TEKS C.11).
 // The core interactions are the chemistry: classify by polarity, read solubility
 // curves, apply solubility rules, prepare a target molarity, and calculate a dilution.

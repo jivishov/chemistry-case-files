@@ -1,0 +1,29 @@
+{
+  "id": "7/c-ppo2",
+  "entries": [
+    {
+      "variant": 0,
+      "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-bf74d0a7-d642-46a1-af7a-849aaba504c4.png",
+      "prompt": "Create ONE COLUMN TWO ROWS photographic diptych overall4:3, eachphoto8:3, no gutter. Same diving chemistry teachingboard on boatdeck, topcool oceanlight bottomwarm sun. Board fills80%ofeachphoto, photographed almostfront-on without perspective distortion, legible. Reproduce reference evidence as PHYSICALLY PRINTED accuratechart. Left waterdepthcolumn/diversilhouette with fourlines '0 m · 1 atm','10 m · 2 atm','20 m · 3 atm','30 m · 4 atm'. Center two vertical bars sharingbaseline, equalwidth: surface totalheight60units, at30m totalheight240units, EXACT4:1 height ratio. Do not make2:1or3:1. Use faint horizontal grid spaced60units to make tallbar exactlyFOUR gridcells and shortbar exactlyONE. Bothbars bottom32%green pO₂ and upper68%blue pN₂. Thus SHORTbar green19.2blue40.8units; TALLbar green76.8blue163.2units. Labels can sitoutsidebarsegments so proportionsarenot distorted tofittext. Beneathbars 'at the surface' and 'at30m'. Arrow '×4' betweenbars. Right EXACT calculation 'EAN32 at4atm', '4.00 ×0.32', '=1.28 atm pO₂', orange 'working limit1.40atm'. Red dashedlimitlineacrosstallbar justabovegreentop matchingreference. Onlysourcevaluesprinted, faintgridunlabelled. Allboardcontentcentral90%widthupper80%height; bottom20%quiet deck. Gearnarrowedges, no brands, no footerbanner. Photorealphysicalboard, crisp textbookgraph.",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 1444,
+        "height": 539
+      },
+      "review": "Both variants preserve0m/1atm,10m/2atm,20m/3atm,30m/4atm, approximately fourfold stacked-bar height and exact4.00x0.32=1.28atm pO2 calculation/1.40atm reference limit. Bar geometry is photographic approximation; source SVG remains precise."
+    },
+    {
+      "variant": 1,
+      "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-bf74d0a7-d642-46a1-af7a-849aaba504c4.png",
+      "prompt": "Create ONE COLUMN TWO ROWS photographic diptych overall4:3, eachphoto8:3, no gutter. Same diving chemistry teachingboard on boatdeck, topcool oceanlight bottomwarm sun. Board fills80%ofeachphoto, photographed almostfront-on without perspective distortion, legible. Reproduce reference evidence as PHYSICALLY PRINTED accuratechart. Left waterdepthcolumn/diversilhouette with fourlines '0 m · 1 atm','10 m · 2 atm','20 m · 3 atm','30 m · 4 atm'. Center two vertical bars sharingbaseline, equalwidth: surface totalheight60units, at30m totalheight240units, EXACT4:1 height ratio. Do not make2:1or3:1. Use faint horizontal grid spaced60units to make tallbar exactlyFOUR gridcells and shortbar exactlyONE. Bothbars bottom32%green pO₂ and upper68%blue pN₂. Thus SHORTbar green19.2blue40.8units; TALLbar green76.8blue163.2units. Labels can sitoutsidebarsegments so proportionsarenot distorted tofittext. Beneathbars 'at the surface' and 'at30m'. Arrow '×4' betweenbars. Right EXACT calculation 'EAN32 at4atm', '4.00 ×0.32', '=1.28 atm pO₂', orange 'working limit1.40atm'. Red dashedlimitlineacrosstallbar justabovegreentop matchingreference. Onlysourcevaluesprinted, faintgridunlabelled. Allboardcontentcentral90%widthupper80%height; bottom20%quiet deck. Gearnarrowedges, no brands, no footerbanner. Photorealphysicalboard, crisp textbookgraph.",
+      "sourceRect": {
+        "left": 2,
+        "top": 545,
+        "width": 1444,
+        "height": 539
+      },
+      "review": "Both variants preserve0m/1atm,10m/2atm,20m/3atm,30m/4atm, approximately fourfold stacked-bar height and exact4.00x0.32=1.28atm pO2 calculation/1.40atm reference limit. Bar geometry is photographic approximation; source SVG remains precise."
+    }
+  ]
+}

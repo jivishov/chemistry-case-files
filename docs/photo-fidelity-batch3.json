@@ -1,0 +1,22 @@
+{
+  "id": "unit3-batch3",
+  "ids": [
+    "3/c-cell",
+    "3/c-connector",
+    "3/c-case"
+  ],
+  "prompt": "Make a photorealistic educational atlas: EXACTLY 2 columns and 3 rows, six separate 8:3 photographs corresponding to the attached SVG reference. No borders, gaps or tile numbers. Left column warm wood, right column a distinct cool gray lab bench view. All objects realistic physical objects; abstract atoms are physical teaching-model balls. Notes are printed cream paper cards with clear accurate text. Preserve exact science and relationships in reference. Keep bottom 15% of every photo quiet tabletop for app caption, and omit reference's bottom caption.\nTOP ROW: a small dark handheld electronic device on left; two red physical model spheres, smaller \"Li\" with \"167 pm\" and \"6.94 u\", larger \"Na\" with \"190 pm\" and \"22.99 u\". Printed header \"GROUP 1 · COMMON ION +1\". Arrow note \"compare atoms\". To right two cylindrical demonstration battery cells labeled \"Li-ion\" and \"Na-ion\", Na-ion cell taller as in reference. Final note \"atomic mass ≠ cell mass\". Both atom size and atomic data clearly visible.\nMIDDLE ROW: two identically shaped rectangular black electrical connector blocks, eight vertical metal contact fingers each. Left bare copper with visible greenish corrosion on copper fingers and a magnifier; right clean gold-plated golden fingers. Labels: \"bare copper / material note: / corrodes more readily\" and \"gold plated / material note: / corrosion resistant\". Printed comparison chart on right titled \"SIMULATION SCORE\": top orange bar five times the length of lower golden bar, top \"Cu 15\" and \"EN 1.90\", lower \"Au 3\" and \"EN 2.54\". Exact values. No loose cable coils or coaxial plugs.\nBOTTOM ROW: two thin rectangular enclosure metal sheet samples resting in a shallow tray, not cubes: bright matte aluminum sheet labeled \"Al · 26.98 u\" and gray iron sheet with three orange-brown rust spots labeled \"Fe · 55.85 u\". To right two cream evidence cards, top \"Al oxide can passivate the surface\", lower \"iron rust is often less protective\". Two connecting printed arrows \"atomic mass\" and \"material data\". Add small printed note \"ATOMIC MASS ≠ MATERIAL DENSITY\" above the quiet caption margin because this distinction is essential. No invented claims or measured cell mass. Genuine natural photography, no people, brands or watermarks.\nCRITICAL CANVAS: overall output MUST be 16:9, ideally 2560x1440. EXACTLY six equal panels: TWO columns by THREE rows. Each panel MUST be 8:3, not 4:1. Use full 2560x1440 composition, with seams x1280 and y480/960. The previous render was too short overall and cannot be cropped into these banners without losing content. Allow more tabletop breathing room above and below each scene so every full card survives.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-a0822d9a-164e-4853-8a1c-f98776498e33.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    313,
+    603,
+    941
+  ],
+  "review": "Visually compared both variants with SVG: Li/Na model sizes, radii/masses, Group 1 +1 and atomic-mass/cell-mass distinction; matched connector geometry, corroded copper vs clean gold and correct score/EN values; thin Al/Fe sheets, three rust spots, correct atomic masses and passivation/protectiveness notes. The plot bars preserve the qualitative score ranking; exact values are printed. Actual panel seams inspected."
+}

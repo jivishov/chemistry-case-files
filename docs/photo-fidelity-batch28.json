@@ -1,0 +1,22 @@
+{
+  "id": "unit6-batch28",
+  "ids": [
+    "6/a-ladder",
+    "6/a-grill",
+    "6/a-depot"
+  ],
+  "prompt": "Create SIX photoreal educational chemistry photographs as exact TWO-column THREE-row atlas, overall16:9, no gutters; each independent tile8:3. Match supplied SVG evidence, with two distinct lighting variants per row. Keep all evidence inside central90%width/upper80%height and bottom20%quiet tabletop. Counts and chemical subscripts must be exact. All diagrams physically printed on cards or displayed by actual devices in scene, not floating overlays. TOP ROW: photographic closeup of an iron I-beam with irregular orange rust patches. Physical plaque 'SIMPLIFIED Fe₂O₃ MODEL'. Right a clear teaching board titled 'BALANCED-EQUATION COEFFICIENTS': row 'Fe' with exactly FOUR gray square counters; row 'O₂' with exactly THREE cyan square counters; row 'Fe₂O₃' with exactly TWO orange square counters. Footer 'ATOMS IN = ATOMS OUT'. This is coefficient counting, not atom-sized photography. MIDDLE ROW: upright scorched RED PROPANE CYLINDER on charred ground after fire extinguished, no flame. Beside it readable incident report on clipboard titled 'INCIDENT REPORT · COMBUSTION'. Four rows: C₃H₈ ONE orange square, O₂ FIVE cyan squares enclosed together by amber outline, CO₂ THREE gray squares, H₂O FOUR blue squares. Small footer 'PROPANE : O₂ = 1 : 5'. Put all text within clipboard, no text extending out of tile. BOTTOM ROW: industrial horizontal silver ammonia tank and pipework beside paved service road. Clearly labeled NH₃, do not invent extra hazard numbers. At right upright physical board titled 'PRE-PLAN SHEET', rows N₂ ONE cyan square, H₂ THREE pale-gray squares, NH₃ TWO green squares. Footer 'BALANCED RATIO: 1 : 3 : 2'. Warm daylight left column, cool overcast right column; documentary photography, realistic textures, no brands, no general footer banners.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-dbdb2ec3-be84-4854-b38b-a69f517c77da.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    313,
+    628,
+    941
+  ],
+  "review": "Both variants manually counted: Fe/O2/Fe2O3 coefficients4/3/2, propane/O2/CO2/H2O1/5/3/4, N2/H2/NH3 1/3/2. Rusted iron, extinguished scorched red propane bottle and horizontal NH3 tank match contexts. Chemical subscripts/ratio labels correct. Ammonia photo uses identity label without reproducing the source's ancillary transport-class plaque."
+}

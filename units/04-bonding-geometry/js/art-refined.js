@@ -3,7 +3,7 @@
 // The underlying SVG geometry in art.js is intentionally preserved. This wrapper changes
 // only student-visible captions/labels that were scientifically overbroad, overly dramatic,
 // or inconsistent with the revised simulation-safety wording.
-import { sceneArt as baseSceneArt } from './art.js';
+import { sceneArt as baseSceneArt } from './art.js?v=polarity-20260929-1';
 
 const COPY = {
   'a-white-jar': [

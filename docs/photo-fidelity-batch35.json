@@ -1,0 +1,25 @@
+{
+  "id": "unit7-batch35",
+  "ids": [
+    "7/c-air",
+    "7/c-blend"
+  ],
+  "prompt": "Generate six photoreal gas-law teaching evidence scenes, exact2columns3rows atlas16:9, no gutters, each tile8:3. Two lighting variants per row. Use reference scientific labels, all visible central90%width upper80%height, bottom20%quiet. Photograph physical instruments/cards, not floating UI. TOP ROW: ocean boat rail with pressuregauge reading1.00 atm and oxygen analyzer20.9%. Beside them large rigid teachingcard: heading 'P total 1.00 atm', vertical stackedbar blue upper79.1% labeledN₂ and green lower20.9% labeledO₂. Formula printed oncard 'pO₂ = X_O₂ · P_total' and '= 0.209 atm'. Smalltag 'open air at the rail'. MIDDLE ROW: scuba filling bench, greenO₂ and blueAIR supply hoses join and feed EAN32 cylinder, pressuregauge200 atm. Adjacent physical chart titled 'P total 200 atm': single vertical bar, green LOWER32% labeledpO₂, blue UPPER68% labeledpN₂. Text 'pO₂ + pN₂ = P total'. Preserve mixed gases, do not depict 32%asoxygen partial pressure. BOTTOM ROW: large laminated diving case teachingboard on boatdeck, with gear at edges. Left verticaldepthgraphic/divefigure and exactly4equallyspaced depth labels: '0 m · 1 atm', '10 m · 2 atm', '20 m · 3 atm', '30 m · 4 atm'. Center TWO stackedbars sharing bottom baseline, second FOUR TIMES height of first; both greenbottom32%blueupper68%, labeledpO₂ andpN₂; beneathfirst 'at the surface', beneathsecond 'at30m', between '×4'. Right printed calculation EXACT 'EAN32 at4atm', '4.00 × 0.32', '= 1.28 atm pO₂'; small orange 'working limit1.40atm'. No extra numbers/units, bars and all text fit board fully, no selected answer, no brands or general footerbanners.\nEDIT:\nCorrect the scientific graphics in this six-panel atlas, keep photos and panels. TOP ROW BOTH: remove added numeric79.1% and20.9% FROM STACKEDBARS only (keep analyzer20.9%). Stackedbar must have green O₂ bottom section onlyONE-FIFTH(20.9%)of totalheight and blueN₂ topfour-fifths, shrink currentgreenpart. Keep P total1.00atm/formula=0.209atm. MIDDLE ROW BOTH: remove68%and32%frombars, leaving ONLYpN₂ andpO₂, fractions are not pressureunits. Greenbottom32%, blueupper68%. Replace each round gauge face with simple unambiguous large central '200' over 'atm', plain tickmarks without othernumerals; no extra100/300. BOTTOM ROW BOTH: correct bars to FOUR-FOLD height relation, samebottom baseline. Keep tallbarabout160px; SHORTENthesurfacebarfrom60to40px (onequartertallbar). EACHbar greenbottom32%,blueupper68%. Place pO₂/pN₂ labels nexttosectionsifshortbarlabelsdon'tfit. Preserve all depth labels, ×4 and calculation1.28atm and workinglimit1.40atm. No other changes.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-08537723-26a5-408a-b808-abf46b4c1119.png",
+  "initialSource": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-3447733e-e42c-40ea-9ec8-fea2d2975aa7.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    313,
+    581
+  ],
+  "rowFit": [
+    "cover",
+    "fill"
+  ],
+  "review": "Only top/middle rows accepted after revision. Open-air1.00atm/20.9%/0.209atm and EAN32/200atm/Dalton sum retained. Extraneous percent labels removed from partial-pressure bars; displayed proportions approximate21%and32%. Depth row rejected for incorrect fourfold scaling and regenerated separately."
+}

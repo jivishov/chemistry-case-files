@@ -1,4 +1,4 @@
-import { photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
+import { photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // svg-fidelity.js — calibrated Unit 1 SVG rendering helpers.
 // Scientific/data-bearing SVGs stay dynamic. Mission banners prefer photorealistic
 // imagery and retain the complete original inline SVG directly underneath as fallback.

@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // main.js: Unit 3 view-model (Periodic Table & Trends, TEKS C.5 A-C).
 // Keeps the existing mechanics while presenting scientific data, activity-only
 // simulation scores, and generated feedback with explicit instructional wording.

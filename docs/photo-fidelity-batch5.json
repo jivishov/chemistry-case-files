@@ -1,0 +1,22 @@
+{
+  "id": "unit2-batch5",
+  "ids": [
+    "2/e-magnesium",
+    "2/e-chromium",
+    "2/e-copper"
+  ],
+  "prompt": "Create a photoreal photographic atlas with overall 16:9 canvas, ideally 2560x1440. Exactly TWO columns by THREE rows: six independent 8:3 panoramic photos with NO gutters/borders. The attached reference contains each scene in matching tile order. Each photo is an overhead view of real cream cardstock evidence cards on a laboratory tabletop. Left column warm wood, right column gray stone, distinct believable photographs. Keep ALL card text in upper 75% of each tile; bottom25% plain tabletop. No other cards, science examples or specimens, no electron configurations anywhere.\nEvery tile contains a prominent left element card and a wider printed worksheet card to right, realistic paper texture and lighting. Right card header \"GROUND-STATE CONFIGURATION\", a big gold question mark \"?\" inside a large otherwise EMPTY box, small text \"choose an answer in the workspace\". Beneath cards a note with the relevant element name and \"answer hidden until submitted\".\nTOP ROW left element card \"Mg\" and \"Z = 12\"; note \"Magnesium · answer hidden until submitted\".\nMIDDLE ROW left element card \"Cr\" and \"Z = 24\"; note \"Chromium · answer hidden until submitted\".\nBOTTOM ROW left element card \"Cu\" and \"Z = 29\"; note \"Copper · answer hidden until submitted\".\nAll six photos reproduce the question state of their reference. Do not fill the empty box with a solution, orbital diagram or sample configuration. Do not add a footer caption. No handwriting, people, logos or watermark. Ensure each tile is one coherent photographed scene and contains none of the neighboring tile.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-0369f7fc-fa72-4e33-9621-591712198e05.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    314,
+    627,
+    941
+  ],
+  "review": "All six cards visually checked: Mg Z=12, Cr Z=24, Cu Z=29; ground-state configuration remains a question mark with no revealed answer. Correct element names and workspace instruction. No neighboring scene leaks. Actual seams inspected."
+}

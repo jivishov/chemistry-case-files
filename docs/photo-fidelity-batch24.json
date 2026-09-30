@@ -1,0 +1,22 @@
+{
+  "id": "unit5-batch24",
+  "ids": [
+    "5/b-eva",
+    "5/b-ration",
+    "5/b-sample"
+  ],
+  "prompt": "Six photoreal science-fiction chemistry mission scenes, exact TWO columns THREE rows, overall16:9 ideally2560x1440, each tile8:3. No gutters. Two distinct warm/cool lighting variants per row matching source. Essential evidence central90%width upper80%height, bottom20%quiet scene. Scientific labels/models ONLY on physical equipment screens/cards, no floating UI, no footercaptions. Preserve symbolic N unknown.\nTOP ROW: white-suited astronaut with dark opaque helmet visor, oxygen backpack, standing outside spacecraft beside hatch in starfield. A clearly visible safety TETHER connects astronaut suit to spacecraft hatch anchor. Mounted nearby on hull a large dark instrument screen headed \"SUIT O₂ FILL\", display \"N × 10²³\", smaller \"molecules\"; slim cyan fillbar about60%full and separate gold targetmark near80%. Do not substitute a computed number forN. No flags, logos or identifiableperson.\nMIDDLE ROW: spacecraft galley FOOD PRINTER, label \"FOOD PRINTER\", transparent front showing nozzle above tray with yellow and green ration portions. Left feed cartridge label EXACT \"C₆H₁₂O₆\", with three small hexagon icons. Right built-in display titled \"RATION LOG\", large \"N × 10²³\", smaller \"molecules\". Dotted printed arrow printer→log, no numeric answer.\nBOTTOM ROW: small wheeled sampling ROVER on reddish extraterrestrial regolith, camera mast and scoop arm collecting small grains. Beside rover physical rugged survey tablet, screen has a labeled \"NaCl\" cubic lattice illustration with EIGHT corner ions alternating FOUR green and FOUR gold spheres, cubic edges, representing formulaunits not a separate molecule. On same tablet adjacent panel \"SURVEY LOG\" and \"N × 10²³\". Do NOT put wordmolecules on NaCl screen. Distant small blue-green Earth in darksky. Realistic equipment materials and lighting, no brands/watermarks.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-13a0b418-01c7-4e7e-9e91-68d0a49da69e.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    313,
+    616,
+    941
+  ],
+  "review": "Both variants retain suited EVA astronaut/tether and suitO2 fillN×10^23molecules; glucoseC6H12O6 feed and food printer/ration logN×10^23molecules; sampling rover andNaCl lattice with4green/4gold ions and symbolic surveycount. No computed answers added; NaCl not labeled molecules."
+}

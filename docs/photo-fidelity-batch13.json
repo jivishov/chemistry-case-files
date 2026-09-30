@@ -1,0 +1,22 @@
+{
+  "id": "unit1-batch13",
+  "ids": [
+    "1/b-log",
+    "1/b-volume",
+    "1/b-pergallon"
+  ],
+  "prompt": "Create six photoreal educational evidence photos, EXACT TWO columns THREE rows on one16:9 atlas. No gutters/borders. Each scene8:3 matching reference in order. Left column warm wood, right gray aquarium maintenance desk, two independent variants. Essentials within central90% width, upper80% height; bottom20% quiet bench. Translate diagrams to physical objects and printed paper cards, correct all supplied numbers, no invented data. No app captions or interface.\nTOP ROW: an OPEN lined tank log sheet titled \"TANK LOG\"; large clearly legible \"4.0 mL\" on first line, then \"4.00 mL\" crossed through with one red line and a red question mark beside it. Yellow pencil with pink eraser beside paper. To right a real horizontal blunt-tip oral graduated syringe partially filled with pale blue liquid, ticks but no numbers; cream card below syringe \"NEXT WATER CHANGE\". No needle. These significant figures and crossed-out alternative must be exactly as specified.\nMIDDLE ROW: rectangular aquarium with clear blue-tinted water, gravel, two green plants and TWO small fish, one blue and one orange. Long ruler with ticks lies beneath tank on bench. To right two readable cream cards: top \"LABEL\" and \"20 gal\"; below \"MEASURED\" and \"18.4 gal\". Full tank visible.\nBOTTOM ROW: on bench left two printed cream cards, top \"PER GALLON\" and \"5.0 mL\"; below \"GALLONS\" and \"18.4\". A paper dashed arrow points right to physical calculator with green LCD reading exactly \"92.0000\". Another dashed arrow points right to paper result card \"REPORT AS\" and \"92 mL\". All digits/zeros/decimals exact. No other numerical labels, brand names, people or watermarks. Make genuinely photographic objects with natural lighting, crisp legible educational evidence.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-e95f2e4e-f13a-4acd-bec1-4528199bd544.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    297,
+    624,
+    941
+  ],
+  "review": "Both variants preserve 4.0mL versus crossed-out4.00mL and oral syringe, tank labeled20gal versus measured18.4gal with ruler, and5.0mL per gallon×18.4→calculator92.0000→report92mL. All displayed decimals and significant figures checked."
+}

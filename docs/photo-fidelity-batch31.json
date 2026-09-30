@@ -1,0 +1,22 @@
+{
+  "id": "unit6-batch31",
+  "ids": [
+    "6/d-shack",
+    "6/d-ditch",
+    "6/d-shed"
+  ],
+  "prompt": "Six photoreal photographs of physical classroom CHEMISTRY CASE RECONSTRUCTIONS. Exact2columns3rows atlas16:9 no gutters, eachtile8:3, source composition essential. Two warm/cool lighting variants per row. Critical labels/models fitcentral90%width upper80%height; bottom20%quiet scene. TOP ROW: miniature open-front shack cutaway, inside a simple sleeping mannequin on lowgreenbunk atleft, smallheater with visible flame at right. Roof placard 'O₂ AVAILABLE', heater placard 'CH₄ + O₂'. At right a physical evidence board 'WHICH ONE RAN OUT FIRST', row CH₄ has EXACTLY SIX pale-gray square counters, row O₂ has EXACTLY THREE cyan squares enclosed in orange rounded outline. Footer 'LIMITING REACTANT SETS MAXIMUM CO₂'. The shack is a case model, no real person. MIDDLE ROW: realistic tabletop roadway model. Left rearopen red emergencytruck with EXACTLY THREE white bags marked NaOH and small inventorycard '5 kg A BAG'. Shallow spill/trail with white reaction patches extends from truck toward road drainage creek at right but white patches STOP at visibleyellowdashed boundary well before creek. Physical tag 'THE LINE STOPS HERE' points to boundary; drain tag 'CREEK'. Include no extra bags; preserve finite inventory. BOTTOM ROW: staged photographed tabletop chemical model in shed: left five flat silver aluminum strips with white simulated product clumps; physical tag 'AlCl₃ MODEL PRODUCT'. Center vertical olivegreen gascylinder clearly labeled Cl₂. A translucent yellowgreen teaching plume (clearly modelmaterial) extends from cylinder toward open miniaturedoor at right; near door tag 'EXCESS Cl₂'. Three concepts visible together: metal reagent, white product, remaining chlorine. No actual operators, procedures, sparks or extra reaction products. Accurate chemical subscripts, realistic materials, no brands, no floating UI or general footer banners.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-b07297bc-1849-4ad1-877b-47b4603eac45.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    313,
+    627,
+    941
+  ],
+  "review": "Both variants retain shack/heater with six CH4 and three O2 counters; finite three NaOH bags at5kg each with reaction patches stopping short of creek; aluminum/white model product/Cl2 cylinder with excess-chlorine model plume. Major quantities and limiting/excess relationships agree with source."
+}

@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // main.js: Unit 9 view-model (Acids & Bases, TEKS C.12).
 //
 // The units_new build: units/09-acids-bases rendered in the mission-cockpit shell. This

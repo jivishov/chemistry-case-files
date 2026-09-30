@@ -1,0 +1,23 @@
+{
+  "id": "unit1-batch14",
+  "ids": [
+    "1/c-ornament",
+    "1/c-anchor",
+    "1/h1-sizecall"
+  ],
+  "prompt": "Six photoreal educational evidence photos, TWO columns THREE rows, overall16:9 ideally2560x1440. No gutters/borders. Tiles8:3, source order. Left warm wood, right gray science bench. Main evidence central90% width/upper80%height, bottom20% quiet surface. Real objects with printed cards; no app footer captions. Preserve unknowns.\nTOP ROW unknown ornament: small matte GRAY metal sailing-ship aquarium ornament at left, cream tag \"? METAL\". Digital balance beside it reading EXACTLY \"38.6 g\". To right two transparent tall graduated cylinders, first with pale cyan water and no object labeled \"BEFORE\"; second same cylinder with small gray metal piece fully submerged at base and HIGHER water level labeled \"AFTER\". Printed paper arrow from balance toward cylinders. Graduation TICKS ONLY no invented numbers. On a cream board behind cylinders, two dashed horizontal orange lines aligned with BEFORE and AFTER water levels, vertical difference bracket labeled \"ΔV\". Before level around45%ofcylinderheight, afteraround65%. Both menisci concave. Keep metal gray; no answer to metal identity.\nMIDDLE ROW unknown plant anchors: shallow transparent aquarium tray with gravel and THREE separated green aquatic plant stems, each anchored by a SMALL MATTE GRAY METAL CLIP at its base. Beside tray resealable translucent specimen bag containing two similar gray clips, cream label \"NO LABEL\". Small digital balance next to bag display \"? g\", no assigned mass or metal identity. Anchor clips clearly visible, not rocks.\nBOTTOM ROW uncertainty: digital balance left with readout EXACTLY \"38.6 ±0.1\", paper label \"BALANCE\". Right printed cream teaching chart titled \"ESTIMATED RANGE\", units \"g/mL\". Thin horizontal number line tick \"7.0\" towardleft and \"8.0\" further right as source. Reference amber marker \"Zn\" above left, reference amber marker \"Fe\" above right. Broad horizontal amber uncertainty band with white endcaps begins just to RIGHT of Zn and reaches Fe reference. Preserve relative marker/band arrangement from source, no extra values or changed result. Card note \"IS THE UNCERTAINTY SMALL ENOUGH?\" Do not answer question. Natural photographic light, entire objects/labels visible, no people, brands or watermarks.\nFollow-up edit: Change ONLY the dashed volume-difference guides and ΔV brackets in BOTH TOP ROW photographs. They currently float above the water levels, which is incorrect. Each BEFORE meniscus bottom is around y131; each AFTER meniscus bottom aroundy97. The two orange dashed horizontal guides should be at y97 and y131, connecting those two heights between the cylinders. REMOVE the old dashed guide at y57 completely. Leave the guide near y95 if aligned to AFTER at97; add the lower guide at131 aligned with BEFORE meniscus. To the right of AFTER cylinder, shorten and reposition the black ΔV bracket so its top cap is y97 and bottom cap y131, spanning ONLY this actual difference of water levels. Keep ΔV readable near that short bracket. These coordinates refer to current1672x941image. Do NOT change liquid levels, cylinder labels, graduation ticks, any object, or the middle and bottom rows. Preserve photographic paper texture.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-6c2fe31e-58d8-449e-9906-75f10d775be2.png",
+  "initialSource": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-544d65fb-4b2d-4d63-83d8-c91edcd73428.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    315,
+    602,
+    941
+  ],
+  "review": "Both variants preserve unknown gray ship metal,38.6g mass and before/after displaced volume; corrected dashed guides and deltaV bracket to actual liquid levels. Unknown plant clips/bag remain unclassified, balance?g. Uncertainty view retains38.6±0.1, Zn/Fe references,7.0/8.0 labels and band relationship, without resolving question."
+}

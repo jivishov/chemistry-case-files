@@ -1,0 +1,23 @@
+{
+  "id": "unit2-batch6",
+  "ids": [
+    "2/f-argon",
+    "2/f-aluminum",
+    "2/f-chlorine"
+  ],
+  "prompt": "Create a photoreal educational atlas, overall canvas 16:9 ideally 2560x1440. Exactly TWO columns and THREE rows, six independent 8:3 photographs in attached reference order. No gutters, borders or tile headings. Left column warm wood, right gray lab tabletop. Photograph realistic equipment and an OPEN cream worksheet with the reference atom diagram clearly PRINTED on it. Preserve diagrams exactly as printed ink; do not replace them with ambiguous loose marbles. Atomic diagrams are teaching models on paper, not purported real atoms. All essential content in top75%; bottom25% quiet tabletop. Omit bottom app captions.\nTOP ROW Argon: glowing violet horizontal discharge tube labeled \"the customer's tube\", a \"LONG SERVICE RECORD\" tag. Printed atom: orange nucleus \"18p\"; exactly THREE concentric rings, inner ring TWO cyan electron dots, middle ring EIGHT cyan dots, outer ring EIGHT gold dots evenly spaced. Label \"eight in the outer shell\". On right arrows \"gain\" and \"lose\", each crossed out. Right printed record \"GROUP PATTERN\"; \"group ?\" / \"family ?  very unreactive\" / \"use  low reactivity\". Keep group/family unresolved.\nMIDDLE ROW Aluminum: short shiny aluminum electrode strip left labeled \"Al, for the electrode\". Printed atom nucleus \"13p\", three rings with exactly TWO inner cyan dots, EIGHT middle cyan dots, THREE outer gold dots at 12,4,8 o'clock. Text \"three in the outer shell\". Arrow points outward to three small removed-electron gold dots, labeled \"often forms Al 3+ ions\". Right record \"GROUP PATTERN\", \"group ?\", \"forms Al 3+\". Preserve question mark for group.\nBOTTOM ROW Chlorine: capped chlorine sample container left labeled \"chlorine sample\". Printed atom nucleus \"17p\"; three rings with TWO inner cyan dots, EIGHT middle cyan dots, SEVEN outer gold dots with ONE vacant position at right. A single cyan electron dot outside the ring with inward arrow to the vacancy, label \"often forms Cl− ions\". Note \"seven — one short of eight\" and \"reactive nonmetal\". Right card \"group ?\" / \"Cl−\". Do not fill the group answer.\nCOUNT EVERY ELECTRON DOT to match reference: Ar 2,8,8; Al 2,8,3; Cl 2,8,7. Thin separated rings, clear uncrowded dots. Readable exact text. Natural light, sharp photographs, no people/brands/watermarks and no extra atoms or data.\nFollow-up edit: Edit this six-panel photographic atlas with ONE precise change: in BOTH BOTTOM ROW panels, replace the transparent bottle of yellow liquid with a small CLOSED opaque gray METAL sample canister with a secure metal cap/valve, labeled \"chlorine sample\". It must not show any liquid or visible contents. Match the gray sealed container shown in the original mission diagram. Chlorine here must not be represented as a bottle of yellow liquid. Preserve EVERYTHING else exactly: all six panel boundaries, every printed word and number, EVERY electron dot and each diagram, camera angles, tabletop materials, top and middle rows. Do not add anything. Overall output remains 16:9, two columns by three rows.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-b9910acd-2aca-45d2-925e-cb3d38c39254.png",
+  "initialSource": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-1dbbc9fd-4a3c-41b4-9996-5d6d86073eb3.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    314,
+    628,
+    941
+  ],
+  "review": "Both variants inspected dot by dot: Ar rings 2/8/8 with 18p and crossed-out gain/loss; Al 2/8/3 with 13p, three departing electrons and Al3+; Cl 2/8/7 with 17p, one incoming electron and Cl-. Group questions remain unresolved. Chlorine liquid bottle rejected and replaced by closed opaque metal sample container. Edited result rechecked against original counts. No adjacent tile leakage."
+}

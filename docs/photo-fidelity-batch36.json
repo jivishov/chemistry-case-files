@@ -1,0 +1,28 @@
+{
+  "id": "unit7-batch36",
+  "ids": [
+    "7/h1-speeds",
+    "7/h2-real",
+    "7/h3-water"
+  ],
+  "prompt": "Six photoreal chemistry teaching photographs as exact2columns3rows contact atlas16:9, no gutters, eachtile8:3. Two warm/cool variants per row preserving same evidence. All important labels central90%width upper80%height, bottom20%quiet tabletop. Graphs are physical printed boards. TOP ROW: two gas cylinders labeled He and air beside thermometer293K; gas-particle teaching sleeves show longer motion streaks forHe. Large plot at right, y-axis FRACTION, x-axis MOLECULAR SPEED. Two smooth distribution curves start atorigin and approach horizontalaxis right: narrow taller pale-blue AIR peak atleft; wider lower cream He peak fartherRIGHT, both labels attachedtocorrectcurve. No yplateau or sharp triangle. Printed notes 'same average KE' and 'lighter gas peaks right'. MIDDLE ROW: three steel cylinders storagebank, gauge300 atm. Physical plot yaxis'PV / nRT', xaxisPRESSURE. Dashed horizontal reference line exactlylabeled 'ideal = 1'; cream realgascurve starts ONreferenceatleft, dipsBELOWthenrises acrossreferenceandendsABOVEatright. Orange pointatminimum labeled'attraction'; note 'below: they pull', 'above: they take up room'. No extra curves or numbers. BOTTOM ROW: gas collectionoverwater apparatus on bench: inverted graduated glass cylinder with CLOSED top, OPEN bottom submerged in watertrough; visible gas space inupperhalf, waterinlowerhalf. Deliveryhose enters trough and releasesbubbles under mouthofcylinder. Thermometer25°C. Physical explanatory card at right shows tall stackedbar labeled 'what the tube reads', mostlyamber'P dry gas' with VERYTHIN cyan topband for water vapor. Text EXACT 'vapor at25°C =0.0313atm' and 'P dry = P total − P H₂O'. No invented numerical volumescale or drypressure answer. Realistic materials, accurately renderedtext, no brands/floating UI/footerbanners.\nEDIT:\nMake ONE precise correction in BOTH MIDDLE-ROW panels only. The words 'ideal = 1' must identify the horizontal DASHED reference line, not the high solidcurve. REMOVE 'ideal = 1' from beside the top-right solidcurve. Place 'ideal = 1' in small white lettering immediately ABOVE THE DASHED horizontal line near its middle/right area, with small pointer touching that dashed line if needed. The dashed line is abouty438in the fullimage; labelbaseline aroundy428. Preserve curve, attractiveminimum, textbelow/above, axes,300atm gauge, alltoprowandbottomrow pixels/composition. No other edits.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-d00d325a-21dd-41c4-860f-bc06c5ae8d7e.png",
+  "initialSource": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-b43354c4-8523-44a0-addf-f79aaf04bec3.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    314,
+    612,
+    941
+  ],
+  "rowFit": [
+    "cover",
+    "cover",
+    "cover"
+  ],
+  "review": "Both variants preserve293K, taller/slower air and broader/faster helium distributions;300atm bank and real-gas curve below then above ideal dashedbaseline, with ideal=1 pointer corrected to that line; inverted water-collection cylinder,25C,0.0313atm vapor and dry=total-water-vapor equation. Curve geometry is qualitative as in source."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "unit4-batch20",
+  "ids": [
+    "4/c-extinguisher",
+    "4/d-dry-pan",
+    "4/d-bulb-battery"
+  ],
+  "prompt": "Six photoreal chemistry evidence photos, exact TWO columns THREE rows, overall16:9 ideally2560x1440, each tile8:3, source order. No gutters/borders. Warm bench left, gray bench right, independent variants. Essentials central90%width upper80%height, bottom20% quietcounter. Real objects and printed labels/cards. No appfootertext; preserve scientific state.\nTOP ROW: red CO2 fire extinguisher with proper black discharge horn, cream label exactly \"CO2\" and \"CLASS B\". Right a printed molecular teaching card: linear O=C=O model, ONE black carbon between TWO red oxygens in a straight horizontal180-degree line, two parallel sticks per carbon-oxygen double bond. Above it two equal orange dipole arrows pointing OUTWARD in opposite directions from central crossed tail, representing cancellation. Label \"180°\". Adjacent small card \"+ AND −\" and green \"NET ZERO\". Do not make molecule bent.\nMIDDLE ROW: shallow metal pan of WHITE CRYSTALLINE SOLID granules over lit blue/orange smallburner. The granules remain dry/solid, NO MELTING OR BROWNING. Cream evidence sign \"SIMULATED HEAT\" and \"NO MELT\". At right clear beaker of pale blue suppliedsolution with TWO separate electrodes dipped into liquid, wires connected to a battery-powered analog conductivity tester. Tester labeled \"CURRENT\" with needle noticeably DEFLECTED right, positive indication (no invented numeric values). Beaker label \"SUPPLIED SOLUTION\". A small \"AND\" card separates heated-solid observation from solution-conductivity observation. Do not put electrodes into dry pan.\nBOTTOM ROW: tabletop low-voltage circuit with rectangular battery clearly labeled \"9V\", small lightbulb BRIGHTLY LIT, and DRY solid gray metal sample with a visible smooth hammer DENT but NO crack. Closed circuit visibly connects battery→bulb→sample→battery via wires/clips. Small hammer rests beside sample. Evidence cards \"LIT\", \"DRY, NO WATER\", \"DENTS, NO CRACK\". No water vessels in this row, no jagged mineral/crystal, no unlit bulb. Natural photographic light, no people, logos, watermark.\nFollow-up edit: Edit ONLY the glass beakers in both MIDDLE ROW photographs: remove all printed white NUMBERS and graduation ticks from their fronts, leaving clear plain glass with pale blue solution and two electrodes unchanged. These invented volume scales are not part of the evidence. Keep \"SUPPLIED SOLUTION\" cards, meters/needles/wires, pans, burner flames, all other words and all top/bottom photographs completely unchanged. Same atlas dimensions/seams.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-6410218a-783d-4f69-9287-f0f66ab91570.png",
+  "initialSource": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-fa086471-e563-4e93-9d1d-6177578bb4a2.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    309,
+    609,
+    941
+  ],
+  "review": "Both variants retainCO2/ClassB extinguisher, linear180° molecular model and cancelling arrows; white heated solid withNO MELT and separate solution with deflected CURRENT meter; lit9V bulb with dry dented, uncracked metal. Removed invented beaker scales. Circuit photographs convey test states; precise apparatus wiring is not an instructional wiring diagram."
+}

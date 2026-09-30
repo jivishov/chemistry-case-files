@@ -1,0 +1,23 @@
+{
+  "id": "unit4-batch21",
+  "ids": [
+    "4/d-drop-test",
+    "4/d-sugar-pan",
+    "4/h1-percent-ionic"
+  ],
+  "prompt": "Create six photoreal chemistry evidence photos in exact TWO columns THREE rows, overall16:9 ideally2560x1440, each tile8:3, source order. No gutters. Warm sciencebench left/coolgray right, distinct photos. Keep essentials central90%width upper80%height with bottom20%quietcounter. Physical objects, real printed cards, no app footer captions.\nTOP ROW: staged aftermath of brittle-sample drop: gray translucent hard irregular sample and FIVE angular BROKEN FRAGMENTS in a shallow tray beside low ledge. Card \"SIMULATED DROP\". Adjacent flat clear glass test plate has two obvious long scratches; card \"SCRATCHES GLASS\". To right battery-powered conductivity tester connected with two probes to gray solid sample; analog needle at far LEFT zero/no deflection, large label \"NOTHING\". Depict hard/brittle/nonconducting observations, no rounded malleable metal.\nMIDDLE ROW: jar of white sugar crystals labeled \"JAR 2\" beside shallow metal pan over visible small burner flames. In pan amber/brown SOFTENED CARAMEL liquid, not unchanged white crystals. Cards \"SIMULATED HEAT\" and \"CARAMEL\". At right separate clear beaker of supplied sugar solution with two electrodes and a self-contained conductivity meter; card \"SOLUTION\", meter label \"NOTHING\", needle far LEFT at zero. Do not show positive current. Do not connect meter to heated pan.\nBOTTOM ROW: cream printed educational continuum chart on bench. Left end shows two gray bonded spheres with shared electron pair, label \"SHARED\"; right end separate purple \"+\" and green \"−\" spheres, label \"TRANSFERRED\". Horizontal rounded bar grades green→yellow→orange→red. Left endpoint label \"ΔEN 0\", right endpoint \"3.3\". Dashed boundary at0.4 (12%fromleft) and1.7 (52%fromleft), each labeled above. A WHITE downward pointer at62%alongbar (to RIGHT of1.7), with small amber sample bottle beneath pointer and text \"% IONIC?\" beside it. Keep percentage unknown. No graph-derived numerical answer or extra value. Preserve relative order/boundaries/pointer. No people, brands or watermark.\nFollow-up edit: Make only these two corrections, keep everything else unchanged:\n1) Both MIDDLE ROW beakers: remove all white volume numbers and graduation ticks, leaving clear plain glass, solution and two separate electrodes unchanged. No invented volume data.\n2) Both TOP ROW solid-sample conductivity tests: red and black alligator clips must contact OPPOSITE SIDES of the tested crystal and NEVER touch each other. Move red clip onto LEFT edge of crystal, keep black clip at RIGHT edge, with full crystal width between metal clip tips. Red wire still connects red meter socket to red clip; black wire black socket to black clip. Both clips visibly on crystal, no metal-to-metal short. Keep meter needle far-left atzero, labelNOTHING, tray shards and scratched-glass plate unchanged.\nDo not alter bottom continuum charts. Same atlas dimensions/seams.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-ccc80000-33ae-4c18-b396-14de16300434.png",
+  "initialSource": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-773f3e5e-3d8b-489c-be5f-3848cd2f4c5d.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    315,
+    638,
+    941
+  ],
+  "review": "Both variants retain brittle shards, scratched-glass and zero-current observations; probe clips corrected to opposite crystal edges. Caramelized sample and separate nonconducting solution retained, invented beaker scales removed. Continuum preserves shared-to-transferred ordering,0/0.4/1.7/3.3 labels and unresolved ionic percentage."
+}

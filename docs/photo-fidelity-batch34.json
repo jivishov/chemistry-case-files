@@ -1,0 +1,22 @@
+{
+  "id": "unit7-batch34",
+  "ids": [
+    "7/b-tire",
+    "7/b-twinset",
+    "7/b-sundeck"
+  ],
+  "prompt": "Six photoreal chemistry gas-law evidence photos in exact2columns3rows atlas16:9, no gutters, each tile8:3. Two distinct warm/cool photographic treatments per row while preserving same numeric evidence. Essential items central90%width upper80%height; bottom20%quiet scene. Source attached. All text on physical cards/equipment. TOP ROW: parked pickup on sunny tarmac, prominent closeup tire inforeground, thermometer reads48°C. Physical state card beside tire title 'TYRE, NOW', four rows EXACT: 'V  14 L', 'n  1.7 mol', 'T  321 K', 'P  ? atm'. Orange question mark pressure must remain unknown. No extra pressure reading. MIDDLE ROW: TWO manifold-connected upright scuba cylinders at filling station with hose to storagebank, pressuregauge clear220 atm. Physical statecard 'THE FILL' with EXACT rows 'P  220 atm', 'V  24 L', 'T  292 K', 'n  ? mol'. At right a smallBANK inventoryindicator with cyan partialbar and tag 'what leaves it'. Unknown moles not solved. BOTTOM ROW: single horizontal steel scubatank on sunny boatdeck beside water, nearby gauge208 atm with smalltag 'filled at200'. Thermometerdisplay '?' without numerictemperature. Physical statecard headed 'THE STEEL ON THE DECK', rows EXACT 'P  208 atm', 'V  12.0 L', 'n  96 mol', 'T  ? K'. Subtle orange-dot physical teaching cutaway sleeve suggests moving gas inside tank. Preserve all decimalpoints/units/unknowns exactly, no bar or psi substitutions, no added numbers, no brands, no floating UI or general footerbanners.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-67de7fc2-e0ea-4989-82c0-1856212c798e.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    313,
+    628,
+    941
+  ],
+  "review": "Both variants preserve all authored gas-law state values and units exactly: tire48C/14L/1.7mol/321K/?atm; twinset220atm/24L/292K/?mol; sun deck208atm/12.0L/96mol/?K and filledat200. Unknown variables remain unresolved; actual vessel contexts match."
+}

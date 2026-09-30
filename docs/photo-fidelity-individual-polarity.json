@@ -1,0 +1,29 @@
+{
+  "id": "4/h2-polarity",
+  "entries": [
+    {
+      "variant": 0,
+      "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-3c47626f-8178-46f9-a167-38078baad975.png",
+      "sourceRect": {
+        "left": 2,
+        "top": 2,
+        "width": 1444,
+        "height": 539
+      },
+      "prompt": "Photoreal teaching display, TWO horizontal panoramic photographs STACKED vertically (one column,two rows). Overall aspect4:3, ideally2048x1536. Each photograph8:3. No gutters. Both show same scientifically precise molecular-polarity comparison from attached corrected SVG: top warm wood, bottom coolgray labbench.\nEach photo has one LARGE open cream worksheet with two side-by-side labeled molecular diagrams and a small clear water bowl at far right under \"VECTOR SUM\" card. All evidence within central90%width/upper80%height, bottom20%quietbench.\nLEFT diagram H2O: ONE red oxygen, TWO white hydrogens belowleft/right, clearly BENT. Two blue lone-pair lobes above O, each EXACTLY TWO dark dots. The TWO orange O-H BOND DIPOLE ARROWS point diagonally INWARD AND UPWARD from white H atoms toward the RED OXYGEN. Arrowheads at the red oxygen, tails/crosses at white hydrogens. A separate LONG resultant arrow points vertically UP above O. The reference depicts the required correct arrow direction. Label \"H₂O\", \"THEY ADD\", \"POLAR\".\nRIGHT diagram CO2: black carbon between two red oxygen spheres in a straight horizontal line, equal orange dipole arrows point outward LEFT and RIGHT so they cancel. Label \"CO₂\", \"THEY CANCEL\", \"NONPOLAR\".\nMake ARROW DIRECTION scientifically clear and large: water arrows converge toward O, never diverge toward H. Models/diagrams printed on actual paper, not floating in air. No extra spheres/electrons/arrows, no appfootercaption, no people/logos/watermark.",
+      "review": "Both water O-H arrows point from H toward O, net arrow upward,2lone pairs with2dots each; linearCO2 equal/opposite arrows cancel. LabelsTHEY ADD/POLAR andTHEY CANCEL/NONPOLAR correctly associated. Generated against corrected underlying SVG, whose prior water arrows were reversed."
+    },
+    {
+      "variant": 1,
+      "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-3c47626f-8178-46f9-a167-38078baad975.png",
+      "sourceRect": {
+        "left": 2,
+        "top": 545,
+        "width": 1444,
+        "height": 539
+      },
+      "prompt": "Photoreal teaching display, TWO horizontal panoramic photographs STACKED vertically (one column,two rows). Overall aspect4:3, ideally2048x1536. Each photograph8:3. No gutters. Both show same scientifically precise molecular-polarity comparison from attached corrected SVG: top warm wood, bottom coolgray labbench.\nEach photo has one LARGE open cream worksheet with two side-by-side labeled molecular diagrams and a small clear water bowl at far right under \"VECTOR SUM\" card. All evidence within central90%width/upper80%height, bottom20%quietbench.\nLEFT diagram H2O: ONE red oxygen, TWO white hydrogens belowleft/right, clearly BENT. Two blue lone-pair lobes above O, each EXACTLY TWO dark dots. The TWO orange O-H BOND DIPOLE ARROWS point diagonally INWARD AND UPWARD from white H atoms toward the RED OXYGEN. Arrowheads at the red oxygen, tails/crosses at white hydrogens. A separate LONG resultant arrow points vertically UP above O. The reference depicts the required correct arrow direction. Label \"H₂O\", \"THEY ADD\", \"POLAR\".\nRIGHT diagram CO2: black carbon between two red oxygen spheres in a straight horizontal line, equal orange dipole arrows point outward LEFT and RIGHT so they cancel. Label \"CO₂\", \"THEY CANCEL\", \"NONPOLAR\".\nMake ARROW DIRECTION scientifically clear and large: water arrows converge toward O, never diverge toward H. Models/diagrams printed on actual paper, not floating in air. No extra spheres/electrons/arrows, no appfootercaption, no people/logos/watermark.",
+      "review": "Both water O-H arrows point from H toward O, net arrow upward,2lone pairs with2dots each; linearCO2 equal/opposite arrows cancel. LabelsTHEY ADD/POLAR andTHEY CANCEL/NONPOLAR correctly associated. Generated against corrected underlying SVG, whose prior water arrows were reversed."
+    }
+  ]
+}

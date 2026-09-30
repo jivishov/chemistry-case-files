@@ -1,0 +1,177 @@
+[
+  {
+    "id": "3/a-datasheet",
+    "entries": [
+      {
+        "variant": 0,
+        "prompt": "Create a replacement educational photorealistic mission banner from the attached authored SVG reference. One image, panoramic 8:3 aspect ratio, ideally 1600x600. Translate the SAME CONTENT into an authentic photographed physical tabletop evidence display with an overhead camera, realistic off-white paper, printed element cards, glass magnifier and warm wood. This is a chemistry historical periodic-pattern activity, not a generic repair bench. Keep composition and every scientific relation: on the LEFT an OPEN visible datasheet titled 'GROUP III', six horizontal rows with one conspicuous dark missing/blank row, a glass magnifier resting over that gap. At CENTER three printed square cards in a VERTICAL sequence: 'Ca' with '40.1', then a dashed empty card marked '?' and '~44', then 'Ti' with '47.9'. To the RIGHT of the question card a printed dashed arrow labeled 'predict' points to a card 'Sc' and '44.96', with 'found 1879' beneath. FAR RIGHT a printed checklist 'MASS', 'OXIDE', 'CHARGE', each checked. Typography clear, exactly these symbols and numbers, no invented labels, no chemical specimens or closed books, no tool trays. The evidence can be printed on one large cream worksheet so its relative positions stay faithful. Make paper, wood and magnifier photoreal, not flat vector art, not CGI. Frame all essential evidence in upper 80 percent; keep bottom 15 percent a quiet wood surface for the application's caption, do NOT reproduce the bottom caption or rounded reference border. Everything sharp and readable, gentle natural light, no people, no logos, no watermark.",
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-4bdf239e-1de4-4c92-bfaa-11051b575b9f.png",
+        "review": "Visually verified: open missing-row sheet, magnifier, Ca 40.1 / ? ~44 / Ti 47.9 sequence, prediction to Sc 44.96, found 1879, mass/oxide/charge checks. Two distinct photographs."
+      },
+      {
+        "variant": 1,
+        "prompt": "Create a replacement educational photorealistic mission banner from the attached authored SVG reference. One image, panoramic 8:3 aspect ratio, ideally 1600x600. Translate the SAME CONTENT into an authentic photographed physical tabletop evidence display with an overhead camera, realistic off-white paper, printed element cards, glass magnifier and warm wood. This is a chemistry historical periodic-pattern activity, not a generic repair bench. Keep composition and every scientific relation: on the LEFT an OPEN visible datasheet titled 'GROUP III', six horizontal rows with one conspicuous dark missing/blank row, a glass magnifier resting over that gap. At CENTER three printed square cards in a VERTICAL sequence: 'Ca' with '40.1', then a dashed empty card marked '?' and '~44', then 'Ti' with '47.9'. To the RIGHT of the question card a printed dashed arrow labeled 'predict' points to a card 'Sc' and '44.96', with 'found 1879' beneath. FAR RIGHT a printed checklist 'MASS', 'OXIDE', 'CHARGE', each checked. Typography clear, exactly these symbols and numbers, no invented labels, no chemical specimens or closed books, no tool trays. The evidence can be printed on one large cream worksheet so its relative positions stay faithful. Make paper, wood and magnifier photoreal, not flat vector art, not CGI. Frame all essential evidence in upper 80 percent; keep bottom 15 percent a quiet wood surface for the application's caption, do NOT reproduce the bottom caption or rounded reference border. Everything sharp and readable, gentle natural light, no people, no logos, no watermark.\nThis is the second alternate photograph for the same mission. Use a cool gray laboratory tabletop, a modern silver-rim glass magnifier, warm cream cardstock and a subtle three-quarter overhead viewpoint. Keep the worksheet broad and nearly frontal so ALL EXACT text and the missing-row evidence remain equally legible. Change only photographic materials/viewpoint; all elements and values must match the reference.",
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-b6e50993-9def-4bed-aa88-3b731c3a309c.png",
+        "review": "Visually verified: open missing-row sheet, magnifier, Ca 40.1 / ? ~44 / Ti 47.9 sequence, prediction to Sc 44.96, found 1879, mass/oxide/charge checks. Two distinct photographs."
+      }
+    ]
+  },
+  {
+    "id": "1/d-dropkit",
+    "entries": [
+      {
+        "variant": 0,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-14dc8f75-ba64-41fc-af5e-dbd0aa814bfb.png",
+        "sourceRect": {
+          "left": 2,
+          "top": 2,
+          "width": 832,
+          "height": 307
+        },
+        "prompt": "Six photoreal educational mission photos in exact TWO columns THREE rows, overall16:9 ideally2560x1440. No gutters/borders. Tiles8:3 source order, left warm wood and right gray work surface distinctvariants. Main evidence central90%width/upper80%height; bottom20% quietsurface. Photograph physical objects and printed worksheets under natural light, no app UI or footer captions. Exact minimal readable text.\nTOP ROW: FOUR capped clear test tubes containing yellow solution in small rack and a dropper alongside. Cream card \"YOUR KIT ×5\" denotes five trials. To right a flat printed teaching sheet with TWO circular concentric-ring targets. Left target FIVE green dots tightly clustered ON center bullseye, caption \"ACCURATE + PRECISE\". Right target red bullseye center and FIVE red sample dots tightly clustered AWAY FROM CENTER toward lower right, caption \"PRECISE, NOT ACCURATE\". \"OR\" printed between. Do not confuse centered cluster with off-center cluster.\nMIDDLE ROW: generic digital pen-type meter beside clear cup of pale blue water marked \"SAME SAMPLE\". Meter LCD exactly \"0.47\", no pH label or invented units. Right printed evidence sheet \"FIVE DIPS\", EXACT five readings in one row \"0.47  0.52  0.44  0.55  0.46\"; below \"REFERENCE 0.50\" and a red circled question mark. Small note \"DISPLAY RESOLUTION ≠ PRECISION\". No extra results.\nBOTTOM ROW: sunlit automobile dashboard photographed through windscreen, white strip container with orange lid lying on dash to show heat exposure. In foreground on dash a white specimen card holding exactly FIVE separate white narrow test strips in a neat row, each has exactly THREE square test pads. All pads yellow/ochre/olive with varying intensities as source: strips1gold/yellow/ochre,2ochre/gold/olive,3lightyellow/lightyellow/gold,4olive/ochre/darkolive,5gold/ochre/yellow. Card label \"FIVE STRIPS · SAME WATER\". Do not add colored blue/red pads, chemical names, numeric readings, or diagnosis. Natural sun glare/light suggests heat, no cartoon heat marks. No people/brands/watermarks.\nFollow-up edit: Only correct the OFF-CENTER red point clusters in the TOP ROW's two \"PRECISE, NOT ACCURATE\" targets. Both currently have four clearly visible red sample dots, but five trials require FIVE. Keep each center bullseye and other four dots unchanged. Add one small red dot just above/left of each off-center cluster, so each cluster contains exactly five distinct visible red dots, arranged like a tight five-dot quincunx away from center. These are SAMPLE dots, separate from the center red bullseye. Keep green five-dot center clusters unchanged. Preserve every text, object, card, photograph seam, middle/bottom rows and image size unchanged.\nSecond follow-up edit: Remove exactly ONE red dot from each top-row off-center cluster, changing six sample dots to five. In the LEFT photograph, erase ONLY the farthest-left cluster dot centered approximately x715,y165. In the RIGHT photograph, erase ONLY the farthest-left cluster dot centered approximately x1520,y165. Leave each of the other FIVE cluster dots untouched. Leave the central bullseye dot untouched. Do not add/reposition/redraw any dot, simply erase these two specified dots with matching paper background. Every other pixel/object/text/row unchanged.",
+        "review": "Top-left tile only:4yellowtubes and dropper,5centeredgreen trials versus5off-centerred trials. Corrected point counts; right top tile rejected."
+      },
+      {
+        "variant": 1,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-72ab1c15-c03a-40da-8d91-5695832f8745.png",
+        "prompt": "ONE photoreal wide educational laboratory photograph, aspect8:3, ideally2048x768. Cool gray bench. At left FOUR capped glass tubes of yellow solution in rack and a small clear dropper, paperlabel \"YOUR KIT ×5\". At right a LARGE white teaching card with TWO circular concentric-ring targets and the word \"OR\" between them. Left target exactly FIVE SEPARATE GREEN sample dots tightly clustered at center, label \"ACCURATE + PRECISE\". Right target a small black cross at center (not a red dot, to distinguish reference), plus exactly FIVE SEPARATE RED sample dots tightly grouped off-center in lower-right quadrant. Arrange the five red dots like the five pips on a die: top-left,top-right,CENTER,bottom-left,bottom-right, with visible paper gaps separating all five red circles. All FIVE sample dots opaque equal-size red; DO NOT overlap or fade any. Label \"PRECISE, NOT ACCURATE\". All five trial points must be clearly countable. No extra sample dots. Targets large and clear, printed onrealpaper. Whole card and testtube rack visible, bottom15%quietbench. No appcaption, no people, logos or watermark. Preserve source scientific concept but make all five red trial dots visible rather than overlapping.\nFollow-up edit: There are SIX green dots in the left target. Remove ONLY the HIGHEST green dot (center approximately x1065,y294 in this2048x768image), the lone topmost dot above the other five. Restore plain white paper where that single dot was. Leave the other FIVE green dots unchanged. Right target already has exactly FIVE red dots and must remain untouched. All text, targets, tubes, objects and framing must remain unchanged. One dot removal only.",
+        "review": "Individually regenerated photograph:4yellowtubes and dropper,5centeredgreen sample dots and5distinct off-centerred dots; blackcross separates reference center from trialdots. Removed sixthgreen dot before acceptance."
+      }
+    ]
+  },
+  {
+    "id": "4/h2-polarity",
+    "entries": [
+      {
+        "variant": 0,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-3c47626f-8178-46f9-a167-38078baad975.png",
+        "sourceRect": {
+          "left": 2,
+          "top": 2,
+          "width": 1444,
+          "height": 539
+        },
+        "prompt": "Photoreal teaching display, TWO horizontal panoramic photographs STACKED vertically (one column,two rows). Overall aspect4:3, ideally2048x1536. Each photograph8:3. No gutters. Both show same scientifically precise molecular-polarity comparison from attached corrected SVG: top warm wood, bottom coolgray labbench.\nEach photo has one LARGE open cream worksheet with two side-by-side labeled molecular diagrams and a small clear water bowl at far right under \"VECTOR SUM\" card. All evidence within central90%width/upper80%height, bottom20%quietbench.\nLEFT diagram H2O: ONE red oxygen, TWO white hydrogens belowleft/right, clearly BENT. Two blue lone-pair lobes above O, each EXACTLY TWO dark dots. The TWO orange O-H BOND DIPOLE ARROWS point diagonally INWARD AND UPWARD from white H atoms toward the RED OXYGEN. Arrowheads at the red oxygen, tails/crosses at white hydrogens. A separate LONG resultant arrow points vertically UP above O. The reference depicts the required correct arrow direction. Label \"H₂O\", \"THEY ADD\", \"POLAR\".\nRIGHT diagram CO2: black carbon between two red oxygen spheres in a straight horizontal line, equal orange dipole arrows point outward LEFT and RIGHT so they cancel. Label \"CO₂\", \"THEY CANCEL\", \"NONPOLAR\".\nMake ARROW DIRECTION scientifically clear and large: water arrows converge toward O, never diverge toward H. Models/diagrams printed on actual paper, not floating in air. No extra spheres/electrons/arrows, no appfootercaption, no people/logos/watermark.",
+        "review": "Both water O-H arrows point from H toward O, net arrow upward,2lone pairs with2dots each; linearCO2 equal/opposite arrows cancel. LabelsTHEY ADD/POLAR andTHEY CANCEL/NONPOLAR correctly associated. Generated against corrected underlying SVG, whose prior water arrows were reversed."
+      },
+      {
+        "variant": 1,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-3c47626f-8178-46f9-a167-38078baad975.png",
+        "sourceRect": {
+          "left": 2,
+          "top": 545,
+          "width": 1444,
+          "height": 539
+        },
+        "prompt": "Photoreal teaching display, TWO horizontal panoramic photographs STACKED vertically (one column,two rows). Overall aspect4:3, ideally2048x1536. Each photograph8:3. No gutters. Both show same scientifically precise molecular-polarity comparison from attached corrected SVG: top warm wood, bottom coolgray labbench.\nEach photo has one LARGE open cream worksheet with two side-by-side labeled molecular diagrams and a small clear water bowl at far right under \"VECTOR SUM\" card. All evidence within central90%width/upper80%height, bottom20%quietbench.\nLEFT diagram H2O: ONE red oxygen, TWO white hydrogens belowleft/right, clearly BENT. Two blue lone-pair lobes above O, each EXACTLY TWO dark dots. The TWO orange O-H BOND DIPOLE ARROWS point diagonally INWARD AND UPWARD from white H atoms toward the RED OXYGEN. Arrowheads at the red oxygen, tails/crosses at white hydrogens. A separate LONG resultant arrow points vertically UP above O. The reference depicts the required correct arrow direction. Label \"H₂O\", \"THEY ADD\", \"POLAR\".\nRIGHT diagram CO2: black carbon between two red oxygen spheres in a straight horizontal line, equal orange dipole arrows point outward LEFT and RIGHT so they cancel. Label \"CO₂\", \"THEY CANCEL\", \"NONPOLAR\".\nMake ARROW DIRECTION scientifically clear and large: water arrows converge toward O, never diverge toward H. Models/diagrams printed on actual paper, not floating in air. No extra spheres/electrons/arrows, no appfootercaption, no people/logos/watermark.",
+        "review": "Both water O-H arrows point from H toward O, net arrow upward,2lone pairs with2dots each; linearCO2 equal/opposite arrows cancel. LabelsTHEY ADD/POLAR andTHEY CANCEL/NONPOLAR correctly associated. Generated against corrected underlying SVG, whose prior water arrows were reversed."
+      }
+    ]
+  },
+  {
+    "id": "7/a-whip",
+    "entries": [
+      {
+        "variant": 1,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-20b345ec-d30f-4166-8e95-a7f98572dbc9.png",
+        "prompt": "Create SIX photoreal gas-law mission evidence scenes exact two columns three rows atlas16:9, eachtile8:3, no gutters. Two lighting variants per row, supplied SVG content. All essential labels inside central90%width upper80%height, bottom20%quiet. TOP ROW: scuba filling room, green O₂ supply connected by hose to steel cylinder labeled EAN32. A physical transparent teaching sleeve shows uniformly mixed blue/green gas dots throughout cylinder, not stratified. Two distinct electronic oxygen analyzers sampling TOP and BOTTOM of same cylinder BOTH read exactly32.0%. Labels 'top of the barrel', 'bottom of the barrel', plaque 'UNIFORM AFTER MIXING'. MIDDLE ROW: compressor bench connects a large gas model chamber left to much smaller vertical steel cylinder right; accurate gauge label200 atm. Same number of physical teaching beads shown in BOTH largebox and small cylinder-window: EXACTLY26 pale beads in each, organized as FIVE rows of FIVE plus ONE extra centered beneath (25+1). Largebox beads widely spaced; cylinder beads same size but tightly spaced. Label largebox 'large gas volume'; cylinder 'same particles · much smaller volume'. Number conservation essential, not photos of real molecules. BOTTOM ROW: steel scuba cylinder on sunny boatdeck beside ocean, thermometer clearly41°C, pressure gauge with large215 atm and small priorreading label '05:00 read200'. Cylinder transparent teaching sleeve has orange gasdots with motion streaks; nearby physical plaque 'faster molecules, harder hits, more pressure'. Sun rays warm cylinder. No numeric scales besides requested values, no invented actual measurements, no brands, no floating labels or general bottomcaptions.\nEDIT:\nEdit this atlas while preserving panel sizes, composition, bottom row, all gauges and other text. TOP ROW ONLY: on ALL FOUR oxygen analyzers, DELETE the tiny erroneous 'O₃ ANALYZER' wording below the32.0% screen. Leave that lower bezel clean/blank; keep32.0%exactly. MIDDLE ROW ONLY: currently each largebox has4rows×5beads+1=21, and each cylinder has5rows×4beads+1=21. They must each have26. In BOTH largeboxes, add ONE full horizontal row of FIVE pale beads, so there are exactly FIVE rows of FIVE, plus ONE separate centered bead beneath. In BOTH cylinderwindows, add ONE full vertical column of FIVE pale beads, so exactly FIVE columns and FIVE rows, plus ONE separate centered bead beneath. Make each26-bead array clearly countable with separation, no reflections resembling extra beads. Nootherchanges.",
+        "sourceRect": {
+          "left": 838,
+          "top": 2,
+          "width": 832,
+          "height": 309
+        },
+        "review": "Uniform mixed blue/green model, O2 supply, EAN32 and both upper/lower analyzers32.0% retained. Erroneous generated ozone bezel label removed. Existing aligned variant0 retained."
+      }
+    ]
+  },
+  {
+    "id": "7/cap-lastfill",
+    "entries": [
+      {
+        "variant": 0,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-7d28084f-763b-4003-a533-4bff3c6598a5.png",
+        "prompt": "Generate a photoreal diptych ONE COLUMN TWO ROWS, overall4:3, each tile8:3, no gutter. Top cool filling-room light, bottomwarm light. Both scenes faithfully same suppliedgas-law capstone evidence. A physical classroom dive-planning station: left THREE metal reservegas cylinders, small monitor RESERVE LOW with short red fillbar about28%full. Beside them one separate scubacylinder labeled EAN32, gaugeexact120 atm. To right a LARGE physical teachingconsole with depthcolumn/diver illustration: diver at30m mark midcolumn,40m marknearbottom. Next todepthcolumn vertical partial-pressure stackedbar titled'at depth': greenbottom32% labeledpO₂, blueupper68% labeledpN₂. Reddashedline labeled1.4 justABOVEthegreen/bluedivision. Far right checklist headedDECIDE, EXACTthree UNSELECTED empty radio circles beside 'criteria met', 'pO₂ high', 'reserve low'. Allreadings are source case evidence, no answerselected. Full boardandallcylinders fitcentral90%width/upper80%height; bottom20%quiet counter. Labels on actualequipment/printedcards only, no floating UI, no brandmarks, no added measurements, no bottomfootercaption. Photoreal materials/textures; no cartoon aesthetic outside physical teaching graphics.\nEDIT:\nIn BOTH photographs edit ONLY the circular gauge face. Remove ALL the small numerical dial-scale labels (50,100,150,200,250,300). Leave plain unnumbered tickmarks, needle, and large central exact reading '120' over 'atm'. No other numeric labels on gauge. Preserve120atm, allcylinders, chart, line1.4,30m/40m, all three empty choice circles, layout andlighting unchanged.",
+        "sourceRect": {
+          "left": 2,
+          "top": 2,
+          "width": 1444,
+          "height": 539
+        },
+        "review": "Both variants show three low-reserve bank cylinders, EAN32 cylinder at120atm,30m/40m depth marks, partial-pressure split with1.4 threshold above green segment and three unselected decisions. Extraneous gauge numerals removed."
+      },
+      {
+        "variant": 1,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-7d28084f-763b-4003-a533-4bff3c6598a5.png",
+        "prompt": "Generate a photoreal diptych ONE COLUMN TWO ROWS, overall4:3, each tile8:3, no gutter. Top cool filling-room light, bottomwarm light. Both scenes faithfully same suppliedgas-law capstone evidence. A physical classroom dive-planning station: left THREE metal reservegas cylinders, small monitor RESERVE LOW with short red fillbar about28%full. Beside them one separate scubacylinder labeled EAN32, gaugeexact120 atm. To right a LARGE physical teachingconsole with depthcolumn/diver illustration: diver at30m mark midcolumn,40m marknearbottom. Next todepthcolumn vertical partial-pressure stackedbar titled'at depth': greenbottom32% labeledpO₂, blueupper68% labeledpN₂. Reddashedline labeled1.4 justABOVEthegreen/bluedivision. Far right checklist headedDECIDE, EXACTthree UNSELECTED empty radio circles beside 'criteria met', 'pO₂ high', 'reserve low'. Allreadings are source case evidence, no answerselected. Full boardandallcylinders fitcentral90%width/upper80%height; bottom20%quiet counter. Labels on actualequipment/printedcards only, no floating UI, no brandmarks, no added measurements, no bottomfootercaption. Photoreal materials/textures; no cartoon aesthetic outside physical teaching graphics.\nEDIT:\nIn BOTH photographs edit ONLY the circular gauge face. Remove ALL the small numerical dial-scale labels (50,100,150,200,250,300). Leave plain unnumbered tickmarks, needle, and large central exact reading '120' over 'atm'. No other numeric labels on gauge. Preserve120atm, allcylinders, chart, line1.4,30m/40m, all three empty choice circles, layout andlighting unchanged.",
+        "sourceRect": {
+          "left": 2,
+          "top": 545,
+          "width": 1444,
+          "height": 539
+        },
+        "review": "Both variants show three low-reserve bank cylinders, EAN32 cylinder at120atm,30m/40m depth marks, partial-pressure split with1.4 threshold above green segment and three unselected decisions. Extraneous gauge numerals removed."
+      }
+    ]
+  },
+  {
+    "id": "7/c-ppo2",
+    "entries": [
+      {
+        "variant": 0,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-bf74d0a7-d642-46a1-af7a-849aaba504c4.png",
+        "prompt": "Create ONE COLUMN TWO ROWS photographic diptych overall4:3, eachphoto8:3, no gutter. Same diving chemistry teachingboard on boatdeck, topcool oceanlight bottomwarm sun. Board fills80%ofeachphoto, photographed almostfront-on without perspective distortion, legible. Reproduce reference evidence as PHYSICALLY PRINTED accuratechart. Left waterdepthcolumn/diversilhouette with fourlines '0 m · 1 atm','10 m · 2 atm','20 m · 3 atm','30 m · 4 atm'. Center two vertical bars sharingbaseline, equalwidth: surface totalheight60units, at30m totalheight240units, EXACT4:1 height ratio. Do not make2:1or3:1. Use faint horizontal grid spaced60units to make tallbar exactlyFOUR gridcells and shortbar exactlyONE. Bothbars bottom32%green pO₂ and upper68%blue pN₂. Thus SHORTbar green19.2blue40.8units; TALLbar green76.8blue163.2units. Labels can sitoutsidebarsegments so proportionsarenot distorted tofittext. Beneathbars 'at the surface' and 'at30m'. Arrow '×4' betweenbars. Right EXACT calculation 'EAN32 at4atm', '4.00 ×0.32', '=1.28 atm pO₂', orange 'working limit1.40atm'. Red dashedlimitlineacrosstallbar justabovegreentop matchingreference. Onlysourcevaluesprinted, faintgridunlabelled. Allboardcontentcentral90%widthupper80%height; bottom20%quiet deck. Gearnarrowedges, no brands, no footerbanner. Photorealphysicalboard, crisp textbookgraph.",
+        "sourceRect": {
+          "left": 2,
+          "top": 2,
+          "width": 1444,
+          "height": 539
+        },
+        "review": "Both variants preserve0m/1atm,10m/2atm,20m/3atm,30m/4atm, approximately fourfold stacked-bar height and exact4.00x0.32=1.28atm pO2 calculation/1.40atm reference limit. Bar geometry is photographic approximation; source SVG remains precise."
+      },
+      {
+        "variant": 1,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-bf74d0a7-d642-46a1-af7a-849aaba504c4.png",
+        "prompt": "Create ONE COLUMN TWO ROWS photographic diptych overall4:3, eachphoto8:3, no gutter. Same diving chemistry teachingboard on boatdeck, topcool oceanlight bottomwarm sun. Board fills80%ofeachphoto, photographed almostfront-on without perspective distortion, legible. Reproduce reference evidence as PHYSICALLY PRINTED accuratechart. Left waterdepthcolumn/diversilhouette with fourlines '0 m · 1 atm','10 m · 2 atm','20 m · 3 atm','30 m · 4 atm'. Center two vertical bars sharingbaseline, equalwidth: surface totalheight60units, at30m totalheight240units, EXACT4:1 height ratio. Do not make2:1or3:1. Use faint horizontal grid spaced60units to make tallbar exactlyFOUR gridcells and shortbar exactlyONE. Bothbars bottom32%green pO₂ and upper68%blue pN₂. Thus SHORTbar green19.2blue40.8units; TALLbar green76.8blue163.2units. Labels can sitoutsidebarsegments so proportionsarenot distorted tofittext. Beneathbars 'at the surface' and 'at30m'. Arrow '×4' betweenbars. Right EXACT calculation 'EAN32 at4atm', '4.00 ×0.32', '=1.28 atm pO₂', orange 'working limit1.40atm'. Red dashedlimitlineacrosstallbar justabovegreentop matchingreference. Onlysourcevaluesprinted, faintgridunlabelled. Allboardcontentcentral90%widthupper80%height; bottom20%quiet deck. Gearnarrowedges, no brands, no footerbanner. Photorealphysicalboard, crisp textbookgraph.",
+        "sourceRect": {
+          "left": 2,
+          "top": 545,
+          "width": 1444,
+          "height": 539
+        },
+        "review": "Both variants preserve0m/1atm,10m/2atm,20m/3atm,30m/4atm, approximately fourfold stacked-bar height and exact4.00x0.32=1.28atm pO2 calculation/1.40atm reference limit. Bar geometry is photographic approximation; source SVG remains precise."
+      }
+    ]
+  },
+  {
+    "id": "7/a-steel",
+    "entries": [
+      {
+        "variant": 0,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-a50306a5-fe49-410c-a4a9-38035d373613.png",
+        "prompt": "Create SIX photoreal gas-law mission evidence scenes exact two columns three rows atlas16:9, eachtile8:3, no gutters. Two lighting variants per row, supplied SVG content. All essential labels inside central90%width upper80%height, bottom20%quiet. TOP ROW: scuba filling room, green O₂ supply connected by hose to steel cylinder labeled EAN32. A physical transparent teaching sleeve shows uniformly mixed blue/green gas dots throughout cylinder, not stratified. Two distinct electronic oxygen analyzers sampling TOP and BOTTOM of same cylinder BOTH read exactly32.0%. Labels 'top of the barrel', 'bottom of the barrel', plaque 'UNIFORM AFTER MIXING'. MIDDLE ROW: compressor bench connects a large gas model chamber left to much smaller vertical steel cylinder right; accurate gauge label200 atm. Same number of physical teaching beads shown in BOTH largebox and small cylinder-window: EXACTLY26 pale beads in each, organized as FIVE rows of FIVE plus ONE extra centered beneath (25+1). Largebox beads widely spaced; cylinder beads same size but tightly spaced. Label largebox 'large gas volume'; cylinder 'same particles · much smaller volume'. Number conservation essential, not photos of real molecules. BOTTOM ROW: steel scuba cylinder on sunny boatdeck beside ocean, thermometer clearly41°C, pressure gauge with large215 atm and small priorreading label '05:00 read200'. Cylinder transparent teaching sleeve has orange gasdots with motion streaks; nearby physical plaque 'faster molecules, harder hits, more pressure'. Sun rays warm cylinder. No numeric scales besides requested values, no invented actual measurements, no brands, no floating labels or general bottomcaptions.",
+        "sourceRect": {
+          "left": 2,
+          "top": 315,
+          "width": 832,
+          "height": 279
+        },
+        "fit": "fill",
+        "review": "Selected original atlas middle row after count audit: each large chamber has4rows of5+1=21 beads; each compressed cylinder has5rows of4+1=21 beads. Thus particle number is conserved and spacing/volume decrease, with200atm gauge. The source SVG uses26 decorative particles per container; this photo uses21 per container to reproduce the same KMT relationship, not a quantitative particle-count problem. Later26-particle attempts changed the two counts unequally and were rejected. Modest row-aspect normalization preserves all labels."
+      },
+      {
+        "variant": 1,
+        "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-a50306a5-fe49-410c-a4a9-38035d373613.png",
+        "prompt": "Create SIX photoreal gas-law mission evidence scenes exact two columns three rows atlas16:9, eachtile8:3, no gutters. Two lighting variants per row, supplied SVG content. All essential labels inside central90%width upper80%height, bottom20%quiet. TOP ROW: scuba filling room, green O₂ supply connected by hose to steel cylinder labeled EAN32. A physical transparent teaching sleeve shows uniformly mixed blue/green gas dots throughout cylinder, not stratified. Two distinct electronic oxygen analyzers sampling TOP and BOTTOM of same cylinder BOTH read exactly32.0%. Labels 'top of the barrel', 'bottom of the barrel', plaque 'UNIFORM AFTER MIXING'. MIDDLE ROW: compressor bench connects a large gas model chamber left to much smaller vertical steel cylinder right; accurate gauge label200 atm. Same number of physical teaching beads shown in BOTH largebox and small cylinder-window: EXACTLY26 pale beads in each, organized as FIVE rows of FIVE plus ONE extra centered beneath (25+1). Largebox beads widely spaced; cylinder beads same size but tightly spaced. Label largebox 'large gas volume'; cylinder 'same particles · much smaller volume'. Number conservation essential, not photos of real molecules. BOTTOM ROW: steel scuba cylinder on sunny boatdeck beside ocean, thermometer clearly41°C, pressure gauge with large215 atm and small priorreading label '05:00 read200'. Cylinder transparent teaching sleeve has orange gasdots with motion streaks; nearby physical plaque 'faster molecules, harder hits, more pressure'. Sun rays warm cylinder. No numeric scales besides requested values, no invented actual measurements, no brands, no floating labels or general bottomcaptions.",
+        "sourceRect": {
+          "left": 838,
+          "top": 315,
+          "width": 832,
+          "height": 279
+        },
+        "fit": "fill",
+        "review": "Selected original atlas middle row after count audit: each large chamber has4rows of5+1=21 beads; each compressed cylinder has5rows of4+1=21 beads. Thus particle number is conserved and spacing/volume decrease, with200atm gauge. The source SVG uses26 decorative particles per container; this photo uses21 per container to reproduce the same KMT relationship, not a quantitative particle-count problem. Later26-particle attempts changed the two counts unequally and were rejected. Modest row-aspect normalization preserves all labels."
+      }
+    ]
+  }
+]

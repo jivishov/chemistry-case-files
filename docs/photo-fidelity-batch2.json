@@ -1,0 +1,22 @@
+{
+  "id": "unit3-batch2",
+  "ids": [
+    "3/b-remote",
+    "3/b-contact",
+    "3/b-plastic"
+  ],
+  "prompt": "Translate the attached 2-column by 3-row reference into ONE PHOTOGRAPHIC ATLAS with six independent 8:3 photographs in exactly the same order. Exact 2 columns, 3 rows, no gutters or borders. Each scene fills its own tile. Left column warm wood, right column gray lab bench with a slightly different camera angle. Genuine photographed materials with realistic texture and lighting, not vector or rendered diagrams. Keep the reference's evidence as legible printed cream paper labels alongside physical objects. Keep bottom 15% of every tile as quiet tabletop for an app caption; omit reference bottom captions. All labels and values must be exact.\nTOP ROW: An open remote battery compartment with white leaked residue, and a removed alkaline AA cell, labeled \"leaked electrolyte\" and \"alkaline AA\". Printed evidence card \"KOH electrolyte\", \"K: Group 1\", \"K+ in KOH\", element tile \"K\" \"+1\". Another card \"remove cells / follow guidance\" and \"seal failure caused the leak\". Preserve the distinction: seal failure causes leakage, ion charge identifies potassium.\nMIDDLE ROW: TWO small identical green circuit boards, left contact black/tarnished with label \"silver plated\" and \"sim score 8\", right contact clean golden with label \"gold plated\" and \"sim score 3\", a glass magnifier over gold. Group 11 vertical element cards Cu, Ag, Au. Printed notes \"same group → conductors, both metals\" and \"different element → corrosion behavior differs\". The dark silver contact and bright gold contact must contrast.\nBOTTOM ROW: broken dark electronic plastic enclosure with clear material label \"> ABS-FR <\" and \"brominated\". Nearby element card \"Br\" \"-1\" and text \"Group 17\", \"7 valence e-\", \"common ion -1\". On the right two small waste collection bins, cyan-lined \"electronics\" and gray \"household\"; a diagonal orange prohibition line across household bin ONLY, with header \"disposal follows guidance\". No people, hands, logos, watermarks, or invented text. Faithfully copy evidence from the reference but make physical objects and printed notes photorealistic.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-7fe2ff33-785f-4d48-930a-69024866587d.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    314,
+    627,
+    941
+  ],
+  "review": "Both variants visually compared with SVG: leaking alkaline cell and KOH/Group 1/K+ evidence with seal-failure explanation; tarnished silver vs bright gold contacts with scores 8/3 and Cu/Ag/Au Group 11 evidence; brominated broken ABS-FR casing, Br -1/Group 17/7 valence electrons and separate electronics vs prohibited household bins. Actual seams inspected."
+}

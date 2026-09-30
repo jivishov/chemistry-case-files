@@ -1,4 +1,4 @@
-import { createSceneMedia } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
+import { createSceneMedia } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // main.js — Unit 1 view-model (Practices, Measurement & Matter, SEP C.1-C.4).
 // The simulation mechanics are unchanged; student-facing wording emphasizes direct
 // chemistry instruction and clearly distinguishes simulation scores/thresholds from

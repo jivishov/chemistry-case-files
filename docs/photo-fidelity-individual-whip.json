@@ -1,0 +1,17 @@
+{
+  "id": "7/a-whip",
+  "entries": [
+    {
+      "variant": 1,
+      "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-20b345ec-d30f-4166-8e95-a7f98572dbc9.png",
+      "prompt": "Create SIX photoreal gas-law mission evidence scenes exact two columns three rows atlas16:9, eachtile8:3, no gutters. Two lighting variants per row, supplied SVG content. All essential labels inside central90%width upper80%height, bottom20%quiet. TOP ROW: scuba filling room, green O₂ supply connected by hose to steel cylinder labeled EAN32. A physical transparent teaching sleeve shows uniformly mixed blue/green gas dots throughout cylinder, not stratified. Two distinct electronic oxygen analyzers sampling TOP and BOTTOM of same cylinder BOTH read exactly32.0%. Labels 'top of the barrel', 'bottom of the barrel', plaque 'UNIFORM AFTER MIXING'. MIDDLE ROW: compressor bench connects a large gas model chamber left to much smaller vertical steel cylinder right; accurate gauge label200 atm. Same number of physical teaching beads shown in BOTH largebox and small cylinder-window: EXACTLY26 pale beads in each, organized as FIVE rows of FIVE plus ONE extra centered beneath (25+1). Largebox beads widely spaced; cylinder beads same size but tightly spaced. Label largebox 'large gas volume'; cylinder 'same particles · much smaller volume'. Number conservation essential, not photos of real molecules. BOTTOM ROW: steel scuba cylinder on sunny boatdeck beside ocean, thermometer clearly41°C, pressure gauge with large215 atm and small priorreading label '05:00 read200'. Cylinder transparent teaching sleeve has orange gasdots with motion streaks; nearby physical plaque 'faster molecules, harder hits, more pressure'. Sun rays warm cylinder. No numeric scales besides requested values, no invented actual measurements, no brands, no floating labels or general bottomcaptions.\nEDIT:\nEdit this atlas while preserving panel sizes, composition, bottom row, all gauges and other text. TOP ROW ONLY: on ALL FOUR oxygen analyzers, DELETE the tiny erroneous 'O₃ ANALYZER' wording below the32.0% screen. Leave that lower bezel clean/blank; keep32.0%exactly. MIDDLE ROW ONLY: currently each largebox has4rows×5beads+1=21, and each cylinder has5rows×4beads+1=21. They must each have26. In BOTH largeboxes, add ONE full horizontal row of FIVE pale beads, so there are exactly FIVE rows of FIVE, plus ONE separate centered bead beneath. In BOTH cylinderwindows, add ONE full vertical column of FIVE pale beads, so exactly FIVE columns and FIVE rows, plus ONE separate centered bead beneath. Make each26-bead array clearly countable with separation, no reflections resembling extra beads. Nootherchanges.",
+      "sourceRect": {
+        "left": 838,
+        "top": 2,
+        "width": 832,
+        "height": 309
+      },
+      "review": "Uniform mixed blue/green model, O2 supply, EAN32 and both upper/lower analyzers32.0% retained. Erroneous generated ozone bezel label removed. Existing aligned variant0 retained."
+    }
+  ]
+}

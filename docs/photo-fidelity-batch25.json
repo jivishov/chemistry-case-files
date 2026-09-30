@@ -1,0 +1,22 @@
+{
+  "id": "unit5-batch25",
+  "ids": [
+    "5/c-ore",
+    "5/c-greenhouse",
+    "5/c-fuelpurity"
+  ],
+  "prompt": "Create six photoreal science-fiction chemistry mission photos, TWO columns THREE rows, overall16:9 ideally2560x1440, tiles8:3 source order, no gutters. Warm cabin/workshop left and coolgray right. All essential labels/evidence central90%width upper80%height, bottom20%quiet bench. Physical objects and equipment displays, no floating UI/appfooters, preserve unknown percentages.\nTOP ROW: planetary workshop bench with rusty red hematite rock sample on tray, card \"HEMATITE SAMPLE\", tag \"Fe ?\". At left upright cross-section rock slab showing rust-red vein. Beside sample physical circular data display amber incomplete ring with \"?\" above \"% Fe\", NO numeric percentage. In background/right small foundry furnace glowing orange at opening, clearly labeled \"FOUNDRY\". Keep ore and proposed extraction context.\nMIDDLE ROW: sealed blue fertilizer jug label EXACT \"N-P-K\" and \"% N ?\". Beside it small instrument/card circle amberring with \"?\"/\"% N\". Directional arrow printed on tray leads toward compact transparent domed greenhouse with THREE green plants in soil, visible overheadgrowlight. Unknown nitrogen mass fraction remainsunknown. No fertilizerbrand/numericNPKratio.\nBOTTOM ROW: horizontally mounted blue metal fuel tank secured to dockingfixture labeled \"DOCKED POD\"; large \"CH₄\" on tank. Tank connects toward central physical fuel-report display amberring with \"?\" above \"% C\", below \"% BY MASS\". At right a silver rocket thruster nozzle, unlit, associated with fuel line/report. Label exactformula CH4 and carbonpercentageunknown; no numericpurity or mass answer. Whole tank/report/nozzle visible. Cinematic but plausible physical materials, no people/logos/watermark.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-838e8b3c-4468-4249-a929-e02f57fafc70.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    318,
+    610,
+    941
+  ],
+  "review": "Both variants show hematite/unknownFe percent and lit foundry; N-P-K unknown nitrogen percent and three greenhouse plants; dockedCH4 tank with unknown carbon mass percentage and unlit thruster. No computed composition answers added."
+}

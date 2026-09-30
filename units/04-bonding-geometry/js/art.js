@@ -871,8 +871,9 @@ export const SCENE_ART = {
       // left: bent, dipoles add
       + `<circle cx="84" cy="48" r="38" fill="#221709" stroke="${C.copper}" stroke-width="1.6"/>`
       + mol2d(84, 42, 'bent', { k, central: 'O', ligand: 'H', s: .92, bond: 23, id: 'p1' })
-      + dipole(72, 58, -.79, .61, 18, { color: '#f0c98a' })
-      + dipole(96, 58, .79, .61, 18, { color: '#f0c98a' })
+      // O-H bond dipoles point toward oxygen and reinforce the upward net dipole.
+      + dipole(72, 58, .79, -.61, 18, { color: '#f0c98a' })
+      + dipole(96, 58, -.79, -.61, 18, { color: '#f0c98a' })
       + dipole(84, 30, 0, -1, 22, { color: C.ember })
       + mono(84, 96, 'THEY ADD', { size: 7.5, fill: C.ember, w: 700, ls: '.06em' })
       // right: linear, dipoles cancel

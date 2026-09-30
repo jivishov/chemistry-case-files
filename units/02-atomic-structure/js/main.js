@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // main.js — Unit 2 view-model (Atomic Structure & Theory, C.6 + C.5B).
 import {
   ATOMIC_MODELS, BUILD_SET, ISOTOPE_ELEMENTS, SPECTRA,

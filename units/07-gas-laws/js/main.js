@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=diffusion-photo-20260927-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // main.js: Unit 7 view-model (Gas Laws & Kinetic Molecular Theory, C.10).
 import {
   KMT_POSTULATES, KMT_QUIZ, GAS_LAWS, RELATIONSHIPS, DALTON_GASES,

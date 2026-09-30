@@ -1,0 +1,22 @@
+{
+  "id": "unit4-batch17",
+  "ids": [
+    "4/a-white-jar",
+    "4/a-gas-ring",
+    "4/a-tap-water"
+  ],
+  "prompt": "Make a photoreal evidence atlas, TWO columns THREE rows, overall16:9, ideally2560x1440. Each tile8:3, same reference order; no gutters. Left warm kitchen, right cooler gray kitchen, two distinct photos. Keep essential evidence central90%width upper80%height of each photo, bottom20%quiet countertop. Photograph real objects and real printed educational cards/models, no floating UI, no footer captions.\nTOP ROW: glass jar of white crystalline granules with gold lid and small label exactly \"Na Cl\" (space between Na and Cl), a metal spoon containing white granules beside jar, and an empty frying pan to right. A cream evidence card reads \"ALL THE LABEL HAS\", then \"Na\" on one line and \"Cl\" below. A small physical question-mark card between jar/spoon and pan. Do not label it sodium chloride or provide a bonding classification, preserve unknown.\nMIDDLE ROW: a gas hob burner with VISIBLE small blue/orange FLAMES, metal gas feed line at left. Behind/alongside it, a printed teaching card titled \"CH4 IN THE LINE\" showing THREE methane ball-and-stick models, each one central black carbon bonded to EXACTLY FOUR white hydrogen spheres in tetrahedral arrangement. Another card \"MOLECULAR GAS\" with three upward printed dashed arrows. Models belong to paper teaching diagram, not literal giant molecules in real fuel line. Never show unlit burner.\nBOTTOM ROW: chrome faucet RUNNING clear water into shallow metal sink. Left a small glass jar with white crystals, gold lid, label \"?\". At right an upright cream educational card headed \"O + H\", with a ball-and-stick WATER model: ONE red oxygen bonded to TWO white hydrogens in clearly BENT V geometry; two subtle blue lone-pair lobes with two small dots each ABOVE oxygen. Printed caption \"POLAR MOLECULE\". Do not make molecule linear or add hydrogens. Bright readable physical evidence, natural light, no people, brands, watermark.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-4dd98d24-3489-494f-afd1-0a01b82dae87.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    301,
+    599,
+    941
+  ],
+  "review": "Both white jars retain Na/Cl-only label evidence, spoon/pan and unresolved classification. Burners are lit and each methane model has four hydrogens; gas feed and molecular-gas cues retained. Running tap and unknown jar accompany bent water models with2H and two electron-pair lobes."
+}

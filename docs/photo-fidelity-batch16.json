@@ -1,0 +1,20 @@
+{
+  "id": "unit1-batch16",
+  "ids": [
+    "1/h2-kitcall",
+    "1/cap-waterchange"
+  ],
+  "prompt": "Create FOUR photoreal educational mission photos as EXACTLY TWO columns TWO rows. Overall aspect ratio8:3, ideally2560x960. Each individual photo8:3. No gutters/borders. Match source order, left warmwood and right graysciencebench. Essential evidence central90%width and upper80%height; bottom20% quiet surface. Actual physical objects and printed worksheets, no floating graphics or UI captions. Do not solve unknowns.\nTOP ROW: one open cream paper worksheet containing two printed concentric-ring circular targets separated by a small cream inset. Left target has red bullseye and exactly FIVE yellow sample dots scattered widely around center (one aboveleft,oneaboveright,onefarright,onebelowleft,onebelowright). Label \"SCATTER\", note \"check reagent / technique\". Middle inset \"s = ?\" with \"STANDARD DEVIATION\" underneath, no numeric answer. Right target red bullseye with FIVE orange sample dots tightly clustered well away from center toward lower-right, label \"BIAS\", note \"independent reference\". Show clear distinction of broad scatter vs tight displaced cluster. Entire worksheet flat on desk with a pencil beside it.\nBOTTOM ROW: aquarium left, clear round temporary fish-holding bucket right. Aquarium contains water,gravel,three green plants and an air tube producing bubbles but ABSOLUTELY NO FISH. Bucket contains SIX small fish waiting: threeorange,twoblue,onegreen, in clear water. Cream label \"WAITING\" above bucket. Between tank and bucket a small printed cream card with a dashed horizontal line and a large question mark \"?\", showing decision pending. Do NOT put any fish in main aquarium and do not show fish being transferred. No arrows selecting an answer or extra chemicals/equipment. Natural photographic lighting, no people, brand names or watermarks.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-ec022546-c7a9-4dea-ac14-425fb9ba7327.png",
+  "xBoundaries": [
+    0,
+    1024,
+    2048
+  ],
+  "yBoundaries": [
+    0,
+    384,
+    768
+  ],
+  "review": "Both variants distinguish five widely scattered yellow points from five off-center clustered orange points, leave s unknown and retain different follow-up cues. Water-change photos show no fish in aquarium; all six fish remain in waiting bucket (3orange,2blue,1green), decision? unresolved."
+}

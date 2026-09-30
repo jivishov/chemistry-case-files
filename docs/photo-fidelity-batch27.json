@@ -1,0 +1,22 @@
+{
+  "id": "unit5-batch27",
+  "ids": [
+    "5/h1-desiccant",
+    "5/h2-arson",
+    "5/cap-pod"
+  ],
+  "prompt": "Generate a contact atlas of six photoreal chemistry mission photographs, EXACT two columns and three rows, no gutters, overall16:9 (2560x1440 preferred), each panel8:3. Each row shows same evidence in two lighting variations, warm orbital station and cool laboratory. Match supplied diagram content. Keep all critical evidence within central90%width and upper80%height; bottom20% quiet tabletop. No floating infographic labels: all text on real physical apparatus or evidence screens. TOP ROW: compact spacecraft laboratory RECLAIM OVEN with visible upper/lower heating coils and tray holding FIVE pale-blue hydrate crystal chunks. Label on tray '·x H₂O', visible water vapor leaving vent. Adjacent physical dark screen headed 'H₂O DRIVEN OFF' with blue water-drop icon and '? g'. Preserve unknown x and unknown grams; no answer numbers. MIDDLE ROW: combustion analysis evidence apparatus: enclosed rectangular combustion chamber showing small orange flame under dark sample on dish; tubing from top right runs horizontally to TWO distinct transparent spherical collection vessels. First vessel labeled 'H₂O' contains cyan-tinted water half full; second vessel labeled 'CO₂' is clear and dry with a printed red-gray-red linear molecular symbol on glass (three balls only, central gray), and a physical magnifying glass to its right. Apparatus illustrates separate water and carbon dioxide products; don't put flames below collection flasks or extra products. BOTTOM ROW: horizontally mounted silver cylindrical resupply pod with two broad straps, scuffed document label and prominent '?' on casing, in docking bay. Adjacent physical decision console has THREE equally unselected routes branching from pod: green 'BRING ABOARD', amber 'QUARANTINE', orange-red 'JETTISON', all clearly legible, no checkmarks or choice selected. Pod remains unidentified. Photoreal materials, realistic lighting and depth, no brands, no border footers or captions.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-71d34473-38e0-4a0e-81c4-7e74c884a08a.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    314,
+    612,
+    941
+  ],
+  "review": "Both variants preserve five hydrate crystals between heating coils, water vapor and unknown hydrate coefficient/water mass; combustion chamber feeding separate H2O/CO2 vessels (CO2 molecular teaching model); unidentified strapped pod and three unselected bring-aboard/quarantine/jettison options. No numeric solutions or selected route added."
+}

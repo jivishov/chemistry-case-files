@@ -1,0 +1,22 @@
+{
+  "id": "unit6-batch29",
+  "ids": [
+    "6/b-jumpkit",
+    "6/b-darkroom",
+    "6/b-ditch"
+  ],
+  "prompt": "Produce 6 photoreal chemistry-case evidence photos, exact2columns3rows atlas overall16:9, no gutters, each tile8:3. Two photographic lighting variants per mission row. Reproduce attached evidence, all material in central90%width upper80%height with bottom20%quiet scene. No floating UI; labels on physical plaques/cards/displays. TOP ROW: closeup of a skin-toned first-aid training forearm with a small mound of white bubbling foam, no flame/no heat source/no gore. Brown glass bottle beside it labeled exactly H₂O₂. Clear physical evidence card headed 'ONE BOTTLE IN'; rows 'H₂O' with TWO blue square counters and 'O₂' with ONE green square counter; footer 'TWO THINGS OUT'. Small plaque 'FOAMS COLD. NO FLAME.' Need unmistakable bubble foam and brown bottle. MIDDLE ROW: two upright glass reagent bottles labeled AgNO₃ and NaCl on darkroom workbench, with a shallow spill/petri dish between/near them containing opaque GREY-WHITE precipitated solid and damp crust; evidence tag 'AgCl(s) FORMS'. Physical teaching card 'PARTNERS TRADED' with two crossing curved lines linking opposite gray/cyan circles; footer 'ONE WILL NOT STAY DISSOLVED'. Dark red safelight background, no clear-only product. BOTTOM ROW: realistic miniature tabletop incident reconstruction: red horizontal roadside tanker labeled HCl, adjacent stopped greenish spill containing white patches; two small orange traffic cones bound the spill's right end. Faint warmth shimmer. Physical evidence card nearby reads 'HCl + NaOH', 'WARM THROUGH THE GLOVE', 'STOPPED CLIMBING'. This represents an educational neutralization model, not active cleanup instructions; no people handling chemicals or fire. Warm documentary lighting left, cool right, accurate legible labels, no brandmarks/no bottom banner captions.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-8ef25543-8fcd-4be1-9e21-5feca0f53e96.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    314,
+    628,
+    941
+  ],
+  "review": "Both variants preserve cold foam on training arm, brown H2O2 bottle and two water/one oxygen counters; AgNO3/NaCl clear reactants with grey-white AgCl solid and partner-exchange diagram; HCl roadside model with stopped spill, two cones, and warmth/stopped-climbing evidence. No invented quantities."
+}

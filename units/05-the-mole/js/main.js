@@ -1,4 +1,4 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // main.js — Unit 5 view-model (The Mole & Chemical Quantities, TEKS C.8).
 // The units_new build of Unit 5: Unit 5's world, chemistry, illustrations, case file and
 // grading spine, rendered in the mission-cockpit shell. Its two

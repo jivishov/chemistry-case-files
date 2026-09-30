@@ -1,0 +1,22 @@
+{
+  "id": "unit6-batch30",
+  "ids": [
+    "6/c-garage",
+    "6/c-depot",
+    "6/c-bobtail"
+  ],
+  "prompt": "Photograph six educational chemistry evidence scenes as exact2columns3rows atlas16:9, no gutters, each tile8:3. Match reference, with left/right lighting variants. Keep evidence central90%width upper80%height, bottom20%quiet. All text on physical boards/plaque/screens, not floating UI. TOP ROW: a clearly miniature cutaway garage incident reconstruction. Left low metal shelf, tipped tan acid container and shallow yellowish floor spill contacting zinc pieces with visible small bubbles. Right gas water heater with tiny lit pilot visible through front window. Physical small tags 'ZINC FIZZING' and 'PILOT LIT'; ceiling-mounted clear teaching overlay outlines gas collection region and reads 'H₂ COLLECTS HERE'. A horizontal dashed measurement ruler between spill area and heater marked 'NINE FEET'. Show dangerous juxtaposition as case evidence, no active person/no ignition explosion. Hydrogen is colorless; ceiling accumulation indicated by teaching overlay, not opaque real smoke. MIDDLE ROW: physical stoichiometry teaching apparatus on industrial bench: rounded horizontal transparent chamber labeled COMP, inside EXACTLY THREE cyan counters and NINE white counters (three groups each onecyan+threewhite). Clear label 'THREE H₂ FOR EVERY N₂'. Right physical calculation board titled 'CALCULATED STOICHIOMETRIC H₂ MASS', simple symbolic unnumbered gauge with small red apparatus icon at left and blankgray readout right. Footer 'STOICHIOMETRY ONLY · NOT A HAZARD ZONE'. No computed mass. BOTTOM ROW: photographed miniature road incident reconstruction: overturned/tilted silver propane bobtail tank at left, red diamond marked1075,2.1. Gray illustrative vapor plume exits rightsidevalve toward small house at far right. A yellow dashed SIM ZONE boundary stands between tanker and house, two orange cones at its base. Physical labels 'PRODUCT STILL VENTING' and 'SIMULATION ONLY'. No flames. Legible case evidence, no brandmarks, no footer banners.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-4cb8f101-076b-4020-8cdd-05ffa3fbfaa2.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    318,
+    625,
+    941
+  ],
+  "review": "Both variants retain bubbling Zn/HCl spill, ceiling H2 region, lit pilot and nine-foot relation; COMP model with three cyan/nine pale counters (third pale counter in each group is shaded), symbolic stoichiometric H2 gauge; venting tilted propane tanker, simulation boundary/two cones/house. Plumes and gas particles are physical educational models, not actual visible hydrogen."
+}

@@ -1,0 +1,9 @@
+{
+  "checkedAt": "2026-09-29T20:54:45.424Z",
+  "usedPercent": 73,
+  "remainingPercent": 27,
+  "resetUTC": "2026-10-03T17:22:53.000Z",
+  "resetCreditsAvailable": 1,
+  "stopCondition": "Stop work when remaining allowance jumps to approximately 100% after reset.",
+  "runState": "Stopped after Unit7 at user's explicit request; monitoring ended."
+}

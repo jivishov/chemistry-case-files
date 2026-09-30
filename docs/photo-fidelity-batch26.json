@@ -1,0 +1,22 @@
+{
+  "id": "unit5-batch26",
+  "ids": [
+    "5/d-leak",
+    "5/d-surface",
+    "5/d-coolant"
+  ],
+  "prompt": "Create six photoreal science-fiction educational mission photos, TWO columns THREE rows, overall16:9 ideally2560x1440, tiles8:3 in reference order, no gutters. Warm workshop left/coolgray right independent variants. Essential evidence central90%width upper80%height; bottom20%quiet surface. Scientific diagrams only on physical cards/screens, preserve unknowns, no appfootercaptions.\nTOP ROW unknown gas: spacecraft ventilation grille at left with red warninglight above and faint visible vapor escaping. Nearby a small diagnostic screen showing an UNIDENTIFIED gray three-sphere molecular sketch and a large \"?\"; do not assign elementcolors/formula. Large instrument screen right titled \"MASS SPEC\", badge \"UNKNOWN\"; cyan trace with exactly FOUR separate peaks on baseline, heights in order medium,TALLEST,short,second-tallest, horizontalaxis \"m/z\", NO numbered peaks or numeric data. Preserve vent→unknown identification evidence.\nMIDDLE ROW drilled solid: a real compact robotic coring drill pointing into red soil/rock, extracted cylindrical brown core standing in holder beside it. A magnifying glass enlarges core texture. Right rugged tablet titled \"FORMULA\": small outlined hexagon containing \"?\" over caption \"EMPIRICAL\", then \"× n\", then larger nested hexagon over caption \"MOLECULAR\". The symbols denote an unknown formula relation; no completed formula or integer multiplier. Visible drill,core,formularelation.\nBOTTOM ROW unknown coolant: horizontal silver coolant pipe mounted above work area, a small joint LEAK releasing THREE cyan drops toward a small puddle. Exposed green electronics circuitboard beside/below leakingjoint, with two darkchips and capacitors. Physical yellow warningtriangle nearby. A small cream evidence tag with \"?\" points to leakingfluid. Do not identify fluid, repair leak, add sparks/flames, or remove electronics. Realistic lighting/materials, no people, brands/watermark.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-3f00ecb7-a372-4e6f-ac56-9bbd7a592ab2.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    314,
+    628,
+    941
+  ],
+  "review": "Both variants show warning vent/unknown three-sphere model and four mass-spectrum peaks in source order (medium, tallest, shortest, second tallest); coring drill/core and unresolved empirical-times-n molecular relationship; coolant leak with three suspended cyan drops and puddle beside exposed electronics/unknown tag. Symbolic unknowns retained."
+}

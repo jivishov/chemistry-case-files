@@ -1,0 +1,67 @@
+{
+  "id": "unit2-batch7",
+  "ids": [
+    "2/a-crt",
+    "2/a-tube",
+    "2/a-assay"
+  ],
+  "prompt": "Photoreal educational atlas. Overall 16:9 canvas ideally2560x1440, exactly TWO columns THREE rows, SIX independent 8:3 photographs. No borders or gaps. Translate reference scenes in exact order into realistic photographed lab equipment and cream printed evidence worksheets. Left warm wood, right gray workbench with distinct viewpoint. Leave bottom20% of EVERY tile quiet tabletop, all essential content above it. Omit reference bottom captions. Exact scientific content, no invented measurements or answers.\nTOP ROW: cathode-ray deflection experiment. A glass CRT chamber, cathode at left, visible cyan fluorescent beam bends clearly DOWNWARD from left to a bright point on right-hand screen. Red horseshoe magnet beneath the curved beam. Printed labels \"cathode\", \"magnet\". Alongside a printed simplified atom circle containing five cyan dots labeled \"a charged particle inside the atom\". Right cream record \"WHAT IT RULES OUT\" with rows \"solid sphere — no\", \"nothing to steer\", \"a bendable beam — yes\". Preserve visibly CURVED beam, not a straight light rod.\nMIDDLE ROW: vertical blue-violet glowing gas-discharge tube on left, label \"tube / it is running\". Printed comparison in middle: continuous rainbow bar with red X, caption \"continuous spectrum\"; below it a black rectangular spectrum strip with exactly FOUR thin bright lines violet, violet-blue, cyan, red from left to right and green check, caption \"observed line spectrum\". Note \"discrete lines → discrete energies\". Right printed discrete energy-level model titled \"FIXED LEVELS\", four horizontal levels labeled n=1 bottom, n=2, n=3, n=4 top; show the same indicated connection between n=4 and n=2 as reference, with a violet wavy photon line beside it and caption \"photon from a transition\". Do not turn the observed lines into a rainbow continuum.\nBOTTOM ROW: two matching amber sample jars containing the SAME white compound, labeled \"LOT A\" and \"LOT B\". Note \"two samples, same compound\". Two identical horizontal stacked bars printed on a worksheet, first titled \"sample A\", second \"sample B\"; each 39.3% golden segment labeled \"Na 39.3\" and60.7% green segment labeled \"Cl 60.7\". Equal sign beside pair, note \"same composition\". Right cream record \"MODEL ?\" with rows \"atoms  stable\", \"ratios  repeat\", \"lots  agree\". Both samples and bar proportions must match. No people, brands, logos or watermarks.",
+  "source": "C:\\Users\\EmilJivishov\\.codex\\generated_images\\01a0ee62-5434-7ff0-95ff-de39e2c2cd5b\\exec-21852172-1c0c-4d56-8265-7e4ddf780cdc.png",
+  "xBoundaries": [
+    0,
+    836,
+    1672
+  ],
+  "yBoundaries": [
+    0,
+    314,
+    641,
+    941
+  ],
+  "rectangles": [
+    [
+      {
+        "left": 2,
+        "top": 2,
+        "width": 832,
+        "height": 288
+      },
+      {
+        "left": 838,
+        "top": 2,
+        "width": 832,
+        "height": 288
+      }
+    ],
+    [
+      {
+        "left": 2,
+        "top": 316,
+        "width": 832,
+        "height": 297
+      },
+      {
+        "left": 838,
+        "top": 316,
+        "width": 832,
+        "height": 297
+      }
+    ],
+    [
+      {
+        "left": 2,
+        "top": 644,
+        "width": 832,
+        "height": 295
+      },
+      {
+        "left": 838,
+        "top": 644,
+        "width": 832,
+        "height": 295
+      }
+    ]
+  ],
+  "fit": "fill",
+  "review": "Both variants: CRT cyan beam bends toward screen beside magnet; five-dot particle model and matching evidence card. Line-spectrum panels preserve four discrete lines, rejected continuous spectrum, fixed levels and transition. Compound samples visually identical; paired Na39.3/Cl60.7 bars identical and correctly proportioned. Inspected scene boundaries in enlarged strips and excluded table-front separators; small aspect normalization preserves all evidence instead of cropping labels."
+}

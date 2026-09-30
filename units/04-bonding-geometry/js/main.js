@@ -1,10 +1,10 @@
-import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=mission-photos-20260922-1';
+import { createSceneMedia, photoScene } from '../../../shared/js/scene-media.js?v=photo-fidelity-20260929-1';
 // main.js - Unit 4 view-model (Bonding, Nomenclature & Geometry, C.7).
 import {
   ELEMENTS, COMPOUNDS, MOLECULES, GEOMETRIES, SUBSTANCE_TYPES,
   IMF_TYPES, IMF_EXAMPLES, BOND_PAIRS, SCENARIOS, SE
 } from './model.js';
-import { sceneArt } from './art-refined.js';
+import { sceneArt } from './art-refined.js?v=polarity-20260929-1';
 import {
   ELECTRONEGATIVITY, bondType, percentIonicCharacter, parseFormula, fmt
 } from '../../../shared/js/chem.js';
